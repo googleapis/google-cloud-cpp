@@ -295,6 +295,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# API Registry
+service {
+  service_proto_path: "google/cloud/apiregistry/v1/service.proto"
+  product_path: "google/cloud/apiregistry/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # App Engine Admin
 service {
   service_proto_path: "google/appengine/v1/appengine.proto"
