@@ -1,0 +1,3 @@
+@com_google_googleapis//google/cloud/apiregistry/v1:common.proto
+@com_google_googleapis//google/cloud/apiregistry/v1:resources.proto
+@com_google_googleapis//google/cloud/apiregistry/v1:service.proto
