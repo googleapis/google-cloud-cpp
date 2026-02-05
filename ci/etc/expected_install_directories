@@ -57,6 +57,10 @@
 ./include/google/cloud/apikeys/v2
 ./include/google/cloud/apikeys/v2/internal
 ./include/google/cloud/apikeys/v2/mocks
+./include/google/cloud/apiregistry
+./include/google/cloud/apiregistry/v1
+./include/google/cloud/apiregistry/v1/internal
+./include/google/cloud/apiregistry/v1/mocks
 ./include/google/cloud/appengine
 ./include/google/cloud/appengine/mocks
 ./include/google/cloud/appengine/v1
@@ -81,6 +85,10 @@
 ./include/google/cloud/assuredworkloads/v1
 ./include/google/cloud/assuredworkloads/v1/internal
 ./include/google/cloud/assuredworkloads/v1/mocks
+./include/google/cloud/auditmanager
+./include/google/cloud/auditmanager/v1
+./include/google/cloud/auditmanager/v1/internal
+./include/google/cloud/auditmanager/v1/mocks
 ./include/google/cloud/automl
 ./include/google/cloud/automl/mocks
 ./include/google/cloud/automl/v1
@@ -1363,6 +1371,8 @@
 ./lib64/cmake/google_cloud_cpp_apigeeconnect_mocks
 ./lib64/cmake/google_cloud_cpp_apikeys
 ./lib64/cmake/google_cloud_cpp_apikeys_mocks
+./lib64/cmake/google_cloud_cpp_apiregistry
+./lib64/cmake/google_cloud_cpp_apiregistry_mocks
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_appengine_mocks
 ./lib64/cmake/google_cloud_cpp_apphub
@@ -1373,6 +1383,8 @@
 ./lib64/cmake/google_cloud_cpp_asset_mocks
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_assuredworkloads_mocks
+./lib64/cmake/google_cloud_cpp_auditmanager
+./lib64/cmake/google_cloud_cpp_auditmanager_mocks
 ./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_automl_mocks
 ./lib64/cmake/google_cloud_cpp_backupdr

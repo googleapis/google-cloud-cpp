@@ -36,6 +36,7 @@ declare -A -r LIBRARIES=(
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
   ["apigeeconnect"]="@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"
   ["apikeys"]="@com_google_googleapis//google/api/apikeys/v2:apikeys_cc_grpc"
+  ["apiregistry"]="@com_google_googleapis//google/cloud/apiregistry/v1:apiregistry_cc_grpc"
   ["appengine"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/appengine/v1:appengine_cc_grpc" \
@@ -46,6 +47,7 @@ declare -A -r LIBRARIES=(
   ["artifactregistry"]="@com_google_googleapis//google/devtools/artifactregistry/v1:artifactregistry_cc_grpc"
   ["asset"]="@com_google_googleapis//google/cloud/asset/v1:asset_cc_grpc"
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_cc_grpc"
+  ["auditmanager"]="@com_google_googleapis//google/cloud/auditmanager/v1:auditmanager_cc_grpc"
   ["automl"]="@com_google_googleapis//google/cloud/automl/v1:automl_cc_grpc"
   ["backupdr"]="$(
     printf ",%s" \
