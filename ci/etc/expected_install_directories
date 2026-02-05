@@ -822,6 +822,10 @@
 ./include/google/cloud/gkemulticloud/v1
 ./include/google/cloud/gkemulticloud/v1/internal
 ./include/google/cloud/gkemulticloud/v1/mocks
+./include/google/cloud/gkerecommender
+./include/google/cloud/gkerecommender/v1
+./include/google/cloud/gkerecommender/v1/internal
+./include/google/cloud/gkerecommender/v1/mocks
 ./include/google/cloud/iam
 ./include/google/cloud/iam/admin
 ./include/google/cloud/iam/admin/v1
@@ -1480,6 +1484,8 @@
 ./lib64/cmake/google_cloud_cpp_gkehub_mocks
 ./lib64/cmake/google_cloud_cpp_gkemulticloud
 ./lib64/cmake/google_cloud_cpp_gkemulticloud_mocks
+./lib64/cmake/google_cloud_cpp_gkerecommender
+./lib64/cmake/google_cloud_cpp_gkerecommender_mocks
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_iam_mocks
 ./lib64/cmake/google_cloud_cpp_iap
