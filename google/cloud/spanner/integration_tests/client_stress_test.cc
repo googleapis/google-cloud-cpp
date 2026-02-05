@@ -148,6 +148,8 @@ TEST_F(ClientStressTest, ParseArgs) {
 
 /// @test Stress test the library using ExecuteQuery calls.
 TEST_F(ClientStressTest, UpsertAndSelect) {
+  // TODO(#15939): Update emulator and enable this test.
+  if (UsingEmulator()) GTEST_SKIP();
   int const task_count = TaskCount();
 
   auto select_task = [](Client client) {
@@ -216,6 +218,8 @@ TEST_F(ClientStressTest, UpsertAndSelect) {
 
 /// @test Stress test the library using Read calls.
 TEST_F(ClientStressTest, UpsertAndRead) {
+  // TODO(#15939): Update emulator and enable this test.
+  if (UsingEmulator()) GTEST_SKIP();
   int const task_count = TaskCount();
 
   auto read_task = [](Client client) {
