@@ -12,6 +12,7 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Cloud API Registry](google/cloud/apiregistry/README.md)
+- [Audit Manager](/google/cloud/auditmanager/README.md)
 
 ## v2.46.0 - 2026-01
 
