@@ -30,7 +30,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:apiregistry_quickstart> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_TEST_REGION)
-    set_tests_properties(apiregistry_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart"
-    PASS_REGULAR_EXPRESSION "Permanent error.*gcloud-cpp.retry.function=ListMcpServers")
+    set_tests_properties(
+        apiregistry_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Permanent error.*gcloud-cpp.retry.function=ListMcpServers")
 endif ()
