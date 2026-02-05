@@ -208,11 +208,11 @@ function integration::bazel_with_emulators() {
 
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
+    bazel "${verb}" "${args[@]}" --cache_test_results=no --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running Spanner integration tests (with emulator)"
   "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
+    bazel "${verb}" "${args[@]}" --cache_test_results=no --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
