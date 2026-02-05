@@ -170,6 +170,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "gkeconnect",
     "gkehub",
     "gkemulticloud",
+    "gkerecommender",
     "iam",
     "iap",
     "ids",

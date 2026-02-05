@@ -13,25 +13,22 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/gkerecommender/v1/ EDIT HERE _client.h"
+#include "google/cloud/gkerecommender/v1/gke_inference_quickstart_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 1) {
+    std::cerr << "Usage: " << argv[0] << "\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
-
   namespace gkerecommender = ::google::cloud::gkerecommender_v1;
-  auto client = gkerecommender::ServiceClient(
-      gkerecommender::MakeServiceConnection());  // EDIT HERE
-
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  auto client = gkerecommender::GkeInferenceQuickstartClient(
+      gkerecommender::MakeGkeInferenceQuickstartConnection());
+  for (auto r : client.FetchModels({})) {
     if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+    std::cout << *r << "\n";
   }
 
   return 0;
