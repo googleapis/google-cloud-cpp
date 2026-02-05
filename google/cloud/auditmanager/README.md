@@ -16,7 +16,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/auditmanager/v1/ EDIT HERE _client.h"
+#include "google/cloud/auditmanager/v1/audit_manager_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -29,10 +29,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace auditmanager = ::google::cloud::auditmanager_v1;
-  auto client = auditmanager::ServiceClient(
-      auditmanager::MakeServiceConnection());  // EDIT HERE
+  auto client = auditmanager::AuditManagerClient(
+      auditmanager::MakeAuditManagerConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListAuditReports(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
