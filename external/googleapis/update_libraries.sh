@@ -166,6 +166,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/gkebackup/v1:gkebackup_cc_grpc"
   )"
   ["gkeconnect"]="@com_google_googleapis//google/cloud/gkeconnect/gateway/v1:gateway_cc_grpc"
+  ["gkerecommender"]="@com_google_googleapis//google/cloud/gkerecommender/v1:gkerecommender_cc_grpc"
   ["gkehub"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/gkehub/v1:gkehub_cc_grpc" \
