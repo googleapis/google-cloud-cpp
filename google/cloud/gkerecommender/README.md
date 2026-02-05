@@ -19,7 +19,6 @@ this library.
 
 ```cc
 #include "google/cloud/gkerecommender/v1/gke_inference_quickstart_client.h"
-#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
