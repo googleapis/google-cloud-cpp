@@ -76,7 +76,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @ingroup google-cloud-spanner-options
  */
-struct EnableMultiplexedSessionOption {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Multiplex Sessions are always enabled")
+    EnableMultiplexedSessionOption {
   using Type = absl::monostate;
 };
 
@@ -155,7 +156,8 @@ struct SessionCreatorRoleOption {
  *
  * @ingroup google-cloud-spanner-options
  */
-struct SessionPoolMinSessionsOption {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Option not used with Multiplex Sessions")
+    SessionPoolMinSessionsOption {
   using Type = int;
 };
 
@@ -167,7 +169,8 @@ struct SessionPoolMinSessionsOption {
  *
  * @ingroup google-cloud-spanner-options
  */
-struct SessionPoolMaxSessionsPerChannelOption {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Option not used with Multiplex Sessions")
+    SessionPoolMaxSessionsPerChannelOption {
   using Type = int;
 };
 
@@ -179,12 +182,14 @@ struct SessionPoolMaxSessionsPerChannelOption {
  *
  * @ingroup google-cloud-spanner-options
  */
-struct SessionPoolMaxIdleSessionsOption {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Option not used with Multiplex Sessions")
+    SessionPoolMaxIdleSessionsOption {
   using Type = int;
 };
 
 /// Action to take when the session pool is exhausted.
-enum class ActionOnExhaustion {
+enum class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Option not used with Multiplex Sessions") ActionOnExhaustion {
   /// Wait until a session is returned to the pool.
   kBlock,
   /// Fail the operation immediately.
@@ -197,7 +202,8 @@ enum class ActionOnExhaustion {
  *
  * @ingroup google-cloud-spanner-options
  */
-struct SessionPoolActionOnExhaustionOption {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Option not used with Multiplex Sessions")
+    SessionPoolActionOnExhaustionOption {
   using Type = spanner::ActionOnExhaustion;
 };
 
@@ -231,7 +237,8 @@ struct LockHintOption {
  *
  * @ingroup google-cloud-spanner-options
  */
-struct SessionPoolKeepAliveIntervalOption {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Option not used with Multiplex Sessions")
+    SessionPoolKeepAliveIntervalOption {
   using Type = std::chrono::seconds;
 };
 
@@ -252,11 +259,9 @@ struct SessionPoolLabelsOption {
 /**
  * List of all SessionPool options. Pass to `spanner::MakeConnection()`.
  */
-using SessionPoolOptionList = OptionList<
-    RouteToLeaderOption, SessionCreatorRoleOption, SessionPoolMinSessionsOption,
-    SessionPoolMaxSessionsPerChannelOption, SessionPoolMaxIdleSessionsOption,
-    SessionPoolActionOnExhaustionOption, SessionPoolKeepAliveIntervalOption,
-    SessionPoolLabelsOption, EnableMultiplexedSessionOption>;
+using SessionPoolOptionList =
+    OptionList<RouteToLeaderOption, SessionCreatorRoleOption,
+               SessionPoolLabelsOption>;
 
 /**
  * Option for `google::cloud::Options` to set the optimizer version used in an
