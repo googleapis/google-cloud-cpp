@@ -33,8 +33,6 @@ ENABLED_FEATURES="$(printf ",%s" "${feature_list[@]}")"
 ENABLED_FEATURES="${ENABLED_FEATURES:1}"
 readonly ENABLED_FEATURES
 
-export VCPKG_OVERLAY_PORTS="ci/gha/builds/vcpkg-overlays"
-
 function exit_trap() {
   local exit_status=$?
   io::log_h2 "cleanup on EXIT with exit_status=${exit_status}"
