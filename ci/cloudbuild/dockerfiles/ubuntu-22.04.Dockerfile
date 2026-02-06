@@ -12,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:focal
-ARG NCPU=4
-ARG ARCH=amd64
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -22,9 +20,7 @@ RUN apt-get update && \
         automake \
         build-essential \
         clang \
-        clang-9 \
         cmake \
-        ctags \
         curl \
         gawk \
         git \
@@ -34,7 +30,6 @@ RUN apt-get update && \
         libcurl4-openssl-dev \
         libssl-dev \
         libtool \
-        llvm-9 \
         lsb-release \
         make \
         ninja-build \
@@ -52,19 +47,9 @@ RUN apt-get update && \
         ca-certificates \
         apt-transport-https
 
-RUN apt update -y && apt upgrade -y
-
-RUN apt update \
-    && apt install software-properties-common -y
-
-RUN add-apt-repository ppa:deadsnakes/ppa -y
-RUN apt update && \
-  apt install python3.12 -y
-
 # Install Python packages used in the integration tests.
 RUN update-alternatives --install /usr/bin/python python $(which python3) 10
 RUN pip3 install setuptools wheel
-
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN apt update && (apt install -y openjdk-11-jre || apt install -y openjdk-9-jre)
 
