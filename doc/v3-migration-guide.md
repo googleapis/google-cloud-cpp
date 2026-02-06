@@ -738,6 +738,21 @@ auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
 ### Spanner
 
 <details>
+<summary>All sessions are now Multiplexed Sessions</summary>
+
+All SessionPool related options are marked deprecated and are now ignored by the
+Spanner library and will be removed in the future:
+
+- `EnableMultiplexedSessionOption`
+- `SessionPoolMinSessionsOption`
+- `SessionPoolMaxSessionsPerChannelOption`
+- `SessionPoolMaxIdleSessionsOption`
+- `SessionPoolActionOnExhaustionOption`
+- `SessionPoolKeepAliveIntervalOption`
+
+</details>
+
+<details>
 <summary>Removed <code>spanner::MakeTestRow</code>
 </summary>
 
