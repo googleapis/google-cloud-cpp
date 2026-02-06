@@ -146,7 +146,6 @@ TEST_F(SessionPoolTest, Multiplexed) {
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
   auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), {});
-  // Options{}.set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
@@ -315,7 +314,6 @@ TEST_F(SessionPoolTest, MultiplexedLabels) {
   auto pool = MakeTestSessionPool(
       db, {mock}, threads.cq(),
       Options{}.set<spanner::SessionPoolLabelsOption>(std::move(labels)));
-  // .set<spanner::EnableMultiplexedSessionOption>({}));
   auto session = pool->Multiplexed();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "multiplexed");
