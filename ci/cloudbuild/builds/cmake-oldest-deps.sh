@@ -33,6 +33,8 @@ ENABLED_FEATURES="$(printf ",%s" "${feature_list[@]}")"
 ENABLED_FEATURES="${ENABLED_FEATURES:1}"
 readonly ENABLED_FEATURES
 
+export VCPKG_OVERLAY_PORTS="ci/gha/builds/vcpkg-overlays"
+
 io::log_h2 "Configuring"
 vcpkg_root="$(vcpkg::root_dir)"
 cmake -GNinja -S . -B cmake-out/build \
