@@ -2689,6 +2689,14 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT
 }
 
+# GKE Recommender
+service {
+  service_proto_path: "google/cloud/gkerecommender/v1/gkerecommender.proto"
+  product_path: "google/cloud/gkerecommender/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # IAM
 service {
   service_proto_path: "google/iam/credentials/v1/iamcredentials.proto"
