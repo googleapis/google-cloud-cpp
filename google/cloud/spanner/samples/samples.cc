@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 //! [START spanner_quickstart]
 #include "google/cloud/spanner/client.h"
@@ -6202,3 +6203,4 @@ int main(int ac, char* av[]) try {
   std::cerr << ex.what() << "\n";
   return 1;
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

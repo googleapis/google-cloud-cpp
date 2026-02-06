@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
@@ -148,6 +148,8 @@ TEST_F(ClientStressTest, ParseArgs) {
 
 /// @test Stress test the library using ExecuteQuery calls.
 TEST_F(ClientStressTest, UpsertAndSelect) {
+  // TODO(#15939): Update emulator and enable this test.
+  if (UsingEmulator()) GTEST_SKIP();
   int const task_count = TaskCount();
 
   auto select_task = [](Client client) {
@@ -216,6 +218,8 @@ TEST_F(ClientStressTest, UpsertAndSelect) {
 
 /// @test Stress test the library using Read calls.
 TEST_F(ClientStressTest, UpsertAndRead) {
+  // TODO(#15939): Update emulator and enable this test.
+  if (UsingEmulator()) GTEST_SKIP();
   int const task_count = TaskCount();
 
   auto read_task = [](Client client) {
@@ -302,3 +306,4 @@ int main(int argc, char* argv[]) {
 
   return RUN_ALL_TESTS();
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
