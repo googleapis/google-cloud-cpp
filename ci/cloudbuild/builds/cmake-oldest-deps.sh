@@ -35,6 +35,16 @@ readonly ENABLED_FEATURES
 
 export VCPKG_OVERLAY_PORTS="ci/gha/builds/vcpkg-overlays"
 
+function exit_trap() {
+  local exit_status=$?
+  io::log_h2 "cleanup on EXIT with exit_status=${exit_status}"
+  if ((exit_status != 0)); then
+    cat /workspace/cmake-out/build/vcpkg-manifest-install.log
+  fi
+}
+
+trap 'exit_trap' INT TERM EXIT
+
 io::log_h2 "Configuring"
 vcpkg_root="$(vcpkg::root_dir)"
 cmake -GNinja -S . -B cmake-out/build \
