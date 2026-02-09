@@ -17,13 +17,6 @@ the decommissioned API surfaces to their replacements.
 Depending on your build system of choice, you should set the appropriate flag
 for your compiler if it does not already default to `--std=c++17` or higher.
 
-## Bazel Central Registry
-
-Bazel is moving away from WORKSPACE file support to using modules from the Bazel
-Central Registry. Part of the v3.x.y release series includes supporting the new
-[google-cloud-cpp](https://registry.bazel.build/modules/google_cloud_cpp) Bazel
-module which can be added to your `MODULE.bazel` file as a dependency.
-
 ## Dependencies
 
 ### Previously Optional Dependencies that are now Required
@@ -34,11 +27,21 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 
 ### Relocated Dependencies
 
-- `crc32c`
+- `crc32c` Is now distributed as part of Abseil.
 
-## Decommissioned API Surfaces
+## Build system changes
 
 ### Bazel
+
+<details>
+<summary>google-cloud-cpp module in Bazel Central Registry</summary>
+
+Bazel is moving away from WORKSPACE file support to using modules from the Bazel
+Central Registry. Part of the v3.x.y release series includes supporting the new
+[google-cloud-cpp](https://registry.bazel.build/modules/google_cloud_cpp) Bazel
+module which can be added to your `MODULE.bazel` file as a dependency.
+
+</details>
 
 ### CMake
 
@@ -60,6 +63,8 @@ name.
 | google/cloud/trace         | devtools_cloudtrace_v2_trace_protos   | google-cloud-cpp::trace_protos         |
 
 </details>
+
+## Decommissioned API Surfaces
 
 ### Common
 
@@ -619,6 +624,17 @@ auto instance_admin =
 auto clusters = instance_admin->ListClusters(
     InstanceName("project-id", "instance-id"));
 ```
+
+</details>
+
+### IAM
+
+<details>
+
+<summary>Removed <code>iam/retry_traits.h</code> file</summary>
+
+The library no longer exposes `google/cloud/iam/retry_traits.h` header file. It
+only contained internal symbols.
 
 </details>
 
@@ -1210,17 +1226,5 @@ options = options.set<gc::UnifiedCredentialsOption>(
     gc::MakeServiceAccountCredentialsFromFile("path-to-file", options));
 auto client = gcs::Client(options);
 ```
-
-</details>
-
-### IAM
-
-<details>
-
-<summary>Removed <code>iam/retry_traits.h</code> file</summary>
-
-</details>
-The library no longer exposes `google/cloud/iam/retry_traits.h` header file. It
-only contained internal symbols.
 
 </details>
