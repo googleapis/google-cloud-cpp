@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.47.0 - TBD
+## v2.47.0 - 2026-02
 
 ### New Libraries
 
@@ -14,6 +14,22 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Cloud API Registry](google/cloud/apiregistry/README.md)
 - [Audit Manager](/google/cloud/auditmanager/README.md)
 - [GKE Recommender](/google/cloud/gkerecommender/README.md)
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): define IsolationLevel enum for Spanner transactions ([#15853](https://github.com/googleapis/google-cloud-cpp/pull/15853))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): take async client out of experimental ([#15573](https://github.com/googleapis/google-cloud-cpp/pull/15573))
+- fix(storage): add extra validation for type in object_metadata_parser ([#15864](https://github.com/googleapis/google-cloud-cpp/pull/15864))
+- feat(storage): Update the write handle while performing appendable object upload ([#15889](https://github.com/googleapis/google-cloud-cpp/pull/15889))
+- feat(storage): add flag for enable and disable multi stream feature. ([#15893](https://github.com/googleapis/google-cloud-cpp/pull/15893))
+- fix(storage): gRPC misuse causing crashes due to concurrent writes from Flush() and Write() ([#15802](https://github.com/googleapis/google-cloud-cpp/pull/15802))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-01-30T21:16:31-08:00](https://github.com/googleapis/googleapis/tree/c0fcb35628690e9eb15dcefae41c651c67cd050b)
 
 ## v2.46.0 - 2026-01
 
