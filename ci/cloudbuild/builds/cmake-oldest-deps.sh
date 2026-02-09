@@ -50,4 +50,5 @@ io::log_h2 "Testing"
 mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out/build ctest "${ctest_args[@]}" -LE "integration-test"
 
-integration::ctest_with_emulators "cmake-out/build"
+# TODO(#15947): Passing spanner here skips its test execution.
+integration::ctest_with_emulators "cmake-out/build" "spanner"
