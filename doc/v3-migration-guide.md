@@ -27,7 +27,7 @@ for your compiler if it does not already default to `--std=c++17` or higher.
 
 ### Relocated Dependencies
 
-- `crc32c` Is now distributed as part of Abseil.
+- `crc32c` google-cloud-cpp now uses the crc32c implementation in Abseil.
 
 ## Build system changes
 
@@ -41,6 +41,10 @@ Central Registry. Part of the v3.x.y release series includes supporting the new
 [google-cloud-cpp](https://registry.bazel.build/modules/google_cloud_cpp) Bazel
 module which can be added to your `MODULE.bazel` file as a dependency.
 
+google-cloud-cpp will support WORKSPACE files until Bazel 8 reaches end of 
+support (2027/12). However, some dependencies may stop supporting WORKSPACE 
+files before then which will limit what dependency versions can be used via
+WORKSPACE.
 </details>
 
 ### CMake
@@ -49,8 +53,8 @@ module which can be added to your `MODULE.bazel` file as a dependency.
 <summary>Removed backward compatible proto interface libraries.</summary>
 
 If your application links directly to one of these decommissioned proto
-libraries, the CMakeLists.txt should be updated with the preferred proto library
-name.
+libraries, your CMakeLists.txt should be updated with the preferred proto
+library name.
 
 | Library                    | Decommissioned Proto Library          | Preferred Proto Library                |
 | -------------------------- | ------------------------------------- | -------------------------------------- |
@@ -340,7 +344,7 @@ for (auto& row : table.ReadRows(
 </summary>
 #### `bigtable::ClientOptions`
 
-The deprecated `bigtable::ClientOptions` has been removed. Please use
+We have removed the deprecated `bigtable::ClientOptions` class. Please use
 `google::cloud::Options` instead.
 
 The following table shows the mapping from `bigtable::ClientOptions` methods to
@@ -496,8 +500,7 @@ auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>("..."
 The `bigtable::DataClient` class and its associated factory functions (e.g.,
 `MakeDataClient`) have been removed. Applications should now use
 `bigtable::DataConnection` and `bigtable::MakeDataConnection()` instead. For
-detailed migration steps and examples, please refer to the official migration
-guide:
+detailed migration steps and examples, please refer to the migration guide:
 
 [Migrating from DataClient to DataConnection](https://docs.cloud.google.com/cpp/docs/reference/bigtable/latest/migrating-from-dataclient)
 
