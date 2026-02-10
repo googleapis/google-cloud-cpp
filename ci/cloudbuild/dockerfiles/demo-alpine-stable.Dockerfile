@@ -88,6 +88,8 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
 
 ## [DONE packaging.md]
 
+RUN apk update && apk add gdb
+
 # Speed up the CI builds using sccache.
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \
