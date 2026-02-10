@@ -1,7 +1,7 @@
 # `google-cloud-cpp` v3 Migration Guide
 
-This document is intended for users of previous major versions (v1.x.y, v2.x.y)
-of the `google-cloud-cpp` SDK who are moving to a release on the v3.x.y series.
+This document helps users of previous major versions (v1.x.y, v2.x.y) of the
+`google-cloud-cpp` SDK migrate to a release on the v3.x.y series.
 
 While this repository does not strictly follow semver, it does use the major
 version number to indicate large breaking changes. We strive to balance the
@@ -9,7 +9,7 @@ frequency in which we introduce breaking changes with improvements to the SDK.
 Since our most recent major version increment, about 3 years ago, we have added
 new API surfaces that supersede the previous deprecated types and functions. As
 part of the v3 release series, we are decommissioning those deprecated API
-surfaces. This guide serves a central location to document how to migrate from
+surfaces. This guide provides a central location to document how to migrate from
 the decommissioned API surfaces to their replacements.
 
 ## C++17
@@ -41,10 +41,11 @@ Central Registry. Part of the v3.x.y release series includes supporting the new
 [google-cloud-cpp](https://registry.bazel.build/modules/google_cloud_cpp) Bazel
 module which can be added to your `MODULE.bazel` file as a dependency.
 
-google-cloud-cpp will support WORKSPACE files until Bazel 8 reaches end of 
-support (2027/12). However, some dependencies may stop supporting WORKSPACE 
+google-cloud-cpp will support WORKSPACE files until Bazel 8 reaches end of
+support (2027/12). However, some dependencies may stop supporting WORKSPACE
 files before then which will limit what dependency versions can be used via
 WORKSPACE.
+
 </details>
 
 ### CMake
@@ -53,7 +54,7 @@ WORKSPACE.
 <summary>Removed backward compatible proto interface libraries.</summary>
 
 If your application links directly to one of these decommissioned proto
-libraries, your CMakeLists.txt should be updated with the preferred proto
+libraries, you should update your CMakeLists.txt with the preferred proto
 library name.
 
 | Library                    | Decommissioned Proto Library          | Preferred Proto Library                |
@@ -76,7 +77,7 @@ library name.
 <summary>Removed <code>v1</code> inline namespace alias.
 </summary>
 
-The `v1` namespace should be omitted for libraries that are unversioned:
+Omit the `v1` namespace for unversioned libraries:
 
 - Bigtable
 - PubSub
@@ -106,8 +107,8 @@ google::cloud::pubsub::Publisher publisher;
 <summary>Removed <code>gcpcxxV1</code> inline namespace alias.
 </summary>
 
-The `gcpcxxV1` namespace should be omitted from versioned libraries. The version
-is now part of the service namespace.
+Omit the `gcpcxxV1` namespace from versioned libraries. The version is now part
+of the service namespace.
 
 For example, code that used to look like this:
 
@@ -161,9 +162,9 @@ google::cloud::CompletionQueue cq;
 <summary>Removed unversioned forwarding headers.
 </summary>
 
-Some early libraries were created without version and/or service directories.
-For backwards compatibility, forwarding headers were left at parent directory
-that pointed at the first version of the library:
+We created some early libraries without version and/or service directories. For
+backwards compatibility, forwarding headers were left at parent directory that
+pointed at the first version of the library:
 
 - google/cloud/accessapproval
 - google/cloud/accesscontextmanager
@@ -285,8 +286,8 @@ file. It only contained internal symbols.
 <summary>Removed <code>bigtable::RowReader</code> constructors
 </summary>
 
-The `bigtable::RowReader` constructors that accept `DataClient` as an argument
-have been removed.
+We have removed the `bigtable::RowReader` constructors that accept `DataClient`
+as an argument.
 
 Developers that read rows by directly constructing a `RowReader` object should
 instead construct a `Table` object and call `Table::ReadRows(...)`.
@@ -393,7 +394,7 @@ auto client = bigtable::Client(
 
 #### `bigtable::CreateDefaultDataClient`
 
-The deprecated `bigtable::CreateDefaultDataClient` function has been removed.
+We have removed the deprecated `bigtable::CreateDefaultDataClient` function.
 Please use `bigtable::MakeDataClient` instead.
 
 **Before:**
@@ -476,9 +477,9 @@ auto limit = google::cloud::bigtable::RowReader::NO_ROWS_LIMIT;
 <summary>Removed Endpoint Options
 </summary>
 
-The `bigtable::DataEndpointOption`, `bigtable::AdminEndpointOption`, and
-`bigtable::InstanceAdminEndpointOption` classes have been removed. Applications
-should use `google::cloud::EndpointOption` instead.
+We have removed the `bigtable::DataEndpointOption`,
+`bigtable::AdminEndpointOption`, and `bigtable::InstanceAdminEndpointOption`
+classes. Applications should use `google::cloud::EndpointOption` instead.
 
 **Before:**
 
@@ -497,8 +498,8 @@ auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>("..."
 <details>
 <summary>Removed <code>bigtable::DataClient</code> and related functions</summary>
 
-The `bigtable::DataClient` class and its associated factory functions (e.g.,
-`MakeDataClient`) have been removed. Applications should now use
+We have removed the `bigtable::DataClient` class and its associated factory
+functions (e.g., `MakeDataClient`). Applications should now use
 `bigtable::DataConnection` and `bigtable::MakeDataConnection()` instead. For
 detailed migration steps and examples, please refer to the migration guide:
 
@@ -509,7 +510,7 @@ detailed migration steps and examples, please refer to the migration guide:
 <details>
 <summary>Removed <code>bigtable::MetadataUpdatePolicy</code></summary>
 
-The `bigtable::MetadataUpdatePolicy` class has been removed. It was only used in
+We have removed the `bigtable::MetadataUpdatePolicy` class. It was only used in
 internal legacy files.
 
 </details>
@@ -517,8 +518,8 @@ internal legacy files.
 <details>
 <summary>Removed <code>bigtable::AdminClient</code> and <code>bigtable::TableAdmin</code></summary>
 
-The `bigtable::AdminClient` class and `bigtable::TableAdmin` class have been
-replaced with `bigtable_admin::BigtableTableAdminClient`.
+We have replaced the `bigtable::AdminClient` class and `bigtable::TableAdmin`
+class with `bigtable_admin::BigtableTableAdminClient`.
 
 **Before:**
 
@@ -562,8 +563,9 @@ result = table_admin.DropRowRange(drop_all_rows);
 
 <details><summary><code>WaitForConsistency</code> is now a free function</summary>
 
-With the removal of the `bigtable::TableAdmin` class, `WaitForConsistency` has
-been moved to `bigtable_admin::BigtableTableAdminClient::WaitForConsistency`.
+With the removal of the `bigtable::TableAdmin` class, we have moved
+`WaitForConsistency` to
+`bigtable_admin::BigtableTableAdminClient::WaitForConsistency`.
 
 **Before:**
 
@@ -602,8 +604,9 @@ auto wait_response = table_admin.WaitForConsistency(wait_request).get();
 <details>
 <summary>Removed <code>bigtable::InstanceAdminClient</code> and <code>bigtable::InstanceAdmin</code></summary>
 
-The `bigtable::InstanceAdminClient` class and `bigtable::InstanceAdmin` class
-have been replaced with `bigtable_admin::BigtableInstanceAdminClient`.
+We have replaced the `bigtable::InstanceAdminClient` class and
+`bigtable::InstanceAdmin` class with
+`bigtable_admin::BigtableInstanceAdminClient`.
 
 **Before:**
 
@@ -648,7 +651,7 @@ only contained internal symbols.
 </summary>
 #### `pubsub::PublisherOptions`
 
-The deprecated `pubsub::PublisherOptions` has been removed. Please use
+We have removed the deprecated `pubsub::PublisherOptions`. Please use
 `google::cloud::Options` instead.
 
 The following table shows the mapping from `pubsub::PublisherOptions` methods to
@@ -706,7 +709,7 @@ auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
 </summary>
 #### `pubsub::SubscriberOptions`
 
-The deprecated `pubsub::SubscriberOptions` has been removed. Please use
+We have removed the deprecated `pubsub::SubscriberOptions`. Please use
 `google::cloud::Options` instead.
 
 The following table shows the mapping from `pubsub::SubscriberOptions` methods
@@ -759,8 +762,8 @@ auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
 <details>
 <summary>All sessions are now Multiplexed Sessions</summary>
 
-All SessionPool related options are marked deprecated and are now ignored by the
-Spanner library and will be removed in the future:
+The Spanner library now ignores all SessionPool related options, which are
+marked as deprecated and will be removed in the future:
 
 - `EnableMultiplexedSessionOption`
 - `SessionPoolMinSessionsOption`
@@ -775,7 +778,7 @@ Spanner library and will be removed in the future:
 <summary>Removed <code>spanner::MakeTestRow</code>
 </summary>
 
-The `spanner::MakeTestRow` functions have been removed. Please use
+We have removed the `spanner::MakeTestRow` functions. Please use
 `spanner_mocks::MakeRow` instead.
 
 **Before:**
@@ -807,8 +810,8 @@ auto row2 = google::cloud::spanner_mocks::MakeRow(1, "foo", true);
 <details>
 <summary>Removed <code>spanner::ClientOptions</code> class</summary>
 
-The `spanner::ClientOptions` class has been removed. Use
-`google::cloud::Options` instead to set the following as needed:
+We have removed the `spanner::ClientOptions` class. Use `google::cloud::Options`
+instead to set the following as needed:
 
 - `spanner::QueryOptimizerVersionOption`
 - `spanner::QueryOptimizerStatisticsPackageOption`
@@ -857,8 +860,8 @@ file. It only contained internal symbols.
 <details>
 <summary>Removed Admin Clients from <code>spanner</code> namespace</summary>
 
-The `DatabaseAdminClient` and `InstanceAdminClient` classes (and their
-associated connection classes and factory functions) have been removed from the
+We have removed the `DatabaseAdminClient` and `InstanceAdminClient` classes (and
+their associated connection classes and factory functions) from the
 `google::cloud::spanner` namespace. Please use the replacements in
 `google::cloud::spanner_admin`.
 
@@ -1009,7 +1012,7 @@ Use the following table to map `ChannelOptions` setters to
 <details>
 <summary><code>Client</code> Constructor removal</summary>
 
-The constructor `Client(ClientOptions)` is removed. The default constructor
+We have removed the `Client(ClientOptions)` constructor. The default constructor
 `Client()` generally uses default options and default credentials. To customize,
 use `Client(Options)`.
 
@@ -1043,8 +1046,8 @@ void CreateClient() {
 <details>
 <summary>Removed <code>Client(Connection, NoDecorations)</code> constructor</summary>
 
-The `Client` constructor that accepted a `StorageConnection` and the
-`NoDecorations` tag has been removed. This was intended only for test code.
+We have removed the `Client` constructor that accepted a `StorageConnection` and
+the `NoDecorations` tag. This was intended only for test code.
 
 **Before:**
 
@@ -1078,7 +1081,7 @@ void TestClient() {
 <details>
 <summary>Removed <code>Client::raw_client()</code></summary>
 
-The `Client::raw_client()` method has been removed. This was intended only for
+We have removed the `Client::raw_client()` method. This was intended only for
 internal use or testing. If you need access to the underlying connection for
 testing purposes, use `google::cloud::storage::internal::ClientImplDetails`.
 
@@ -1146,10 +1149,10 @@ Bazel should now depend on `@google_cloud_cpp//:storage_grpc`
 <details>
 <summary>Removed deprecated <code>Oauth2CredentialsOption</code></summary>
 
-The `google::cloud::UnifiedCredentialsOption` and the unified credentials API
-documented at
+You should use the `google::cloud::UnifiedCredentialsOption` and the unified
+credentials API documented at
 https://docs.cloud.google.com/cpp/docs/reference/common/latest/group__guac
-should be used instead.
+instead.
 
 **Before:**
 
@@ -1187,9 +1190,9 @@ auto client = gcs::Client(options);
 <details>
 <summary>Removed deprecated <code>CreateServiceAccountCredentialsFromFilePath</code></summary>
 
-The `google::cloud::MakeServiceAccountCredentialsFromFile` factory function and
-associated override options `google::cloud::ScopesOption` and
-`google::cloud::subjectOption` should be used instead.
+You should use the `google::cloud::MakeServiceAccountCredentialsFromFile`
+factory function and associated override options `google::cloud::ScopesOption`
+and `google::cloud::subjectOption` instead.
 
 **Before:**
 
