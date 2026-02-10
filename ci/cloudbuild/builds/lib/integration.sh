@@ -308,6 +308,8 @@ function integration::ctest_with_emulators() {
   fi
 
   local cmake_out="$1"
+  local skip_args=("${@:2}")
+
   mapfile -t ctest_args < <(ctest::common_args)
   # Integration tests are inherently flaky. Make up to three attempts to get the
   # test passing.
@@ -321,9 +323,11 @@ function integration::ctest_with_emulators() {
   "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
-  io::log_h2 "Running Spanner integration tests (with emulator)"
-  "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+  if ! [[ "${skip_args[*]}" =~ "spanner" ]]; then
+    io::log_h2 "Running Spanner integration tests (with emulator)"
+    "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+      "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+  fi
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
