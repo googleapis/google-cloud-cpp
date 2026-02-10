@@ -97,6 +97,10 @@ if (APPLE
             "    cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...")
 endif ()
 
+if (WIN32)
+    add_definitions(-DNOMINMAX)
+endif ()
+
 # If ccache is installed use it for the build.
 option(GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available"
        OFF)
