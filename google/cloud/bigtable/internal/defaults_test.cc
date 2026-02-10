@@ -426,24 +426,20 @@ TEST(EndpointEnvTest, UserCredentialsOverrideEmulatorEnv) {
 
 TEST(EndpointEnvTest, DirectPathEnabled) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
-  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-                                "storage,bigtable");
+  ScopedEnvironment direct_path("CBT_ENABLE_DIRECTPATH", "true");
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("google-c2p:///directpath-bigtable.googleapis.com",
-            opts.get<DataEndpointOption>());
-  EXPECT_EQ("directpath-bigtable.googleapis.com", opts.get<AuthorityOption>());
+  EXPECT_EQ("c2p:///bigtable.googleapis.com", opts.get<DataEndpointOption>());
+  EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
   // Admin endpoints are not affected.
   EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
   EXPECT_EQ("bigtableadmin.googleapis.com",
             opts.get<InstanceAdminEndpointOption>());
-  EXPECT_EQ(1, opts.get<GrpcNumChannelsOption>());
 }
 
-TEST(EndpointEnvTest, DirectPathNoMatch) {
+TEST(EndpointEnvTest, DirectPathNotEnabled) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
-  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-                                "bigtable-not,almost-bigtable");
+  ScopedEnvironment direct_path("CBT_ENABLE_DIRECTPATH", "false");
 
   auto opts = DefaultDataOptions(Options{});
   EXPECT_EQ("bigtable.googleapis.com", opts.get<EndpointOption>());
@@ -452,18 +448,17 @@ TEST(EndpointEnvTest, DirectPathNoMatch) {
 
 TEST(EndpointEnvTest, DirectPathOverridesUserEndpoints) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
-  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  ScopedEnvironment direct_path("CBT_ENABLE_DIRECTPATH", "true");
 
   auto opts = DefaultDataOptions(
-      Options{}.set<EndpointOption>("ignored").set<AuthorityOption>("ignored"));
-  EXPECT_EQ("google-c2p:///directpath-bigtable.googleapis.com",
-            opts.get<EndpointOption>());
-  EXPECT_EQ("directpath-bigtable.googleapis.com", opts.get<AuthorityOption>());
+      Options{}.set<EndpointOption>("userendpoint").set<AuthorityOption>("userendpoint"));
+  EXPECT_EQ("c2p:///userendpoint", opts.get<EndpointOption>());
+  EXPECT_EQ("userendpoint", opts.get<AuthorityOption>());
 }
 
 TEST(EndpointEnvTest, EmulatorOverridesDirectPath) {
   ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
-  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  ScopedEnvironment direct_path("CBT_ENABLE_DIRECTPATH", "true");
 
   auto opts = DefaultDataOptions(Options{});
   EXPECT_EQ("emulator-host:8000", opts.get<EndpointOption>());

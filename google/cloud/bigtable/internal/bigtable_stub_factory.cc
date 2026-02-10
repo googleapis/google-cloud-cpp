@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "absl/base/no_destructor.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/bigtable_auth_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_channel_refresh.h"
@@ -20,6 +21,7 @@
 #include "google/cloud/bigtable/internal/bigtable_round_robin_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -46,18 +48,32 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
+std::string CreateFeaturesMetadataString(bool enable_direct_access) {
+  google::bigtable::v2::FeatureFlags proto;
+  proto.set_reverse_scans(true);
+  proto.set_last_scanned_row_responses(true);
+  proto.set_mutate_rows_rate_limit(true);
+  proto.set_mutate_rows_rate_limit2(true);
+  proto.set_routing_cookie(true);
+  proto.set_retry_info(true);
+
+  if (enable_direct_access) {
+    proto.set_traffic_director_enabled(true);
+    proto.set_direct_access_requested(true);
+  }
+  return internal::UrlsafeBase64Encode(proto.SerializeAsString());
+}
+
 std::string FeaturesMetadata() {
-  static auto const* const kFeatures = new auto([] {
-    google::bigtable::v2::FeatureFlags proto;
-    proto.set_reverse_scans(true);
-    proto.set_last_scanned_row_responses(true);
-    proto.set_mutate_rows_rate_limit(true);
-    proto.set_mutate_rows_rate_limit2(true);
-    proto.set_routing_cookie(true);
-    proto.set_retry_info(true);
-    return internal::UrlsafeBase64Encode(proto.SerializeAsString());
-  }());
-  return *kFeatures;
+  if (bigtable::internal::EnableDirectAccess()) {
+    static const absl::NoDestructor<std::string> kDirectAccessFeatures(
+        CreateFeaturesMetadataString(true));
+    return *kDirectAccessFeatures;
+  } else {
+    static const absl::NoDestructor<std::string> kDefaultFeatures(
+        CreateFeaturesMetadataString(false));
+    return *kDefaultFeatures;
+  }
 }
 
 }  // namespace
