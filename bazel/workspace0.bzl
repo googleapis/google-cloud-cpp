@@ -258,21 +258,6 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "json-3.11.3",
     )
 
-    # Load google/crc32c, a library to efficiently compute CRC32C checksums.
-    maybe(
-        http_archive,
-        name = "crc32c",
-        urls = [
-            "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
-        ],
-        sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
-        strip_prefix = "crc32c-1.1.2",
-        build_file = Label("//bazel:crc32c.BUILD"),
-        patch_tool = "patch",
-        patch_args = ["-p1"],
-        patches = [Label("//bazel:configure_template.bzl.patch")],
-    )
-
     # Open Telemetry
     http_archive(
         name = "opentelemetry-cpp",
