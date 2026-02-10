@@ -6,7 +6,6 @@
   "supports": "!uwp",
   "dependencies": [
     "abseil",
-    "crc32c",
     {
       "name": "curl",
       "features": [
@@ -32,10 +31,7 @@
     "nlohmann-json",
     "benchmark",
     "gtest",
-    {
-      "$description": "Only used for the opentelemetry feature.",
-      "name": "opentelemetry-cpp"
-    },
+    "opentelemetry-cpp",
     {
       "$description": "Only used for the docfx feature.",
       "name": "pugixml"
