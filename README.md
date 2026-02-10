@@ -577,8 +577,8 @@ run the examples included with the libraries.
 
 ### Building with Bazel
 
-This library requires Bazel >= 6.0. From the top-level directory, run the usual
-commands.
+This library requires Bazel >= 7.0. We recommend using Bazel modules instead of
+WORKSPACE files. From the top-level directory, run the usual commands.
 
 ```shell
 bazel build //...
@@ -586,7 +586,7 @@ bazel build //...
 
 ### Building with CMake
 
-This library requires CMake >= 3.10. If you are planning to install the
+This library requires CMake >= 3.22. If you are planning to install the
 libraries please consult the [packaging guide](/doc/packaging.md), these
 instructions will **NOT** produce artifacts that you can put in `/usr/local`, or
 share with your colleagues.
@@ -607,11 +607,11 @@ The binary artifacts, such as examples, will be placed in `cmake-out/`.
 - This project follows Google's
   [Foundational C++ Support Policy][support-policy], which is summarized in the
   [Foundational C++ Support Matrix][support-matrix].
-  - Language Version (>= C++14).
+  - Language Version (>= C++17).
   - Operating Systems: Windows, macOS, and Linux.
-  - Build Systems: Bazel (>= 6.0), CMake (>= 3.10).
-  - Compilers: GCC (>= 7.5), Clang (>= 6.0), MSVC (>= 2022), Apple Clang (>=
-    12).
+  - Build Systems: Bazel (>= 7.0), CMake (>= 3.22).
+  - Compilers: GCC (>= 7.5), Clang (>= 14.0.0), MSVC (>= 2022), Apple Clang (>=
+    17).
 - This project uses dependencies described in
   [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
 - This project works with or without exceptions enabled.

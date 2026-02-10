@@ -78,27 +78,19 @@ We expect that application developers using Bazel will include
 
 ### The C++ Standard
 
-The default Bazel toolchain forces C++11 on Linux and macOS. `google-cloud-cpp`
-requires C++14, so you will need to update the C++ standard version. You must
+The default Bazel toolchain forces C++17 on Linux and macOS. `google-cloud-cpp`
+requires C++17, so you will need to update the C++ standard version. You must
 either:
 
 - Provide your own C++ toolchain configuration for Bazel. Consult the Bazel
   documentation if you want to attempt this approach.
-- Add `--cxxopt=-std=c++14` and `--host_cxxopt=-std=c++14` (or higher) in your
+- Add `--cxxopt=-std=c++17` and `--host_cxxopt=-std=c++17` (or higher) in your
   Bazel command-line.
 - Add the same options in your Bazel `.bazelrc` file.
 
 The `--host_cxxopt` may be unfamiliar. This is required to support Protobuf and
 gRPC, which compile code generators for the "host" environment, and generate
 libraries for the "target" environment.
-
-### Enabling OpenTelemetry
-
-[OpenTelemetry] is disabled by default. Add `--//:enable_opentelemetry` to your
-Bazel command-line parameters to enable OpenTelemetry features, such as
-instrumentation to collect distributed traces.
-
-See the [OpenTelemetry quickstart] for more details.
 
 ### Workarounds
 
@@ -110,4 +102,3 @@ Add the `--features=-layering_check` option to your Bazel command-line or add
 [github discussion]: https://github.com/googleapis/google-cloud-cpp/discussions
 [grpc#34482]: https://github.com/grpc/grpc/issues/34482
 [opentelemetry]: https://opentelemetry.io/
-[opentelemetry quickstart]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/opentelemetry/quickstart

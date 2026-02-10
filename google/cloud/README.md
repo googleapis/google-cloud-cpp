@@ -15,14 +15,6 @@ intended for general use. They are subject to change and/or removal without
 notice. These include `google/cloud/internal/`, and
 `google/cloud/testing_utils/`.
 
-## Supported Platforms
-
-- Windows, macOS, Linux
-- C++14 (and higher) compilers. We test with GCC >= 7.5, Clang >= 6.0, and MSVC
-  \>= 2022
-- Environments with or without exceptions
-- Bazel (>= 6.0) and CMake (>= 3.5) builds
-
 ## Documentation
 
 - [Reference doxygen documentation][doxygen-link] for each release of this

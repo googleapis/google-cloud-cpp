@@ -115,20 +115,13 @@ quickstart guides also cover this use-case.
 
 | Library                           |   Minimum version | Description                                                |
 | --------------------------------- | ----------------: | ---------------------------------------------------------- |
-| [Abseil][abseil-gh]               | 20200923, Patch 3 | Abseil C++ common library [^1]                             |
-| [gRPC][grpc-gh]                   |            1.35.x | An RPC library and framework [^2]                          |
-| [libcurl][libcurl-gh]             |            7.47.0 | HTTP client library [^3]                                   |
-| [crc32c][crc32c-gh]               |             1.0.6 | Hardware-accelerated CRC32C implementation [^4]            |
-| [OpenSSL][openssl-gh]             |             1.0.2 | Crypto functions for [^3]                                  |
-| [nlohmann/json][nlohmann-json-gh] |             3.4.0 | JSON for Modern C++ [^3]                                   |
-| [protobuf][protobuf-gh]           |            3.15.8 | Protobuf is needed for any library based on gRPC [^5] [^6] |
-
-`google-cloud-cpp` also has an **optional** dependency on the following
-libraries:
-
-| Library                           | Minimum version | Description                    |
-| --------------------------------- | --------------- | ------------------------------ |
-| [OpenTelemetry][opentelemetry-gh] | 1.9.1           | An observability framework[^7] |
+| [Abseil][abseil-gh]               | 20250814, Patch 1 | Abseil C++ common library [^1]                             |
+| [gRPC][grpc-gh]                   |            1.76.x | An RPC library and framework [^2]                          |
+| [libcurl][libcurl-gh]             |            7.74.0 | HTTP client library [^3]                                   |
+| [OpenSSL][openssl-gh]             |            3.0.17 | Crypto functions for [^3]                                  |
+| [nlohmann/json][nlohmann-json-gh] |            3.12.0 | JSON for Modern C++ [^3]                                   |
+| [protobuf][protobuf-gh]           |            6.33.x | Protobuf is needed for any library based on gRPC [^5] [^6] |
+| [OpenTelemetry][opentelemetry-gh] |            1.23.0 | An observability framework[^7]                             |
 
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
@@ -1211,8 +1204,6 @@ cmake --build cmake-out --target install
 [^3]: Only some libraries (Compute, SQL Admin, and Google Cloud Storage) require
     this dependency.
 
-[^4]: Only the Google Cloud Storage client library requires this dependency.
-
 [^5]: The Google Cloud Storage client does not require Protobuf.
 
 [^6]: On some platforms, some libraries may need a newer version of Protobuf to
@@ -1224,7 +1215,6 @@ cmake --build cmake-out --target install
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [abseil/abseil-cpp#696]: https://github.com/abseil/abseil-cpp/issues/696
-[crc32c-gh]: https://github.com/google/crc32c
 [grpc-gh]: https://github.com/grpc/grpc
 [homebrew formula]: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/abseil.rb
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
