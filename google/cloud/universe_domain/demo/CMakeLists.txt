@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-cmake_minimum_required(VERSION 3.10...3.24)
+cmake_minimum_required(VERSION 3.22...3.31)
 project(google-cloud-cpp-universe-domain-demo CXX)
 
 find_package(google_cloud_cpp_bigquery REQUIRED)
