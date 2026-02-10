@@ -9,8 +9,7 @@ frequency in which we introduce breaking changes with improvements to the SDK.
 Since our most recent major version increment, about 3 years ago, we have added
 new API surfaces that supersede the previous deprecated types and functions. As
 part of the v3 release series, we are decommissioning those deprecated API
-surfaces. This guide provides a central location to document how to migrate from
-the decommissioned API surfaces to their replacements.
+surfaces.
 
 ## C++17
 
