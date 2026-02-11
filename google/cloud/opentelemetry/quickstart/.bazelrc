@@ -15,11 +15,8 @@
 # Use host-OS-specific config lines from bazelrc files.
 build --enable_platform_specific_config=true
 
-
-
 build:linux --cxxopt=-std=c++17
 build:macos --cxxopt=-std=c++17
-
 
 build:linux --host_cxxopt=-std=c++17
 build:macos --host_cxxopt=-std=c++17
@@ -28,20 +25,6 @@ build:macos --host_cxxopt=-std=c++17
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
 build --experimental_convenience_symlinks=ignore
-
-# Enable OpenTelemetry tracing instrumentation for google-cloud-cpp.
-build --@google_cloud_cpp//:enable_opentelemetry
-
-# OpenTelemetry versions < v1.16.0 are not compatible with Abseil
-# out-of-the-box. If you are using a version of OpenTelemetry < v1.16.0,
-# uncomment the following configuration:
-#
-# ```
-# build --@io_opentelemetry_cpp//api:with_abseil
-# ```
-#
-# Note that the flag is not required for OpenTelemetry versions >= v1.16.0. In
-# fact, the flag may be removed in future versions of OpenTelemetry.
 
 #Our quickstarts do not yet support bzlmod
 build --noenable_bzlmod
