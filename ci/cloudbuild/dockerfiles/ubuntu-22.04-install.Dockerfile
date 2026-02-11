@@ -26,7 +26,6 @@ RUN apt-get update && \
         git \
         gcc \
         g++ \
-        cmake \
         libcurl4-openssl-dev \
         libssl-dev \
         libtool \
