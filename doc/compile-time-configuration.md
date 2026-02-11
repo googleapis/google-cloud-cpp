@@ -78,9 +78,8 @@ We expect that application developers using Bazel will include
 
 ### The C++ Standard
 
-The default Bazel toolchain forces C++17 on Linux and macOS. `google-cloud-cpp`
-requires C++17, so you will need to update the C++ standard version. You must
-either:
+`google-cloud-cpp` requires C++17, so you may need to update the C++ standard
+version. You want to either:
 
 - Provide your own C++ toolchain configuration for Bazel. Consult the Bazel
   documentation if you want to attempt this approach.

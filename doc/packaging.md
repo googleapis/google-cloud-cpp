@@ -1211,7 +1211,7 @@ cmake --build cmake-out --target install
     the Protobuf-generated code.
 
 [^7]: See the [OpenTelemetry quickstart][otel-qs] for detailed instructions on how
-    to enable and build this optional dependency.
+    to build this dependency.
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [abseil/abseil-cpp#696]: https://github.com/abseil/abseil-cpp/issues/696
