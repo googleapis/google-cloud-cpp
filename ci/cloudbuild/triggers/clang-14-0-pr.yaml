@@ -16,13 +16,14 @@ filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
-  push:
+  pullRequest:
     branch: prepare-for-v3.0.0
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: prepare-for-v3-0-0-clang-7-0-ci
+name: prepare-for-v3-0-0-clang-14-0-pr
 substitutions:
-  _BUILD_NAME: clang-7.0
-  _DISTRO: ubuntu-20.04-install
-  _TRIGGER_TYPE: ci
+  _BUILD_NAME: clang-14.0
+  _DISTRO: ubuntu-22.04-install
+  _TRIGGER_TYPE: pr
 tags:
-- ci
+- pr
