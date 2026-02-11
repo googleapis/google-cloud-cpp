@@ -23,7 +23,7 @@ includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: prepare-for-v3-0-0-quickstart-cmake-pr
 substitutions:
   _BUILD_NAME: quickstart-cmake
-  _DISTRO: ubuntu-focal
+  _DISTRO: ubuntu-22.04
   _TRIGGER_TYPE: pr
 tags:
 - pr
