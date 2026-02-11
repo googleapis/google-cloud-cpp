@@ -565,7 +565,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -586,7 +586,7 @@ Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.76.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -790,10 +790,17 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates cmake curl git \
+        automake build-essential ca-certificates curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 ```
+
+#### Install CMake v3.22
+
+mkdir -p $HOME/Downloads/cmake && cd $HOME/Downloads/cmake curl -fsSL
+https://github.com/Kitware/cmake/archive/v3.22.3.tar.gz | \
+tar -xzf - --strip-components=1 && \
+./bootstrap && make -j ${NCPU:-4} && sudo make install
 
 #### Abseil
 
@@ -831,7 +838,7 @@ to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -867,7 +874,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.76.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1011,7 +1018,7 @@ install Protobuf (and any downstream packages) from source.
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1053,7 +1060,7 @@ install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.76.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \

@@ -52,7 +52,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | 
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -92,7 +92,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.74.1.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.76.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -159,6 +159,9 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
 # ```
 
 ## [DONE packaging.md]
+
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y gdb
 
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \

@@ -15,7 +15,7 @@
 # A minimal CMakeList.txt showing how to enable OpenTelemetry tracing for Google
 # Cloud C++ client libraries in CMake-based projects.
 
-cmake_minimum_required(VERSION 3.10...3.24)
+cmake_minimum_required(VERSION 3.22...3.31)
 project(google-cloud-cpp-opentelemetry-quickstart CXX)
 
 find_package(google_cloud_cpp_storage REQUIRED)
