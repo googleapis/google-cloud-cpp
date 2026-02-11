@@ -73,6 +73,7 @@ bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
          && lhs.updated_ == rhs.updated_                    //
          && lhs.soft_delete_time_ == rhs.soft_delete_time_  //
          && lhs.hard_delete_time_ == rhs.hard_delete_time_  //
+         && lhs.contexts_ == rhs.contexts_                  //
       ;
 }
 
@@ -133,6 +134,11 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   if (rhs.has_hard_delete_time()) {
     os << ", hard_delete_time=" << FormatRfc3339(rhs.hard_delete_time());
   }
+
+  if (rhs.has_contexts()) {
+    os << ", contexts=" << rhs.contexts();
+  }
+
   return os << "}";
 }
 
