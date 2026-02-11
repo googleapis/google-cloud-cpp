@@ -42,12 +42,11 @@ observability into their operation at runtime. To enable tracing,
 OpenTelemetry provides full [install instructions][opentelemetry-cpp-install].
 We will highlight the important points.
 
-### Compatibility with Abseil
+### Standard Template Library (STL) types
 
-OpenTelemetry vendors-in Abseil types, defining them in `namespace absl`. The
-Google Cloud client libraries depends on Abseil, which also defines these types
-in the same namespace. In order to avoid ambiguous symbols, we must set certain
-flags when compiling `opentelemetry-cpp`.
+OpenTelemetry provides implementations for some STL types via several sources:
+Abseil, its own `nostd` implementation, and the STL bundled with your compiler.
+The `google-cloud-cpp` libraries require using the STL implementation.
 
 ## Using with Bazel
 
@@ -117,7 +116,7 @@ To enable these features, add the following to your CMake configuration command:
 
 #### Details
 
-We must supply the `-DWITH_ABSEIL=ON` flag when compiling `opentelemetry-cpp`
+We must supply the `-DWITH_STL=CXX17` flag when compiling `opentelemetry-cpp`
 for compatibility with Abseil.
 
 We must also ensure that the `-DCMAKE_CXX_STANDARD` used to compile
@@ -126,8 +125,9 @@ We must also ensure that the `-DCMAKE_CXX_STANDARD` used to compile
 OpenTelemetry defaults the language standard if it is not explicitly set. So it
 is good practice to explicitly set the language standard.
 
-While OpenTelemetry supports C++>=11, `google-cloud-cpp` requires C++>=14. So
-you can use `-DCMAKE_CXX_STANDARD=14`, `-DCMAKE_CXX_STANDARD=17`, or higher.
+While OpenTelemetry supports C++>=11, `google-cloud-cpp` requires C++>=17. So
+you can use `-DCMAKE_CXX_STANDARD=17`, or higher, just make sure it matches the
+standard value in the `-DWITH_STL=CXXnn` flag.
 
 ### Package Managers
 
