@@ -790,10 +790,17 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates cmake curl git \
+        automake build-essential ca-certificates curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 ```
+
+#### Install CMake v3.22
+
+mkdir -p $HOME/Downloads/cmake && cd $HOME/Downloads/cmake curl -fsSL
+https://github.com/Kitware/cmake/archive/v3.22.3.tar.gz | \
+tar -xzf - --strip-components=1 && \
+./bootstrap && make -j ${NCPU:-4} && sudo make install
 
 #### Abseil
 
