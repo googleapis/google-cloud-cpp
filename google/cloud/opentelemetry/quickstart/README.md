@@ -116,8 +116,8 @@ To enable these features, add the following to your CMake configuration command:
 
 #### Details
 
-We must supply the `-DWITH_STL=17` flag when compiling `opentelemetry-cpp` for
-compatibility with Abseil.
+We must supply the `-DWITH_STL=CXX17` flag when compiling `opentelemetry-cpp`
+for compatibility with Abseil.
 
 We must also ensure that the `-DCMAKE_CXX_STANDARD` used to compile
 `opentelemetry-cpp` matches the language standard used to compile `abseil-cpp`.
@@ -127,7 +127,7 @@ is good practice to explicitly set the language standard.
 
 While OpenTelemetry supports C++>=11, `google-cloud-cpp` requires C++>=17. So
 you can use `-DCMAKE_CXX_STANDARD=17`, or higher, just make sure it matches the
-standard value in the `-DWITH_STL=xx` flag.
+standard value in the `-DWITH_STL=CXXnn` flag.
 
 ### Package Managers
 
