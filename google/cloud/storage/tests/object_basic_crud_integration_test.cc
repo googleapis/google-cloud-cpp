@@ -31,6 +31,13 @@
 #include <utility>
 #include <vector>
 
+namespace {
+// Helper function to check if a time point is set (i.e. not the default value).
+bool IsSet(std::chrono::system_clock::time_point tp) {
+  return tp != std::chrono::system_clock::time_point{};
+}
+}
+
 namespace google {
 namespace cloud {
 namespace storage {
@@ -59,6 +66,32 @@ struct ObjectBasicCRUDIntegrationTest
       options.set<EndpointOption>(endpoint + ":443");
     }
     return MakeIntegrationTestClient(std::move(options));
+  }
+
+  void SetUp() override {
+    // 1. Run the base class SetUp first. This initializes 'bucket_name_'
+    //    from the environment variable.
+    ::google::cloud::storage::testing::ObjectIntegrationTest::SetUp();
+
+    // 2. Create a client to interact with the emulator/backend.
+    auto client = MakeIntegrationTestClient();
+
+    // 3. Check if the bucket exists.
+    auto metadata = client.GetBucketMetadata(bucket_name_);
+
+    // 4. If it's missing (kNotFound), create it.
+    if (metadata.status().code() == StatusCode::kNotFound) {
+      // Use a default project ID if the env var isn't set (common in local emulators).
+      auto project_id =
+          google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("test-project");
+
+      auto created = client.CreateBucketForProject(
+          bucket_name_, project_id, BucketMetadata());
+      ASSERT_STATUS_OK(created) << "Failed to auto-create missing bucket: " << bucket_name_;
+    } else {
+      // If it exists (or failed for another reason), assert it is OK.
+      ASSERT_STATUS_OK(metadata) << "Failed to verify bucket existence: " << bucket_name_;
+    }
   }
 };
 
@@ -104,6 +137,16 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       .set_content_language("en")
       .set_content_type("plain/text");
   update.mutable_metadata().emplace("updated", "true");
+
+  // Adds custom contexts with value only.
+  ObjectContexts contexts;
+  ObjectCustomContextPayload payload;
+  payload.value = "test-custom-value";
+  contexts.upsert_custom("test-key", payload);
+  update.set_contexts(contexts);
+  EXPECT_TRUE(!IsSet(update.contexts().get_custom("test-key").update_time));
+  EXPECT_TRUE(!IsSet(update.contexts().get_custom("test-key").create_time));
+
   StatusOr<ObjectMetadata> updated_meta = client.UpdateObject(
       bucket_name_, object_name, update, Projection("full"));
   ASSERT_STATUS_OK(updated_meta);
@@ -135,6 +178,12 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   EXPECT_EQ(update.content_type(), updated_meta->content_type())
       << *updated_meta;
   EXPECT_EQ(update.metadata(), updated_meta->metadata()) << *updated_meta;
+  // Verify the custom contexts are updated correctly with valid timestamps.
+  EXPECT_EQ(
+      "test-custom-value",
+      updated_meta->contexts().get_custom("test-key").value) << *updated_meta;
+  EXPECT_TRUE(IsSet(updated_meta->contexts().get_custom("test-key").update_time)) << *updated_meta;
+  EXPECT_TRUE(IsSet(updated_meta->contexts().get_custom("test-key").create_time)) << *updated_meta;
 
   ObjectMetadata desired_patch = *updated_meta;
   desired_patch.set_content_language("en");
