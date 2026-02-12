@@ -19,9 +19,9 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include "bytes.h"
-#include "timestamp.h"
 #include "google/bigtable/v2/data.pb.h"
 #include "google/bigtable/v2/types.pb.h"
+#include "timestamp.h"
 #include <cmath>
 #include <vector>
 

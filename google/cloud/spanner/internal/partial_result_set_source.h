@@ -23,10 +23,10 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include "google/protobuf/struct.pb.h"
 #include "google/spanner/v1/spanner.pb.h"
 #include <google/protobuf/arena.h>
 #include <google/protobuf/repeated_field.h>
-#include "google/protobuf/struct.pb.h"
 #include <cstddef>
 #include <deque>
 #include <memory>

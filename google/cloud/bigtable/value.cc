@@ -19,9 +19,9 @@
 #include "absl/strings/cord.h"
 #include "absl/strings/substitute.h"
 #include "google/bigtable/v2/types.pb.h"
+#include "google/type/date.pb.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
-#include "google/type/date.pb.h"
 #include <algorithm>
 
 namespace google {
