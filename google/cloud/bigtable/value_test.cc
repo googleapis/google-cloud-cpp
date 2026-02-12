@@ -20,7 +20,7 @@
 #include "absl/strings/cord.h"
 #include "absl/strings/substitute.h"
 #include <google/protobuf/text_format.h>
-#include <google/type/date.pb.h>
+#include "google/type/date.pb.h"
 #include <gmock/gmock.h>
 #include <cmath>
 #include <cstdint>

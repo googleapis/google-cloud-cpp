@@ -20,7 +20,7 @@
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
-#include <google/bigtable/v2/response_params.pb.h>
+#include "google/bigtable/v2/response_params.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/metrics/meter.h>

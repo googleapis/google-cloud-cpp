@@ -21,7 +21,7 @@
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/internal/algorithm.h"
 #include "absl/strings/str_split.h"
-#include <google/api/monitored_resource.pb.h>
+#include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>

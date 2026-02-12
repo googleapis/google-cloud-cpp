@@ -26,7 +26,7 @@
 #include "google/spanner/v1/spanner.pb.h"
 #include <google/protobuf/arena.h>
 #include <google/protobuf/repeated_field.h>
-#include <google/protobuf/struct.pb.h>
+#include "google/protobuf/struct.pb.h"
 #include <cstddef>
 #include <deque>
 #include <memory>
