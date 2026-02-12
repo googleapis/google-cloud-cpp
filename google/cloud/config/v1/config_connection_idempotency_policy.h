@@ -121,6 +121,13 @@ class ConfigConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetResourceDrift(
       google::cloud::config::v1::GetResourceDriftRequest const& request);
 
+  virtual google::cloud::Idempotency GetAutoMigrationConfig(
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateAutoMigrationConfig(
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

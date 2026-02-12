@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class ReadRange {
  public:
-  using ReadResponse =
-      storage_experimental::AsyncReaderConnection::ReadResponse;
+  using ReadResponse = storage::AsyncReaderConnection::ReadResponse;
 
   ReadRange(std::int64_t offset, std::int64_t length,
             std::shared_ptr<storage::internal::HashFunction> hash_function =
@@ -63,13 +62,12 @@ class ReadRange {
   void OnRead(google::storage::v2::ObjectRangeData data);
 
  private:
-  void Notify(std::unique_lock<std::mutex> lk,
-              storage_experimental::ReadPayload p);
+  void Notify(std::unique_lock<std::mutex> lk, storage::ReadPayload p);
 
   mutable std::mutex mu_;
   std::int64_t offset_;
   std::int64_t length_;
-  absl::optional<storage_experimental::ReadPayload> payload_;
+  absl::optional<storage::ReadPayload> payload_;
   absl::optional<Status> status_;
   absl::optional<promise<ReadResponse>> wait_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;

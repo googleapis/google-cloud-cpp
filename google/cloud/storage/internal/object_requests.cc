@@ -533,7 +533,10 @@ UploadChunkRequest UploadChunkRequest::RemainingChunk(
 HashValues FinishHashes(UploadChunkRequest const& request) {
   // Prefer the hashes provided via *Value options in the request. If those
   // are not set, use the computed hashes from the data.
-  return Merge(request.known_object_hashes(), request.hash_function().Finish());
+  if (auto hf = request.hash_function_ptr()) {
+    return Merge(request.known_object_hashes(), hf->Finish());
+  }
+  return request.known_object_hashes();
 }
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {

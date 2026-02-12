@@ -235,6 +235,52 @@ TEST(MetadataParserTest, ParseIntegralFieldInvalidFieldType) {
   CheckParseInvalidFieldType<std::uint64_t>(&ParseUnsignedLongField);
 }
 
+/// @test Verify that we parse string values in JSON objects.
+TEST(MetadataParserTest, ParseStringField) {
+  std::string text = R"""({
+      "field1": "value1",
+      "field2": ""
+  })""";
+  auto json_object = nlohmann::json::parse(text);
+  EXPECT_EQ("value1", ParseStringField(json_object, "field1").value());
+  EXPECT_EQ("", ParseStringField(json_object, "field2").value());
+}
+
+/// @test Verify that we parse missing string values in JSON objects.
+TEST(MetadataParserTest, ParseMissingStringField) {
+  std::string text = R"""({
+      "some-field": "some-value"
+  })""";
+  auto json_object = nlohmann::json::parse(text);
+  auto actual = ParseStringField(json_object, "missing-field").value();
+  EXPECT_EQ("", actual);
+}
+
+/// @test Verify that we return an error for invalid string field types.
+TEST(MetadataParserTest, ParseInvalidStringFieldType) {
+  std::string text = R"""({
+      "field": 12345
+  })""";
+  auto json_object = nlohmann::json::parse(text);
+
+  auto actual = ParseStringField(json_object, "field");
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(actual.status().message(),
+              ::testing::HasSubstr("Error parsing field <field> as a string"));
+}
+
+/// @test Verify that we return an error for complex types where a string is
+/// expected.
+TEST(MetadataParserTest, ParseInvalidStringFieldTypeComplex) {
+  std::string text = R"""({
+      "field": [1, 2, 3]
+  })""";
+  auto json_object = nlohmann::json::parse(text);
+
+  EXPECT_THAT(ParseStringField(json_object, "field"),
+              StatusIs(StatusCode::kInvalidArgument));
+}
+
 TEST(MetadataParserTest, NotJsonObject) {
   EXPECT_THAT(NotJsonObject(nlohmann::json{}, GCP_ERROR_INFO()),
               StatusIs(StatusCode::kInvalidArgument));

@@ -26,10 +26,9 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::unique_ptr<storage_experimental::AsyncWriterConnection>
-MakeTracingWriterConnection(
+std::unique_ptr<storage::AsyncWriterConnection> MakeTracingWriterConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::unique_ptr<storage_experimental::AsyncWriterConnection> impl);
+    std::unique_ptr<storage::AsyncWriterConnection> impl);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

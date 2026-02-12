@@ -25,11 +25,10 @@ namespace {
 
 using google::cloud::internal::EndSpan;
 
-class AsyncRewriterTracingConnection
-    : public storage_experimental::AsyncRewriterConnection {
+class AsyncRewriterTracingConnection : public storage::AsyncRewriterConnection {
  public:
   AsyncRewriterTracingConnection(
-      std::shared_ptr<storage_experimental::AsyncRewriterConnection> impl,
+      std::shared_ptr<storage::AsyncRewriterConnection> impl,
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span)
       : impl_(std::move(impl)), span_(std::move(span)) {}
   ~AsyncRewriterTracingConnection() override { EndSpan(*span_, Status{}); }
@@ -58,16 +57,15 @@ class AsyncRewriterTracingConnection
   }
 
  private:
-  std::shared_ptr<storage_experimental::AsyncRewriterConnection> impl_;
+  std::shared_ptr<storage::AsyncRewriterConnection> impl_;
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
 };
 
 }  // namespace
 
-std::shared_ptr<storage_experimental::AsyncRewriterConnection>
+std::shared_ptr<storage::AsyncRewriterConnection>
 MakeTracingAsyncRewriterConnection(
-    std::shared_ptr<storage_experimental::AsyncRewriterConnection> impl,
-    bool enabled) {
+    std::shared_ptr<storage::AsyncRewriterConnection> impl, bool enabled) {
   if (!enabled) return impl;
   auto span = internal::MakeSpan("storage::AsyncConnection::RewriteObject");
   return std::make_shared<AsyncRewriterTracingConnection>(std::move(impl),

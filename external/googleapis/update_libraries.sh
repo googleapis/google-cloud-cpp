@@ -36,6 +36,7 @@ declare -A -r LIBRARIES=(
   ["apigateway"]="@googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
   ["apigeeconnect"]="@googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"
   ["apikeys"]="@googleapis//google/api/apikeys/v2:apikeys_cc_grpc"
+  ["apiregistry"]="@googleapis//google/cloud/apiregistry/v1:apiregistry_cc_grpc"
   ["appengine"]="$(
     printf ",%s" \
       "@googleapis//google/appengine/v1:appengine_cc_grpc" \
@@ -46,6 +47,7 @@ declare -A -r LIBRARIES=(
   ["artifactregistry"]="@googleapis//google/devtools/artifactregistry/v1:artifactregistry_cc_grpc"
   ["asset"]="@googleapis//google/cloud/asset/v1:asset_cc_grpc"
   ["assuredworkloads"]="@googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_cc_grpc"
+  ["auditmanager"]="@googleapis//google/cloud/auditmanager/v1:auditmanager_cc_grpc"
   ["automl"]="@googleapis//google/cloud/automl/v1:automl_cc_grpc"
   ["backupdr"]="$(
     printf ",%s" \
@@ -166,6 +168,7 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/gkebackup/v1:gkebackup_cc_grpc"
   )"
   ["gkeconnect"]="@googleapis//google/cloud/gkeconnect/gateway/v1:gateway_cc_grpc"
+  ["gkerecommender"]="@googleapis//google/cloud/gkerecommender/v1:gkerecommender_cc_grpc"
   ["gkehub"]="$(
     printf ",%s" \
       "@googleapis//google/cloud/gkehub/v1:gkehub_cc_grpc" \

@@ -114,6 +114,20 @@ DefaultAgentEndpointServiceStub::ReportInventory(
   return response;
 }
 
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+DefaultAgentEndpointServiceStub::ReportVmInventory(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryRequest const&
+        request) {
+  google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse
+      response;
+  auto status = grpc_stub_->ReportVmInventory(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_agentendpoint_v1_internal
 }  // namespace cloud

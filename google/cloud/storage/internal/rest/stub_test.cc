@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/rest/stub.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
@@ -44,6 +45,29 @@ using ::testing::Not;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
+
+class NoOpHashFunction : public HashFunction {
+ public:
+  std::string Name() const override { return "NoOp"; }
+  void Update(absl::string_view b) override { Cormorant(b); }
+  Status Update(std::int64_t o, absl::string_view b) override {
+    Cormorant(o, b);
+    return Status{};
+  }
+  Status Update(std::int64_t o, absl::string_view b, std::uint32_t c) override {
+    Cormorant(o, b, c);
+    return Status{};
+  }
+  Status Update(std::int64_t o, absl::Cord const& b, std::uint32_t c) override {
+    Cormorant(o, b, c);
+    return Status{};
+  }
+  HashValues Finish() override { return {}; }
+
+ private:
+  template <typename... Args>
+  void Cormorant(Args const&...) {}
+};
 
 TEST(RestStubTest, ResolveStorageAuthorityProdEndpoint) {
   auto options =
@@ -917,6 +941,92 @@ TEST(RestStubTest, DeleteNotification) {
   auto context = TestContext();
   auto status = tested->DeleteNotification(context, TestOptions(),
                                            DeleteNotificationRequest());
+  EXPECT_THAT(status,
+              StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, UploadChunkLastChunkWithCrc32c) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(
+      *mock,
+      Put(ExpectedContext(),
+          ResultOf(
+              "request headers contain x-goog-hash with crc32c",
+              [](RestRequest const& r) { return r.headers(); },
+              Contains(Pair("x-goog-hash", ElementsAre("crc32c=test-crc32c")))),
+          ExpectedPayload()))
+      .WillOnce(Return(PermanentError()));
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->UploadChunk(
+      context, TestOptions(),
+      UploadChunkRequest("test-url", 0, {},
+                         std::make_shared<NoOpHashFunction>(),
+                         {"test-crc32c", ""}));
+  EXPECT_THAT(status,
+              StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, UploadChunkLastChunkWithMd5) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(
+      *mock,
+      Put(ExpectedContext(),
+          ResultOf(
+              "request headers contain x-goog-hash with md5",
+              [](RestRequest const& r) { return r.headers(); },
+              Contains(Pair("x-goog-hash", ElementsAre("md5=test-md5")))),
+          ExpectedPayload()))
+      .WillOnce(Return(PermanentError()));
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->UploadChunk(
+      context, TestOptions(),
+      UploadChunkRequest("test-url", 0, {},
+                         std::make_shared<NoOpHashFunction>(),
+                         {"", "test-md5"}));
+  EXPECT_THAT(status,
+              StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, UploadChunkLastChunkWithBoth) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(
+      *mock,
+      Put(ExpectedContext(),
+          ResultOf(
+              "request headers contain x-goog-hash with crc32c and md5",
+              [](RestRequest const& r) { return r.headers(); },
+              Contains(Pair("x-goog-hash", ElementsAre("crc32c=test-crc32c",
+                                                       "md5=test-md5")))),
+          ExpectedPayload()))
+      .WillOnce(Return(PermanentError()));
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->UploadChunk(
+      context, TestOptions(),
+      UploadChunkRequest("test-url", 0, {},
+                         std::make_shared<NoOpHashFunction>(),
+                         {"test-crc32c", "test-md5"}));
+  EXPECT_THAT(status,
+              StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, UploadChunkIntermediate) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock, Put(ExpectedContext(),
+                         ResultOf(
+                             "request headers do not contain x-goog-hash",
+                             [](RestRequest const& r) { return r.headers(); },
+                             Not(Contains(Pair("x-goog-hash", _)))),
+                         ExpectedPayload()))
+      .WillOnce(Return(PermanentError()));
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->UploadChunk(
+      context, TestOptions(),
+      UploadChunkRequest("test-url", 0, {},
+                         std::make_shared<NoOpHashFunction>()));
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
 }

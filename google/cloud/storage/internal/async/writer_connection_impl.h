@@ -30,8 +30,7 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AsyncWriterConnectionImpl
-    : public storage_experimental::AsyncWriterConnection {
+class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
  public:
   using StreamingRpc = google::cloud::AsyncStreamingReadWriteRpc<
       google::storage::v2::BidiWriteObjectRequest,
@@ -54,13 +53,17 @@ class AsyncWriterConnectionImpl
   void Cancel() override { return impl_->Cancel(); }
 
   std::string UploadId() const override;
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const override {
+    return latest_write_handle_;
+  }
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override;
 
-  future<Status> Write(storage_experimental::WritePayload payload) override;
+  future<Status> Write(storage::WritePayload payload) override;
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage_experimental::WritePayload) override;
-  future<Status> Flush(storage_experimental::WritePayload payload) override;
+      storage::WritePayload) override;
+  future<Status> Flush(storage::WritePayload payload) override;
   future<StatusOr<std::int64_t>> Query() override;
   RpcMetadata GetRequestMetadata() override;
 

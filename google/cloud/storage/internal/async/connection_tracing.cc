@@ -29,10 +29,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
+class AsyncConnectionTracing : public storage::AsyncConnection {
  public:
   explicit AsyncConnectionTracing(
-      std::shared_ptr<storage_experimental::AsyncConnection> impl)
+      std::shared_ptr<storage::AsyncConnection> impl)
       : impl_(std::move(impl)) {}
 
   Options options() const override { return impl_->options(); }
@@ -45,16 +45,15 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
                              impl_->InsertObject(std::move(p)));
   }
 
-  future<StatusOr<
-      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
-  Open(OpenParams p) override {
+  future<StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>> Open(
+      OpenParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::Open");
     internal::OTelScope scope(span);
     return impl_->Open(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f)
-                  -> StatusOr<std::shared_ptr<
-                      storage_experimental::ObjectDescriptorConnection>> {
+                  -> StatusOr<
+                      std::shared_ptr<storage::ObjectDescriptorConnection>> {
           auto result = f.get();
           internal::DetachOTelContext(oc);
           if (!result) {
@@ -65,14 +64,13 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
-  ReadObject(ReadObjectParams p) override {
+  future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>> ReadObject(
+      ReadObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadObject");
     internal::OTelScope scope(span);
     auto wrap = [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                  span = std::move(span)](auto f)
-        -> StatusOr<
-            std::unique_ptr<storage_experimental::AsyncReaderConnection>> {
+        -> StatusOr<std::unique_ptr<storage::AsyncReaderConnection>> {
       auto reader = f.get();
       internal::DetachOTelContext(oc);
       if (!reader) return internal::EndSpan(*span, std::move(reader).status());
@@ -81,7 +79,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     return impl_->ReadObject(std::move(p)).then(std::move(wrap));
   }
 
-  future<StatusOr<storage_experimental::ReadPayload>> ReadObjectRange(
+  future<StatusOr<storage::ReadPayload>> ReadObjectRange(
       ReadObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadObjectRange");
     internal::OTelScope scope(span);
@@ -94,7 +92,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   StartAppendableObjectUpload(AppendableUploadParams p) override {
     auto span = internal::MakeSpan(
         "storage::AsyncConnection::StartAppendableObjectUpload");
@@ -102,8 +100,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     return impl_->StartAppendableObjectUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f)
-                  -> StatusOr<std::unique_ptr<
-                      storage_experimental::AsyncWriterConnection>> {
+                  -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
           if (!w) return internal::EndSpan(*span, std::move(w).status());
@@ -111,7 +108,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   ResumeAppendableObjectUpload(AppendableUploadParams p) override {
     auto span = internal::MakeSpan(
         "storage::AsyncConnection::ResumeAppendableObjectUpload");
@@ -119,8 +116,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     return impl_->ResumeAppendableObjectUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f)
-                  -> StatusOr<std::unique_ptr<
-                      storage_experimental::AsyncWriterConnection>> {
+                  -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
           if (!w) return internal::EndSpan(*span, std::move(w).status());
@@ -128,7 +124,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::StartUnbufferedUpload");
@@ -136,8 +132,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     return impl_->StartUnbufferedUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f)
-                  -> StatusOr<std::unique_ptr<
-                      storage_experimental::AsyncWriterConnection>> {
+                  -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
           if (!w) return internal::EndSpan(*span, std::move(w).status());
@@ -145,7 +140,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   StartBufferedUpload(UploadParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::StartBufferedUpload");
@@ -153,8 +148,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     return impl_->StartBufferedUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f)
-                  -> StatusOr<std::unique_ptr<
-                      storage_experimental::AsyncWriterConnection>> {
+                  -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
           if (!w) return internal::EndSpan(*span, std::move(w).status());
@@ -162,7 +156,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   ResumeUnbufferedUpload(ResumeUploadParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::ResumeUnbufferedUpload");
@@ -170,8 +164,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     return impl_->ResumeUnbufferedUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f)
-                  -> StatusOr<std::unique_ptr<
-                      storage_experimental::AsyncWriterConnection>> {
+                  -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
           if (!w) return internal::EndSpan(*span, std::move(w).status());
@@ -179,7 +172,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
         });
   }
 
-  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   ResumeBufferedUpload(ResumeUploadParams p) override {
     auto span =
         internal::MakeSpan("storage::AsyncConnection::ResumeBufferedUpload");
@@ -187,8 +180,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
     return impl_->ResumeBufferedUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span)](auto f)
-                  -> StatusOr<std::unique_ptr<
-                      storage_experimental::AsyncWriterConnection>> {
+                  -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
           if (!w) return internal::EndSpan(*span, std::move(w).status());
@@ -211,7 +203,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
                              impl_->DeleteObject(std::move(p)));
   }
 
-  std::shared_ptr<storage_experimental::AsyncRewriterConnection> RewriteObject(
+  std::shared_ptr<storage::AsyncRewriterConnection> RewriteObject(
       RewriteObjectParams p) override {
     auto const enabled = internal::TracingEnabled(p.options);
     return MakeTracingAsyncRewriterConnection(
@@ -219,14 +211,13 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
   }
 
  private:
-  std::shared_ptr<storage_experimental::AsyncConnection> impl_;
+  std::shared_ptr<storage::AsyncConnection> impl_;
 };
 
 }  // namespace
 
-std::shared_ptr<storage_experimental::AsyncConnection>
-MakeTracingAsyncConnection(
-    std::shared_ptr<storage_experimental::AsyncConnection> impl) {
+std::shared_ptr<storage::AsyncConnection> MakeTracingAsyncConnection(
+    std::shared_ptr<storage::AsyncConnection> impl) {
   if (!internal::TracingEnabled(impl->options())) return impl;
   return std::make_unique<AsyncConnectionTracing>(std::move(impl));
 }

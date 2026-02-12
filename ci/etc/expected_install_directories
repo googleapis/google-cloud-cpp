@@ -52,6 +52,10 @@
 ./include/google/cloud/apikeys/v2
 ./include/google/cloud/apikeys/v2/internal
 ./include/google/cloud/apikeys/v2/mocks
+./include/google/cloud/apiregistry
+./include/google/cloud/apiregistry/v1
+./include/google/cloud/apiregistry/v1/internal
+./include/google/cloud/apiregistry/v1/mocks
 ./include/google/cloud/appengine
 ./include/google/cloud/appengine/v1
 ./include/google/cloud/appengine/v1/internal
@@ -72,6 +76,10 @@
 ./include/google/cloud/assuredworkloads/v1
 ./include/google/cloud/assuredworkloads/v1/internal
 ./include/google/cloud/assuredworkloads/v1/mocks
+./include/google/cloud/auditmanager
+./include/google/cloud/auditmanager/v1
+./include/google/cloud/auditmanager/v1/internal
+./include/google/cloud/auditmanager/v1/mocks
 ./include/google/cloud/automl
 ./include/google/cloud/automl/v1
 ./include/google/cloud/automl/v1/internal
@@ -785,6 +793,10 @@
 ./include/google/cloud/gkemulticloud/v1
 ./include/google/cloud/gkemulticloud/v1/internal
 ./include/google/cloud/gkemulticloud/v1/mocks
+./include/google/cloud/gkerecommender
+./include/google/cloud/gkerecommender/v1
+./include/google/cloud/gkerecommender/v1/internal
+./include/google/cloud/gkerecommender/v1/mocks
 ./include/google/cloud/iam
 ./include/google/cloud/iam/admin
 ./include/google/cloud/iam/admin/v1
@@ -1274,6 +1286,8 @@
 ./lib64/cmake/google_cloud_cpp_apigeeconnect_mocks
 ./lib64/cmake/google_cloud_cpp_apikeys
 ./lib64/cmake/google_cloud_cpp_apikeys_mocks
+./lib64/cmake/google_cloud_cpp_apiregistry
+./lib64/cmake/google_cloud_cpp_apiregistry_mocks
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_appengine_mocks
 ./lib64/cmake/google_cloud_cpp_apphub
@@ -1284,6 +1298,8 @@
 ./lib64/cmake/google_cloud_cpp_asset_mocks
 ./lib64/cmake/google_cloud_cpp_assuredworkloads
 ./lib64/cmake/google_cloud_cpp_assuredworkloads_mocks
+./lib64/cmake/google_cloud_cpp_auditmanager
+./lib64/cmake/google_cloud_cpp_auditmanager_mocks
 ./lib64/cmake/google_cloud_cpp_automl
 ./lib64/cmake/google_cloud_cpp_automl_mocks
 ./lib64/cmake/google_cloud_cpp_backupdr
@@ -1395,6 +1411,8 @@
 ./lib64/cmake/google_cloud_cpp_gkehub_mocks
 ./lib64/cmake/google_cloud_cpp_gkemulticloud
 ./lib64/cmake/google_cloud_cpp_gkemulticloud_mocks
+./lib64/cmake/google_cloud_cpp_gkerecommender
+./lib64/cmake/google_cloud_cpp_gkerecommender_mocks
 ./lib64/cmake/google_cloud_cpp_iam
 ./lib64/cmake/google_cloud_cpp_iam_mocks
 ./lib64/cmake/google_cloud_cpp_iap

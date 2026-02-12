@@ -40,6 +40,14 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency AddServerCa(
       google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request);
 
+  virtual google::cloud::Idempotency AddServerCertificate(
+      google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency AddEntraIdCertificate(
+      google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&
+          request);
+
   virtual google::cloud::Idempotency Clone(
       google::cloud::sql::v1::SqlInstancesCloneRequest const& request);
 
@@ -76,6 +84,14 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListServerCas(
       google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request);
 
+  virtual google::cloud::Idempotency ListServerCertificates(
+      google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListEntraIdCertificates(
+      google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&
+          request);
+
   virtual google::cloud::Idempotency Patch(
       google::cloud::sql::v1::SqlInstancesPatchRequest const& request);
 
@@ -96,6 +112,14 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency RotateServerCa(
       google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request);
+
+  virtual google::cloud::Idempotency RotateServerCertificate(
+      google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RotateEntraIdCertificate(
+      google::cloud::sql::v1::SqlInstancesRotateEntraIdCertificateRequest const&
+          request);
 
   virtual google::cloud::Idempotency StartReplica(
       google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request);
@@ -141,12 +165,23 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
           request);
 
+  virtual google::cloud::Idempotency ExecuteSql(
+      google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const& request);
+
   virtual google::cloud::Idempotency AcquireSsrsLease(
       google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
           request);
 
   virtual google::cloud::Idempotency ReleaseSsrsLease(
       google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+          request);
+
+  virtual google::cloud::Idempotency PreCheckMajorVersionUpgrade(
+      google::cloud::sql::v1::
+          SqlInstancesPreCheckMajorVersionUpgradeRequest const& request);
+
+  virtual google::cloud::Idempotency PointInTimeRestore(
+      google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
           request);
 };
 

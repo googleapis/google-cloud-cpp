@@ -46,6 +46,7 @@ DefaultSqlFlagsServiceRestStub::List(
     google::cloud::sql::v1::SqlFlagsListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"database_version", request.database_version()});
+  query_params.push_back({"flag_scope", std::to_string(request.flag_scope())});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::FlagsListResponse>(

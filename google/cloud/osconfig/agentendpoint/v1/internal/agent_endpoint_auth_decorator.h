@@ -79,6 +79,12 @@ class AgentEndpointServiceAuth : public AgentEndpointServiceStub {
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(grpc::ClientContext& context, Options const& options,
+                    google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<AgentEndpointServiceStub> child_;

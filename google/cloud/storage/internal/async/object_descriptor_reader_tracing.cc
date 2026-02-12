@@ -46,8 +46,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
           auto result = f.get();
           internal::DetachOTelContext(oc);
           if (!absl::holds_alternative<Status>(result)) {
-            auto const& payload =
-                absl::get<storage_experimental::ReadPayload>(result);
+            auto const& payload = absl::get<storage::ReadPayload>(result);
 
             span->AddEvent(
                 "gl-cpp.read-range",
@@ -69,7 +68,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
 
 }  // namespace
 
-std::unique_ptr<storage_experimental::AsyncReaderConnection>
+std::unique_ptr<storage::AsyncReaderConnection>
 MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl) {
   return std::make_unique<ObjectDescriptorReaderTracing>(std::move(impl));
 }

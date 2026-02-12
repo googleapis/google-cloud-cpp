@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -86,8 +86,19 @@ struct MaximumRangeSizeOption {
   using Type = std::int64_t;
 };
 
+/**
+ * If enabled, the client uses multiple streams for downloading
+ * objects, which can improve performance for large objects.
+ *
+ * The option has no effect if the service does not support multi-stream
+ * uploads or downloads.
+ */
+struct EnableMultiStreamOptimizationOption {
+  using Type = bool;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

@@ -583,6 +583,62 @@ class NetAppLogging : public NetAppStub {
       google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreBackupFiles(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RestoreBackupFiles(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ListHostGroupsResponse> ListHostGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::ListHostGroupsRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::HostGroup> GetHostGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::GetHostGroupRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateHostGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateHostGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateHostGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateHostGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteHostGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteHostGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

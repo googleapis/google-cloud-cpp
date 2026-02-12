@@ -4,6 +4,7 @@
 @googleapis//google/cloud/netapp/v1:backup_vault.proto
 @googleapis//google/cloud/netapp/v1:cloud_netapp_service.proto
 @googleapis//google/cloud/netapp/v1:common.proto
+@googleapis//google/cloud/netapp/v1:host_group.proto
 @googleapis//google/cloud/netapp/v1:kms.proto
 @googleapis//google/cloud/netapp/v1:quota_rule.proto
 @googleapis//google/cloud/netapp/v1:replication.proto

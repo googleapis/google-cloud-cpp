@@ -111,8 +111,7 @@ AsyncWriterConnectionImpl::PersistedState() const {
   return persisted_state_;
 }
 
-future<Status> AsyncWriterConnectionImpl::Write(
-    storage_experimental::WritePayload payload) {
+future<Status> AsyncWriterConnectionImpl::Write(storage::WritePayload payload) {
   auto write = MakeRequest();
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
@@ -126,8 +125,7 @@ future<Status> AsyncWriterConnectionImpl::Write(
 }
 
 future<StatusOr<google::storage::v2::Object>>
-AsyncWriterConnectionImpl::Finalize(
-    storage_experimental::WritePayload payload) {
+AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
   auto write = MakeRequest();
   write.set_finish_write(true);
 
@@ -145,8 +143,7 @@ AsyncWriterConnectionImpl::Finalize(
   });
 }
 
-future<Status> AsyncWriterConnectionImpl::Flush(
-    storage_experimental::WritePayload payload) {
+future<Status> AsyncWriterConnectionImpl::Flush(storage::WritePayload payload) {
   auto write = MakeRequest();
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
@@ -172,7 +169,7 @@ AsyncWriterConnectionImpl::MakeRequest() {
   auto request = request_;
   if (first_request_) {
     first_request_ = false;
-    if (latest_write_handle_.has_value()) {
+    if (latest_write_handle_.has_value() && request.has_append_object_spec()) {
       *request.mutable_append_object_spec()->mutable_write_handle() =
           *latest_write_handle_;
     }

@@ -119,7 +119,7 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
+  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L254}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L195}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
@@ -160,7 +160,7 @@ class VersionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
+  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L254}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L195}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
@@ -266,7 +266,7 @@ class VersionsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L137}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L243}
-  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
+  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L254}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
@@ -332,7 +332,7 @@ class VersionsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L137}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L243}
-  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
+  /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L254}
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on

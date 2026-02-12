@@ -101,6 +101,17 @@ AgentEndpointServiceTracingConnection::ReportInventory(
   return internal::EndSpan(*span, child_->ReportInventory(request));
 }
 
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+AgentEndpointServiceTracingConnection::ReportVmInventory(
+    google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "osconfig_agentendpoint_v1::AgentEndpointServiceConnection::"
+      "ReportVmInventory");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReportVmInventory(request));
+}
+
 std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
 MakeAgentEndpointServiceTracingConnection(
     std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>

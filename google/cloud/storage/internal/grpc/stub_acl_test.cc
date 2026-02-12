@@ -145,7 +145,7 @@ auto constexpr kObjectProtoText = R"pb(
   content_type: "test-content-type"
   size: 123456
   create_time: { seconds: 1565194924 nanos: 234567890 }
-  # These magic numbers can be obtained using `gsutil hash` and then
+  # These magic numbers can be obtained using `gcloud storage hash` and then
   # transforming the output from base64 to binary using tools like xxd(1).
   checksums {
     crc32c: 576848900

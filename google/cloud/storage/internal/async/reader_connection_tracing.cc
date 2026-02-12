@@ -27,12 +27,11 @@ namespace {
 
 namespace sc = ::opentelemetry::semconv;
 
-class AsyncReaderConnectionTracing
-    : public storage_experimental::AsyncReaderConnection {
+class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
  public:
   explicit AsyncReaderConnectionTracing(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      std::unique_ptr<storage_experimental::AsyncReaderConnection> impl)
+      std::unique_ptr<storage::AsyncReaderConnection> impl)
       : span_(std::move(span)), impl_(std::move(impl)) {}
 
   void Cancel() override {
@@ -59,7 +58,7 @@ class AsyncReaderConnectionTracing
                 });
             return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
           }
-          auto const& payload = absl::get<storage_experimental::ReadPayload>(r);
+          auto const& payload = absl::get<storage::ReadPayload>(r);
           span->AddEvent(
               "gl-cpp.read",
               {
@@ -84,16 +83,15 @@ class AsyncReaderConnectionTracing
 
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
-  std::unique_ptr<storage_experimental::AsyncReaderConnection> impl_;
+  std::unique_ptr<storage::AsyncReaderConnection> impl_;
   std::int64_t count_ = 0;
 };
 
 }  // namespace
 
-std::unique_ptr<storage_experimental::AsyncReaderConnection>
-MakeTracingReaderConnection(
+std::unique_ptr<storage::AsyncReaderConnection> MakeTracingReaderConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::unique_ptr<storage_experimental::AsyncReaderConnection> impl) {
+    std::unique_ptr<storage::AsyncReaderConnection> impl) {
   return std::make_unique<AsyncReaderConnectionTracing>(std::move(span),
                                                         std::move(impl));
 }

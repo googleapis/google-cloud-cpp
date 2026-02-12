@@ -475,6 +475,53 @@ DefaultConfigStub::GetResourceDrift(
   return response;
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+DefaultConfigStub::GetAutoMigrationConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request) {
+  google::cloud::config::v1::AutoMigrationConfig response;
+  auto status =
+      grpc_stub_->GetAutoMigrationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultConfigStub::AsyncUpdateAutoMigrationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAutoMigrationConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConfigStub::UpdateAutoMigrationConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateAutoMigrationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConfigStub::ListLocations(
     grpc::ClientContext& context, Options const&,

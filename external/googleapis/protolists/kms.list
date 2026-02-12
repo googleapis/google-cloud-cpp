@@ -3,5 +3,6 @@
 @googleapis//google/cloud/kms/v1:autokey.proto
 @googleapis//google/cloud/kms/v1:autokey_admin.proto
 @googleapis//google/cloud/kms/v1:ekm_service.proto
+@googleapis//google/cloud/kms/v1:hsm_management.proto
 @googleapis//google/cloud/kms/v1:resources.proto
 @googleapis//google/cloud/kms/v1:service.proto

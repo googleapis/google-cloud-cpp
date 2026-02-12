@@ -605,6 +605,69 @@ ConfigClient::GetResourceDrift(
   return connection_->GetResourceDrift(request);
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigClient::GetAutoMigrationConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::GetAutoMigrationConfigRequest request;
+  request.set_name(name);
+  return connection_->GetAutoMigrationConfig(request);
+}
+
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigClient::GetAutoMigrationConfig(
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAutoMigrationConfig(request);
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigClient::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::AutoMigrationConfig const& auto_migration_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::UpdateAutoMigrationConfigRequest request;
+  *request.mutable_auto_migration_config() = auto_migration_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAutoMigrationConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigClient::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::AutoMigrationConfig const& auto_migration_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::UpdateAutoMigrationConfigRequest request;
+  *request.mutable_auto_migration_config() = auto_migration_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAutoMigrationConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigClient::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoMigrationConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigClient::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoMigrationConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigClient::UpdateAutoMigrationConfig(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoMigrationConfig(operation);
+}
+
 StreamRange<google::cloud::location::Location> ConfigClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -28,10 +28,10 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::ReadPayload;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::storage_experimental::ReadPayload;
 using ReadResponse =
-    ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
+    ::google::cloud::storage::AsyncReaderConnection::ReadResponse;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;

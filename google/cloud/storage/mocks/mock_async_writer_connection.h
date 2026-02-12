@@ -25,19 +25,18 @@ namespace cloud {
 namespace storage_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockAsyncWriterConnection
-    : public storage_experimental::AsyncWriterConnection {
+class MockAsyncWriterConnection : public storage::AsyncWriterConnection {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(std::string, UploadId, (), (const, override));
+  MOCK_METHOD(absl::optional<google::storage::v2::BidiWriteHandle>, WriteHandle,
+              (), (const, override));
   MOCK_METHOD((absl::variant<std::int64_t, google::storage::v2::Object>),
               PersistedState, (), (const, override));
-  MOCK_METHOD(future<Status>, Write, (storage_experimental::WritePayload),
-              (override));
+  MOCK_METHOD(future<Status>, Write, (storage::WritePayload), (override));
   MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, Finalize,
-              (storage_experimental::WritePayload), (override));
-  MOCK_METHOD(future<Status>, Flush, (storage_experimental::WritePayload),
-              (override));
+              (storage::WritePayload), (override));
+  MOCK_METHOD(future<Status>, Flush, (storage::WritePayload), (override));
   MOCK_METHOD(future<StatusOr<std::int64_t>>, Query, (), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (override));
 };

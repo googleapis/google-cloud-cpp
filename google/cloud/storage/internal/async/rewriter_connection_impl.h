@@ -31,7 +31,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class RewriterConnectionImpl
-    : public storage_experimental::AsyncRewriterConnection,
+    : public storage::AsyncRewriterConnection,
       public std::enable_shared_from_this<RewriterConnectionImpl> {
  public:
   RewriterConnectionImpl(CompletionQueue cq, std::shared_ptr<StorageStub> stub,

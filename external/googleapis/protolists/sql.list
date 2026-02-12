@@ -1,8 +1,10 @@
 @googleapis//google/cloud/sql/v1:cloud_sql_available_database_versions.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_backup_runs.proto
+@googleapis//google/cloud/sql/v1:cloud_sql_backups.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_connect.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_databases.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_events.proto
+@googleapis//google/cloud/sql/v1:cloud_sql_feature_eligibility.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_flags.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_iam_policies.proto
 @googleapis//google/cloud/sql/v1:cloud_sql_instance_names.proto

@@ -30,9 +30,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ReadResponse =
-    ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
-using ::google::cloud::storage_experimental::ObjectDescriptorConnection;
-using ::google::cloud::storage_experimental::ReadPayload;
+    ::google::cloud::storage::AsyncReaderConnection::ReadResponse;
+using ::google::cloud::storage::ObjectDescriptorConnection;
+using ::google::cloud::storage::ReadPayload;
 using ::google::cloud::storage_mocks::MockAsyncObjectDescriptorConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::EventNamed;
@@ -110,8 +110,7 @@ TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
 
   EXPECT_CALL(*mock_connection, Read)
       .WillOnce([&](ObjectDescriptorConnection::ReadParams) {
-        return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-            mock_reader_ptr);
+        return std::unique_ptr<storage::AsyncReaderConnection>(mock_reader_ptr);
       });
 
   auto connection = MakeTracingObjectDescriptorConnection(

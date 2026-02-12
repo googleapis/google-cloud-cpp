@@ -1,0 +1,4 @@
+- uid: product-neutral-guides
+  name: 'Client library help'
+  items:
+@TOC_ITEMS@

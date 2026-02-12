@@ -23,6 +23,7 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/debug_log.h"  // TODO(#4758): remove
 #include "google/cloud/spanner/testing/instance_location.h"
@@ -3427,6 +3428,8 @@ void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
 //! [START spanner_read_write_transaction]
 void ReadWriteTransaction(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::Status;
+  using ::google::cloud::StatusCode;
   using ::google::cloud::StatusOr;
 
   // A helper to read a single album MarketingBudget.
@@ -3443,14 +3446,20 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
     return std::get<0>(*std::move(row));
   };
 
+  auto constexpr kInsufficientFundsMessage =
+      "The second album does not have enough funds to transfer";
   auto commit = client.Commit(
-      [&client, &get_current_budget](
-          spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
+      [&](spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
         auto b1 = get_current_budget(client, txn, 1, 1);
         if (!b1) return std::move(b1).status();
         auto b2 = get_current_budget(client, txn, 2, 2);
         if (!b2) return std::move(b2).status();
         std::int64_t transfer_amount = 200000;
+
+        if (*b2 < transfer_amount) {
+          return Status(StatusCode::kFailedPrecondition,
+                        kInsufficientFundsMessage);
+        }
 
         return spanner::Mutations{
             spanner::UpdateMutationBuilder(
@@ -3464,6 +3473,71 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
   std::cout << "Transfer was successful [spanner_read_write_transaction]\n";
 }
 //! [END spanner_read_write_transaction]
+
+//! [START spanner_isolation_level] [spanner-isolation-level-setting-sample]
+void IsolationLevelSetting(std::string const& project_id,
+                           std::string const& instance_id,
+                           std::string const& database_id) {
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::Options;
+  using ::google::cloud::StatusOr;
+
+  auto db = spanner::Database(project_id, instance_id, database_id);
+
+  // The isolation level specified at the client-level will be applied
+  // to all RW transactions.
+  auto options = Options{}.set<spanner::TransactionIsolationLevelOption>(
+      spanner::Transaction::IsolationLevel::kSerializable);
+  auto client = spanner::Client(spanner::MakeConnection(db, options));
+
+  auto commit = client.Commit(
+      [&client](
+          spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
+        // Read an AlbumTitle.
+        auto sql = spanner::SqlStatement(
+            "SELECT AlbumTitle from Albums WHERE SingerId = @SingerId and "
+            "AlbumId = @AlbumId",
+            {{"SingerId", spanner::Value(1)}, {"AlbumId", spanner::Value(1)}});
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
+        for (auto const& row :
+             spanner::StreamOf<std::tuple<std::string>>(rows)) {
+          if (!row) return row.status();
+          std::cout << "Current album title: " << std::get<0>(*row) << "\n";
+        }
+
+        // Update the title.
+        auto update_sql = spanner::SqlStatement(
+            "UPDATE Albums "
+            "SET AlbumTitle = @AlbumTitle "
+            "WHERE SingerId = @SingerId and AlbumId = @AlbumId",
+            {{"AlbumTitle", spanner::Value("New Album Title")},
+             {"SingerId", spanner::Value(1)},
+             {"AlbumId", spanner::Value(1)}});
+        auto result = client.ExecuteDml(txn, std::move(update_sql));
+        if (!result) return result.status();
+        std::cout << result->RowsModified() << " record updated.\n";
+
+        return spanner::Mutations{};
+      },
+      // The isolation level specified at the transaction-level takes
+      // precedence over the isolation level configured at the client-level.
+      // kRepeatableRead is used here to demonstrate overriding the client-level
+      // setting.
+      Options{}.set<spanner::TransactionIsolationLevelOption>(
+          spanner::Transaction::IsolationLevel::kRepeatableRead));
+
+  if (!commit) throw std::move(commit).status();
+  std::cout << "Update was successful [spanner_isolation_level_setting]\n";
+}
+//! [END spanner_isolation_level] [spanner-isolation-level-setting-sample],
+
+void IsolationLevelSettingCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "isolation-level-setting <project-id> <instance-id> <database-id>");
+  }
+  IsolationLevelSetting(argv[0], argv[1], argv[2]);
+}
 
 //! [START spanner_get_commit_stats]
 void GetCommitStatistics(google::cloud::spanner::Client client) {
@@ -5183,6 +5257,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("read-data-with-storing-index",
                          ReadDataWithStoringIndex),
       make_command_entry("read-write-transaction", ReadWriteTransaction),
+      {"isolation-level-setting", IsolationLevelSettingCommand},
       make_command_entry("get-commit-stats", GetCommitStatistics),
       make_command_entry("dml-standard-insert", DmlStandardInsert),
       make_command_entry("dml-standard-update", DmlStandardUpdate),
@@ -5880,6 +5955,9 @@ void RunAll(bool emulator) {
 
   SampleBanner("spanner_directed_read");
   DirectedRead(project_id, instance_id, database_id);
+
+  SampleBanner("spanner_isolation_level");
+  IsolationLevelSetting(project_id, instance_id, database_id);
 
   SampleBanner("spanner_batch_client");
   UsePartitionQuery(client);

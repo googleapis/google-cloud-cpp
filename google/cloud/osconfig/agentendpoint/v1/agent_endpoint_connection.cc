@@ -83,6 +83,13 @@ AgentEndpointServiceConnection::ReportInventory(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+AgentEndpointServiceConnection::ReportVmInventory(
+    google::cloud::osconfig::agentendpoint::v1::
+        ReportVmInventoryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AgentEndpointServiceConnection>
 MakeAgentEndpointServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

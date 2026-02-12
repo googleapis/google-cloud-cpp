@@ -1465,6 +1465,147 @@ StatusOr<google::longrunning::Operation> NetAppLogging::DeleteQuotaRule(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncRestoreBackupFiles(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+        return child_->AsyncRestoreBackupFiles(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::RestoreBackupFiles(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+        return child_->RestoreBackupFiles(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ListHostGroupsResponse>
+NetAppLogging::ListHostGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ListHostGroupsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::ListHostGroupsRequest const& request) {
+        return child_->ListHostGroups(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::HostGroup> NetAppLogging::GetHostGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::GetHostGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::GetHostGroupRequest const& request) {
+        return child_->GetHostGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncCreateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+        return child_->AsyncCreateHostGroup(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+        return child_->CreateHostGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncUpdateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+        return child_->AsyncUpdateHostGroup(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+        return child_->UpdateHostGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncDeleteHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+        return child_->AsyncDeleteHostGroup(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+        return child_->DeleteHostGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetAppLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

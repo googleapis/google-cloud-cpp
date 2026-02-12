@@ -39,12 +39,12 @@ using ::testing::IsEmpty;
 using ::testing::Return;
 
 // These values were obtained using:
-// echo -n '' > foo.txt && gsutil hash foo.txt
+// echo -n '' > foo.txt && gcloud storage hash foo.txt
 auto constexpr kEmptyStringCrc32cChecksum = "AAAAAA==";
 auto constexpr kEmptyStringMD5Hash = "1B2M2Y8AsgTpgAmY7PhCfg==";
 
 // /bin/echo -n 'The quick brown fox jumps over the lazy dog' > foo.txt
-// gsutil hash foo.txt
+// gcloud storage hash foo.txt
 auto constexpr kQuickFoxCrc32cChecksum = "ImIEBA==";
 auto constexpr kQuickFoxMD5Hash = "nhB9nTcrtoJr2B01QqQZ1g==";
 auto constexpr kQuickFox = "The quick brown fox jumps over the lazy dog";

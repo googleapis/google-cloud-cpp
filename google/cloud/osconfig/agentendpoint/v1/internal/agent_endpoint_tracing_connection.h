@@ -70,6 +70,11 @@ class AgentEndpointServiceTracingConnection
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request) override;
+
  private:
   std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
       child_;

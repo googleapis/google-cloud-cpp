@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -121,6 +121,10 @@ class AsyncWriterConnection {
 
   /// Return the request metadata.
   virtual RpcMetadata GetRequestMetadata() = 0;
+
+  /// Returns the latest write handle, if any.
+  virtual absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const = 0;
 };
 
 /**
@@ -145,7 +149,7 @@ struct BufferedUploadLwmOption {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

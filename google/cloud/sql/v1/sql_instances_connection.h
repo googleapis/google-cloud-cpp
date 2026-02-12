@@ -188,6 +188,14 @@ class SqlInstancesServiceConnection {
   virtual StatusOr<google::cloud::sql::v1::Operation> AddServerCa(
       google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request);
 
+  virtual StatusOr<google::cloud::sql::v1::Operation> AddServerCertificate(
+      google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::sql::v1::Operation> AddEntraIdCertificate(
+      google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&
+          request);
+
   virtual StatusOr<google::cloud::sql::v1::Operation> Clone(
       google::cloud::sql::v1::SqlInstancesCloneRequest const& request);
 
@@ -225,6 +233,18 @@ class SqlInstancesServiceConnection {
   ListServerCas(
       google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request);
 
+  virtual StatusOr<
+      google::cloud::sql::v1::InstancesListServerCertificatesResponse>
+  ListServerCertificates(
+      google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&
+          request);
+
+  virtual StatusOr<
+      google::cloud::sql::v1::InstancesListEntraIdCertificatesResponse>
+  ListEntraIdCertificates(
+      google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&
+          request);
+
   virtual StatusOr<google::cloud::sql::v1::Operation> Patch(
       google::cloud::sql::v1::SqlInstancesPatchRequest const& request);
 
@@ -245,6 +265,14 @@ class SqlInstancesServiceConnection {
 
   virtual StatusOr<google::cloud::sql::v1::Operation> RotateServerCa(
       google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request);
+
+  virtual StatusOr<google::cloud::sql::v1::Operation> RotateServerCertificate(
+      google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::sql::v1::Operation> RotateEntraIdCertificate(
+      google::cloud::sql::v1::SqlInstancesRotateEntraIdCertificateRequest const&
+          request);
 
   virtual StatusOr<google::cloud::sql::v1::Operation> StartReplica(
       google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request);
@@ -296,6 +324,10 @@ class SqlInstancesServiceConnection {
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
           request);
 
+  virtual StatusOr<google::cloud::sql::v1::SqlInstancesExecuteSqlResponse>
+  ExecuteSql(
+      google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const& request);
+
   virtual StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
   AcquireSsrsLease(
       google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
@@ -304,6 +336,15 @@ class SqlInstancesServiceConnection {
   virtual StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
   ReleaseSsrsLease(
       google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::sql::v1::Operation>
+  PreCheckMajorVersionUpgrade(
+      google::cloud::sql::v1::
+          SqlInstancesPreCheckMajorVersionUpgradeRequest const& request);
+
+  virtual StatusOr<google::cloud::sql::v1::Operation> PointInTimeRestore(
+      google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
           request);
 };
 

@@ -1302,6 +1302,135 @@ StatusOr<google::longrunning::Operation> NetAppAuth::DeleteQuotaRule(
   return child_->DeleteQuotaRule(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppAuth::AsyncRestoreBackupFiles(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRestoreBackupFiles(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::RestoreBackupFiles(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreBackupFiles(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::ListHostGroupsResponse>
+NetAppAuth::ListHostGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ListHostGroupsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListHostGroups(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::HostGroup> NetAppAuth::GetHostGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::GetHostGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetHostGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppAuth::AsyncCreateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateHostGroup(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateHostGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppAuth::AsyncUpdateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateHostGroup(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateHostGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppAuth::AsyncDeleteHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteHostGroup(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteHostGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteHostGroup(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetAppAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -36,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This is used when resuming a download, the `AsyncConnection` creates an
  * object of this type, encapsulating all the steps to create a new download.
  */
-using AsyncReaderConnectionFactory = std::function<future<
-    StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>(
-    storage::Generation generation, std::int64_t received_bytes)>;
+using AsyncReaderConnectionFactory = std::function<
+    future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>(
+        storage::Generation generation, std::int64_t received_bytes)>;
 
 /// Updates a `ReadObjectRequest` to resume assuming using @p generation in new
 /// requests.

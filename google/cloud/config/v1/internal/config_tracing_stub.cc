@@ -450,6 +450,49 @@ ConfigTracingStub::GetResourceDrift(
                            child_->GetResourceDrift(context, options, request));
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigTracingStub::GetAutoMigrationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "GetAutoMigrationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetAutoMigrationConfig(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigTracingStub::AsyncUpdateAutoMigrationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "UpdateAutoMigrationConfig");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateAutoMigrationConfig(cq, context,
+                                                  std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingStub::UpdateAutoMigrationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "UpdateAutoMigrationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateAutoMigrationConfig(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

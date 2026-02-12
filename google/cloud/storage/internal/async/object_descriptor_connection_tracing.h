@@ -23,10 +23,10 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<storage_experimental::ObjectDescriptorConnection>
+std::shared_ptr<storage::ObjectDescriptorConnection>
 MakeTracingObjectDescriptorConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl);
+    std::shared_ptr<storage::ObjectDescriptorConnection> impl);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

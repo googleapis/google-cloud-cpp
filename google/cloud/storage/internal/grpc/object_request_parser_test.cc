@@ -37,10 +37,10 @@ using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::UnorderedElementsAre;
 
-// Use gsutil to obtain the CRC32C checksum (in base64):
+// Use gcloud storage to obtain the CRC32C checksum (in base64):
 //    TEXT="The quick brown fox jumps over the lazy dog"
 //    /bin/echo -n $TEXT > /tmp/fox.txt
-//    gsutil hash /tmp/fox.txt
+//    gcloud storage hash /tmp/fox.txt
 // Hashes [base64] for /tmp/fox.txt:
 //    Hash (crc32c): ImIEBA==
 //    Hash (md5)   : nhB9nTcrtoJr2B01QqQZ1g==

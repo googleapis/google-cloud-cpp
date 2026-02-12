@@ -30,11 +30,11 @@ namespace {
 namespace sc = ::opentelemetry::semconv;
 
 class AsyncObjectDescriptorConnectionTracing
-    : public storage_experimental::ObjectDescriptorConnection {
+    : public storage::ObjectDescriptorConnection {
  public:
   explicit AsyncObjectDescriptorConnectionTracing(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl)
+      std::shared_ptr<storage::ObjectDescriptorConnection> impl)
       : span_(std::move(span)), impl_(std::move(impl)) {}
 
   ~AsyncObjectDescriptorConnectionTracing() override {
@@ -47,8 +47,7 @@ class AsyncObjectDescriptorConnectionTracing
     return impl_->metadata();
   }
 
-  std::unique_ptr<storage_experimental::AsyncReaderConnection> Read(
-      ReadParams p) override {
+  std::unique_ptr<storage::AsyncReaderConnection> Read(ReadParams p) override {
     internal::OTelScope scope(span_);
     auto result = impl_->Read(p);
     span_->AddEvent("gl-cpp.open.read",
@@ -64,15 +63,15 @@ class AsyncObjectDescriptorConnectionTracing
 
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
-  std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl_;
+  std::shared_ptr<storage::ObjectDescriptorConnection> impl_;
 };
 
 }  // namespace
 
-std::shared_ptr<storage_experimental::ObjectDescriptorConnection>
+std::shared_ptr<storage::ObjectDescriptorConnection>
 MakeTracingObjectDescriptorConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl) {
+    std::shared_ptr<storage::ObjectDescriptorConnection> impl) {
   return std::make_unique<AsyncObjectDescriptorConnectionTracing>(
       std::move(span), std::move(impl));
 }

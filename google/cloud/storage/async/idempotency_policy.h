@@ -23,7 +23,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -53,9 +53,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * configure the library to retry all operations, regardless of whether the
  * operations are idempotent or not.
  */
-class IdempotencyPolicy {
+class AsyncIdempotencyPolicy {
  public:
-  virtual ~IdempotencyPolicy() = 0;
+  virtual ~AsyncIdempotencyPolicy() = 0;
 
   /// Determine if a google.storage.v2.ReadObjectRequest is idempotent.
   virtual google::cloud::Idempotency ReadObject(
@@ -85,20 +85,20 @@ class IdempotencyPolicy {
 };
 
 /// Creates an idempotency policy where only safe operations are retried.
-std::unique_ptr<IdempotencyPolicy> MakeStrictIdempotencyPolicy();
+std::unique_ptr<AsyncIdempotencyPolicy> MakeStrictAsyncIdempotencyPolicy();
 
 /// Creates an idempotency policy that retries all operations.
-std::unique_ptr<IdempotencyPolicy> MakeAlwaysRetryIdempotencyPolicy();
+std::unique_ptr<AsyncIdempotencyPolicy> MakeAlwaysRetryAsyncIdempotencyPolicy();
 
 /**
  * An option (see `google::cloud::Options`) to set the idempotency policy.
  */
-struct IdempotencyPolicyOption {
-  using Type = std::function<std::unique_ptr<IdempotencyPolicy>()>;
+struct AsyncIdempotencyPolicyOption {
+  using Type = std::function<std::unique_ptr<AsyncIdempotencyPolicy>()>;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

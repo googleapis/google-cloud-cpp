@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AsyncReaderConnection;
 class AsyncRewriterConnection;
@@ -88,9 +88,8 @@ class AsyncConnection {
   };
 
   /// Open an object to perform multiple reads.
-  virtual future<StatusOr<
-      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
-  Open(OpenParams p) = 0;
+  virtual future<StatusOr<std::shared_ptr<ObjectDescriptorConnection>>> Open(
+      OpenParams p) = 0;
 
   /**
    * A thin wrapper around the `ReadObject()` parameters.
@@ -128,13 +127,11 @@ class AsyncConnection {
   };
 
   /// Start an appendable upload configured for persistent sources.
-  virtual future<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  virtual future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   StartAppendableObjectUpload(AppendableUploadParams p) = 0;
 
   /// Resume an appendable upload configured for persistent sources.
-  virtual future<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  virtual future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   ResumeAppendableObjectUpload(AppendableUploadParams p) = 0;
 
   /**
@@ -153,13 +150,11 @@ class AsyncConnection {
   };
 
   /// Start (or resume) an upload configured for persistent sources.
-  virtual future<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  virtual future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) = 0;
 
   /// Start (or resume) an upload configured for streaming sources.
-  virtual future<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  virtual future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   StartBufferedUpload(UploadParams p) = 0;
 
   /**
@@ -179,13 +174,11 @@ class AsyncConnection {
   };
 
   /// Resume an upload configured for persistent sources.
-  virtual future<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  virtual future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   ResumeUnbufferedUpload(ResumeUploadParams p) = 0;
 
   /// Resume an upload configured for streaming sources.
-  virtual future<
-      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  virtual future<StatusOr<std::unique_ptr<AsyncWriterConnection>>>
   ResumeBufferedUpload(ResumeUploadParams p) = 0;
 
   /**
@@ -248,7 +241,7 @@ class AsyncConnection {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
