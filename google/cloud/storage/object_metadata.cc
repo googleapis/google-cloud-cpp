@@ -134,11 +134,9 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   if (rhs.has_hard_delete_time()) {
     os << ", hard_delete_time=" << FormatRfc3339(rhs.hard_delete_time());
   }
-
   if (rhs.has_contexts()) {
     os << ", contexts=" << rhs.contexts();
   }
-
   return os << "}";
 }
 
