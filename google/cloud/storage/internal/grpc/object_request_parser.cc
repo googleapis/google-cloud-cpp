@@ -155,6 +155,17 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
     *resource.mutable_custom_time() =
         google::cloud::internal::ToProtoTimestamp(metadata.custom_time());
   }
+  if (metadata.has_contexts()) {
+    auto& contexts_proto = *resource.mutable_contexts();
+    if (metadata.contexts().has_custom()) {
+      auto& custom_map = *contexts_proto.mutable_custom();
+      for (auto const& kv : metadata.contexts().custom()) {
+        if (kv.second.has_value()) {
+          custom_map[kv.first].set_value(kv.second->value);
+        }
+      }
+    }
+  }
   return Status{};
 }
 
@@ -287,6 +298,17 @@ StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
     if (metadata.has_custom_time()) {
       *destination.mutable_custom_time() =
           google::cloud::internal::ToProtoTimestamp(metadata.custom_time());
+    }
+    if (metadata.has_contexts()) {
+      auto& contexts_proto = *destination.mutable_contexts();
+      if (metadata.contexts().has_custom()) {
+        auto& custom_map = *contexts_proto.mutable_custom();
+        for (auto const& kv : metadata.contexts().custom()) {
+          if (kv.second.has_value()) {
+            custom_map[kv.first].set_value(kv.second->value);
+          }
+        }
+      }
     }
   }
   for (auto const& s : request.source_objects()) {
@@ -514,6 +536,23 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     result.mutable_update_mask()->add_paths("custom_time");
     *object.mutable_custom_time() = google::cloud::internal::ToProtoTimestamp(
         request.metadata().custom_time());
+  }
+
+  if (request.metadata().has_contexts()) {
+    result.mutable_update_mask()->add_paths("contexts");
+    auto& contexts_proto = *object.mutable_contexts();
+    if (request.metadata().contexts().has_custom()) {
+      auto& custom_map = *contexts_proto.mutable_custom();
+      for (auto const& kv : request.metadata().contexts().custom()) {
+        if (kv.second.has_value()) {
+          custom_map[kv.first].set_value(kv.second->value);
+        } else {
+          custom_map.erase(kv.first);
+        }
+      }
+    } else {
+      contexts_proto.clear_custom();
+    }
   }
 
   // We need to check each modifiable field.

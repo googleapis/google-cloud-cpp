@@ -44,6 +44,35 @@ void SetIfNotEmpty(nlohmann::json& json, char const* key,
   json[key] = value;
 }
 
+/**
+ * Populates the "contexts" field in the JSON object from the given metadata.
+ */
+void SetJsonContextsIfNotEmpty(nlohmann::json& json,
+                               ObjectMetadata const& meta) {
+  if (!meta.has_contexts()) {
+    return;
+  }
+  if (meta.contexts().has_custom()) {
+    nlohmann::json custom_json;
+    for (auto const& kv : meta.contexts().custom()) {
+      if (kv.second.has_value()) {
+        nlohmann::json item;
+        item["value"] = kv.second.value().value;
+        item["createTime"] = google::cloud::internal::FormatRfc3339(
+            kv.second.value().create_time);
+        item["updateTime"] = google::cloud::internal::FormatRfc3339(
+            kv.second.value().update_time);
+        custom_json[kv.first] = std::move(item);
+      } else {
+        custom_json[kv.first] = nullptr;
+      }
+    }
+    json["contexts"] = nlohmann::json{{"custom", std::move(custom_json)}};
+  } else {
+    json["contexts"] = nlohmann::json{{"custom", nullptr}};
+  }
+}
+
 Status ParseAcl(ObjectMetadata& meta, nlohmann::json const& json) {
   auto i = json.find("acl");
   if (i == json.end()) return Status{};
@@ -157,6 +186,40 @@ Status ParseRetention(ObjectMetadata& meta, nlohmann::json const& json) {
   retention.mode = f->value("mode", "");
   retention.retain_until_time = *ts;
   meta.set_retention(std::move(retention));
+  return Status{};
+}
+
+Status ParseContexts(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto f_contexts = json.find("contexts");
+  if (f_contexts == json.end()) return Status{};
+
+  auto f_custom = f_contexts->find("custom");
+  if (f_custom == f_contexts->end()) return Status{};
+
+  ObjectContexts contexts;
+  for (auto const& kv : f_custom->items()) {
+    if (kv.value().is_null()) {
+      contexts.upsert_custom_context(kv.key(), absl::nullopt);
+
+    } else {
+      ObjectCustomContextPayload payload;
+      auto value = kv.value().value("value", "");
+      payload.value = value;
+
+      auto create_time =
+          internal::ParseTimestampField(kv.value(), "createTime");
+      if (!create_time) return std::move(create_time).status();
+      payload.create_time = *create_time;
+
+      auto update_time =
+          internal::ParseTimestampField(kv.value(), "updateTime");
+      if (!update_time) return std::move(update_time).status();
+      payload.update_time = *update_time;
+
+      contexts.upsert_custom_context(kv.key(), std::move(payload));
+    }
+  }
+  meta.set_contexts(std::move(contexts));
   return Status{};
 }
 
@@ -296,6 +359,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       ParseOwner,
       ParseRetentionExpirationTime,
       ParseRetention,
+      ParseContexts,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
         return SetStringField(meta, json, "selfLink",
                               &ObjectMetadata::set_self_link);
@@ -372,6 +436,8 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
                                 meta.retention().retain_until_time)}};
   }
 
+  SetJsonContextsIfNotEmpty(metadata_as_json, meta);
+
   return metadata_as_json;
 }
 
@@ -429,6 +495,8 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
         {"retainUntilTime", google::cloud::internal::FormatRfc3339(
                                 meta.retention().retain_until_time)}};
   }
+
+  SetJsonContextsIfNotEmpty(metadata_as_json, meta);
 
   return metadata_as_json;
 }

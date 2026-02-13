@@ -229,6 +229,8 @@ add_library(
     oauth2/service_account_credentials.h
     object_access_control.cc
     object_access_control.h
+    object_contexts.cc
+    object_contexts.h
     object_metadata.cc
     object_metadata.h
     object_read_stream.cc
