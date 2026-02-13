@@ -67,6 +67,35 @@ struct ObjectBasicCRUDIntegrationTest
     }
     return MakeIntegrationTestClient(std::move(options));
   }
+
+  void SetUp() override {
+    // 1. Run the base class SetUp first. This initializes 'bucket_name_'
+    //    from the environment variable.
+    ::google::cloud::storage::testing::ObjectIntegrationTest::SetUp();
+
+    // 2. Create a client to interact with the emulator/backend.
+    auto client = MakeIntegrationTestClient();
+
+    // 3. Check if the bucket exists.
+    auto metadata = client.GetBucketMetadata(bucket_name_);
+
+    // 4. If it's missing (kNotFound), create it.
+    if (metadata.status().code() == StatusCode::kNotFound) {
+      // Use a default project ID if the env var isn't set (common in local
+      // emulators).
+      auto project_id = google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
+                            .value_or("test-project");
+
+      auto created = client.CreateBucketForProject(bucket_name_, project_id,
+                                                   BucketMetadata());
+      ASSERT_STATUS_OK(created)
+          << "Failed to auto-create missing bucket: " << bucket_name_;
+    } else {
+      // If it exists (or failed for another reason), assert it is OK.
+      ASSERT_STATUS_OK(metadata)
+          << "Failed to verify bucket existence: " << bucket_name_;
+    }
+  }
 };
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
@@ -100,6 +129,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
   EXPECT_EQ(*get_meta, *insert_meta);
+  EXPECT_FALSE(insert_meta->has_contexts()) << *insert_meta;
 
   ObjectMetadata update = *get_meta;
   update.mutable_acl().emplace_back(
@@ -111,16 +141,6 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       .set_content_language("en")
       .set_content_type("plain/text");
   update.mutable_metadata().emplace("updated", "true");
-
-  // Adds custom contexts with value only.
-  ObjectContexts contexts;
-  ObjectCustomContextPayload payload;
-  payload.value = "test-custom-value";
-  contexts.upsert_custom("test-key", payload);
-  update.set_contexts(contexts);
-  EXPECT_TRUE(!IsSet(update.contexts().get_custom("test-key").update_time));
-  EXPECT_TRUE(!IsSet(update.contexts().get_custom("test-key").create_time));
-
   StatusOr<ObjectMetadata> updated_meta = client.UpdateObject(
       bucket_name_, object_name, update, Projection("full"));
   ASSERT_STATUS_OK(updated_meta);
@@ -152,16 +172,6 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   EXPECT_EQ(update.content_type(), updated_meta->content_type())
       << *updated_meta;
   EXPECT_EQ(update.metadata(), updated_meta->metadata()) << *updated_meta;
-  // Verify the custom contexts are updated correctly with valid timestamps.
-  EXPECT_EQ("test-custom-value",
-            updated_meta->contexts().get_custom("test-key").value)
-      << *updated_meta;
-  EXPECT_TRUE(
-      IsSet(updated_meta->contexts().get_custom("test-key").update_time))
-      << *updated_meta;
-  EXPECT_TRUE(
-      IsSet(updated_meta->contexts().get_custom("test-key").create_time))
-      << *updated_meta;
 
   ObjectMetadata desired_patch = *updated_meta;
   desired_patch.set_content_language("en");
@@ -176,6 +186,127 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       << *patched_meta;
   EXPECT_EQ(desired_patch.content_language(), patched_meta->content_language())
       << *patched_meta;
+
+  // This is the test for Object CRUD, we cannot rely on `ScheduleForDelete()`.
+  auto status = client.DeleteObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(status);
+  EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
+}
+
+/// @test Verify the Object CRUD operations with object contexts.
+TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUDWithObjectContexts) {
+  auto client = MakeIntegrationTestClient();
+
+  auto list_object_names = [&client, this] {
+    std::vector<std::string> names;
+    for (auto o : client.ListObjects(bucket_name_)) {
+      EXPECT_STATUS_OK(o);
+      if (!o) break;
+      names.push_back(o->name());
+    }
+    return names;
+  };
+
+  auto object_name = MakeRandomObjectName();
+  ASSERT_THAT(list_object_names(), Not(Contains(object_name)))
+      << "Test aborted. The object <" << object_name << "> already exists."
+      << "This is unexpected as the test generates a random object name.";
+
+  // Create the object, but only if it does not exist already, inserting
+  // a custom context {"department": "engineering"}.
+  ObjectContexts contexts;
+  ObjectCustomContextPayload payload;
+  payload.value = "engineering";
+  contexts.upsert_custom_context("department", std::move(payload));
+  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
+      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
+      Projection("full"),
+      WithObjectMetadata(ObjectMetadata().set_contexts(contexts)));
+  ASSERT_STATUS_OK(insert_meta);
+  EXPECT_THAT(list_object_names(), Contains(object_name).Times(1));
+
+  // Verify the response ObjectMetadata has the custom contexts we set.
+  StatusOr<ObjectMetadata> get_meta = client.GetObjectMetadata(
+      bucket_name_, object_name, Generation(insert_meta->generation()),
+      Projection("full"));
+  ASSERT_STATUS_OK(get_meta);
+  EXPECT_TRUE(get_meta->has_contexts()) << *get_meta;
+  EXPECT_TRUE(get_meta->contexts().has_custom("department")) << *get_meta;
+  EXPECT_EQ("engineering",
+            get_meta->contexts().custom().at("department")->value)
+      << *get_meta;
+  EXPECT_TRUE(
+      IsSet(get_meta->contexts().custom().at("department")->update_time))
+      << *get_meta;
+  EXPECT_TRUE(
+      IsSet(get_meta->contexts().custom().at("department")->create_time))
+      << *get_meta;
+
+  // Update object with a new value "engineering and research" for the existing
+  // custom context, and also add another custom context {"region":
+  // "Asia Pacific"}.
+  ObjectMetadata update = *get_meta;
+  ObjectContexts contexts_updated;
+  ObjectCustomContextPayload payload_updated;
+  payload_updated.value = "engineering and research";
+  contexts_updated.upsert_custom_context("department",
+                                         std::move(payload_updated));
+  ObjectCustomContextPayload payload_another;
+  payload_another.value = "Asia Pacific";
+  contexts_updated.upsert_custom_context("region", std::move(payload_another));
+  update.set_contexts(contexts_updated);
+  StatusOr<ObjectMetadata> updated_meta = client.UpdateObject(
+      bucket_name_, object_name, update, Projection("full"));
+  ASSERT_STATUS_OK(updated_meta);
+
+  // Verify the response ObjectMetadata has the updated custom contexts.
+  EXPECT_TRUE(updated_meta->has_contexts()) << *updated_meta;
+  EXPECT_TRUE(updated_meta->contexts().has_custom("department"))
+      << *updated_meta;
+  EXPECT_EQ("engineering and research",
+            updated_meta->contexts().custom().at("department")->value)
+      << *updated_meta;
+  EXPECT_TRUE(updated_meta->contexts().has_custom("region")) << *updated_meta;
+  EXPECT_EQ("Asia Pacific",
+            updated_meta->contexts().custom().at("region")->value)
+      << *updated_meta;
+  EXPECT_TRUE(
+      IsSet(updated_meta->contexts().custom().at("region")->update_time))
+      << *updated_meta;
+  EXPECT_TRUE(
+      IsSet(updated_meta->contexts().custom().at("region")->create_time))
+      << *updated_meta;
+
+  // Update object with deletion of the "department" custom context.
+  ObjectContexts contexts_deleted;
+  contexts_deleted.upsert_custom_context("department", absl::nullopt);
+  update.set_contexts(contexts_deleted);
+  StatusOr<ObjectMetadata> deleted_meta = client.UpdateObject(
+      bucket_name_, object_name, update, Projection("full"));
+  ASSERT_STATUS_OK(deleted_meta);
+
+  // Verify the response ObjectMetadata has the "department" key is set to null,
+  // but the "region" key still present with value.
+  EXPECT_TRUE(deleted_meta->has_contexts()) << *deleted_meta;
+  EXPECT_FALSE(deleted_meta->contexts().has_custom("department"))
+      << *deleted_meta;
+  EXPECT_TRUE(deleted_meta->contexts().has_custom("region")) << *deleted_meta;
+  EXPECT_TRUE(deleted_meta->contexts().custom().at("region").has_value())
+      << *deleted_meta;
+  EXPECT_EQ("Asia Pacific",
+            deleted_meta->contexts().custom().at("region")->value)
+      << *deleted_meta;
+
+  // Update object with reset of the custom field.
+  ObjectContexts contexts_reset;
+  update.set_contexts(contexts_reset);
+  StatusOr<ObjectMetadata> reset_meta = client.UpdateObject(
+      bucket_name_, object_name, update, Projection("full"));
+  ASSERT_STATUS_OK(reset_meta);
+
+  // Verify the response ObjectMetadata that no custom contexts exists. This
+  // is the default behavior as if the custom field is never set.
+  EXPECT_FALSE(reset_meta->has_contexts()) << *reset_meta;
 
   // This is the test for Object CRUD, we cannot rely on `ScheduleForDelete()`.
   auto status = client.DeleteObject(bucket_name_, object_name);

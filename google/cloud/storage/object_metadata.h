@@ -451,7 +451,7 @@ class ObjectMetadata {
     return *this;
   }
 
-  /// Returns `true` if the object has user-defined contexts.
+  /// Returns `true` if the object has custom contexts.
   bool has_contexts() const { return contexts_.has_value(); }
 
   /**
@@ -468,7 +468,7 @@ class ObjectMetadata {
     return *this;
   }
 
-  /// Reset the object's custom contexts.
+  /// Reset the object contexts.
   ObjectMetadata& reset_contexts() {
     contexts_.reset();
     return *this;

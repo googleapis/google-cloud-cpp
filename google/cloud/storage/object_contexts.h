@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_CONTEXTS_H
 
 #include "google/cloud/storage/version.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <map>
 #include <string>
@@ -54,35 +55,66 @@ std::ostream& operator<<(std::ostream& os,
  * Specifies the custom contexts of an object.
  */
 struct ObjectContexts {
-  /**
-   * Represents the map of user-defined object contexts, keyed by a string
-   * value.
-   */
-  std::map<std::string, ObjectCustomContextPayload> custom;
+ public:
+  // Returns true if the map itself exists.
+  bool has_custom() const { return custom_map_.has_value(); }
 
   /**
-   * A set of helper functions to handle the custom.
+   * Returns true if the map exists AND the key is present AND the value is
+   * a valid value.
    */
   bool has_custom(std::string const& key) const {
-    return custom.end() != custom.find(key);
+    if (!has_custom()) {
+      return false;
+    }
+    return custom_map_->find(key) != custom_map_->end() &&
+           custom_map_->at(key).has_value();
   }
-  ObjectCustomContextPayload const& get_custom(std::string const& key) const {
-    return custom.at(key);
-  }
-  void upsert_custom(std::string const& key,
-                     ObjectCustomContextPayload const& value) {
-    custom[key] = value;
-  }
-  void delete_custom(std::string const& key) { custom.erase(key); }
-};
 
-inline bool operator==(ObjectContexts const& lhs, ObjectContexts const& rhs) {
-  return lhs.custom == rhs.custom;
-};
+  /**
+   * The `custom` attribute of the object contexts.
+   * Values are now absl::optional.
+   *
+   * It is undefined behavior to call this member function if
+   * `has_custom() == false`.
+   */
+  std::map<std::string, absl::optional<ObjectCustomContextPayload>> const&
+  custom() const {
+    return *custom_map_;
+  }
 
-inline bool operator!=(ObjectContexts const& lhs, ObjectContexts const& rhs) {
-  return !(lhs == rhs);
-}
+  /**
+   * Upserts a context. Passing absl::nullopt for the value
+   * represents a "null" entry in the map.
+   */
+  void upsert_custom_context(std::string const& key,
+                             absl::optional<ObjectCustomContextPayload> value) {
+    if (!has_custom()) {
+      custom_map_.emplace();
+    }
+
+    (*custom_map_)[key] = std::move(value);
+  }
+
+  void reset_custom() { custom_map_.reset(); }
+
+  bool operator==(ObjectContexts const& other) const {
+    return custom_map_ == other.custom_map_;
+  }
+
+  bool operator!=(ObjectContexts const& other) const {
+    return !(*this == other);
+  }
+
+ private:
+  /**
+   * Represents the map of user-defined object contexts.
+   * Inner optional allows keys to point to a "null" value.
+   */
+  absl::optional<
+      std::map<std::string, absl::optional<ObjectCustomContextPayload>>>
+      custom_map_;
+};
 
 std::ostream& operator<<(std::ostream& os, ObjectContexts const& rhs);
 
