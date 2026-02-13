@@ -216,9 +216,9 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ(actual.hard_delete_time(),
             std::chrono::system_clock::from_time_t(1710160496L) +
                 std::chrono::milliseconds(789));
-  ASSERT_TRUE(actual.has_contexts());
+  ASSERT_TRUE(actual.has_contexts() && actual.contexts().has_custom());
   EXPECT_EQ(
-      actual.contexts().custom.at("environment"),
+      actual.contexts().custom().at("environment"),
       (ObjectCustomContextPayload{
           "prod",
           google::cloud::internal::ParseRfc3339("2024-07-18T00:00:00Z").value(),
@@ -692,19 +692,19 @@ TEST(ObjectMetadataTest, ResetRetention) {
 TEST(ObjectMetadataTest, SetContexts) {
   auto const expected = CreateObjectMetadataForTest();
   auto copy = expected;
-  auto const context_payload = ObjectCustomContextPayload{"engineering", {}, {}};
-  std::map<std::string, ObjectCustomContextPayload> custom{
-      {"department", context_payload}};
-  auto const contexts = ObjectContexts{custom};
+  auto const context_payload =
+      ObjectCustomContextPayload{"engineering", {}, {}};
+  ObjectContexts contexts;
+  contexts.upsert_custom_context("department", context_payload);
   copy.set_contexts(contexts);
-  EXPECT_TRUE(expected.has_contexts());
-  EXPECT_TRUE(copy.has_contexts());
+  EXPECT_TRUE(expected.contexts().has_custom());
+  EXPECT_TRUE(copy.contexts().has_custom());
   EXPECT_EQ(contexts, copy.contexts());
   EXPECT_NE(expected, copy);
 }
 
 /// @test Verify we can reset the `contexts` field.
-TEST(ObjectMetadataTest, ResetContexts) {
+TEST(ObjectMetadataTest, DeleteContexts) {
   auto const expected = CreateObjectMetadataForTest();
   auto copy = expected;
   copy.reset_contexts();

@@ -52,19 +52,25 @@ void SetJsonContextsIfNotEmpty(nlohmann::json& json,
   if (!meta.has_contexts()) {
     return;
   }
-
-  nlohmann::json custom_json;
-  for (auto const& kv : meta.contexts().custom) {
-    custom_json[kv.first] = nlohmann::json{
-        {"value", kv.second.value},
-        {"createTime",
-         google::cloud::internal::FormatRfc3339(kv.second.create_time)},
-        {"updateTime",
-         google::cloud::internal::FormatRfc3339(kv.second.update_time)},
-    };
+  if (meta.contexts().has_custom()) {
+    nlohmann::json custom_json;
+    for (auto const& kv : meta.contexts().custom()) {
+      if (kv.second.has_value()) {
+        nlohmann::json item;
+        item["value"] = kv.second.value().value;
+        item["createTime"] = google::cloud::internal::FormatRfc3339(
+            kv.second.value().create_time);
+        item["updateTime"] = google::cloud::internal::FormatRfc3339(
+            kv.second.value().update_time);
+        custom_json[kv.first] = std::move(item);
+      } else {
+        custom_json[kv.first] = nullptr;
+      }
+    }
+    json["contexts"] = nlohmann::json{{"custom", std::move(custom_json)}};
+  } else {
+    json["contexts"] = nlohmann::json{{"custom", nullptr}};
   }
-
-  json["contexts"] = nlohmann::json{{"custom", std::move(custom_json)}};
 }
 
 Status ParseAcl(ObjectMetadata& meta, nlohmann::json const& json) {
@@ -192,19 +198,26 @@ Status ParseContexts(ObjectMetadata& meta, nlohmann::json const& json) {
 
   ObjectContexts contexts;
   for (auto const& kv : f_custom->items()) {
-    ObjectCustomContextPayload payload;
-    auto value = kv.value().value("value", "");
-    payload.value = value;
+    if (kv.value().is_null()) {
+      contexts.upsert_custom_context(kv.key(), absl::nullopt);
 
-    auto create_time = internal::ParseTimestampField(kv.value(), "createTime");
-    if (!create_time) return std::move(create_time).status();
-    payload.create_time = *create_time;
+    } else {
+      ObjectCustomContextPayload payload;
+      auto value = kv.value().value("value", "");
+      payload.value = value;
 
-    auto update_time = internal::ParseTimestampField(kv.value(), "updateTime");
-    if (!update_time) return std::move(update_time).status();
-    payload.update_time = *update_time;
+      auto create_time =
+          internal::ParseTimestampField(kv.value(), "createTime");
+      if (!create_time) return std::move(create_time).status();
+      payload.create_time = *create_time;
 
-    contexts.custom.emplace(kv.key(), std::move(payload));
+      auto update_time =
+          internal::ParseTimestampField(kv.value(), "updateTime");
+      if (!update_time) return std::move(update_time).status();
+      payload.update_time = *update_time;
+
+      contexts.upsert_custom_context(kv.key(), std::move(payload));
+    }
   }
   meta.set_contexts(std::move(contexts));
   return Status{};
