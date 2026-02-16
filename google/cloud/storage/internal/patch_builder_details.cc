@@ -62,6 +62,15 @@ nlohmann::json const& PatchBuilderDetails::GetMetadataSubPatch(
   return GetPatch(patch.metadata_subpatch_);
 }
 
+nlohmann::json const& PatchBuilderDetails::GetCustomContextsSubPatch(
+    storage::ObjectMetadataPatchBuilder const& patch) {
+  static auto const* const kEmpty = [] {
+    return new nlohmann::json(nlohmann::json::object());
+  }();
+  if (!patch.contexts_subpatch_dirty_) return *kEmpty;
+  return GetPatch(patch.contexts_custom_subpatch_);
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
