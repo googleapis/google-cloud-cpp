@@ -216,7 +216,6 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ(actual.hard_delete_time(),
             std::chrono::system_clock::from_time_t(1710160496L) +
                 std::chrono::milliseconds(789));
-  ASSERT_TRUE(actual.has_contexts() && actual.contexts().has_custom());
   EXPECT_EQ(
       actual.contexts().custom().at("environment"),
       (ObjectCustomContextPayload{
@@ -695,10 +694,9 @@ TEST(ObjectMetadataTest, SetContexts) {
   auto const context_payload =
       ObjectCustomContextPayload{"engineering", {}, {}};
   ObjectContexts contexts;
-  contexts.upsert_custom_context("department", context_payload);
+  contexts.upsert("department", context_payload);
   copy.set_contexts(contexts);
-  EXPECT_TRUE(expected.contexts().has_custom());
-  EXPECT_TRUE(copy.contexts().has_custom());
+  EXPECT_TRUE(copy.has_contexts());
   EXPECT_EQ(contexts, copy.contexts());
   EXPECT_NE(expected, copy);
 }

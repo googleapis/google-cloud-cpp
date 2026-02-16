@@ -32,20 +32,12 @@ std::ostream& operator<<(std::ostream& os,
 
 std::ostream& operator<<(std::ostream& os, ObjectContexts const& rhs) {
   os << "ObjectContexts={custom={";
-  if (rhs.has_custom()) {
-    char const* sep = "";
-    for (auto const& kv : rhs.custom()) {
-      os << sep << kv.first << "=";
-      if (kv.second.has_value()) {
-        os << kv.second.value();
-      } else {
-        os << "null";
-      }
-      sep = ",\n";
-    }
-  } else {
-    os << "null";
+  char const* sep = "";
+  for (auto const& kv : rhs.custom()) {
+    os << sep << kv.first << "=" << kv.second.value;
+    sep = ",\n";
   }
+
   return os << "}}";
 }
 

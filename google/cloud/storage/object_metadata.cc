@@ -149,6 +149,15 @@ std::string ObjectMetadataPatchBuilder::BuildPatch() const {
       tmp.AddSubPatch("metadata", metadata_subpatch_);
     }
   }
+  if (contexts_subpatch_dirty_) {
+    if (contexts_custom_subpatch_.empty()) {
+      tmp.AddSubPatch("contexts",
+                      internal::PatchBuilder().RemoveField("custom"));
+    } else {
+      tmp.AddSubPatch("contexts", internal::PatchBuilder().AddSubPatch(
+                                      "custom", contexts_custom_subpatch_));
+    }
+  }
   return tmp.ToString();
 }
 
@@ -272,6 +281,27 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata(
 ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata() {
   metadata_subpatch_.clear();
   metadata_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetContext(
+    std::string const& key, std::string const& value) {
+  contexts_custom_subpatch_.AddSubPatch(
+      key.c_str(), internal::PatchBuilder().SetStringField("value", value));
+  contexts_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContext(
+    std::string const& key) {
+  contexts_custom_subpatch_.RemoveField(key.c_str());
+  contexts_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContexts() {
+  contexts_custom_subpatch_.clear();
+  contexts_subpatch_dirty_ = true;
   return *this;
 }
 
