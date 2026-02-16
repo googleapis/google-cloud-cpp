@@ -23,6 +23,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/strings/str_cat.h"
+#include <google/storage/v2/storage.pb.h>
 #include <iterator>
 
 namespace google {
@@ -156,16 +157,14 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
         google::cloud::internal::ToProtoTimestamp(metadata.custom_time());
   }
   if (metadata.has_contexts()) {
-    auto& contexts_proto = *resource.mutable_contexts();
-    if (metadata.contexts().has_custom()) {
-      auto& custom_map = *contexts_proto.mutable_custom();
-      for (auto const& kv : metadata.contexts().custom()) {
-        if (kv.second.has_value()) {
-          custom_map[kv.first].set_value(kv.second->value);
-        }
-      }
+    auto& custom_map = *resource.mutable_contexts()->mutable_custom();
+    for (auto const& kv : metadata.contexts().custom()) {
+      // In request, the create_time and update_time are ignored by the server,
+      // hence there is no need to parse them.
+      custom_map[kv.first].set_value(kv.second.value);
     }
   }
+
   return Status{};
 }
 
@@ -287,6 +286,13 @@ StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
     for (auto const& kv : metadata.metadata()) {
       (*destination.mutable_metadata())[kv.first] = kv.second;
     }
+    if (metadata.has_contexts()) {
+      for (auto const& kv : metadata.contexts().custom()) {
+        auto& payload =
+            (*destination.mutable_contexts()->mutable_custom())[kv.first];
+        payload.set_value(kv.second.value);
+      }
+    }
     destination.set_content_encoding(metadata.content_encoding());
     destination.set_content_disposition(metadata.content_disposition());
     destination.set_cache_control(metadata.cache_control());
@@ -298,17 +304,6 @@ StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
     if (metadata.has_custom_time()) {
       *destination.mutable_custom_time() =
           google::cloud::internal::ToProtoTimestamp(metadata.custom_time());
-    }
-    if (metadata.has_contexts()) {
-      auto& contexts_proto = *destination.mutable_contexts();
-      if (metadata.contexts().has_custom()) {
-        auto& custom_map = *contexts_proto.mutable_custom();
-        for (auto const& kv : metadata.contexts().custom()) {
-          if (kv.second.has_value()) {
-            custom_map[kv.first].set_value(kv.second->value);
-          }
-        }
-      }
     }
   }
   for (auto const& s : request.source_objects()) {
@@ -478,6 +473,24 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     }
   }
 
+  auto const& contexts_subpatch =
+      storage::internal::PatchBuilderDetails::GetCustomContextsSubPatch(
+          request.patch());
+  if (contexts_subpatch.is_null()) {
+    object.clear_contexts();
+    result.mutable_update_mask()->add_paths("contexts.custom");
+  } else {
+    for (auto const& kv : contexts_subpatch.items()) {
+      result.mutable_update_mask()->add_paths("contexts.custom." + kv.key());
+      auto const& v = kv.value();
+      if (v.is_object() && v.contains("value")) {
+        auto& payload =
+            (*object.mutable_contexts()->mutable_custom())[kv.key()];
+        payload.set_value(v["value"].get<std::string>());
+      }
+    }
+  }
+
   // We need to check each modifiable field.
   struct StringField {
     char const* json_name;
@@ -532,27 +545,23 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     (*object.mutable_metadata())[kv.first] = kv.second;
   }
 
+  if (request.metadata().has_contexts()) {
+    result.mutable_update_mask()->add_paths("contexts");
+    auto& custom_map = *object.mutable_contexts()->mutable_custom();
+
+    for (auto const& kv : request.metadata().contexts().custom()) {
+      google::storage::v2::ObjectCustomContextPayload& payload_ref =
+          custom_map[kv.first];
+      // In request, the create_time and update_time are ignored by
+      // the server, hence there is no need to parse them.
+      payload_ref.set_value(kv.second.value);
+    }
+  }
+
   if (request.metadata().has_custom_time()) {
     result.mutable_update_mask()->add_paths("custom_time");
     *object.mutable_custom_time() = google::cloud::internal::ToProtoTimestamp(
         request.metadata().custom_time());
-  }
-
-  if (request.metadata().has_contexts()) {
-    result.mutable_update_mask()->add_paths("contexts");
-    auto& contexts_proto = *object.mutable_contexts();
-    if (request.metadata().contexts().has_custom()) {
-      auto& custom_map = *contexts_proto.mutable_custom();
-      for (auto const& kv : request.metadata().contexts().custom()) {
-        if (kv.second.has_value()) {
-          custom_map[kv.first].set_value(kv.second->value);
-        } else {
-          custom_map.erase(kv.first);
-        }
-      }
-    } else {
-      contexts_proto.clear_custom();
-    }
   }
 
   // We need to check each modifiable field.

@@ -79,6 +79,32 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     }
     metadata: { key: "test-key-1" value: "test-value-1" }
     metadata: { key: "test-key-2" value: "test-value-2" }
+    contexts: {
+      custom: {
+        key: "custom-key-1" value: {
+          value: "custom-value-1"
+          create_time: {
+          seconds: 1565194924
+          nanos: 456789012
+        }
+        update_time: {
+          seconds: 1565194924
+          nanos: 456789012
+        }
+      }}
+      custom: {
+        key: "custom-key-2" value: {
+          value: "custom-value-2"
+          create_time: {
+          seconds: 1565194924
+          nanos: 456789012
+        }
+        update_time: {
+          seconds: 1709555696
+          nanos: 987654321
+        }
+      }}
+    }
     event_based_hold: true
     name: "test-object-name"
     bucket: "test-bucket"
@@ -140,6 +166,20 @@ TEST(GrpcClientFromProto, ObjectSimple) {
     "metadata": {
         "test-key-1": "test-value-1",
         "test-key-2": "test-value-2"
+    },
+    "contexts": {
+        "custom": {
+            "custom-key-1": {
+                "value": "custom-value-1",
+                "createTime": "2019-08-07T16:22:04.456789012Z",
+                "updateTime": "2019-08-07T16:22:04.456789012Z"
+             },
+             "custom-key-2": {
+                "value": "custom-value-2",
+                "createTime": "2019-08-07T16:22:04.456789012Z",
+                "updateTime": "2024-03-04T12:34:56.987654321Z"
+             }
+        }
     },
     "eventBasedHold": true,
     "name": "test-object-name",

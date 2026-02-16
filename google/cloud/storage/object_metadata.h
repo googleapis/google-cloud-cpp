@@ -700,6 +700,11 @@ class ObjectMetadataPatchBuilder {
   ObjectMetadataPatchBuilder& ResetMetadata(std::string const& key);
   ObjectMetadataPatchBuilder& ResetMetadata();
 
+  ObjectMetadataPatchBuilder& SetContext(std::string const& key,
+                                         std::string const& value);
+  ObjectMetadataPatchBuilder& ResetContext(std::string const& key);
+  ObjectMetadataPatchBuilder& ResetContexts();
+
   ObjectMetadataPatchBuilder& SetTemporaryHold(bool v);
   ObjectMetadataPatchBuilder& ResetTemporaryHold();
 
@@ -728,6 +733,8 @@ class ObjectMetadataPatchBuilder {
   internal::PatchBuilder impl_;
   bool metadata_subpatch_dirty_{false};
   internal::PatchBuilder metadata_subpatch_;
+  bool contexts_subpatch_dirty_{false};
+  internal::PatchBuilder contexts_custom_subpatch_;
 };
 
 /**

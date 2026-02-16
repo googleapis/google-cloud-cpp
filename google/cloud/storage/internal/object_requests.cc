@@ -97,6 +97,44 @@ ObjectMetadataPatchBuilder DiffObjectMetadata(ObjectMetadata const& original,
     }
   }
 
+  if (original.has_contexts() && updated.has_contexts()) {
+    if (original.contexts() != updated.contexts()) {
+      // Find the keys in the original map that are not in the new map, so as
+      // to reset them in patch builder.
+      std::map<std::string, ObjectCustomContextPayload> deleted_entries;
+      std::set_difference(
+          original.contexts().custom().begin(),
+          original.contexts().custom().end(),
+          updated.contexts().custom().begin(),
+          updated.contexts().custom().end(),
+          std::inserter(deleted_entries, deleted_entries.end()),
+          [](auto const& a, auto const& b) { return a.first < b.first; });
+      for (auto&& d : deleted_entries) {
+        builder.ResetContext(d.first);
+      }
+
+      // Find the entries in the updated map that are either not in the original
+      // map or have different values, so as to upsert them in the patch
+      // builder.
+      std::map<std::string, ObjectCustomContextPayload> changed_entries;
+      std::set_difference(
+          updated.contexts().custom().begin(),
+          updated.contexts().custom().end(),
+          original.contexts().custom().begin(),
+          original.contexts().custom().end(),
+          std::inserter(changed_entries, changed_entries.end()));
+      for (auto&& d : changed_entries) {
+        builder.SetContext(d.first, d.second.value);
+      }
+    }
+  } else if (original.has_contexts() && !updated.has_contexts()) {
+    builder.ResetContexts();
+  } else if (!original.has_contexts() && updated.has_contexts()) {
+    for (auto const& c : updated.contexts().custom()) {
+      builder.SetContext(c.first, c.second.value);
+    }
+  }
+
   if (original.temporary_hold() != updated.temporary_hold()) {
     builder.SetTemporaryHold(updated.temporary_hold());
   }
