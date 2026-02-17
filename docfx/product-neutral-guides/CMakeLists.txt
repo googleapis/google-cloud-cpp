@@ -51,6 +51,20 @@ set(TOC_ITEMS ${toc_items})
 set(toc_file "${output_dir}/toc.yml")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/toc.yml.in" "${toc_file}" @ONLY)
 
+set(metadata_file "${output_dir}/docs.metadata.json")
+add_custom_command(
+    OUTPUT "${metadata_file}"
+    COMMAND ${CMAKE_COMMAND} -E write_file "${metadata_file}"
+            "{
+    \"language\": \"cpp\",
+    \"name\": \"product-neutral-guides\",
+    \"version\": \"${PROJECT_VERSION}\"
+}"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt"
+    COMMENT "Generating ${metadata_file}"
+    VERBATIM)
+list(APPEND copied_files "${metadata_file}")
+
 add_custom_target(product-neutral-guides-docs DEPENDS ${copied_files})
 
 add_dependencies(all-docfx product-neutral-guides-docs)
