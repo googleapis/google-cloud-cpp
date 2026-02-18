@@ -56,9 +56,11 @@ jobs:
       working-directory: "${{runner.temp}}"
       run: |
         mkdir -p vcpkg
-        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${STEPS_VCPKG_VERSION_OUTPUTS_VERSION}.tar.gz" |
             tar -C vcpkg --strip-components=1 -zxf -
         vcpkg/bootstrap-vcpkg.sh -disableMetrics
+      env:
+        STEPS_VCPKG_VERSION_OUTPUTS_VERSION: ${{ steps.vcpkg-version.outputs.version }}
     # First compile the code using the identity with access to the build cache
     - run: |
         env VCPKG_ROOT="${{ runner.temp }}/vcpkg" ci/gha/builds/external-account.sh

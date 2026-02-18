@@ -39,9 +39,13 @@ jobs:
         run: |
           echo "event=${{ github.event_name }}"
           echo "assoc=${{ github.event.pull_request.author_association }}"
-          echo "org=${{ github.organization }}" || true
-          echo "user=${{ github.event.pull_request.user }}" || true
-          echo "user_orgs=${{ github.event.pull_request.user.organizations_url }}" || true
+          echo "org=${GITHUB_ORGANIZATION}" || true
+          echo "user=${GITHUB_EVENT_PULL_REQUEST_USER}" || true
+          echo "user_orgs=${GITHUB_EVENT_PULL_REQUEST_USER_ORGANIZATIONS_URL}" || true
+        env:
+          GITHUB_ORGANIZATION: ${{ github.organization }}
+          GITHUB_EVENT_PULL_REQUEST_USER: ${{ github.event.pull_request.user }}
+          GITHUB_EVENT_PULL_REQUEST_USER_ORGANIZATIONS_URL: ${{ github.event.pull_request.user.organizations_url }}
 
   pre-flight:
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
