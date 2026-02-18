@@ -978,8 +978,8 @@ TEST(PatchObjectRequestTest, DiffSetContexts) {
 
   ObjectMetadata updated = original;
   ObjectContexts contexts;
-  contexts.upsert("department", {"engineering"})
-      .upsert("environment", {"preprod"});
+  contexts.upsert("department", {"engineering", {}, {}})
+      .upsert("environment", {"preprod", {}, {}});
   updated.set_contexts(contexts);
 
   PatchObjectRequest request("test-bucket", "test-object", original, updated);

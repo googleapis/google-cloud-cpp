@@ -119,8 +119,8 @@ storage::ObjectMetadata FullObjectMetadata() {
       .set_temporary_hold(true)
       .upsert_metadata("test-metadata-key1", "test-value1")
       .upsert_metadata("test-metadata-key2", "test-value2")
-      .set_contexts(
-          storage::ObjectContexts().upsert("custom-key-1", {"custom-value-1"}))
+      .set_contexts(storage::ObjectContexts().upsert(
+          "custom-key-1", {"custom-value-1", {}, {}}))
       .set_event_based_hold(true)
       .set_custom_time(std::chrono::system_clock::time_point{} +
                        std::chrono::seconds(1643126687) +
