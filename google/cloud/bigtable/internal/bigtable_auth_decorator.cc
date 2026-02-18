@@ -18,9 +18,12 @@
 
 #include "google/cloud/bigtable/internal/bigtable_auth_decorator.h"
 #include "google/cloud/internal/async_streaming_read_rpc_auth.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -267,3 +270,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

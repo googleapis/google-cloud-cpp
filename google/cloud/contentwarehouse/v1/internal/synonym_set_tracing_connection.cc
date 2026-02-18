@@ -27,8 +27,6 @@ namespace cloud {
 namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SynonymSetServiceTracingConnection::SynonymSetServiceTracingConnection(
     std::shared_ptr<contentwarehouse_v1::SynonymSetServiceConnection> child)
     : child_(std::move(child)) {}
@@ -92,17 +90,13 @@ SynonymSetServiceTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<contentwarehouse_v1::SynonymSetServiceConnection>
 MakeSynonymSetServiceTracingConnection(
     std::shared_ptr<contentwarehouse_v1::SynonymSetServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<SynonymSetServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

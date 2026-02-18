@@ -1830,6 +1830,189 @@ NetAppClient::DeleteQuotaRule(google::longrunning::Operation const& operation,
   return connection_->DeleteQuotaRule(operation);
 }
 
+future<StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>
+NetAppClient::RestoreBackupFiles(
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreBackupFiles(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::RestoreBackupFiles(
+    NoAwaitTag,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreBackupFiles(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>
+NetAppClient::RestoreBackupFiles(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreBackupFiles(operation);
+}
+
+StreamRange<google::cloud::netapp::v1::HostGroup> NetAppClient::ListHostGroups(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::ListHostGroupsRequest request;
+  request.set_parent(parent);
+  return connection_->ListHostGroups(request);
+}
+
+StreamRange<google::cloud::netapp::v1::HostGroup> NetAppClient::ListHostGroups(
+    google::cloud::netapp::v1::ListHostGroupsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListHostGroups(std::move(request));
+}
+
+StatusOr<google::cloud::netapp::v1::HostGroup> NetAppClient::GetHostGroup(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::GetHostGroupRequest request;
+  request.set_name(name);
+  return connection_->GetHostGroup(request);
+}
+
+StatusOr<google::cloud::netapp::v1::HostGroup> NetAppClient::GetHostGroup(
+    google::cloud::netapp::v1::GetHostGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetHostGroup(request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+NetAppClient::CreateHostGroup(
+    std::string const& parent,
+    google::cloud::netapp::v1::HostGroup const& host_group,
+    std::string const& host_group_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::CreateHostGroupRequest request;
+  request.set_parent(parent);
+  *request.mutable_host_group() = host_group;
+  request.set_host_group_id(host_group_id);
+  return connection_->CreateHostGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::CreateHostGroup(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::netapp::v1::HostGroup const& host_group,
+    std::string const& host_group_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::CreateHostGroupRequest request;
+  request.set_parent(parent);
+  *request.mutable_host_group() = host_group;
+  request.set_host_group_id(host_group_id);
+  return connection_->CreateHostGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+NetAppClient::CreateHostGroup(
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateHostGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::CreateHostGroup(
+    NoAwaitTag,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateHostGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+NetAppClient::CreateHostGroup(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateHostGroup(operation);
+}
+
+future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+NetAppClient::UpdateHostGroup(
+    google::cloud::netapp::v1::HostGroup const& host_group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateHostGroupRequest request;
+  *request.mutable_host_group() = host_group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateHostGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::UpdateHostGroup(
+    NoAwaitTag, google::cloud::netapp::v1::HostGroup const& host_group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::UpdateHostGroupRequest request;
+  *request.mutable_host_group() = host_group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateHostGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+NetAppClient::UpdateHostGroup(
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateHostGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::UpdateHostGroup(
+    NoAwaitTag,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateHostGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+NetAppClient::UpdateHostGroup(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateHostGroup(operation);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteHostGroup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::DeleteHostGroupRequest request;
+  request.set_name(name);
+  return connection_->DeleteHostGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::DeleteHostGroup(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::netapp::v1::DeleteHostGroupRequest request;
+  request.set_name(name);
+  return connection_->DeleteHostGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteHostGroup(
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHostGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::DeleteHostGroup(
+    NoAwaitTag,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHostGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::DeleteHostGroup(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHostGroup(operation);
+}
+
 StreamRange<google::cloud::location::Location> NetAppClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -43,7 +43,7 @@ Options StorageTransferServiceDefaultOptions(Options options) {
           storagetransfer_v1::StorageTransferServiceRetryPolicyOption>()) {
     options.set<storagetransfer_v1::StorageTransferServiceRetryPolicyOption>(
         storagetransfer_v1::StorageTransferServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

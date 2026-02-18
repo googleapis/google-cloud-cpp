@@ -28,8 +28,6 @@ namespace cloud {
 namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AdaptationTracingConnection : public speech_v1::AdaptationConnection {
  public:
   ~AdaptationTracingConnection() override = default;
@@ -84,8 +82,6 @@ class AdaptationTracingConnection : public speech_v1::AdaptationConnection {
  private:
   std::shared_ptr<speech_v1::AdaptationConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -17,12 +17,15 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_stub.h"
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -658,3 +661,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace developerconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

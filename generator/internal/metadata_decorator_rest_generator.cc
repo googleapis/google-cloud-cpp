@@ -19,8 +19,8 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "generator/internal/routing.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/url_encode.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 #include <algorithm>
@@ -219,14 +219,14 @@ Status MetadataDecoratorRestGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes(
-      {vars("metadata_rest_header_path"),
-       "google/cloud/internal/api_client_header.h",
-       HasExplicitRoutingMethod() ? "google/cloud/internal/routing_matcher.h"
-                                  : "",
-       "google/cloud/status_or.h", "google/cloud/internal/absl_str_cat_quiet.h",
-       "google/cloud/internal/rest_set_metadata.h",
-       "absl/strings/str_format.h"});
+  CcLocalIncludes({vars("metadata_rest_header_path"),
+                   "google/cloud/internal/api_client_header.h",
+                   HasExplicitRoutingMethod()
+                       ? "google/cloud/internal/routing_matcher.h"
+                       : "",
+                   "google/cloud/status_or.h", "absl/strings/str_cat.h",
+                   "google/cloud/internal/rest_set_metadata.h",
+                   "absl/strings/str_format.h"});
   CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);

@@ -40,7 +40,7 @@ Options CloudTasksDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<tasks_v2::CloudTasksRetryPolicyOption>()) {
     options.set<tasks_v2::CloudTasksRetryPolicyOption>(
-        tasks_v2::CloudTasksLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        tasks_v2::CloudTasksLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<tasks_v2::CloudTasksBackoffPolicyOption>()) {

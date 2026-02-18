@@ -13,19 +13,34 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/connection_factory.h"
-#include "google/cloud/storage/oauth2/service_account_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/rest_response.h"
+#include "google/cloud/internal/service_endpoint.h"
+#include "google/cloud/internal/sha256_hash.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/universe_domain_options.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
+#include <cstdlib>
 #include <fstream>
 #include <memory>
+#include <set>
+#include <sstream>
 #include <string>
 #include <thread>
 #include <utility>
@@ -35,6 +50,32 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+class WrapRestCredentials {
+ public:
+  explicit WrapRestCredentials(
+      std::shared_ptr<oauth2_internal::Credentials> impl)
+      : impl_(std::move(impl)) {}
+
+  StatusOr<std::string> AuthorizationHeader() {
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_);
+  }
+
+  StatusOr<std::vector<std::uint8_t>> SignBlob(
+      SigningAccount const& signing_account, std::string const& blob) const {
+    return impl_->SignBlob(signing_account.value_or(impl_->AccountEmail()),
+                           blob);
+  }
+
+  std::string AccountEmail() const { return impl_->AccountEmail(); }
+  std::string KeyId() const { return impl_->KeyId(); }
+
+ private:
+  std::shared_ptr<oauth2_internal::Credentials> impl_;
+};
+
+}  // namespace
 
 using ::google::cloud::rest_internal::CurlHandle;
 
@@ -59,8 +100,6 @@ Client::Client(InternalOnly, Options const& opts,
 Client::Client(InternalOnly, Options const& opts)
     : Client(InternalOnlyNoDecorations{},
              storage_internal::MakeStorageConnection(opts)) {}
-
-StatusOr<Client> Client::CreateDefaultClient() { return Client(Options{}); }
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
@@ -235,17 +274,21 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) const {
   if (signing_account.has_value()) {
     return signing_account.value();
   }
-  return connection_->client_options().credentials()->AccountEmail();
+
+  auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
+      *connection_->options().get<UnifiedCredentialsOption>()));
+  return credentials.AccountEmail();
 }
 
 StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
-  auto credentials = connection_->client_options().credentials();
+  auto credentials = WrapRestCredentials(rest_internal::MapCredentials(
+      *connection_->options().get<UnifiedCredentialsOption>()));
 
   // First try to sign locally.
-  auto signed_blob = credentials->SignBlob(signing_account, string_to_sign);
+  auto signed_blob = credentials.SignBlob(signing_account, string_to_sign);
   if (signed_blob) {
-    return SignBlobResponseRaw{credentials->KeyId(), *std::move(signed_blob)};
+    return SignBlobResponseRaw{credentials.KeyId(), *std::move(signed_blob)};
   }
 
   // If signing locally fails that may be because the credentials do not
@@ -389,7 +432,223 @@ std::string Client::EndpointAuthority() const {
   return std::string(endpoint_authority);
 }
 
+// This magic number was obtained by experimentation summarized in #2657
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE
+#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE (8 * 1024 * 1024)
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE
+
+// This magic number was obtained by experimentation summarized in #2657
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE
+#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE \
+  (3 * 1024 * 1024 / 2)
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE
+
+// This is a result of experiments performed in #2657.
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
+#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE \
+  (20 * 1024 * 1024L)
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
+
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT
+#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT 120
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT
+
+// Define the defaults using a pre-processor macro, this allows the application
+// developers to change the defaults for their application by compiling with
+// different values.
+#ifndef STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
+#define STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD std::chrono::minutes(15)
+#endif  // STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
+
+#ifndef STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY
+#define STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY std::chrono::seconds(1)
+#endif  // STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY
+
+#ifndef STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY
+#define STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY std::chrono::minutes(5)
+#endif  // STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY
+
+#ifndef STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING
+#define STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING 2.0
+#endif  //  STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING
+
+namespace {
+
+using ::google::cloud::internal::GetEnv;
+
+absl::optional<std::string> GetEmulator() {
+  auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  if (emulator) return emulator;
+  return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+}
+
+std::size_t DefaultConnectionPoolSize() {
+  std::size_t nthreads = std::thread::hardware_concurrency();
+  if (nthreads == 0) {
+    return 4;
+  }
+  return 4 * nthreads;
+}
+
+}  // namespace
+
 namespace internal {
+
+Options ApplyPolicy(Options opts, RetryPolicy const& p) {
+  opts.set<RetryPolicyOption>(p.clone());
+  return opts;
+}
+
+Options ApplyPolicy(Options opts, BackoffPolicy const& p) {
+  opts.set<BackoffPolicyOption>(p.clone());
+  return opts;
+}
+
+Options ApplyPolicy(Options opts, IdempotencyPolicy const& p) {
+  opts.set<IdempotencyPolicyOption>(p.clone());
+  return opts;
+}
+
+Options DefaultOptions(std::shared_ptr<oauth2_internal::Credentials> const&,
+                       Options opts) {
+  return DefaultOptions(std::move(opts));
+}
+
+Options DefaultOptions(Options opts) {
+  auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
+  if (ud && !ud->empty()) {
+    opts.set<google::cloud::internal::UniverseDomainOption>(*std::move(ud));
+  }
+  auto gcs_ep = google::cloud::internal::UniverseDomainEndpoint(
+      "https://storage.googleapis.com", opts);
+  auto iam_ep = absl::StrCat(google::cloud::internal::UniverseDomainEndpoint(
+                                 "https://iamcredentials.googleapis.com", opts),
+                             "/v1");
+  Options o;
+  if (!opts.has<UnifiedCredentialsOption>()) {
+    o.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  }
+  // Storage has more stringent requirements w.r.t. self-signed JWTs
+  // than most services. Any scope makes the self-signed JWTs unusable with
+  // storage, but they remain usable with other services. We need to disable
+  // self-signed JWTs.
+  o.set<oauth2_internal::DisableSelfSignedJWTOption>({})
+      .set<RestEndpointOption>(std::move(gcs_ep))
+      .set<IamEndpointOption>(std::move(iam_ep))
+      .set<TargetApiVersionOption>("v1")
+      .set<ConnectionPoolSizeOption>(DefaultConnectionPoolSize())
+      .set<DownloadBufferSizeOption>(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE)
+      .set<UploadBufferSizeOption>(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE)
+      .set<MaximumSimpleUploadSizeOption>(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE)
+      .set<EnableCurlSslLockingOption>(true)
+      .set<EnableCurlSigpipeHandlerOption>(true)
+      .set<MaximumCurlSocketRecvSizeOption>(0)
+      .set<MaximumCurlSocketSendSizeOption>(0)
+      .set<TransferStallTimeoutOption>(std::chrono::seconds(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT))
+      .set<TransferStallMinimumRateOption>(1)
+      .set<DownloadStallMinimumRateOption>(1)
+      .set<RetryPolicyOption>(
+          LimitedTimeRetryPolicy(STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
+              .clone())
+      .set<BackoffPolicyOption>(
+          ExponentialBackoffPolicy(STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
+                                   STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
+                                   STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
+              .clone())
+      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
+
+  o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));
+  // If the application did not set `DownloadStallTimeoutOption` then use the
+  // same value as `TransferStallTimeoutOption` (which could be the default
+  // value). Some applications need tighter timeouts for downloads, but longer
+  // timeouts for other transfers.
+  if (!o.has<DownloadStallTimeoutOption>()) {
+    o.set<DownloadStallTimeoutOption>(o.get<TransferStallTimeoutOption>());
+  }
+
+  auto emulator = GetEmulator();
+  if (emulator.has_value()) {
+    o.set<RestEndpointOption>(*emulator).set<IamEndpointOption>(*emulator +
+                                                                "/iamapi");
+  }
+
+  auto logging = GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
+  if (logging) {
+    for (auto c : absl::StrSplit(*logging, ',')) {
+      GCP_LOG(INFO) << "Enabling logging for " << c;
+      o.lookup<LoggingComponentsOption>().insert(std::string(c));
+    }
+  }
+
+  auto tracing = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING");
+  if (tracing && !tracing->empty()) {
+    o.set<OpenTelemetryTracingOption>(true);
+  }
+
+  auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT");
+  if (project_id.has_value()) {
+    o.set<ProjectIdOption>(std::move(*project_id));
+  }
+
+  // Always apply the RestClient defaults, even if it is not in use. Now that we
+  // use the low-level initialization code in
+  // google/cloud/internal/curl_wrappers.cc, these are always needed.
+  namespace rest = ::google::cloud::rest_internal;
+  auto rest_defaults = Options{}
+                           .set<rest::DownloadStallTimeoutOption>(
+                               o.get<DownloadStallTimeoutOption>())
+                           .set<rest::DownloadStallMinimumRateOption>(
+                               o.get<DownloadStallMinimumRateOption>())
+                           .set<rest::TransferStallTimeoutOption>(
+                               o.get<TransferStallTimeoutOption>())
+                           .set<rest::TransferStallMinimumRateOption>(
+                               o.get<TransferStallMinimumRateOption>())
+                           .set<rest::MaximumCurlSocketRecvSizeOption>(
+                               o.get<MaximumCurlSocketRecvSizeOption>())
+                           .set<rest::MaximumCurlSocketSendSizeOption>(
+                               o.get<MaximumCurlSocketSendSizeOption>())
+                           .set<rest::ConnectionPoolSizeOption>(
+                               o.get<ConnectionPoolSizeOption>())
+                           .set<rest::EnableCurlSslLockingOption>(
+                               o.get<EnableCurlSslLockingOption>())
+                           .set<rest::EnableCurlSigpipeHandlerOption>(
+                               o.get<EnableCurlSigpipeHandlerOption>());
+
+  // These two are not always present, but if they are, and only if they are, we
+  // need to map their value to the corresponding option in `rest_internal::`.
+  if (o.has<storage_experimental::HttpVersionOption>()) {
+    rest_defaults.set<rest::HttpVersionOption>(
+        o.get<storage_experimental::HttpVersionOption>());
+  }
+  if (o.has<internal::CAPathOption>()) {
+    rest_defaults.set<rest::CAPathOption>(o.get<internal::CAPathOption>());
+  }
+
+  return google::cloud::internal::MergeOptions(std::move(o),
+                                               std::move(rest_defaults));
+}
+
+Options DefaultOptionsWithCredentials(Options opts) {
+  if (opts.has<UnifiedCredentialsOption>()) {
+    auto credentials =
+        rest_internal::MapCredentials(*opts.get<UnifiedCredentialsOption>());
+    return internal::DefaultOptions(std::move(credentials), std::move(opts));
+  }
+  if (GetEmulator().has_value()) {
+    return internal::DefaultOptions(
+        rest_internal::MapCredentials(
+            *google::cloud::MakeInsecureCredentials()),
+        std::move(opts));
+  }
+  auto credentials = rest_internal::MapCredentials(
+      *google::cloud::MakeGoogleDefaultCredentials(
+          google::cloud::internal::MakeAuthOptions(opts)));
+  return internal::DefaultOptions(std::move(credentials), std::move(opts));
+}
 
 Client ClientImplDetails::CreateWithDecorations(
     Options const& opts, std::shared_ptr<StorageConnection> connection) {

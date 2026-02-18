@@ -1630,6 +1630,170 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               DeleteQuotaRule,
               (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreBackupFiles(Matcher<google::cloud::netapp::v1::RestoreBackupFilesRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>,
+      RestoreBackupFiles,
+      (google::cloud::netapp::v1::RestoreBackupFilesRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RestoreBackupFiles(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RestoreBackupFiles,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::RestoreBackupFilesRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreBackupFiles(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>,
+      RestoreBackupFiles, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::HostGroup>),
+              ListHostGroups,
+              (google::cloud::netapp::v1::ListHostGroupsRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::netapp::v1::HostGroup>, GetHostGroup,
+              (google::cloud::netapp::v1::GetHostGroupRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateHostGroup(Matcher<google::cloud::netapp::v1::CreateHostGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::HostGroup>>, CreateHostGroup,
+      (google::cloud::netapp::v1::CreateHostGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateHostGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateHostGroup,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::CreateHostGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateHostGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::HostGroup>>,
+              CreateHostGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateHostGroup(Matcher<google::cloud::netapp::v1::UpdateHostGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::HostGroup>>, UpdateHostGroup,
+      (google::cloud::netapp::v1::UpdateHostGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateHostGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateHostGroup,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::UpdateHostGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateHostGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::HostGroup>>,
+              UpdateHostGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteHostGroup(Matcher<google::cloud::netapp::v1::DeleteHostGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+      DeleteHostGroup,
+      (google::cloud::netapp::v1::DeleteHostGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteHostGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteHostGroup,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::DeleteHostGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteHostGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+              DeleteHostGroup,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_REST_STUB_UTILS_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {

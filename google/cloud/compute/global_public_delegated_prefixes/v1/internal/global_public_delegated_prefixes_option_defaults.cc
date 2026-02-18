@@ -47,7 +47,7 @@ Options GlobalPublicDelegatedPrefixesDefaultOptions(Options options) {
                     GlobalPublicDelegatedPrefixesRetryPolicyOption>(
         compute_global_public_delegated_prefixes_v1::
             GlobalPublicDelegatedPrefixesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_global_public_delegated_prefixes_v1::

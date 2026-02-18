@@ -40,7 +40,7 @@ Options ExecutionsDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<run_v2::ExecutionsRetryPolicyOption>()) {
     options.set<run_v2::ExecutionsRetryPolicyOption>(
-        run_v2::ExecutionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        run_v2::ExecutionsLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<run_v2::ExecutionsBackoffPolicyOption>()) {

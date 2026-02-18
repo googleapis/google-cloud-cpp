@@ -1,4 +1,4 @@
-@com_google_googleapis//google/cloud/clouddms/logging/v1:clouddms_platform_logs.proto
-@com_google_googleapis//google/cloud/clouddms/v1:clouddms.proto
-@com_google_googleapis//google/cloud/clouddms/v1:clouddms_resources.proto
-@com_google_googleapis//google/cloud/clouddms/v1:conversionworkspace_resources.proto
+@googleapis//google/cloud/clouddms/logging/v1:clouddms_platform_logs.proto
+@googleapis//google/cloud/clouddms/v1:clouddms.proto
+@googleapis//google/cloud/clouddms/v1:clouddms_resources.proto
+@googleapis//google/cloud/clouddms/v1:conversionworkspace_resources.proto

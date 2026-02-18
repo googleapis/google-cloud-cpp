@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/datastore/v1/datastore.pb.h>
+#include "google/datastore/v1/datastore.pb.h"
 #include <memory>
 
 namespace google {

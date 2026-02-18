@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/spanner/admin/instance/v1/spanner_instance_admin.pb.h"
 #include <memory>
 
 namespace google {
@@ -372,7 +372,6 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

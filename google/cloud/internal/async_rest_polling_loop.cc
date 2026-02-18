@@ -19,7 +19,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.pb.h>
+#include "google/longrunning/operations.pb.h"
 #include <memory>
 #include <string>
 

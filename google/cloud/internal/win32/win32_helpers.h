@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_WIN32_WIN32_HELPERS_H
 
 #ifdef _WIN32
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 #include <string>
 

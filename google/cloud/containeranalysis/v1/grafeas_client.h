@@ -247,7 +247,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.DeleteOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L418}
+  /// [grafeas.v1.DeleteOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L431}
   ///
   // clang-format on
   Status DeleteOccurrence(std::string const& name, Options opts = {});
@@ -275,7 +275,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.DeleteOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L418}
+  /// [grafeas.v1.DeleteOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L431}
   ///
   // clang-format on
   Status DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request,
@@ -301,7 +301,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.CreateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L428}
+  /// [grafeas.v1.CreateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L441}
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
@@ -332,7 +332,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.CreateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L428}
+  /// [grafeas.v1.CreateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L441}
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
@@ -359,8 +359,8 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.BatchCreateOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L585}
-  /// [grafeas.v1.BatchCreateOccurrencesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L598}
+  /// [grafeas.v1.BatchCreateOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L611}
+  /// [grafeas.v1.BatchCreateOccurrencesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L624}
   ///
   // clang-format on
   StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
@@ -391,8 +391,8 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.BatchCreateOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L585}
-  /// [grafeas.v1.BatchCreateOccurrencesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L598}
+  /// [grafeas.v1.BatchCreateOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L611}
+  /// [grafeas.v1.BatchCreateOccurrencesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L624}
   ///
   // clang-format on
   StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
@@ -421,7 +421,7 @@ class GrafeasClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
-  /// [grafeas.v1.UpdateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L440}
+  /// [grafeas.v1.UpdateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L453}
   ///
   // clang-format on
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
@@ -452,7 +452,7 @@ class GrafeasClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
-  /// [grafeas.v1.UpdateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L440}
+  /// [grafeas.v1.UpdateOccurrenceRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L453}
   ///
   // clang-format on
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
@@ -478,7 +478,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.GetOccurrenceNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L464}
+  /// [grafeas.v1.GetOccurrenceNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L477}
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
@@ -509,7 +509,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.GetOccurrenceNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L464}
+  /// [grafeas.v1.GetOccurrenceNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L477}
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
@@ -535,7 +535,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.GetNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L454}
+  /// [grafeas.v1.GetNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L467}
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
@@ -565,7 +565,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.GetNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L454}
+  /// [grafeas.v1.GetNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L467}
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
@@ -601,7 +601,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.ListNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L474}
+  /// [grafeas.v1.ListNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L487}
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
@@ -641,7 +641,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.ListNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L474}
+  /// [grafeas.v1.ListNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L487}
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
@@ -665,7 +665,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.DeleteNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L504}
+  /// [grafeas.v1.DeleteNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L530}
   ///
   // clang-format on
   Status DeleteNote(std::string const& name, Options opts = {});
@@ -691,7 +691,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.DeleteNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L504}
+  /// [grafeas.v1.DeleteNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L530}
   ///
   // clang-format on
   Status DeleteNote(grafeas::v1::DeleteNoteRequest const& request,
@@ -718,7 +718,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.CreateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L514}
+  /// [grafeas.v1.CreateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L540}
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
@@ -750,7 +750,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.CreateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L514}
+  /// [grafeas.v1.CreateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L540}
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
   ///
   // clang-format on
@@ -777,8 +777,8 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.BatchCreateNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L566}
-  /// [grafeas.v1.BatchCreateNotesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L579}
+  /// [grafeas.v1.BatchCreateNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L592}
+  /// [grafeas.v1.BatchCreateNotesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L605}
   ///
   // clang-format on
   StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
@@ -808,8 +808,8 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.BatchCreateNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L566}
-  /// [grafeas.v1.BatchCreateNotesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L579}
+  /// [grafeas.v1.BatchCreateNotesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L592}
+  /// [grafeas.v1.BatchCreateNotesResponse]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L605}
   ///
   // clang-format on
   StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
@@ -837,7 +837,7 @@ class GrafeasClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
-  /// [grafeas.v1.UpdateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L528}
+  /// [grafeas.v1.UpdateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L554}
   ///
   // clang-format on
   StatusOr<grafeas::v1::Note> UpdateNote(
@@ -868,7 +868,7 @@ class GrafeasClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [grafeas.v1.Note]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L309}
-  /// [grafeas.v1.UpdateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L528}
+  /// [grafeas.v1.UpdateNoteRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L554}
   ///
   // clang-format on
   StatusOr<grafeas::v1::Note> UpdateNote(
@@ -905,7 +905,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.ListNoteOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L542}
+  /// [grafeas.v1.ListNoteOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L568}
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on
@@ -946,7 +946,7 @@ class GrafeasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [grafeas.v1.ListNoteOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L542}
+  /// [grafeas.v1.ListNoteOccurrencesRequest]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L568}
   /// [grafeas.v1.Occurrence]: @googleapis_reference_link{grafeas/v1/grafeas.proto#L241}
   ///
   // clang-format on

@@ -47,8 +47,7 @@ include(CTest)
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
-find_package(opentelemetry-cpp CONFIG)
-find_package(Crc32c)
+find_package(opentelemetry-cpp CONFIG REQUIRED)
 
 # the client library
 add_library(
@@ -90,6 +89,7 @@ add_library(
     admin/internal/bigtable_table_admin_auth_decorator.h
     admin/internal/bigtable_table_admin_connection_impl.cc
     admin/internal/bigtable_table_admin_connection_impl.h
+    admin/internal/bigtable_table_admin_connection_impl_bespoke.cc
     admin/internal/bigtable_table_admin_logging_decorator.cc
     admin/internal/bigtable_table_admin_logging_decorator.h
     admin/internal/bigtable_table_admin_metadata_decorator.cc
@@ -105,11 +105,8 @@ add_library(
     admin/internal/bigtable_table_admin_tracing_connection.h
     admin/internal/bigtable_table_admin_tracing_stub.cc
     admin/internal/bigtable_table_admin_tracing_stub.h
-    admin_client.cc
-    admin_client.h
     app_profile_config.cc
     app_profile_config.h
-    async_row_reader.h
     bound_query.cc
     bound_query.h
     bytes.cc
@@ -117,15 +114,11 @@ add_library(
     cell.h
     client.cc
     client.h
-    client_options.cc
-    client_options.h
     cluster_config.cc
     cluster_config.h
     cluster_list_responses.h
     column_family.h
     completion_queue.h
-    data_client.cc
-    data_client.h
     data_connection.cc
     data_connection.h
     expr.cc
@@ -137,10 +130,6 @@ add_library(
     iam_policy.h
     idempotent_mutation_policy.cc
     idempotent_mutation_policy.h
-    instance_admin.cc
-    instance_admin.h
-    instance_admin_client.cc
-    instance_admin_client.h
     instance_config.cc
     instance_config.h
     instance_list_responses.h
@@ -194,18 +183,9 @@ add_library(
     internal/default_row_reader.h
     internal/defaults.cc
     internal/defaults.h
+    internal/endpoint_options.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
-    internal/legacy_async_bulk_apply.cc
-    internal/legacy_async_bulk_apply.h
-    internal/legacy_async_row_reader.cc
-    internal/legacy_async_row_reader.h
-    internal/legacy_async_row_sampler.cc
-    internal/legacy_async_row_sampler.h
-    internal/legacy_row_reader.cc
-    internal/legacy_row_reader.h
-    internal/logging_data_client.cc
-    internal/logging_data_client.h
     internal/logging_result_set_reader.cc
     internal/logging_result_set_reader.h
     internal/metrics.cc
@@ -238,8 +218,6 @@ add_library(
     internal/traced_row_reader.h
     internal/tuple_utils.h
     internal/unary_client_utils.h
-    metadata_update_policy.cc
-    metadata_update_policy.h
     mutation_batcher.cc
     mutation_batcher.h
     mutation_branch.h
@@ -276,8 +254,6 @@ add_library(
     sql_statement.h
     table.cc
     table.h
-    table_admin.cc
-    table_admin.h
     table_config.cc
     table_config.h
     table_resource.cc
@@ -288,27 +264,21 @@ add_library(
     value.h
     version.cc
     version.h
-    version_info.h
-    wait_for_consistency.cc
-    wait_for_consistency.h)
+    version_info.h)
 target_link_libraries(
     google_cloud_cpp_bigtable
     PUBLIC absl::memory
            google-cloud-cpp::bigtable_protos
            google-cloud-cpp::common
            google-cloud-cpp::grpc_utils
-           Crc32c::crc32c
            gRPC::grpc++
            gRPC::grpc
            protobuf::libprotobuf)
-if (opentelemetry-cpp_FOUND)
-    target_compile_definitions(
-        google_cloud_cpp_bigtable
-        PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
-    target_link_libraries(google_cloud_cpp_bigtable
-                          PUBLIC google-cloud-cpp::opentelemetry)
-    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
-endif ()
+target_compile_definitions(google_cloud_cpp_bigtable
+                           PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
+target_link_libraries(google_cloud_cpp_bigtable
+                      PUBLIC google-cloud-cpp::opentelemetry)
+set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigtable)
 target_include_directories(
     google_cloud_cpp_bigtable
@@ -354,9 +324,7 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
     "google_cloud_cpp_bigtable_protos"
-    ${EXTRA_MODULES}
-    LIBS
-    crc32c)
+    ${EXTRA_MODULES})
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -410,11 +378,8 @@ if (BUILD_TESTING)
         testing/cleanup_stale_resources.h
         testing/embedded_server_test_fixture.cc
         testing/embedded_server_test_fixture.h
-        testing/inprocess_data_client.cc
-        testing/inprocess_data_client.h
         testing/mock_async_failing_rpc_factory.h
         testing/mock_bigtable_stub.h
-        testing/mock_data_client.h
         testing/mock_mutate_rows_limiter.h
         testing/mock_mutate_rows_reader.h
         testing/mock_partial_result_set_reader.h
@@ -425,9 +390,7 @@ if (BUILD_TESTING)
         testing/random_names.cc
         testing/random_names.h
         testing/table_integration_test.cc
-        testing/table_integration_test.h
-        testing/table_test_fixture.cc
-        testing/table_test_fixture.h)
+        testing/table_integration_test.h)
     target_link_libraries(
         bigtable_client_testing
         PUBLIC google-cloud-cpp::bigtable
@@ -452,18 +415,15 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_client_unit_tests
         # cmake-format: sort
-        admin_client_test.cc
         app_profile_config_test.cc
         async_read_stream_test.cc
         bigtable_version_test.cc
         bound_query_test.cc
         bytes_test.cc
         cell_test.cc
-        client_options_test.cc
         client_test.cc
         cluster_config_test.cc
         column_family_test.cc
-        data_client_test.cc
         data_connection_test.cc
         expr_test.cc
         filters_test.cc
@@ -471,8 +431,6 @@ if (BUILD_TESTING)
         iam_binding_test.cc
         iam_policy_test.cc
         idempotent_mutation_policy_test.cc
-        instance_admin_client_test.cc
-        instance_admin_test.cc
         instance_config_test.cc
         instance_resource_test.cc
         instance_update_config_test.cc
@@ -492,12 +450,6 @@ if (BUILD_TESTING)
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
-        internal/legacy_async_bulk_apply_test.cc
-        internal/legacy_async_row_reader_test.cc
-        internal/legacy_async_row_sampler_test.cc
-        internal/legacy_bulk_mutator_test.cc
-        internal/legacy_row_reader_test.cc
-        internal/logging_data_client_test.cc
         internal/logging_result_set_reader_test.cc
         internal/metrics_test.cc
         internal/mutate_rows_limiter_test.cc
@@ -511,8 +463,6 @@ if (BUILD_TESTING)
         internal/retry_traits_test.cc
         internal/traced_row_reader_test.cc
         internal/tuple_utils_test.cc
-        legacy_table_test.cc
-        metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
         mutation_batcher_test.cc
         mutations_test.cc
@@ -528,22 +478,13 @@ if (BUILD_TESTING)
         rpc_backoff_policy_test.cc
         rpc_retry_policy_test.cc
         sql_statement_test.cc
-        table_admin_test.cc
-        table_apply_test.cc
-        table_bulk_apply_test.cc
-        table_check_and_mutate_row_test.cc
         table_config_test.cc
-        table_readmodifywriterow_test.cc
-        table_readrow_test.cc
-        table_readrows_test.cc
         table_resource_test.cc
-        table_sample_row_keys_test.cc
         table_test.cc
         testing/cleanup_stale_resources_test.cc
         testing/random_names_test.cc
         timestamp_test.cc
-        value_test.cc
-        wait_for_consistency_test.cc)
+        value_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("bigtable_client_unit_tests.bzl"

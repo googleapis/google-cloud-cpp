@@ -19,16 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_INTERNAL_ORACLE_DATABASE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_INTERNAL_ORACLE_DATABASE_STUB_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/oracledatabase/v1/oracledatabase.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/oracledatabase/v1/oracledatabase.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -1167,5 +1170,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oracledatabase_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_INTERNAL_ORACLE_DATABASE_STUB_H

@@ -43,7 +43,7 @@ Options AssuredWorkloadsServiceDefaultOptions(Options options) {
           assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()) {
     options.set<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>(
         assuredworkloads_v1::AssuredWorkloadsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

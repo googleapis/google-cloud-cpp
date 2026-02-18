@@ -10,6 +10,9 @@
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+> Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) for
+> details on updating existing applications using v1.x.y or v2.x.y.
+
 > Please check the [CHANGELOG] for important announcements and upcoming changes.
 
 ## Quickstart
@@ -119,6 +122,9 @@ See each library's `README.md` file for more information about:
 - [API Keys API](google/cloud/apikeys/README.md)
   [[quickstart]](google/cloud/apikeys/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/apikeys/latest)
+- [Cloud API Registry API](google/cloud/apiregistry/README.md)
+  [[quickstart]](google/cloud/apiregistry/quickstart/README.md)
+  [[reference]](https://cloud.google.com/cpp/docs/reference/apiregistry/latest)
 - [App Engine Admin API](google/cloud/appengine/README.md)
   [[quickstart]](google/cloud/appengine/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/appengine/latest)
@@ -134,6 +140,9 @@ See each library's `README.md` file for more information about:
 - [Assured Workloads API](google/cloud/assuredworkloads/README.md)
   [[quickstart]](google/cloud/assuredworkloads/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/assuredworkloads/latest)
+- [Audit Manager API](google/cloud/auditmanager/README.md)
+  [[quickstart]](google/cloud/auditmanager/quickstart/README.md)
+  [[reference]](https://cloud.google.com/cpp/docs/reference/auditmanager/latest)
 - [Cloud AutoML API](google/cloud/automl/README.md)
   [[quickstart]](google/cloud/automl/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/automl/latest)
@@ -302,6 +311,9 @@ See each library's `README.md` file for more information about:
 - [Anthos Multi-Cloud API](google/cloud/gkemulticloud/README.md)
   [[quickstart]](google/cloud/gkemulticloud/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/gkemulticloud/latest)
+- [GKE Recommender API](google/cloud/gkerecommender/README.md)
+  [[quickstart]](google/cloud/gkerecommender/quickstart/README.md)
+  [[reference]](https://cloud.google.com/cpp/docs/reference/gkerecommender/latest)
 - [Google Cloud IAM](google/cloud/iam/README.md)
   [[quickstart]](google/cloud/iam/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/iam/latest)
@@ -574,8 +586,8 @@ run the examples included with the libraries.
 
 ### Building with Bazel
 
-This library requires Bazel >= 6.0. From the top-level directory, run the usual
-commands.
+This library requires Bazel >= 7.0. We recommend using Bazel modules instead of
+WORKSPACE files. From the top-level directory, run the usual commands.
 
 ```shell
 bazel build //...
@@ -583,7 +595,7 @@ bazel build //...
 
 ### Building with CMake
 
-This library requires CMake >= 3.10. If you are planning to install the
+This library requires CMake >= 3.22. If you are planning to install the
 libraries please consult the [packaging guide](/doc/packaging.md), these
 instructions will **NOT** produce artifacts that you can put in `/usr/local`, or
 share with your colleagues.
@@ -604,11 +616,11 @@ The binary artifacts, such as examples, will be placed in `cmake-out/`.
 - This project follows Google's
   [Foundational C++ Support Policy][support-policy], which is summarized in the
   [Foundational C++ Support Matrix][support-matrix].
-  - Language Version (>= C++14).
+  - Language Version (>= C++17).
   - Operating Systems: Windows, macOS, and Linux.
-  - Build Systems: Bazel (>= 6.0), CMake (>= 3.10).
-  - Compilers: GCC (>= 7.5), Clang (>= 6.0), MSVC (>= 2022), Apple Clang (>=
-    12).
+  - Build Systems: Bazel (>= 7.0), CMake (>= 3.22).
+  - Compilers: GCC (>= 7.5), Clang (>= 14.0.0), MSVC (>= 2022), Apple Clang (>=
+    17).
 - This project uses dependencies described in
   [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
 - This project works with or without exceptions enabled.

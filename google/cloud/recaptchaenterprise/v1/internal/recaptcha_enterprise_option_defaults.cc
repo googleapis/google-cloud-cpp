@@ -46,7 +46,7 @@ Options RecaptchaEnterpriseServiceDefaultOptions(Options options) {
         recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicyOption>(
         recaptchaenterprise_v1::
             RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<recaptchaenterprise_v1::

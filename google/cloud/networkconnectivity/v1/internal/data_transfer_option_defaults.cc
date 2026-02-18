@@ -43,7 +43,7 @@ Options DataTransferServiceDefaultOptions(Options options) {
           networkconnectivity_v1::DataTransferServiceRetryPolicyOption>()) {
     options.set<networkconnectivity_v1::DataTransferServiceRetryPolicyOption>(
         networkconnectivity_v1::DataTransferServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

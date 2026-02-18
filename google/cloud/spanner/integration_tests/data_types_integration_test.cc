@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
@@ -20,7 +20,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
+#include "protos/google/cloud/spanner/testing/singer.pb.h"
 #include <gmock/gmock.h>
 #include <cstdint>
 #include <string>
@@ -1021,3 +1021,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

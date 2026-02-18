@@ -43,7 +43,7 @@ Options AnalyticsHubServiceDefaultOptions(Options options) {
           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()) {
     options.set<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>(
         bigquery_analyticshub_v1::AnalyticsHubServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

@@ -42,7 +42,7 @@ Options OsConfigZonalServiceDefaultOptions(Options options) {
   if (!options.has<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()) {
     options.set<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>(
         osconfig_v1::OsConfigZonalServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<osconfig_v1::OsConfigZonalServiceBackoffPolicyOption>()) {

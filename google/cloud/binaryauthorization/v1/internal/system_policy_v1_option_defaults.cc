@@ -42,7 +42,7 @@ Options SystemPolicyV1DefaultOptions(Options options) {
   if (!options.has<binaryauthorization_v1::SystemPolicyV1RetryPolicyOption>()) {
     options.set<binaryauthorization_v1::SystemPolicyV1RetryPolicyOption>(
         binaryauthorization_v1::SystemPolicyV1LimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

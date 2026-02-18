@@ -17,9 +17,12 @@
 // source: google/storage/control/v2/storage_control.proto
 
 #include "google/cloud/storagecontrol/v2/internal/storage_control_auth_decorator.h"
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -365,3 +368,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

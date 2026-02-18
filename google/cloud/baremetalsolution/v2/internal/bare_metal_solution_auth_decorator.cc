@@ -17,9 +17,12 @@
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_auth_decorator.h"
-#include <google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h>
+#include "google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -815,3 +818,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

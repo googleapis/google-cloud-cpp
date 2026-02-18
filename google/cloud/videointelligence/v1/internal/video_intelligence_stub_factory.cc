@@ -22,15 +22,18 @@
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_metadata_decorator.h"
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_tracing_stub.h"
+#include "google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -73,3 +76,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

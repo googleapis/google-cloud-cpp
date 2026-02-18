@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/dataform/logging/v1:logging.proto
-@com_google_googleapis//google/cloud/dataform/v1:dataform.proto
+@googleapis//google/cloud/dataform/logging/v1:logging.proto
+@googleapis//google/cloud/dataform/v1:dataform.proto

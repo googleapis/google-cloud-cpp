@@ -28,8 +28,6 @@ namespace cloud {
 namespace profiler_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ExportServiceTracingConnection
     : public profiler_v2::ExportServiceConnection {
  public:
@@ -47,8 +45,6 @@ class ExportServiceTracingConnection
  private:
   std::shared_ptr<profiler_v2::ExportServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

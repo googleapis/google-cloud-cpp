@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2022-02-11T02:48:08.775499777Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: e373a802-f341-4559-bb55-7ec64f1ee825
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: quickstart-production-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/e373a802-f341-4559-bb55-7ec64f1ee825
+name: prepare-for-v3-0-0-quickstart-production-pr
 substitutions:
   _BUILD_NAME: quickstart-production
   _DISTRO: fedora-latest-cmake

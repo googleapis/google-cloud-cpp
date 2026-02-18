@@ -18,12 +18,12 @@
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_join.h"
 #include "absl/time/time.h"
 #include <algorithm>
 #include <functional>

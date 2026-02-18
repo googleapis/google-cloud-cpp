@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2024-04-29T15:41:19.785339726Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 93fdf9e2-71b2-44a1-911e-13dca09cbd7c
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-ubuntu-24-04-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/93fdf9e2-71b2-44a1-911e-13dca09cbd7c
+name: prepare-for-v3-0-0-demo-ubuntu-24-04-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-ubuntu-24.04

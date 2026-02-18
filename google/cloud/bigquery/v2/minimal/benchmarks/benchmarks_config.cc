@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmarks_config.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <chrono>
 #include <functional>
 #include <sstream>

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_ANALYTICS_HUB_CONNECTION_H
 
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
+#include "google/cloud/bigquery/analyticshub/v1/analyticshub.pb.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/analyticshub/v1/analyticshub.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

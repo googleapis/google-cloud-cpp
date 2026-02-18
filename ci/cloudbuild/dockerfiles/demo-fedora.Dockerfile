@@ -31,7 +31,7 @@ RUN dnf makecache && \
 # ```bash
 RUN dnf makecache && \
     dnf install -y protobuf-compiler protobuf-devel grpc-cpp grpc-devel \
-        json-devel libcurl-devel google-crc32c-devel openssl-devel
+        json-devel libcurl-devel openssl-devel
 # ```
 
 # #### Patching pkg-config
@@ -54,14 +54,6 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 # ```
 
-# Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting
-# with Fedora:38. If you using Fedora >= 38 or you are not planning to use
-# `pkg-config(1)` you can ignore this step.  Alternatively, you can install RE2
-# and gRPC from source.
-# ```
-# sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
-# ```
-
 # The following steps will install libraries and tools in `/usr/local`. By
 # default, pkgconf does not search in these directories. We need to explicitly
 # set the search path.
@@ -79,14 +71,14 @@ ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/l
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
-        -DWITH_STL=CXX14 \
-        -DWITH_ABSEIL=ON \
+        -DWITH_STL=CXX17 \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -96,6 +88,8 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20
 # ```
 
 ## [DONE packaging.md]
+
+RUN dnf makecache && dnf install -y gdb
 
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \

@@ -43,7 +43,7 @@ Options VideoStitcherServiceDefaultOptions(Options options) {
            .has<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()) {
     options.set<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>(
         video_stitcher_v1::VideoStitcherServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

@@ -42,7 +42,7 @@ Options KeyManagementServiceDefaultOptions(Options options) {
   if (!options.has<kms_v1::KeyManagementServiceRetryPolicyOption>()) {
     options.set<kms_v1::KeyManagementServiceRetryPolicyOption>(
         kms_v1::KeyManagementServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<kms_v1::KeyManagementServiceBackoffPolicyOption>()) {

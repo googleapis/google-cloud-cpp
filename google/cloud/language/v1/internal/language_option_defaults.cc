@@ -41,7 +41,7 @@ Options LanguageServiceDefaultOptions(Options options) {
   if (!options.has<language_v1::LanguageServiceRetryPolicyOption>()) {
     options.set<language_v1::LanguageServiceRetryPolicyOption>(
         language_v1::LanguageServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<language_v1::LanguageServiceBackoffPolicyOption>()) {

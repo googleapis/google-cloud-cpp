@@ -17,8 +17,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-name: universe-domain-ci
+    branch: prepare-for-v3.0.0
+name: prepare-for-v3-0-0-universe-domain-ci
 substitutions:
   _BUILD_NAME: universe-domain
   _DISTRO: fedora-latest-bazel

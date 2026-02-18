@@ -28,8 +28,6 @@ namespace cloud {
 namespace cloudbuild_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RepositoryManagerTracingConnection
     : public cloudbuild_v2::RepositoryManagerConnection {
  public:
@@ -173,8 +171,6 @@ class RepositoryManagerTracingConnection
  private:
   std::shared_ptr<cloudbuild_v2::RepositoryManagerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

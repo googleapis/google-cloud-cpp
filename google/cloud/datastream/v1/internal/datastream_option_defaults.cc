@@ -41,7 +41,7 @@ Options DatastreamDefaultOptions(Options options) {
   if (!options.has<datastream_v1::DatastreamRetryPolicyOption>()) {
     options.set<datastream_v1::DatastreamRetryPolicyOption>(
         datastream_v1::DatastreamLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<datastream_v1::DatastreamBackoffPolicyOption>()) {

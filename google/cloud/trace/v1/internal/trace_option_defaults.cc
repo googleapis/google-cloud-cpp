@@ -40,7 +40,7 @@ Options TraceServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<trace_v1::TraceServiceRetryPolicyOption>()) {
     options.set<trace_v1::TraceServiceRetryPolicyOption>(
-        trace_v1::TraceServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        trace_v1::TraceServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<trace_v1::TraceServiceBackoffPolicyOption>()) {

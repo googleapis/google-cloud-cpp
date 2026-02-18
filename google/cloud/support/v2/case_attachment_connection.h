@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_ATTACHMENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_ATTACHMENT_CONNECTION_H
 
+#include "google/cloud/support/v2/attachment_service.pb.h"
 #include "google/cloud/support/v2/case_attachment_connection_idempotency_policy.h"
 #include "google/cloud/support/v2/internal/case_attachment_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/support/v2/attachment_service.pb.h>
 #include <memory>
 
 namespace google {

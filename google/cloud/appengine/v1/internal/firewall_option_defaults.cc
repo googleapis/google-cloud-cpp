@@ -40,7 +40,7 @@ Options FirewallDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::FirewallRetryPolicyOption>()) {
     options.set<appengine_v1::FirewallRetryPolicyOption>(
-        appengine_v1::FirewallLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        appengine_v1::FirewallLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<appengine_v1::FirewallBackoffPolicyOption>()) {

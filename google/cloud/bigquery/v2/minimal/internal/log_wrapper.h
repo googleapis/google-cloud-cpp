@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_LOG_WRAPPER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_LOG_WRAPPER_H
 
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/string_view.h"
 
 namespace google {

@@ -44,7 +44,7 @@ Options GroundedGenerationServiceDefaultOptions(Options options) {
           discoveryengine_v1::GroundedGenerationServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::GroundedGenerationServiceRetryPolicyOption>(
         discoveryengine_v1::GroundedGenerationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

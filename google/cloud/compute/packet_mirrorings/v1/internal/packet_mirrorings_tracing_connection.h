@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_packet_mirrorings_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class PacketMirroringsTracingConnection
     : public compute_packet_mirrorings_v1::PacketMirroringsConnection {
  public:
@@ -101,8 +99,6 @@ class PacketMirroringsTracingConnection
   std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

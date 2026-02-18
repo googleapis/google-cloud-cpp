@@ -20,7 +20,7 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/port_platform.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/transaction.pb.h>
+#include "google/spanner/v1/transaction.pb.h"
 #include <condition_variable>
 #include <cstdint>
 #include <memory>

@@ -44,13 +44,6 @@ capture_build_info(
     ],
 )
 
-config_setting(
-    name = "enable_opentelemetry",
-    flag_values = {
-        "//:enable_opentelemetry": "true",
-    },
-)
-
 filegroup(
     name = "common_hdrs",
     srcs = [h for h in google_cloud_cpp_common_hdrs if not h.startswith("internal/")],
@@ -61,13 +54,6 @@ cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
-    defines = select({
-        ":enable_opentelemetry": [
-            # Enable OpenTelemetry features in google-cloud-cpp
-            "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
-        ],
-        "//conditions:default": [],
-    }),
     linkopts = select({
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
@@ -86,20 +72,16 @@ cc_library(
         "//:__pkg__",
     ],
     deps = [
-        "@com_google_absl//absl/base",
-        "@com_google_absl//absl/functional:function_ref",
-        "@com_google_absl//absl/strings",
-        "@com_google_absl//absl/strings:str_format",
-        "@com_google_absl//absl/time",
-        "@com_google_absl//absl/types:optional",
-        "@com_google_absl//absl/types:span",
-        "@com_google_absl//absl/types:variant",
+        "@abseil-cpp//absl/base",
+        "@abseil-cpp//absl/functional:function_ref",
+        "@abseil-cpp//absl/strings",
+        "@abseil-cpp//absl/strings:str_format",
+        "@abseil-cpp//absl/time",
+        "@abseil-cpp//absl/types:optional",
+        "@abseil-cpp//absl/types:span",
+        "@abseil-cpp//absl/types:variant",
+        "@opentelemetry-cpp//api",
     ] + select({
-        ":enable_opentelemetry": [
-            "@io_opentelemetry_cpp//api",
-        ],
-        "//conditions:default": [],
-    }) + select({
         "@platforms//os:windows": [],
         "//conditions:default": [
             "@boringssl//:crypto",
@@ -109,13 +91,11 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_common",
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. Use
-    //:common instead. More info:
-    https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_common_private"],
 )
 
@@ -130,7 +110,7 @@ cc_library(
         ":google_cloud_cpp_common",
         ":google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_common_unit_tests]
 
@@ -166,28 +146,25 @@ cc_library(
     ],
     deps = [
         ":google_cloud_cpp_common",
-        "@com_github_grpc_grpc//:grpc++",
-        "@com_google_absl//absl/functional:function_ref",
-        "@com_google_absl//absl/time",
-        "@com_google_googleapis//:googleapis_system_includes",
-        "@com_google_googleapis//google/cloud/location:location_cc_grpc",
-        "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc",
-        "@com_google_googleapis//google/iam/v1:iam_cc_grpc",
-        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
-        "@com_google_googleapis//google/rpc:error_details_cc_proto",
-        "@com_google_googleapis//google/rpc:status_cc_proto",
+        "@abseil-cpp//absl/functional:function_ref",
+        "@abseil-cpp//absl/time",
+        "@googleapis//google/cloud/location:location_cc_grpc",
+        "@googleapis//google/iam/credentials/v1:credentials_cc_grpc",
+        "@googleapis//google/iam/v1:iam_cc_grpc",
+        "@googleapis//google/longrunning:longrunning_cc_grpc",
+        "@googleapis//google/rpc:error_details_cc_proto",
+        "@googleapis//google/rpc:status_cc_proto",
+        "@grpc//:grpc++",
     ],
 )
 
 cc_library(
     name = "google_cloud_cpp_grpc_utils",
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. Use
-    //:grpc_utils instead. More info:
-    https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_grpc_utils_private"],
 )
 
@@ -200,9 +177,9 @@ cc_library(
         ":google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
-        "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
-        "@com_google_googletest//:gtest_main",
+        "@googleapis//google/bigtable/admin/v2:admin_cc_grpc",
+        "@googleapis//google/bigtable/v2:bigtable_cc_grpc",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_grpc_utils_unit_tests]
 
@@ -217,9 +194,9 @@ cc_library(
         ":google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
-        "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
-        "@com_google_googletest//:gtest_main",
+        "@googleapis//google/bigtable/admin/v2:admin_cc_grpc",
+        "@googleapis//google/bigtable/v2:bigtable_cc_grpc",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_grpc_utils_integration_tests]
 
@@ -231,8 +208,8 @@ cc_library(
         ":google_cloud_cpp_grpc_utils",
         "@com_google_benchmark//:benchmark",
         "@com_google_benchmark//:benchmark_main",
-        "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
-        "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
+        "@googleapis//google/bigtable/admin/v2:admin_cc_grpc",
+        "@googleapis//google/bigtable/v2:bigtable_cc_grpc",
     ],
 ) for test in google_cloud_cpp_grpc_utils_benchmarks]
 
@@ -279,10 +256,10 @@ cc_library(
     visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_common",
-        "@com_github_curl_curl//:curl",
-        "@com_github_nlohmann_json//:json",
-        "@com_google_absl//absl/functional:function_ref",
-        "@com_google_absl//absl/types:span",
+        "@abseil-cpp//absl/functional:function_ref",
+        "@abseil-cpp//absl/types:span",
+        "@curl",
+        "@nlohmann_json//:json",
     ] + select({
         "@platforms//os:windows": [],
         "//conditions:default": [
@@ -299,7 +276,7 @@ cc_library(
         ":google_cloud_cpp_rest_internal",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_unit_tests]
 
@@ -312,7 +289,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_rest_internal",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_emulator_integration_tests]
 
@@ -325,7 +302,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_rest_internal",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_production_integration_tests]
 
@@ -360,9 +337,9 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
-        "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
-        "@com_google_googletest//:gtest_main",
+        "@googleapis//google/bigtable/admin/v2:admin_cc_grpc",
+        "@googleapis//google/iam/admin/v1:admin_cc_grpc",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]
 
@@ -384,7 +361,7 @@ cc_library(
         ":google_cloud_cpp_universe_domain",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_universe_domain_unit_tests]
 

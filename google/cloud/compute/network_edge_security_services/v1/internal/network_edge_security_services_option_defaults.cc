@@ -47,7 +47,7 @@ Options NetworkEdgeSecurityServicesDefaultOptions(Options options) {
                     NetworkEdgeSecurityServicesRetryPolicyOption>(
         compute_network_edge_security_services_v1::
             NetworkEdgeSecurityServicesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_network_edge_security_services_v1::

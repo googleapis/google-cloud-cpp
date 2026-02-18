@@ -44,8 +44,7 @@ RewriterConnectionImpl::RewriterConnectionImpl(
 
 future<StatusOr<google::storage::v2::RewriteResponse>>
 RewriterConnectionImpl::Iterate() {
-  auto policy =
-      current_->get<storage_experimental::IdempotencyPolicyOption>()();
+  auto policy = current_->get<storage::AsyncIdempotencyPolicyOption>()();
   return google::cloud::internal::AsyncRetryLoop(
              current_->get<storage::RetryPolicyOption>()->clone(),
              current_->get<storage::BackoffPolicyOption>()->clone(),

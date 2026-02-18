@@ -54,8 +54,6 @@ add_library(
     bucket_website.h
     client.cc
     client.h
-    client_options.cc
-    client_options.h
     download_options.h
     enable_object_retention.h
     hash_mismatch_error.h
@@ -69,11 +67,6 @@ add_library(
     idempotency_policy.cc
     idempotency_policy.h
     include_folders_as_prefixes.h
-    internal/access_control_common.h
-    internal/access_control_common_parser.cc
-    internal/access_control_common_parser.h
-    internal/access_token_credentials.cc
-    internal/access_token_credentials.h
     internal/base64.cc
     internal/base64.h
     internal/binary_data_as_debug_string.h
@@ -85,8 +78,6 @@ add_library(
     internal/bucket_metadata_parser.h
     internal/bucket_requests.cc
     internal/bucket_requests.h
-    internal/common_metadata.h
-    internal/common_metadata_parser.h
     internal/complex_option.h
     internal/compute_engine_util.cc
     internal/compute_engine_util.h
@@ -104,8 +95,6 @@ add_library(
     internal/default_object_acl_requests.h
     internal/empty_response.cc
     internal/empty_response.h
-    internal/error_credentials.cc
-    internal/error_credentials.h
     internal/generate_message_boundary.cc
     internal/generate_message_boundary.h
     internal/generic_object_request.h
@@ -131,8 +120,6 @@ add_library(
     internal/hmac_key_requests.h
     internal/http_response.cc
     internal/http_response.h
-    internal/impersonate_service_account_credentials.cc
-    internal/impersonate_service_account_credentials.h
     internal/lifecycle_rule_parser.cc
     internal/lifecycle_rule_parser.h
     internal/logging_stub.cc
@@ -192,8 +179,6 @@ add_library(
     internal/tracing_object_read_source.cc
     internal/tracing_object_read_source.h
     internal/tuple_filter.h
-    internal/unified_rest_credentials.cc
-    internal/unified_rest_credentials.h
     internal/well_known_parameters_impl.h
     internal/win32/hash_function_impl.cc
     lifecycle_rule.cc
@@ -210,23 +195,6 @@ add_library(
     notification_metadata.cc
     notification_metadata.h
     notification_payload_format.h
-    oauth2/anonymous_credentials.cc
-    oauth2/anonymous_credentials.h
-    oauth2/authorized_user_credentials.cc
-    oauth2/authorized_user_credentials.h
-    oauth2/compute_engine_credentials.cc
-    oauth2/compute_engine_credentials.h
-    oauth2/credential_constants.h
-    oauth2/credentials.cc
-    oauth2/credentials.h
-    oauth2/google_application_default_credentials_file.cc
-    oauth2/google_application_default_credentials_file.h
-    oauth2/google_credentials.cc
-    oauth2/google_credentials.h
-    oauth2/refreshing_credentials_wrapper.cc
-    oauth2/refreshing_credentials_wrapper.h
-    oauth2/service_account_credentials.cc
-    oauth2/service_account_credentials.h
     object_access_control.cc
     object_access_control.h
     object_metadata.cc
@@ -274,7 +242,6 @@ target_link_libraries(
            google-cloud-cpp::common
            google-cloud-cpp::rest_internal
            nlohmann_json::nlohmann_json
-           Crc32c::crc32c
            CURL::libcurl
            Threads::Threads)
 if (WIN32)
@@ -348,8 +315,6 @@ google_cloud_cpp_add_pkgconfig(
     "absl_variant"
     NON_WIN32_REQUIRES
     openssl
-    LIBS
-    crc32c
     WIN32_LIBS
     ws2_32
     bcrypt)
@@ -441,7 +406,6 @@ if (BUILD_TESTING)
         client_object_acl_test.cc
         client_object_copy_test.cc
         client_object_test.cc
-        client_options_test.cc
         client_service_account_test.cc
         client_sign_policy_document_test.cc
         client_sign_url_test.cc
@@ -452,9 +416,6 @@ if (BUILD_TESTING)
         hashing_options_test.cc
         hmac_key_metadata_test.cc
         idempotency_policy_test.cc
-        internal/access_control_common_parser_test.cc
-        internal/access_control_common_test.cc
-        internal/access_token_credentials_test.cc
         internal/base64_test.cc
         internal/bucket_acl_requests_test.cc
         internal/bucket_requests_test.cc
@@ -481,7 +442,6 @@ if (BUILD_TESTING)
         internal/hash_values_test.cc
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc
-        internal/impersonate_service_account_credentials_test.cc
         internal/logging_stub_test.cc
         internal/make_jwt_assertion_test.cc
         internal/md5hash_test.cc
@@ -505,7 +465,6 @@ if (BUILD_TESTING)
         internal/tracing_connection_test.cc
         internal/tracing_object_read_source_test.cc
         internal/tuple_filter_test.cc
-        internal/unified_rest_credentials_test.cc
         lifecycle_rule_test.cc
         list_buckets_extended_reader_test.cc
         list_buckets_reader_test.cc
@@ -513,12 +472,6 @@ if (BUILD_TESTING)
         list_objects_and_prefixes_reader_test.cc
         list_objects_reader_test.cc
         notification_metadata_test.cc
-        oauth2/anonymous_credentials_test.cc
-        oauth2/authorized_user_credentials_test.cc
-        oauth2/compute_engine_credentials_test.cc
-        oauth2/google_application_default_credentials_file_test.cc
-        oauth2/google_credentials_test.cc
-        oauth2/service_account_credentials_test.cc
         object_access_control_test.cc
         object_metadata_test.cc
         object_retention_test.cc

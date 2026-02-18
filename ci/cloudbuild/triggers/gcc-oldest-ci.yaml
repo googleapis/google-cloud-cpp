@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2024-07-02T17:49:31.595592561Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 71fc938d-2480-4bdb-b274-eb0bf3a3ed1b
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: gcc-oldest-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/71fc938d-2480-4bdb-b274-eb0bf3a3ed1b
+name: prepare-for-v3-0-0-gcc-oldest-ci
 substitutions:
   _BUILD_NAME: gcc-oldest
   _DISTRO: gcc-oldest

@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
+#include "google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h"
 #include <memory>
 
 namespace google {

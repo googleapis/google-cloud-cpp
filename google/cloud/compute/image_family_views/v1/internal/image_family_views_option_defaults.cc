@@ -44,7 +44,7 @@ Options ImageFamilyViewsDefaultOptions(Options options) {
     options.set<
         compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>(
         compute_image_family_views_v1::ImageFamilyViewsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_image_family_views_v1::

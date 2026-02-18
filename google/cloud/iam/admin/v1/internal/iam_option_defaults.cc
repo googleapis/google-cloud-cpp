@@ -40,7 +40,7 @@ Options IAMDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iam_admin_v1::IAMRetryPolicyOption>()) {
     options.set<iam_admin_v1::IAMRetryPolicyOption>(
-        iam_admin_v1::IAMLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        iam_admin_v1::IAMLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<iam_admin_v1::IAMBackoffPolicyOption>()) {

@@ -32,17 +32,16 @@ using ::testing::Return;
 /// Shows how to mock simple APIs, including `DeleteObject` and `ComposeObject`.
 TEST(StorageAsyncMockingSamples, MockDeleteObject) {
   namespace gc = ::google::cloud;
-  namespace gcs_ex = ::google::cloud::storage_experimental;
+  namespace gcs = ::google::cloud::storage;
   auto mock =
       std::make_shared<google::cloud::storage_mocks::MockAsyncConnection>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(Return(ByMove(gc::make_ready_future(gc::Status{}))));
 
-  auto client = gcs_ex::AsyncClient(mock);
+  auto client = gcs::AsyncClient(mock);
   auto actual =
-      client.DeleteObject(gcs_ex::BucketName("test-bucket"), "test-object")
-          .get();
+      client.DeleteObject(gcs::BucketName("test-bucket"), "test-object").get();
   EXPECT_TRUE(actual.ok());
 }
 //! [mock-async-delete-object]
@@ -51,13 +50,13 @@ TEST(StorageAsyncMockingSamples, MockDeleteObject) {
 /// Shows how to mock more complex APIs, such as `ReadObject()`.
 TEST(StorageAsyncMockingSamples, MockReadObject) {
   namespace gc = ::google::cloud;
-  namespace gcs_ex = ::google::cloud::storage_experimental;
+  namespace gcs = ::google::cloud::storage;
   auto mock =
       std::make_shared<google::cloud::storage_mocks::MockAsyncConnection>();
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, ReadObject).WillOnce([] {
-    using ReadResponse = gcs_ex::AsyncReaderConnection::ReadResponse;
-    using ReadPayload = gcs_ex::ReadPayload;
+    using ReadResponse = gcs::AsyncReaderConnection::ReadResponse;
+    using ReadPayload = gcs::ReadPayload;
     auto reader = std::make_unique<
         google::cloud::storage_mocks::MockAsyncReaderConnection>();
     EXPECT_CALL(*reader, Read)
@@ -74,22 +73,22 @@ TEST(StorageAsyncMockingSamples, MockReadObject) {
           return gc::make_ready_future(ReadResponse(gc::Status{}));
         });
     return gc::make_ready_future(gc::make_status_or(
-        std::unique_ptr<gcs_ex::AsyncReaderConnection>(std::move(reader))));
+        std::unique_ptr<gcs::AsyncReaderConnection>(std::move(reader))));
   });
 
-  auto client = gcs_ex::AsyncClient(mock);
+  auto client = gcs::AsyncClient(mock);
   // To simplify the test we use .get() to "block" until the gc::future is
   // ready, and then use `.value()` to get the `StatusOr<>` values or an
   // exception.
-  gcs_ex::AsyncReader reader;
-  gcs_ex::AsyncToken token;
+  gcs::AsyncReader reader;
+  gcs::AsyncToken token;
   std::tie(reader, token) =
-      client.ReadObject(gcs_ex::BucketName("test-bucket"), "test-object")
+      client.ReadObject(gcs::BucketName("test-bucket"), "test-object")
           .get()
           .value();
 
-  gcs_ex::ReadPayload payload;
-  gcs_ex::AsyncToken t;  // Avoid use-after-move warnings from clang-tidy.
+  gcs::ReadPayload payload;
+  gcs::AsyncToken t;  // Avoid use-after-move warnings from clang-tidy.
   std::tie(payload, t) = reader.Read(std::move(token)).get().value();
   token = std::move(t);
   EXPECT_THAT(payload.contents(), ElementsAre("test-contents"));

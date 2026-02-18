@@ -41,7 +41,7 @@ Options MemorystoreDefaultOptions(Options options) {
   if (!options.has<memorystore_v1::MemorystoreRetryPolicyOption>()) {
     options.set<memorystore_v1::MemorystoreRetryPolicyOption>(
         memorystore_v1::MemorystoreLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<memorystore_v1::MemorystoreBackoffPolicyOption>()) {

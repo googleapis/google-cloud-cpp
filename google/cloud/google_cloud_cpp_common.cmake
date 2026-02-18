@@ -42,9 +42,6 @@ add_library(
     future_generic.h
     future_void.h
     idempotency.h
-    internal/absl_str_cat_quiet.h
-    internal/absl_str_join_quiet.h
-    internal/absl_str_replace_quiet.h
     internal/algorithm.h
     internal/api_client_header.cc
     internal/api_client_header.h
@@ -163,6 +160,8 @@ add_library(
     options.cc
     options.h
     polling_policy.h
+    ports_def.inc
+    ports_undef.inc
     project.cc
     project.h
     retry_policy.h
@@ -202,10 +201,6 @@ if (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     if (opentelemetry-cpp_FOUND)
         target_link_libraries(google_cloud_cpp_common
                               PUBLIC opentelemetry-cpp::api)
-        target_compile_definitions(
-            google_cloud_cpp_common
-            PUBLIC # Enable OpenTelemetry features in google-cloud-cpp
-                   GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
         set(GOOGLE_CLOUD_CPP_FIND_OPTIONAL_DEPENDENCIES
             "find_dependency(opentelemetry-cpp)")
         set(GOOGLE_CLOUD_CPP_OPENTELEMETRY_API "opentelemetry_api")

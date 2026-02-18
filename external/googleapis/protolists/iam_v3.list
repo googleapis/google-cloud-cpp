@@ -1,5 +1,5 @@
-@com_google_googleapis//google/iam/v3:operation_metadata.proto
-@com_google_googleapis//google/iam/v3:policy_binding_resources.proto
-@com_google_googleapis//google/iam/v3:policy_bindings_service.proto
-@com_google_googleapis//google/iam/v3:principal_access_boundary_policies_service.proto
-@com_google_googleapis//google/iam/v3:principal_access_boundary_policy_resources.proto
+@googleapis//google/iam/v3:operation_metadata.proto
+@googleapis//google/iam/v3:policy_binding_resources.proto
+@googleapis//google/iam/v3:policy_bindings_service.proto
+@googleapis//google/iam/v3:principal_access_boundary_policies_service.proto
+@googleapis//google/iam/v3:principal_access_boundary_policy_resources.proto

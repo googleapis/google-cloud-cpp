@@ -27,8 +27,6 @@ namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CatalogServiceTracingConnection::CatalogServiceTracingConnection(
     std::shared_ptr<dataplex_v1::CatalogServiceConnection> child)
     : child_(std::move(child)) {}
@@ -594,16 +592,12 @@ Status CatalogServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<dataplex_v1::CatalogServiceConnection>
 MakeCatalogServiceTracingConnection(
     std::shared_ptr<dataplex_v1::CatalogServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CatalogServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

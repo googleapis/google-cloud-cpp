@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 //! [START spanner_quickstart]
 #include "google/cloud/spanner/client.h"
@@ -22,6 +23,7 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/debug_log.h"  // TODO(#4758): remove
 #include "google/cloud/spanner/testing/instance_location.h"
@@ -41,7 +43,7 @@
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
+#include "protos/google/cloud/spanner/testing/singer.pb.h"
 #include <chrono>
 #include <iomanip>
 #include <iterator>
@@ -3472,6 +3474,71 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
 }
 //! [END spanner_read_write_transaction]
 
+//! [START spanner_isolation_level] [spanner-isolation-level-setting-sample]
+void IsolationLevelSetting(std::string const& project_id,
+                           std::string const& instance_id,
+                           std::string const& database_id) {
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::Options;
+  using ::google::cloud::StatusOr;
+
+  auto db = spanner::Database(project_id, instance_id, database_id);
+
+  // The isolation level specified at the client-level will be applied
+  // to all RW transactions.
+  auto options = Options{}.set<spanner::TransactionIsolationLevelOption>(
+      spanner::Transaction::IsolationLevel::kSerializable);
+  auto client = spanner::Client(spanner::MakeConnection(db, options));
+
+  auto commit = client.Commit(
+      [&client](
+          spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
+        // Read an AlbumTitle.
+        auto sql = spanner::SqlStatement(
+            "SELECT AlbumTitle from Albums WHERE SingerId = @SingerId and "
+            "AlbumId = @AlbumId",
+            {{"SingerId", spanner::Value(1)}, {"AlbumId", spanner::Value(1)}});
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
+        for (auto const& row :
+             spanner::StreamOf<std::tuple<std::string>>(rows)) {
+          if (!row) return row.status();
+          std::cout << "Current album title: " << std::get<0>(*row) << "\n";
+        }
+
+        // Update the title.
+        auto update_sql = spanner::SqlStatement(
+            "UPDATE Albums "
+            "SET AlbumTitle = @AlbumTitle "
+            "WHERE SingerId = @SingerId and AlbumId = @AlbumId",
+            {{"AlbumTitle", spanner::Value("New Album Title")},
+             {"SingerId", spanner::Value(1)},
+             {"AlbumId", spanner::Value(1)}});
+        auto result = client.ExecuteDml(txn, std::move(update_sql));
+        if (!result) return result.status();
+        std::cout << result->RowsModified() << " record updated.\n";
+
+        return spanner::Mutations{};
+      },
+      // The isolation level specified at the transaction-level takes
+      // precedence over the isolation level configured at the client-level.
+      // kRepeatableRead is used here to demonstrate overriding the client-level
+      // setting.
+      Options{}.set<spanner::TransactionIsolationLevelOption>(
+          spanner::Transaction::IsolationLevel::kRepeatableRead));
+
+  if (!commit) throw std::move(commit).status();
+  std::cout << "Update was successful [spanner_isolation_level_setting]\n";
+}
+//! [END spanner_isolation_level] [spanner-isolation-level-setting-sample],
+
+void IsolationLevelSettingCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "isolation-level-setting <project-id> <instance-id> <database-id>");
+  }
+  IsolationLevelSetting(argv[0], argv[1], argv[2]);
+}
+
 //! [START spanner_get_commit_stats]
 void GetCommitStatistics(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -5190,6 +5257,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("read-data-with-storing-index",
                          ReadDataWithStoringIndex),
       make_command_entry("read-write-transaction", ReadWriteTransaction),
+      {"isolation-level-setting", IsolationLevelSettingCommand},
       make_command_entry("get-commit-stats", GetCommitStatistics),
       make_command_entry("dml-standard-insert", DmlStandardInsert),
       make_command_entry("dml-standard-update", DmlStandardUpdate),
@@ -5888,6 +5956,9 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_directed_read");
   DirectedRead(project_id, instance_id, database_id);
 
+  SampleBanner("spanner_isolation_level");
+  IsolationLevelSetting(project_id, instance_id, database_id);
+
   SampleBanner("spanner_batch_client");
   UsePartitionQuery(client);
 
@@ -6210,3 +6281,4 @@ int main(int ac, char* av[]) try {
   std::cerr << ex.what() << "\n";
   return 1;
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

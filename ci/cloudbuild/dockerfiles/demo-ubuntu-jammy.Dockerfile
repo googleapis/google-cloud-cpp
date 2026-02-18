@@ -30,18 +30,14 @@ RUN apt-get update && \
 
 # #### Abseil
 
-# We need a recent version of Abseil. Enabling `ABSL_PROPAGATE_CXX_STD` 
-# propagates the version of C++ used to compile Abseil to anything that depends
-# on Abseil.
-
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
       -DABSL_BUILD_TESTING=OFF \
-      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -56,10 +52,11 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | 
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v29.4.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
@@ -76,10 +73,11 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v29.4.tar.gz 
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.69.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.76.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
@@ -89,27 +87,6 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.69.0.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### crc32c
-
-# The project depends on the Crc32c library, we need to compile this from
-# source:
-
-# ```bash
-WORKDIR /var/tmp/build/crc32c
-RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -DCRC32C_BUILD_TESTS=OFF \
-        -DCRC32C_BUILD_BENCHMARKS=OFF \
-        -DCRC32C_USE_GLOG=OFF \
         -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -146,14 +123,14 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
-        -DWITH_STL=CXX14 \
-        -DWITH_ABSEIL=ON \
+        -DWITH_STL=CXX17 \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -163,6 +140,9 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20
 # ```
 
 ## [DONE packaging.md]
+
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y gdb
 
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \

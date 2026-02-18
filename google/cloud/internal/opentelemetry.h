@@ -21,24 +21,20 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/span_context_kv_iterable_view.h>
 #include <opentelemetry/trace/tracer.h>
-#include <string>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <chrono>
 #include <functional>
+#include <string>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Returns a [tracer] to use for creating [spans].
@@ -234,8 +230,6 @@ std::string ToString(opentelemetry::trace::SpanId const& span_id);
 /// Gets the current thread id.
 std::string CurrentThreadId();
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 bool TracingEnabled(Options const& options);
 
 /// Wraps the sleeper in a span, if tracing is enabled.
@@ -244,7 +238,6 @@ std::function<void(std::chrono::duration<Rep, Period>)> MakeTracedSleeper(
     Options const& options,
     std::function<void(std::chrono::duration<Rep, Period>)> sleeper,
     std::string const& name) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (TracingEnabled(options)) {
     return [name, sleeper = std::move(sleeper)](
                std::chrono::duration<Rep, Period> d) {
@@ -255,7 +248,6 @@ std::function<void(std::chrono::duration<Rep, Period>)> MakeTracedSleeper(
       span->End();
     };
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   (void)options;
   (void)name;
   return sleeper;

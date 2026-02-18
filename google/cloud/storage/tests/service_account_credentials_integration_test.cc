@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/retry_http_request.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/rest_request.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
-#include <set>
 #include <string>
 #include <utility>
 
@@ -43,20 +43,21 @@ TEST_F(ServiceAccountCredentialsTest, UserInfoOAuth2) {
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (UsingEmulator() || !filename) GTEST_SKIP();
 
-  auto credentials = oauth2::CreateServiceAccountCredentialsFromFilePath(
-      *filename, /*scopes=*/
-      std::set<std::string>({"https://www.googleapis.com/auth/userinfo.email",
-                             "https://www.googleapis.com/auth/cloud-platform"}),
-      /*subject=*/absl::nullopt);
-  ASSERT_STATUS_OK(credentials);
+  auto options = Options{}
+                     .set<oauth2_internal::DisableSelfSignedJWTOption>({})
+                     .set<ScopesOption>(std::vector<std::string>(
+                         {"https://www.googleapis.com/auth/userinfo.email",
+                          "https://www.googleapis.com/auth/cloud-platform"}));
+
+  auto credentials = MakeServiceAccountCredentialsFromFile(*filename, options);
+  auto sa_creds = rest_internal::MapCredentials(*credentials);
 
   auto constexpr kUrl = "https://www.googleapis.com/userinfo/v2/me";
-  auto factory = [c = *credentials]() {
-    auto authorization = c->AuthorizationHeader();
+  auto factory = [c = sa_creds]() {
+    auto authorization = c->GetToken(std::chrono::system_clock::now());
     if (!authorization) return rest_internal::RestRequest();
-    std::pair<std::string, std::string> p =
-        absl::StrSplit(*authorization, absl::MaxSplits(": ", 1));
-    return rest_internal::RestRequest().AddHeader(std::move(p));
+    return rest_internal::RestRequest().AddHeader(
+        std::make_pair("Authorization", "Bearer " + authorization->token));
   };
 
   auto response = RetryHttpGet(kUrl, factory);

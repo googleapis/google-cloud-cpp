@@ -28,8 +28,6 @@ namespace cloud {
 namespace bigquery_datatransfer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataTransferServiceTracingConnection
     : public bigquery_datatransfer_v1::DataTransferServiceConnection {
  public:
@@ -125,8 +123,6 @@ class DataTransferServiceTracingConnection
   std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

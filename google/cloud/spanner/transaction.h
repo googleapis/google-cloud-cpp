@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "absl/types/optional.h"
-#include <google/spanner/v1/transaction.pb.h>
+#include "google/spanner/v1/transaction.pb.h"
 #include <chrono>
 #include <memory>
 #include <string>
@@ -83,7 +83,7 @@ class Transaction {
      * absence of conflicts between its updates and any concurrent updates
      * that have occurred since that snapshot. Consequently, in contrast to
      * `kSerializable` transactions, only write-write conflicts are detected in
-     * snapshot transactions.
+     * repeatable read transactions.
      */
     kRepeatableRead,
   };

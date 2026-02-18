@@ -21,6 +21,7 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/pipeline_connection_idempotency_policy.h"
+#include "google/cloud/contentwarehouse/v1/pipeline_service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -29,8 +30,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/contentwarehouse/v1/pipeline_service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

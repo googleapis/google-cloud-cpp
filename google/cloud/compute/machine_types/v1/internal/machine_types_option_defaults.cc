@@ -41,7 +41,7 @@ Options MachineTypesDefaultOptions(Options options) {
   if (!options.has<compute_machine_types_v1::MachineTypesRetryPolicyOption>()) {
     options.set<compute_machine_types_v1::MachineTypesRetryPolicyOption>(
         compute_machine_types_v1::MachineTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

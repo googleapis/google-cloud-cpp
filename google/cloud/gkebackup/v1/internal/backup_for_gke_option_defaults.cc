@@ -41,7 +41,7 @@ Options BackupForGKEDefaultOptions(Options options) {
   if (!options.has<gkebackup_v1::BackupForGKERetryPolicyOption>()) {
     options.set<gkebackup_v1::BackupForGKERetryPolicyOption>(
         gkebackup_v1::BackupForGKELimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<gkebackup_v1::BackupForGKEBackoffPolicyOption>()) {

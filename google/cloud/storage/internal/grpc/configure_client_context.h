@@ -20,7 +20,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/rest_context.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <grpcpp/client_context.h>
 
 namespace google {

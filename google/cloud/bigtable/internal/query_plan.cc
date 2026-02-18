@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/internal/query_plan.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/time_utils.h"
-#include <google/bigtable/v2/data.pb.h>
+#include "google/bigtable/v2/data.pb.h"
 
 namespace google {
 namespace cloud {

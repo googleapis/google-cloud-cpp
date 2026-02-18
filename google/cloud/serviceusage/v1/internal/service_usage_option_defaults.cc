@@ -42,7 +42,7 @@ Options ServiceUsageDefaultOptions(Options options) {
   if (!options.has<serviceusage_v1::ServiceUsageRetryPolicyOption>()) {
     options.set<serviceusage_v1::ServiceUsageRetryPolicyOption>(
         serviceusage_v1::ServiceUsageLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<serviceusage_v1::ServiceUsageBackoffPolicyOption>()) {

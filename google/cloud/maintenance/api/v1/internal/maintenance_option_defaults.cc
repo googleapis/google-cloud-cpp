@@ -41,7 +41,7 @@ Options MaintenanceDefaultOptions(Options options) {
   if (!options.has<maintenance_api_v1::MaintenanceRetryPolicyOption>()) {
     options.set<maintenance_api_v1::MaintenanceRetryPolicyOption>(
         maintenance_api_v1::MaintenanceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<maintenance_api_v1::MaintenanceBackoffPolicyOption>()) {

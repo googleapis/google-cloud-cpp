@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_images_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ImagesTracingConnection : public compute_images_v1::ImagesConnection {
  public:
   ~ImagesTracingConnection() override = default;
@@ -127,8 +125,6 @@ class ImagesTracingConnection : public compute_images_v1::ImagesConnection {
  private:
   std::shared_ptr<compute_images_v1::ImagesConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

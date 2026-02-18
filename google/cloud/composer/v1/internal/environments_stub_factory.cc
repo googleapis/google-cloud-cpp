@@ -22,16 +22,19 @@
 #include "google/cloud/composer/v1/internal/environments_metadata_decorator.h"
 #include "google/cloud/composer/v1/internal/environments_stub.h"
 #include "google/cloud/composer/v1/internal/environments_tracing_stub.h"
+#include "google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -72,3 +75,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

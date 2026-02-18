@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace developerconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DeveloperConnectTracingStub::DeveloperConnectTracingStub(
     std::shared_ptr<DeveloperConnectStub> child)
@@ -617,18 +618,14 @@ future<Status> DeveloperConnectTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<DeveloperConnectStub> MakeDeveloperConnectTracingStub(
     std::shared_ptr<DeveloperConnectStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DeveloperConnectTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace developerconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -39,6 +39,7 @@
  */
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
@@ -97,37 +98,6 @@ struct AppProfileIdOption {
  */
 struct ReverseScanOption {
   using Type = bool;
-};
-
-/**
- * The endpoint for data operations.
- *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
- */
-struct DataEndpointOption {
-  using Type = std::string;
-};
-
-/**
- * The endpoint for table admin operations.
- *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
- */
-struct AdminEndpointOption {
-  using Type = std::string;
-};
-
-/**
- * The endpoint for instance admin operations.
- *
- * In most scenarios this should have the same value as `AdminEndpointOption`.
- * The most common exception is testing, where the emulator for instance admin
- * operations may be different than the emulator for admin and data operations.
- *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
- */
-struct InstanceAdminEndpointOption {
-  using Type = std::string;
 };
 
 /**
@@ -207,9 +177,10 @@ struct QueryPlanRefreshFunctionRetryPolicyOption {
 
 /// The complete list of options accepted by `bigtable::*Client`
 using ClientOptionList =
-    OptionList<DataEndpointOption, AdminEndpointOption,
-               InstanceAdminEndpointOption, MinConnectionRefreshOption,
-               MaxConnectionRefreshOption>;
+    OptionList<::google::cloud::bigtable_internal::DataEndpointOption,
+               ::google::cloud::bigtable_internal::AdminEndpointOption,
+               ::google::cloud::bigtable_internal::InstanceAdminEndpointOption,
+               MinConnectionRefreshOption, MaxConnectionRefreshOption>;
 
 /**
  * Option to configure the retry policy used by `Table`.

@@ -40,7 +40,7 @@ Options ServicesDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<run_v2::ServicesRetryPolicyOption>()) {
     options.set<run_v2::ServicesRetryPolicyOption>(
-        run_v2::ServicesLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        run_v2::ServicesLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<run_v2::ServicesBackoffPolicyOption>()) {

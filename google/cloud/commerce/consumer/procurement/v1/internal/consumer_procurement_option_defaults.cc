@@ -47,7 +47,7 @@ Options ConsumerProcurementServiceDefaultOptions(Options options) {
                     ConsumerProcurementServiceRetryPolicyOption>(
         commerce_consumer_procurement_v1::
             ConsumerProcurementServiceLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<commerce_consumer_procurement_v1::

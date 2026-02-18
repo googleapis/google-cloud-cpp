@@ -28,8 +28,6 @@ namespace cloud {
 namespace video_livestream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class LivestreamServiceTracingConnection
     : public video_livestream_v1::LivestreamServiceConnection {
  public:
@@ -351,8 +349,6 @@ class LivestreamServiceTracingConnection
  private:
   std::shared_ptr<video_livestream_v1::LivestreamServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

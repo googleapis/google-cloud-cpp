@@ -42,7 +42,7 @@ Options BigQueryWriteDefaultOptions(Options options) {
   if (!options.has<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>()) {
     options.set<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>(
         bigquery_storage_v1::BigQueryWriteLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<bigquery_storage_v1::BigQueryWriteBackoffPolicyOption>()) {

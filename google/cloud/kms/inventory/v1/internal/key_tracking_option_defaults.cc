@@ -42,7 +42,7 @@ Options KeyTrackingServiceDefaultOptions(Options options) {
   if (!options.has<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()) {
     options.set<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>(
         kms_inventory_v1::KeyTrackingServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>()) {

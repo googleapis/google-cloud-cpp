@@ -65,11 +65,10 @@ auto PermanentError() {
 
 auto MakeRequest() {
   google::storage::v2::RewriteObjectRequest request;
-  request.set_source_bucket(
-      storage_experimental::BucketName("source-bucket").FullName());
+  request.set_source_bucket(storage::BucketName("source-bucket").FullName());
   request.set_source_object("source-object");
   request.set_destination_bucket(
-      storage_experimental::BucketName("destination-bucket").FullName());
+      storage::BucketName("destination-bucket").FullName());
   request.set_destination_name("destination-object");
   return request;
 }

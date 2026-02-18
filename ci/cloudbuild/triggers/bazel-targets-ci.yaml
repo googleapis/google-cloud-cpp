@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-26T16:37:27.818296611Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 1f63c286-589b-41cf-aee0-dd0e3cb6861c
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-targets-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/1f63c286-589b-41cf-aee0-dd0e3cb6861c
+name: prepare-for-v3-0-0-bazel-targets-ci
 substitutions:
   _BUILD_NAME: bazel-targets
   _DISTRO: fedora-latest-bazel

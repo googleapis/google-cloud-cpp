@@ -41,7 +41,7 @@ Options NodeGroupsDefaultOptions(Options options) {
   if (!options.has<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()) {
     options.set<compute_node_groups_v1::NodeGroupsRetryPolicyOption>(
         compute_node_groups_v1::NodeGroupsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()) {

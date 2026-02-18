@@ -43,7 +43,7 @@ Options RecommendationServiceDefaultOptions(Options options) {
            .has<discoveryengine_v1::RecommendationServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::RecommendationServiceRetryPolicyOption>(
         discoveryengine_v1::RecommendationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

@@ -41,7 +41,7 @@ Options CloudBillingDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<billing_v1::CloudBillingRetryPolicyOption>()) {
     options.set<billing_v1::CloudBillingRetryPolicyOption>(
-        billing_v1::CloudBillingLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        billing_v1::CloudBillingLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<billing_v1::CloudBillingBackoffPolicyOption>()) {

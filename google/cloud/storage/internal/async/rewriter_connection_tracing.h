@@ -25,10 +25,9 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<storage_experimental::AsyncRewriterConnection>
+std::shared_ptr<storage::AsyncRewriterConnection>
 MakeTracingAsyncRewriterConnection(
-    std::shared_ptr<storage_experimental::AsyncRewriterConnection> impl,
-    bool enabled);
+    std::shared_ptr<storage::AsyncRewriterConnection> impl, bool enabled);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

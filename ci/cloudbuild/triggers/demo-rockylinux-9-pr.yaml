@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2022-11-09T20:49:14.519880680Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 55c2722f-ba23-4b27-af94-cee7095098e2
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-rockylinux-9-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/55c2722f-ba23-4b27-af94-cee7095098e2
+name: prepare-for-v3-0-0-demo-rockylinux-9-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-rockylinux-9

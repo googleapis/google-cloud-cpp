@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -1119,7 +1120,6 @@ TEST_F(AsyncBulkApplyTest, BigtableCookie) {
   CheckFailedMutations(actual.get(), expected);
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::SpanNamed;
@@ -1191,7 +1191,6 @@ TEST_F(AsyncBulkApplyTest, CallSpanActiveThroughout) {
   auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
   (void)f.get();
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

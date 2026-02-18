@@ -15,7 +15,7 @@
 #include "generator/internal/mixin_utils.h"
 #include "generator/testing/descriptor_pool_fixture.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <google/api/annotations.pb.h>
+#include "google/api/annotations.pb.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -207,11 +207,16 @@ TEST_F(MixinUtilsTest, FilesParseSuccessfully) {
 }
 
 TEST_F(MixinUtilsTest, ExtractMixinProtoPathsFromYaml) {
-  auto const mixin_proto_paths = GetMixinProtoPaths(service_config_);
-  EXPECT_THAT(mixin_proto_paths,
-              AllOf(Contains("google/cloud/location/locations.proto"),
-                    Contains("google/iam/v1/iam_policy.proto"),
-                    Contains("google/longrunning/operations.proto")));
+  std::vector<MixinService> const mixin_proto_paths =
+      GetMixinServiceProto(service_config_);
+  EXPECT_THAT(
+      mixin_proto_paths,
+      AllOf(Contains(MixinService{"google.cloud.location.Locations",
+                                  "google/cloud/location/locations.proto"}),
+            Contains(MixinService{"google.iam.v1.IAMPolicy",
+                                  "google/iam/v1/iam_policy.proto"}),
+            Contains(MixinService{"google.longrunning.Operations",
+                                  "google/longrunning/operations.proto"})));
 }
 
 TEST_F(MixinUtilsTest, GetMixinMethods) {

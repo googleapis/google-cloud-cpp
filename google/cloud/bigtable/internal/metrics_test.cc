@@ -142,6 +142,17 @@ class MockMeter : public opentelemetry::metrics::Meter {
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
+
+  MOCK_METHOD(uintptr_t,
+              RegisterCallback,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::metrics::MultiObservableCallbackPtr, void*,
+               opentelemetry::nostd::span<
+                   opentelemetry::metrics::ObservableInstrument*>),
+              (noexcept, override));
+
+  MOCK_METHOD(void,
+              DeregisterCallback,  // NOLINT(bugprone-exception-escape)
+              (uintptr_t), (noexcept, override));
 #endif
 
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,

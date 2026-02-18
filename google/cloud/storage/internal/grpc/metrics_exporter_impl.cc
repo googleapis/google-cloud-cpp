@@ -24,9 +24,9 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 #include <grpcpp/ext/otel_plugin.h>

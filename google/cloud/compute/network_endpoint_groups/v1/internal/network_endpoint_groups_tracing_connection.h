@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_network_endpoint_groups_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class NetworkEndpointGroupsTracingConnection
     : public compute_network_endpoint_groups_v1::
           NetworkEndpointGroupsConnection {
@@ -129,8 +127,6 @@ class NetworkEndpointGroupsTracingConnection
       compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

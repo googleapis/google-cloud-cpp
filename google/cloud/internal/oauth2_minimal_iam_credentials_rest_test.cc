@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/http_payload.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_request.h"
@@ -23,6 +22,7 @@
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <memory>
 

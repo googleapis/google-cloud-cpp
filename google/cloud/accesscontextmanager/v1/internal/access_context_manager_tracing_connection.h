@@ -28,8 +28,6 @@ namespace cloud {
 namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AccessContextManagerTracingConnection
     : public accesscontextmanager_v1::AccessContextManagerConnection {
  public:
@@ -300,8 +298,6 @@ class AccessContextManagerTracingConnection
   std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

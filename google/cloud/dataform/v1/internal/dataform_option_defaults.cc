@@ -40,7 +40,7 @@ Options DataformDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataform_v1::DataformRetryPolicyOption>()) {
     options.set<dataform_v1::DataformRetryPolicyOption>(
-        dataform_v1::DataformLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        dataform_v1::DataformLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataform_v1::DataformBackoffPolicyOption>()) {

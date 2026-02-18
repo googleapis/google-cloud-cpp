@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -219,6 +219,24 @@ class NetAppConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteQuotaRule(
       google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request);
+
+  virtual google::cloud::Idempotency RestoreBackupFiles(
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request);
+
+  virtual google::cloud::Idempotency ListHostGroups(
+      google::cloud::netapp::v1::ListHostGroupsRequest request);
+
+  virtual google::cloud::Idempotency GetHostGroup(
+      google::cloud::netapp::v1::GetHostGroupRequest const& request);
+
+  virtual google::cloud::Idempotency CreateHostGroup(
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateHostGroup(
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteHostGroup(
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

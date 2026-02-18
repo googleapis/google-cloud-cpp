@@ -21,7 +21,7 @@
 #include "generator/integration_tests/golden/v1/golden_rest_only_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options GoldenRestOnlyDefaultOptions(std::string const& location, Options option
   if (!options.has<golden_v1::GoldenRestOnlyRetryPolicyOption>()) {
     options.set<golden_v1::GoldenRestOnlyRetryPolicyOption>(
         golden_v1::GoldenRestOnlyLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(10)).clone());
   }
   if (!options.has<golden_v1::GoldenRestOnlyBackoffPolicyOption>()) {
     options.set<golden_v1::GoldenRestOnlyBackoffPolicyOption>(

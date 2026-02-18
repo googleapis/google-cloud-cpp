@@ -42,7 +42,7 @@ Options OsConfigServiceDefaultOptions(Options options) {
   if (!options.has<osconfig_v1::OsConfigServiceRetryPolicyOption>()) {
     options.set<osconfig_v1::OsConfigServiceRetryPolicyOption>(
         osconfig_v1::OsConfigServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<osconfig_v1::OsConfigServiceBackoffPolicyOption>()) {

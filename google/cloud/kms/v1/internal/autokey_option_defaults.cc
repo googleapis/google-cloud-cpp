@@ -40,7 +40,7 @@ Options AutokeyDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_v1::AutokeyRetryPolicyOption>()) {
     options.set<kms_v1::AutokeyRetryPolicyOption>(
-        kms_v1::AutokeyLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        kms_v1::AutokeyLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<kms_v1::AutokeyBackoffPolicyOption>()) {

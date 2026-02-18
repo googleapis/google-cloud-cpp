@@ -334,6 +334,36 @@ Idempotency NetAppConnectionIdempotencyPolicy::DeleteQuotaRule(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetAppConnectionIdempotencyPolicy::RestoreBackupFiles(
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ListHostGroups(
+    google::cloud::netapp::v1::ListHostGroupsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::GetHostGroup(
+    google::cloud::netapp::v1::GetHostGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::CreateHostGroup(
+    google::cloud::netapp::v1::CreateHostGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateHostGroup(
+    google::cloud::netapp::v1::UpdateHostGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteHostGroup(
+    google::cloud::netapp::v1::DeleteHostGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetAppConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

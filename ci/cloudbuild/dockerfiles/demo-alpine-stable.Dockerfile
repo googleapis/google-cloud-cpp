@@ -58,7 +58,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 
 # ```bash
 RUN apk update && \
-    apk add abseil-cpp-dev crc32c-dev c-ares-dev curl-dev grpc-dev \
+    apk add abseil-cpp-dev c-ares-dev curl-dev grpc-dev \
         protobuf-dev nlohmann-json openssl-dev re2-dev
 # ```
 
@@ -71,14 +71,14 @@ RUN apk update && \
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
-        -DWITH_STL=CXX14 \
-        -DWITH_ABSEIL=ON \
+        -DWITH_STL=CXX17 \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -87,6 +87,8 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20
 # ```
 
 ## [DONE packaging.md]
+
+RUN apk update && apk add gdb
 
 # Speed up the CI builds using sccache.
 WORKDIR /var/tmp/sccache

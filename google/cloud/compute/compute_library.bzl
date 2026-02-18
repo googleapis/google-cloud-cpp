@@ -63,7 +63,7 @@ def compute_library(service_dir, inner_deps = []):
         visibility = ["//:__pkg__"],
         deps = [
             ":google_cloud_cpp_compute_" + service,
-            "@com_google_googletest//:gtest",
+            "@googletest//:gtest",
         ],
     )
 
@@ -77,7 +77,7 @@ def compute_library(service_dir, inner_deps = []):
             "//:grpc_utils",
             "//google/cloud:google_cloud_cpp_rest_internal",
             "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
-            "//protos:system_includes",
+            #            "//protos:system_includes",
             "//protos/google/cloud/compute:cc_proto",
         ] + inner_deps,
     )

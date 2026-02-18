@@ -44,7 +44,7 @@ Options StorageBatchOperationsDefaultOptions(Options options) {
     options.set<
         storagebatchoperations_v1::StorageBatchOperationsRetryPolicyOption>(
         storagebatchoperations_v1::StorageBatchOperationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<storagebatchoperations_v1::

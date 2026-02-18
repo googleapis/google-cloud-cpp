@@ -17,12 +17,15 @@
 // source: google/cloud/aiplatform/v1/deployment_resource_pool_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/deployment_resource_pool_stub.h"
+#include "google/cloud/aiplatform/v1/deployment_resource_pool_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/aiplatform/v1/deployment_resource_pool_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -327,3 +330,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

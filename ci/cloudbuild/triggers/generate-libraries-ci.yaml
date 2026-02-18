@@ -12,16 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-23T21:24:08.230967530Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 11fcbd32-d016-4661-ba98-31c65277739c
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: generate-libraries-ci
+name: prepare-for-v3-0-0-generate-libraries-ci
 substitutions:
   _BUILD_NAME: generate-libraries
   _DISTRO: checkers

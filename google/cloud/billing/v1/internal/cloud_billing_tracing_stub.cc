@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CloudBillingTracingStub::CloudBillingTracingStub(
     std::shared_ptr<CloudBillingStub> child)
@@ -165,18 +166,14 @@ CloudBillingTracingStub::MoveBillingAccount(
       context, *span, child_->MoveBillingAccount(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CloudBillingStub> MakeCloudBillingTracingStub(
     std::shared_ptr<CloudBillingStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CloudBillingTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

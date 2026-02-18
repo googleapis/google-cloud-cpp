@@ -15,8 +15,8 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 #include <string>
 #include <vector>

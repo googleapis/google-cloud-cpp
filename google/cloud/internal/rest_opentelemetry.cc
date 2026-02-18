@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/rest_opentelemetry.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/semconv/network_attributes.h>
 #include <opentelemetry/trace/provider.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 
@@ -71,13 +70,13 @@ void InjectTraceContext(
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
     RestRequest const& request, opentelemetry::nostd::string_view method) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto span = internal::MakeSpan(
       absl::StrCat("HTTP/", absl::string_view{method.data(), method.size()}),
       {{/*sc::kNetworkTransport=*/"network.transport",
-        sc::NetTransportValues::kIpTcp},
+        sc::network::NetworkTransportValues::kTcp},
        {/*sc::kHttpRequestMethod=*/"http.request.method", method},
        {/*sc::kUrlFull=*/"url.full", request.path()}},
       options);
@@ -100,5 +99,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

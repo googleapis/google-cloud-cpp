@@ -42,7 +42,7 @@ Options DeploymentDefaultOptions(Options options) {
   if (!options.has<cloudsecuritycompliance_v1::DeploymentRetryPolicyOption>()) {
     options.set<cloudsecuritycompliance_v1::DeploymentRetryPolicyOption>(
         cloudsecuritycompliance_v1::DeploymentLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

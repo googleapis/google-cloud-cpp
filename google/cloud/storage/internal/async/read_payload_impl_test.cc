@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/strings/string_view.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -58,7 +58,7 @@ TEST(ReadPayload, FromString) {
 }
 
 TEST(ReadPayload, FromVector) {
-  auto const actual = storage_experimental::ReadPayload(
+  auto const actual = storage::ReadPayload(
       std::vector<std::string>({std::string(kQuick), std::string(kQuick)}));
   EXPECT_THAT(actual.contents(), ElementsAre(absl::string_view(kQuick),
                                              absl::string_view(kQuick)));

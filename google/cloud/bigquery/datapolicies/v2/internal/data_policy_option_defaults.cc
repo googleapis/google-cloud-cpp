@@ -43,7 +43,7 @@ Options DataPolicyServiceDefaultOptions(Options options) {
           bigquery_datapolicies_v2::DataPolicyServiceRetryPolicyOption>()) {
     options.set<bigquery_datapolicies_v2::DataPolicyServiceRetryPolicyOption>(
         bigquery_datapolicies_v2::DataPolicyServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

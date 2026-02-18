@@ -77,6 +77,16 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "rules_cc-0.1.4",
     )
 
+    maybe(
+        http_archive,
+        name = "com_envoyproxy_protoc_gen_validate",
+        urls = [
+            "https://github.com/bufbuild/protoc-gen-validate/archive/v1.2.1.tar.gz",
+        ],
+        strip_prefix = "protoc-gen-validate-1.2.1",
+        integrity = "sha256-5HGDUnVN8Tk7h5K2MTOKqFYvOQ6BYHg+NlRUvBHZYyg=",
+    )
+
     # protobuf requires this
     maybe(
         http_archive,
@@ -101,19 +111,19 @@ def gl_cpp_workspace0(name = None):
     # Load Abseil
     maybe(
         http_archive,
-        name = "com_google_absl",
+        name = "abseil-cpp",
         urls = [
-            "https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz",
+            "https://github.com/abseil/abseil-cpp/archive/20250512.1.tar.gz",
         ],
-        sha256 = "b396401fd29e2e679cace77867481d388c807671dc2acc602a0259eeb79b7811",
-        strip_prefix = "abseil-cpp-20250127.1",
+        sha256 = "9b7a064305e9fd94d124ffa6cc358592eb42b5da588fb4e07d09254aa40086db",
+        strip_prefix = "abseil-cpp-20250512.1",
     )
 
     # Load a version of googletest that we know works. This is needed to create
     # //:.*mocks targets, which are public.
     maybe(
         http_archive,
-        name = "com_google_googletest",
+        name = "googletest",
         urls = [
             "https://github.com/google/googletest/archive/v1.16.0.tar.gz",
         ],
@@ -124,32 +134,47 @@ def gl_cpp_workspace0(name = None):
     # Load the googleapis dependency.
     maybe(
         http_archive,
-        name = "com_google_googleapis",
+        name = "googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/6145b5ffe99d290c3d840136f310490d732acb04.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/c0fcb35628690e9eb15dcefae41c651c67cd050b.tar.gz",
         ],
-        sha256 = "6d23d3507b1e6534db5378a0b2bc2d85da7023727bccc069fdd3181e2cdc3348",
-        strip_prefix = "googleapis-6145b5ffe99d290c3d840136f310490d732acb04",
+        sha256 = "68c82109667c892b6595385b2ad77c1342752f998664eb6d055509ecaddc3150",
+        strip_prefix = "googleapis-c0fcb35628690e9eb15dcefae41c651c67cd050b",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
-        #   patches = ["googleapis.patch"]
-        # NOTE: This should only be used while developing with a new
-        # protobuf message. No changes to `patches` should ever be
-        # committed to the main branch.
+        patches = [
+
+            # NOTE: This should only be used while developing with a new
+            # protobuf message. No changes to `patches` should ever be
+            # committed to the main branch.
+            #"googleapis.patch",
+
+            # Mirrors the patch from the current bazel module
+            "//bazel:remove_upb_c_rules.patch",
+        ],
         patch_tool = "patch",
-        patch_args = ["-p1"],
-        patches = [],
+
+        # Use the following args when developing with a new proto message
+        # patch_args = ["-p1", "-l", "-n"],
+        repo_mapping = {
+            "@com_github_grpc_grpc": "@grpc",
+        },
     )
 
     # Load protobuf.
+    # The name "com_google_protobuf" is internally used by @bazel_tools,
+    # a native repository we cannot override.
+    # We will revert this to @protobuf once @bazel_tools is deprecated
+    # and libraries have strayed away from it.
+    # See https://github.com/googleapis/google-cloud-cpp/issues/15393
     maybe(
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v29.4.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz",
         ],
-        sha256 = "6bd9dcc91b17ef25c26adf86db71c67ec02431dc92e9589eaf82e22889230496",
-        strip_prefix = "protobuf-29.4",
+        sha256 = "c3a0a9ece8932e31c3b736e2db18b1c42e7070cd9b881388b26d01aa71e24ca2",
+        strip_prefix = "protobuf-31.1",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -167,45 +192,65 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "boringssl-82a53d8c902f940eb1310f76a0b96c40c67f632f",
     )
 
+    # This is a transitive dependency of grpc
+    maybe(
+        http_archive,
+        name = "io_bazel_rules_go",
+        sha256 = "d93ef02f1e72c82d8bb3d5169519b36167b33cf68c252525e3b9d3d5dd143de7",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+        ],
+        patch_args = ["-p1"],
+    )
+
     # Load gRPC and its dependencies, using a similar pattern to this function.
     maybe(
         http_archive,
-        name = "com_github_grpc_grpc",
+        name = "grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.69.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.74.1.tar.gz",
         ],
-        sha256 = "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc",
-        strip_prefix = "grpc-1.69.0",
+        repo_mapping = {
+            "@com_google_absl": "@abseil-cpp",
+            "@com_github_grpc_grpc": "@grpc",
+        },
+        sha256 = "7bf97c11cf3808d650a3a025bbf9c5f922c844a590826285067765dfd055d228",
+        strip_prefix = "grpc-1.74.1",
+    )
+
+    native.bind(
+        name = "protocol_compiler",
+        actual = "@com_google_protobuf//:protoc",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
     # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
     native.bind(
         name = "grpc_cpp_plugin",
-        actual = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
+        actual = "@grpc//src/compiler:grpc_cpp_plugin",
     )
 
     native.bind(
         name = "grpc_lib",
-        actual = "@com_github_grpc_grpc//:grpc++",
+        actual = "@grpc//:grpc++",
     )
 
     # We need libcurl for the Google Cloud Storage client.
-    maybe(
-        http_archive,
+    http_archive(
         name = "com_github_curl_curl",
         urls = [
-            "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
+            "https://curl.haxx.se/download/curl-7.74.0.tar.gz",
         ],
-        sha256 = "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98",
-        strip_prefix = "curl-7.69.1",
+        sha256 = "e56b3921eeb7a2951959c02db0912b5fcd5fdba5aca071da819e1accf338bbd7",
+        strip_prefix = "curl-7.74.0",
         build_file = Label("//bazel:curl.BUILD"),
     )
 
     # We need the nlohmann_json library
     maybe(
         http_archive,
-        name = "com_github_nlohmann_json",
+        name = "nlohmann_json",
         urls = [
             "https://github.com/nlohmann/json/archive/v3.11.3.tar.gz",
         ],
@@ -213,25 +258,9 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "json-3.11.3",
     )
 
-    # Load google/crc32c, a library to efficiently compute CRC32C checksums.
-    maybe(
-        http_archive,
-        name = "com_github_google_crc32c",
-        urls = [
-            "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
-        ],
-        sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
-        strip_prefix = "crc32c-1.1.2",
-        build_file = Label("//bazel:crc32c.BUILD"),
-        patch_tool = "patch",
-        patch_args = ["-p1"],
-        patches = [Label("//bazel:configure_template.bzl.patch")],
-    )
-
     # Open Telemetry
-    maybe(
-        http_archive,
-        name = "io_opentelemetry_cpp",
+    http_archive(
+        name = "opentelemetry-cpp",
         urls = [
             "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz",
         ],

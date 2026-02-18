@@ -43,7 +43,7 @@ Options PacketMirroringsDefaultOptions(Options options) {
     options.set<
         compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>(
         compute_packet_mirrorings_v1::PacketMirroringsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_packet_mirrorings_v1::

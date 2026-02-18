@@ -12,16 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-13T23:35:58.117686333Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: efe44360-59b3-4784-96f6-ebe03ecdd2f7
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-fedora-ci
+name: prepare-for-v3-0-0-demo-fedora-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-fedora

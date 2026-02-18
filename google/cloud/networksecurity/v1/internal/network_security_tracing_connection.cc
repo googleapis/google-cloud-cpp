@@ -27,8 +27,6 @@ namespace cloud {
 namespace networksecurity_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 NetworkSecurityTracingConnection::NetworkSecurityTracingConnection(
     std::shared_ptr<networksecurity_v1::NetworkSecurityConnection> child)
     : child_(std::move(child)) {}
@@ -490,16 +488,12 @@ Status NetworkSecurityTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<networksecurity_v1::NetworkSecurityConnection>
 MakeNetworkSecurityTracingConnection(
     std::shared_ptr<networksecurity_v1::NetworkSecurityConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<NetworkSecurityTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

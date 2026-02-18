@@ -44,7 +44,7 @@ Options ServiceMonitoringServiceDefaultOptions(Options options) {
            .has<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::ServiceMonitoringServiceRetryPolicyOption>(
         monitoring_v3::ServiceMonitoringServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

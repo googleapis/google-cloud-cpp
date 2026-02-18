@@ -17,8 +17,8 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include <google/rpc/status.pb.h>
-#include <google/storage/v2/storage.pb.h>
+#include "google/rpc/status.pb.h"
+#include "google/storage/v2/storage.pb.h"
 
 namespace google {
 namespace cloud {

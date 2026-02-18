@@ -26,6 +26,9 @@
 #include <memory>
 #include <string>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace osconfig_agentendpoint_v1_internal {
@@ -77,6 +80,12 @@ class AgentEndpointServiceMetadata : public AgentEndpointServiceStub {
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(grpc::ClientContext& context, Options const& options,
+                    google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
@@ -91,5 +100,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_agentendpoint_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_INTERNAL_AGENT_ENDPOINT_METADATA_DECORATOR_H

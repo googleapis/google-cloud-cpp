@@ -22,10 +22,13 @@
 #include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -218,5 +221,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_METADATA_DECORATOR_H

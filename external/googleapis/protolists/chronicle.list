@@ -1,5 +1,5 @@
-@com_google_googleapis//google/cloud/chronicle/v1:data_access_control.proto
-@com_google_googleapis//google/cloud/chronicle/v1:entity.proto
-@com_google_googleapis//google/cloud/chronicle/v1:instance.proto
-@com_google_googleapis//google/cloud/chronicle/v1:reference_list.proto
-@com_google_googleapis//google/cloud/chronicle/v1:rule.proto
+@googleapis//google/cloud/chronicle/v1:data_access_control.proto
+@googleapis//google/cloud/chronicle/v1:entity.proto
+@googleapis//google/cloud/chronicle/v1:instance.proto
+@googleapis//google/cloud/chronicle/v1:reference_list.proto
+@googleapis//google/cloud/chronicle/v1:rule.proto

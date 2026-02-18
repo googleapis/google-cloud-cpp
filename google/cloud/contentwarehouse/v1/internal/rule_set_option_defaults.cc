@@ -42,7 +42,7 @@ Options RuleSetServiceDefaultOptions(Options options) {
   if (!options.has<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::RuleSetServiceRetryPolicyOption>(
         contentwarehouse_v1::RuleSetServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<contentwarehouse_v1::RuleSetServiceBackoffPolicyOption>()) {

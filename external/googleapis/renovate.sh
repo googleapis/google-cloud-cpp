@@ -38,7 +38,7 @@ fi
 
 DOWNLOAD="$(mktemp)"
 curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
-gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
+gcloud storage cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
 SHA256=$(sha256sum "${DOWNLOAD}" | sed "s/ .*//")
 SHA256_BASE64=$(openssl dgst -sha256 -binary <"${DOWNLOAD}" | openssl base64 -A)
 PIPERORIGIN_REVID=

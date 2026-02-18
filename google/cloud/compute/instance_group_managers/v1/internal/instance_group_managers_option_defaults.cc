@@ -46,7 +46,7 @@ Options InstanceGroupManagersDefaultOptions(Options options) {
                     InstanceGroupManagersRetryPolicyOption>(
         compute_instance_group_managers_v1::
             InstanceGroupManagersLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_instance_group_managers_v1::

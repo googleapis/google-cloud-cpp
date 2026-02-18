@@ -20,20 +20,21 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 template <typename T>
-future<StatusOr<T>> TokenError(internal::ErrorInfoBuilder eib) {
-  return make_ready_future(StatusOr<T>(
-      internal::InvalidArgumentError("invalid token", std::move(eib))));
+future<StatusOr<T>> TokenError(google::cloud::internal::ErrorInfoBuilder eib) {
+  return make_ready_future(
+      StatusOr<T>(google::cloud::internal::InvalidArgumentError(
+          "invalid token", std::move(eib))));
 }
 
 template <typename T>
-future<StatusOr<T>> StreamError(internal::ErrorInfoBuilder eib) {
-  return make_ready_future(
-      StatusOr<T>(internal::CancelledError("closed stream", std::move(eib))));
+future<StatusOr<T>> StreamError(google::cloud::internal::ErrorInfoBuilder eib) {
+  return make_ready_future(StatusOr<T>(google::cloud::internal::CancelledError(
+      "closed stream", std::move(eib))));
 }
 
 }  // namespace
@@ -88,8 +89,8 @@ future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
 
 future<Status> AsyncWriter::Flush() {
   if (!impl_) {
-    return make_ready_future(
-        internal::CancelledError("closed stream", GCP_ERROR_INFO()));
+    return make_ready_future(google::cloud::internal::CancelledError(
+        "closed stream", GCP_ERROR_INFO()));
   }
 
   return impl_->Flush(WritePayload{}).then([impl = impl_](auto f) {
@@ -99,8 +100,8 @@ future<Status> AsyncWriter::Flush() {
 
 future<Status> AsyncWriter::Close() {
   if (!impl_) {
-    return make_ready_future(
-        internal::CancelledError("closed stream", GCP_ERROR_INFO()));
+    return make_ready_future(google::cloud::internal::CancelledError(
+        "closed stream", GCP_ERROR_INFO()));
   }
 
   return impl_->Flush(WritePayload{}).then([impl = std::move(impl_)](auto f) {
@@ -113,6 +114,6 @@ RpcMetadata AsyncWriter::GetRequestMetadata() const {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -27,7 +27,7 @@ ARG NCPU=4
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y automake cmake curl \
-        gcc gcc-c++ gcc8 gcc8-c++ git gzip libtool make patch tar wget
+        gcc8 gcc8-c++ git gzip libtool make patch tar wget
 # ```
 
 # Install some of the dependencies for `google-cloud-cpp`.
@@ -35,7 +35,7 @@ RUN zypper refresh && \
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
-        libcurl-devel libopenssl-devel libcrc32c-devel nlohmann_json-devel \
+        libcurl-devel libopenssl-devel nlohmann_json-devel \
         grpc-devel libprotobuf-devel
 # ```
 
@@ -50,23 +50,25 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 ENV PATH=/usr/local/bin:${PATH}
 # ```
 
+# Use the following environment variables to configure the compiler used by
+# CMake.
+ENV CC=gcc-8
+ENV CXX=g++-8
+
 # #### opentelemetry-cpp
 
-# The project has an **optional** dependency on the OpenTelemetry library.
-# We recommend installing this library because:
-# - the dependency will become required in the google-cloud-cpp v3.x series.
-# - it is needed to produce distributed traces of the library.
+# The project has a dependency on the OpenTelemetry library.
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
-        -DWITH_STL=CXX14 \
-        -DWITH_ABSEIL=ON \
+        -DWITH_STL=CXX17 \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -75,14 +77,10 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20
     ldconfig
 # ```
 
-# Use the following environment variables to configure the compiler used by
-# CMake.
-
-ENV CXX=g++-8
-
-ENV CC=gcc-8
-
 ## [DONE packaging.md]
+
+RUN zypper refresh && \
+    zypper install --allow-downgrade -y gdb
 
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \

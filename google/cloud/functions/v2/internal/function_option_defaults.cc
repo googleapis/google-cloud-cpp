@@ -42,7 +42,7 @@ Options FunctionServiceDefaultOptions(Options options) {
   if (!options.has<functions_v2::FunctionServiceRetryPolicyOption>()) {
     options.set<functions_v2::FunctionServiceRetryPolicyOption>(
         functions_v2::FunctionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<functions_v2::FunctionServiceBackoffPolicyOption>()) {

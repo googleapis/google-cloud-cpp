@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/unified_rest_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
@@ -25,6 +24,7 @@
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <cstdlib>
@@ -405,7 +405,7 @@ TEST(UnifiedRestCredentialsTest, ServiceAccount) {
   EXPECT_CALL(client_factory, Call).Times(0);
 
   auto const config =
-      internal::ServiceAccountConfig(contents.dump(), Options{});
+      internal::ServiceAccountConfig(contents.dump(), absl::nullopt, Options{});
   auto credentials = MapCredentials(config, client_factory.AsStdFunction());
   auto access_token = credentials->GetToken(now);
   ASSERT_STATUS_OK(access_token);

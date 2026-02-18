@@ -17,12 +17,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 18b11d89-0625-40ba-897a-ac10462d1c7b
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-otel-abi-2-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/18b11d89-0625-40ba-897a-ac10462d1c7b
+name: prepare-for-v3-0-0-bazel-otel-abi-2-pr
 substitutions:
   _BUILD_NAME: bazel-otel-abi-2
   _DISTRO: fedora-latest-bazel

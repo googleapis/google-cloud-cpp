@@ -46,7 +46,7 @@ Options RegionInstantSnapshotsDefaultOptions(Options options) {
                     RegionInstantSnapshotsRetryPolicyOption>(
         compute_region_instant_snapshots_v1::
             RegionInstantSnapshotsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_instant_snapshots_v1::

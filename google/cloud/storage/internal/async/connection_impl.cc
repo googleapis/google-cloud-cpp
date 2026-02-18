@@ -64,42 +64,39 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-inline std::unique_ptr<storage_experimental::AsyncRetryPolicy> retry_policy(
+inline std::unique_ptr<storage::AsyncRetryPolicy> retry_policy(
     Options const& options) {
-  return options.get<storage_experimental::AsyncRetryPolicyOption>()->clone();
+  return options.get<storage::AsyncRetryPolicyOption>()->clone();
 }
 
 inline std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<storage::BackoffPolicyOption>()->clone();
 }
 
-inline std::unique_ptr<storage_experimental::IdempotencyPolicy>
-idempotency_policy(Options const& options) {
-  return options.get<storage_experimental::IdempotencyPolicyOption>()();
+inline std::unique_ptr<storage::AsyncIdempotencyPolicy> idempotency_policy(
+    Options const& options) {
+  return options.get<storage::AsyncIdempotencyPolicyOption>()();
 }
 
 std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
     Options const& options) {
   auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
-  if (options.has<storage_experimental::UseCrc32cValueOption>()) {
+  if (options.has<storage::UseCrc32cValueOption>()) {
     crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(
         storage::internal::HashValues{
-            Crc32cFromProto(
-                options.get<storage_experimental::UseCrc32cValueOption>()),
+            Crc32cFromProto(options.get<storage::UseCrc32cValueOption>()),
             /*.md5=*/{}});
-  } else if (options
-                 .get<storage_experimental::EnableCrc32cValidationOption>()) {
+  } else if (options.get<storage::EnableCrc32cValidationOption>()) {
     crc32c = std::make_unique<storage::internal::Crc32cHashFunction>();
   }
 
   auto md5 = std::unique_ptr<storage::internal::HashFunction>();
-  if (options.has<storage_experimental::UseMD5ValueOption>()) {
+  if (options.has<storage::UseMD5ValueOption>()) {
     md5 = std::make_unique<storage::internal::PrecomputedHashFunction>(
         storage::internal::HashValues{
             /*.crc32=*/{},
-            MD5FromProto(
-                options.get<storage_experimental::UseMD5ValueOption>())});
-  } else if (options.get<storage_experimental::EnableMD5ValidationOption>()) {
+            MD5FromProto(options.get<storage::UseMD5ValueOption>())});
+  } else if (options.get<storage::EnableMD5ValidationOption>()) {
     md5 = storage::internal::MD5HashFunction::Create();
   }
 
@@ -120,9 +117,8 @@ std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
   if (is_ranged_read) return storage::internal::CreateNullHashValidator();
 
   auto const enable_crc32c =
-      options.get<storage_experimental::EnableCrc32cValidationOption>();
-  auto const enable_md5 =
-      options.get<storage_experimental::EnableMD5ValidationOption>();
+      options.get<storage::EnableCrc32cValidationOption>();
+  auto const enable_md5 = options.get<storage::EnableMD5ValidationOption>();
 
   if (enable_crc32c && enable_md5) {
     return std::make_unique<storage::internal::CompositeValidator>(
@@ -191,18 +187,16 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
       std::move(current), std::move(request), __func__);
 }
 
-future<
-    StatusOr<std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
+future<StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>>
 AsyncConnectionImpl::Open(OpenParams p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
   *initial_request.mutable_read_object_spec() = p.read_spec;
   auto current = internal::MakeImmutableOptions(p.options);
   // Get the policy factory and immediately create a policy.
-  auto resume_policy =
-      current->get<storage_experimental::ResumePolicyOption>()();
+  auto resume_policy = current->get<storage::ResumePolicyOption>()();
 
-  auto retry = std::shared_ptr<storage_experimental::AsyncRetryPolicy>(
-      retry_policy(*current));
+  auto retry =
+      std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   auto const* function_name = __func__;
@@ -236,8 +230,7 @@ AsyncConnectionImpl::Open(OpenParams p) {
       });
 
   auto pending = factory(std::move(initial_request));
-  using ReturnType =
-      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>;
+  using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
   return pending.then(
       [rp = std::move(resume_policy), fa = std::move(factory),
        rs = std::move(p.read_spec),
@@ -253,15 +246,13 @@ AsyncConnectionImpl::Open(OpenParams p) {
       });
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>
 AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
-  using ReturnType =
-      StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>;
+  using ReturnType = StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>;
   auto current = internal::MakeImmutableOptions(std::move(p.options));
 
   // Get the policy factory and immediately create a policy.
-  auto resume_policy =
-      current->get<storage_experimental::ResumePolicyOption>()();
+  auto resume_policy = current->get<storage::ResumePolicyOption>()();
   // Create the hash function and validator based on the original request. Note
   // that p.request will be moved-from, so we have to do it relatively early in
   // this function.
@@ -279,40 +270,40 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   return make_ready_future(ReturnType(std::move(connection)));
 }
 
-future<StatusOr<storage_experimental::ReadPayload>>
-AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
+future<StatusOr<storage::ReadPayload>> AsyncConnectionImpl::ReadObjectRange(
+    ReadObjectParams p) {
   return ReadObject(std::move(p))
-      .then([](auto f) -> future<StatusOr<storage_experimental::ReadPayload>> {
+      .then([](auto f) -> future<StatusOr<storage::ReadPayload>> {
         auto r = f.get();
         if (!r) {
-          return make_ready_future(StatusOr<storage_experimental::ReadPayload>(
-              std::move(r).status()));
+          return make_ready_future(
+              StatusOr<storage::ReadPayload>(std::move(r).status()));
         }
         auto token = storage_internal::MakeAsyncToken(r->get());
-        return storage_experimental::ReadAll(
-            storage_experimental::AsyncReader(*std::move(r)), std::move(token));
+        return storage::ReadAll(storage::AsyncReader(*std::move(r)),
+                                std::move(token));
       });
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
   return AppendableObjectUploadImpl(std::move(p));
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::ResumeAppendableObjectUpload(AppendableUploadParams p) {
   return AppendableObjectUploadImpl(std::move(p));
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = p.request;
   std::int64_t persisted_size = 0;
   std::shared_ptr<storage::internal::HashFunction> hash_function =
       CreateHashFunction(*current);
-  auto retry = std::shared_ptr<storage_experimental::AsyncRetryPolicy>(
-      retry_policy(*current));
+  auto retry =
+      std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   using StreamingRpcTimeout =
@@ -380,8 +371,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   return pending.then(
       [current, request = std::move(p.request), persisted_size,
        hash = std::move(hash_function), fa = std::move(factory)](auto f) mutable
-      -> StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+      -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
         std::unique_ptr<AsyncWriterConnectionImpl> impl;
@@ -401,7 +391,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
       });
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
 
@@ -414,12 +404,12 @@ AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
                                              std::move(request), f.get());
     }
     return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
+        StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())));
   });
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
   auto current = internal::MakeImmutableOptions(p.options);
   auto async_write_object = [c = current, start = p.request,
@@ -431,14 +421,13 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
         start.common_object_request_params();
     if (auto self = w.lock()) return self->ResumeUpload(c, std::move(query));
     return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>{
+        StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>{
             internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())});
   };
   return StartUnbufferedUpload(std::move(p))
       .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
-            -> StatusOr<
-                std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+            -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         auto factory = [upload_id = (*w)->UploadId(),
@@ -450,13 +439,13 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
       });
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::ResumeUnbufferedUpload(ResumeUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   return ResumeUpload(current, std::move(p.request));
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   // This is a factory to create unbuffered writer connections. We will call
@@ -467,21 +456,19 @@ AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
                           w = WeakFromThis()]() mutable {
     if (auto self = w.lock()) return self->ResumeUpload(c, std::move(query));
     return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>{
+        StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>{
             internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())});
   };
 
   auto f = make_unbuffered();
-  return f.then(
-      [current = std::move(current),
-       make_unbuffered = std::move(make_unbuffered)](auto f) mutable
-      -> StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
-        auto w = f.get();
-        if (!w) return std::move(w).status();
-        return MakeWriterConnectionBuffered(std::move(make_unbuffered),
-                                            *std::move(w), *current);
-      });
+  return f.then([current = std::move(current),
+                 make_unbuffered = std::move(make_unbuffered)](auto f) mutable
+                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+    auto w = f.get();
+    if (!w) return std::move(w).status();
+    return MakeWriterConnectionBuffered(std::move(make_unbuffered),
+                                        *std::move(w), *current);
+  });
 }
 
 future<StatusOr<google::storage::v2::Object>>
@@ -522,7 +509,7 @@ future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
       std::move(current), std::move(p.request), __func__);
 }
 
-std::shared_ptr<storage_experimental::AsyncRewriterConnection>
+std::shared_ptr<storage::AsyncRewriterConnection>
 AsyncConnectionImpl::RewriteObject(RewriteObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
 
@@ -579,11 +566,10 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
     // Make this mutable, because it is called only once and we can
     // `std::move()` the captured values.
     auto transform = [current, hash_function](auto f) mutable
-        -> StatusOr<
-            std::unique_ptr<storage_experimental::AsyncReaderConnection>> {
+        -> StatusOr<std::unique_ptr<storage::AsyncReaderConnection>> {
       auto rpc = f.get();
       if (!rpc) return std::move(rpc).status();
-      return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+      return std::unique_ptr<storage::AsyncReaderConnection>(
           std::make_unique<AsyncReaderConnectionImpl>(
               std::move(current), *std::move(rpc), std::move(hash_function)));
     };
@@ -647,7 +633,7 @@ AsyncConnectionImpl::QueryWriteStatus(
 }
 
 // Combines a call to QueryWriteStatus and creates an unbuffered upload.
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::ResumeUpload(
     internal::ImmutableOptions current,
     google::storage::v2::QueryWriteStatusRequest query) {
@@ -660,19 +646,19 @@ AsyncConnectionImpl::ResumeUpload(
                                               f.get());
     }
     return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
+        StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             internal::CancelledError("Cannot lock self", GCP_ERROR_INFO())));
   });
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartUnbufferedUploadImpl(
     internal::ImmutableOptions current,
     google::storage::v2::StartResumableWriteRequest request,
     StatusOr<google::storage::v2::StartResumableWriteResponse> response) {
   if (!response) {
     return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
+        StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             std::move(response).status()));
   }
   auto hash_function = CreateHashFunction(*current);
@@ -690,19 +676,19 @@ AsyncConnectionImpl::StartUnbufferedUploadImpl(
                               std::move(proto), std::move(hash_function), 0);
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
     internal::ImmutableOptions current,
     google::storage::v2::QueryWriteStatusRequest query,
     StatusOr<google::storage::v2::QueryWriteStatusResponse> response) {
   if (!response) {
     return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
+        StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             std::move(response).status()));
   }
   if (response->has_resource()) {
     return make_ready_future(
-        StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>(
+        StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             std::make_unique<AsyncWriterConnectionFinalized>(
                 std::move(*query.mutable_upload_id()),
                 std::move(*response->mutable_resource()))));
@@ -729,7 +715,7 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
                               response->persisted_size());
 }
 
-future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
 AsyncConnectionImpl::UnbufferedUploadImpl(
     internal::ImmutableOptions current,
     std::function<void(grpc::ClientContext&)> configure_context,
@@ -773,11 +759,10 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
 
   auto transform = [current, request = std::move(request), persisted_size,
                     hash = std::move(hash_function)](auto f) mutable
-      -> StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+      -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
     auto rpc = f.get();
     if (!rpc) return std::move(rpc).status();
-    return std::unique_ptr<storage_experimental::AsyncWriterConnection>(
+    return std::unique_ptr<storage::AsyncWriterConnection>(
         std::make_unique<AsyncWriterConnectionImpl>(
             current, std::move(request), *std::move(rpc), std::move(hash),
             persisted_size, true));
@@ -792,7 +777,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
       .then(std::move(transform));
 }
 
-std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
+std::shared_ptr<storage::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, Options options) {
   options = DefaultOptionsAsync(std::move(options));
   EnableGrpcMetrics(options);
@@ -802,7 +787,7 @@ std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
       std::move(options));
 }
 
-std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
+std::shared_ptr<storage::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub, Options options) {
   return std::make_shared<AsyncConnectionImpl>(
       std::move(cq), std::shared_ptr<GrpcChannelRefresh>{}, std::move(stub),

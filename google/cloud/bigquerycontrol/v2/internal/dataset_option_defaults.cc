@@ -41,7 +41,7 @@ Options DatasetServiceDefaultOptions(Options options) {
   if (!options.has<bigquerycontrol_v2::DatasetServiceRetryPolicyOption>()) {
     options.set<bigquerycontrol_v2::DatasetServiceRetryPolicyOption>(
         bigquerycontrol_v2::DatasetServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<bigquerycontrol_v2::DatasetServiceBackoffPolicyOption>()) {

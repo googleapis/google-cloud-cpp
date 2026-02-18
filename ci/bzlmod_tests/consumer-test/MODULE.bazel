@@ -1,0 +1,5 @@
+module(name = "bzlmod-consumer-test")
+
+bazel_dep(name = "google_cloud_cpp", version = "3.0.0-rc1")
+bazel_dep(name = "googletest", version = "1.15.2")
+bazel_dep(name = "rules_cc", version = "0.1.1")

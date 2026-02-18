@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/make_status.h"
@@ -24,6 +23,7 @@
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <array>

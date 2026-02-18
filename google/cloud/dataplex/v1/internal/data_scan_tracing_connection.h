@@ -28,8 +28,6 @@ namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataScanServiceTracingConnection
     : public dataplex_v1::DataScanServiceConnection {
  public:
@@ -127,8 +125,6 @@ class DataScanServiceTracingConnection
  private:
   std::shared_ptr<dataplex_v1::DataScanServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

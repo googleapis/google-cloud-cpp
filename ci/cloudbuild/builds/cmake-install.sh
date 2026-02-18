@@ -35,6 +35,7 @@ readonly ENABLED_FEATURES
 # Compiles and installs all libraries and headers.
 cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DGOOGLE_CLOUD_CPP_ENABLE_CLANG_ABI_COMPAT_17=ON \
   -DBUILD_TESTING=OFF \
@@ -98,7 +99,6 @@ expected_dirs+=(
   ./include/google/cloud/gkebackup/logging/v1
   ./include/google/cloud/gkehub/v1/configmanagement
   ./include/google/cloud/gkehub/v1/multiclusteringress
-  ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
   ./include/google/cloud/internal/win32
   ./include/google/cloud/location
@@ -132,7 +132,6 @@ expected_dirs+=(
   ./include/google/cloud/storage/internal/grpc
   ./include/google/cloud/storage/internal/rest
   ./include/google/cloud/storage/mocks
-  ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
   # no gRPC services in google/cloud/workflows/type.
   ./include/google/cloud/workflows/type

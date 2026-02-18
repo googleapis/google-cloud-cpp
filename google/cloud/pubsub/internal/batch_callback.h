@@ -19,7 +19,7 @@
 #include "google/cloud/pubsub/internal/span.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/pubsub.pb.h>
+#include "google/pubsub/v1/pubsub.pb.h"
 #include <string>
 
 namespace google {

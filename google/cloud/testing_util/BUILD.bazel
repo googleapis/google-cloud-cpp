@@ -41,27 +41,22 @@ cc_library(
     }),
     deps = [
         "//:common",
-        "@com_google_absl//absl/debugging:failure_signal_handler",
-        "@com_google_absl//absl/debugging:symbolize",
-        "@com_google_googletest//:gtest_main",
-    ] + select({
-        "//google/cloud:enable_opentelemetry": [
-            "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
-            "@io_opentelemetry_cpp//sdk/src/trace",
-        ],
-        "//conditions:default": [],
-    }),
+        "@abseil-cpp//absl/debugging:failure_signal_handler",
+        "@abseil-cpp//absl/debugging:symbolize",
+        "@googletest//:gtest_main",
+        "@opentelemetry-cpp//exporters/memory:in_memory_span_exporter",
+        "@opentelemetry-cpp//sdk/src/trace",
+    ],
 )
 
 cc_library(
     name = "google_cloud_cpp_testing",
     testonly = True,
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_testing_private"],
 )
 
@@ -71,7 +66,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_testing",
         "//:common",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_testing_unit_tests]
 
@@ -83,11 +78,11 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_github_grpc_grpc//:grpc++",
-        "@com_google_googleapis//:googleapis_system_includes",
-        "@com_google_googleapis//google/api:annotations_cc_proto",
-        "@com_google_googleapis//google/api:routing_cc_proto",
-        "@com_google_googletest//:gtest_main",
+        "@grpc//:grpc++",
+        #        "@googleapis//:googleapis_system_includes",
+        "@googleapis//google/api:annotations_cc_proto",
+        "@googleapis//google/api:routing_cc_proto",
+        "@googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
     ],
 )
@@ -95,12 +90,11 @@ cc_library(
 cc_library(
     name = "google_cloud_cpp_testing_grpc",
     testonly = True,
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_testing_grpc_private"],
 )
 
@@ -110,8 +104,8 @@ cc_library(
     deps = [
         ":google_cloud_cpp_testing_grpc",
         "//:common",
-        "@com_google_googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
+        "@googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_testing_grpc_unit_tests]
 
@@ -122,18 +116,17 @@ cc_library(
     hdrs = google_cloud_cpp_testing_rest_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_rest_internal",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
 cc_library(
     name = "google_cloud_cpp_testing_rest",
     testonly = True,
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":google_cloud_cpp_testing_rest_private"],
 )

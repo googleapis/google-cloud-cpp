@@ -15,9 +15,9 @@
 #include "google/cloud/internal/debug_string_status.h"
 #include "google/cloud/internal/debug_string_protobuf.h"
 #include "google/cloud/internal/status_payload_keys.h"
-#include <google/protobuf/any.pb.h>
-#include <google/rpc/error_details.pb.h>
-#include <google/rpc/status.pb.h>
+#include "google/protobuf/any.pb.h"
+#include "google/rpc/error_details.pb.h"
+#include "google/rpc/status.pb.h"
 #include <sstream>
 
 namespace google {

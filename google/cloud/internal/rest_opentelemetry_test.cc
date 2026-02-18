@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/network_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -39,7 +38,7 @@ using ::testing::Gt;
 using ::testing::Pair;
 
 TEST(RestOpentelemetry, MakeSpanHttp) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
@@ -66,7 +65,7 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
           SpanHasAttributes(
               OTelAttribute<std::string>(
                   /*sc::kNetworkTransport=*/"network.transport",
-                  sc::NetTransportValues::kIpTcp),
+                  sc::network::NetworkTransportValues::kTcp),
               OTelAttribute<std::string>(
                   /*sc::kHttpRequestMethod=*/"http.request.method", "GET"),
               OTelAttribute<std::string>(/*sc::kUrlFull=*/"url.full", kUrl),
@@ -101,5 +100,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

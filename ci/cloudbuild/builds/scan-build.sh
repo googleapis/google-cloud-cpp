@@ -38,5 +38,6 @@ scan_build=(
   "${HOME}/scan-build"
 )
 io::run "${scan_build[@]}" cmake "${cmake_args[@]}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 io::run "${scan_build[@]}" cmake --build cmake-out

@@ -42,7 +42,7 @@ Options DepServiceDefaultOptions(Options options) {
   if (!options.has<networkservices_v1::DepServiceRetryPolicyOption>()) {
     options.set<networkservices_v1::DepServiceRetryPolicyOption>(
         networkservices_v1::DepServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<networkservices_v1::DepServiceBackoffPolicyOption>()) {

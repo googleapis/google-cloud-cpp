@@ -19,12 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_V1_INTERNAL_CONNECTION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_V1_INTERNAL_CONNECTION_STUB_H
 
+#include "google/cloud/apigeeconnect/v1/connection.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/apigeeconnect/v1/connection.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -66,5 +69,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_V1_INTERNAL_CONNECTION_STUB_H

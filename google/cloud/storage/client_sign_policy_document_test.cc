@@ -14,8 +14,6 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/base64.h"
-#include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/mock_client.h"

@@ -42,7 +42,7 @@ Options ExportServiceDefaultOptions(Options options) {
   if (!options.has<profiler_v2::ExportServiceRetryPolicyOption>()) {
     options.set<profiler_v2::ExportServiceRetryPolicyOption>(
         profiler_v2::ExportServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<profiler_v2::ExportServiceBackoffPolicyOption>()) {

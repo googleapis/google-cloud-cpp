@@ -41,7 +41,7 @@ Options ImagesDefaultOptions(Options options) {
   if (!options.has<compute_images_v1::ImagesRetryPolicyOption>()) {
     options.set<compute_images_v1::ImagesRetryPolicyOption>(
         compute_images_v1::ImagesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_images_v1::ImagesBackoffPolicyOption>()) {

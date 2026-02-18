@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/pubsub/internal/tracing_exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/mock_exactly_once_ack_handler_impl.h"
@@ -22,7 +20,8 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -147,7 +146,7 @@ TEST(TracingExactlyOnceAckHandlerTest, AckError) {
 }
 
 TEST(TracingAckHandlerTest, AckAttributes) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, ack())
@@ -162,17 +161,19 @@ TEST(TracingAckHandlerTest, AckAttributes) {
       ElementsAre(AllOf(
           SpanNamed("test-subscription ack"),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
-                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                  "settle"),
-              OTelAttribute<std::string>(sc::kCodeFunction,
+                  /*sc::messaging::kMessagingOperationType=*/
+                  "messaging.operation.type", "settle"),
+              OTelAttribute<std::string>(sc::code::kCodeFunctionName,
                                          "pubsub::AckHandler::ack"),
               OTelAttribute<std::int32_t>(
                   "messaging.gcp_pubsub.message.delivery_attempt", 42),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-subscription")))));
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName,
+                  "test-subscription")))));
 }
 
 TEST(TracingExactlyOnceAckHandlerTest, NackSuccess) {
@@ -255,7 +256,7 @@ TEST(TracingExactlyOnceAckHandlerTest, NackSuccessWithNoSubscribeSpan) {
 }
 
 TEST(TracingAckHandlerTest, NackAttributes) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, nack())
@@ -270,17 +271,19 @@ TEST(TracingAckHandlerTest, NackAttributes) {
       ElementsAre(AllOf(
           SpanNamed("test-subscription nack"),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
-                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                  "settle"),
-              OTelAttribute<std::string>(sc::kCodeFunction,
+                  /*sc::messaging::kMessagingOperationType=*/
+                  "messaging.operation.type", "settle"),
+              OTelAttribute<std::string>(sc::code::kCodeFunctionName,
                                          "pubsub::AckHandler::nack"),
               OTelAttribute<std::int32_t>(
                   "messaging.gcp_pubsub.message.delivery_attempt", 42),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-subscription")))));
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName,
+                  "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, DeliveryAttempt) {
@@ -312,5 +315,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

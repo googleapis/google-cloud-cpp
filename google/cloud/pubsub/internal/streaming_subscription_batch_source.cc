@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/pubsub/internal/extend_leases_with_retry.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/url_encode.h"

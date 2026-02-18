@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_region_ssl_certificates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RegionSslCertificatesTracingConnection
     : public compute_region_ssl_certificates_v1::
           RegionSslCertificatesConnection {
@@ -84,8 +82,6 @@ class RegionSslCertificatesTracingConnection
       compute_region_ssl_certificates_v1::RegionSslCertificatesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

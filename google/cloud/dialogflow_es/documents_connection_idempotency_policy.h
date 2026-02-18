@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_DOCUMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_DOCUMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/dialogflow/v2/document.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/v2/document.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

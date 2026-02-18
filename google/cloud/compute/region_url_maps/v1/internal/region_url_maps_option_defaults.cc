@@ -42,7 +42,7 @@ Options RegionUrlMapsDefaultOptions(Options options) {
            .has<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()) {
     options.set<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>(
         compute_region_url_maps_v1::RegionUrlMapsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

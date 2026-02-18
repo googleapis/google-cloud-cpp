@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 KeyManagementServiceTracingStub::KeyManagementServiceTracingStub(
     std::shared_ptr<KeyManagementServiceStub> child)
@@ -457,18 +458,14 @@ KeyManagementServiceTracingStub::GetOperation(
                            child_->GetOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<KeyManagementServiceStub> MakeKeyManagementServiceTracingStub(
     std::shared_ptr<KeyManagementServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<KeyManagementServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

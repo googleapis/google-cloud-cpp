@@ -23,8 +23,8 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
-#include <google/bigtable/v2/bigtable.pb.h>
-#include <google/bigtable/v2/data.pb.h>
+#include "google/bigtable/v2/bigtable.pb.h"
+#include "google/bigtable/v2/data.pb.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>

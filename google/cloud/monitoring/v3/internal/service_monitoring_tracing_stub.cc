@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ServiceMonitoringServiceTracingStub::ServiceMonitoringServiceTracingStub(
     std::shared_ptr<ServiceMonitoringServiceStub> child)
@@ -160,19 +161,15 @@ Status ServiceMonitoringServiceTracingStub::DeleteServiceLevelObjective(
       child_->DeleteServiceLevelObjective(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ServiceMonitoringServiceStub>
 MakeServiceMonitoringServiceTracingStub(
     std::shared_ptr<ServiceMonitoringServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ServiceMonitoringServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

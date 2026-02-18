@@ -17,9 +17,12 @@
 // source: google/bigtable/admin/v2/bigtable_table_admin.proto
 
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_auth_decorator.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+#include "google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -529,3 +532,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

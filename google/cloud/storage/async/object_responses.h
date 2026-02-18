@@ -22,7 +22,7 @@
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <map>
 #include <string>
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -128,7 +128,7 @@ class ReadPayload {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

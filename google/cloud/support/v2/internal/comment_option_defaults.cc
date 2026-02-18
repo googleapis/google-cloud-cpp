@@ -42,7 +42,7 @@ Options CommentServiceDefaultOptions(Options options) {
   if (!options.has<support_v2::CommentServiceRetryPolicyOption>()) {
     options.set<support_v2::CommentServiceRetryPolicyOption>(
         support_v2::CommentServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<support_v2::CommentServiceBackoffPolicyOption>()) {

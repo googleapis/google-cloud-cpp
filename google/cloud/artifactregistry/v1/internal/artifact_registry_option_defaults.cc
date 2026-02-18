@@ -42,7 +42,7 @@ Options ArtifactRegistryDefaultOptions(Options options) {
   if (!options.has<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()) {
     options.set<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>(
         artifactregistry_v1::ArtifactRegistryLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

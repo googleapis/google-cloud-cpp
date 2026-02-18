@@ -55,15 +55,15 @@ auto TestOptions(Options options = {}) {
       std::move(options),
       Options{}
           .set<GrpcNumChannelsOption>(1)
-          .set<storage_experimental::AsyncRetryPolicyOption>(
-              storage_experimental::LimitedErrorCountRetryPolicy(2).clone())
+          .set<storage::AsyncRetryPolicyOption>(
+              storage::LimitedErrorCountAsyncRetryPolicy(2).clone())
           .set<storage::BackoffPolicyOption>(
               storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));
   return DefaultOptionsAsync(std::move(options));
 }
 
 // Creates a test connection with a mock stub.
-std::shared_ptr<storage_experimental::AsyncConnection> MakeTestConnection(
+std::shared_ptr<storage::AsyncConnection> MakeTestConnection(
     CompletionQueue cq, std::shared_ptr<storage::testing::MockStorageStub> mock,
     Options options = {}) {
   return MakeAsyncConnection(std::move(cq), std::move(mock),
@@ -206,7 +206,7 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadSuccess) {
   // An empty payload might be a no-op in the implementation, which would
   // prevent the mock from being triggered and cause the sequencer to hang.
   // We provide a non-empty payload to ensure the Write RPC is sent.
-  auto w1 = writer->Write(storage_experimental::WritePayload("some data"));
+  auto w1 = writer->Write(storage::WritePayload("some data"));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write(data)");
   next.first.set_value(true);
@@ -272,7 +272,7 @@ TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadSuccess) {
   // Verify the persisted state is correctly reported.
   EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), kPersistedSize);
 
-  auto w1 = writer->Write(storage_experimental::WritePayload("some more data"));
+  auto w1 = writer->Write(storage::WritePayload("some more data"));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write(data)");
   next.first.set_value(true);

@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class EventServiceTracingStub : public EventServiceStub {
  public:
@@ -53,8 +54,6 @@ class EventServiceTracingStub : public EventServiceStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -68,5 +67,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_v4_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_EVENT_TRACING_STUB_H

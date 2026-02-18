@@ -19,16 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LICENSEMANAGER_V1_INTERNAL_LICENSE_MANAGER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LICENSEMANAGER_V1_INTERNAL_LICENSE_MANAGER_STUB_H
 
+#include "google/cloud/licensemanager/v1/licensemanager.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/licensemanager/v1/licensemanager.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -352,5 +355,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace licensemanager_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LICENSEMANAGER_V1_INTERNAL_LICENSE_MANAGER_STUB_H

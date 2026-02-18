@@ -17,9 +17,12 @@
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
 #include "google/cloud/accessapproval/v1/internal/access_approval_auth_decorator.h"
-#include <google/cloud/accessapproval/v1/accessapproval.grpc.pb.h>
+#include "google/cloud/accessapproval/v1/accessapproval.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -124,3 +127,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

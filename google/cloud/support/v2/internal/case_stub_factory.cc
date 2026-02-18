@@ -17,6 +17,7 @@
 // source: google/cloud/support/v2/case_service.proto
 
 #include "google/cloud/support/v2/internal/case_stub_factory.h"
+#include "google/cloud/support/v2/case_service.grpc.pb.h"
 #include "google/cloud/support/v2/internal/case_auth_decorator.h"
 #include "google/cloud/support/v2/internal/case_logging_decorator.h"
 #include "google/cloud/support/v2/internal/case_metadata_decorator.h"
@@ -28,9 +29,11 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/support/v2/case_service.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -68,3 +71,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

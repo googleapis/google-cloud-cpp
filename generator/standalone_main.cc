@@ -18,15 +18,16 @@
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/discovery_to_proto.h"
 #include "generator/internal/format_method_comments.h"
+#include "generator/internal/mixin_utils.h"
 #include "generator/internal/scaffold_generator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
 #include <algorithm>
@@ -164,14 +165,6 @@ int WriteInstallDirectories(
     if (!service.omit_connection()) {
       install_directories.push_back("./include/" + product_path + "/mocks");
     }
-    auto const& forwarding_product_path = service.forwarding_product_path();
-    if (!forwarding_product_path.empty()) {
-      install_directories.push_back("./include/" + forwarding_product_path);
-      if (!service.omit_connection()) {
-        install_directories.push_back("./include/" + forwarding_product_path +
-                                      "/mocks");
-      }
-    }
     auto const lib = LibraryName(product_path);
     install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
     // Note that storage does not have a public-facing mocks library. Only
@@ -288,9 +281,13 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
       args.emplace_back(absl::StrCat("--cpp_codegen_opt=omit_rpc=",
                                      SafeReplaceAll(omit_rpc, ",", "@")));
     }
-    if (service.backwards_compatibility_namespace_alias()) {
-      args.emplace_back(
-          "--cpp_codegen_opt=backwards_compatibility_namespace_alias=true");
+    for (auto const& bespoke_method : service.bespoke_methods()) {
+      args.emplace_back(absl::StrCat(
+          "--cpp_codegen_opt=bespoke_method=",
+          absl::StrJoin({SafeReplaceAll(bespoke_method.name(), ",", "@"),
+                         SafeReplaceAll(bespoke_method.return_type(), ",", "@"),
+                         SafeReplaceAll(bespoke_method.parameters(), ",", "@")},
+                        "@@")));
     }
     for (auto const& retry_code : service.retryable_status_codes()) {
       args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code);
@@ -329,16 +326,8 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     if (service.generate_rest_transport()) {
       args.emplace_back("--cpp_codegen_opt=generate_rest_transport=true");
     }
-    args.emplace_back(service.service_proto_path());
-    for (auto const& additional_proto_file : service.additional_proto_files()) {
-      args.emplace_back(additional_proto_file);
-    }
     if (service.experimental()) {
       args.emplace_back("--cpp_codegen_opt=experimental=true");
-    }
-    if (!service.forwarding_product_path().empty()) {
-      args.emplace_back("--cpp_codegen_opt=forwarding_product_path=" +
-                        service.forwarding_product_path());
     }
     for (auto const& o : service.idempotency_overrides()) {
       args.emplace_back(absl::StrCat(
@@ -388,10 +377,30 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
                        "=", kv.second));
     }
 
+    std::vector<std::string> mixin_files_to_append;
     auto path = ServiceConfigYamlPath(yaml_root, scaffold_vars);
     if (!path.empty()) {
+      auto mixins =
+          google::cloud::generator_internal::GetMixinServiceProto(path);
       args.emplace_back(absl::StrCat("--cpp_codegen_opt=service_config_yaml=",
                                      std::move(path)));
+      for (auto& mixin_service : mixins) {
+        if (mixin_service.proto_file_path != service.service_proto_path()) {
+          args.emplace_back("--cpp_codegen_opt=omit_service=" +
+                            std::move(mixin_service.service_full_name));
+          mixin_files_to_append.push_back(
+              std::move(mixin_service.proto_file_path));
+        }
+      }
+    }
+
+    args.push_back(service.service_proto_path());
+    for (auto const& additional_proto_file : service.additional_proto_files()) {
+      args.push_back(additional_proto_file);
+    }
+
+    for (auto& mixin_path : mixin_files_to_append) {
+      args.push_back(std::move(mixin_path));
     }
 
     GCP_LOG(INFO) << "Generating service code using: "

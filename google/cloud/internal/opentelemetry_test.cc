@@ -18,10 +18,8 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/default_span.h>
 #include <opentelemetry/version.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
@@ -32,7 +30,6 @@ namespace {
 using ms = std::chrono::milliseconds;
 using ::testing::MockFunction;
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -446,23 +443,6 @@ TEST(OpenTelemetry, AddSpanAttributeDisabled) {
           SpanNamed("span"),
           Not(SpanHasAttributes(OTelAttribute<std::string>("key", "value"))))));
 }
-
-#else
-
-TEST(NoOpenTelemetry, TracingEnabled) {
-  EXPECT_FALSE(TracingEnabled(Options{}));
-}
-
-TEST(NoOpenTelemetry, MakeTracedSleeper) {
-  MockFunction<void(ms)> mock_sleeper;
-  EXPECT_CALL(mock_sleeper, Call(ms(42)));
-
-  auto sleeper = mock_sleeper.AsStdFunction();
-  auto result = MakeTracedSleeper(Options{}, sleeper, "Backoff");
-  result(ms(42));
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

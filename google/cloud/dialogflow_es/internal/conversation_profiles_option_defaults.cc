@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_option_defaults.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_connection.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,7 +45,7 @@ Options ConversationProfilesDefaultOptions(std::string const& location,
   if (!options.has<dialogflow_es::ConversationProfilesRetryPolicyOption>()) {
     options.set<dialogflow_es::ConversationProfilesRetryPolicyOption>(
         dialogflow_es::ConversationProfilesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dialogflow_es::ConversationProfilesBackoffPolicyOption>()) {

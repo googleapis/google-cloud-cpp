@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ROUTING_MATCHER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ROUTING_MATCHER_H
 
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include "absl/types/optional.h"
 #include <functional>
 #include <regex>

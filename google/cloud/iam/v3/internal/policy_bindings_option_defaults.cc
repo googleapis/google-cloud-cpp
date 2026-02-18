@@ -40,7 +40,7 @@ Options PolicyBindingsDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iam_v3::PolicyBindingsRetryPolicyOption>()) {
     options.set<iam_v3::PolicyBindingsRetryPolicyOption>(
-        iam_v3::PolicyBindingsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        iam_v3::PolicyBindingsLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<iam_v3::PolicyBindingsBackoffPolicyOption>()) {

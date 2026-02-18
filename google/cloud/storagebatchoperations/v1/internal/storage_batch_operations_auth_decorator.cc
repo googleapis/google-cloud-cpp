@@ -17,9 +17,12 @@
 // source: google/cloud/storagebatchoperations/v1/storage_batch_operations.proto
 
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_auth_decorator.h"
-#include <google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h>
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -190,3 +193,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagebatchoperations_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

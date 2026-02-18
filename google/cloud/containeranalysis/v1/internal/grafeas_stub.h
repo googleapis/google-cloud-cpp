@@ -22,10 +22,13 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <grafeas/v1/grafeas.grpc.pb.h>
-#include <grafeas/v1/grafeas.pb.h>
+#include "grafeas/v1/grafeas.grpc.pb.h"
+#include "grafeas/v1/grafeas.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -164,5 +167,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_GRAFEAS_STUB_H

@@ -18,22 +18,25 @@
 // google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto
 
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_auth_decorator.h"
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_logging_decorator.h"
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_metadata_decorator.h"
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_stub.h"
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_tracing_stub.h"
+#include "google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -77,3 +80,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rapidmigrationassessment_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

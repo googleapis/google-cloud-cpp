@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/bucket_request_parser.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>

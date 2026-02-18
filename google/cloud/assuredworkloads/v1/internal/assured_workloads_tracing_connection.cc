@@ -27,8 +27,6 @@ namespace cloud {
 namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AssuredWorkloadsServiceTracingConnection::
     AssuredWorkloadsServiceTracingConnection(
         std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
@@ -165,18 +163,14 @@ AssuredWorkloadsServiceTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceTracingConnection(
     std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AssuredWorkloadsServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

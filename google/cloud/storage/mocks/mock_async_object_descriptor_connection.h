@@ -25,12 +25,12 @@ namespace storage_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockAsyncObjectDescriptorConnection
-    : public storage_experimental::ObjectDescriptorConnection {
+    : public storage::ObjectDescriptorConnection {
  public:
   MOCK_METHOD(absl::optional<google::storage::v2::Object>, metadata, (),
               (const, override));
-  MOCK_METHOD(std::unique_ptr<storage_experimental::AsyncReaderConnection>,
-              Read, (ReadParams), (override));
+  MOCK_METHOD(std::unique_ptr<storage::AsyncReaderConnection>, Read,
+              (ReadParams), (override));
   MOCK_METHOD(void, MakeSubsequentStream, (), (override));
   MOCK_METHOD(Options, options, (), (const, override));
 };

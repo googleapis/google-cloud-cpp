@@ -14,10 +14,10 @@
 
 #include "generator/internal/scaffold_generator.h"
 #include "generator/internal/codegen_utils.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -424,8 +424,7 @@ this library.
   google::protobuf::io::Printer printer(&output, '$');
   printer.Print(
       variables,
-      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2)
-          .c_str());
+      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2));
 }
 
 void GenerateBuild(std::ostream& os,
@@ -453,7 +452,7 @@ licenses(["notice"])  # Apache 2.0
 service_dirs = ["$service_subdirectory$"]
 
 googleapis_deps = [
-    "@com_google_googleapis//$directory$:$library$_cc_grpc",
+    "@googleapis//$directory$:$library$_cc_grpc",
 ]
 
 cc_gapic_library(
@@ -560,8 +559,7 @@ which should give you a taste of the $title$ C++ client library API.
   google::protobuf::io::Printer printer(&output, '$');
   printer.Print(
       variables,
-      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2)
-          .c_str());
+      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2));
 }
 
 void GenerateDoxygenEnvironmentPage(
@@ -1021,7 +1019,7 @@ void GenerateQuickstartCMake(
 # This file shows how to use the $title$ C++ client library from a larger
 # CMake project.
 
-cmake_minimum_required(VERSION 3.10...3.24)
+cmake_minimum_required(VERSION 3.22...3.31)
 project(google-cloud-cpp-$library$-quickstart CXX)
 
 find_package(google_cloud_cpp_$library$ REQUIRED)
@@ -1086,7 +1084,7 @@ $$(BIN)/quickstart: quickstart.cc
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, format.c_str());
+  printer.Print(variables, format);
 }
 
 void GenerateQuickstartWorkspace(
@@ -1094,7 +1092,7 @@ void GenerateQuickstartWorkspace(
     std::string const& contents) {
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, contents.c_str());
+  printer.Print(variables, contents);
 }
 
 void GenerateQuickstartBuild(

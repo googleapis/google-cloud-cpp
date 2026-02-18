@@ -42,7 +42,7 @@ Options DataTaxonomyServiceDefaultOptions(Options options) {
   if (!options.has<dataplex_v1::DataTaxonomyServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::DataTaxonomyServiceRetryPolicyOption>(
         dataplex_v1::DataTaxonomyServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataplex_v1::DataTaxonomyServiceBackoffPolicyOption>()) {

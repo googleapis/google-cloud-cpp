@@ -21,13 +21,13 @@
 
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_connection_idempotency_policy.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_retry_traits.h"
+#include "google/cloud/cloudcontrolspartner/v1/monitoring.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/cloudcontrolspartner/v1/monitoring.pb.h>
 #include <memory>
 
 namespace google {
