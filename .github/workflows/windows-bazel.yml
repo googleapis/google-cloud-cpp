@@ -98,9 +98,11 @@ jobs:
         # Using a short name like this avoids the problem in most cases.
         mkdir -p 'c:\b' || true
         export BAZEL_ROOT='c:\b'
-        export BAZEL_REMOTE_CACHE_RW_MODE=${{ inputs.bazel-cache-mode }}
+        export BAZEL_REMOTE_CACHE_RW_MODE=${INPUTS_BAZEL_CACHE_MODE}
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         ci/gha/builds/windows-bazel.sh ${{ matrix.compilation_mode }} ${{ join(matrix.targets, ' ') }}
+      env:
+        INPUTS_BAZEL_CACHE_MODE: ${{ inputs.bazel-cache-mode }}
     - name: Post Build Disk Space
       shell: bash
       run: df -m
