@@ -17,9 +17,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: prepare-for-v3.0.0
+    branch: main
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: prepare-for-v3-0-0-clang-tidy-ci
+name: clang-tidy-ci
 substitutions:
   _BUILD_NAME: clang-tidy
   _DISTRO: fedora-latest-cmake
