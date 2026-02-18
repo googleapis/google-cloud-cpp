@@ -299,9 +299,10 @@ jobs:
       run: |
         cd "${TEMP}"
         mkdir -p .build/vcpkg
-        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
-            tar -C .build/vcpkg --strip-components=1 -zxf -
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${STEPS_DYNAMIC_OUTPUTS_VCPKG_VERSION}.tar.gz" | tar -C .build/vcpkg --strip-components=1 -zxf -
         .build/vcpkg/bootstrap-vcpkg.sh -disableMetrics
+      env:
+        STEPS_DYNAMIC_OUTPUTS_VCPKG_VERSION: ${{ steps.dynamic.outputs.vcpkg-version }}
     # go/github-actions#gha-bestpractices explains why we use a SHA instead of
     # a named version for this runner. We could avoid using this runner with the
     # ideas from:
@@ -315,12 +316,15 @@ jobs:
       shell: bash
       run: |
         export VCPKG_ROOT="${TEMP}/.build/vcpkg"
-        export CLOUDSDK_PYTHON="${{ steps.py311.outputs.python-path }}"
+        export CLOUDSDK_PYTHON="${STEPS_PY311_OUTPUTS_PYTHON_PATH}"
         # Put the CMake output in a directory with more space and keep it short
         # to avoid running into the MSVC limits.
         export CMAKE_OUT='c:\b'
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
-        ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
+        ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${STEPS_DYNAMIC_OUTPUTS_FEATURES}
+      env:
+        STEPS_PY311_OUTPUTS_PYTHON_PATH: ${{ steps.py311.outputs.python-path }}
+        STEPS_DYNAMIC_OUTPUTS_FEATURES: ${{ steps.dynamic.outputs.features }}
     - name: Post Build Disk Space
       shell: bash
       run: df -m
