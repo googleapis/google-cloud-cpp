@@ -53,6 +53,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
