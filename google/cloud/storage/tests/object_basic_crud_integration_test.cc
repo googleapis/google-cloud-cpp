@@ -36,6 +36,27 @@ namespace {
 bool IsSet(std::chrono::system_clock::time_point tp) {
   return tp != std::chrono::system_clock::time_point{};
 }
+
+void AssertHasCustomContext(google::cloud::storage::ObjectMetadata const& meta,
+                            std::string const& key,
+                            std::string const& expected_value) {
+  EXPECT_TRUE(meta.has_contexts())
+      << "Missing contexts entirely in metadata: " << meta;
+  EXPECT_TRUE(meta.contexts().has_key(key))
+      << "Missing expected context key '" << key << "' in metadata: " << meta;
+  if (meta.contexts().has_key(key)) {
+    EXPECT_EQ(expected_value, meta.contexts().custom().at(key).value)
+        << "Mismatch in context value for key '" << key << "'\n"
+        << "Expecting value '" << expected_value << "'\n"
+        << "Actual metadata: " << meta;
+    EXPECT_TRUE(IsSet(meta.contexts().custom().at(key).create_time))
+        << "The create_time of key '" << key << "' is not set.\n"
+        << "Actual metadata: " << meta;
+    EXPECT_TRUE(IsSet(meta.contexts().custom().at(key).update_time))
+        << "The update_time of key '" << key << "' is not set.\n"
+        << "Actual metadata: " << meta;
+  }
+}
 }  // namespace
 
 namespace google {
@@ -68,35 +89,34 @@ struct ObjectBasicCRUDIntegrationTest
     return MakeIntegrationTestClient(std::move(options));
   }
 
-  // void SetUp() override {
-  //   // 1. Run the base class SetUp first. This initializes 'bucket_name_'
-  //   //    from the environment variable.
-  //   ::google::cloud::storage::testing::ObjectIntegrationTest::SetUp();
+  void SetUp() override {
+    // 1. Run the base class SetUp first. This initializes 'bucket_name_'
+    //    from the environment variable.
+    ::google::cloud::storage::testing::ObjectIntegrationTest::SetUp();
 
-  //   // 2. Create a client to interact with the emulator/backend.
-  //   auto client = MakeIntegrationTestClient();
+    // 2. Create a client to interact with the emulator/backend.
+    auto client = MakeIntegrationTestClient();
 
-  //   // 3. Check if the bucket exists.
-  //   auto metadata = client.GetBucketMetadata(bucket_name_);
+    // 3. Check if the bucket exists.
+    auto metadata = client.GetBucketMetadata(bucket_name_);
 
-  //   // 4. If it's missing (kNotFound), create it.
-  //   if (metadata.status().code() == StatusCode::kNotFound) {
-  //     // Use a default project ID if the env var isn't set (common in local
-  //     // emulators).
-  //     auto project_id =
-  //     google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
-  //                           .value_or("test-project");
+    // 4. If it's missing (kNotFound), create it.
+    if (metadata.status().code() == StatusCode::kNotFound) {
+      // Use a default project ID if the env var isn't set (common in local
+      // emulators).
+      auto project_id = google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT")
+                            .value_or("test-project");
 
-  //     auto created = client.CreateBucketForProject(bucket_name_, project_id,
-  //                                                  BucketMetadata());
-  //     ASSERT_STATUS_OK(created)
-  //         << "Failed to auto-create missing bucket: " << bucket_name_;
-  //   } else {
-  //     // If it exists (or failed for another reason), assert it is OK.
-  //     ASSERT_STATUS_OK(metadata)
-  //         << "Failed to verify bucket existence: " << bucket_name_;
-  //   }
-  // }
+      auto created = client.CreateBucketForProject(bucket_name_, project_id,
+                                                   BucketMetadata());
+      ASSERT_STATUS_OK(created)
+          << "Failed to auto-create missing bucket: " << bucket_name_;
+    } else {
+      // If it exists (or failed for another reason), assert it is OK.
+      ASSERT_STATUS_OK(metadata)
+          << "Failed to verify bucket existence: " << bucket_name_;
+    }
+  }
 };
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
@@ -195,7 +215,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 }
 
 /// @test Verify the Object CRUD operations with object contexts.
-TEST_F(ObjectBasicCRUDIntegrationTest, BasicInsertAndGetWithObjectContexts) {
+TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUDWithObjectContexts) {
   auto client = MakeIntegrationTestClient();
 
   auto list_object_names = [&client, this] {
@@ -213,8 +233,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicInsertAndGetWithObjectContexts) {
       << "Test aborted. The object <" << object_name << "> already exists."
       << "This is unexpected as the test generates a random object name.";
 
-  // Create the object, but only if it does not exist already, inserting
-  // a custom context {"department": "engineering"}.
+  // 1. Insert Object with custom contexts.
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       Projection("full"),
@@ -222,64 +241,13 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicInsertAndGetWithObjectContexts) {
           ObjectContexts().upsert("department", {"engineering", {}, {}}))));
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_THAT(list_object_names(), Contains(object_name).Times(1));
-
-  // Verify the response ObjectMetadata has the custom contexts we set.
   StatusOr<ObjectMetadata> get_meta = client.GetObjectMetadata(
       bucket_name_, object_name, Generation(insert_meta->generation()),
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
-  EXPECT_TRUE(get_meta->has_contexts()) << *get_meta;
-  EXPECT_TRUE(get_meta->contexts().has_key("department")) << *get_meta;
-  EXPECT_EQ("engineering", get_meta->contexts().custom().at("department").value)
-      << *get_meta;
-  EXPECT_TRUE(IsSet(get_meta->contexts().custom().at("department").update_time))
-      << *get_meta;
-  EXPECT_TRUE(IsSet(get_meta->contexts().custom().at("department").create_time))
-      << *get_meta;
+  AssertHasCustomContext(*get_meta, "department", "engineering");
 
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
-  EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
-}
-
-/// @test Verify the Object CRUD operations with object contexts.
-TEST_F(ObjectBasicCRUDIntegrationTest, BasicUpdateWithObjectContexts) {
-  auto client = MakeIntegrationTestClient();
-
-  auto list_object_names = [&client, this] {
-    std::vector<std::string> names;
-    for (auto o : client.ListObjects(bucket_name_)) {
-      EXPECT_STATUS_OK(o);
-      if (!o) break;
-      names.push_back(o->name());
-    }
-    return names;
-  };
-
-  auto object_name = MakeRandomObjectName();
-  ASSERT_THAT(list_object_names(), Not(Contains(object_name)))
-      << "Test aborted. The object <" << object_name << "> already exists."
-      << "This is unexpected as the test generates a random object name.";
-
-  // Create the object, but only if it does not exist already, inserting
-  // a custom context {"department": "engineering"}.
-  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      Projection("full"),
-      WithObjectMetadata(ObjectMetadata().set_contexts(
-          ObjectContexts().upsert("department", {"engineering", {}, {}}))));
-  ASSERT_STATUS_OK(insert_meta);
-  EXPECT_THAT(list_object_names(), Contains(object_name).Times(1));
-
-  // Verify the response ObjectMetadata has the custom contexts we set.
-  StatusOr<ObjectMetadata> get_meta = client.GetObjectMetadata(
-      bucket_name_, object_name, Generation(insert_meta->generation()),
-      Projection("full"));
-  ASSERT_STATUS_OK(get_meta);
-  EXPECT_TRUE(get_meta->has_contexts()) << *get_meta;
-  EXPECT_TRUE(get_meta->contexts().has_key("department")) << *get_meta;
-
-  // Update object with two keys.
+  // 2. Update object with two keys.
   ObjectMetadata update = *get_meta;
   update.set_contexts(
       ObjectContexts()
@@ -289,125 +257,38 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicUpdateWithObjectContexts) {
       bucket_name_, object_name, update, Generation(get_meta->generation()),
       Projection("full"));
   ASSERT_STATUS_OK(updated_meta);
+  AssertHasCustomContext(*updated_meta, "department",
+                         "engineering and research");
+  AssertHasCustomContext(*updated_meta, "region", "Asia Pacific");
 
-  // Verify the response ObjectMetadata has the updated custom contexts.
-  EXPECT_TRUE(updated_meta->has_contexts()) << *updated_meta;
-  EXPECT_TRUE(updated_meta->contexts().has_key("department")) << *updated_meta;
-  // EXPECT_EQ("engineering and research",
-  //           updated_meta->contexts().custom().at("department").value)
-  //     << *updated_meta;
-  EXPECT_TRUE(updated_meta->contexts().has_key("region")) << *updated_meta;
-  // EXPECT_EQ("Asia Pacific",
-  //           updated_meta->contexts().custom().at("region").value)
-  //     << *updated_meta;
-
-  // This is the test for Object CRUD, we cannot rely on `ScheduleForDelete()`.
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
-  EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
-}
-
-/// @test Verify the Object CRUD operations with object contexts.
-TEST_F(ObjectBasicCRUDIntegrationTest, BasicPatchWithObjectContexts) {
-  auto client = MakeIntegrationTestClient();
-
-  auto list_object_names = [&client, this] {
-    std::vector<std::string> names;
-    for (auto o : client.ListObjects(bucket_name_)) {
-      EXPECT_STATUS_OK(o);
-      if (!o) break;
-      names.push_back(o->name());
-    }
-    return names;
-  };
-
-  auto object_name = MakeRandomObjectName();
-  ASSERT_THAT(list_object_names(), Not(Contains(object_name)))
-      << "Test aborted. The object <" << object_name << "> already exists."
-      << "This is unexpected as the test generates a random object name.";
-
-  // Create the object, but only if it does not exist already, inserting
-  // a custom context {"department": "engineering"}.
-  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      Projection("full"),
-      WithObjectMetadata(ObjectMetadata().set_contexts(
-          ObjectContexts().upsert("department", {"engineering", {}, {}}))));
-  ASSERT_STATUS_OK(insert_meta);
-  EXPECT_THAT(list_object_names(), Contains(object_name).Times(1));
-
-  // Verify the response ObjectMetadata has the custom contexts we set.
-  StatusOr<ObjectMetadata> get_meta = client.GetObjectMetadata(
-      bucket_name_, object_name, Generation(insert_meta->generation()),
-      Projection("full"));
-  ASSERT_STATUS_OK(get_meta);
-  EXPECT_TRUE(get_meta->has_contexts()) << *get_meta;
-  EXPECT_TRUE(get_meta->contexts().has_key("department")) << *get_meta;
-
+  // 3. Patch the object contexts by updating one key's value.
   StatusOr<ObjectMetadata> patched_meta =
       client.PatchObject(bucket_name_, object_name,
                          ObjectMetadataPatchBuilder().SetContext(
                              "region", {"Asia Pacific - Singapore"}),
                          Projection("full"));
   ASSERT_STATUS_OK(patched_meta);
+  AssertHasCustomContext(*patched_meta, "department",
+                         "engineering and research");
+  AssertHasCustomContext(*patched_meta, "region", "Asia Pacific - Singapore");
 
-  EXPECT_TRUE(patched_meta->has_contexts()) << *patched_meta;
-  EXPECT_TRUE(patched_meta->contexts().has_key("department")) << *patched_meta;
-  EXPECT_TRUE(patched_meta->contexts().has_key("region")) << *patched_meta;
+  // 4. Patch object contexts by deleting one existing key.
+  StatusOr<ObjectMetadata> reset_key_meta = client.PatchObject(
+      bucket_name_, object_name,
+      ObjectMetadataPatchBuilder().ResetContext("region"), Projection("full"));
+  ASSERT_STATUS_OK(reset_key_meta);
+  AssertHasCustomContext(*reset_key_meta, "department",
+                         "engineering and research");
+  EXPECT_FALSE(reset_key_meta->contexts().has_key("region"));
 
-  // This is the test for Object CRUD, we cannot rely on `ScheduleForDelete()`.
-  auto status = client.DeleteObject(bucket_name_, object_name);
-  ASSERT_STATUS_OK(status);
-  EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
-}
-
-/// @test Verify the Object CRUD operations with object contexts.
-TEST_F(ObjectBasicCRUDIntegrationTest, BasicResetWithObjectContexts) {
-  auto client = MakeIntegrationTestClient();
-
-  auto list_object_names = [&client, this] {
-    std::vector<std::string> names;
-    for (auto o : client.ListObjects(bucket_name_)) {
-      EXPECT_STATUS_OK(o);
-      if (!o) break;
-      names.push_back(o->name());
-    }
-    return names;
-  };
-
-  auto object_name = MakeRandomObjectName();
-  ASSERT_THAT(list_object_names(), Not(Contains(object_name)))
-      << "Test aborted. The object <" << object_name << "> already exists."
-      << "This is unexpected as the test generates a random object name.";
-
-  // Create the object, but only if it does not exist already, inserting
-  // a custom context {"department": "engineering"}.
-  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      Projection("full"),
-      WithObjectMetadata(ObjectMetadata().set_contexts(
-          ObjectContexts().upsert("department", {"engineering", {}, {}}))));
-  ASSERT_STATUS_OK(insert_meta);
-  EXPECT_THAT(list_object_names(), Contains(object_name).Times(1));
-
-  // Verify the response ObjectMetadata has the custom contexts we set.
-  StatusOr<ObjectMetadata> get_meta = client.GetObjectMetadata(
-      bucket_name_, object_name, Generation(insert_meta->generation()),
-      Projection("full"));
-  ASSERT_STATUS_OK(get_meta);
-  EXPECT_TRUE(get_meta->has_contexts()) << *get_meta;
-  EXPECT_TRUE(get_meta->contexts().has_key("department")) << *get_meta;
-
-  // Patch object with reset of all contexts.
+  // 5. Patch object with reset of all contexts.
   StatusOr<ObjectMetadata> reset_meta = client.PatchObject(
       bucket_name_, object_name, ObjectMetadataPatchBuilder().ResetContexts(),
       Projection("full"));
   ASSERT_STATUS_OK(reset_meta);
-
-  // Verify the response ObjectMetadata that no custom contexts exists.
   EXPECT_FALSE(reset_meta->has_contexts()) << *reset_meta;
 
-  // This is the test for Object CRUD, we cannot rely on `ScheduleForDelete()`.
+  // 6. Delete the object away to clean up.
   auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
   EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
