@@ -33,11 +33,8 @@ RUN apt-get update && \
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get --no-install-recommends install -y  \
-        libabsl-dev \
-        libcurl4-openssl-dev \
-        libgrpc++-dev protobuf-compiler-grpc \
-        libprotobuf-dev protobuf-compiler \
-        nlohmann-json3-dev
+        libssl-dev libcurl4-openssl-dev nlohmann-json3-dev zlib1g-dev \
+        libsystemd-dev
 # ```
 
 # #### Patching pkg-config
@@ -62,7 +59,9 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 RUN ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 # ```
 
-# #### abseil
+# #### Abseil
+
+# ```bash
 WORKDIR /var/tmp/build/abseil-cpp
 RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -71,16 +70,28 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | 
       -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
+# ```
+
+# #### Protobuf
+
+# ```bash
+WORKDIR /var/tmp/build/protobuf
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
 
 # #### opentelemetry-cpp
-
-# The project has an **optional** dependency on the OpenTelemetry library.
-# We recommend installing this library because:
-# - the dependency will become required in the google-cloud-cpp v3.x series.
-# - it is needed to produce distributed traces of the library.
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
@@ -94,6 +105,59 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
+# #### c-ares
+
+# ```bash
+WORKDIR /var/tmp/build/c-ares
+RUN curl -fsSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig
+# ```
+
+# #### RE2
+
+# ```bash
+WORKDIR /var/tmp/build/re2
+RUN curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig
+# ```
+
+# #### gRPC
+
+# ```bash
+WORKDIR /var/tmp/build/grpc
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.76.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -DgRPC_OPENTELEMETRY_PROVIDER=package \
+        -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
         -S . -B cmake-out && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -113,3 +177,5 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/scca
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
+
+ENV DEMO_CORD_WORKAROUND=OFF

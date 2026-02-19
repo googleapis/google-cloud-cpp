@@ -17,12 +17,12 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: prepare-for-v3.0.0
+    branch: main
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: prepare-for-v3-0-0-quickstart-cmake-ci
+name: quickstart-cmake-ci
 substitutions:
   _BUILD_NAME: quickstart-cmake
-  _DISTRO: ubuntu-22.04
+  _DISTRO: ubuntu-24.04
   _TRIGGER_TYPE: ci
 tags:
 - ci

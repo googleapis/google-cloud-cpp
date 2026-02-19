@@ -176,11 +176,6 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
 
 # #### opentelemetry-cpp
 
-# The project has an **optional** dependency on the OpenTelemetry library.
-# We recommend installing this library because:
-# - the dependency will become required in the google-cloud-cpp v3.x series.
-# - it is needed to produce distributed traces of the library.
-
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
@@ -212,3 +207,5 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/scca
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
+
+ENV DEMO_CORD_WORKAROUND=OFF

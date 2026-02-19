@@ -51,6 +51,11 @@ set(TOC_ITEMS ${toc_items})
 set(toc_file "${output_dir}/toc.yml")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/toc.yml.in" "${toc_file}" @ONLY)
 
+set(metadata_file "${output_dir}/docs.metadata.json")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/docs.metadata.json.in"
+               "${metadata_file}" @ONLY)
+list(APPEND copied_files "${metadata_file}")
+
 add_custom_target(product-neutral-guides-docs DEPENDS ${copied_files})
 
 add_dependencies(all-docfx product-neutral-guides-docs)

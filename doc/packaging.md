@@ -187,12 +187,6 @@ apk update && \
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
-- the dependency will become required in the google-cloud-cpp v3.x series.
-- it is needed to produce distributed traces of the library.
-
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
 curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
@@ -224,6 +218,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -282,12 +277,6 @@ export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/loca
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
-- the dependency will become required in the google-cloud-cpp v3.x series.
-- it is needed to produce distributed traces of the library.
-
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
 curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
@@ -320,6 +309,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -403,6 +393,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -430,11 +421,8 @@ Ubuntu:24 includes packages for most of the direct dependencies of
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y  \
-        libabsl-dev \
-        libcurl4-openssl-dev \
-        libgrpc++-dev protobuf-compiler-grpc \
-        libprotobuf-dev protobuf-compiler \
-        nlohmann-json3-dev
+        libssl-dev libcurl4-openssl-dev nlohmann-json3-dev zlib1g-dev \
+        libsystemd-dev
 ```
 
 #### Patching pkg-config
@@ -459,27 +447,39 @@ sudo ldconfig && cd /var/tmp && rm -fr build
 ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 ```
 
-#### abseil
+#### Abseil
 
-mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp curl -fsSL
-https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
-tar -xzf - --strip-components=1 && \
-cmake \
--DCMAKE_BUILD_TYPE=Release \
--DABSL_BUILD_TESTING=OFF \
--DBUILD_SHARED_LIBS=yes \
--S . -B cmake-out && \
-cmake --build cmake-out -- -j ${NCPU:-4} && \
+```bash
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DABSL_BUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
+```
+
+#### Protobuf
+
+```bash
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
 
 #### opentelemetry-cpp
-
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
-- the dependency will become required in the google-cloud-cpp v3.x series.
-- it is needed to produce distributed traces of the library.
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
@@ -493,6 +493,59 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### c-ares
+
+```bash
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -fsSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig
+```
+
+#### RE2
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig
+```
+
+#### gRPC
+
+```bash
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -fsSL https://github.com/grpc/grpc/archive/v1.76.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -DgRPC_OPENTELEMETRY_PROVIDER=package \
+        -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -512,6 +565,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -622,12 +676,6 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
-- the dependency will become required in the google-cloud-cpp v3.x series.
-- it is needed to produce distributed traces of the library.
-
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
 curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
@@ -660,6 +708,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -685,9 +734,6 @@ Install the development packages for direct `google-cloud-cpp` dependencies:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y \
-        libabsl-dev \
-        libprotobuf-dev protobuf-compiler \
-        libgrpc++-dev libgrpc-dev protobuf-compiler-grpc \
         libcurl4-openssl-dev libssl-dev nlohmann-json3-dev
 ```
 
@@ -712,28 +758,42 @@ sudo ldconfig && cd /var/tmp && rm -fr build
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
 ```
 
-#### abseil
+#### Abseil
 
-mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp curl -fsSL
-https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
-tar -xzf - --strip-components=1 && \
-cmake \
--DCMAKE_BUILD_TYPE=Release \
--DCMAKE_CXX_STANDARD=17 \
--DABSL_BUILD_TESTING=OFF \
--DBUILD_SHARED_LIBS=yes \
--S . -B cmake-out && \
-cmake --build cmake-out -- -j ${NCPU:-4} && \
+```bash
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DABSL_BUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
+```
+
+#### Protobuf
+
+```bash
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig && \
+    ln -s /usr/local/bin/protoc /usr/bin/protoc
+```
 
 #### opentelemetry-cpp
-
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
-- the dependency will become required in the google-cloud-cpp v3.x series.
-- it is needed to produce distributed traces of the library.
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
@@ -753,6 +813,58 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### c-ares
+
+```bash
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -fsSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig
+```
+
+#### RE2
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig
+```
+
+#### gRPC
+
+```bash
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -fsSL https://github.com/grpc/grpc/archive/v1.76.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -DgRPC_OPENTELEMETRY_PROVIDER=package \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -767,6 +879,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -888,12 +1001,6 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
-- the dependency will become required in the google-cloud-cpp v3.x series.
-- it is needed to produce distributed traces of the library.
-
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
 curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
@@ -926,6 +1033,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -1096,12 +1204,6 @@ sudo ldconfig
 
 #### opentelemetry-cpp
 
-The project has an **optional** dependency on the OpenTelemetry library. We
-recommend installing this library because:
-
-- the dependency will become required in the google-cloud-cpp v3.x series.
-- it is needed to produce distributed traces of the library.
-
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
 curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
@@ -1134,6 +1236,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install

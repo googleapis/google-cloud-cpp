@@ -91,3 +91,5 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/scca
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
+
+ENV DEMO_CORD_WORKAROUND=OFF

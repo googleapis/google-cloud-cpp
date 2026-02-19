@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/test_proxy/cbt_test_proxy.h"
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/client.h"
@@ -455,3 +456,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

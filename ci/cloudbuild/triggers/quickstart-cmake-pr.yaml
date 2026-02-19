@@ -17,13 +17,13 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: prepare-for-v3.0.0
+    branch: main
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: prepare-for-v3-0-0-quickstart-cmake-pr
+name: quickstart-cmake-pr
 substitutions:
   _BUILD_NAME: quickstart-cmake
-  _DISTRO: ubuntu-22.04
+  _DISTRO: ubuntu-24.04
   _TRIGGER_TYPE: pr
 tags:
 - pr

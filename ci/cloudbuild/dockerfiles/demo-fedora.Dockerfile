@@ -64,11 +64,6 @@ ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/l
 
 # #### opentelemetry-cpp
 
-# The project has an **optional** dependency on the OpenTelemetry library.
-# We recommend installing this library because:
-# - the dependency will become required in the google-cloud-cpp v3.x series.
-# - it is needed to produce distributed traces of the library.
-
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
