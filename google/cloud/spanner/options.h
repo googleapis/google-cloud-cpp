@@ -431,6 +431,15 @@ struct TransactionIsolationLevelOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to set the transaction read lock mode.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
+struct TransactionReadLockModeOption {
+  using Type = spanner::Transaction::ReadLockMode;
+};
+
+/**
  * Option for `google::cloud::Options` to return additional statistics
  * about the committed transaction in a `spanner::CommitResult`.
  *

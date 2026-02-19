@@ -3539,6 +3539,71 @@ void IsolationLevelSettingCommand(std::vector<std::string> argv) {
   IsolationLevelSetting(argv[0], argv[1], argv[2]);
 }
 
+//! [START spanner_read_lock_mode]
+void ReadLockModeSetting(std::string const& project_id,
+                         std::string const& instance_id,
+                         std::string const& database_id) {
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::Options;
+  using ::google::cloud::StatusOr;
+
+  auto db = spanner::Database(project_id, instance_id, database_id);
+
+  // The read lock mode specified at the client-level will be applied
+  // to all RW transactions.
+  auto options = Options{}.set<spanner::TransactionReadLockModeOption>(
+      spanner::Transaction::ReadLockMode::kOptimistic);
+  auto client = spanner::Client(spanner::MakeConnection(db, options));
+
+  auto commit = client.Commit(
+      [&client](
+          spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
+        // Read an AlbumTitle.
+        auto sql = spanner::SqlStatement(
+            "SELECT AlbumTitle from Albums WHERE SingerId = @SingerId and "
+            "AlbumId = @AlbumId",
+            {{"SingerId", spanner::Value(2)}, {"AlbumId", spanner::Value(1)}});
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
+        for (auto const& row :
+             spanner::StreamOf<std::tuple<std::string>>(rows)) {
+          if (!row) return row.status();
+          std::cout << "Current Album Title: " << std::get<0>(*row) << "\n";
+        }
+
+        // Update the title.
+        auto update_sql = spanner::SqlStatement(
+            "UPDATE Albums "
+            "SET AlbumTitle = @AlbumTitle "
+            "WHERE SingerId = @SingerId and AlbumId = @AlbumId",
+            {{"AlbumTitle", spanner::Value("A New Title")},
+             {"SingerId", spanner::Value(2)},
+             {"AlbumId", spanner::Value(1)}});
+        auto result = client.ExecuteDml(txn, std::move(update_sql));
+        if (!result) return result.status();
+        std::cout << result->RowsModified() << " record(s) updated.\n";
+
+        return spanner::Mutations{};
+      },
+      // The read lock mode specified at the transaction-level takes
+      // precedence over the read lock mode configured at the client-level.
+      // kPessimistic is used here to demonstrate overriding the client-level
+      // setting.
+      Options{}.set<spanner::TransactionReadLockModeOption>(
+          spanner::Transaction::ReadLockMode::kPessimistic));
+
+  if (!commit) throw std::move(commit).status();
+  std::cout << "Update was successful [spanner_read_lock_mode]\n";
+}
+//! [END spanner_read_lock_mode]
+
+void ReadLockModeSettingCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "read-lock-mode-setting <project-id> <instance-id> <database-id>");
+  }
+  ReadLockModeSetting(argv[0], argv[1], argv[2]);
+}
+
 //! [START spanner_get_commit_stats]
 void GetCommitStatistics(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -5258,6 +5323,7 @@ int RunOneCommand(std::vector<std::string> argv) {
                          ReadDataWithStoringIndex),
       make_command_entry("read-write-transaction", ReadWriteTransaction),
       {"isolation-level-setting", IsolationLevelSettingCommand},
+      {"read-lock-mode-setting", ReadLockModeSettingCommand},
       make_command_entry("get-commit-stats", GetCommitStatistics),
       make_command_entry("dml-standard-insert", DmlStandardInsert),
       make_command_entry("dml-standard-update", DmlStandardUpdate),
