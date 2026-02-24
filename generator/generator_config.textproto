@@ -4038,6 +4038,49 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Vision AI
+service {
+  service_proto_path: "google/cloud/visionai/v1/health_service.proto"
+  product_path: "google/cloud/visionai/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/visionai/v1/lva_service.proto"
+  product_path: "google/cloud/visionai/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/visionai/v1/platform.proto"
+  product_path: "google/cloud/visionai/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/visionai/v1/streaming_service.proto"
+  product_path: "google/cloud/visionai/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/visionai/v1/streams_service.proto"
+  product_path: "google/cloud/visionai/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/visionai/v1/warehouse.proto"
+  product_path: "google/cloud/visionai/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # VM Migration
 service {
   service_proto_path: "google/cloud/vmmigration/v1/vmmigration.proto"

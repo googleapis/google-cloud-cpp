@@ -338,6 +338,7 @@ declare -A -r LIBRARIES=(
   )"
   ["videointelligence"]="@googleapis//google/cloud/videointelligence/v1:videointelligence_cc_grpc"
   ["vision"]="@googleapis//google/cloud/vision/v1:vision_cc_grpc"
+  ["visionai"]="@googleapis//google/cloud/visionai/v1:visionai_cc_grpc"
   ["vmmigration"]="@googleapis//google/cloud/vmmigration/v1:vmmigration_cc_grpc"
   ["vmwareengine"]="@googleapis//google/cloud/vmwareengine/v1:vmwareengine_cc_grpc"
   ["vpcaccess"]="@googleapis//google/cloud/vpcaccess/v1:vpcaccess_cc_grpc"
