@@ -191,7 +191,7 @@ Status ParseContexts(ObjectMetadata& meta, nlohmann::json const& json) {
 
   ObjectContexts contexts;
   for (auto const& kv : f_custom->items()) {
-    auto payload_json = kv.value();
+    auto const& payload_json = kv.value();
     ObjectCustomContextPayload payload;
 
     payload.value = payload_json.value("value", "");
