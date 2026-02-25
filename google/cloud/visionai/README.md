@@ -16,7 +16,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/visionai/v1/ EDIT HERE _client.h"
+#include "google/cloud/visionai/v1/app_platform_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -30,9 +30,9 @@ int main(int argc, char* argv[]) try {
 
   namespace visionai = ::google::cloud::visionai_v1;
   auto client =
-      visionai::ServiceClient(visionai::MakeServiceConnection());  // EDIT HERE
+      visionai::AppPlatformClient(visionai::MakeAppPlatformConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListApplications(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

@@ -9,6 +9,13 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.3.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Vision AI API](/google/cloud/visionai/README.md)
+
 ## v3.2.0 - 2026-02
 
 ### [Cloud Key Management Service](/google/cloud/kms/README.md)
