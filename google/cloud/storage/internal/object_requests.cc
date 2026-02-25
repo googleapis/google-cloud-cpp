@@ -37,6 +37,70 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+void DiffMetadata(ObjectMetadataPatchBuilder& builder,
+                  ObjectMetadata const& original,
+                  ObjectMetadata const& updated) {
+  if (original.metadata() == updated.metadata()) return;
+
+  if (updated.metadata().empty()) {
+    builder.ResetMetadata();
+    return;
+  }
+
+  std::map<std::string, std::string> difference;
+  std::set_difference(original.metadata().begin(), original.metadata().end(),
+                      updated.metadata().begin(), updated.metadata().end(),
+                      std::inserter(difference, difference.end()),
+                      original.metadata().value_comp());
+  for (auto&& d : difference) {
+    builder.ResetMetadata(d.first);
+  }
+
+  difference.clear();
+  std::set_difference(updated.metadata().begin(), updated.metadata().end(),
+                      original.metadata().begin(), original.metadata().end(),
+                      std::inserter(difference, difference.end()));
+  for (auto&& d : difference) {
+    builder.SetMetadata(d.first, d.second);
+  }
+}
+
+void DiffContexts(ObjectMetadataPatchBuilder& builder,
+                  ObjectMetadata const& original,
+                  ObjectMetadata const& updated) {
+  if (original.has_contexts() && updated.has_contexts()) {
+    if (original.contexts() != updated.contexts()) {
+      std::map<std::string, ObjectCustomContextPayload> deleted_entries;
+      std::set_difference(
+          original.contexts().custom().begin(),
+          original.contexts().custom().end(),
+          updated.contexts().custom().begin(),
+          updated.contexts().custom().end(),
+          std::inserter(deleted_entries, deleted_entries.end()),
+          [](auto const& a, auto const& b) { return a.first < b.first; });
+      for (auto&& d : deleted_entries) {
+        builder.ResetContext(d.first);
+      }
+
+      std::map<std::string, ObjectCustomContextPayload> changed_entries;
+      std::set_difference(
+          updated.contexts().custom().begin(),
+          updated.contexts().custom().end(),
+          original.contexts().custom().begin(),
+          original.contexts().custom().end(),
+          std::inserter(changed_entries, changed_entries.end()));
+      for (auto&& d : changed_entries) {
+        builder.SetContext(d.first, d.second.value);
+      }
+    }
+  } else if (original.has_contexts() && !updated.has_contexts()) {
+    builder.ResetContexts();
+  } else if (!original.has_contexts() && updated.has_contexts()) {
+    for (auto const& c : updated.contexts().custom()) {
+      builder.SetContext(c.first, c.second.value);
+    }
+  }
+}
 
 ObjectMetadataPatchBuilder DiffObjectMetadata(ObjectMetadata const& original,
                                               ObjectMetadata const& updated) {
@@ -65,75 +129,8 @@ ObjectMetadataPatchBuilder DiffObjectMetadata(ObjectMetadata const& original,
     builder.SetEventBasedHold(updated.event_based_hold());
   }
 
-  if (original.metadata() != updated.metadata()) {
-    if (updated.metadata().empty()) {
-      builder.ResetMetadata();
-    } else {
-      std::map<std::string, std::string> difference;
-      // Find the keys in the original map that are not in the new map. Using
-      // `std::set_difference()` works because, unlike `std::unordered_map` the
-      // `std::map` iterators return elements ordered by key:
-      std::set_difference(original.metadata().begin(),
-                          original.metadata().end(), updated.metadata().begin(),
-                          updated.metadata().end(),
-                          std::inserter(difference, difference.end()),
-                          // We want to compare just keys and ignore values, the
-                          // map class provides such a function, so use it:
-                          original.metadata().value_comp());
-      for (auto&& d : difference) {
-        builder.ResetMetadata(d.first);
-      }
-
-      // Find the elements (comparing key and value) in the updated map that
-      // are not in the original map:
-      difference.clear();
-      std::set_difference(updated.metadata().begin(), updated.metadata().end(),
-                          original.metadata().begin(),
-                          original.metadata().end(),
-                          std::inserter(difference, difference.end()));
-      for (auto&& d : difference) {
-        builder.SetMetadata(d.first, d.second);
-      }
-    }
-  }
-
-  if (original.has_contexts() && updated.has_contexts()) {
-    if (original.contexts() != updated.contexts()) {
-      // Find the keys in the original map that are not in the new map, so as
-      // to reset them in patch builder.
-      std::map<std::string, ObjectCustomContextPayload> deleted_entries;
-      std::set_difference(
-          original.contexts().custom().begin(),
-          original.contexts().custom().end(),
-          updated.contexts().custom().begin(),
-          updated.contexts().custom().end(),
-          std::inserter(deleted_entries, deleted_entries.end()),
-          [](auto const& a, auto const& b) { return a.first < b.first; });
-      for (auto&& d : deleted_entries) {
-        builder.ResetContext(d.first);
-      }
-
-      // Find the entries in the updated map that are either not in the original
-      // map or have different values, so as to upsert them in the patch
-      // builder.
-      std::map<std::string, ObjectCustomContextPayload> changed_entries;
-      std::set_difference(
-          updated.contexts().custom().begin(),
-          updated.contexts().custom().end(),
-          original.contexts().custom().begin(),
-          original.contexts().custom().end(),
-          std::inserter(changed_entries, changed_entries.end()));
-      for (auto&& d : changed_entries) {
-        builder.SetContext(d.first, d.second.value);
-      }
-    }
-  } else if (original.has_contexts() && !updated.has_contexts()) {
-    builder.ResetContexts();
-  } else if (!original.has_contexts() && updated.has_contexts()) {
-    for (auto const& c : updated.contexts().custom()) {
-      builder.SetContext(c.first, c.second.value);
-    }
-  }
+  DiffMetadata(builder, original, updated);
+  DiffContexts(builder, original, updated);
 
   if (original.temporary_hold() != updated.temporary_hold()) {
     builder.SetTemporaryHold(updated.temporary_hold());

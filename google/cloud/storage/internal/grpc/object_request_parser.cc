@@ -267,6 +267,49 @@ Status FinalizeChecksums(google::storage::v2::ObjectChecksums& checksums,
   return {};
 }
 
+void PatchGrpcMetadata(
+    google::storage::v2::UpdateObjectRequest& result,
+    google::storage::v2::Object& object,
+    storage::ObjectMetadataPatchBuilder const& patch_builder) {
+  auto const& subpatch =
+      storage::internal::PatchBuilderDetails::GetMetadataSubPatch(
+          patch_builder);
+  if (subpatch.is_null()) {
+    object.clear_metadata();
+    result.mutable_update_mask()->add_paths("metadata");
+  } else {
+    for (auto const& kv : subpatch.items()) {
+      result.mutable_update_mask()->add_paths("metadata." + kv.key());
+      auto const& v = kv.value();
+      if (!v.is_string()) continue;
+      (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
+    }
+  }
+}
+
+void PatchGrpcContexts(
+    google::storage::v2::UpdateObjectRequest& result,
+    google::storage::v2::Object& object,
+    storage::ObjectMetadataPatchBuilder const& patch_builder) {
+  auto const& contexts_subpatch =
+      storage::internal::PatchBuilderDetails::GetCustomContextsSubPatch(
+          patch_builder);
+  if (contexts_subpatch.is_null()) {
+    object.clear_contexts();
+    result.mutable_update_mask()->add_paths("contexts.custom");
+  } else {
+    for (auto const& kv : contexts_subpatch.items()) {
+      result.mutable_update_mask()->add_paths("contexts.custom." + kv.key());
+      auto const& v = kv.value();
+      if (v.is_object() && v.contains("value")) {
+        auto& payload =
+            (*object.mutable_contexts()->mutable_custom())[kv.key()];
+        payload.set_value(v["value"].get<std::string>());
+      }
+    }
+  }
+}
+
 }  // namespace
 
 StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
@@ -458,38 +501,8 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     result.mutable_update_mask()->add_paths(field.grpc_name);
   }
 
-  auto const& subpatch =
-      storage::internal::PatchBuilderDetails::GetMetadataSubPatch(
-          request.patch());
-  if (subpatch.is_null()) {
-    object.clear_metadata();
-    result.mutable_update_mask()->add_paths("metadata");
-  } else {
-    for (auto const& kv : subpatch.items()) {
-      result.mutable_update_mask()->add_paths("metadata." + kv.key());
-      auto const& v = kv.value();
-      if (!v.is_string()) continue;
-      (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
-    }
-  }
-
-  auto const& contexts_subpatch =
-      storage::internal::PatchBuilderDetails::GetCustomContextsSubPatch(
-          request.patch());
-  if (contexts_subpatch.is_null()) {
-    object.clear_contexts();
-    result.mutable_update_mask()->add_paths("contexts.custom");
-  } else {
-    for (auto const& kv : contexts_subpatch.items()) {
-      result.mutable_update_mask()->add_paths("contexts.custom." + kv.key());
-      auto const& v = kv.value();
-      if (v.is_object() && v.contains("value")) {
-        auto& payload =
-            (*object.mutable_contexts()->mutable_custom())[kv.key()];
-        payload.set_value(v["value"].get<std::string>());
-      }
-    }
-  }
+  PatchGrpcMetadata(result, object, request.patch());
+  PatchGrpcContexts(result, object, request.patch());
 
   // We need to check each modifiable field.
   struct StringField {
