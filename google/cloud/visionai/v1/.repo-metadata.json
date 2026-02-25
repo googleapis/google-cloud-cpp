@@ -1,0 +1,14 @@
+{
+    "api_id": "visionai.googleapis.com",
+    "api_shortname": "visionai",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/visionai/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:187174%20status=open",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Vision AI API",
+    "product_documentation": "https://cloud.google.com/vision-ai/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

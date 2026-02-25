@@ -1180,6 +1180,10 @@
 ./include/google/cloud/vision/v1
 ./include/google/cloud/vision/v1/internal
 ./include/google/cloud/vision/v1/mocks
+./include/google/cloud/visionai
+./include/google/cloud/visionai/v1
+./include/google/cloud/visionai/v1/internal
+./include/google/cloud/visionai/v1/mocks
 ./include/google/cloud/vmmigration
 ./include/google/cloud/vmmigration/v1
 ./include/google/cloud/vmmigration/v1/internal
@@ -1562,6 +1566,8 @@
 ./lib64/cmake/google_cloud_cpp_videointelligence_mocks
 ./lib64/cmake/google_cloud_cpp_vision
 ./lib64/cmake/google_cloud_cpp_vision_mocks
+./lib64/cmake/google_cloud_cpp_visionai
+./lib64/cmake/google_cloud_cpp_visionai_mocks
 ./lib64/cmake/google_cloud_cpp_vmmigration
 ./lib64/cmake/google_cloud_cpp_vmmigration_mocks
 ./lib64/cmake/google_cloud_cpp_vmwareengine
