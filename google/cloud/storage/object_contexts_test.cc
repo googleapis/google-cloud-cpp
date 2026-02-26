@@ -105,8 +105,6 @@ TEST(ObjectContextsTest, AggregateCountLimitBreached) {
 
   // Breaching the limit (51 entries)
   for (int i = 0; i < 51; ++i) {
-    // Note: We don't use contexts.upsert here because that function would
-    // trigger ValidateObjectContext under the hood. We simulate it directly.
     contexts.upsert("k" + std::to_string(i),
                     ObjectCustomContextPayload{"v", {}, {}});
   }
