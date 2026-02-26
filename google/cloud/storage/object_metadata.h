@@ -464,6 +464,7 @@ class ObjectMetadata {
 
   /// Change or set the object's custom contexts.
   ObjectMetadata& set_contexts(ObjectContexts v) {
+    internal::ValidateObjectContextsAggregate(v);
     contexts_ = std::move(v);
     return *this;
   }
