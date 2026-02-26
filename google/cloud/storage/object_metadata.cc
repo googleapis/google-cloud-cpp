@@ -286,6 +286,9 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata() {
 
 ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetContext(
     std::string const& key, std::string const& value) {
+  // Throws if the key or value is invalid.
+  internal::ValidateObjectContext(key, value);
+
   contexts_custom_subpatch_.AddSubPatch(
       key.c_str(), internal::PatchBuilder().SetStringField("value", value));
   contexts_subpatch_dirty_ = true;
