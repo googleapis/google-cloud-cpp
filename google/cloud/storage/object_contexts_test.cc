@@ -25,15 +25,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+// ============================================================================
+// Happy Path Tests: These run unconditionally.
+// ============================================================================
+
 TEST(ObjectContextsTest, ValidContexts) {
   // Typical valid key-value pairs
-  EXPECT_NO_THROW(ValidateObjectContext("validKey1", "validValue1"));
-  EXPECT_NO_THROW(ValidateObjectContext("a", "b"));
+  ValidateObjectContext("validKey1", "validValue1");
+  ValidateObjectContext("a", "b");
 
   // Exact 256-byte limits
-  EXPECT_NO_THROW(
-      ValidateObjectContext(std::string(256, 'k'), std::string(256, 'v')));
+  ValidateObjectContext(std::string(256, 'k'), std::string(256, 'v'));
 }
+
+TEST(ObjectContextsTest, ReservedPrefixValid) {
+  // Similar but valid keys
+  ValidateObjectContext("goodKey", "value");
+  ValidateObjectContext("goo", "value");
+}
+
+TEST(ObjectContextsTest, AggregateCountLimit) {
+  ObjectContexts contexts;
+
+  // Insert exactly 50 entries
+  for (int i = 0; i < 50; ++i) {
+    contexts.upsert("k" + std::to_string(i),
+                    ObjectCustomContextPayload{"v", {}, {}});
+  }
+
+  // Should pass validation unconditionally
+  ValidateObjectContextsAggregate(contexts);
+}
+
+// ============================================================================
+// Sad Path Tests: These expect validation failures and throw exceptions.
+// They are completely stripped out when compiled with -fno-exceptions.
+// ============================================================================
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST(ObjectContextsTest, LengthLimits) {
   // Empty strings
@@ -69,27 +98,24 @@ TEST(ObjectContextsTest, ReservedPrefix) {
                std::invalid_argument);
   EXPECT_THROW(ValidateObjectContext("google", "value"), std::invalid_argument);
   EXPECT_THROW(ValidateObjectContext("goog", "value"), std::invalid_argument);
-
-  // Similar but valid keys
-  EXPECT_NO_THROW(ValidateObjectContext("goodKey", "value"));
-  EXPECT_NO_THROW(ValidateObjectContext("goo", "value"));
 }
 
-TEST(ObjectContextsTest, AggregateCountLimit) {
+TEST(ObjectContextsTest, AggregateCountLimitBreached) {
   ObjectContexts contexts;
 
-  // Insert exactly 50 entries
-  for (int i = 0; i < 50; ++i) {
+  // Breaching the limit (51 entries)
+  for (int i = 0; i < 51; ++i) {
+    // Note: We don't use contexts.upsert here because that function would
+    // trigger ValidateObjectContext under the hood. We simulate it directly.
     contexts.upsert("k" + std::to_string(i),
                     ObjectCustomContextPayload{"v", {}, {}});
   }
-  EXPECT_NO_THROW(ValidateObjectContextsAggregate(contexts));
 
-  // Breaching the limit (51 entries)
-  contexts.upsert("k50", ObjectCustomContextPayload{"v", {}, {}});
   EXPECT_THROW(ValidateObjectContextsAggregate(contexts),
                std::invalid_argument);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 }  // namespace
 }  // namespace internal
