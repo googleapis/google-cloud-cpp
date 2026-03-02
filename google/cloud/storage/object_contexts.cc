@@ -15,6 +15,7 @@
 #include "google/cloud/storage/object_contexts.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include <algorithm>
 #include <cctype>
 #include <iostream>
 
@@ -28,10 +29,14 @@ namespace internal {
 void ValidateObjectContext(std::string const& key, std::string const& value) {
   // Helper lambda to validate shared rules for both keys and values
   auto validate_component = [](std::string const& str, char const* name) {
+    // The GCS spec requires each object context key / value to
+    // contain 1 - 256 UTF-8 code units. Since each UTF-8 code unit is
+    // equivalent to 1 byte, we use std::string::size() to check the
+    // number of bytes.
     if (str.empty() || str.size() > 256) {
       google::cloud::internal::ThrowInvalidArgument(
           std::string("Object context ") + name +
-          " must be between 1 and 256 bytes.");
+          " must be between 1 and 256 UTF-8 code units.");
     }
     if (!std::isalnum(static_cast<unsigned char>(str.front()))) {
       google::cloud::internal::ThrowInvalidArgument(
@@ -48,10 +53,16 @@ void ValidateObjectContext(std::string const& key, std::string const& value) {
   validate_component(key, "keys");
   validate_component(value, "values");
 
-  // Rule specific to keys: Cannot begin with 'goog'
-  if (key.size() >= 4 && key.compare(0, 4, "goog") == 0) {
-    google::cloud::internal::ThrowInvalidArgument(
-        "Object context keys cannot begin with 'goog'.");
+  // Rule specific to keys: Cannot begin with 'goog' (case-insensitive)
+  if (key.size() >= 4) {
+    std::string prefix = key.substr(0, 4);
+    std::transform(prefix.begin(), prefix.end(), prefix.begin(),
+                   [](unsigned char c) { return std::tolower(c); });
+
+    if (prefix == "goog") {
+      google::cloud::internal::ThrowInvalidArgument(
+          "Object context keys cannot begin with 'goog' (case-insensitive).");
+    }
   }
 }
 
@@ -77,19 +88,19 @@ void ValidateObjectContextsAggregate(ObjectContexts const& contexts) {
 
 std::ostream& operator<<(std::ostream& os,
                          ObjectCustomContextPayload const& rhs) {
-  return os << "ObjectCustomContextPayload={value=" << rhs.value
-            << ", create_time="
+  return os << "ObjectCustomContextPayload{value=" << rhs.value
+            << ", createTime="
             << google::cloud::internal::FormatRfc3339(rhs.create_time)
-            << ", update_time="
+            << ", updateTime="
             << google::cloud::internal::FormatRfc3339(rhs.update_time) << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectContexts const& rhs) {
-  os << "ObjectContexts={custom={";
+  os << "ObjectContexts{custom={";
   char const* sep = "";
   for (auto const& kv : rhs.custom()) {
-    os << sep << kv.first << "=" << kv.second.value;
-    sep = ",\n";
+    os << sep << kv.first << "=" << kv.second;
+    sep = ", ";
   }
 
   return os << "}}";

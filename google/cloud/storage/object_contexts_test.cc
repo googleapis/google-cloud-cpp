@@ -96,8 +96,9 @@ TEST(ObjectContextsTest, ReservedPrefix) {
   // Cannot begin with 'goog'
   EXPECT_THROW(ValidateObjectContext("googKey", "value"),
                std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("google", "value"), std::invalid_argument);
+  EXPECT_THROW(ValidateObjectContext("Google", "value"), std::invalid_argument);
   EXPECT_THROW(ValidateObjectContext("goog", "value"), std::invalid_argument);
+  EXPECT_THROW(ValidateObjectContext("GOOG", "value"), std::invalid_argument);
 }
 
 TEST(ObjectContextsTest, AggregateCountLimitBreached) {

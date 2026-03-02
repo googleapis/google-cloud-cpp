@@ -68,7 +68,18 @@ void DiffMetadata(ObjectMetadataPatchBuilder& builder,
 void DiffContexts(ObjectMetadataPatchBuilder& builder,
                   ObjectMetadata const& original,
                   ObjectMetadata const& updated) {
-  if (original.has_contexts() && updated.has_contexts()) {
+  bool is_original_empty =
+      !original.has_contexts() || original.contexts().custom().empty();
+  bool is_updated_empty =
+      !updated.has_contexts() || updated.contexts().custom().empty();
+
+  if (!is_original_empty && is_updated_empty) {
+    builder.ResetContexts();
+  } else if (is_original_empty && !is_updated_empty) {
+    for (auto const& c : updated.contexts().custom()) {
+      builder.SetContext(c.first, c.second.value);
+    }
+  } else if (!is_original_empty && !is_updated_empty) {
     if (original.contexts() != updated.contexts()) {
       std::map<std::string, ObjectCustomContextPayload> deleted_entries;
       std::set_difference(
@@ -92,12 +103,6 @@ void DiffContexts(ObjectMetadataPatchBuilder& builder,
       for (auto&& d : changed_entries) {
         builder.SetContext(d.first, d.second.value);
       }
-    }
-  } else if (original.has_contexts() && !updated.has_contexts()) {
-    builder.ResetContexts();
-  } else if (!original.has_contexts() && updated.has_contexts()) {
-    for (auto const& c : updated.contexts().custom()) {
-      builder.SetContext(c.first, c.second.value);
     }
   }
 }
