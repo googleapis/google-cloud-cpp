@@ -755,6 +755,11 @@ ObjectMetadata CreateObjectMetadataForTest() {
             "value": "prod",
             "createTime": "2024-07-18T00:00:00Z",
             "updateTime": "2024-07-18T00:00:00Z"
+          },
+          "department": {
+            "value": "human resource",
+            "createTime": "2024-07-18T00:00:00Z",
+            "updateTime": "2024-07-18T00:00:00Z"
           }
         }
       },
@@ -1002,9 +1007,8 @@ TEST(PatchObjectRequestTest, DiffSetContexts) {
 
 TEST(PatchObjectRequestTest, DiffResetOneContext) {
   ObjectMetadata original = CreateObjectMetadataForTest();
-
   ObjectMetadata updated = original;
-  ObjectContexts contexts;
+  ObjectContexts contexts = updated.contexts();
   contexts.delete_key("environment");
   updated.set_contexts(contexts);
 

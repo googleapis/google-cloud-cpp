@@ -42,8 +42,7 @@ struct ObjectCustomContextPayload {
 
 inline bool operator==(ObjectCustomContextPayload const& lhs,
                        ObjectCustomContextPayload const& rhs) {
-  return std::tie(lhs.value, lhs.create_time, lhs.update_time) ==
-         std::tie(rhs.value, rhs.create_time, rhs.update_time);
+  return lhs.value == rhs.value;
 };
 
 inline bool operator!=(ObjectCustomContextPayload const& lhs,
