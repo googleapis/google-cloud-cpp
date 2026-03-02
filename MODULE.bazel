@@ -23,7 +23,7 @@ module(
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "bazel_skylib", version = "1.8.2")
 bazel_dep(name = "rules_cc", version = "0.2.14")
-bazel_dep(name = "abseil-cpp", version = "20250814.1")
+bazel_dep(name = "abseil-cpp", version = "20250814.2")
 
 # For backwards compatibility with WORKSPACE.
 # The name "com_google_protobuf" is internally used by @bazel_tools,

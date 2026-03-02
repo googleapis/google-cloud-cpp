@@ -452,7 +452,7 @@ ln -s /usr/bin/pkgconf /usr/bin/pkg-config
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Debug \
@@ -593,7 +593,7 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Debug \
@@ -763,7 +763,7 @@ export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgcon
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Debug \
@@ -913,7 +913,7 @@ tar -xzf - --strip-components=1 && \
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Debug \
@@ -1101,7 +1101,7 @@ export PATH=/usr/local/bin:${PATH}
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.1.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Debug \
