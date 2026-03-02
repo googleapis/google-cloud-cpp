@@ -36,7 +36,7 @@ bazel_dep(name = "curl", version = "8.8.0.bcr.3")
 bazel_dep(name = "opentelemetry-cpp", version = "1.24.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
 bazel_dep(name = "rules_python", version = "1.6.3")
-bazel_dep(name = "rules_apple", version = "4.3.2")
+bazel_dep(name = "rules_apple", version = "4.3.3")
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 
 bazel_dep(name = "google_benchmark", version = "1.9.4", dev_dependency = True, repo_name = "com_google_benchmark")
