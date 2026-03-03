@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/object_contexts.h"
 #include "google/cloud/internal/format_time_point.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include <algorithm>
 #include <cctype>
 #include <iostream>
@@ -26,32 +25,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace internal {
 
-void ValidateObjectContext(std::string const& key, std::string const& value) {
+Status ValidateObjectContext(std::string const& key, std::string const& value) {
   // Helper lambda to validate shared rules for both keys and values
-  auto validate_component = [](std::string const& str, char const* name) {
+  auto validate_component = [](std::string const& str,
+                               char const* name) -> Status {
     // The GCS spec requires each object context key / value to
     // contain 1 - 256 UTF-8 code units. Since each UTF-8 code unit is
     // equivalent to 1 byte, we use std::string::size() to check the
     // number of bytes.
     if (str.empty() || str.size() > 256) {
-      google::cloud::internal::ThrowInvalidArgument(
-          std::string("Object context ") + name +
-          " must be between 1 and 256 UTF-8 code units.");
+      return Status(StatusCode::kInvalidArgument,
+                    std::string("Object context ") + name +
+                        " must be between 1 and 256 UTF-8 code units.");
     }
     if (!std::isalnum(static_cast<unsigned char>(str.front()))) {
-      google::cloud::internal::ThrowInvalidArgument(
-          std::string("Object context ") + name +
-          " must begin with an alphanumeric character.");
+      return Status(StatusCode::kInvalidArgument,
+                    std::string("Object context ") + name +
+                        " must begin with an alphanumeric character.");
     }
     if (str.find_first_of("'\"\\/") != std::string::npos) {
-      google::cloud::internal::ThrowInvalidArgument(
-          std::string("Object context ") + name +
-          " cannot contain ', \", \\, or /.");
+      return Status(StatusCode::kInvalidArgument,
+                    std::string("Object context ") + name +
+                        " cannot contain ', \", \\, or /.");
     }
+    return Status();
   };
 
-  validate_component(key, "keys");
-  validate_component(value, "values");
+  auto status = validate_component(key, "keys");
+  if (!status.ok()) return status;
+
+  status = validate_component(value, "values");
+  if (!status.ok()) return status;
 
   // Rule specific to keys: Cannot begin with 'goog' (case-insensitive)
   if (key.size() >= 4) {
@@ -60,28 +64,32 @@ void ValidateObjectContext(std::string const& key, std::string const& value) {
                    [](unsigned char c) { return std::tolower(c); });
 
     if (prefix == "goog") {
-      google::cloud::internal::ThrowInvalidArgument(
+      return Status(
+          StatusCode::kInvalidArgument,
           "Object context keys cannot begin with 'goog' (case-insensitive).");
     }
   }
+  return Status();
 }
 
-void ValidateObjectContextsAggregate(ObjectContexts const& contexts) {
+Status ValidateObjectContextsAggregate(ObjectContexts const& contexts) {
   // Validate each individual key-value pair and calculate aggregate size.
   for (auto const& kv : contexts.custom()) {
-    ValidateObjectContext(kv.first, kv.second.value);
+    auto status = ValidateObjectContext(kv.first, kv.second.value);
+    if (!status.ok()) return status;
   }
 
   // Rule: Count limited to 50.
   if (contexts.custom().size() > 50) {
-    google::cloud::internal::ThrowInvalidArgument(
-        "Object contexts are limited to 50 entries per object.");
+    return Status(StatusCode::kInvalidArgument,
+                  "Object contexts are limited to 50 entries per object.");
   }
 
   // Note: The API limits the aggregate size to 25 KiB (25,600 bytes).
   // With a max of 50 items and a max of 256 bytes per key and value,
   // the maximum possible size is exactly 50 * (256 + 256) = 25,600 bytes.
   // Therefore, an explicit aggregate size check is mathematically redundant.
+  return Status();
 }
 
 }  // namespace internal

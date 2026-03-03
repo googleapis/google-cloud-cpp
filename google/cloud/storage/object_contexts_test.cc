@@ -15,7 +15,6 @@
 #include "google/cloud/storage/object_contexts.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <stdexcept>
 #include <string>
 
 namespace google {
@@ -26,22 +25,23 @@ namespace internal {
 namespace {
 
 // ============================================================================
-// Happy Path Tests: These run unconditionally.
+// Happy Path Tests
 // ============================================================================
 
 TEST(ObjectContextsTest, ValidContexts) {
   // Typical valid key-value pairs
-  ValidateObjectContext("validKey1", "validValue1");
-  ValidateObjectContext("a", "b");
+  EXPECT_TRUE(ValidateObjectContext("validKey1", "validValue1").ok());
+  EXPECT_TRUE(ValidateObjectContext("a", "b").ok());
 
   // Exact 256-byte limits
-  ValidateObjectContext(std::string(256, 'k'), std::string(256, 'v'));
+  EXPECT_TRUE(
+      ValidateObjectContext(std::string(256, 'k'), std::string(256, 'v')).ok());
 }
 
 TEST(ObjectContextsTest, ReservedPrefixValid) {
   // Similar but valid keys
-  ValidateObjectContext("goodKey", "value");
-  ValidateObjectContext("goo", "value");
+  EXPECT_TRUE(ValidateObjectContext("goodKey", "value").ok());
+  EXPECT_TRUE(ValidateObjectContext("goo", "value").ok());
 }
 
 TEST(ObjectContextsTest, AggregateCountLimit) {
@@ -54,51 +54,61 @@ TEST(ObjectContextsTest, AggregateCountLimit) {
   }
 
   // Should pass validation unconditionally
-  ValidateObjectContextsAggregate(contexts);
+  EXPECT_TRUE(ValidateObjectContextsAggregate(contexts).ok());
 }
 
 // ============================================================================
-// Sad Path Tests: These expect validation failures and throw exceptions.
-// They are completely stripped out when compiled with -fno-exceptions.
+// Sad Path Tests: Expect failures and non-OK statuses.
 // ============================================================================
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST(ObjectContextsTest, LengthLimits) {
   // Empty strings
-  EXPECT_THROW(ValidateObjectContext("", "value"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("key", ""), std::invalid_argument);
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("", "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("key", "").code());
 
   // Exceeding 256 bytes
-  EXPECT_THROW(ValidateObjectContext(std::string(257, 'k'), "value"),
-               std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("key", std::string(257, 'v')),
-               std::invalid_argument);
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext(std::string(257, 'k'), "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("key", std::string(257, 'v')).code());
 }
 
 TEST(ObjectContextsTest, StartingCharacters) {
   // Cannot start with non-alphanumeric characters
-  EXPECT_THROW(ValidateObjectContext("-key", "value"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("_key", "value"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("key", ".value"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("key", "@value"), std::invalid_argument);
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("-key", "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("_key", "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("key", ".value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("key", "@value").code());
 }
 
 TEST(ObjectContextsTest, ForbiddenCharacters) {
   // Contains ', ", \, or /
-  EXPECT_THROW(ValidateObjectContext("ke'y", "value"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("key", "va\"lue"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("ke\\y", "value"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("key", "val/ue"), std::invalid_argument);
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("ke'y", "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("key", "va\"lue").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("ke\\y", "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("key", "val/ue").code());
 }
 
 TEST(ObjectContextsTest, ReservedPrefix) {
   // Cannot begin with 'goog'
-  EXPECT_THROW(ValidateObjectContext("googKey", "value"),
-               std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("Google", "value"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("goog", "value"), std::invalid_argument);
-  EXPECT_THROW(ValidateObjectContext("GOOG", "value"), std::invalid_argument);
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("googKey", "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("Google", "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("goog", "value").code());
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContext("GOOG", "value").code());
 }
 
 TEST(ObjectContextsTest, AggregateCountLimitBreached) {
@@ -110,11 +120,9 @@ TEST(ObjectContextsTest, AggregateCountLimitBreached) {
                     ObjectCustomContextPayload{"v", {}, {}});
   }
 
-  EXPECT_THROW(ValidateObjectContextsAggregate(contexts),
-               std::invalid_argument);
+  EXPECT_EQ(StatusCode::kInvalidArgument,
+            ValidateObjectContextsAggregate(contexts).code());
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 }  // namespace
 }  // namespace internal

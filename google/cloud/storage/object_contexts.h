@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_CONTEXTS_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status.h"
 #include "absl/types/optional.h"
 #include <chrono>
 #include <map>
@@ -27,7 +28,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- *  Represents the payload of a user-defined object context.
+ * Represents the payload of a user-defined object context.
  */
 struct ObjectCustomContextPayload {
   // The value of the object context.
@@ -61,7 +62,7 @@ std::ostream& operator<<(std::ostream& os,
 /**
  * Specifies the custom contexts of an object.
  */
-struct ObjectContexts {
+class ObjectContexts {
  public:
   bool has_key(std::string const& key) const {
     return custom_.find(key) != custom_.end();
@@ -79,12 +80,12 @@ struct ObjectContexts {
     return custom_;
   }
 
-  bool operator==(ObjectContexts const& other) const {
-    return custom_ == other.custom_;
+  friend bool operator==(ObjectContexts const& lhs, ObjectContexts const& rhs) {
+    return lhs.custom_ == rhs.custom_;
   }
 
-  bool operator!=(ObjectContexts const& other) const {
-    return !(*this == other);
+  friend bool operator!=(ObjectContexts const& lhs, ObjectContexts const& rhs) {
+    return !(lhs == rhs);
   }
 
  private:
@@ -97,12 +98,13 @@ struct ObjectContexts {
 std::ostream& operator<<(std::ostream& os, ObjectContexts const& rhs);
 
 namespace internal {
-// Validates a single context key/value pair and throws on invalid inputs.
-void ValidateObjectContext(std::string const& key, std::string const& value);
+// Validates a single context key/value pair and returns a Status on invalid
+// inputs.
+Status ValidateObjectContext(std::string const& key, std::string const& value);
 
 // Validates the aggregate constraints (size & count) and all individual pairs.
-// Throws on invalid inputs.
-void ValidateObjectContextsAggregate(ObjectContexts const& contexts);
+// Returns a Status on invalid inputs.
+Status ValidateObjectContextsAggregate(ObjectContexts const& contexts);
 }  // namespace internal
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -173,14 +173,14 @@ storage::ObjectMetadata FromProto(google::storage::v2::Object object,
   }
   if (object.has_contexts()) {
     storage::ObjectContexts contexts;
-    for (auto const& kv : object.contexts().custom()) {
+    for (auto& kv : *object.mutable_contexts()->mutable_custom()) {
       storage::ObjectCustomContextPayload payload;
-      payload.value = kv.second.value();
+      payload.value = std::move(*kv.second.mutable_value());
       payload.create_time =
           google::cloud::internal::ToChronoTimePoint(kv.second.create_time());
       payload.update_time =
           google::cloud::internal::ToChronoTimePoint(kv.second.update_time());
-      contexts.upsert(kv.first, std::move(payload));
+      contexts.upsert(std::move(kv.first), std::move(payload));
     }
     metadata.set_contexts(std::move(contexts));
   }
