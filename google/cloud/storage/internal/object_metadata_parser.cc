@@ -47,9 +47,7 @@ void SetIfNotEmpty(char const* key, std::string const& value,
  */
 void SetJsonContextsIfNotEmpty(ObjectMetadata const& meta,
                                nlohmann::json& json) {
-  if (!meta.has_contexts()) {
-    return;
-  }
+  if (!meta.has_contexts()) return;
 
   nlohmann::json custom_json;
   for (auto const& kv : meta.contexts().custom()) {
