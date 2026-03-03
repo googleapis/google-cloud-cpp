@@ -37,9 +37,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
-void DiffMetadata(ObjectMetadataPatchBuilder& builder,
-                  ObjectMetadata const& original,
-                  ObjectMetadata const& updated) {
+void DiffMetadata(ObjectMetadata const& original, ObjectMetadata const& updated,
+                  ObjectMetadataPatchBuilder& builder) {
   if (original.metadata() == updated.metadata()) return;
 
   if (updated.metadata().empty()) {
@@ -52,22 +51,21 @@ void DiffMetadata(ObjectMetadataPatchBuilder& builder,
                       updated.metadata().begin(), updated.metadata().end(),
                       std::inserter(difference, difference.end()),
                       original.metadata().value_comp());
-  for (auto&& d : difference) {
-    builder.ResetMetadata(d.first);
+  for (auto& d : difference) {
+    builder.ResetMetadata(std::move(d.first));
   }
 
   difference.clear();
   std::set_difference(updated.metadata().begin(), updated.metadata().end(),
                       original.metadata().begin(), original.metadata().end(),
                       std::inserter(difference, difference.end()));
-  for (auto&& d : difference) {
-    builder.SetMetadata(d.first, d.second);
+  for (auto& d : difference) {
+    builder.SetMetadata(std::move(d.first), std::move(d.second));
   }
 }
 
-void DiffContexts(ObjectMetadataPatchBuilder& builder,
-                  ObjectMetadata const& original,
-                  ObjectMetadata const& updated) {
+void DiffContexts(ObjectMetadata const& original, ObjectMetadata const& updated,
+                  ObjectMetadataPatchBuilder& builder) {
   bool is_original_empty =
       !original.has_contexts() || original.contexts().custom().empty();
   bool is_updated_empty =
@@ -89,8 +87,8 @@ void DiffContexts(ObjectMetadataPatchBuilder& builder,
           updated.contexts().custom().end(),
           std::inserter(deleted_entries, deleted_entries.end()),
           [](auto const& a, auto const& b) { return a.first < b.first; });
-      for (auto&& d : deleted_entries) {
-        builder.ResetContext(d.first);
+      for (auto& d : deleted_entries) {
+        builder.ResetContext(std::move(d.first));
       }
 
       std::map<std::string, ObjectCustomContextPayload> changed_entries;
@@ -100,8 +98,8 @@ void DiffContexts(ObjectMetadataPatchBuilder& builder,
           original.contexts().custom().begin(),
           original.contexts().custom().end(),
           std::inserter(changed_entries, changed_entries.end()));
-      for (auto&& d : changed_entries) {
-        builder.SetContext(d.first, d.second.value);
+      for (auto& d : changed_entries) {
+        builder.SetContext(std::move(d.first), std::move(d.second.value));
       }
     }
   }
@@ -134,8 +132,8 @@ ObjectMetadataPatchBuilder DiffObjectMetadata(ObjectMetadata const& original,
     builder.SetEventBasedHold(updated.event_based_hold());
   }
 
-  DiffMetadata(builder, original, updated);
-  DiffContexts(builder, original, updated);
+  DiffMetadata(original, updated, builder);
+  DiffContexts(original, updated, builder);
 
   if (original.temporary_hold() != updated.temporary_hold()) {
     builder.SetTemporaryHold(updated.temporary_hold());

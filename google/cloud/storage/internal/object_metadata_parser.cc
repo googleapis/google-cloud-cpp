@@ -36,19 +36,17 @@ namespace {
  * This simplifies the implementation of ToJsonString() because we repeat this
  * check for many attributes.
  */
-void SetIfNotEmpty(nlohmann::json& json, char const* key,
-                   std::string const& value) {
-  if (value.empty()) {
-    return;
-  }
+void SetIfNotEmpty(char const* key, std::string const& value,
+                   nlohmann::json& json) {
+  if (value.empty()) return;
   json[key] = value;
 }
 
 /**
  * Populates the "contexts" field in the JSON object from the given metadata.
  */
-void SetJsonContextsIfNotEmpty(nlohmann::json& json,
-                               ObjectMetadata const& meta) {
+void SetJsonContextsIfNotEmpty(ObjectMetadata const& meta,
+                               nlohmann::json& json) {
   if (!meta.has_contexts()) {
     return;
   }
@@ -385,25 +383,25 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
       nlohmann::json entry;
-      SetIfNotEmpty(entry, "entity", a.entity());
-      SetIfNotEmpty(entry, "role", a.role());
+      SetIfNotEmpty("entity", a.entity(), entry);
+      SetIfNotEmpty("role", a.role(), entry);
       metadata_as_json["acl"].emplace_back(std::move(entry));
     }
   }
 
-  SetIfNotEmpty(metadata_as_json, "cacheControl", meta.cache_control());
-  SetIfNotEmpty(metadata_as_json, "contentDisposition",
-                meta.content_disposition());
-  SetIfNotEmpty(metadata_as_json, "contentEncoding", meta.content_encoding());
-  SetIfNotEmpty(metadata_as_json, "contentLanguage", meta.content_language());
-  SetIfNotEmpty(metadata_as_json, "contentType", meta.content_type());
+  SetIfNotEmpty("cacheControl", meta.cache_control(), metadata_as_json);
+  SetIfNotEmpty("contentDisposition", meta.content_disposition(),
+                metadata_as_json);
+  SetIfNotEmpty("contentEncoding", meta.content_encoding(), metadata_as_json);
+  SetIfNotEmpty("contentLanguage", meta.content_language(), metadata_as_json);
+  SetIfNotEmpty("contentType", meta.content_type(), metadata_as_json);
 
   if (meta.event_based_hold()) {
     metadata_as_json["eventBasedHold"] = true;
   }
 
-  SetIfNotEmpty(metadata_as_json, "name", meta.name());
-  SetIfNotEmpty(metadata_as_json, "storageClass", meta.storage_class());
+  SetIfNotEmpty("name", meta.name(), metadata_as_json);
+  SetIfNotEmpty("storageClass", meta.storage_class(), metadata_as_json);
 
   if (!meta.metadata().empty()) {
     nlohmann::json meta_as_json;
@@ -425,7 +423,7 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
                                 meta.retention().retain_until_time)}};
   }
 
-  SetJsonContextsIfNotEmpty(metadata_as_json, meta);
+  SetJsonContextsIfNotEmpty(meta, metadata_as_json);
 
   return metadata_as_json;
 }
@@ -436,8 +434,8 @@ nlohmann::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta) {
 
 nlohmann::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta) {
   auto json = ObjectMetadataJsonForCompose(meta);
-  SetIfNotEmpty(json, "crc32c", meta.crc32c());
-  SetIfNotEmpty(json, "md5Hash", meta.md5_hash());
+  SetIfNotEmpty("crc32c", meta.crc32c(), json);
+  SetIfNotEmpty("md5Hash", meta.md5_hash(), json);
   return json;
 }
 
@@ -450,18 +448,18 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
       nlohmann::json entry;
-      SetIfNotEmpty(entry, "entity", a.entity());
-      SetIfNotEmpty(entry, "role", a.role());
+      SetIfNotEmpty("entity", a.entity(), entry);
+      SetIfNotEmpty("role", a.role(), entry);
       metadata_as_json["acl"].emplace_back(std::move(entry));
     }
   }
 
-  SetIfNotEmpty(metadata_as_json, "cacheControl", meta.cache_control());
-  SetIfNotEmpty(metadata_as_json, "contentDisposition",
-                meta.content_disposition());
-  SetIfNotEmpty(metadata_as_json, "contentEncoding", meta.content_encoding());
-  SetIfNotEmpty(metadata_as_json, "contentLanguage", meta.content_language());
-  SetIfNotEmpty(metadata_as_json, "contentType", meta.content_type());
+  SetIfNotEmpty("cacheControl", meta.cache_control(), metadata_as_json);
+  SetIfNotEmpty("contentDisposition", meta.content_disposition(),
+                metadata_as_json);
+  SetIfNotEmpty("contentEncoding", meta.content_encoding(), metadata_as_json);
+  SetIfNotEmpty("contentLanguage", meta.content_language(), metadata_as_json);
+  SetIfNotEmpty("contentType", meta.content_type(), metadata_as_json);
 
   metadata_as_json["eventBasedHold"] = meta.event_based_hold();
 
@@ -485,7 +483,7 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
                                 meta.retention().retain_until_time)}};
   }
 
-  SetJsonContextsIfNotEmpty(metadata_as_json, meta);
+  SetJsonContextsIfNotEmpty(meta, metadata_as_json);
 
   return metadata_as_json;
 }
