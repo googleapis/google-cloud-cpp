@@ -90,9 +90,9 @@ void UpdateAnywhereCache(
      std::string const& admission_policy) {
     google::storage::control::v2::AnywhereCache cache;
     google::protobuf::FieldMask field_mask;
-    field_mask.add_paths("admission_policy");
+    field_mask.add_paths("ttl");
     cache.set_name(cache_name);
-    cache.set_admission_policy(admission_policy);
+    cache->mutable_ttl()->set_seconds(86400);
     // Start an update operation and block until it completes. Real applications
     // may want to setup a callback, wait on a coroutine, or poll until it
     // completes.
