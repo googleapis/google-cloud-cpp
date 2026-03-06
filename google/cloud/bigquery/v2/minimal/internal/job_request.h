@@ -311,9 +311,10 @@ class CancelJobRequest {
 
 struct DataFormatOptions {
   DataFormatOptions() = default;
-  bool use_int64_timestamp = false;
 
-  std::string timestamp_output_format = "FLOAT64";
+  bool use_int64_timestamp = false;
+  std::string timestamp_output_format = "TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED";
+
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
