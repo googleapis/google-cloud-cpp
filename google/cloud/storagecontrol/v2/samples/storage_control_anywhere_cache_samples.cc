@@ -92,7 +92,7 @@ void UpdateAnywhereCache(
     google::protobuf::FieldMask field_mask;
     field_mask.add_paths("ttl");
     cache.set_name(cache_name);
-    cache->mutable_ttl()->set_seconds(86400);
+    cache.mutable_ttl()->set_seconds(86400);
     // Start an update operation and block until it completes. Real applications
     // may want to setup a callback, wait on a coroutine, or poll until it
     // completes.
