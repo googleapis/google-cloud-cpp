@@ -97,16 +97,6 @@ class ObjectContexts {
 
 std::ostream& operator<<(std::ostream& os, ObjectContexts const& rhs);
 
-namespace internal {
-// Validates a single context key/value pair and returns a Status on invalid
-// inputs.
-Status ValidateObjectContext(std::string const& key, std::string const& value);
-
-// Validates the aggregate constraints (size & count) and all individual pairs.
-// Returns a Status on invalid inputs.
-Status ValidateObjectContextsAggregate(ObjectContexts const& contexts);
-}  // namespace internal
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud

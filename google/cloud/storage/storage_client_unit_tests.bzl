@@ -98,7 +98,6 @@ storage_client_unit_tests = [
     "list_objects_reader_test.cc",
     "notification_metadata_test.cc",
     "object_access_control_test.cc",
-    "object_contexts_test.cc",
     "object_metadata_test.cc",
     "object_retention_test.cc",
     "object_stream_test.cc",
