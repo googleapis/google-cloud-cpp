@@ -86,8 +86,8 @@ void UpdateAnywhereCache(
     std::vector<std::string> const& argv) {
   // [START storage_control_update_anywhere_cache]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string const& cache_name,
-     std::string const& admission_policy) {
+  [](storagecontrol::StorageControlClient client,
+     std::string const& cache_name) {
     google::storage::control::v2::AnywhereCache cache;
     google::protobuf::FieldMask field_mask;
     field_mask.add_paths("ttl");
@@ -221,8 +221,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                  CreateAnywhereCache),
       make_entry("get-anywhere-cache", {"cache-name"}, GetAnywhereCache),
       make_entry("list-anywhere-caches", {"bucket-name"}, ListAnywhereCaches),
-      make_entry("update-anywhere-cache", {"cache-name", "admission-policy"},
-                 UpdateAnywhereCache),
+      make_entry("update-anywhere-cache", {"cache-name"}, UpdateAnywhereCache),
       make_entry("pause-anywhere-cache", {"cache-name"}, PauseAnywhereCache),
       make_entry("resume-anywhere-cache", {"cache-name"}, ResumeAnywhereCache),
       make_entry("disable-anywhere-cache", {"cache-name"},
