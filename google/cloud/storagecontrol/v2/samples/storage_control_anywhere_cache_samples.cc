@@ -101,7 +101,7 @@ void UpdateAnywhereCache(
     std::cout << "Updated anywhere cache: " << anywhere_cache->name() << "\n";
   }
   // [END storage_control_update_anywhere_cache]
-  (std::move(client), argv.at(0), argv.at(1));
+  (std::move(client), argv.at(0));
 }
 
 void PauseAnywhereCache(
