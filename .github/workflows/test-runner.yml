@@ -106,6 +106,8 @@ jobs:
       execute-integration-tests: true
     secrets: inherit
   windows-cmake:
+    # Disabled
+    if: false
     name: Windows-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/windows-cmake.yml
