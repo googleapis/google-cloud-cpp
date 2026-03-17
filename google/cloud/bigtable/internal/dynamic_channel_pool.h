@@ -259,7 +259,6 @@ class DynamicChannelPool
                                           bad_channel_iters);
 
     std::shared_ptr<ChannelUsage<T>> channel;
-
     if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
       channel = *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
                                                       : *d.channel_2_iter;
@@ -277,7 +276,6 @@ class DynamicChannelPool
       std::swap(channels_.front(), channels_.back());
       channel = channels_.front();
     }
-
     // Wait until we no longer need valid iterators to call EvictBadChannels.
     EvictBadChannels(lk, bad_channel_iters);
     ScheduleRemoveChannels(lk);
@@ -446,7 +444,6 @@ class DynamicChannelPool
                                 return a + (rpcs_b.ok() ? *rpcs_b : 0);
                               }) /
                   static_cast<int>(channels_.size() + num_pending_channels_);
-
     if (channels_.size() < sizing_policy_.minimum_channel_pool_size ||
         (average_rpcs_per_channel >
              sizing_policy_.maximum_average_outstanding_rpcs_per_channel &&
