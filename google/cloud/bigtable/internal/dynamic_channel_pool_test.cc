@@ -67,6 +67,15 @@ class DynamicChannelPoolTestWrapper {
     return pool_->draining_channels_;
   }
 
+  std::size_t num_pending_channels() const {
+    return pool_->num_pending_channels_;
+  }
+
+  DynamicChannelPoolTestWrapper& set_num_pending_channels(std::size_t n) {
+    pool_->num_pending_channels_ = n;
+    return *this;
+  }
+
  protected:
   std::shared_ptr<DynamicChannelPool<BigtableStub>> pool_;
 };
@@ -130,14 +139,27 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolUndersized) {
       stub_factory_fn.AsStdFunction(), sizing_policy);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
-  auto test_fn = [](std::vector<int> const& new_channel_ids) {
-    EXPECT_THAT(new_channel_ids,
-                ::testing::ElementsAreArray({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}));
-  };
   {
+    EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
+    auto test_fn = [](std::vector<int> const& new_channel_ids) {
+      EXPECT_THAT(new_channel_ids,
+                  ::testing::ElementsAreArray({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}));
+    };
     auto lk = wrapper.CreateLock();
     wrapper.ScheduleAddChannels(lk, test_fn);
+    EXPECT_THAT(wrapper.num_pending_channels(), Eq(10));
+  }
+
+  {
+    EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
+    auto test_fn = [](std::vector<int> const& new_channel_ids) {
+      EXPECT_THAT(new_channel_ids,
+                  ::testing::ElementsAreArray(
+                      {10, 11, 12, 13, 14, 15, 16, 17, 18, 19}));
+    };
+    auto lk = wrapper.CreateLock();
+    wrapper.ScheduleAddChannels(lk, test_fn);
+    EXPECT_THAT(wrapper.num_pending_channels(), Eq(20));
   }
 }
 
@@ -334,8 +356,10 @@ TEST_F(DynamicChannelPoolTest, AddChannels) {
       stub_factory_fn.AsStdFunction(), sizing_policy);
   DynamicChannelPoolTestWrapper wrapper(pool);
   std::vector<int> new_channel_ids = {0, 1};
+  wrapper.set_num_pending_channels(new_channel_ids.size());
   wrapper.AddChannels(new_channel_ids);
   EXPECT_THAT(pool->size(), Eq(2));
+  EXPECT_THAT(wrapper.num_pending_channels(), Eq(0));
   fake_cq_impl_->SimulateCompletion(false);
 }
 
