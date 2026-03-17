@@ -121,9 +121,6 @@ class DynamicChannelPool
     // performing this work. We might as well cancel those timer futures now.
     refresh_state_->timers().CancelAll();
     if (remove_channel_poll_timer_.valid()) remove_channel_poll_timer_.cancel();
-    if (pool_size_increase_cooldown_timer_.valid()) {
-      pool_size_increase_cooldown_timer_.cancel();
-    }
     if (pool_size_decrease_cooldown_timer_.valid()) {
       pool_size_decrease_cooldown_timer_.cancel();
     }
@@ -216,6 +213,7 @@ class DynamicChannelPool
                    absl::visit(ChannelAddVisitor(channels_.size()),
                                sizing_policy_.channels_to_add_per_resize));
     }
+    num_pending_channels_ += num_channels_to_add;
     std::vector<int> new_channel_ids;
     new_channel_ids.reserve(num_channels_to_add);
     for (std::size_t i = 0; i < num_channels_to_add; ++i) {
@@ -244,6 +242,7 @@ class DynamicChannelPool
       if (new_stub.ok()) new_stubs.push_back(*std::move(new_stub));
     }
     std::scoped_lock lk(mu_);
+    num_pending_channels_ -= new_stubs.size();
     channels_.insert(channels_.end(),
                      std::make_move_iterator(new_stubs.begin()),
                      std::make_move_iterator(new_stubs.end()));
@@ -302,11 +301,6 @@ class DynamicChannelPool
     // Not yet implemented.
   }
 
-  void SetSizeIncreaseCooldownTimer(std::scoped_lock<std::mutex> const&) {
-    pool_size_increase_cooldown_timer_ = cq_.MakeRelativeTimer(
-        sizing_policy_.pool_size_increase_cooldown_interval);
-  }
-
   void SetSizeDecreaseCooldownTimer(std::scoped_lock<std::mutex> const&) {
     pool_size_decrease_cooldown_timer_ = cq_.MakeRelativeTimer(
         sizing_policy_.pool_size_decrease_cooldown_interval);
@@ -328,11 +322,10 @@ class DynamicChannelPool
   std::shared_ptr<ConnectionRefreshState> refresh_state_;
   StubFactoryFn stub_factory_fn_;
   std::vector<std::shared_ptr<ChannelUsage<T>>> channels_;
+  std::size_t num_pending_channels_ = 0;
   DynamicChannelPoolSizingPolicy sizing_policy_;
   std::vector<std::shared_ptr<ChannelUsage<T>>> draining_channels_;
   future<void> remove_channel_poll_timer_;
-  future<StatusOr<std::chrono::system_clock::time_point>>
-      pool_size_increase_cooldown_timer_;
   future<StatusOr<std::chrono::system_clock::time_point>>
       pool_size_decrease_cooldown_timer_;
   std::uint32_t next_channel_id_;

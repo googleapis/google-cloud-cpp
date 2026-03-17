@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/internal/dynamic_channel_pool.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -49,10 +48,6 @@ class DynamicChannelPoolTestWrapper {
 
   void RemoveChannels() { pool_->RemoveChannels(); }
 
-  void SetSizeIncreaseCooldownTimer(std::scoped_lock<std::mutex> const& lk) {
-    pool_->SetSizeIncreaseCooldownTimer(lk);
-  }
-
   void SetSizeDecreaseCooldownTimer(std::scoped_lock<std::mutex> const& lk) {
     pool_->SetSizeDecreaseCooldownTimer(lk);
   }
@@ -80,7 +75,6 @@ namespace {
 
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::google::cloud::testing_util::FakeSteadyClock;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::Eq;
 using ::testing::IsEmpty;
@@ -91,7 +85,6 @@ class DynamicChannelPoolTest : public ::testing::Test {
   DynamicChannelPoolTest()
       : fake_cq_impl_(std::make_shared<FakeCompletionQueueImpl>()),
         mock_cq_impl_(std::make_shared<MockCompletionQueueImpl>()),
-        fake_clock_impl_(std::make_shared<FakeSteadyClock>()),
         thread_([this] { cq_.Run(); }) {}
 
   ~DynamicChannelPoolTest() override {
@@ -102,7 +95,6 @@ class DynamicChannelPoolTest : public ::testing::Test {
  protected:
   std::shared_ptr<FakeCompletionQueueImpl> fake_cq_impl_;
   std::shared_ptr<MockCompletionQueueImpl> mock_cq_impl_;
-  std::shared_ptr<FakeSteadyClock> fake_clock_impl_;
   CompletionQueue cq_;
   std::thread thread_;
 };
@@ -159,9 +151,9 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNearMax) {
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
   channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   DynamicChannelPoolSizingPolicy sizing_policy;
   sizing_policy.minimum_channel_pool_size = 2;
   sizing_policy.maximum_channel_pool_size = 3;
@@ -208,9 +200,9 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNotNearMax) {
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
   channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   DynamicChannelPoolSizingPolicy sizing_policy;
   sizing_policy.minimum_channel_pool_size = 2;
   sizing_policy.maximum_channel_pool_size = 10;
@@ -257,9 +249,9 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNotNearMaxPercentage) {
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
   channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   DynamicChannelPoolSizingPolicy sizing_policy;
   sizing_policy.minimum_channel_pool_size = 2;
   sizing_policy.maximum_channel_pool_size = 10;
@@ -316,16 +308,14 @@ TEST_F(DynamicChannelPoolTest, AddChannels) {
         EXPECT_THAT(id, Eq(0));
         EXPECT_THAT(instance, Eq(instance_name));
         EXPECT_THAT(priming, Eq(StubManager::Priming::kSynchronousPriming));
-        return std::make_shared<ChannelUsage<BigtableStub>>(
-            mock_stub_0, fake_clock_impl_, 20);
+        return std::make_shared<ChannelUsage<BigtableStub>>(mock_stub_0, 20);
       })
       .WillOnce([&](int id, std::string const& instance,
                     StubManager::Priming priming) {
         EXPECT_THAT(id, Eq(1));
         EXPECT_THAT(instance, Eq(instance_name));
         EXPECT_THAT(priming, Eq(StubManager::Priming::kSynchronousPriming));
-        return std::make_shared<ChannelUsage<BigtableStub>>(
-            mock_stub_1, fake_clock_impl_, 20);
+        return std::make_shared<ChannelUsage<BigtableStub>>(mock_stub_1, 20);
       });
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
@@ -467,7 +457,7 @@ TEST_F(DynamicChannelPoolTest, RemoveChannelsLoneChannelDrained) {
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> draining_channels;
   draining_channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   auto const& d = wrapper.SetDrainingChannels(draining_channels);
 
   wrapper.RemoveChannels();
@@ -508,13 +498,13 @@ TEST_F(DynamicChannelPoolTest, RemoveChannelsSomeChannelsDrained) {
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> draining_channels;
   draining_channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 1));
+      std::make_shared<MockBigtableStub>(), 1));
   draining_channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   draining_channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 0));
+      std::make_shared<MockBigtableStub>(), 0));
   draining_channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), fake_clock_impl_, 2));
+      std::make_shared<MockBigtableStub>(), 2));
   auto const& d = wrapper.SetDrainingChannels(draining_channels);
 
   EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)

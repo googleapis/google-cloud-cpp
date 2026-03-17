@@ -69,56 +69,6 @@ TEST(ChannelUsageTest, SetLastRefreshStatus) {
   channel->set_last_refresh_status(expected_status);
   EXPECT_THAT(channel->instant_outstanding_rpcs(),
               StatusIs(expected_status.code()));
-  EXPECT_THAT(channel->average_outstanding_rpcs(),
-              StatusIs(expected_status.code()));
-}
-
-TEST(ChannelUsageTest, AverageOutstandingRpcs) {
-  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
-  auto mock = std::make_shared<MockBigtableStub>();
-  auto channel = std::make_shared<ChannelUsage<BigtableStub>>(mock, clock);
-  EXPECT_THAT(channel->instant_outstanding_rpcs(), IsOkAndHolds(0));
-
-  auto start = std::chrono::steady_clock::now();
-  clock->SetTime(start);
-
-  for (int i = 0; i < 10; ++i) (void)channel->AcquireStub();
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(10));
-
-  clock->AdvanceTime(std::chrono::seconds(1));
-  // sum=10 total_weight=1
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(10));
-
-  for (int i = 0; i < 10; ++i) (void)channel->AcquireStub();
-  clock->AdvanceTime(std::chrono::seconds(1));
-  // sum=30, total_weight=2
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(15));
-
-  for (int i = 0; i < 20; ++i) channel->ReleaseStub();
-  clock->AdvanceTime(std::chrono::seconds(1));
-  // sum=30, total_weight=3
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(10));
-
-  clock->AdvanceTime(std::chrono::seconds(2));
-  // sum=30, total_weight=5
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(6));
-
-  for (int i = 0; i < 100; ++i) (void)channel->AcquireStub();
-  clock->AdvanceTime(std::chrono::seconds(25));
-  // sum=2530, total_weight=84
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(84));
-
-  clock->AdvanceTime(std::chrono::seconds(35));
-  // First 5s of measurements have aged out.
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(100));
-
-  clock->AdvanceTime(std::chrono::seconds(60));
-  // All measurements have aged out.
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(100));
-
-  clock->AdvanceTime(std::chrono::seconds(3600));
-  // All measurements have aged out.
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(100));
 }
 
 TEST(ChannelUsageTest, MakeWeak) {
