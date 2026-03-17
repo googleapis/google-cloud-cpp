@@ -95,6 +95,8 @@ template <typename T>
 class DynamicChannelPool
     : public std::enable_shared_from_this<DynamicChannelPool<T>> {
  public:
+  // This function should only return an error status if priming is attempted
+  // and it is unsuccessful.
   using StubFactoryFn =
       std::function<StatusOr<std::shared_ptr<ChannelUsage<T>>>(
           std::uint32_t id, std::string const& instance_name,
@@ -186,7 +188,9 @@ class DynamicChannelPool
       return *d.channel_1_iter;
     }
     if (d.iterators.empty()) {
-      // Pool is empty, create a channel immediately and return it.
+      // Pool is empty, create a channel immediately and return it. While the
+      // return value is a StatusOr<T>, it will only ever contain an error if
+      // priming is attempted.
       channels_.push_back(*stub_factory_fn_(next_channel_id_++, instance_name_,
                                             StubManager::Priming::kNoPriming));
       return channels_.front();
@@ -253,28 +257,30 @@ class DynamicChannelPool
     ChannelSelectionData::FindGoodChannel(d.iterators, d.channel_2_iter,
                                           d.channel_2_rpcs, d.shuffle_iter,
                                           bad_channel_iters);
-    EvictBadChannels(lk, bad_channel_iters);
-    ScheduleRemoveChannels(lk);
-
-    if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
-      return *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
-                                                   : *d.channel_2_iter;
-    }
 
     std::shared_ptr<ChannelUsage<T>> channel;
-    if (d.channel_1_rpcs.ok()) {
+
+    if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
+      channel = *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
+                                                      : *d.channel_2_iter;
+    } else if (d.channel_1_rpcs.ok()) {
       channel = *d.channel_1_iter;
     } else if (d.channel_2_rpcs.ok()) {
       channel = *d.channel_2_iter;
     } else {
       // We have no usable channels in the entire pool; this is bad.
-      // Create a channel immediately to unblock application.
+      // Create a channel immediately to unblock application. While the
+      // return value is a StatusOr<T>, it will only ever contain an error if
+      // priming is attempted.
       channels_.push_back(*stub_factory_fn_(next_channel_id_++, instance_name_,
                                             StubManager::Priming::kNoPriming));
       std::swap(channels_.front(), channels_.back());
       channel = channels_.front();
     }
 
+    // Wait until we no longer need valid iterators to call EvictBadChannels.
+    EvictBadChannels(lk, bad_channel_iters);
+    ScheduleRemoveChannels(lk);
     ScheduleAddChannels(lk);
     return channel;
   }

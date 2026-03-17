@@ -999,8 +999,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
-  // ScheduleAddChannels will NOT be called.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(0);
+  // ScheduleAddChannels will be called as the minimum pool size is 2.
+  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
 
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {
