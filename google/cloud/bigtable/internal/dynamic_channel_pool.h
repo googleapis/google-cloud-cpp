@@ -242,7 +242,7 @@ class DynamicChannelPool
       if (new_stub.ok()) new_stubs.push_back(*std::move(new_stub));
     }
     std::scoped_lock lk(mu_);
-    num_pending_channels_ -= new_stubs.size();
+    num_pending_channels_ -= new_channel_ids.size();
     channels_.insert(channels_.end(),
                      std::make_move_iterator(new_stubs.begin()),
                      std::make_move_iterator(new_stubs.end()));
