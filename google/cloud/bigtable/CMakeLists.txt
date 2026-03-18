@@ -155,6 +155,8 @@ add_library(
     internal/bigtable_logging_decorator.h
     internal/bigtable_metadata_decorator.cc
     internal/bigtable_metadata_decorator.h
+    internal/bigtable_random_two_least_used_decorator.cc
+    internal/bigtable_random_two_least_used_decorator.h
     internal/bigtable_round_robin_decorator.cc
     internal/bigtable_round_robin_decorator.h
     internal/bigtable_stub.cc
@@ -444,6 +446,7 @@ if (BUILD_TESTING)
         internal/async_row_sampler_test.cc
         internal/async_streaming_read_test.cc
         internal/bigtable_channel_refresh_test.cc
+        internal/bigtable_random_two_least_used_decorator_test.cc
         internal/bigtable_stub_factory_test.cc
         internal/bulk_mutator_test.cc
         internal/channel_usage_test.cc
