@@ -822,9 +822,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
-  // ScheduleAddChannels will be called.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
-
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {
     auto lock = wrapper.CreateLock();
@@ -905,9 +902,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
       stub_factory_fn.AsStdFunction(), sizing_policy);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
-
-  // ScheduleAddChannels will be called.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
 
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {
@@ -995,9 +989,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
       stub_factory_fn.AsStdFunction(), sizing_policy);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
-
-  // ScheduleAddChannels will be called as the minimum pool size is 2.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
 
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {
@@ -1095,9 +1086,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
       stub_factory_fn.AsStdFunction(), sizing_policy);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
-
-  // ScheduleAddChannels will be called.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
 
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {

@@ -191,8 +191,9 @@ class DynamicChannelPool
       // Pool is empty, create a channel immediately and return it. While the
       // return value is a StatusOr<T>, it will only ever contain an error if
       // priming is attempted.
-      channels_.push_back(*stub_factory_fn_(next_channel_id_++, instance_name_,
-                                            StubManager::Priming::kNoPriming));
+      channels_.push_back(stub_factory_fn_(next_channel_id_++, instance_name_,
+                                           StubManager::Priming::kNoPriming)
+                              .value());
       return channels_.front();
     }
     return HandleBadChannels(lk, d);
@@ -259,27 +260,32 @@ class DynamicChannelPool
                                           bad_channel_iters);
 
     std::shared_ptr<ChannelUsage<T>> channel;
-    if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
-      channel = *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
-                                                      : *d.channel_2_iter;
-    } else if (d.channel_1_rpcs.ok()) {
-      channel = *d.channel_1_iter;
-    } else if (d.channel_2_rpcs.ok()) {
-      channel = *d.channel_2_iter;
+    if (d.channel_1_rpcs.ok() || d.channel_2_rpcs.ok()) {
+      if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
+        channel = *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
+                                                        : *d.channel_2_iter;
+      } else if (d.channel_1_rpcs.ok()) {
+        channel = *d.channel_1_iter;
+      } else if (d.channel_2_rpcs.ok()) {
+        channel = *d.channel_2_iter;
+      }
+      // Wait until we no longer need valid iterators to call EvictBadChannels.
+      EvictBadChannels(lk, bad_channel_iters);
     } else {
+      // Call EvictBadChannels before we channels_.push_back to avoid
+      // invalidating bad_channel_iters if there is a realloc of the vector.
+      EvictBadChannels(lk, bad_channel_iters);
       // We have no usable channels in the entire pool; this is bad.
       // Create a channel immediately to unblock application. While the
       // return value is a StatusOr<T>, it will only ever contain an error if
       // priming is attempted.
-      channels_.push_back(*stub_factory_fn_(next_channel_id_++, instance_name_,
-                                            StubManager::Priming::kNoPriming));
+      channels_.push_back(stub_factory_fn_(next_channel_id_++, instance_name_,
+                                           StubManager::Priming::kNoPriming)
+                              .value());
       std::swap(channels_.front(), channels_.back());
       channel = channels_.front();
     }
-    // Wait until we no longer need valid iterators to call EvictBadChannels.
-    EvictBadChannels(lk, bad_channel_iters);
     ScheduleRemoveChannels(lk);
-    ScheduleAddChannels(lk);
     return channel;
   }
 
