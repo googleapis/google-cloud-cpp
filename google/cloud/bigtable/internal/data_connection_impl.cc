@@ -189,6 +189,12 @@ ResultType MakeStatusOnlyResult(Status status) {
       std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
+std::string_view InstanceNameFromTableName(std::string_view table_name) {
+  auto pos = table_name.rfind("/tables");
+  if (pos == std::string_view::npos) return {};
+  return table_name.substr(0, pos);
+}
+
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -270,10 +276,6 @@ DataConnectionImpl::DataConnectionImpl(
                          std::make_unique<StubManager>(std::move(stub)),
                          std::move(operation_context_factory),
                          std::move(limiter), std::move(options)) {}
-
-absl::string_view InstanceNameFromTableName(absl::string_view table_name) {
-  return table_name.substr(0, table_name.rfind("/tables"));
-}
 
 Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {
@@ -873,16 +875,16 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
       instance_full_name, app_profile_id(*current));
   auto const* func = __func__;
   auto instance_name = params.instance.FullName();
+  auto stub = stub_manager_->GetStub(instance_name);
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), Idempotency::kIdempotent,
              background_->cq(),
-             [this, instance_name, operation_context](
+             [this, stub, instance_name, operation_context](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
                  google::bigtable::v2::PrepareQueryRequest const& request) {
                operation_context->PreCall(*context);
-               auto stub = stub_manager_->GetStub(instance_name);
                auto f = stub->AsyncPrepareQuery(cq, context, std::move(options),
                                                 request);
                return f.then(
@@ -932,6 +934,7 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                          google::bigtable::v2::PrepareQueryRequest const&
                              request) {
                        operation_context->PreCall(*context);
+                       // Get a new stub here to take advantage of the pool.
                        auto stub = stub_manager_->GetStub(instance_name);
                        auto f = stub->AsyncPrepareQuery(
                            cq, context, std::move(options), request);
