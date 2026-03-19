@@ -924,18 +924,18 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
           auto backoff = backoff_policy(*current);
           auto operation_context = operation_context_factory_->PrepareQuery(
               request.instance_name(), app_profile_id(*current));
+          // Get a new stub here to take advantage of the pool.
+          auto stub = stub_manager_->GetStub(instance_name);
           return google::cloud::internal::AsyncRetryLoop(
                      std::move(retry), std::move(backoff),
                      Idempotency::kIdempotent, background_->cq(),
-                     [this, instance_name, operation_context](
+                     [stub, instance_name, operation_context](
                          CompletionQueue& cq,
                          std::shared_ptr<grpc::ClientContext> context,
                          google::cloud::internal::ImmutableOptions options,
                          google::bigtable::v2::PrepareQueryRequest const&
                              request) {
                        operation_context->PreCall(*context);
-                       // Get a new stub here to take advantage of the pool.
-                       auto stub = stub_manager_->GetStub(instance_name);
                        auto f = stub->AsyncPrepareQuery(
                            cq, context, std::move(options), request);
                        return f.then([operation_context,
