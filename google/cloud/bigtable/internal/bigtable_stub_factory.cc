@@ -126,7 +126,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     if (priming == StubManager::Priming::kSynchronousPriming) {
       grpc::ClientContext client_context;
       google::bigtable::v2::PingAndWarmRequest request;
-      request.set_name(instance_name);
+      request.set_name(std::string{instance_name});
       auto response =
           stub->PingAndWarm(client_context, options, std::move(request));
       if (!response.ok()) return response.status();
