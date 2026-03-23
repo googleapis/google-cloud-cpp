@@ -21,6 +21,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -44,8 +45,10 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::_;
 using ::testing::Contains;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::MockFunction;
 using ::testing::Not;
 using ::testing::Optional;
 using ::testing::Pair;
@@ -105,6 +108,56 @@ TEST(BigtableStubFactory, RoundRobin) {
     auto response = stub->MutateRow(context, Options{}, {});
     EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
   }
+}
+
+TEST(BigtableStubFactory, RandomTwoLeastUsed) {
+  auto constexpr kTestChannels = 3;
+
+  MockFactory factory;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, PingAndWarm)
+      .WillRepeatedly(Return(google::bigtable::v2::PingAndWarmResponse{}));
+  EXPECT_CALL(*mock, MutateRow)
+      .WillRepeatedly(Return(internal::AbortedError("fail")));
+
+  EXPECT_CALL(factory, Call)
+      .Times(kTestChannels)
+      .WillRepeatedly(
+          [&](std::shared_ptr<grpc::Channel> const&) { return mock; });
+
+  auto expect_channel_id = [](int id) {
+    return ResultOf(
+        "channel ID",
+        [](grpc::ChannelArguments const& args) {
+          return internal::GetIntChannelArgument(args, "grpc.channel_id");
+        },
+        Optional(id));
+  };
+
+  auto auth = MakeStubFactoryMockAuth();
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(0)));
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(1)));
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", expect_channel_id(2)));
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillOnce(Return(false));
+
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
+  CompletionQueue cq(fake_cq_impl);
+  auto stub = CreateDecoratedStubs(
+      std::move(auth), cq, "projects/my-projects/instances/my-instance",
+      StubManager::Priming::kSynchronousPriming,
+      Options{}
+          .set<GrpcNumChannelsOption>(kTestChannels)
+          .set<EndpointOption>("localhost:1")
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
+
+  grpc::ClientContext context;
+  for (int i = 0; i != kTestChannels; ++i) {
+    auto response = stub->MutateRow(context, Options{}, {});
+    EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
+  }
+
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 // Note that the channel refreshing decorator is tested in
@@ -333,6 +386,35 @@ TEST(BigtableStubFactory, TracingDisabled) {
   (void)stub->MutateRow(context, Options{}, {});
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+}
+
+TEST(BigtableStubFactory, CreateBigtableAffinityStubs) {
+  bigtable::InstanceResource instance_a{Project("my-project"), "instance-a"};
+  bigtable::InstanceResource instance_b{Project("my-project"), "instance-b"};
+  std::vector<bigtable::InstanceResource> instances;
+  instances.push_back(instance_a);
+  instances.push_back(instance_b);
+
+  MockFunction<std::shared_ptr<BigtableStub>(std::string_view,
+                                             StubManager::Priming)>
+      stub_creation_fn;
+
+  EXPECT_CALL(stub_creation_fn, Call)
+      .WillOnce([&](std::string_view instance, StubManager::Priming priming) {
+        EXPECT_THAT(instance, Eq(instance_a.FullName()));
+        EXPECT_THAT(priming, Eq(StubManager::Priming::kSynchronousPriming));
+        return std::make_shared<MockBigtableStub>();
+      })
+      .WillOnce([&](std::string_view instance, StubManager::Priming priming) {
+        EXPECT_THAT(instance, Eq(instance_b.FullName()));
+        EXPECT_THAT(priming, Eq(StubManager::Priming::kSynchronousPriming));
+        return std::make_shared<MockBigtableStub>();
+      });
+
+  auto stubs =
+      CreateBigtableAffinityStubs(instances, stub_creation_fn.AsStdFunction());
+
+  EXPECT_THAT(stubs, testing::SizeIs(2));
 }
 
 }  // namespace
