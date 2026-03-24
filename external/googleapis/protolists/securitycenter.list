@@ -5,6 +5,7 @@
 @googleapis//google/cloud/securitycenter/v1:attack_path.proto
 @googleapis//google/cloud/securitycenter/v1:backup_disaster_recovery.proto
 @googleapis//google/cloud/securitycenter/v1:bigquery_export.proto
+@googleapis//google/cloud/securitycenter/v1:chokepoint.proto
 @googleapis//google/cloud/securitycenter/v1:cloud_armor.proto
 @googleapis//google/cloud/securitycenter/v1:cloud_dlp_data_profile.proto
 @googleapis//google/cloud/securitycenter/v1:cloud_dlp_inspection.proto
@@ -18,6 +19,7 @@
 @googleapis//google/cloud/securitycenter/v1:event_threat_detection_custom_module.proto
 @googleapis//google/cloud/securitycenter/v1:event_threat_detection_custom_module_validation_errors.proto
 @googleapis//google/cloud/securitycenter/v1:exfiltration.proto
+@googleapis//google/cloud/securitycenter/v1:external_exposure.proto
 @googleapis//google/cloud/securitycenter/v1:external_system.proto
 @googleapis//google/cloud/securitycenter/v1:file.proto
 @googleapis//google/cloud/securitycenter/v1:finding.proto

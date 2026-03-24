@@ -1,5 +1,6 @@
 @googleapis//google/cloud/ces/v1:agent.proto
 @googleapis//google/cloud/ces/v1:agent_service.proto
+@googleapis//google/cloud/ces/v1:agent_tool.proto
 @googleapis//google/cloud/ces/v1:agent_transfers.proto
 @googleapis//google/cloud/ces/v1:app.proto
 @googleapis//google/cloud/ces/v1:app_version.proto
@@ -28,6 +29,7 @@
 @googleapis//google/cloud/ces/v1:python_function.proto
 @googleapis//google/cloud/ces/v1:schema.proto
 @googleapis//google/cloud/ces/v1:search_suggestions.proto
+@googleapis//google/cloud/ces/v1:security_settings.proto
 @googleapis//google/cloud/ces/v1:session_service.proto
 @googleapis//google/cloud/ces/v1:system_tool.proto
 @googleapis//google/cloud/ces/v1:tool.proto

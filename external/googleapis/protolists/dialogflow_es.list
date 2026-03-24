@@ -2,6 +2,8 @@
 @googleapis//google/cloud/dialogflow/v2:agent_coaching_instruction.proto
 @googleapis//google/cloud/dialogflow/v2:answer_record.proto
 @googleapis//google/cloud/dialogflow/v2:audio_config.proto
+@googleapis//google/cloud/dialogflow/v2:ces_app.proto
+@googleapis//google/cloud/dialogflow/v2:ces_tool.proto
 @googleapis//google/cloud/dialogflow/v2:context.proto
 @googleapis//google/cloud/dialogflow/v2:conversation.proto
 @googleapis//google/cloud/dialogflow/v2:conversation_dataset.proto
@@ -26,6 +28,7 @@
 @googleapis//google/cloud/dialogflow/v2:sip_trunk.proto
 @googleapis//google/cloud/dialogflow/v2:tool.proto
 @googleapis//google/cloud/dialogflow/v2:tool_call.proto
+@googleapis//google/cloud/dialogflow/v2:toolset.proto
 @googleapis//google/cloud/dialogflow/v2:validation_result.proto
 @googleapis//google/cloud/dialogflow/v2:version.proto
 @googleapis//google/cloud/dialogflow/v2:webhook.proto
