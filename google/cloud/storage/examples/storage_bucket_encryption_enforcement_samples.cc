@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/examples/storage_examples_common.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/getenv.h"
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -25,7 +25,8 @@ namespace {
 void GetBucketEncryptionEnforcementConfig(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [get bucket encryption enforcement config] [START storage_get_bucket_encryption_enforcement_config]
+  //! [get bucket encryption enforcement config] [START
+  //! storage_get_bucket_encryption_enforcement_config]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -45,65 +46,116 @@ void GetBucketEncryptionEnforcementConfig(
     auto const& encryption = metadata->encryption();
 
     auto format_config = [](auto const& config) {
-      if (config.restriction_mode.empty()) return std::string("NOT SET (Default)");
+      if (config.restriction_mode.empty())
+        return std::string("NOT SET (Default)");
       return "Mode: " + config.restriction_mode + ", Effective Time: " +
              google::cloud::internal::FormatRfc3339(config.effective_time);
     };
 
     std::cout << "  GMEK Enforcement: "
-              << format_config(encryption.google_managed_encryption_enforcement_config) << "\n"
+              << format_config(
+                     encryption.google_managed_encryption_enforcement_config)
+              << "\n"
               << "  CMEK Enforcement: "
-              << format_config(encryption.customer_managed_encryption_enforcement_config) << "\n"
+              << format_config(
+                     encryption.customer_managed_encryption_enforcement_config)
+              << "\n"
               << "  CSEK Enforcement: "
-              << format_config(encryption.customer_supplied_encryption_enforcement_config) << "\n";
+              << format_config(
+                     encryption.customer_supplied_encryption_enforcement_config)
+              << "\n";
   }
-  //! [get bucket encryption enforcement config] [END storage_get_bucket_encryption_enforcement_config]
+  //! [get bucket encryption enforcement config] [END
+  //! storage_get_bucket_encryption_enforcement_config]
   (std::move(client), argv.at(0));
 }
 
 void SetBucketEncryptionEnforcementConfig(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [set bucket encryption enforcement config] [START storage_set_bucket_encryption_enforcement_config]
+  //! [set bucket encryption enforcement config] [START
+  //! storage_set_bucket_encryption_enforcement_config]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& project_id,
+     std::string const& bucket_name) {
+    auto create_bucket = [&](std::string const& name,
+                             gcs::BucketEncryption encryption) {
+      StatusOr<gcs::BucketMetadata> bucket = client.CreateBucketForProject(
+          name, project_id, gcs::BucketMetadata().set_encryption(encryption));
+      if (!bucket) throw std::move(bucket).status();
+      return bucket;
+    };
+
+    // Example 1: Enforce GMEK Only
+    gcs::BucketEncryption gmek_encryption;
+    gmek_encryption.google_managed_encryption_enforcement_config
+        .restriction_mode = "NOT_RESTRICTED";
+    gmek_encryption.customer_managed_encryption_enforcement_config
+        .restriction_mode = "FULLY_RESTRICTED";
+    gmek_encryption.customer_supplied_encryption_enforcement_config
+        .restriction_mode = "FULLY_RESTRICTED";
+    std::cout << "Bucket "
+              << create_bucket("g-" + bucket_name, gmek_encryption)->name()
+              << " created with GMEK-only enforcement policy.\n";
+
+    // Example 2: Enforce CMEK Only
+    gcs::BucketEncryption cmek_encryption;
+    cmek_encryption.google_managed_encryption_enforcement_config
+        .restriction_mode = "FULLY_RESTRICTED";
+    cmek_encryption.customer_managed_encryption_enforcement_config
+        .restriction_mode = "NOT_RESTRICTED";
+    cmek_encryption.customer_supplied_encryption_enforcement_config
+        .restriction_mode = "FULLY_RESTRICTED";
+    std::cout << "Bucket "
+              << create_bucket("c-" + bucket_name, cmek_encryption)->name()
+              << " created with CMEK-only enforcement policy.\n";
+
+    // Example 3: Restrict CSEK (Ransomware Protection)
+    gcs::BucketEncryption csek_encryption;
+    csek_encryption.customer_supplied_encryption_enforcement_config
+        .restriction_mode = "FULLY_RESTRICTED";
+    std::cout << "Bucket "
+              << create_bucket("rc-" + bucket_name, csek_encryption)->name()
+              << " created with a policy to restrict CSEK.\n";
+  }
+  //! [set bucket encryption enforcement config] [END
+  //! storage_set_bucket_encryption_enforcement_config]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+void UpdateBucketEncryptionEnforcementConfig(
+    google::cloud::storage::Client client,
+    std::vector<std::string> const& argv) {
+  //! [update bucket encryption enforcement config] [START
+  //! storage_update_bucket_encryption_enforcement_config]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketEncryption encryption;
+    // 1. Update a specific type (e.g., change GMEK to FULLY_RESTRICTED)
     encryption.google_managed_encryption_enforcement_config.restriction_mode =
-        "NOT_RESTRICTED";
+        "FULLY_RESTRICTED";
+    // 2. Remove a specific type (e.g., remove CMEK enforcement)
     encryption.customer_managed_encryption_enforcement_config.restriction_mode =
-        "FULLY_RESTRICTED";
-    encryption.customer_supplied_encryption_enforcement_config.restriction_mode =
-        "FULLY_RESTRICTED";
+        "NOT_RESTRICTED";
+    // For the update, need to specify all three configs, so keeping this same
+    // as before
+    encryption.customer_supplied_encryption_enforcement_config
+        .restriction_mode = "FULLY_RESTRICTED";
 
     StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetEncryption(encryption));
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetEncryption(encryption));
     if (!updated) throw std::move(updated).status();
 
-    std::cout << "Successfully set encryption enforcement config on bucket "
-              << updated->name() << ".\n";
+    std::cout << "Encryption enforcement policy updated for bucket "
+              << updated->name() << "\n"
+              << "GMEK is now fully restricted, and CMEK enforcement has been "
+                 "removed.\n";
   }
-  //! [set bucket encryption enforcement config] [END storage_set_bucket_encryption_enforcement_config]
-  (std::move(client), argv.at(0));
-}
-
-void RemoveAllEncryptionEnforcementConfig(
-    google::cloud::storage::Client client,
-    std::vector<std::string> const& argv) {
-  //! [remove all encryption enforcement config] [START storage_remove_all_encryption_enforcement_config]
-  namespace gcs = ::google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& bucket_name) {
-    // To remove the enforcement policy, the fields must be explicitly cleared.
-    // Here we clear the entire encryption configuration.
-    StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().ResetEncryption());
-    if (!updated) throw std::move(updated).status();
-
-    std::cout << "Successfully removed encryption enforcement config for bucket "
-              << updated->name() << ".\n";
-  }
-  //! [remove all encryption enforcement config] [END storage_remove_all_encryption_enforcement_config]
+  //! [update bucket encryption enforcement config] [END
+  //! storage_update_bucket_encryption_enforcement_config]
   (std::move(client), argv.at(0));
 }
 
@@ -116,38 +168,38 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto const bucket_name = examples::MakeRandomBucketName(generator);
-  auto client = gcs::Client();
-
-  std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
-            << std::endl;
-  (void)client
-      .CreateBucketForProject(bucket_name, project_id, gcs::BucketMetadata{},
-                              examples::CreateBucketOptions())
-      .value();
-  // In GCS a single project cannot create or delete buckets more often than
-  // once every two seconds. We will pause until that time before deleting the
-  // bucket.
-  auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+  // Shorten bucket name to allow for prefixes without exceeding max length
+  auto const bucket_name =
+      examples::MakeRandomBucketName(generator).substr(0, 50);
+  auto client = gcs::Client(examples::CreateBucketOptions());
 
   std::cout << "\nRunning the SetBucketEncryptionEnforcementConfig() example"
             << std::endl;
-  SetBucketEncryptionEnforcementConfig(client, {bucket_name});
+  SetBucketEncryptionEnforcementConfig(client, {project_id, bucket_name});
 
-  std::cout << "\nRunning the GetBucketEncryptionEnforcementConfig() example [1]"
+  std::cout
+      << "\nRunning the GetBucketEncryptionEnforcementConfig() example [1]"
+      << std::endl;
+  GetBucketEncryptionEnforcementConfig(client, {"c-" + bucket_name});
+
+  std::cout << "\nRunning the UpdateBucketEncryptionEnforcementConfig() example"
             << std::endl;
-  GetBucketEncryptionEnforcementConfig(client, {bucket_name});
+  UpdateBucketEncryptionEnforcementConfig(client, {"c-" + bucket_name});
 
-  std::cout << "\nRunning the RemoveAllEncryptionEnforcementConfig() example"
-            << std::endl;
-  RemoveAllEncryptionEnforcementConfig(client, {bucket_name});
+  std::cout
+      << "\nRunning the GetBucketEncryptionEnforcementConfig() example [2]"
+      << std::endl;
+  GetBucketEncryptionEnforcementConfig(client, {"c-" + bucket_name});
 
-  std::cout << "\nRunning the GetBucketEncryptionEnforcementConfig() example [2]"
-            << std::endl;
-  GetBucketEncryptionEnforcementConfig(client, {bucket_name});
-
+  // In GCS a single project cannot create or delete buckets more often than
+  // once every two seconds. We will pause until that time before deleting the
+  // buckets.
+  auto pause = std::chrono::steady_clock::now() + std::chrono::seconds(2);
   if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
-  (void)examples::RemoveBucketAndContents(client, bucket_name);
+
+  (void)examples::RemoveBucketAndContents(client, "g-" + bucket_name);
+  (void)examples::RemoveBucketAndContents(client, "c-" + bucket_name);
+  (void)examples::RemoveBucketAndContents(client, "rc-" + bucket_name);
 }
 
 }  // namespace
@@ -163,10 +215,10 @@ int main(int argc, char* argv[]) {
       make_entry("get-bucket-encryption-enforcement-config", {"<bucket-name>"},
                  GetBucketEncryptionEnforcementConfig),
       make_entry("set-bucket-encryption-enforcement-config",
-                 {"<bucket-name>"},
+                 {"<project-id>", "<bucket-name>"},
                  SetBucketEncryptionEnforcementConfig),
-      make_entry("remove-all-encryption-enforcement-config", {"<bucket-name>"},
-                 RemoveAllEncryptionEnforcementConfig),
+      make_entry("update-bucket-encryption-enforcement-config",
+                 {"<bucket-name>"}, UpdateBucketEncryptionEnforcementConfig),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
