@@ -96,7 +96,7 @@ void SetBucketEncryptionEnforcementConfig(
     gmek_encryption.customer_supplied_encryption_enforcement_config
         .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
-              << create_bucket("g-" + bucket_name, gmek_encryption)->name()
+              << create_bucket("gmek-" + bucket_name, gmek_encryption)->name()
               << " created with GMEK-only enforcement policy.\n";
 
     // In GCS, a single project cannot create or delete buckets more often than
@@ -112,7 +112,7 @@ void SetBucketEncryptionEnforcementConfig(
     cmek_encryption.customer_supplied_encryption_enforcement_config
         .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
-              << create_bucket("c-" + bucket_name, cmek_encryption)->name()
+              << create_bucket("cmek-" + bucket_name, cmek_encryption)->name()
               << " created with CMEK-only enforcement policy.\n";
 
     // In GCS, a single project cannot create or delete buckets more often than
@@ -124,7 +124,7 @@ void SetBucketEncryptionEnforcementConfig(
     csek_encryption.customer_supplied_encryption_enforcement_config
         .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
-              << create_bucket("rc-" + bucket_name, csek_encryption)->name()
+              << create_bucket("csek-" + bucket_name, csek_encryption)->name()
               << " created with a policy to restrict CSEK.\n";
   }
   //! [set bucket encryption enforcement config] [END
