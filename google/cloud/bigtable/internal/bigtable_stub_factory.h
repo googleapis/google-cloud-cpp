@@ -58,10 +58,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using BaseBigtableStubFactory = std::function<std::shared_ptr<BigtableStub>(
     std::shared_ptr<grpc::Channel>)>;
 
+/// Creates a static pool of stubs that use a round-robin strategy to select.
 std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
     Options const& options, std::function<std::shared_ptr<BigtableStub>(int)>
                                 refreshing_channel_stub_factory);
 
+/// Creates a dynamic pool of stubs that selects the least used from a random
+/// pair of stubs.
 std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<internal::CompletionQueueImpl> cq_impl,
