@@ -412,8 +412,6 @@ void ToJsonEncryption(nlohmann::json& json, BucketMetadata const& meta) {
     if (config_source.restriction_mode.empty()) return;
     nlohmann::json config;
     config["restrictionMode"] = config_source.restriction_mode;
-    config["effectiveTime"] =
-        google::cloud::internal::FormatRfc3339(config_source.effective_time);
     e[name] = std::move(config);
   };
   to_json_config(

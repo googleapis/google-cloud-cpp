@@ -163,17 +163,6 @@ Status PatchLogging(Bucket& b, nlohmann::json const& l) {
   return Status{};
 }
 
-google::protobuf::Timestamp ToProtoTimestamp(
-    std::chrono::system_clock::time_point tp) {
-  auto duration = tp.time_since_epoch();
-  auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration);
-  auto nanos =
-      std::chrono::duration_cast<std::chrono::nanoseconds>(duration - seconds);
-  google::protobuf::Timestamp ts;
-  ts.set_seconds(seconds.count());
-  ts.set_nanos(static_cast<std::int32_t>(nanos.count()));
-  return ts;
-}
 
 Status PatchEncryption(Bucket& b, nlohmann::json const& e) {
   if (e.is_null()) {
@@ -189,13 +178,6 @@ Status PatchEncryption(Bucket& b, nlohmann::json const& e) {
       auto const& c = e[json_key];
       if (c.contains("restrictionMode")) {
         mutable_config->set_restriction_mode(c.value("restrictionMode", ""));
-      }
-      if (c.contains("effectiveTime")) {
-        auto ts =
-            google::cloud::internal::ParseRfc3339(c.value("effectiveTime", ""));
-        if (ts) {
-          *mutable_config->mutable_effective_time() = ToProtoTimestamp(*ts);
-        }
       }
     }
   };
@@ -336,7 +318,6 @@ void UpdateEncryption(Bucket& bucket, storage::BucketMetadata const& metadata) {
   auto update_config = [&](auto const& source, auto* dest) {
     if (source.restriction_mode.empty()) return;
     dest->set_restriction_mode(source.restriction_mode);
-    *dest->mutable_effective_time() = ToProtoTimestamp(source.effective_time);
   };
 
   update_config(

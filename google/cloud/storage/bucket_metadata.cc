@@ -368,10 +368,7 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
     if (config.restriction_mode.empty()) return;
     builder.AddSubPatch(
         name, internal::PatchBuilder()
-                  .SetStringField("restrictionMode", config.restriction_mode)
-                  .SetStringField("effectiveTime",
-                                  google::cloud::internal::FormatRfc3339(
-                                      config.effective_time)));
+                  .SetStringField("restrictionMode", config.restriction_mode));
   };
   add_config_patch("googleManagedEncryptionEnforcementConfig",
                    v.google_managed_encryption_enforcement_config);
