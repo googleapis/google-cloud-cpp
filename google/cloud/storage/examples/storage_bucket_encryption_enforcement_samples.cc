@@ -90,11 +90,11 @@ void SetBucketEncryptionEnforcementConfig(
     // Example 1: Enforce GMEK Only
     gcs::BucketEncryption gmek_encryption;
     gmek_encryption.google_managed_encryption_enforcement_config
-        .restriction_mode = "NOT_RESTRICTED";
+        .restriction_mode = "NotRestricted";
     gmek_encryption.customer_managed_encryption_enforcement_config
-        .restriction_mode = "FULLY_RESTRICTED";
+        .restriction_mode = "FullyRestricted";
     gmek_encryption.customer_supplied_encryption_enforcement_config
-        .restriction_mode = "FULLY_RESTRICTED";
+        .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
               << create_bucket("g-" + bucket_name, gmek_encryption)->name()
               << " created with GMEK-only enforcement policy.\n";
@@ -102,11 +102,11 @@ void SetBucketEncryptionEnforcementConfig(
     // Example 2: Enforce CMEK Only
     gcs::BucketEncryption cmek_encryption;
     cmek_encryption.google_managed_encryption_enforcement_config
-        .restriction_mode = "FULLY_RESTRICTED";
+        .restriction_mode = "FullyRestricted";
     cmek_encryption.customer_managed_encryption_enforcement_config
-        .restriction_mode = "NOT_RESTRICTED";
+        .restriction_mode = "NotRestricted";
     cmek_encryption.customer_supplied_encryption_enforcement_config
-        .restriction_mode = "FULLY_RESTRICTED";
+        .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
               << create_bucket("c-" + bucket_name, cmek_encryption)->name()
               << " created with CMEK-only enforcement policy.\n";
@@ -114,7 +114,7 @@ void SetBucketEncryptionEnforcementConfig(
     // Example 3: Restrict CSEK (Ransomware Protection)
     gcs::BucketEncryption csek_encryption;
     csek_encryption.customer_supplied_encryption_enforcement_config
-        .restriction_mode = "FULLY_RESTRICTED";
+        .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
               << create_bucket("rc-" + bucket_name, csek_encryption)->name()
               << " created with a policy to restrict CSEK.\n";
@@ -133,16 +133,16 @@ void UpdateBucketEncryptionEnforcementConfig(
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     gcs::BucketEncryption encryption;
-    // 1. Update a specific type (e.g., change GMEK to FULLY_RESTRICTED)
+    // 1. Update a specific type (e.g., change GMEK to FullyRestricted)
     encryption.google_managed_encryption_enforcement_config.restriction_mode =
-        "FULLY_RESTRICTED";
+        "FullyRestricted";
     // 2. Remove a specific type (e.g., remove CMEK enforcement)
     encryption.customer_managed_encryption_enforcement_config.restriction_mode =
-        "NOT_RESTRICTED";
+        "NotRestricted";
     // For the update, need to specify all three configs, so keeping this same
     // as before
     encryption.customer_supplied_encryption_enforcement_config
-        .restriction_mode = "FULLY_RESTRICTED";
+        .restriction_mode = "FullyRestricted";
 
     StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name,
