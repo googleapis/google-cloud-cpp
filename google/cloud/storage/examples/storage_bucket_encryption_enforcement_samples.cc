@@ -96,7 +96,7 @@ void SetBucketEncryptionEnforcementConfig(
     gmek_encryption.customer_supplied_encryption_enforcement_config
         .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
-              << create_bucket("gmek-" + bucket_name, gmek_encryption)->name()
+              << create_bucket("g-" + bucket_name, gmek_encryption)->name()
               << " created with GMEK-only enforcement policy.\n";
 
     // In GCS, a single project cannot create or delete buckets more often than
@@ -112,7 +112,7 @@ void SetBucketEncryptionEnforcementConfig(
     cmek_encryption.customer_supplied_encryption_enforcement_config
         .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
-              << create_bucket("cmek-" + bucket_name, cmek_encryption)->name()
+              << create_bucket("c-" + bucket_name, cmek_encryption)->name()
               << " created with CMEK-only enforcement policy.\n";
 
     // In GCS, a single project cannot create or delete buckets more often than
@@ -124,7 +124,7 @@ void SetBucketEncryptionEnforcementConfig(
     csek_encryption.customer_supplied_encryption_enforcement_config
         .restriction_mode = "FullyRestricted";
     std::cout << "Bucket "
-              << create_bucket("csek-" + bucket_name, csek_encryption)->name()
+              << create_bucket("rc-" + bucket_name, csek_encryption)->name()
               << " created with a policy to restrict CSEK.\n";
   }
   //! [set bucket encryption enforcement config] [END
@@ -181,6 +181,17 @@ void RunAll(std::vector<std::string> const& argv) {
       examples::MakeRandomBucketName(generator).substr(0, 50);
   auto client = gcs::Client(examples::CreateBucketOptions());
 
+  auto constexpr kBucketPeriod = std::chrono::seconds(2);
+
+  // Clean up any potentially leaked buckets from a previous run before creating
+  // them.
+  (void)examples::RemoveBucketAndContents(client, "g-" + bucket_name);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
+  (void)examples::RemoveBucketAndContents(client, "c-" + bucket_name);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
+  (void)examples::RemoveBucketAndContents(client, "rc-" + bucket_name);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
+
   std::cout << "\nRunning the SetBucketEncryptionEnforcementConfig() example"
             << std::endl;
   SetBucketEncryptionEnforcementConfig(client, {project_id, bucket_name});
@@ -202,7 +213,6 @@ void RunAll(std::vector<std::string> const& argv) {
   // In GCS a single project cannot create or delete buckets more often than
   // once every two seconds. We will pause until that time before deleting the
   // buckets.
-  auto constexpr kBucketPeriod = std::chrono::seconds(2);
   auto pause = std::chrono::steady_clock::now() + kBucketPeriod;
   if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
 
