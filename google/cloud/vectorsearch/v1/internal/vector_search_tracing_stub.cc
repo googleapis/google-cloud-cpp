@@ -241,6 +241,33 @@ VectorSearchServiceTracingStub::ImportDataObjects(
       context, *span, child_->ImportDataObjects(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+VectorSearchServiceTracingStub::AsyncExportDataObjects(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vectorsearch.v1.VectorSearchService", "ExportDataObjects");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncExportDataObjects(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceTracingStub::ExportDataObjects(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vectorsearch.v1.VectorSearchService", "ExportDataObjects");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ExportDataObjects(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 VectorSearchServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

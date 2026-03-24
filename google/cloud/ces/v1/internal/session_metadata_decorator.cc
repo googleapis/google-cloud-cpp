@@ -58,6 +58,17 @@ SessionServiceMetadata::RunSession(
   return child_->RunSession(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::ces::v1::RunSessionResponse>>
+SessionServiceMetadata::StreamRunSession(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::ces::v1::RunSessionRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("config.session=",
+                           internal::UrlEncode(request.config().session())));
+  return child_->StreamRunSession(std::move(context), options, request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::ces::v1::BidiSessionClientMessage,
     google::cloud::ces::v1::BidiSessionServerMessage>>

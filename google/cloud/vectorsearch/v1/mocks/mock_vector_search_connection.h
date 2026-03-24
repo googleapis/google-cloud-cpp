@@ -305,6 +305,49 @@ class MockVectorSearchServiceConnection
       ImportDataObjects, (google::longrunning::Operation const& operation),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportDataObjects(Matcher<google::cloud::vectorsearch::v1::ExportDataObjectsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>,
+      ExportDataObjects,
+      (google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportDataObjects(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportDataObjects,
+              (NoAwaitTag,
+               google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportDataObjects(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>,
+      ExportDataObjects, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

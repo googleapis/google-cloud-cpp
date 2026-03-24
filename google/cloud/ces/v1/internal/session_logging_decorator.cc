@@ -20,6 +20,7 @@
 #include "google/cloud/ces/v1/session_service.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 #include <set>
@@ -51,6 +52,31 @@ SessionServiceLogging::RunSession(
         return child_->RunSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::ces::v1::RunSessionResponse>>
+SessionServiceLogging::StreamRunSession(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::ces::v1::RunSessionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::ces::v1::RunSessionRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::cloud::ces::v1::RunSessionResponse>> {
+        auto stream =
+            child_->StreamRunSession(std::move(context), options, request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::cloud::ces::v1::RunSessionResponse>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

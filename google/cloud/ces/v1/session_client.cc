@@ -39,6 +39,13 @@ SessionServiceClient::RunSession(
   return connection_->RunSession(request);
 }
 
+StreamRange<google::cloud::ces::v1::RunSessionResponse>
+SessionServiceClient::StreamRunSession(
+    google::cloud::ces::v1::RunSessionRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StreamRunSession(request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::ces::v1::BidiSessionClientMessage,
     google::cloud::ces::v1::BidiSessionServerMessage>>

@@ -242,6 +242,35 @@ VectorSearchServiceAuth::ImportDataObjects(
   return child_->ImportDataObjects(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+VectorSearchServiceAuth::AsyncExportDataObjects(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncExportDataObjects(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceAuth::ExportDataObjects(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportDataObjects(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 VectorSearchServiceAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -281,6 +281,38 @@ VectorSearchServiceLogging::ImportDataObjects(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+VectorSearchServiceLogging::AsyncExportDataObjects(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&
+                 request) {
+        return child_->AsyncExportDataObjects(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceLogging::ExportDataObjects(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&
+                 request) {
+        return child_->ExportDataObjects(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 VectorSearchServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

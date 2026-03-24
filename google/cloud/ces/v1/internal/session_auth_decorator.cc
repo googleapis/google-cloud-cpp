@@ -44,6 +44,18 @@ SessionServiceAuth::RunSession(
   return child_->RunSession(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::ces::v1::RunSessionResponse>>
+SessionServiceAuth::StreamRunSession(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::ces::v1::RunSessionRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::cloud::ces::v1::RunSessionResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->StreamRunSession(std::move(context), options, request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::ces::v1::BidiSessionClientMessage,
     google::cloud::ces::v1::BidiSessionServerMessage>>

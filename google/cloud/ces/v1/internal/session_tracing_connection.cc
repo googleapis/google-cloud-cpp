@@ -40,6 +40,17 @@ SessionServiceTracingConnection::RunSession(
   return internal::EndSpan(*span, child_->RunSession(request));
 }
 
+StreamRange<google::cloud::ces::v1::RunSessionResponse>
+SessionServiceTracingConnection::StreamRunSession(
+    google::cloud::ces::v1::RunSessionRequest const& request) {
+  auto span =
+      internal::MakeSpan("ces_v1::SessionServiceConnection::StreamRunSession");
+  internal::OTelScope scope(span);
+  auto sr = child_->StreamRunSession(request);
+  return internal::MakeTracedStreamRange<
+      google::cloud::ces::v1::RunSessionResponse>(std::move(span),
+                                                  std::move(sr));
+}
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::ces::v1::BidiSessionClientMessage,
     google::cloud::ces::v1::BidiSessionServerMessage>>

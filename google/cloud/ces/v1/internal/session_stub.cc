@@ -46,6 +46,17 @@ DefaultSessionServiceStub::RunSession(
   return response;
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::ces::v1::RunSessionResponse>>
+DefaultSessionServiceStub::StreamRunSession(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::ces::v1::RunSessionRequest const& request) {
+  auto stream = grpc_stub_->StreamRunSession(context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::cloud::ces::v1::RunSessionResponse>>(std::move(context),
+                                                   std::move(stream));
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::ces::v1::BidiSessionClientMessage,
     google::cloud::ces::v1::BidiSessionServerMessage>>

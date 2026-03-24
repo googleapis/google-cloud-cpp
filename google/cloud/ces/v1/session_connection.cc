@@ -44,6 +44,17 @@ SessionServiceConnection::RunSession(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::ces::v1::RunSessionResponse>
+SessionServiceConnection::StreamRunSession(
+    google::cloud::ces::v1::RunSessionRequest const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::cloud::ces::v1::RunSessionResponse>(
+      []()
+          -> absl::variant<Status, google::cloud::ces::v1::RunSessionResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::ces::v1::BidiSessionClientMessage,
     google::cloud::ces::v1::BidiSessionServerMessage>>

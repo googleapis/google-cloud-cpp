@@ -22,7 +22,9 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
 #include <utility>
 
@@ -49,6 +51,10 @@ idempotency_policy(Options const& options) {
 
 }  // namespace
 
+void SessionServiceStreamRunSessionStreamingUpdater(
+    google::cloud::ces::v1::RunSessionResponse const&,
+    google::cloud::ces::v1::RunSessionRequest&) {}
+
 SessionServiceConnectionImpl::SessionServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<ces_v1_internal::SessionServiceStub> stub, Options options)
@@ -69,6 +75,30 @@ SessionServiceConnectionImpl::RunSession(
         return stub_->RunSession(context, options, request);
       },
       *current, request, __func__);
+}
+
+StreamRange<google::cloud::ces::v1::RunSessionResponse>
+SessionServiceConnectionImpl::StreamRunSession(
+    google::cloud::ces::v1::RunSessionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory = [stub = stub_, current](
+                     google::cloud::ces::v1::RunSessionRequest const& request) {
+    return stub->StreamRunSession(std::make_shared<grpc::ClientContext>(),
+                                  *current, request);
+  };
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::cloud::ces::v1::RunSessionResponse,
+      google::cloud::ces::v1::RunSessionRequest>(
+      retry_policy(*current), backoff_policy(*current), factory,
+      SessionServiceStreamRunSessionStreamingUpdater, request);
+  return internal::MakeStreamRange<google::cloud::ces::v1::RunSessionResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<Status, google::cloud::ces::v1::RunSessionResponse> {
+        google::cloud::ces::v1::RunSessionResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

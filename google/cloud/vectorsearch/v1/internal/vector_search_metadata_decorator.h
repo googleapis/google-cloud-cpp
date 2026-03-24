@@ -134,6 +134,18 @@ class VectorSearchServiceMetadata : public VectorSearchServiceStub {
       google::cloud::vectorsearch::v1::ImportDataObjectsRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncExportDataObjects(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportDataObjects(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

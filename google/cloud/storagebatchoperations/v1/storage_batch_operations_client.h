@@ -484,7 +484,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L136}
+  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L139}
   /// [google.cloud.storagebatchoperations.v1.ListBucketOperationsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L241}
   ///
   // clang-format on
@@ -523,7 +523,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L136}
+  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L139}
   /// [google.cloud.storagebatchoperations.v1.ListBucketOperationsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L241}
   ///
   // clang-format on
@@ -553,7 +553,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L136}
+  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L139}
   /// [google.cloud.storagebatchoperations.v1.GetBucketOperationRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L276}
   ///
   // clang-format on
@@ -583,7 +583,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L136}
+  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L139}
   /// [google.cloud.storagebatchoperations.v1.GetBucketOperationRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L276}
   ///
   // clang-format on
