@@ -163,7 +163,6 @@ Status PatchLogging(Bucket& b, nlohmann::json const& l) {
   return Status{};
 }
 
-
 Status PatchEncryption(Bucket& b, nlohmann::json const& e) {
   if (e.is_null()) {
     b.clear_encryption();

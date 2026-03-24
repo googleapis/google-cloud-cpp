@@ -366,9 +366,8 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
 
   auto add_config_patch = [&](char const* name, auto const& config) {
     if (config.restriction_mode.empty()) return;
-    builder.AddSubPatch(
-        name, internal::PatchBuilder()
-                  .SetStringField("restrictionMode", config.restriction_mode));
+    builder.AddSubPatch(name, internal::PatchBuilder().SetStringField(
+                                  "restrictionMode", config.restriction_mode));
   };
   add_config_patch("googleManagedEncryptionEnforcementConfig",
                    v.google_managed_encryption_enforcement_config);
