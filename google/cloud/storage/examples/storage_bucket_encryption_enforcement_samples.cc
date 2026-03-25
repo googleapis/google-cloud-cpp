@@ -192,6 +192,15 @@ void RunAll(std::vector<std::string> const& argv) {
 
   auto constexpr kBucketPeriod = std::chrono::seconds(2);
 
+  // Clean up any potentially leaked buckets from a previous run before creating
+  // them.
+  (void)examples::RemoveBucketAndContents(client, "g-" + bucket_name);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
+  (void)examples::RemoveBucketAndContents(client, "c-" + bucket_name);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
+  (void)examples::RemoveBucketAndContents(client, "rc-" + bucket_name);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
+
   std::cout << "\nRunning the SetBucketEncryptionEnforcementConfig() example"
             << std::endl;
   SetBucketEncryptionEnforcementConfig(client, {project_id, bucket_name});
