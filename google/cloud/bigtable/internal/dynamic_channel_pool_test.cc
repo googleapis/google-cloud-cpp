@@ -103,6 +103,7 @@ class DynamicChannelPoolTestWrapper {
 
 namespace {
 
+using ::google::cloud::bigtable::experimental::DynamicChannelPoolSizingPolicy;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;

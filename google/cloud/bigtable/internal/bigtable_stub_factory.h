@@ -26,30 +26,6 @@
 #include <functional>
 #include <memory>
 
-namespace google::cloud::bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-// TODO(#16035): Move this Option to bigtable/options.h in the experimental
-// namespace when the feature is ready.
-namespace experimental {
-/**
- *  If set, a dynamic channel pool is created for each instance that requests
- *  are destined. Instances specified as part of this Option have dynamic
- *  channel pools created and primed as part of DataConnection construction. If
- *  no Instances are specified, then dynamic channel pool creation is deferred
- *  until the first request sent, increasing time to first byte latency.
- *
- * @note This option must be supplied to `MakeDataConnection()` in order to take
- * effect.
- */
-struct InstanceChannelAffinityOption {
-  using Type = std::vector<bigtable::InstanceResource>;
-};
-}  // namespace experimental
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace google::cloud::bigtable
-
 namespace google {
 namespace cloud {
 namespace bigtable_internal {

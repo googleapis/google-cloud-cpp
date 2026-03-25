@@ -38,7 +38,7 @@ class BigtableRandomTwoLeastUsedTest : public ::testing::Test {
     auto instance_name =
         bigtable::InstanceResource(Project("my-project"), "my-instance")
             .FullName();
-    DynamicChannelPoolSizingPolicy sizing_policy;
+    bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy;
     auto refresh_state = std::make_shared<ConnectionRefreshState>(
         fake_cq_impl_, std::chrono::milliseconds(1),
         std::chrono::milliseconds(10));

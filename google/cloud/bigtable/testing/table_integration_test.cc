@@ -122,7 +122,13 @@ void TableAdminTestEnvironment::TearDown() {
 }
 
 void TableIntegrationTest::SetUp() {
-  data_connection_ = MakeDataConnection();
+  Options options;
+  if (google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
+          .value_or("") == "dynamic") {
+    options.set<experimental::InstanceChannelAffinityOption>({});
+  }
+  data_connection_ = MakeDataConnection(options);
 
   // In production, we cannot use `DropAllRows()` to cleanup the table because
   // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.

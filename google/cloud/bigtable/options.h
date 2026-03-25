@@ -39,6 +39,7 @@
  */
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -47,6 +48,7 @@
 #include "google/cloud/options.h"
 #include <chrono>
 #include <string>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -171,6 +173,68 @@ struct ExecuteQueryPlanRefreshRetryPolicyOption {
  */
 struct QueryPlanRefreshFunctionRetryPolicyOption {
   using Type = std::shared_ptr<DataRetryPolicy>;
+};
+
+/**
+ *  If set, a dynamic channel pool is created for each instance that requests
+ *  are destined. Instances specified as part of this Option have dynamic
+ *  channel pools created and primed as part of DataConnection construction. If
+ *  no Instances are specified, then dynamic channel pool creation is deferred
+ *  until the first request sent, increasing time to first byte latency.
+ *
+ * @note This option must be supplied to `MakeDataConnection()` in order to take
+ * effect.
+ */
+struct InstanceChannelAffinityOption {
+  using Type = std::vector<bigtable::InstanceResource>;
+};
+
+/**
+ *  If the `InstanceChannelAffinityOption` is set, then all connections will be
+ *  managed by a Dynamic Channel Pool. The `DynamicChannelPoolSizingPolicy` can
+ *  be provided via the `DynamicChannelPoolSizingPolicyOption` and configures
+ *  the behavior of the `DynamicChannelPool`.
+ */
+struct DynamicChannelPoolSizingPolicy {
+  // Removing unused channels is not as performance critical as adding channels
+  // to handle a surge in RPC calls. Thus, there are separate cooldown settings
+  // for each.
+  std::chrono::milliseconds pool_size_decrease_cooldown_interval =
+      std::chrono::seconds(120);
+
+  struct DiscreteChannels {
+    explicit DiscreteChannels(int number = 0) : number(number) {}
+    int number;
+  };
+  struct PercentageOfPoolSize {
+    explicit PercentageOfPoolSize(double percentage = 0.0)
+        : percentage(percentage) {}
+    double percentage;
+  };
+  std::variant<DiscreteChannels, PercentageOfPoolSize>
+      channels_to_add_per_resize = DiscreteChannels{1};
+
+  // If the average number of outstanding RPCs is below this threshold,
+  // the pool size will be decreased.
+  int minimum_average_outstanding_rpcs_per_channel = 1;
+  // If the average number of outstanding RPCs is above this threshold,
+  // the pool size will be increased.
+  int maximum_average_outstanding_rpcs_per_channel = 25;
+
+  // When channels are removed from the pool, we have to wait until all
+  // outstanding RPCs on that channel are completed before destroying it.
+  std::chrono::milliseconds remove_channel_polling_interval =
+      std::chrono::seconds(30);
+
+  // Limits how large the pool can grow. Default is twice the minimum_pool_size.
+  std::size_t maximum_channel_pool_size = 0;
+
+  // This is set to the value of GrpcNumChannelsOption.
+  std::size_t minimum_channel_pool_size = 0;
+};
+
+struct DynamicChannelPoolSizingPolicyOption {
+  using Type = DynamicChannelPoolSizingPolicy;
 };
 
 }  // namespace experimental
