@@ -788,7 +788,7 @@ class PredictionServiceClient {
   /// @param model  Required. The name of the publisher model requested to serve the
   ///  prediction. Format:
   ///  `projects/{project}/locations/{location}/publishers/*/models/*`
-  /// @param content  Required. Input content to be embedded. Required.
+  /// @param content  Required. Input content to be embedded.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -803,7 +803,7 @@ class PredictionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.EmbedContentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L894}
-  /// [google.cloud.aiplatform.v1.EmbedContentResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L954}
+  /// [google.cloud.aiplatform.v1.EmbedContentResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L996}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse> EmbedContent(
@@ -834,7 +834,7 @@ class PredictionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.EmbedContentRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L894}
-  /// [google.cloud.aiplatform.v1.EmbedContentResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L954}
+  /// [google.cloud.aiplatform.v1.EmbedContentResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L996}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse> EmbedContent(

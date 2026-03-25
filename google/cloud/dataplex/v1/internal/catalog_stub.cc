@@ -545,11 +545,47 @@ DefaultCatalogServiceStub::CreateEntryLink(
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
+DefaultCatalogServiceStub::UpdateEntryLink(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request) {
+  google::cloud::dataplex::v1::EntryLink response;
+  auto status = grpc_stub_->UpdateEntryLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
 DefaultCatalogServiceStub::DeleteEntryLink(
     grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
   google::cloud::dataplex::v1::EntryLink response;
   auto status = grpc_stub_->DeleteEntryLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupEntryLinksResponse>
+DefaultCatalogServiceStub::LookupEntryLinks(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::LookupEntryLinksRequest const& request) {
+  google::cloud::dataplex::v1::LookupEntryLinksResponse response;
+  auto status = grpc_stub_->LookupEntryLinks(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+DefaultCatalogServiceStub::LookupContext(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::LookupContextRequest const& request) {
+  google::cloud::dataplex::v1::LookupContextResponse response;
+  auto status = grpc_stub_->LookupContext(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -562,6 +598,123 @@ DefaultCatalogServiceStub::GetEntryLink(
     google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
   google::cloud::dataplex::v1::EntryLink response;
   auto status = grpc_stub_->GetEntryLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCatalogServiceStub::AsyncCreateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateMetadataFeed(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::CreateMetadataFeed(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMetadataFeed(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+DefaultCatalogServiceStub::GetMetadataFeed(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const& request) {
+  google::cloud::dataplex::v1::MetadataFeed response;
+  auto status = grpc_stub_->GetMetadataFeed(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataFeedsResponse>
+DefaultCatalogServiceStub::ListMetadataFeeds(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListMetadataFeedsRequest const& request) {
+  google::cloud::dataplex::v1::ListMetadataFeedsResponse response;
+  auto status = grpc_stub_->ListMetadataFeeds(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCatalogServiceStub::AsyncDeleteMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteMetadataFeed(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::DeleteMetadataFeed(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteMetadataFeed(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCatalogServiceStub::AsyncUpdateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateMetadataFeed(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::UpdateMetadataFeed(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateMetadataFeed(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

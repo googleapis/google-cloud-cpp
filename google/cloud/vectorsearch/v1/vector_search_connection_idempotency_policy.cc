@@ -85,6 +85,11 @@ Idempotency VectorSearchServiceConnectionIdempotencyPolicy::ImportDataObjects(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency VectorSearchServiceConnectionIdempotencyPolicy::ExportDataObjects(
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency VectorSearchServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

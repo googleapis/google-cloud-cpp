@@ -136,6 +136,8 @@
 @googleapis//google/cloud/aiplatform/v1:schedule.proto
 @googleapis//google/cloud/aiplatform/v1:schedule_service.proto
 @googleapis//google/cloud/aiplatform/v1:service_networking.proto
+@googleapis//google/cloud/aiplatform/v1:session.proto
+@googleapis//google/cloud/aiplatform/v1:session_service.proto
 @googleapis//google/cloud/aiplatform/v1:specialist_pool.proto
 @googleapis//google/cloud/aiplatform/v1:specialist_pool_service.proto
 @googleapis//google/cloud/aiplatform/v1:study.proto

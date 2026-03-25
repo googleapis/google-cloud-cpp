@@ -7,7 +7,9 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.3.0 - TBD
+## v3.4.0 - TBD
+
+## v3.3.0 - 2026-03
 
 ### New Libraries
 
@@ -19,6 +21,14 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Vector Search API](google/cloud/vectorsearch/README.md)
 - [Vision AI API](/google/cloud/visionai/README.md)
 - [Workload Manager](/google/cloud/workloadmanager/README.md)
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Get/Insert/Update/Patch Object contexts ([#15933](https://github.com/googleapis/google-cloud-cpp/pull/15933))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-02-23T01:04:53-08:00](https://github.com/googleapis/googleapis/tree/edfe7983b9d99d6244b4d7636d25fa6e752a2041)
 
 ## v3.2.0 - 2026-02
 

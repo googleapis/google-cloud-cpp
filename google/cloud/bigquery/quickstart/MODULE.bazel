@@ -17,4 +17,4 @@ module(
     version = "0.0.0",
 )
 
-bazel_dep(name = "google_cloud_cpp", version = "3.1.0")
+bazel_dep(name = "google_cloud_cpp", version = "3.2.0")

@@ -23,6 +23,7 @@
 #include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
+#include "google/iam/v1/iam_policy.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
@@ -39,35 +40,20 @@ class ContentServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ContentServiceConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency CreateContent(
-      google::cloud::dataplex::v1::CreateContentRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateContent(
-      google::cloud::dataplex::v1::UpdateContentRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteContent(
-      google::cloud::dataplex::v1::DeleteContentRequest const& request);
-
-  virtual google::cloud::Idempotency GetContent(
-      google::cloud::dataplex::v1::GetContentRequest const& request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual google::cloud::Idempotency ListContent(
-      google::cloud::dataplex::v1::ListContentRequest request);
-
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
   virtual google::cloud::Idempotency GetLocation(
       google::cloud::location::GetLocationRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual google::cloud::Idempotency ListOperations(
       google::longrunning::ListOperationsRequest request);

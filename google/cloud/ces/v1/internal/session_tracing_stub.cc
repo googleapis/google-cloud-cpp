@@ -19,6 +19,7 @@
 #include "google/cloud/ces/v1/internal/session_tracing_stub.h"
 #include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/streaming_read_rpc_tracing.h"
 #include <memory>
 #include <utility>
 
@@ -44,6 +45,21 @@ SessionServiceTracingStub::RunSession(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RunSession(context, options, request));
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::ces::v1::RunSessionResponse>>
+SessionServiceTracingStub::StreamRunSession(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::ces::v1::RunSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.ces.v1.SessionService",
+                                     "StreamRunSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->StreamRunSession(context, options, request);
+  return std::make_unique<internal::StreamingReadRpcTracing<
+      google::cloud::ces::v1::RunSessionResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<

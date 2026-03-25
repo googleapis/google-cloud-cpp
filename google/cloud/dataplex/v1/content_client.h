@@ -89,446 +89,6 @@ class ContentServiceClient {
 
   // clang-format off
   ///
-  /// Create a content.
-  ///
-  /// @param parent  Required. The resource name of the parent lake:
-  ///  projects/{project_id}/locations/{location_id}/lakes/{lake_id}
-  /// @param content  Required. Content resource.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.dataplex.v1.Content])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.CreateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L158}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      std::string const& parent,
-      google::cloud::dataplex::v1::Content const& content, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Create a content.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.CreateContentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.dataplex.v1.Content])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.CreateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L158}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      google::cloud::dataplex::v1::CreateContentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// Update a content. Only supports full resource update.
-  ///
-  /// @param content  Required. Update description.
-  ///  Only fields specified in `update_mask` are updated.
-  /// @param update_mask  Required. Mask of fields to update.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.dataplex.v1.Content])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.UpdateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L175}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      google::cloud::dataplex::v1::Content const& content,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Update a content. Only supports full resource update.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.UpdateContentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.dataplex.v1.Content])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.UpdateContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L175}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      google::cloud::dataplex::v1::UpdateContentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// Delete a content.
-  ///
-  /// @param name  Required. The resource name of the content:
-  ///  projects/{project_id}/locations/{location_id}/lakes/{lake_id}/content/{content_id}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed, the
-  ///     status contains the details of the failure.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L190}
-  ///
-  // clang-format on
-  Status DeleteContent(std::string const& name, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Delete a content.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.DeleteContentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return a [`Status`] object. If the request failed, the
-  ///     status contains the details of the failure.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L190}
-  ///
-  // clang-format on
-  Status DeleteContent(
-      google::cloud::dataplex::v1::DeleteContentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// Get a content resource.
-  ///
-  /// @param name  Required. The resource name of the content:
-  ///  projects/{project_id}/locations/{location_id}/lakes/{lake_id}/content/{content_id}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.dataplex.v1.Content])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.GetContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L244}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      std::string const& name, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Get a content resource.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.GetContentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.dataplex.v1.Content])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.GetContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L244}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      google::cloud::dataplex::v1::GetContentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// Gets the access control policy for a contentitem resource. A `NOT_FOUND`
-  /// error is returned if the resource does not exist. An empty policy is
-  /// returned if the resource exists but does not have a policy set on it.
-  ///
-  /// Caller must have Google IAM `dataplex.content.getIamPolicy` permission
-  /// on the resource.
-  ///
-  /// @param resource  REQUIRED: The resource for which the policy is being requested.
-  ///  See the operation documentation for the appropriate value for this field.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.iam.v1.Policy])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
-  ///
-  // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options opts = {});
-
-  // clang-format off
-  ///
-  /// Gets the access control policy for a contentitem resource. A `NOT_FOUND`
-  /// error is returned if the resource does not exist. An empty policy is
-  /// returned if the resource exists but does not have a policy set on it.
-  ///
-  /// Caller must have Google IAM `dataplex.content.getIamPolicy` permission
-  /// on the resource.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.iam.v1.GetIamPolicyRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.iam.v1.Policy])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
-  ///
-  // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Sets the access control policy on the specified contentitem resource.
-  /// Replaces any existing policy.
-  ///
-  /// Caller must have Google IAM `dataplex.content.setIamPolicy` permission
-  /// on the resource.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.iam.v1.SetIamPolicyRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.iam.v1.Policy])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
-  ///
-  // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Returns the caller's permissions on a resource.
-  /// If the resource does not exist, an empty set of
-  /// permissions is returned (a `NOT_FOUND` error is not returned).
-  ///
-  /// A caller is not required to have Google IAM permission to make this
-  /// request.
-  ///
-  /// Note: This operation is designed to be used for building permission-aware
-  /// UIs and command-line tools, not for authorization checking. This operation
-  /// may "fail open" without warning.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.iam.v1.TestIamPermissionsRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.iam.v1.TestIamPermissionsResponse])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
-  ///
-  // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// List content.
-  ///
-  /// @param parent  Required. The resource name of the parent lake:
-  ///  projects/{project_id}/locations/{location_id}/lakes/{lake_id}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return a [StreamRange](@ref google::cloud::StreamRange)
-  ///     to iterate of the results. See the documentation of this type for
-  ///     details. In brief, this class has `begin()` and `end()` member
-  ///     functions returning a iterator class meeting the
-  ///     [input iterator requirements]. The value type for this iterator is a
-  ///     [`StatusOr`] as the iteration may fail even after some values are
-  ///     retrieved successfully, for example, if there is a network disconnect.
-  ///     An empty set of results does not indicate an error, it indicates
-  ///     that there are no resources meeting the request criteria.
-  ///     On a successful iteration the `StatusOr<T>` contains elements of type
-  ///     [google.cloud.dataplex.v1.Content], or rather,
-  ///     the C++ class generated by Protobuf from that type. Please consult the
-  ///     Protobuf documentation for details on the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.ListContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L202}
-  ///
-  // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Content> ListContent(
-      std::string const& parent, Options opts = {});
-
-  // clang-format off
-  ///
-  /// List content.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.ListContentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return a [StreamRange](@ref google::cloud::StreamRange)
-  ///     to iterate of the results. See the documentation of this type for
-  ///     details. In brief, this class has `begin()` and `end()` member
-  ///     functions returning a iterator class meeting the
-  ///     [input iterator requirements]. The value type for this iterator is a
-  ///     [`StatusOr`] as the iteration may fail even after some values are
-  ///     retrieved successfully, for example, if there is a network disconnect.
-  ///     An empty set of results does not indicate an error, it indicates
-  ///     that there are no resources meeting the request criteria.
-  ///     On a successful iteration the `StatusOr<T>` contains elements of type
-  ///     [google.cloud.dataplex.v1.Content], or rather,
-  ///     the C++ class generated by Protobuf from that type. Please consult the
-  ///     Protobuf documentation for details on the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Content]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L175}
-  /// [google.cloud.dataplex.v1.ListContentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/content.proto#L202}
-  ///
-  // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Content> ListContent(
-      google::cloud::dataplex::v1::ListContentRequest request,
-      Options opts = {});
-
-  // clang-format off
-  ///
   /// Lists information about the supported locations for this service.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -595,6 +155,108 @@ class ContentServiceClient {
   // clang-format on
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the access control policy on the specified resource. Replaces any
+  /// existing policy.
+  ///
+  /// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the access control policy for a resource.
+  /// Returns an empty policy if the resource exists and does not have a policy
+  /// set.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// If the resource does not exist, this will return an empty set of
+  /// permissions, not a `NOT_FOUND` error.
+  ///
+  /// Note: This operation is designed to be used for building permission-aware
+  /// UIs and command-line tools, not for authorization checking. This operation
+  /// may "fail open" without warning.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
 
   // clang-format off

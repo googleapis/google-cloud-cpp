@@ -34,28 +34,13 @@ ContentServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ContentServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ContentServiceConnectionIdempotencyPolicy::CreateContent(
-    google::cloud::dataplex::v1::CreateContentRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
-Idempotency ContentServiceConnectionIdempotencyPolicy::UpdateContent(
-    google::cloud::dataplex::v1::UpdateContentRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
-Idempotency ContentServiceConnectionIdempotencyPolicy::DeleteContent(
-    google::cloud::dataplex::v1::DeleteContentRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
-Idempotency ContentServiceConnectionIdempotencyPolicy::GetContent(
-    google::cloud::dataplex::v1::GetContentRequest const&) {
+Idempotency ContentServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContentServiceConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ContentServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -65,23 +50,13 @@ Idempotency ContentServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
+Idempotency ContentServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency ContentServiceConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kIdempotent;
-}
-
-Idempotency ContentServiceConnectionIdempotencyPolicy::ListContent(
-    google::cloud::dataplex::v1::ListContentRequest) {  // NOLINT
-  return Idempotency::kIdempotent;
-}
-
-Idempotency ContentServiceConnectionIdempotencyPolicy::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT
-  return Idempotency::kIdempotent;
-}
-
-Idempotency ContentServiceConnectionIdempotencyPolicy::GetLocation(
-    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 

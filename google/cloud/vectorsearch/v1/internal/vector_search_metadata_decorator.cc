@@ -212,6 +212,27 @@ VectorSearchServiceMetadata::ImportDataObjects(
   return child_->ImportDataObjects(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+VectorSearchServiceMetadata::AsyncExportDataObjects(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportDataObjects(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceMetadata::ExportDataObjects(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportDataObjects(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 VectorSearchServiceMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

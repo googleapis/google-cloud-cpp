@@ -23,6 +23,7 @@
 #include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -44,6 +45,12 @@ class SessionServiceStub {
 
   virtual StatusOr<google::cloud::ces::v1::RunSessionResponse> RunSession(
       grpc::ClientContext& context, Options const& options,
+      google::cloud::ces::v1::RunSessionRequest const& request) = 0;
+
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::ces::v1::RunSessionResponse>>
+  StreamRunSession(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::ces::v1::RunSessionRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -94,6 +101,12 @@ class DefaultSessionServiceStub : public SessionServiceStub {
 
   StatusOr<google::cloud::ces::v1::RunSessionResponse> RunSession(
       grpc::ClientContext& context, Options const& options,
+      google::cloud::ces::v1::RunSessionRequest const& request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::ces::v1::RunSessionResponse>>
+  StreamRunSession(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::cloud::ces::v1::RunSessionRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

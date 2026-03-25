@@ -38,99 +38,6 @@ ContentServiceLogging::ContentServiceLogging(
     std::set<std::string> const&)
     : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceLogging::CreateContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::CreateContentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreateContentRequest const& request) {
-        return child_->CreateContent(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceLogging::UpdateContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-        return child_->UpdateContent(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-Status ContentServiceLogging::DeleteContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-        return child_->DeleteContent(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceLogging::GetContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::GetContentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::GetContentRequest const& request) {
-        return child_->GetContent(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::iam::v1::Policy> ContentServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::iam::v1::Policy> ContentServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContentServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::cloud::dataplex::v1::ListContentResponse>
-ContentServiceLogging::ListContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::ListContentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::ListContentRequest const& request) {
-        return child_->ListContent(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
 StatusOr<google::cloud::location::ListLocationsResponse>
 ContentServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -150,6 +57,40 @@ StatusOr<google::cloud::location::Location> ContentServiceLogging::GetLocation(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContentServiceLogging::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

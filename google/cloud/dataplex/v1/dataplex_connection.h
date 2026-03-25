@@ -352,49 +352,6 @@ class DataplexServiceConnection {
   virtual Status CancelJob(
       google::cloud::dataplex::v1::CancelJobRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
-  CreateEnvironment(
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
-  CreateEnvironment(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
-  UpdateEnvironment(
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
-  UpdateEnvironment(google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::dataplex::v1::Environment>
-  ListEnvironments(
-      google::cloud::dataplex::v1::ListEnvironmentsRequest request);
-
-  virtual StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request);
-
-  virtual StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
-      google::cloud::dataplex::v1::ListSessionsRequest request);
-
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

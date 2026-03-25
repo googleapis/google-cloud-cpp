@@ -169,14 +169,54 @@ Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateEntryLink(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateEntryLink(
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteEntryLink(
     google::cloud::dataplex::v1::DeleteEntryLinkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::LookupEntryLinks(
+    google::cloud::dataplex::v1::LookupEntryLinksRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::LookupContext(
+    google::cloud::dataplex::v1::LookupContextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency CatalogServiceConnectionIdempotencyPolicy::GetEntryLink(
     google::cloud::dataplex::v1::GetEntryLinkRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateMetadataFeed(
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetMetadataFeed(
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListMetadataFeeds(
+    google::cloud::dataplex::v1::ListMetadataFeedsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteMetadataFeed(
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateMetadataFeed(
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 Idempotency CatalogServiceConnectionIdempotencyPolicy::ListLocations(

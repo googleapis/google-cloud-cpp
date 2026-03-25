@@ -269,6 +269,19 @@ class VectorSearchServiceConnection {
       StatusOr<google::cloud::vectorsearch::v1::ImportDataObjectsResponse>>
   ImportDataObjects(google::longrunning::Operation const& operation);
 
+  virtual future<
+      StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>
+  ExportDataObjects(
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportDataObjects(
+      NoAwaitTag,
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>
+  ExportDataObjects(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

@@ -5,6 +5,7 @@
 @googleapis//google/cloud/dataplex/v1:content.proto
 @googleapis//google/cloud/dataplex/v1:data_discovery.proto
 @googleapis//google/cloud/dataplex/v1:data_documentation.proto
+@googleapis//google/cloud/dataplex/v1:data_products.proto
 @googleapis//google/cloud/dataplex/v1:data_profile.proto
 @googleapis//google/cloud/dataplex/v1:data_quality.proto
 @googleapis//google/cloud/dataplex/v1:data_taxonomy.proto

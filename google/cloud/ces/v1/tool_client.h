@@ -110,7 +110,7 @@ class ToolServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.ExecuteToolRequest]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L69}
-  /// [google.cloud.ces.v1.ExecuteToolResponse]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L100}
+  /// [google.cloud.ces.v1.ExecuteToolResponse]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L112}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::ExecuteToolResponse> ExecuteTool(
@@ -141,8 +141,8 @@ class ToolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.RetrieveToolSchemaRequest]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L121}
-  /// [google.cloud.ces.v1.RetrieveToolSchemaResponse]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L149}
+  /// [google.cloud.ces.v1.RetrieveToolSchemaRequest]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L136}
+  /// [google.cloud.ces.v1.RetrieveToolSchemaResponse]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L164}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::RetrieveToolSchemaResponse>
@@ -173,8 +173,8 @@ class ToolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.RetrieveToolsRequest]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L170}
-  /// [google.cloud.ces.v1.RetrieveToolsResponse]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L186}
+  /// [google.cloud.ces.v1.RetrieveToolsRequest]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L185}
+  /// [google.cloud.ces.v1.RetrieveToolsResponse]: @googleapis_reference_link{google/cloud/ces/v1/tool_service.proto#L201}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::RetrieveToolsResponse> RetrieveTools(

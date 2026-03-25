@@ -208,6 +208,30 @@ VectorSearchServiceConnection::ImportDataObjects(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>
+VectorSearchServiceConnection::ExportDataObjects(
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceConnection::ExportDataObjects(
+    NoAwaitTag,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>
+VectorSearchServiceConnection::ExportDataObjects(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 VectorSearchServiceConnection::ListLocations(
     google::cloud::location::

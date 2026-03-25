@@ -43,6 +43,12 @@ class SessionServiceTracingStub : public SessionServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::ces::v1::RunSessionRequest const& request) override;
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::ces::v1::RunSessionResponse>>
+  StreamRunSession(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::ces::v1::RunSessionRequest const& request) override;
+
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::ces::v1::BidiSessionClientMessage,
       google::cloud::ces::v1::BidiSessionServerMessage>>

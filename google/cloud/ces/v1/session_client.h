@@ -88,8 +88,7 @@ class SessionServiceClient {
 
   // clang-format off
   ///
-  /// Initiates a single turn interaction with the CES agent within a
-  /// session.
+  /// Initiates a single-turn interaction with the CES agent within a session.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -110,11 +109,51 @@ class SessionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.RunSessionRequest]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L403}
-  /// [google.cloud.ces.v1.RunSessionResponse]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L413}
+  /// [google.cloud.ces.v1.RunSessionRequest]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L433}
+  /// [google.cloud.ces.v1.RunSessionResponse]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L443}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::RunSessionResponse> RunSession(
+      google::cloud::ces::v1::RunSessionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Initiates a single-turn interaction with the CES agent. Uses server-side
+  /// streaming to deliver incremental results and partial responses as they are
+  /// generated.
+  ///
+  /// By default, complete responses (e.g., messages from callbacks or full LLM
+  /// responses) are sent to the client as soon as they are available. To enable
+  /// streaming individual text chunks directly from the model, set
+  /// [enable_text_streaming][google.cloud.ces.v1.SessionConfig.enable_text_streaming]
+  /// to true.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.ces.v1.RunSessionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.ces.v1.RunSessionResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.ces.v1.RunSessionRequest]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L433}
+  /// [google.cloud.ces.v1.RunSessionResponse]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L443}
+  /// [google.cloud.ces.v1.SessionConfig.enable_text_streaming]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L261}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::ces::v1::RunSessionResponse> StreamRunSession(
       google::cloud::ces::v1::RunSessionRequest const& request,
       Options opts = {});
 
@@ -201,21 +240,21 @@ class SessionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.BidiSessionClientMessage]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L421}
-  /// [google.cloud.ces.v1.BidiSessionClientMessage.config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L425}
-  /// [google.cloud.ces.v1.BidiSessionClientMessage.realtime_input]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L428}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L435}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.end_session]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L450}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.go_away]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L454}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.interruption_signal]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L446}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.recognition_result]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L442}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.session_output]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L439}
-  /// [google.cloud.ces.v1.SessionConfig.input_audio_config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L190}
-  /// [google.cloud.ces.v1.SessionConfig.output_audio_config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L194}
-  /// [google.cloud.ces.v1.SessionInput.audio]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L285}
-  /// [google.cloud.ces.v1.SessionOutput.audio]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L336}
-  /// [google.cloud.ces.v1.SessionOutput.diagnostic_info]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L367}
-  /// [google.cloud.ces.v1.SessionOutput.turn_completed]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L362}
+  /// [google.cloud.ces.v1.BidiSessionClientMessage]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L451}
+  /// [google.cloud.ces.v1.BidiSessionClientMessage.config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L455}
+  /// [google.cloud.ces.v1.BidiSessionClientMessage.realtime_input]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L458}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L465}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.end_session]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L480}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.go_away]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L484}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.interruption_signal]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L476}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.recognition_result]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L472}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.session_output]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L469}
+  /// [google.cloud.ces.v1.SessionConfig.input_audio_config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L205}
+  /// [google.cloud.ces.v1.SessionConfig.output_audio_config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L209}
+  /// [google.cloud.ces.v1.SessionInput.audio]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L313}
+  /// [google.cloud.ces.v1.SessionOutput.audio]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L366}
+  /// [google.cloud.ces.v1.SessionOutput.diagnostic_info]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L397}
+  /// [google.cloud.ces.v1.SessionOutput.turn_completed]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L392}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

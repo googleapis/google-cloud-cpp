@@ -121,24 +121,6 @@ class DataplexServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CancelJob(
       google::cloud::dataplex::v1::CancelJobRequest const& request);
 
-  virtual google::cloud::Idempotency CreateEnvironment(
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateEnvironment(
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteEnvironment(
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency ListEnvironments(
-      google::cloud::dataplex::v1::ListEnvironmentsRequest request);
-
-  virtual google::cloud::Idempotency GetEnvironment(
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency ListSessions(
-      google::cloud::dataplex::v1::ListSessionsRequest request);
-
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

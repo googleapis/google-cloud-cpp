@@ -38,6 +38,10 @@ namespace cloud {
 namespace ces_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void SessionServiceStreamRunSessionStreamingUpdater(
+    google::cloud::ces::v1::RunSessionResponse const& response,
+    google::cloud::ces::v1::RunSessionRequest& request);
+
 class SessionServiceConnectionImpl : public ces_v1::SessionServiceConnection {
  public:
   ~SessionServiceConnectionImpl() override = default;
@@ -50,6 +54,9 @@ class SessionServiceConnectionImpl : public ces_v1::SessionServiceConnection {
   Options options() override { return options_; }
 
   StatusOr<google::cloud::ces::v1::RunSessionResponse> RunSession(
+      google::cloud::ces::v1::RunSessionRequest const& request) override;
+
+  StreamRange<google::cloud::ces::v1::RunSessionResponse> StreamRunSession(
       google::cloud::ces::v1::RunSessionRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

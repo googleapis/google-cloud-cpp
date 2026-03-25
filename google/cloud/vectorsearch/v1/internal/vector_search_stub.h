@@ -132,6 +132,19 @@ class VectorSearchServiceStub {
       google::cloud::vectorsearch::v1::ImportDataObjectsRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportDataObjects(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ExportDataObjects(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -273,6 +286,18 @@ class DefaultVectorSearchServiceStub : public VectorSearchServiceStub {
   StatusOr<google::longrunning::Operation> ImportDataObjects(
       grpc::ClientContext& context, Options options,
       google::cloud::vectorsearch::v1::ImportDataObjectsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncExportDataObjects(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportDataObjects(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request)
       override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

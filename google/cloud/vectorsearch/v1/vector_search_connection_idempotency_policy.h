@@ -69,6 +69,9 @@ class VectorSearchServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ImportDataObjects(
       google::cloud::vectorsearch::v1::ImportDataObjectsRequest const& request);
 
+  virtual google::cloud::Idempotency ExportDataObjects(
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

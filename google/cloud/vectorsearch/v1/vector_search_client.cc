@@ -347,6 +347,30 @@ VectorSearchServiceClient::ImportDataObjects(
   return connection_->ImportDataObjects(operation);
 }
 
+future<StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>
+VectorSearchServiceClient::ExportDataObjects(
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportDataObjects(request);
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceClient::ExportDataObjects(
+    NoAwaitTag,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportDataObjects(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>
+VectorSearchServiceClient::ExportDataObjects(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportDataObjects(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 VectorSearchServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

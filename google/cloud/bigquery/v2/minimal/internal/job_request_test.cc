@@ -1028,7 +1028,7 @@ TEST(PostQueryRequestTest, DebugString) {
       R"( parameter_value { value: "query-parameter-value" } })"
       R"( labels { key: "lk1" value: "lv1" } labels { key: "lk2" value: "lv2" })"
       R"( default_dataset { project_id: "2" dataset_id: "1" })"
-      R"( format_options { use_int64_timestamp: true })"
+      R"( format_options { use_int64_timestamp: true timestamp_output_format: TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED })"
       R"( job_creation_mode { value: "JOB_CREATION_MODE_UNSPECIFIED" } } })");
 
   EXPECT_EQ(
@@ -1049,7 +1049,7 @@ TEST(PostQueryRequestTest, DebugString) {
       R"( parameter_value { value: "query-p...<truncated>..." } })"
       R"( labels { key: "lk1" value: "lv1" } labels { key: "lk2" value: "lv2" })"
       R"( default_dataset { project_id: "2" dataset_id: "1" })"
-      R"( format_options { use_int64_timestamp: true })"
+      R"( format_options { use_int64_timestamp: true timestamp_output_format: TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED })"
       R"( job_creation_mode { value: "JOB_CRE...<truncated>..." } } })");
 
   EXPECT_EQ(request.DebugString("PostQueryRequest", TracingOptions{}.SetOptions(
@@ -1103,6 +1103,7 @@ TEST(PostQueryRequestTest, DebugString) {
     }
     format_options {
       use_int64_timestamp: true
+      timestamp_output_format: TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED
     }
     job_creation_mode {
       value: "JOB_CREATION_MODE_UNSPECIFIED"

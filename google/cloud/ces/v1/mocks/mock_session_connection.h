@@ -50,6 +50,11 @@ class MockSessionServiceConnection : public ces_v1::SessionServiceConnection {
               (google::cloud::ces::v1::RunSessionRequest const& request),
               (override));
 
+  MOCK_METHOD(StreamRange<google::cloud::ces::v1::RunSessionResponse>,
+              StreamRunSession,
+              (google::cloud::ces::v1::RunSessionRequest const& request),
+              (override));
+
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    google::cloud::ces::v1::BidiSessionClientMessage,
                    google::cloud::ces::v1::BidiSessionServerMessage>>),

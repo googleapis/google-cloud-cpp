@@ -128,7 +128,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L392}
+  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L324}
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
@@ -182,7 +182,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L392}
+  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L324}
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
@@ -245,7 +245,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L422}
+  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L354}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
@@ -298,7 +298,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L422}
+  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L354}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
@@ -359,8 +359,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L437}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L369}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
@@ -412,8 +412,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L437}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L369}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
@@ -477,7 +477,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L447}
+  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L379}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
@@ -516,7 +516,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L447}
+  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L379}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
@@ -541,7 +541,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L520}
+  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L452}
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
@@ -571,7 +571,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L520}
+  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L452}
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
@@ -608,7 +608,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
+  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L421}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
@@ -647,7 +647,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L489}
+  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L421}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
@@ -690,7 +690,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L530}
+  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L462}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -744,7 +744,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L530}
+  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L462}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -806,7 +806,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L558}
+  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L490}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -859,7 +859,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L558}
+  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L490}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -921,8 +921,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L573}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L505}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
@@ -974,8 +974,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L573}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L505}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
@@ -1037,7 +1037,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L583}
+  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L515}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -1076,7 +1076,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L583}
+  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L515}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -1102,7 +1102,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L640}
+  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L572}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -1132,7 +1132,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L640}
+  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L572}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -1169,7 +1169,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
+  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L551}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
@@ -1208,7 +1208,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L619}
+  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L551}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
@@ -1251,7 +1251,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
+  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L582}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
@@ -1306,7 +1306,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L650}
+  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L582}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
@@ -1369,7 +1369,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
+  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L609}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
@@ -1422,7 +1422,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L677}
+  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L609}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
@@ -1484,8 +1484,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L624}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
@@ -1537,8 +1537,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L624}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
@@ -1602,7 +1602,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L634}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
@@ -1641,7 +1641,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L634}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
@@ -1668,7 +1668,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
+  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(std::string const& name,
@@ -1698,7 +1698,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L760}
+  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(
@@ -1734,7 +1734,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
+  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L671}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
@@ -1773,7 +1773,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L739}
+  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L671}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
@@ -1808,7 +1808,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L800}
+  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L732}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -1862,7 +1862,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L800}
+  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L732}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -1925,7 +1925,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
-  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L820}
+  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L752}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
@@ -1978,7 +1978,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
-  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L820}
+  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L752}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
@@ -2038,8 +2038,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L767}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
@@ -2090,8 +2090,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L767}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
@@ -2153,7 +2153,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L845}
+  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L777}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -2192,7 +2192,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L845}
+  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L777}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -2218,7 +2218,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L884}
+  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L816}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -2248,7 +2248,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L884}
+  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L816}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -2285,7 +2285,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
-  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L936}
+  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L868}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
@@ -2324,7 +2324,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
-  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L936}
+  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L868}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
@@ -2349,8 +2349,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L903}
-  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L930}
+  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
+  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L862}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
@@ -2379,8 +2379,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L903}
-  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L930}
+  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
+  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L862}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
@@ -2406,7 +2406,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L894}
+  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L826}
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
   ///
   // clang-format on
@@ -2436,7 +2436,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L894}
+  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L826}
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
   ///
   // clang-format on
@@ -2461,7 +2461,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L967}
+  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L899}
   ///
   // clang-format on
   Status CancelJob(std::string const& name, Options opts = {});
@@ -2487,575 +2487,11 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L967}
+  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L899}
   ///
   // clang-format on
   Status CancelJob(google::cloud::dataplex::v1::CancelJobRequest const& request,
                    Options opts = {});
-
-  // clang-format off
-  ///
-  /// Create an environment resource.
-  ///
-  /// @param parent  Required. The resource name of the parent lake:
-  ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}`.
-  /// @param environment  Required. Environment resource.
-  /// @param environment_id  Required. Environment identifier.
-  ///  * Must contain only lowercase letters, numbers and hyphens.
-  ///  * Must start with a letter.
-  ///  * Must be between 1-63 characters.
-  ///  * Must end with a number or a letter.
-  ///  * Must be unique within the lake.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return A [`future`] that becomes satisfied when the LRO
-  ///     ([Long Running Operation]) completes or the polling policy in effect
-  ///     for this call is exhausted. The future is satisfied with an error if
-  ///     the LRO completes with an error or the polling policy is exhausted.
-  ///     In this case the [`StatusOr`] returned by the future contains the
-  ///     error. If the LRO completes successfully the value of the future
-  ///     contains the LRO's result. For this RPC the result is a
-  ///     [google.cloud.dataplex.v1.Environment] proto message.
-  ///     The C++ class representing this message is created by Protobuf, using
-  ///     the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L977}
-  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
-      std::string const& parent,
-      google::cloud::dataplex::v1::Environment const& environment,
-      std::string const& environment_id, Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief CreateEnvironment
-  ///
-  /// Specifying the [`NoAwaitTag`] immediately returns the
-  /// [`google::longrunning::Operation`] that corresponds to the Long Running
-  /// Operation that has been started. No polling for operation status occurs.
-  ///
-  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
-  ///
-  // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::Environment const& environment,
-      std::string const& environment_id, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Create an environment resource.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.CreateEnvironmentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return A [`future`] that becomes satisfied when the LRO
-  ///     ([Long Running Operation]) completes or the polling policy in effect
-  ///     for this call is exhausted. The future is satisfied with an error if
-  ///     the LRO completes with an error or the polling policy is exhausted.
-  ///     In this case the [`StatusOr`] returned by the future contains the
-  ///     error. If the LRO completes successfully the value of the future
-  ///     contains the LRO's result. For this RPC the result is a
-  ///     [google.cloud.dataplex.v1.Environment] proto message.
-  ///     The C++ class representing this message is created by Protobuf, using
-  ///     the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L977}
-  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief CreateEnvironment
-  ///
-  /// Specifying the [`NoAwaitTag`] immediately returns the
-  /// [`google::longrunning::Operation`] that corresponds to the Long Running
-  /// Operation that has been started. No polling for operation status occurs.
-  ///
-  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
-  ///
-  // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief CreateEnvironment
-  ///
-  /// This method accepts a `google::longrunning::Operation` that corresponds
-  /// to a previously started Long Running Operation (LRO) and polls the status
-  /// of the LRO in the background.
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
-      google::longrunning::Operation const& operation, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Update the environment resource.
-  ///
-  /// @param environment  Required. Update description.
-  ///  Only fields specified in `update_mask` are updated.
-  /// @param update_mask  Required. Mask of fields to update.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return A [`future`] that becomes satisfied when the LRO
-  ///     ([Long Running Operation]) completes or the polling policy in effect
-  ///     for this call is exhausted. The future is satisfied with an error if
-  ///     the LRO completes with an error or the polling policy is exhausted.
-  ///     In this case the [`StatusOr`] returned by the future contains the
-  ///     error. If the LRO completes successfully the value of the future
-  ///     contains the LRO's result. For this RPC the result is a
-  ///     [google.cloud.dataplex.v1.Environment] proto message.
-  ///     The C++ class representing this message is created by Protobuf, using
-  ///     the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1002}
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
-      google::cloud::dataplex::v1::Environment const& environment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief UpdateEnvironment
-  ///
-  /// Specifying the [`NoAwaitTag`] immediately returns the
-  /// [`google::longrunning::Operation`] that corresponds to the Long Running
-  /// Operation that has been started. No polling for operation status occurs.
-  ///
-  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
-  ///
-  // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag, google::cloud::dataplex::v1::Environment const& environment,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Update the environment resource.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.UpdateEnvironmentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return A [`future`] that becomes satisfied when the LRO
-  ///     ([Long Running Operation]) completes or the polling policy in effect
-  ///     for this call is exhausted. The future is satisfied with an error if
-  ///     the LRO completes with an error or the polling policy is exhausted.
-  ///     In this case the [`StatusOr`] returned by the future contains the
-  ///     error. If the LRO completes successfully the value of the future
-  ///     contains the LRO's result. For this RPC the result is a
-  ///     [google.cloud.dataplex.v1.Environment] proto message.
-  ///     The C++ class representing this message is created by Protobuf, using
-  ///     the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1002}
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief UpdateEnvironment
-  ///
-  /// Specifying the [`NoAwaitTag`] immediately returns the
-  /// [`google::longrunning::Operation`] that corresponds to the Long Running
-  /// Operation that has been started. No polling for operation status occurs.
-  ///
-  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
-  ///
-  // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief UpdateEnvironment
-  ///
-  /// This method accepts a `google::longrunning::Operation` that corresponds
-  /// to a previously started Long Running Operation (LRO) and polls the status
-  /// of the LRO in the background.
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
-      google::longrunning::Operation const& operation, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Delete the environment resource. All the child resources must have been
-  /// deleted before environment deletion can be initiated.
-  ///
-  /// @param name  Required. The resource name of the environment:
-  ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}`.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return A [`future`] that becomes satisfied when the LRO
-  ///     ([Long Running Operation]) completes or the polling policy in effect
-  ///     for this call is exhausted. The future is satisfied with an error if
-  ///     the LRO completes with an error or the polling policy is exhausted.
-  ///     In this case the [`StatusOr`] returned by the future contains the
-  ///     error. If the LRO completes successfully the value of the future
-  ///     contains the LRO's result. For this RPC the result is a
-  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
-  ///     The C++ class representing this message is created by Protobuf, using
-  ///     the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1017}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(std::string const& name, Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief DeleteEnvironment
-  ///
-  /// Specifying the [`NoAwaitTag`] immediately returns the
-  /// [`google::longrunning::Operation`] that corresponds to the Long Running
-  /// Operation that has been started. No polling for operation status occurs.
-  ///
-  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
-  ///
-  // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      NoAwaitTag, std::string const& name, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Delete the environment resource. All the child resources must have been
-  /// deleted before environment deletion can be initiated.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.DeleteEnvironmentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return A [`future`] that becomes satisfied when the LRO
-  ///     ([Long Running Operation]) completes or the polling policy in effect
-  ///     for this call is exhausted. The future is satisfied with an error if
-  ///     the LRO completes with an error or the polling policy is exhausted.
-  ///     In this case the [`StatusOr`] returned by the future contains the
-  ///     error. If the LRO completes successfully the value of the future
-  ///     contains the LRO's result. For this RPC the result is a
-  ///     [google.cloud.dataplex.v1.OperationMetadata] proto message.
-  ///     The C++ class representing this message is created by Protobuf, using
-  ///     the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1017}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief DeleteEnvironment
-  ///
-  /// Specifying the [`NoAwaitTag`] immediately returns the
-  /// [`google::longrunning::Operation`] that corresponds to the Long Running
-  /// Operation that has been started. No polling for operation status occurs.
-  ///
-  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
-  ///
-  // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// @copybrief DeleteEnvironment
-  ///
-  /// This method accepts a `google::longrunning::Operation` that corresponds
-  /// to a previously started Long Running Operation (LRO) and polls the status
-  /// of the LRO in the background.
-  ///
-  // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(google::longrunning::Operation const& operation,
-                    Options opts = {});
-
-  // clang-format off
-  ///
-  /// Lists environments under the given lake.
-  ///
-  /// @param parent  Required. The resource name of the parent lake:
-  ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}`.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return a [StreamRange](@ref google::cloud::StreamRange)
-  ///     to iterate of the results. See the documentation of this type for
-  ///     details. In brief, this class has `begin()` and `end()` member
-  ///     functions returning a iterator class meeting the
-  ///     [input iterator requirements]. The value type for this iterator is a
-  ///     [`StatusOr`] as the iteration may fail even after some values are
-  ///     retrieved successfully, for example, if there is a network disconnect.
-  ///     An empty set of results does not indicate an error, it indicates
-  ///     that there are no resources meeting the request criteria.
-  ///     On a successful iteration the `StatusOr<T>` contains elements of type
-  ///     [google.cloud.dataplex.v1.Environment], or rather,
-  ///     the C++ class generated by Protobuf from that type. Please consult the
-  ///     Protobuf documentation for details on the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1029}
-  ///
-  // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
-      std::string const& parent, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Lists environments under the given lake.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.ListEnvironmentsRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return a [StreamRange](@ref google::cloud::StreamRange)
-  ///     to iterate of the results. See the documentation of this type for
-  ///     details. In brief, this class has `begin()` and `end()` member
-  ///     functions returning a iterator class meeting the
-  ///     [input iterator requirements]. The value type for this iterator is a
-  ///     [`StatusOr`] as the iteration may fail even after some values are
-  ///     retrieved successfully, for example, if there is a network disconnect.
-  ///     An empty set of results does not indicate an error, it indicates
-  ///     that there are no resources meeting the request criteria.
-  ///     On a successful iteration the `StatusOr<T>` contains elements of type
-  ///     [google.cloud.dataplex.v1.Environment], or rather,
-  ///     the C++ class generated by Protobuf from that type. Please consult the
-  ///     Protobuf documentation for details on the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1029}
-  ///
-  // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
-      google::cloud::dataplex::v1::ListEnvironmentsRequest request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// Get environment resource.
-  ///
-  /// @param name  Required. The resource name of the environment:
-  ///  `projects/{project_id}/locations/{location_id}/lakes/{lake_id}/environments/{environment_id}`.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.dataplex.v1.Environment])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1067}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      std::string const& name, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Get environment resource.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.GetEnvironmentRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.dataplex.v1.Environment])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Environment]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
-  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1067}
-  ///
-  // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request,
-      Options opts = {});
-
-  // clang-format off
-  ///
-  /// Lists session resources in an environment.
-  ///
-  /// @param parent  Required. The resource name of the parent environment:
-  ///  `projects/{project_number}/locations/{location_id}/lakes/{lake_id}/environment/{environment_id}`.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return a [StreamRange](@ref google::cloud::StreamRange)
-  ///     to iterate of the results. See the documentation of this type for
-  ///     details. In brief, this class has `begin()` and `end()` member
-  ///     functions returning a iterator class meeting the
-  ///     [input iterator requirements]. The value type for this iterator is a
-  ///     [`StatusOr`] as the iteration may fail even after some values are
-  ///     retrieved successfully, for example, if there is a network disconnect.
-  ///     An empty set of results does not indicate an error, it indicates
-  ///     that there are no resources meeting the request criteria.
-  ///     On a successful iteration the `StatusOr<T>` contains elements of type
-  ///     [google.cloud.dataplex.v1.Session], or rather,
-  ///     the C++ class generated by Protobuf from that type. Please consult the
-  ///     Protobuf documentation for details on the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1079}
-  /// [google.cloud.dataplex.v1.Session]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L261}
-  ///
-  // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
-      std::string const& parent, Options opts = {});
-
-  // clang-format off
-  ///
-  /// Lists session resources in an environment.
-  ///
-  /// @param request Unary RPCs, such as the one wrapped by this
-  ///     function, receive a single `request` proto message which includes all
-  ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.dataplex.v1.ListSessionsRequest].
-  ///     Proto messages are converted to C++ classes by Protobuf, using the
-  ///     [Protobuf mapping rules].
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return a [StreamRange](@ref google::cloud::StreamRange)
-  ///     to iterate of the results. See the documentation of this type for
-  ///     details. In brief, this class has `begin()` and `end()` member
-  ///     functions returning a iterator class meeting the
-  ///     [input iterator requirements]. The value type for this iterator is a
-  ///     [`StatusOr`] as the iteration may fail even after some values are
-  ///     retrieved successfully, for example, if there is a network disconnect.
-  ///     An empty set of results does not indicate an error, it indicates
-  ///     that there are no resources meeting the request criteria.
-  ///     On a successful iteration the `StatusOr<T>` contains elements of type
-  ///     [google.cloud.dataplex.v1.Session], or rather,
-  ///     the C++ class generated by Protobuf from that type. Please consult the
-  ///     Protobuf documentation for details on the [Protobuf mapping rules].
-  ///
-  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
-  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
-  /// [`future`]: @ref google::cloud::future
-  /// [`StatusOr`]: @ref google::cloud::StatusOr
-  /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1079}
-  /// [google.cloud.dataplex.v1.Session]: @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L261}
-  ///
-  // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
-      google::cloud::dataplex::v1::ListSessionsRequest request,
-      Options opts = {});
 
   // clang-format off
   ///

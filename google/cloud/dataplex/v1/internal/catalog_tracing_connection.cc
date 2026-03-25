@@ -494,12 +494,41 @@ CatalogServiceTracingConnection::CreateEntryLink(
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingConnection::UpdateEntryLink(
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::UpdateEntryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEntryLink(request));
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
 CatalogServiceTracingConnection::DeleteEntryLink(
     google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteEntryLink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteEntryLink(request));
+}
+
+StreamRange<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingConnection::LookupEntryLinks(
+    google::cloud::dataplex::v1::LookupEntryLinksRequest request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::LookupEntryLinks");
+  internal::OTelScope scope(span);
+  auto sr = child_->LookupEntryLinks(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataplex::v1::EntryLink>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+CatalogServiceTracingConnection::LookupContext(
+    google::cloud::dataplex::v1::LookupContextRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::LookupContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->LookupContext(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
@@ -509,6 +538,120 @@ CatalogServiceTracingConnection::GetEntryLink(
       internal::MakeSpan("dataplex_v1::CatalogServiceConnection::GetEntryLink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEntryLink(request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceTracingConnection::CreateMetadataFeed(
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::CreateMetadataFeed");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMetadataFeed(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingConnection::CreateMetadataFeed(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::CreateMetadataFeed");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateMetadataFeed(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceTracingConnection::CreateMetadataFeed(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::CreateMetadataFeed");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMetadataFeed(operation));
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceTracingConnection::GetMetadataFeed(
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::GetMetadataFeed");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMetadataFeed(request));
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceTracingConnection::ListMetadataFeeds(
+    google::cloud::dataplex::v1::ListMetadataFeedsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::ListMetadataFeeds");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListMetadataFeeds(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataplex::v1::MetadataFeed>(std::move(span),
+                                                 std::move(sr));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceTracingConnection::DeleteMetadataFeed(
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::DeleteMetadataFeed");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteMetadataFeed(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingConnection::DeleteMetadataFeed(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::DeleteMetadataFeed");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteMetadataFeed(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceTracingConnection::DeleteMetadataFeed(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::DeleteMetadataFeed");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteMetadataFeed(operation));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceTracingConnection::UpdateMetadataFeed(
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::UpdateMetadataFeed");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateMetadataFeed(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingConnection::UpdateMetadataFeed(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::UpdateMetadataFeed");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateMetadataFeed(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceTracingConnection::UpdateMetadataFeed(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::UpdateMetadataFeed");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateMetadataFeed(operation));
 }
 
 StreamRange<google::cloud::location::Location>

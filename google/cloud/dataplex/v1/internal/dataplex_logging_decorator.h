@@ -225,56 +225,6 @@ class DataplexServiceLogging : public DataplexServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CancelJobRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
-      override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
-      override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
-  ListEnvironments(grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListEnvironmentsRequest const&
-                       request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::cloud::dataplex::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::ListSessionsRequest const& request) override;
-
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

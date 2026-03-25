@@ -266,6 +266,37 @@ DefaultVectorSearchServiceStub::ImportDataObjects(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultVectorSearchServiceStub::AsyncExportDataObjects(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vectorsearch::v1::ExportDataObjectsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::vectorsearch::v1::ExportDataObjectsRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncExportDataObjects(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVectorSearchServiceStub::ExportDataObjects(
+    grpc::ClientContext& context, Options,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportDataObjects(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultVectorSearchServiceStub::ListLocations(
     grpc::ClientContext& context, Options const&,

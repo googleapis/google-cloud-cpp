@@ -182,35 +182,20 @@ class ContentServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      google::cloud::dataplex::v1::CreateContentRequest const& request);
-
-  virtual StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      google::cloud::dataplex::v1::UpdateContentRequest const& request);
-
-  virtual Status DeleteContent(
-      google::cloud::dataplex::v1::DeleteContentRequest const& request);
-
-  virtual StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      google::cloud::dataplex::v1::GetContentRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual StreamRange<google::cloud::dataplex::v1::Content> ListContent(
-      google::cloud::dataplex::v1::ListContentRequest request);
-
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request);

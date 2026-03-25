@@ -111,7 +111,7 @@ class WidgetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.ces.v1.GenerateChatTokenRequest]: @googleapis_reference_link{google/cloud/ces/v1/widget_service.proto#L50}
-  /// [google.cloud.ces.v1.GenerateChatTokenResponse]: @googleapis_reference_link{google/cloud/ces/v1/widget_service.proto#L73}
+  /// [google.cloud.ces.v1.GenerateChatTokenResponse]: @googleapis_reference_link{google/cloud/ces/v1/widget_service.proto#L76}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::GenerateChatTokenResponse> GenerateChatToken(

@@ -381,8 +381,28 @@ CatalogServiceConnection::CreateEntryLink(
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceConnection::UpdateEntryLink(
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
 CatalogServiceConnection::DeleteEntryLink(
     google::cloud::dataplex::v1::DeleteEntryLinkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceConnection::LookupEntryLinks(
+    google::cloud::dataplex::v1::
+        LookupEntryLinksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataplex::v1::EntryLink>>();
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+CatalogServiceConnection::LookupContext(
+    google::cloud::dataplex::v1::LookupContextRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -390,6 +410,89 @@ StatusOr<google::cloud::dataplex::v1::EntryLink>
 CatalogServiceConnection::GetEntryLink(
     google::cloud::dataplex::v1::GetEntryLinkRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceConnection::CreateMetadataFeed(
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::MetadataFeed>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceConnection::CreateMetadataFeed(
+    NoAwaitTag, google::cloud::dataplex::v1::CreateMetadataFeedRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceConnection::CreateMetadataFeed(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::MetadataFeed>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceConnection::GetMetadataFeed(
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceConnection::ListMetadataFeeds(
+    google::cloud::dataplex::v1::
+        ListMetadataFeedsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataplex::v1::MetadataFeed>>();
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceConnection::DeleteMetadataFeed(
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceConnection::DeleteMetadataFeed(
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteMetadataFeedRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceConnection::DeleteMetadataFeed(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceConnection::UpdateMetadataFeed(
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::MetadataFeed>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceConnection::UpdateMetadataFeed(
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateMetadataFeedRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceConnection::UpdateMetadataFeed(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::MetadataFeed>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::location::Location>

@@ -15,13 +15,40 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_STUB_FACTORY_H
 
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/internal/stub_manager.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <functional>
 #include <memory>
+
+namespace google::cloud::bigtable {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+// TODO(#16035): Move this Option to bigtable/options.h in the experimental
+// namespace when the feature is ready.
+namespace experimental {
+/**
+ *  If set, a dynamic channel pool is created for each instance that requests
+ *  are destined. Instances specified as part of this Option have dynamic
+ *  channel pools created and primed as part of DataConnection construction. If
+ *  no Instances are specified, then dynamic channel pool creation is deferred
+ *  until the first request sent, increasing time to first byte latency.
+ *
+ * @note This option must be supplied to `MakeDataConnection()` in order to take
+ * effect.
+ */
+struct InstanceChannelAffinityOption {
+  using Type = std::vector<bigtable::InstanceResource>;
+};
+}  // namespace experimental
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace google::cloud::bigtable
 
 namespace google {
 namespace cloud {
@@ -31,20 +58,52 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using BaseBigtableStubFactory = std::function<std::shared_ptr<BigtableStub>(
     std::shared_ptr<grpc::Channel>)>;
 
+/// Creates a static pool of stubs that use a round-robin strategy to select.
 std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
-    Options const& options,
-    std::function<std::shared_ptr<BigtableStub>(int)> child_factory);
+    Options const& options, std::function<std::shared_ptr<BigtableStub>(int)>
+                                refreshing_channel_stub_factory);
+
+/// Creates a dynamic pool of stubs that selects the least used from a random
+/// pair of stubs.
+std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<internal::CompletionQueueImpl> cq_impl,
+    std::string_view instance_name, StubManager::Priming priming,
+    Options const& options, BaseBigtableStubFactory stub_factory,
+    std::shared_ptr<ConnectionRefreshState> refresh_state);
 
 /// Used in testing to create decorated mocks.
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     CompletionQueue const& cq, Options const& options,
-    BaseBigtableStubFactory const& base_factory);
+    BaseBigtableStubFactory const& stub_factory);
+
+/// Used in testing to create decorated mocks.
+std::shared_ptr<BigtableStub> CreateDecoratedStubs(
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    CompletionQueue const& cq, std::string_view instance_name,
+    StubManager::Priming priming, Options const& options,
+    BaseBigtableStubFactory const& stub_factory);
 
 /// Default function used by `DataConnectionImpl`.
+/// No instance affinity, uses legacy grpc::GetState to refresh using the
+/// round-robin channel selection strategy.
 std::shared_ptr<BigtableStub> CreateBigtableStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     CompletionQueue const& cq, Options const& options);
+
+/// Creates a stub with instance affinity using PingAndWarm priming using the
+/// random two least used channel selection strategy.
+std::shared_ptr<BigtableStub> CreateBigtableStub(
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    CompletionQueue const& cq, std::string_view instance_name,
+    StubManager::Priming priming, Options const& options);
+
+/// Creates a map of instance to stub pairs.
+absl::flat_hash_map<std::string, std::shared_ptr<BigtableStub>>
+CreateBigtableAffinityStubs(
+    std::vector<bigtable::InstanceResource> const& instances,
+    StubManager::StubCreationFn const& stub_creation_fn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

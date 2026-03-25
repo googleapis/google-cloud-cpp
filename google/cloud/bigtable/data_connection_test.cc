@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/data_connection.h"
+#include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -29,6 +30,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ms = std::chrono::milliseconds;
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::Contains;
+using ::testing::Eq;
+using ::testing::IsEmpty;
 
 Options TestOptions() {
   return Options{}
@@ -54,12 +61,6 @@ TEST(MakeDataConnection, DefaultsOptions) {
       << "User supplied Options are overridden in MakeDataConnection()";
 }
 
-using ::google::cloud::testing_util::DisableTracing;
-using ::google::cloud::testing_util::EnableTracing;
-using ::google::cloud::testing_util::SpanNamed;
-using ::testing::Contains;
-using ::testing::IsEmpty;
-
 TEST(MakeDataConnection, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
@@ -69,6 +70,24 @@ TEST(MakeDataConnection, TracingEnabled) {
 
   EXPECT_THAT(span_catcher->GetSpans(),
               Contains(SpanNamed("bigtable::Table::Apply")));
+}
+
+TEST(MakeDataConnection, InstanceChannelAffinityOption) {
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  InstanceResource instance_b{Project("my-project"), "instance-b"};
+  auto conn =
+      MakeDataConnection(TestOptions()
+                             .set<AppProfileIdOption>("user-supplied")
+                             .set<experimental::InstanceChannelAffinityOption>(
+                                 {instance_a, instance_b}));
+  auto options = conn->options();
+  EXPECT_TRUE(options.has<DataBackoffPolicyOption>())
+      << "Options are not defaulted in MakeDataConnection()";
+  EXPECT_EQ(options.get<AppProfileIdOption>(), "user-supplied")
+      << "User supplied Options are overridden in MakeDataConnection()";
+  ASSERT_TRUE(options.has<experimental::InstanceChannelAffinityOption>());
+  EXPECT_THAT(options.get<experimental::InstanceChannelAffinityOption>().size(),
+              Eq(2));
 }
 
 TEST(MakeDataConnection, TracingDisabled) {

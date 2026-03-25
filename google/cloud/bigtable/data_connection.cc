@@ -184,14 +184,35 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
       google::cloud::internal::MakeBackgroundThreadsFactory(options)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       background->cq(), options);
-  auto stub = bigtable_internal::CreateBigtableStub(std::move(auth),
-                                                    background->cq(), options);
   auto limiter =
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
-  std::shared_ptr<DataConnection> conn =
-      std::make_shared<bigtable_internal::DataConnectionImpl>(
-          std::move(background), std::move(stub), std::move(limiter),
-          std::move(options));
+  std::shared_ptr<DataConnection> conn;
+
+  if (options.has<experimental::InstanceChannelAffinityOption>()) {
+    auto stub_creation_fn =
+        [auth, cq = background->cq(), options](
+            std::string_view instance_name,
+            bigtable_internal::StubManager::Priming priming) {
+          return bigtable_internal::CreateBigtableStub(auth, cq, instance_name,
+                                                       priming, options);
+        };
+
+    auto affinity_stubs = bigtable_internal::CreateBigtableAffinityStubs(
+        options.get<experimental::InstanceChannelAffinityOption>(),
+        stub_creation_fn);
+    conn = std::make_shared<bigtable_internal::DataConnectionImpl>(
+        std::move(background),
+        std::make_unique<bigtable_internal::StubManager>(
+            std::move(affinity_stubs), stub_creation_fn),
+        std::move(limiter), std::move(options));
+  } else {
+    auto stub = bigtable_internal::CreateBigtableStub(
+        std::move(auth), background->cq(), options);
+    conn = std::make_shared<bigtable_internal::DataConnectionImpl>(
+        std::move(background),
+        std::make_unique<bigtable_internal::StubManager>(std::move(stub)),
+        std::move(limiter), std::move(options));
+  }
   if (google::cloud::internal::TracingEnabled(conn->options())) {
     conn = bigtable_internal::MakeDataTracingConnection(std::move(conn));
   }

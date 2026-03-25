@@ -248,6 +248,36 @@ VectorSearchServiceTracingConnection::ImportDataObjects(
                            child_->ImportDataObjects(operation));
 }
 
+future<StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>
+VectorSearchServiceTracingConnection::ExportDataObjects(
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vectorsearch_v1::VectorSearchServiceConnection::ExportDataObjects");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportDataObjects(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceTracingConnection::ExportDataObjects(
+    NoAwaitTag,
+    google::cloud::vectorsearch::v1::ExportDataObjectsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vectorsearch_v1::VectorSearchServiceConnection::ExportDataObjects");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ExportDataObjects(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>
+VectorSearchServiceTracingConnection::ExportDataObjects(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vectorsearch_v1::VectorSearchServiceConnection::ExportDataObjects");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ExportDataObjects(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 VectorSearchServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

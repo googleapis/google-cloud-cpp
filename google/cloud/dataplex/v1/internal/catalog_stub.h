@@ -224,13 +224,75 @@ class CatalogServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::dataplex::v1::EntryLink> UpdateEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::dataplex::v1::LookupEntryLinksResponse>
+  LookupEntryLinks(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::LookupEntryLinksRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+  LookupContext(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::LookupContextRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetEntryLinkRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::dataplex::v1::MetadataFeed> GetMetadataFeed(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetMetadataFeedRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::dataplex::v1::ListMetadataFeedsResponse>
+  ListMetadataFeeds(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::ListMetadataFeedsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
@@ -497,14 +559,75 @@ class DefaultCatalogServiceStub : public CatalogServiceStub {
       google::cloud::dataplex::v1::CreateEntryLinkRequest const& request)
       override;
 
+  StatusOr<google::cloud::dataplex::v1::EntryLink> UpdateEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request)
+      override;
+
   StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request)
       override;
 
+  StatusOr<google::cloud::dataplex::v1::LookupEntryLinksResponse>
+  LookupEntryLinks(grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::LookupEntryLinksRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::dataplex::v1::LookupContextResponse> LookupContext(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::LookupContextRequest const& request)
+      override;
+
   StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetEntryLinkRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::MetadataFeed> GetMetadataFeed(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::ListMetadataFeedsResponse>
+  ListMetadataFeeds(grpc::ClientContext& context, Options const& options,
+                    google::cloud::dataplex::v1::ListMetadataFeedsRequest const&
+                        request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

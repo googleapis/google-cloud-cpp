@@ -186,6 +186,9 @@ class SessionServiceConnection {
   virtual StatusOr<google::cloud::ces::v1::RunSessionResponse> RunSession(
       google::cloud::ces::v1::RunSessionRequest const& request);
 
+  virtual StreamRange<google::cloud::ces::v1::RunSessionResponse>
+  StreamRunSession(google::cloud::ces::v1::RunSessionRequest const& request);
+
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::ces::v1::BidiSessionClientMessage,
       google::cloud::ces::v1::BidiSessionServerMessage>>
