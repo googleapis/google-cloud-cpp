@@ -140,7 +140,15 @@ void UpdateBucketEncryptionEnforcementConfig(
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
+    StatusOr<gcs::BucketMetadata> original =
+        client.GetBucketMetadata(bucket_name);
+
+    gcs::BucketMetadata updated_metadata = *original;
     gcs::BucketEncryption encryption;
+    if (original->has_encryption()) {
+      encryption = original->encryption();
+    }
+
     // 1. Update a specific type (e.g., change GMEK to FullyRestricted)
     encryption.google_managed_encryption_enforcement_config.restriction_mode =
         "FullyRestricted";
@@ -152,9 +160,10 @@ void UpdateBucketEncryptionEnforcementConfig(
     encryption.customer_supplied_encryption_enforcement_config
         .restriction_mode = "FullyRestricted";
 
-    StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
-        bucket_name,
-        gcs::BucketMetadataPatchBuilder().SetEncryption(encryption));
+    updated_metadata.set_encryption(encryption);
+
+    StatusOr<gcs::BucketMetadata> updated =
+        client.PatchBucket(bucket_name, *original, updated_metadata);
     if (!updated) throw std::move(updated).status();
 
     std::cout << "Encryption enforcement policy updated for bucket "
@@ -182,15 +191,6 @@ void RunAll(std::vector<std::string> const& argv) {
   auto client = gcs::Client(examples::CreateBucketOptions());
 
   auto constexpr kBucketPeriod = std::chrono::seconds(2);
-
-  // Clean up any potentially leaked buckets from a previous run before creating
-  // them.
-  (void)examples::RemoveBucketAndContents(client, "g-" + bucket_name);
-  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
-  (void)examples::RemoveBucketAndContents(client, "c-" + bucket_name);
-  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
-  (void)examples::RemoveBucketAndContents(client, "rc-" + bucket_name);
-  if (!examples::UsingEmulator()) std::this_thread::sleep_for(kBucketPeriod);
 
   std::cout << "\nRunning the SetBucketEncryptionEnforcementConfig() example"
             << std::endl;

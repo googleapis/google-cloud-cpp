@@ -362,7 +362,11 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetDefaultAcl() {
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
     BucketEncryption const& v) {
   internal::PatchBuilder builder;
-  builder.SetStringField("defaultKmsKeyName", v.default_kms_key_name);
+  if (v.default_kms_key_name.empty()) {
+    builder.RemoveField("defaultKmsKeyName");
+  } else {
+    builder.SetStringField("defaultKmsKeyName", v.default_kms_key_name);
+  }
 
   auto add_config_patch = [&](char const* name, auto const& config) {
     if (config.restriction_mode.empty()) return;
