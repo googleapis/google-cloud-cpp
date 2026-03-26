@@ -247,6 +247,7 @@ class DynamicChannelPool
   void ScheduleAddChannels(
       std::scoped_lock<std::mutex> const&,
       std::function<void(std::vector<int> const&)> const& test_fn = nullptr) {
+    constexpr std::size_t kOneAddedChannel = 1;
     std::size_t num_channels_to_add;
     // If we're undersized due to bad channels, get us back to the minimum size.
     if (channels_.size() < sizing_policy_.minimum_channel_pool_size) {
@@ -255,7 +256,7 @@ class DynamicChannelPool
     } else {
       num_channels_to_add =
           std::min(sizing_policy_.maximum_channel_pool_size - channels_.size(),
-                   std::size_t(1));
+                   kOneAddedChannel);
     }
     num_pending_channels_ += num_channels_to_add;
     std::vector<int> new_channel_ids;
