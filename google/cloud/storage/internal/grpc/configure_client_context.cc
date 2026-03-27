@@ -28,7 +28,7 @@ void AddIdempotencyToken(grpc::ClientContext& ctx,
   auto const& headers = context.headers();
   auto const l = headers.find(kIdempotencyTokenHeader);
   if (l != headers.end()) {
-    for (auto const& v : l->second) {
+    for (auto const& v : l->second.values()) {
       ctx.AddMetadata(kIdempotencyTokenHeader, v);
     }
   }
