@@ -13,36 +13,30 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_context.h"
+#include "absl/strings/strip.h"
 #include <algorithm>
-#include <cctype>
 
 namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RestContext& RestContext::AddHeader(std::string header, std::string value) & {
-  std::transform(header.begin(), header.end(), header.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
-  auto iter = headers_.find(header);
+RestContext& RestContext::AddHeader(HttpHeader header) & {
+  auto iter = headers_.find(header.name());
   if (iter == headers_.end()) {
-    std::vector<std::string> v = {std::move(value)};
-    headers_.emplace(std::move(header), std::move(v));
+    headers_.emplace(header.name(), std::move(header));
   } else {
-    iter->second.push_back(value);
+    iter->second.MergeHeader(std::move(header));
   }
   return *this;
 }
 
-RestContext& RestContext::AddHeader(
-    std::pair<std::string, std::string> header) & {
-  return AddHeader(std::move(header.first), std::move(header.second));
+RestContext& RestContext::AddHeader(std::string header, std::string value) & {
+  return AddHeader(HttpHeader(std::move(header), std::move(value)));
 }
 
-std::vector<std::string> RestContext::GetHeader(std::string header) const {
-  std::transform(header.begin(), header.end(), header.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
-  auto iter = headers_.find(header);
+HttpHeader RestContext::GetHeader(std::string_view header) const {
+  auto iter = headers_.find(absl::AsciiStrToLower(header));
   if (iter == headers_.end()) {
     return {};
   }
