@@ -22,48 +22,50 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-HttpHeader::HttpHeader(std::string key) : key_(std::move(key)) {}
+HttpHeader::HttpHeader(HttpHeaderName key) : name_(std::move(key)) {}
 
-HttpHeader::HttpHeader(std::string key, std::string value)
-    : key_(std::move(key)), values_({std::move(value)}) {}
+HttpHeader::HttpHeader(std::pair<std::string, std::string> header)
+    : HttpHeader(std::move(header.first), std::move(header.second)) {}
 
-HttpHeader::HttpHeader(std::string key, std::vector<std::string> values)
-    : key_(std::move(key)), values_(std::move(values)) {}
+HttpHeader::HttpHeader(HttpHeaderName key, std::string value)
+    : name_(std::move(key)), values_({std::move(value)}) {}
 
-HttpHeader::HttpHeader(std::string key,
+HttpHeader::HttpHeader(HttpHeaderName key, std::vector<std::string> values)
+    : name_(std::move(key)), values_(std::move(values)) {}
+
+HttpHeader::HttpHeader(HttpHeaderName key,
                        std::initializer_list<char const*> values)
-    : key_(std::move(key)) {
+    : name_(std::move(key)) {
   for (auto&& v : values) values_.emplace_back(v);
 }
 
 bool operator==(HttpHeader const& lhs, HttpHeader const& rhs) {
-  return absl::AsciiStrToLower(lhs.key_) == absl::AsciiStrToLower(rhs.key_) &&
-         lhs.values_ == rhs.values_;
+  return lhs.name_ == rhs.name_ && lhs.values_ == rhs.values_;
 }
 
 bool operator<(HttpHeader const& lhs, HttpHeader const& rhs) {
-  return absl::AsciiStrToLower(lhs.key_) < absl::AsciiStrToLower(rhs.key_);
+  return lhs.name_ < rhs.name_;
 }
 
-bool HttpHeader::IsSameKey(std::string const& key) const {
-  return absl::AsciiStrToLower(key_) == absl::AsciiStrToLower(key);
+bool HttpHeader::IsSameKey(std::string_view key) const {
+  return name_.name() == absl::AsciiStrToLower(key);
 }
 
 bool HttpHeader::IsSameKey(HttpHeader const& other) const {
-  return IsSameKey(other.key_);
+  return name_ == other.name_;
 }
 
 HttpHeader::operator std::string() const {
-  if (key_.empty()) return {};
-  if (values_.empty()) return absl::StrCat(key_, ":");
-  return absl::StrCat(key_, ": ", absl::StrJoin(values_, ","));
+  if (name_.empty()) return {};
+  if (values_.empty()) return absl::StrCat(name_.name(), ":");
+  return absl::StrCat(name_.name(), ": ", absl::StrJoin(values_, ","));
 }
 
 std::string HttpHeader::DebugString() const {
-  if (key_.empty()) return {};
-  if (values_.empty()) return absl::StrCat(key_, ":");
+  if (name_.empty()) return {};
+  if (values_.empty()) return absl::StrCat(name_.name(), ":");
   return absl::StrCat(
-      key_, ": ",
+      name_.name(), ": ",
       absl::StrJoin(values_, ",", [](std::string* out, std::string const& v) {
         absl::StrAppend(out, v.substr(0, 10));
       }));

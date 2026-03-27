@@ -256,6 +256,7 @@ cc_library(
     visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_common",
+        "@abseil-cpp//absl/container:flat_hash_map",
         "@abseil-cpp//absl/functional:function_ref",
         "@abseil-cpp//absl/types:span",
         "@curl",

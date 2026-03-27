@@ -137,7 +137,7 @@ add_library(
 target_link_libraries(
     google_cloud_cpp_rest_internal
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
-           nlohmann_json::nlohmann_json)
+           absl::flat_hash_map nlohmann_json::nlohmann_json)
 if (WIN32)
     target_compile_definitions(google_cloud_cpp_rest_internal
                                PRIVATE WIN32_LEAN_AND_MEAN)
