@@ -197,6 +197,7 @@ google_cloud_cpp_add_pkgconfig(
     "Provides REST Transport for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common"
     "libcurl"
+    "absl_flat_hash_map"
     NON_WIN32_REQUIRES
     openssl
     WIN32_LIBS
