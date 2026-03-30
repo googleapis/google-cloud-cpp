@@ -83,7 +83,7 @@ class RestRequest {
 
   // Vector is empty if header name is not found.
   // Header names are case-insensitive; header values are case-sensitive.
-  HttpHeader GetHeader(std::string_view header) const;
+  HttpHeader GetHeader(HttpHeaderName const& header) const;
 
   // Returns all values associated with parameter name.
   // Parameter names and values are case-sensitive.

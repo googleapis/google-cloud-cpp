@@ -57,7 +57,7 @@ class RestContext {
   }
 
   // Header names are case-insensitive; header values are case-sensitive.
-  HttpHeader GetHeader(std::string_view header) const;
+  HttpHeader GetHeader(HttpHeaderName const& header) const;
 
   absl::optional<std::string> local_ip_address() const {
     return local_ip_address_;

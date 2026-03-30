@@ -76,8 +76,8 @@ RestRequest& RestRequest::AddQueryParameter(
                            std::move(parameter.second));
 }
 
-HttpHeader RestRequest::GetHeader(std::string_view header) const {
-  auto iter = headers_.find(absl::AsciiStrToLower(header));
+HttpHeader RestRequest::GetHeader(HttpHeaderName const& header) const {
+  auto iter = headers_.find(header);
   if (iter == headers_.end()) {
     return {};
   }

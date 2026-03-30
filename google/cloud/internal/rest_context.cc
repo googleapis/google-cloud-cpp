@@ -35,8 +35,8 @@ RestContext& RestContext::AddHeader(std::string header, std::string value) & {
   return AddHeader(HttpHeader(std::move(header), std::move(value)));
 }
 
-HttpHeader RestContext::GetHeader(std::string_view header) const {
-  auto iter = headers_.find(absl::AsciiStrToLower(header));
+HttpHeader RestContext::GetHeader(HttpHeaderName const& header) const {
+  auto iter = headers_.find(header);
   if (iter == headers_.end()) {
     return {};
   }
