@@ -16,11 +16,9 @@ description: Runs clang-tidy on all compute libraries.
 gitFileSource:
   path: ci/cloudbuild/cloudbuild.yaml
   repoType: GITHUB
-  revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
 name: v2-47-x-clang-tidy-compute
 sourceToBuild:
-  ref: refs/heads/main
   repoType: GITHUB
   uri: https://github.com/googleapis/google-cloud-cpp
 substitutions:

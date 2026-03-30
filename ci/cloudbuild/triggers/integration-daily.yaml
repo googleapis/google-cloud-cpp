@@ -16,11 +16,9 @@ description: Runs the slow integration tests
 gitFileSource:
   path: ci/cloudbuild/cloudbuild.yaml
   repoType: GITHUB
-  revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
 name: v2-47-x-integration-daily
 sourceToBuild:
-  ref: refs/heads/main
   repoType: GITHUB
   uri: https://github.com/googleapis/google-cloud-cpp
 substitutions:
