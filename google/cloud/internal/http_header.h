@@ -119,7 +119,7 @@ class HttpHeader {
 
   // Performs a case-insensitive comparison of the key.
   bool IsSameKey(HttpHeader const& other) const;
-  bool IsSameKey(std::string_view key) const;
+  bool IsSameKey(HttpHeaderName const& name) const;
 
   std::string name() const { return name_; }
   std::vector<std::string> const& values() const { return values_; }

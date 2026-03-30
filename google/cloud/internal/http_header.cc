@@ -47,8 +47,8 @@ bool operator<(HttpHeader const& lhs, HttpHeader const& rhs) {
   return lhs.name_ < rhs.name_;
 }
 
-bool HttpHeader::IsSameKey(std::string_view key) const {
-  return name_.name() == absl::AsciiStrToLower(key);
+bool HttpHeader::IsSameKey(HttpHeaderName const& name) const {
+  return name_ == name.name();
 }
 
 bool HttpHeader::IsSameKey(HttpHeader const& other) const {
