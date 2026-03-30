@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-03-24T00:02:59.444857698Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 49d3dff1-bee0-4a2b-9bd1-a696d54e48c9
+    branch: v2.47.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-install-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/49d3dff1-bee0-4a2b-9bd1-a696d54e48c9
+name: v2-47-x-cmake-install-ci
 substitutions:
   _BUILD_NAME: cmake-install
   _DISTRO: fedora-latest-cmake
