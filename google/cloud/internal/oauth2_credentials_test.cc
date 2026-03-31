@@ -27,7 +27,6 @@ using ::google::cloud::internal::UnavailableError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::testing::Contains;
-using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Return;
 

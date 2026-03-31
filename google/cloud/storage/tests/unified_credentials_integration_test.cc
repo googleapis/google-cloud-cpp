@@ -44,9 +44,9 @@ using ::google::cloud::UnifiedCredentialsOption;
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::TempFile;
 using ::google::cloud::testing_util::IsOk;
+using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
-using ::testing::StartsWith;
 
 // This is a properly formatted, but invalid, CA Certificate. We will use this
 // as the *only* root of trust and try to contact *.google.com. This will
@@ -88,6 +88,10 @@ KlXA1yQW/ClmnHVg57SN1g1rvOJCcnHBnSbT7kGFqUol
 
 constexpr int kCurleAbortedByCallback = 42;
 constexpr int kCurleOk = 0;
+
+MATCHER_P(HeaderStartsWith, prefix, "header start with") {
+  return absl::StartsWith(std::string{arg}, prefix);
+}
 
 class UnifiedCredentialsIntegrationTest
     : public ::google::cloud::storage::testing::StorageIntegrationTest {
@@ -381,7 +385,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessToken) {
   ASSERT_THAT(headers, IsOk());
 
   auto constexpr kPrefix = "authorization: Bearer ";
-  ASSERT_THAT(*headers, Contains(StartsWith(kPrefix)));
+  ASSERT_THAT(*headers, Contains(HeaderStartsWith(kPrefix)));
   std::string authorization;
   for (auto const& h : *headers) {
     authorization = std::string{h};
@@ -412,7 +416,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
   ASSERT_THAT(headers, IsOk());
 
   auto constexpr kPrefix = "authorization: Bearer ";
-  ASSERT_THAT(*headers, Contains(StartsWith(kPrefix)));
+  ASSERT_THAT(*headers, Contains(HeaderStartsWith(kPrefix)));
   std::string authorization;
   for (auto const& h : *headers) {
     authorization = std::string{h};
@@ -446,7 +450,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
   ASSERT_THAT(headers, IsOk());
 
   auto constexpr kPrefix = "authorization: Bearer ";
-  ASSERT_THAT(*headers, Contains(StartsWith(kPrefix)));
+  ASSERT_THAT(*headers, Contains(HeaderStartsWith(kPrefix)));
   std::string authorization;
   for (auto const& h : *headers) {
     authorization = std::string{h};
