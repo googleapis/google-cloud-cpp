@@ -16,6 +16,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
 #include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {
@@ -46,21 +47,26 @@ StatusOr<std::string> Credentials::project_id(
   return project_id();
 }
 
-StatusOr<std::pair<std::string, std::string>> Credentials::AuthenticationHeader(
-    std::chrono::system_clock::time_point tp) {
+StatusOr<std::vector<rest_internal::HttpHeader>>
+Credentials::AuthenticationHeaders(std::chrono::system_clock::time_point tp) {
+  std::vector<rest_internal::HttpHeader> headers;
   auto token = GetToken(tp);
   if (!token) return std::move(token).status();
-  if (token->token.empty()) return std::make_pair(std::string{}, std::string{});
-  return std::make_pair(std::string{"Authorization"},
-                        absl::StrCat("Bearer ", token->token));
+  if (!token->token.empty()) {
+    headers.emplace_back("Authorization",
+                         absl::StrCat("Bearer ", token->token));
+  }
+  return headers;
 }
 
-StatusOr<std::string> AuthenticationHeaderJoined(
+StatusOr<std::string> AuthenticationHeadersJoined(
     Credentials& credentials, std::chrono::system_clock::time_point tp) {
-  auto header = credentials.AuthenticationHeader(tp);
-  if (!header) return std::move(header).status();
-  if (header->first.empty()) return std::string{};
-  return absl::StrCat(header->first, ": ", header->second);
+  auto headers = credentials.AuthenticationHeaders(tp);
+  if (!headers) return std::move(headers).status();
+  return absl::StrJoin(*headers, ";",
+                       [](std::string* s, rest_internal::HttpHeader const& h) {
+                         *s += std::string{h};
+                       });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

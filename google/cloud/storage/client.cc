@@ -59,7 +59,7 @@ class WrapRestCredentials {
       : impl_(std::move(impl)) {}
 
   StatusOr<std::string> AuthorizationHeader() {
-    return oauth2_internal::AuthenticationHeaderJoined(*impl_);
+    return oauth2_internal::AuthenticationHeadersJoined(*impl_);
   }
 
   StatusOr<std::vector<std::uint8_t>> SignBlob(

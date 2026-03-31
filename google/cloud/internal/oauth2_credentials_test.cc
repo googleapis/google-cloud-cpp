@@ -26,6 +26,7 @@ namespace {
 using ::google::cloud::internal::UnavailableError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Pair;
@@ -43,8 +44,9 @@ TEST(Credentials, AuthorizationHeaderSuccess) {
   auto const expiration = now + std::chrono::seconds(3600);
   EXPECT_CALL(mock, GetToken(now))
       .WillOnce(Return(AccessToken{"test-token", expiration}));
-  auto actual = mock.AuthenticationHeader(now);
-  EXPECT_THAT(actual, IsOkAndHolds(Pair("Authorization", "Bearer test-token")));
+  auto actual = mock.AuthenticationHeaders(now);
+  EXPECT_THAT(actual, IsOkAndHolds(Contains(rest_internal::HttpHeader(
+                          "authorization", "Bearer test-token"))));
 }
 
 TEST(Credentials, AuthenticationHeaderJoinedSuccess) {
@@ -53,8 +55,8 @@ TEST(Credentials, AuthenticationHeaderJoinedSuccess) {
   auto const expiration = now + std::chrono::seconds(3600);
   EXPECT_CALL(mock, GetToken(now))
       .WillOnce(Return(AccessToken{"test-token", expiration}));
-  auto actual = AuthenticationHeaderJoined(mock, now);
-  EXPECT_THAT(actual, IsOkAndHolds("Authorization: Bearer test-token"));
+  auto actual = AuthenticationHeadersJoined(mock, now);
+  EXPECT_THAT(actual, IsOkAndHolds("authorization: Bearer test-token"));
 }
 
 TEST(Credentials, AuthenticationHeaderJoinedEmpty) {
@@ -63,21 +65,21 @@ TEST(Credentials, AuthenticationHeaderJoinedEmpty) {
   auto const expiration = now + std::chrono::seconds(3600);
   EXPECT_CALL(mock, GetToken(now))
       .WillOnce(Return(AccessToken{"", expiration}));
-  auto actual = AuthenticationHeaderJoined(mock, now);
+  auto actual = AuthenticationHeadersJoined(mock, now);
   EXPECT_THAT(actual, IsOkAndHolds(IsEmpty()));
 }
 
 TEST(Credentials, AuthenticationHeaderError) {
   MockCredentials mock;
   EXPECT_CALL(mock, GetToken).WillOnce(Return(UnavailableError("try-again")));
-  auto actual = mock.AuthenticationHeader(std::chrono::system_clock::now());
+  auto actual = mock.AuthenticationHeaders(std::chrono::system_clock::now());
   EXPECT_EQ(actual.status(), UnavailableError("try-again"));
 }
 
 TEST(Credentials, AuthenticationHeaderJoinedError) {
   MockCredentials mock;
   EXPECT_CALL(mock, GetToken).WillOnce(Return(UnavailableError("try-again")));
-  auto actual = AuthenticationHeaderJoined(mock);
+  auto actual = AuthenticationHeadersJoined(mock);
   EXPECT_EQ(actual.status(), UnavailableError("try-again"));
 }
 

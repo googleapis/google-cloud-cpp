@@ -46,12 +46,13 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
 StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
-  auto auth_header =
-      credentials_->AuthenticationHeader(std::chrono::system_clock::now());
-  if (!auth_header) return std::move(auth_header).status();
-
+  auto auth_headers =
+      credentials_->AuthenticationHeaders(std::chrono::system_clock::now());
+  if (!auth_headers) return std::move(auth_headers).status();
   rest_internal::RestRequest rest_request;
-  rest_request.AddHeader(rest_internal::HttpHeader(auth_header.value()));
+  for (auto const& auth_header : *auth_headers) {
+    rest_request.AddHeader(auth_header);
+  }
   rest_request.AddHeader("Content-Type", "application/json");
   rest_request.SetPath(MakeRequestPath(request));
   nlohmann::json payload{

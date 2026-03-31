@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_api_key_credentials.h"
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -24,6 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Pair;
 
@@ -38,8 +40,9 @@ TEST(ApiKeyCredentials, EmptyToken) {
 TEST(ApiKeyCredentials, SetsXGoogApiKeyHeader) {
   ApiKeyCredentials creds("api-key");
   auto const now = std::chrono::system_clock::now();
-  EXPECT_THAT(creds.AuthenticationHeader(now),
-              IsOkAndHolds(Pair("x-goog-api-key", "api-key")));
+  EXPECT_THAT(creds.AuthenticationHeaders(now),
+              IsOkAndHolds(Contains(
+                  rest_internal::HttpHeader("x-goog-api-key", "api-key"))));
 }
 
 }  // namespace

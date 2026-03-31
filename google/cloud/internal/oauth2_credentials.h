@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 
 #include "google/cloud/access_token.h"
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -109,10 +110,11 @@ class Credentials {
   virtual StatusOr<std::string> project_id(Options const&) const;
 
   /**
-   * Returns a header pair used for authentication.
+   * Returns header pairs used for authentication.
    *
    * In most cases, this is the "Authorization" HTTP header. For API key
-   * credentials, it is the "X-Goog-Api-Key" header.
+   * credentials, it is the "X-Goog-Api-Key" header. It may also include the
+   * "x-allowed-locations" header if applicable.
    *
    * If unable to obtain a value for the header, which could happen for
    * `Credentials` that need to be periodically refreshed, the underlying
@@ -120,22 +122,24 @@ class Credentials {
    * Otherwise, the returned value will contain the header pair to be used in
    * HTTP requests.
    */
-  virtual StatusOr<std::pair<std::string, std::string>> AuthenticationHeader(
-      std::chrono::system_clock::time_point tp);
+  virtual StatusOr<std::vector<rest_internal::HttpHeader>>
+  AuthenticationHeaders(std::chrono::system_clock::time_point tp);
 };
 
 /**
- * Returns a header pair as a single string to be used for authentication.
+ * Returns header pairs as a single string to be used for authentication.
  *
  * In most cases, this is the "Authorization" HTTP header. For API key
- * credentials, it is the "X-Goog-Api-Key" header.
+ * credentials, it is the "X-Goog-Api-Key" header. It may also include the
+ * "x-allowed-locations" header if applicable.
+ *
  *
  * If unable to obtain a value for the header, which could happen for
  * `Credentials` that need to be periodically refreshed, the underlying `Status`
  * will indicate failure details from the refresh HTTP request. Otherwise, the
  * returned value will contain the header pair to be used in HTTP requests.
  */
-StatusOr<std::string> AuthenticationHeaderJoined(
+StatusOr<std::string> AuthenticationHeadersJoined(
     Credentials& credentials, std::chrono::system_clock::time_point tp =
                                   std::chrono::system_clock::now());
 
