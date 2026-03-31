@@ -16,13 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_HTTP_HEADER_H
 
 #include "google/cloud/version.h"
+#include "absl/strings/ascii.h"
+#include <cstdint>
 #if UINTPTR_MAX == UINT64_MAX
 #include "absl/container/flat_hash_map.h"
 #else
 #include <unordered_map>
-#endif
-#include "absl/strings/ascii.h"
-#include <cstdint>
+#endif  // UINTPTR_MAX == UINT64_MAX
 #include <string>
 #include <vector>
 
