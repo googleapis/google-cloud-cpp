@@ -158,19 +158,24 @@ class HttpHeader {
   std::vector<std::string> values_;
 };
 
-// Abseil does not guarantee compatibility with 32-bit targets.
-#if defined(_WIN64) || defined(__LP64__) || defined(__x86_64__) || \
-    defined(__ppc64__)
+// Abseil does not guarantee compatibility with 32-bit platforms that they do
+// not test with. Support for such platforms is a community effort. Using
+// std::unordered_map on 32-bit platforms reduces the likelihood of issues
+// arising due to this arrangement.
+#if UINTPTR_MAX == UINT64_MAX
 // 64-bit architecture
 using HttpHeaders = absl::flat_hash_map<HttpHeaderName, HttpHeader>;
 #else
 // 32-bit architecture
+using HttpHeaders = std::unordered_map<HttpHeaderName, HttpHeader>;
+#endif  // UINTPTR_MAX == UINT64_MAX
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
 
+#if UINTPTR_MAX != UINT64_MAX
 // This specialization has to be in the global namespace.
 template <>
 struct std::hash<google::cloud::rest_internal::HttpHeaderName> {
@@ -179,18 +184,6 @@ struct std::hash<google::cloud::rest_internal::HttpHeaderName> {
     return std::hash<std::string>()(k.name());
   }
 };
-
-namespace google {
-namespace cloud {
-namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using HttpHeaders = std::unordered_map<HttpHeaderName, HttpHeader>;
-#endif
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace rest_internal
-}  // namespace cloud
-}  // namespace google
+#endif  // UINTPTR_MAX != UINT64_MAX
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_HTTP_HEADER_H
