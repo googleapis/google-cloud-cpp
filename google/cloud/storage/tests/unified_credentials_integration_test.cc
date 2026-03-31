@@ -21,6 +21,7 @@
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #ifndef _WIN32
 #include <openssl/err.h>
@@ -375,13 +376,18 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessToken) {
   auto default_credentials =
       rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
-  auto header =
-      oauth2_internal::AuthenticationHeadersJoined(*default_credentials);
-  ASSERT_THAT(header, IsOk());
+  auto headers = default_credentials->AuthenticationHeaders(
+      std::chrono::system_clock::now());
+  ASSERT_THAT(headers, IsOk());
 
-  auto constexpr kPrefix = "Authorization: Bearer ";
-  ASSERT_THAT(*header, StartsWith(kPrefix));
-  auto token = header->substr(std::strlen(kPrefix));
+  auto constexpr kPrefix = "authorization: Bearer ";
+  ASSERT_THAT(*headers, Contains(StartsWith(kPrefix)));
+  std::string authorization;
+  for (auto const& h : *headers) {
+    authorization = std::string{h};
+    if (absl::StartsWith(authorization, kPrefix)) break;
+  }
+  auto token = authorization.substr(std::strlen(kPrefix));
 
   auto client = MakeTestClient(Options{}.set<UnifiedCredentialsOption>(
       MakeAccessTokenCredentials(token, expiration)));
@@ -401,13 +407,18 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
   auto default_credentials =
       rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
-  auto header =
-      oauth2_internal::AuthenticationHeadersJoined(*default_credentials);
-  ASSERT_THAT(header, IsOk());
+  auto headers = default_credentials->AuthenticationHeaders(
+      std::chrono::system_clock::now());
+  ASSERT_THAT(headers, IsOk());
 
-  auto constexpr kPrefix = "Authorization: Bearer ";
-  ASSERT_THAT(*header, StartsWith(kPrefix));
-  auto token = header->substr(std::strlen(kPrefix));
+  auto constexpr kPrefix = "authorization: Bearer ";
+  ASSERT_THAT(*headers, Contains(StartsWith(kPrefix)));
+  std::string authorization;
+  for (auto const& h : *headers) {
+    authorization = std::string{h};
+    if (absl::StartsWith(authorization, kPrefix)) break;
+  }
+  auto token = authorization.substr(std::strlen(kPrefix));
 
   testing_util::ScopedEnvironment grpc_roots_pem(
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH", absl::nullopt);
@@ -430,13 +441,18 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
   auto default_credentials =
       rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
-  auto header =
-      oauth2_internal::AuthenticationHeadersJoined(*default_credentials);
-  ASSERT_THAT(header, IsOk());
+  auto headers = default_credentials->AuthenticationHeaders(
+      std::chrono::system_clock::now());
+  ASSERT_THAT(headers, IsOk());
 
-  auto constexpr kPrefix = "Authorization: Bearer ";
-  ASSERT_THAT(*header, StartsWith(kPrefix));
-  auto token = header->substr(std::strlen(kPrefix));
+  auto constexpr kPrefix = "authorization: Bearer ";
+  ASSERT_THAT(*headers, Contains(StartsWith(kPrefix)));
+  std::string authorization;
+  for (auto const& h : *headers) {
+    authorization = std::string{h};
+    if (absl::StartsWith(authorization, kPrefix)) break;
+  }
+  auto token = authorization.substr(std::strlen(kPrefix));
 
   auto client = MakeTestClient(
       EmptyTrustStoreOptions()

@@ -59,16 +59,6 @@ Credentials::AuthenticationHeaders(std::chrono::system_clock::time_point tp) {
   return headers;
 }
 
-StatusOr<std::string> AuthenticationHeadersJoined(
-    Credentials& credentials, std::chrono::system_clock::time_point tp) {
-  auto headers = credentials.AuthenticationHeaders(tp);
-  if (!headers) return std::move(headers).status();
-  return absl::StrJoin(*headers, ";",
-                       [](std::string* s, rest_internal::HttpHeader const& h) {
-                         *s += std::string{h};
-                       });
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

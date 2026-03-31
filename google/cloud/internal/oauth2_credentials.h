@@ -126,23 +126,6 @@ class Credentials {
   AuthenticationHeaders(std::chrono::system_clock::time_point tp);
 };
 
-/**
- * Returns header pairs as a single string to be used for authentication.
- *
- * In most cases, this is the "Authorization" HTTP header. For API key
- * credentials, it is the "X-Goog-Api-Key" header. It may also include the
- * "x-allowed-locations" header if applicable.
- *
- *
- * If unable to obtain a value for the header, which could happen for
- * `Credentials` that need to be periodically refreshed, the underlying `Status`
- * will indicate failure details from the refresh HTTP request. Otherwise, the
- * returned value will contain the header pair to be used in HTTP requests.
- */
-StatusOr<std::string> AuthenticationHeadersJoined(
-    Credentials& credentials, std::chrono::system_clock::time_point tp =
-                                  std::chrono::system_clock::now());
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

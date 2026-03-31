@@ -129,10 +129,8 @@ class HttpHeader {
   std::string name() const { return name_; }
   std::vector<std::string> const& values() const { return values_; }
 
-  // While the RFCs indicate that header keys are case-insensitive, no attempt
-  // to convert them to all lowercase is made. Header keys are printed in the
-  // case they were constructed with. We rely on libcurl to encode them per the
-  // HTTP version used.
+  // The RFCs indicate that header names are case-insensitive. The
+  // HttpHeaderName type converts them to all lowercase.
   //
   // HTTP/1.1 https://www.rfc-editor.org/rfc/rfc7230#section-3.2
   // HTTP/2 https://www.rfc-editor.org/rfc/rfc7540#section-8.1.2

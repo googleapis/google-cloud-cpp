@@ -58,10 +58,6 @@ class WrapRestCredentials {
       std::shared_ptr<oauth2_internal::Credentials> impl)
       : impl_(std::move(impl)) {}
 
-  StatusOr<std::string> AuthorizationHeader() {
-    return oauth2_internal::AuthenticationHeadersJoined(*impl_);
-  }
-
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       SigningAccount const& signing_account, std::string const& blob) const {
     return impl_->SignBlob(signing_account.value_or(impl_->AccountEmail()),

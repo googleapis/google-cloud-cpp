@@ -27,7 +27,6 @@ namespace {
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::testing::Contains;
 using ::testing::IsEmpty;
-using ::testing::Pair;
 
 TEST(ApiKeyCredentials, EmptyToken) {
   ApiKeyCredentials creds("api-key");
