@@ -371,7 +371,7 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolUndersized) {
   }
 }
 
-TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNearMax) {
+TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolAtMax) {
   auto instance_name =
       bigtable::InstanceResource(Project("my-project"), "my-instance")
           .FullName();
@@ -386,9 +386,7 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNearMax) {
       std::make_shared<MockBigtableStub>(), 0));
   DynamicChannelPoolSizingPolicy sizing_policy;
   sizing_policy.minimum_channel_pool_size = 2;
-  sizing_policy.maximum_channel_pool_size = 3;
-  sizing_policy.channels_to_add_per_resize =
-      DynamicChannelPoolSizingPolicy::DiscreteChannels(3);
+  sizing_policy.maximum_channel_pool_size = 2;
 
   MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
       std::uint32_t, std::string const&, StubManager::Priming)>
@@ -411,7 +409,7 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNearMax) {
 
   EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
   auto test_fn = [](std::vector<int> const& new_channel_ids) {
-    EXPECT_THAT(new_channel_ids, ::testing::ElementsAreArray({2}));
+    EXPECT_THAT(new_channel_ids, IsEmpty());
   };
 
   {
@@ -420,7 +418,7 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNearMax) {
   }
 }
 
-TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNotNearMax) {
+TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolBelowMax) {
   auto instance_name =
       bigtable::InstanceResource(Project("my-project"), "my-instance")
           .FullName();
@@ -436,57 +434,6 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNotNearMax) {
   DynamicChannelPoolSizingPolicy sizing_policy;
   sizing_policy.minimum_channel_pool_size = 2;
   sizing_policy.maximum_channel_pool_size = 10;
-  sizing_policy.channels_to_add_per_resize =
-      DynamicChannelPoolSizingPolicy::DiscreteChannels(3);
-
-  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
-      std::uint32_t, std::string const&, StubManager::Priming)>
-      stub_factory_fn;
-
-  // Pool creation should set the pool size increase cooldown timer.
-  EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
-      .WillOnce([&](std::chrono::nanoseconds ns) {
-        EXPECT_THAT(ns.count(),
-                    Eq(std::chrono::nanoseconds(
-                           sizing_policy.pool_size_decrease_cooldown_interval)
-                           .count()));
-        return make_ready_future(StatusOr(std::chrono::system_clock::now()));
-      });
-
-  auto pool = DynamicChannelPool<BigtableStub>::Create(
-      instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
-  DynamicChannelPoolTestWrapper wrapper(pool);
-
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
-  auto test_fn = [](std::vector<int> const& new_channel_ids) {
-    EXPECT_THAT(new_channel_ids, ::testing::ElementsAreArray({2, 3, 4}));
-  };
-
-  {
-    auto lk = wrapper.CreateLock();
-    wrapper.ScheduleAddChannels(lk, test_fn);
-  }
-}
-
-TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolNotNearMaxPercentage) {
-  auto instance_name =
-      bigtable::InstanceResource(Project("my-project"), "my-instance")
-          .FullName();
-  auto refresh_state = std::make_shared<ConnectionRefreshState>(
-      fake_cq_impl_, std::chrono::milliseconds(1),
-      std::chrono::milliseconds(10));
-
-  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
-  channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), 0));
-  channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
-      std::make_shared<MockBigtableStub>(), 0));
-  DynamicChannelPoolSizingPolicy sizing_policy;
-  sizing_policy.minimum_channel_pool_size = 2;
-  sizing_policy.maximum_channel_pool_size = 10;
-  sizing_policy.channels_to_add_per_resize =
-      DynamicChannelPoolSizingPolicy::PercentageOfPoolSize(0.5);
 
   MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
       std::uint32_t, std::string const&, StubManager::Priming)>

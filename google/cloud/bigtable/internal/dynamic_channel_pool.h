@@ -241,28 +241,13 @@ class DynamicChannelPool
     return channel;
   }
 
-  struct ChannelAddVisitor {
-    std::size_t pool_size;
-    explicit ChannelAddVisitor(std::size_t pool_size) : pool_size(pool_size) {}
-    std::size_t operator()(
-        typename bigtable::experimental::DynamicChannelPoolSizingPolicy::
-            DiscreteChannels const& c) const {
-      return c.number;
-    }
-    std::size_t operator()(
-        typename bigtable::experimental::DynamicChannelPoolSizingPolicy::
-            PercentageOfPoolSize const& c) const {
-      return static_cast<std::size_t>(
-          std::floor(static_cast<double>(pool_size) * c.percentage));
-    }
-  };
-
   // Determines the number of channels to add and reserves the channel ids to
   // be used. Lastly, it calls CompletionQueue::RunAsync with a callback that
   // executes AddChannels with the reserved ids.
   void ScheduleAddChannels(
       std::scoped_lock<std::mutex> const&,
       std::function<void(std::vector<int> const&)> const& test_fn = nullptr) {
+    constexpr std::size_t kOneAddedChannel = 1;
     std::size_t num_channels_to_add;
     // If we're undersized due to bad channels, get us back to the minimum size.
     if (channels_.size() < sizing_policy_.minimum_channel_pool_size) {
@@ -271,8 +256,7 @@ class DynamicChannelPool
     } else {
       num_channels_to_add =
           std::min(sizing_policy_.maximum_channel_pool_size - channels_.size(),
-                   absl::visit(ChannelAddVisitor(channels_.size()),
-                               sizing_policy_.channels_to_add_per_resize));
+                   kOneAddedChannel);
     }
     num_pending_channels_ += num_channels_to_add;
     std::vector<int> new_channel_ids;

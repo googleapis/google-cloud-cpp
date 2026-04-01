@@ -42,13 +42,11 @@
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/retry_policy.h"
-#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include <chrono>
 #include <string>
-#include <variant>
 
 namespace google {
 namespace cloud {
@@ -201,18 +199,6 @@ struct DynamicChannelPoolSizingPolicy {
   // for each.
   std::chrono::milliseconds pool_size_decrease_cooldown_interval =
       std::chrono::seconds(120);
-
-  struct DiscreteChannels {
-    explicit DiscreteChannels(int number = 0) : number(number) {}
-    int number;
-  };
-  struct PercentageOfPoolSize {
-    explicit PercentageOfPoolSize(double percentage = 0.0)
-        : percentage(percentage) {}
-    double percentage;
-  };
-  std::variant<DiscreteChannels, PercentageOfPoolSize>
-      channels_to_add_per_resize = DiscreteChannels{1};
 
   // If the average number of outstanding RPCs is below this threshold,
   // the pool size will be decreased.
