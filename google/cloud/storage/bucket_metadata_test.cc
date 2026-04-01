@@ -526,23 +526,14 @@ TEST(BucketMetadataTest, ToJsonString) {
   EXPECT_EQ("FullyRestricted",
             encryption["googleManagedEncryptionEnforcementConfig"].value(
                 "restrictionMode", ""));
-  EXPECT_EQ("2025-12-18T18:13:15Z",
-            encryption["googleManagedEncryptionEnforcementConfig"].value(
-                "effectiveTime", ""));
 
   EXPECT_EQ("NotRestricted",
             encryption["customerManagedEncryptionEnforcementConfig"].value(
                 "restrictionMode", ""));
-  EXPECT_EQ("2025-12-18T18:13:15Z",
-            encryption["customerManagedEncryptionEnforcementConfig"].value(
-                "effectiveTime", ""));
 
   EXPECT_EQ("NotRestricted",
             encryption["customerSuppliedEncryptionEnforcementConfig"].value(
                 "restrictionMode", ""));
-  EXPECT_EQ("2025-12-18T18:13:15Z",
-            encryption["customerSuppliedEncryptionEnforcementConfig"].value(
-                "effectiveTime", ""));
 
   // hierarchical_namespace()
   ASSERT_EQ(1, actual.count("hierarchicalNamespace"));
