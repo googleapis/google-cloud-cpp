@@ -178,12 +178,9 @@ TEST(RestStubTest, GlobalCustomHeadersAppearInRequestTest) {
                    google::cloud::rest_internal::RestRequest const& request) {
         auto const& headers = request.headers();
         EXPECT_THAT(headers,
-                    Contains(Pair("custom-header-1",
-                                  std::vector<std::string>{"value1"})));
+                    Contains(Pair("custom-header-1", ElementsAre("value1"))));
         EXPECT_THAT(headers,
-                    Contains(Pair("custom-header-2",
-                                  std::vector<std::string>{"value2"})));
-
+                    Contains(Pair("custom-header-2", ElementsAre("value2"))));
         return PermanentError();
       });
   auto stub = std::make_unique<RestStub>(global_opts, mock_client, mock_client);

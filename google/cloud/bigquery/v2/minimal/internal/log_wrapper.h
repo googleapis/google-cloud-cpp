@@ -38,10 +38,11 @@ Result LogWrapper(Functor&& functor, rest_internal::RestContext& context,
                   TracingOptions const& options) {
   auto formatter = [options](std::string* out, auto const& header) {
     auto const* delim = options.single_line_mode() ? "&" : "\n";
-    absl::StrAppend(
-        out, " { name: \"", header.first, "\" value: \"",
-        internal::DebugString(absl::StrJoin(header.second, delim), options),
-        "\" }");
+    absl::StrAppend(out, " { name: \"", std::string_view{header.first},
+                    "\" value: \"",
+                    internal::DebugString(
+                        absl::StrJoin(header.second.values(), delim), options),
+                    "\" }");
   };
   GCP_LOG(DEBUG) << where << "() << "
                  << request.DebugString(request_name, options) << ", Context {"

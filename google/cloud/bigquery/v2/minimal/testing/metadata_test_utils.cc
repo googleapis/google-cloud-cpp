@@ -30,13 +30,15 @@ static auto const kUserProject = "test-only-project";
 static auto const kQuotaUser = "test-quota-user";
 
 void VerifyMetadataContext(rest_internal::RestContext& context) {
-  EXPECT_THAT(context.GetHeader("x-goog-api-client"),
+  EXPECT_THAT(context.GetHeader("x-goog-api-client").values(),
               ElementsAre(internal::HandCraftedLibClientHeader()));
-  EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
-  EXPECT_THAT(context.GetHeader("x-goog-user-project"),
+  EXPECT_THAT(context.GetHeader("x-goog-request-params").values(), IsEmpty());
+  EXPECT_THAT(context.GetHeader("x-goog-user-project").values(),
               ElementsAre(kUserProject));
-  EXPECT_THAT(context.GetHeader("x-goog-quota-user"), ElementsAre(kQuotaUser));
-  EXPECT_THAT(context.GetHeader("x-server-timeout"), ElementsAre("3.141"));
+  EXPECT_THAT(context.GetHeader("x-goog-quota-user").values(),
+              ElementsAre(kQuotaUser));
+  EXPECT_THAT(context.GetHeader("x-server-timeout").values(),
+              ElementsAre("3.141"));
 }
 
 Options GetMetadataOptions() {

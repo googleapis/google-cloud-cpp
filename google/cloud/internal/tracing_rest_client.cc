@@ -71,21 +71,22 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
                        *context.local_port());
   }
   for (auto const& kv : context.headers()) {
-    auto const name = "http.request.header." + kv.first;
-    if (kv.second.empty()) {
+    auto const name = "http.request.header." + std::string{kv.first};
+    if (kv.second.EmptyValues()) {
       span->SetAttribute(name, "");
       continue;
     }
     if (absl::EqualsIgnoreCase(kv.first, "authorization")) {
-      span->SetAttribute(name, kv.second.front().substr(0, 32));
+      span->SetAttribute(name, kv.second.values().front().substr(0, 32));
       continue;
     }
     if (absl::EqualsIgnoreCase(kv.first, "x-goog-api-key")) {
       span->SetAttribute(
-          name, kv.second.front().substr(0, kApiKeyHintLength) + "...");
+          name,
+          kv.second.values().front().substr(0, kApiKeyHintLength) + "...");
       continue;
     }
-    span->SetAttribute(name, kv.second.front());
+    span->SetAttribute(name, kv.second.values().front());
   }
   if (!request_result || !(*request_result)) {
     return internal::EndSpan(*span, std::move(request_result));
