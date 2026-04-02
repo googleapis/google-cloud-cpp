@@ -470,7 +470,7 @@ TEST(UnifiedRestCredentialsTest, ApiKey) {
   ASSERT_THAT(oauth2_creds, NotNull());
 
   auto header =
-      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now());
+      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
   EXPECT_THAT(header,
               IsOkAndHolds(Contains(HttpHeader("x-goog-api-key", "api-key"))));
 }

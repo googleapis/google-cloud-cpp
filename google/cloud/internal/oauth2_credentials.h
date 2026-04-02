@@ -21,6 +21,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <absl/strings/match.h>
 #include <chrono>
 #include <cstdint>
 #include <string>
@@ -110,6 +111,13 @@ class Credentials {
   virtual StatusOr<std::string> project_id(Options const&) const;
 
   /**
+   * Returns the "x-allowed-locations" header if applicable for the credential
+   * type.
+   */
+  virtual StatusOr<rest_internal::HttpHeader> AllowedLocations(
+      std::chrono::system_clock::time_point tp, std::string_view endpoint);
+
+  /**
    * Returns header pairs used for authentication.
    *
    * In most cases, this is the "Authorization" HTTP header. For API key
@@ -123,7 +131,8 @@ class Credentials {
    * HTTP requests.
    */
   virtual StatusOr<std::vector<rest_internal::HttpHeader>>
-  AuthenticationHeaders(std::chrono::system_clock::time_point tp);
+  AuthenticationHeaders(std::chrono::system_clock::time_point tp,
+                        std::string_view endpoint);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

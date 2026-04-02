@@ -23,7 +23,6 @@ add_library(
     internal/async_rest_polling_loop.h
     internal/async_rest_polling_loop_custom.h
     internal/async_rest_polling_loop_impl.h
-    internal/async_rest_retry_loop.h
     internal/rest_background_threads_impl.cc
     internal/rest_background_threads_impl.h
     internal/rest_completion_queue_impl.cc

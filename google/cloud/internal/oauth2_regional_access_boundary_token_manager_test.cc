@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,29 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/oauth2_api_key_credentials.h"
+#include "google/cloud/internal/oauth2_regional_access_boundary_token_manager.h"
+// #include "google/cloud/internal/make_status.h"
+// #include "google/cloud/testing_util/status_matchers.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-ApiKeyCredentials::ApiKeyCredentials(std::string api_key)
-    : api_key_(std::move(api_key)) {}
-
-StatusOr<AccessToken> ApiKeyCredentials::GetToken(
-    std::chrono::system_clock::time_point tp) {
-  return AccessToken{std::string{}, tp};
-}
-
-StatusOr<std::vector<rest_internal::HttpHeader>>
-ApiKeyCredentials::AuthenticationHeaders(std::chrono::system_clock::time_point,
-                                         std::string_view) {
-  std::vector<rest_internal::HttpHeader> headers;
-  headers.emplace_back("x-goog-api-key", api_key_);
-  return headers;
-}
-
+namespace {}  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

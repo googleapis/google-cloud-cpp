@@ -39,7 +39,7 @@ TEST(ApiKeyCredentials, EmptyToken) {
 TEST(ApiKeyCredentials, SetsXGoogApiKeyHeader) {
   ApiKeyCredentials creds("api-key");
   auto const now = std::chrono::system_clock::now();
-  EXPECT_THAT(creds.AuthenticationHeaders(now),
+  EXPECT_THAT(creds.AuthenticationHeaders(now, ""),
               IsOkAndHolds(Contains(
                   rest_internal::HttpHeader("x-goog-api-key", "api-key"))));
 }

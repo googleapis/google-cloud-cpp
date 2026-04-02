@@ -39,8 +39,21 @@ struct GenerateAccessTokenRequest {
   std::vector<std::string> delegates;
 };
 
+struct AllowedLocationsRequest {
+  std::string path;
+};
+
+struct AllowedLocationsResponse {
+  std::vector<std::string> locations;
+  std::string encoded_locations;
+};
+
 /// Parse the HTTP response from a `GenerateAccessToken()` call.
 StatusOr<google::cloud::AccessToken> ParseGenerateAccessTokenResponse(
+    rest_internal::RestResponse& response,
+    google::cloud::internal::ErrorContext const& ec);
+
+StatusOr<AllowedLocationsResponse> ParseAllowedLocationsResponse(
     rest_internal::RestResponse& response,
     google::cloud::internal::ErrorContext const& ec);
 
@@ -54,6 +67,11 @@ class MinimalIamCredentialsRest {
 
   virtual StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) = 0;
+
+  virtual StatusOr<AllowedLocationsResponse> AllowedLocations(
+      AllowedLocationsRequest const& request) {
+    return StatusOr<AllowedLocationsResponse>{};
+  }
 
   virtual StatusOr<std::string> universe_domain(
       Options const& options) const = 0;
@@ -78,12 +96,16 @@ class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
   StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) override;
 
+  StatusOr<AllowedLocationsResponse> AllowedLocations(
+      AllowedLocationsRequest const& request) override;
+
   StatusOr<std::string> universe_domain(Options const& options) const override {
     return credentials_->universe_domain(options);
   }
 
  private:
   std::string MakeRequestPath(GenerateAccessTokenRequest const& request) const;
+  std::string MakeRequestPath(AllowedLocationsRequest const& request) const;
 
   std::shared_ptr<oauth2_internal::Credentials> credentials_;
   Options options_;

@@ -370,6 +370,15 @@ StatusOr<std::string> ServiceAccountCredentials::project_id(
   return project_id();
 }
 
+StatusOr<rest_internal::HttpHeader> ServiceAccountCredentials::AllowedLocations(
+    std::chrono::system_clock::time_point tp, std::string_view endpoint) {
+  auto token = rab_token_manager_->GetServiceAccountToken(info_.client_email,
+                                                          tp, endpoint);
+  if (!token.ok()) return std::move(token.status());
+  if (token->empty()) return rest_internal::HttpHeader{};
+  return rest_internal::HttpHeader{"x-allowed-locations", token->token};
+}
+
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
   // Custom universe domains are only supported with JWT, not OAuth tokens.
   if (info.universe_domain.has_value() &&

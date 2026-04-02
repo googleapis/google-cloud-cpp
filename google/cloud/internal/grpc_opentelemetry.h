@@ -108,23 +108,23 @@ future<StatusOr<T>> EndSpan(
   });
 }
 
-/**
- * Returns a traced timer, if OpenTelemetry tracing is enabled.
- */
-template <typename Rep, typename Period>
-future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
-    CompletionQueue& cq, Options const& options,
-    std::chrono::duration<Rep, Period> duration, std::string const& name) {
-  if (TracingEnabled(options)) {
-    auto span = MakeSpan(name);
-    OTelScope scope(span);
-    auto timer = cq.MakeRelativeTimer(duration);
-    return EndSpan(std::move(span), std::move(timer));
-  }
-  (void)options;
-  (void)name;
-  return cq.MakeRelativeTimer(duration);
-}
+// /**
+//  * Returns a traced timer, if OpenTelemetry tracing is enabled.
+//  */
+// template <typename Rep, typename Period>
+// future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
+//     CompletionQueue& cq, Options const& options,
+//     std::chrono::duration<Rep, Period> duration, std::string const& name) {
+//   if (TracingEnabled(options)) {
+//     auto span = MakeSpan(name);
+//     OTelScope scope(span);
+//     auto timer = cq.MakeRelativeTimer(duration);
+//     return EndSpan(std::move(span), std::move(timer));
+//   }
+//   (void)options;
+//   (void)name;
+//   return cq.MakeRelativeTimer(duration);
+// }
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

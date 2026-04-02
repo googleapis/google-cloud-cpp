@@ -33,6 +33,15 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::string IamCredentialsEndpoint(
+    StatusOr<std::string> const& universe_domain) {
+  return absl::StrCat("https://iamcredentials.",
+                      universe_domain ? *universe_domain : "googleapis.com");
+}
+
+}  // namespace
 
 using ::google::cloud::internal::InvalidArgumentError;
 
@@ -46,8 +55,9 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
 StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
-  auto auth_headers =
-      credentials_->AuthenticationHeaders(std::chrono::system_clock::now());
+  auto auth_headers = credentials_->AuthenticationHeaders(
+      std::chrono::system_clock::now(),
+      IamCredentialsEndpoint(universe_domain(Options{})));
   if (!auth_headers) return std::move(auth_headers).status();
   rest_internal::RestRequest rest_request;
   for (auto const& auth_header : *auth_headers) {
@@ -75,10 +85,42 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
 
 std::string MinimalIamCredentialsRestStub::MakeRequestPath(
     GenerateAccessTokenRequest const& request) const {
-  auto ud = universe_domain(Options{});
-  return absl::StrCat("https://iamcredentials.", ud ? *ud : "googleapis.com",
+  return absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
                       "/v1/projects/-/serviceAccounts/",
                       request.service_account, ":generateAccessToken");
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestStub::AllowedLocations(
+    AllowedLocationsRequest const& request) {
+  auto auth_headers = credentials_->AuthenticationHeaders(
+      std::chrono::system_clock::now(),
+      IamCredentialsEndpoint(universe_domain(Options{})));
+  if (!auth_headers) return std::move(auth_headers).status();
+  rest_internal::RestRequest rest_request;
+  for (auto const& auth_header : *auth_headers) {
+    rest_request.AddHeader(auth_header);
+  }
+  rest_request.AddHeader("Content-Type", "application/json");
+  rest_request.SetPath(MakeRequestPath(request));
+  nlohmann::json payload{};
+
+  auto client = client_factory_(options_);
+  rest_internal::RestContext context;
+  auto response = client->Post(context, rest_request, {payload.dump()});
+  if (!response) return std::move(response).status();
+  return ParseAllowedLocationsResponse(
+      **response,
+      internal::ErrorContext(
+          {{"gcloud-cpp.root.class", "MinimalIamCredentialsRestStub"},
+           {"gcloud-cpp.root.function", __func__},
+           {"path", rest_request.path()}}));
+}
+
+std::string MinimalIamCredentialsRestStub::MakeRequestPath(
+    AllowedLocationsRequest const& request) const {
+  return absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
+                      "/v1/", request.path);
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
@@ -132,6 +174,29 @@ StatusOr<AccessToken> ParseGenerateAccessTokenResponse(
         GCP_ERROR_INFO().WithContext(ec));
   }
   return google::cloud::AccessToken{*std::move(token), *expire_time};
+}
+
+StatusOr<AllowedLocationsResponse> ParseAllowedLocationsResponse(
+    rest_internal::RestResponse& response,
+    google::cloud::internal::ErrorContext const& ec) {
+  if (IsHttpError(response)) return AsStatus(std::move(response));
+  auto response_payload =
+      rest_internal::ReadAll(std::move(response).ExtractPayload());
+  if (!response_payload) return std::move(response_payload).status();
+  auto parsed = nlohmann::json::parse(*response_payload, nullptr, false);
+  if (!parsed.is_object()) {
+    return InvalidArgumentError("cannot parse response as a JSON object",
+                                GCP_ERROR_INFO().WithContext(ec));
+  }
+  auto locations = ValidateStringArrayField(parsed, "locations",
+                                            "AllowedLocations() response", ec);
+  if (!locations) return std::move(locations).status();
+
+  auto encoded_locations = ValidateStringField(
+      parsed, "encodedLocations", "AllowedLocations() response", ec);
+  if (!encoded_locations) return std::move(encoded_locations).status();
+  return AllowedLocationsResponse{*std::move(locations),
+                                  *std::move(encoded_locations)};
 }
 
 std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(

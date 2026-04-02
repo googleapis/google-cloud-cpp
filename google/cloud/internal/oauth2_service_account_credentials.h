@@ -18,6 +18,7 @@
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_http_client_factory.h"
+#include "google/cloud/internal/oauth2_regional_access_boundary_token_manager.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -293,6 +294,10 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   StatusOr<std::string> project_id() const override;
   StatusOr<std::string> project_id(Options const&) const override;
 
+  StatusOr<rest_internal::HttpHeader> AllowedLocations(
+      std::chrono::system_clock::time_point tp,
+      std::string_view endpoint) override;
+
  private:
   bool UseOAuth();
   StatusOr<AccessToken> GetTokenOAuth(
@@ -303,6 +308,7 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   ServiceAccountCredentialsInfo info_;
   Options options_;
   HttpClientFactory client_factory_;
+  std::shared_ptr<RegionalAccessBoundaryTokenManager> rab_token_manager_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

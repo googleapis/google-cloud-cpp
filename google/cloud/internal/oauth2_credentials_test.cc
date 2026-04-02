@@ -34,6 +34,9 @@ class MockCredentials : public Credentials {
  public:
   MOCK_METHOD(StatusOr<AccessToken>, GetToken,
               (std::chrono::system_clock::time_point), (override));
+  MOCK_METHOD(StatusOr<rest_internal::HttpHeader>, AllowedLocations,
+              (std::chrono::system_clock::time_point, std::string_view),
+              (override));
 };
 
 TEST(Credentials, AuthorizationHeaderSuccess) {
@@ -42,7 +45,9 @@ TEST(Credentials, AuthorizationHeaderSuccess) {
   auto const expiration = now + std::chrono::seconds(3600);
   EXPECT_CALL(mock, GetToken(now))
       .WillOnce(Return(AccessToken{"test-token", expiration}));
-  auto actual = mock.AuthenticationHeaders(now);
+  EXPECT_CALL(mock, AllowedLocations)
+      .WillOnce(Return(rest_internal::HttpHeader{}));
+  auto actual = mock.AuthenticationHeaders(now, "my-endpoint");
   EXPECT_THAT(actual, IsOkAndHolds(Contains(rest_internal::HttpHeader(
                           "authorization", "Bearer test-token"))));
 }
@@ -50,7 +55,8 @@ TEST(Credentials, AuthorizationHeaderSuccess) {
 TEST(Credentials, AuthenticationHeaderError) {
   MockCredentials mock;
   EXPECT_CALL(mock, GetToken).WillOnce(Return(UnavailableError("try-again")));
-  auto actual = mock.AuthenticationHeaders(std::chrono::system_clock::now());
+  auto actual = mock.AuthenticationHeaders(std::chrono::system_clock::now(),
+                                           "my-endpoint");
   EXPECT_EQ(actual.status(), UnavailableError("try-again"));
 }
 
@@ -58,6 +64,41 @@ TEST(Credentials, ProjectId) {
   MockCredentials mock;
   EXPECT_THAT(mock.project_id(), Not(IsOk()));
   EXPECT_THAT(mock.project_id({}), Not(IsOk()));
+}
+
+TEST(Credentials, AllowedLocationsSuccess) {
+  MockCredentials mock;
+  auto const now = std::chrono::system_clock::now();
+  auto const expiration = now + std::chrono::seconds(3600);
+  EXPECT_CALL(mock, GetToken)
+      .WillOnce(Return(AccessToken{"test-token", expiration}));
+  EXPECT_CALL(mock, AllowedLocations)
+      .WillOnce(Return(
+          rest_internal::HttpHeader("x-allowed-locations", "my-location")));
+
+  auto auth_headers = mock.AuthenticationHeaders(
+      std::chrono::system_clock::now(), "my-endpoint");
+  EXPECT_THAT(
+      auth_headers,
+      IsOkAndHolds(::testing::ElementsAre(
+          rest_internal::HttpHeader("authorization", "Bearer test-token"),
+          rest_internal::HttpHeader("x-allowed-locations", "my-location"))));
+}
+
+TEST(Credentials, AllowedLocationsFailure) {
+  MockCredentials mock;
+  auto const now = std::chrono::system_clock::now();
+  auto const expiration = now + std::chrono::seconds(3600);
+  EXPECT_CALL(mock, GetToken)
+      .WillOnce(Return(AccessToken{"test-token", expiration}));
+  EXPECT_CALL(mock, AllowedLocations)
+      .WillOnce(Return(internal::DeadlineExceededError("RPC took too long")));
+
+  auto auth_headers = mock.AuthenticationHeaders(
+      std::chrono::system_clock::now(), "my-endpoint");
+  EXPECT_THAT(auth_headers,
+              IsOkAndHolds(::testing::ElementsAre(rest_internal::HttpHeader(
+                  "authorization", "Bearer test-token"))));
 }
 
 }  // namespace

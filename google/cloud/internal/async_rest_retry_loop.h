@@ -16,12 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_REST_RETRY_LOOP_H
 
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/completion_queue.h"
+// #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/call_context.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/options.h"
@@ -167,14 +167,15 @@ struct FutureValueType<future<T>> {
  * functions.  If the value is visible, the retry loop will stop on the next
  * callback and/or before the next request or timer is issued.
  */
-template <typename Functor, typename Request, typename RetryPolicyType>
+template <typename Functor, typename Request, typename RetryPolicyType,
+          typename CompletionQueueType>
 class AsyncRestRetryLoopImpl
-    : public std::enable_shared_from_this<
-          AsyncRestRetryLoopImpl<Functor, Request, RetryPolicyType>> {
+    : public std::enable_shared_from_this<AsyncRestRetryLoopImpl<
+          Functor, Request, RetryPolicyType, CompletionQueueType>> {
  public:
   AsyncRestRetryLoopImpl(std::unique_ptr<RetryPolicyType> retry_policy,
                          std::unique_ptr<BackoffPolicy> backoff_policy,
-                         Idempotency idempotency, CompletionQueue cq,
+                         Idempotency idempotency, CompletionQueueType cq,
                          Functor&& functor, internal::ImmutableOptions options,
                          Request request, char const* location)
       : retry_policy_(std::move(retry_policy)),
@@ -194,7 +195,7 @@ class AsyncRestRetryLoopImpl
   ~AsyncRestRetryLoopImpl() = default;
 
   using ReturnType = ::google::cloud::internal::invoke_result_t<
-      Functor, CompletionQueue&, std::unique_ptr<RestContext>,
+      Functor, CompletionQueueType&, std::unique_ptr<RestContext>,
       internal::ImmutableOptions, Request const&>;
   using T = typename FutureValueType<ReturnType>::value_type;
 
@@ -329,7 +330,7 @@ class AsyncRestRetryLoopImpl
   std::unique_ptr<RetryPolicyType> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   Idempotency idempotency_ = Idempotency::kNonIdempotent;
-  CompletionQueue cq_;
+  CompletionQueueType cq_;
   std::decay_t<Functor> functor_;
   Request request_;
   char const* location_ = "unknown";
@@ -352,24 +353,26 @@ class AsyncRestRetryLoopImpl
  */
 template <
     typename Functor, typename Request, typename RetryPolicyType,
+    typename CompletionQueueType,
     std::enable_if_t<
         google::cloud::internal::is_invocable<
-            Functor, CompletionQueue&, std::unique_ptr<RestContext>,
+            Functor, CompletionQueueType&, std::unique_ptr<RestContext>,
             google::cloud::internal::ImmutableOptions, Request const&>::value,
         int> = 0>
 auto AsyncRestRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                         std::unique_ptr<BackoffPolicy> backoff_policy,
-                        Idempotency idempotency, CompletionQueue cq,
+                        Idempotency idempotency, CompletionQueueType cq,
                         Functor&& functor, internal::ImmutableOptions options,
                         Request request, char const* location)
     -> google::cloud::internal::invoke_result_t<
-        Functor, CompletionQueue&, std::unique_ptr<RestContext>,
+        Functor, CompletionQueueType&, std::unique_ptr<RestContext>,
         google::cloud::internal::ImmutableOptions, Request const&> {
-  auto loop = std::make_shared<
-      AsyncRestRetryLoopImpl<Functor, Request, RetryPolicyType>>(
-      std::move(retry_policy), std::move(backoff_policy), idempotency,
-      std::move(cq), std::forward<Functor>(functor), std::move(options),
-      std::move(request), location);
+  auto loop =
+      std::make_shared<AsyncRestRetryLoopImpl<Functor, Request, RetryPolicyType,
+                                              CompletionQueueType>>(
+          std::move(retry_policy), std::move(backoff_policy), idempotency,
+          std::move(cq), std::forward<Functor>(functor), std::move(options),
+          std::move(request), location);
   return loop->Start();
 }
 

@@ -381,7 +381,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessToken) {
       rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
   auto headers = default_credentials->AuthenticationHeaders(
-      std::chrono::system_clock::now());
+      std::chrono::system_clock::now(), "");
   ASSERT_THAT(headers, IsOk());
 
   auto constexpr kPrefix = "authorization: Bearer ";
@@ -412,7 +412,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
       rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
   auto headers = default_credentials->AuthenticationHeaders(
-      std::chrono::system_clock::now());
+      std::chrono::system_clock::now(), "");
   ASSERT_THAT(headers, IsOk());
 
   auto constexpr kPrefix = "authorization: Bearer ";
@@ -446,7 +446,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
       rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
   auto headers = default_credentials->AuthenticationHeaders(
-      std::chrono::system_clock::now());
+      std::chrono::system_clock::now(), "");
   ASSERT_THAT(headers, IsOk());
 
   auto constexpr kPrefix = "authorization: Bearer ";

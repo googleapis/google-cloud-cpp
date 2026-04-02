@@ -257,6 +257,24 @@ std::function<void(std::chrono::duration<Rep, Period>)> MakeTracedSleeper(
 void AddSpanAttribute(Options const& options, std::string const& key,
                       std::string const& value);
 
+/**
+ * Returns a traced timer, if OpenTelemetry tracing is enabled.
+ */
+template <typename Rep, typename Period, typename CompletionQueueType>
+future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
+    CompletionQueueType& cq, Options const& options,
+    std::chrono::duration<Rep, Period> duration, std::string const& name) {
+  if (TracingEnabled(options)) {
+    auto span = MakeSpan(name);
+    OTelScope scope(span);
+    auto timer = cq.MakeRelativeTimer(duration);
+    return EndSpan(std::move(span), std::move(timer));
+  }
+  (void)options;
+  (void)name;
+  return cq.MakeRelativeTimer(duration);
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

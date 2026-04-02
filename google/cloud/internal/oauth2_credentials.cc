@@ -47,14 +47,27 @@ StatusOr<std::string> Credentials::project_id(
   return project_id();
 }
 
+StatusOr<rest_internal::HttpHeader> Credentials::AllowedLocations(
+    std::chrono::system_clock::time_point tp, std::string_view) {
+  return {};
+}
+
 StatusOr<std::vector<rest_internal::HttpHeader>>
-Credentials::AuthenticationHeaders(std::chrono::system_clock::time_point tp) {
+Credentials::AuthenticationHeaders(std::chrono::system_clock::time_point tp,
+                                   std::string_view endpoint) {
   std::vector<rest_internal::HttpHeader> headers;
   auto token = GetToken(tp);
   if (!token) return std::move(token).status();
   if (!token->token.empty()) {
     headers.emplace_back("Authorization",
                          absl::StrCat("Bearer ", token->token));
+  }
+
+  auto allowed_locations = AllowedLocations(tp, endpoint);
+  // Not all credential types support the x-allowed-locations header. For those
+  // that do, if there is a problem retrieving the header, omit the header.
+  if (allowed_locations.ok() && !allowed_locations->empty()) {
+    headers.push_back(*std::move(allowed_locations));
   }
   return headers;
 }
