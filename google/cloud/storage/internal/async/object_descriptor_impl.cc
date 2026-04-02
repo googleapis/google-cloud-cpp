@@ -65,10 +65,12 @@ void ObjectDescriptorImpl::Start(
 }
 
 bool ObjectDescriptorImpl::IsOpen() const {
-  std::unique_lock<std::mutex> lk(mu_);
-  if (cancelled_) return false;
-  if (stream_manager_->Empty()) return false;
-  return transport_ok_();
+  {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (cancelled_) return false;
+    if (stream_manager_->Empty()) return false;
+  }
+  return !transport_ok_ || transport_ok_();
 }
 
 void ObjectDescriptorImpl::Cancel() {

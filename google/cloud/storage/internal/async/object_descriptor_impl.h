@@ -126,7 +126,6 @@ class ObjectDescriptorImpl
       google::cloud::StatusOr<storage_internal::OpenStreamResult>>
       pending_stream_;
   bool cancelled_ = false;
-  bool permanent_failure_ = false;
   std::function<bool()> transport_ok_;
 };
 
