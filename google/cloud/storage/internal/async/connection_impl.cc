@@ -382,7 +382,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   return pending.then(
       [current, request = std::move(p.request), persisted_size,
        hash = std::move(hash_function), fa = std::move(factory)](auto f) mutable
-          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+      -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
         std::unique_ptr<AsyncWriterConnectionImpl> impl;
@@ -438,7 +438,7 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
   return StartUnbufferedUpload(std::move(p))
       .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
-                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+            -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         auto factory = [upload_id = (*w)->UploadId(),
@@ -472,15 +472,14 @@ AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
   };
 
   auto f = make_unbuffered();
-  return f.then(
-      [current = std::move(current),
-       make_unbuffered = std::move(make_unbuffered)](auto f) mutable
-          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-        auto w = f.get();
-        if (!w) return std::move(w).status();
-        return MakeWriterConnectionBuffered(std::move(make_unbuffered),
-                                            *std::move(w), *current);
-      });
+  return f.then([current = std::move(current),
+                 make_unbuffered = std::move(make_unbuffered)](auto f) mutable
+                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+    auto w = f.get();
+    if (!w) return std::move(w).status();
+    return MakeWriterConnectionBuffered(std::move(make_unbuffered),
+                                        *std::move(w), *current);
+  });
 }
 
 future<StatusOr<google::storage::v2::Object>>
