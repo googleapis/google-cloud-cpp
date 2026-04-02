@@ -142,6 +142,7 @@ void UpdateBucketEncryptionEnforcementConfig(
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
+    if (!original) throw std::move(original).status();
 
     gcs::BucketMetadata updated_metadata = *original;
     gcs::BucketEncryption encryption;
@@ -155,8 +156,6 @@ void UpdateBucketEncryptionEnforcementConfig(
     // 2. Remove a specific type (e.g., remove CMEK enforcement)
     encryption.customer_managed_encryption_enforcement_config.restriction_mode =
         "NotRestricted";
-    // For the update, need to specify all three configs, so keeping this same
-    // as before
     encryption.customer_supplied_encryption_enforcement_config
         .restriction_mode = "FullyRestricted";
 
