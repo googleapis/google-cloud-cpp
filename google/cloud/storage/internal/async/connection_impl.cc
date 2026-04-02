@@ -240,14 +240,14 @@ AsyncConnectionImpl::Open(OpenParams p) {
     if (!result) return std::move(result).status();
 
     auto transport_ok = [refresh] {
-      for (auto const& channel : refresh->channels()) {
-        auto state = channel->GetState(false);
-        if (state == GRPC_CHANNEL_READY || state == GRPC_CHANNEL_IDLE ||
-            state == GRPC_CHANNEL_CONNECTING) {
-          return true;
-        }
-      }
-      return false;
+      if (!refresh) return true;
+      auto const& channels = refresh->channels();
+      return std::any_of(
+          channels.begin(), channels.end(), [](auto const& channel) {
+            auto state = channel->GetState(false);
+            return state == GRPC_CHANNEL_READY || state == GRPC_CHANNEL_IDLE ||
+                   state == GRPC_CHANNEL_CONNECTING;
+          });
     };
     auto impl = std::make_shared<ObjectDescriptorImpl>(
         std::move(rp), std::move(fa), std::move(rs), std::move(result->stream),
@@ -382,7 +382,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   return pending.then(
       [current, request = std::move(p.request), persisted_size,
        hash = std::move(hash_function), fa = std::move(factory)](auto f) mutable
-      -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
         std::unique_ptr<AsyncWriterConnectionImpl> impl;
@@ -438,7 +438,7 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
   return StartUnbufferedUpload(std::move(p))
       .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
-            -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         auto factory = [upload_id = (*w)->UploadId(),
@@ -472,14 +472,15 @@ AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
   };
 
   auto f = make_unbuffered();
-  return f.then([current = std::move(current),
-                 make_unbuffered = std::move(make_unbuffered)](auto f) mutable
-                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-    auto w = f.get();
-    if (!w) return std::move(w).status();
-    return MakeWriterConnectionBuffered(std::move(make_unbuffered),
-                                        *std::move(w), *current);
-  });
+  return f.then(
+      [current = std::move(current),
+       make_unbuffered = std::move(make_unbuffered)](auto f) mutable
+          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        return MakeWriterConnectionBuffered(std::move(make_unbuffered),
+                                            *std::move(w), *current);
+      });
 }
 
 future<StatusOr<google::storage::v2::Object>>
