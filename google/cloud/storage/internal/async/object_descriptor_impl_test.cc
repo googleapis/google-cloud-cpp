@@ -67,15 +67,18 @@ auto constexpr kMetadataText = R"pb(
 
 auto NoResume() { return storage::LimitedErrorCountResumePolicy(0)(); }
 
-auto MakeTested(std::unique_ptr<storage::ResumePolicy> resume_policy,
-                OpenStreamFactory make_stream,
-                google::storage::v2::BidiReadObjectSpec read_object_spec,
-                std::shared_ptr<OpenStream> stream) {
+auto MakeTested(
+    std::unique_ptr<storage::ResumePolicy> resume_policy,
+    OpenStreamFactory make_stream,
+    google::storage::v2::BidiReadObjectSpec read_object_spec,
+    std::shared_ptr<OpenStream> stream,
+    std::function<bool()> transport_ok = [] { return true; }) {
   Options options;
   options.set<storage::EnableMultiStreamOptimizationOption>(true);
   return std::make_shared<ObjectDescriptorImpl>(
       std::move(resume_policy), std::move(make_stream),
-      std::move(read_object_spec), std::move(stream), std::move(options));
+      std::move(read_object_spec), std::move(stream), std::move(options),
+      std::move(transport_ok));
 }
 
 MATCHER_P(IsProtoEqualModuloRepeatedFieldOrdering, value,
@@ -1782,6 +1785,83 @@ TEST(ObjectDescriptorImpl, MultiStreamOptimizationDisabled) {
   tested->MakeSubsequentStream();
 
   tested.reset();
+}
+
+/// @test Verify that IsOpen() is true by default.
+TEST(ObjectDescriptorImpl, IsOpenTrueByDefault) {
+  MockFactory factory;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
+  EXPECT_TRUE(tested->IsOpen());
+}
+
+/// @test Verify that IsOpen() is false after Cancel().
+TEST(ObjectDescriptorImpl, IsOpenFalseOnCancel) {
+  MockFactory factory;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(2));
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)));
+  EXPECT_TRUE(tested->IsOpen());
+  tested->Cancel();
+  EXPECT_FALSE(tested->IsOpen());
+}
+
+/// @test Verify that IsOpen() is false if transport health check fails.
+TEST(ObjectDescriptorImpl, IsOpenFalseOnPermanentError) {
+  MockFactory factory;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Finish).WillOnce(Return(make_ready_future(Status{})));
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+  bool transport_ok = true;
+  auto transport_ok_callback = [&transport_ok] { return transport_ok; };
+
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)),
+                           transport_ok_callback);
+
+  EXPECT_TRUE(tested->IsOpen());
+  transport_ok = false;
+  EXPECT_FALSE(tested->IsOpen());
+}
+
+TEST(ObjectDescriptorImpl, IsOpenFalseOnTransportFailure) {
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Cancel).Times(1);
+  EXPECT_CALL(*stream, Finish).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  MockFactory factory;
+  auto transport_ok = [] { return false; };
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), Options{},
+      std::move(transport_ok));
+  EXPECT_FALSE(tested->IsOpen());
+}
+
+TEST(ObjectDescriptorImpl, IsOpenTrueOnTransportSuccess) {
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Cancel).Times(1);
+  EXPECT_CALL(*stream, Finish).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  MockFactory factory;
+  auto transport_ok = [] { return true; };
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), Options{},
+      std::move(transport_ok));
+  EXPECT_TRUE(tested->IsOpen());
 }
 
 }  // namespace

@@ -55,6 +55,7 @@
 #include "google/cloud/internal/async_streaming_read_rpc_timeout.h"
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
+#include <grpcpp/grpcpp.h>
 #include <memory>
 #include <utility>
 
@@ -231,19 +232,29 @@ AsyncConnectionImpl::Open(OpenParams p) {
 
   auto pending = factory(std::move(initial_request));
   using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
-  return pending.then(
-      [rp = std::move(resume_policy), fa = std::move(factory),
-       rs = std::move(p.read_spec),
-       options = std::move(p.options)](auto f) mutable -> StatusOr<ReturnType> {
-        auto result = f.get();
-        if (!result) return std::move(result).status();
+  return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
+                       rs = std::move(p.read_spec),
+                       options = std::move(p.options), refresh = refresh_](
+                          auto f) mutable -> StatusOr<ReturnType> {
+    auto result = f.get();
+    if (!result) return std::move(result).status();
 
-        auto impl = std::make_shared<ObjectDescriptorImpl>(
-            std::move(rp), std::move(fa), std::move(rs),
-            std::move(result->stream), std::move(options));
-        impl->Start(std::move(result->first_response));
-        return ReturnType(impl);
-      });
+    auto transport_ok = [refresh] {
+      for (auto const& channel : refresh->channels()) {
+        auto state = channel->GetState(false);
+        if (state == GRPC_CHANNEL_READY || state == GRPC_CHANNEL_IDLE ||
+            state == GRPC_CHANNEL_CONNECTING) {
+          return true;
+        }
+      }
+      return false;
+    };
+    auto impl = std::make_shared<ObjectDescriptorImpl>(
+        std::move(rp), std::move(fa), std::move(rs), std::move(result->stream),
+        std::move(options), std::move(transport_ok));
+    impl->Start(std::move(result->first_response));
+    return ReturnType(impl);
+  });
 }
 
 future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>

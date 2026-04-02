@@ -61,6 +61,14 @@ class ObjectDescriptorConnection {
   virtual std::unique_ptr<AsyncReaderConnection> Read(ReadParams p) = 0;
 
   virtual void MakeSubsequentStream() = 0;
+
+  /**
+   * Returns true if the descriptor is open.
+   *
+   * A descriptor is open if it has not been cancelled and has not hit a
+   * permanent failure.
+   */
+  virtual bool IsOpen() const = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
