@@ -144,6 +144,48 @@ StorageControlClient::RenameFolder(
   return connection_->RenameFolder(operation);
 }
 
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlClient::DeleteFolderRecursive(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::DeleteFolderRecursiveRequest request;
+  request.set_name(name);
+  return connection_->DeleteFolderRecursive(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::DeleteFolderRecursive(NoAwaitTag, std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::DeleteFolderRecursiveRequest request;
+  request.set_name(name);
+  return connection_->DeleteFolderRecursive(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlClient::DeleteFolderRecursive(
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFolderRecursive(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::DeleteFolderRecursive(
+    NoAwaitTag,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFolderRecursive(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlClient::DeleteFolderRecursive(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFolderRecursive(operation);
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlClient::GetStorageLayout(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -41,7 +41,7 @@ Options NodeTypesDefaultOptions(Options options) {
   if (!options.has<compute_node_types_v1::NodeTypesRetryPolicyOption>()) {
     options.set<compute_node_types_v1::NodeTypesRetryPolicyOption>(
         compute_node_types_v1::NodeTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_node_types_v1::NodeTypesBackoffPolicyOption>()) {

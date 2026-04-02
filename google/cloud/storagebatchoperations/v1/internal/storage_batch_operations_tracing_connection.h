@@ -28,8 +28,6 @@ namespace cloud {
 namespace storagebatchoperations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class StorageBatchOperationsTracingConnection
     : public storagebatchoperations_v1::StorageBatchOperationsConnection {
  public:
@@ -70,6 +68,15 @@ class StorageBatchOperationsTracingConnection
   CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const&
                 request) override;
 
+  StreamRange<google::cloud::storagebatchoperations::v1::BucketOperation>
+  ListBucketOperations(
+      google::cloud::storagebatchoperations::v1::ListBucketOperationsRequest
+          request) override;
+
+  StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+  GetBucketOperation(google::cloud::storagebatchoperations::v1::
+                         GetBucketOperationRequest const& request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
@@ -92,8 +99,6 @@ class StorageBatchOperationsTracingConnection
   std::shared_ptr<storagebatchoperations_v1::StorageBatchOperationsConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

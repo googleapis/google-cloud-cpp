@@ -42,7 +42,7 @@ Options CloudApiRegistryDefaultOptions(Options options) {
   if (!options.has<apiregistry_v1::CloudApiRegistryRetryPolicyOption>()) {
     options.set<apiregistry_v1::CloudApiRegistryRetryPolicyOption>(
         apiregistry_v1::CloudApiRegistryLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<apiregistry_v1::CloudApiRegistryBackoffPolicyOption>()) {

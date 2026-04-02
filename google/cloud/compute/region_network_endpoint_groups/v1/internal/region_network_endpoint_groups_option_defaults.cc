@@ -47,7 +47,7 @@ Options RegionNetworkEndpointGroupsDefaultOptions(Options options) {
                     RegionNetworkEndpointGroupsRetryPolicyOption>(
         compute_region_network_endpoint_groups_v1::
             RegionNetworkEndpointGroupsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_network_endpoint_groups_v1::

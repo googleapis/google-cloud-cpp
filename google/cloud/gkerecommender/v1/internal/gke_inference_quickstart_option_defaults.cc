@@ -43,7 +43,7 @@ Options GkeInferenceQuickstartDefaultOptions(Options options) {
            .has<gkerecommender_v1::GkeInferenceQuickstartRetryPolicyOption>()) {
     options.set<gkerecommender_v1::GkeInferenceQuickstartRetryPolicyOption>(
         gkerecommender_v1::GkeInferenceQuickstartLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

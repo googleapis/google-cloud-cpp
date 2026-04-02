@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_CONNECTION_H
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_retry_traits.h"
+#include "google/cloud/managedkafka/v1/managed_kafka.pb.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/managedkafka/v1/managed_kafka.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

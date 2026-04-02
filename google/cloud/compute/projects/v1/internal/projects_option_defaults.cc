@@ -41,7 +41,7 @@ Options ProjectsDefaultOptions(Options options) {
   if (!options.has<compute_projects_v1::ProjectsRetryPolicyOption>()) {
     options.set<compute_projects_v1::ProjectsRetryPolicyOption>(
         compute_projects_v1::ProjectsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_projects_v1::ProjectsBackoffPolicyOption>()) {

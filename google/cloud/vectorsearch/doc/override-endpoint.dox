@@ -1,0 +1,43 @@
+/*!
+@page vectorsearch-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `vectorsearch_v1::DataObjectServiceClient`:
+
+@snippet data_object_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c vectorsearch_v1::DataObjectServiceClient](@ref vectorsearch_v1::DataObjectServiceClient-endpoint-snippet)
+- [\c vectorsearch_v1::DataObjectSearchServiceClient](@ref vectorsearch_v1::DataObjectSearchServiceClient-endpoint-snippet)
+- [\c vectorsearch_v1::VectorSearchServiceClient](@ref vectorsearch_v1::VectorSearchServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page vectorsearch_v1::DataObjectServiceClient-endpoint-snippet Override vectorsearch_v1::DataObjectServiceClient Endpoint Configuration
+
+@snippet google/cloud/vectorsearch/v1/samples/data_object_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page vectorsearch_v1::DataObjectSearchServiceClient-endpoint-snippet Override vectorsearch_v1::DataObjectSearchServiceClient Endpoint Configuration
+
+@snippet google/cloud/vectorsearch/v1/samples/data_object_search_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page vectorsearch_v1::VectorSearchServiceClient-endpoint-snippet Override vectorsearch_v1::VectorSearchServiceClient Endpoint Configuration
+
+@snippet google/cloud/vectorsearch/v1/samples/vector_search_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

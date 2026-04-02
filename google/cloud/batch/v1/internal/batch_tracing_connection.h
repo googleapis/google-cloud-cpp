@@ -28,8 +28,6 @@ namespace cloud {
 namespace batch_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class BatchServiceTracingConnection : public batch_v1::BatchServiceConnection {
  public:
   ~BatchServiceTracingConnection() override = default;
@@ -95,8 +93,6 @@ class BatchServiceTracingConnection : public batch_v1::BatchServiceConnection {
  private:
   std::shared_ptr<batch_v1::BatchServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

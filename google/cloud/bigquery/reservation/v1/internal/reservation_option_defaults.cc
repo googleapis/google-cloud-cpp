@@ -43,7 +43,7 @@ Options ReservationServiceDefaultOptions(Options options) {
           bigquery_reservation_v1::ReservationServiceRetryPolicyOption>()) {
     options.set<bigquery_reservation_v1::ReservationServiceRetryPolicyOption>(
         bigquery_reservation_v1::ReservationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

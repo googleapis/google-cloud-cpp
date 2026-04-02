@@ -43,7 +43,7 @@ Options IdentityAwareProxyAdminServiceDefaultOptions(Options options) {
   if (!options.has<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>()) {
     options.set<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>(
         iap_v1::IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

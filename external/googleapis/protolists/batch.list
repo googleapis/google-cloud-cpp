@@ -1,4 +1,4 @@
-@com_google_googleapis//google/cloud/batch/v1:batch.proto
-@com_google_googleapis//google/cloud/batch/v1:job.proto
-@com_google_googleapis//google/cloud/batch/v1:task.proto
-@com_google_googleapis//google/cloud/batch/v1:volume.proto
+@googleapis//google/cloud/batch/v1:batch.proto
+@googleapis//google/cloud/batch/v1:job.proto
+@googleapis//google/cloud/batch/v1:task.proto
+@googleapis//google/cloud/batch/v1:volume.proto

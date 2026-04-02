@@ -26,6 +26,9 @@
 #include <memory>
 #include <string>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
@@ -117,6 +120,12 @@ class BigtableMetadata : public BigtableStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;
 
+  future<StatusOr<google::bigtable::v2::PingAndWarmResponse>> AsyncPingAndWarm(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::PingAndWarmRequest const& request) override;
+
   future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
   AsyncReadModifyWriteRow(
       google::cloud::CompletionQueue& cq,
@@ -145,5 +154,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_METADATA_DECORATOR_H

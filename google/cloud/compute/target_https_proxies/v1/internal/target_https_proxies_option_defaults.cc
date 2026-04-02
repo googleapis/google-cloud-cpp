@@ -45,7 +45,7 @@ Options TargetHttpsProxiesDefaultOptions(Options options) {
     options.set<
         compute_target_https_proxies_v1::TargetHttpsProxiesRetryPolicyOption>(
         compute_target_https_proxies_v1::
-            TargetHttpsProxiesLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            TargetHttpsProxiesLimitedTimeRetryPolicy(std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_target_https_proxies_v1::

@@ -17,11 +17,14 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_stub.h"
+#include "google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -75,3 +78,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_publishing_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

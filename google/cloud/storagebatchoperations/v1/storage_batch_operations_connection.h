@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_CONNECTION_H
 
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_retry_traits.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations.pb.h"
 #include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/storagebatchoperations/v1/storage_batch_operations.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -218,6 +218,16 @@ class StorageBatchOperationsConnection {
   virtual StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
   CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const&
                 request);
+
+  virtual StreamRange<
+      google::cloud::storagebatchoperations::v1::BucketOperation>
+  ListBucketOperations(
+      google::cloud::storagebatchoperations::v1::ListBucketOperationsRequest
+          request);
+
+  virtual StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+  GetBucketOperation(google::cloud::storagebatchoperations::v1::
+                         GetBucketOperationRequest const& request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

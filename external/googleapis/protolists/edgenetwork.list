@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/edgenetwork/v1:resources.proto
-@com_google_googleapis//google/cloud/edgenetwork/v1:service.proto
+@googleapis//google/cloud/edgenetwork/v1:resources.proto
+@googleapis//google/cloud/edgenetwork/v1:service.proto

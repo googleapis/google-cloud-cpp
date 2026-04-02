@@ -28,8 +28,6 @@ namespace cloud {
 namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DlpServiceTracingConnection : public dlp_v2::DlpServiceConnection {
  public:
   ~DlpServiceTracingConnection() override = default;
@@ -251,8 +249,6 @@ class DlpServiceTracingConnection : public dlp_v2::DlpServiceConnection {
  private:
   std::shared_ptr<dlp_v2::DlpServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

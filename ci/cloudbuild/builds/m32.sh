@@ -35,6 +35,7 @@ readonly ENABLED_FEATURES
 # This is the build to test with -m32, which requires a toolchain file.
 io::run cmake "${cmake_args[@]}" \
   "--toolchain" "${PROJECT_ROOT}/ci/etc/m32-toolchain.cmake" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)

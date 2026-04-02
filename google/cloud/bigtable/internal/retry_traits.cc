@@ -16,8 +16,8 @@
 #include "google/cloud/internal/status_payload_keys.h"
 #include "google/cloud/status.h"
 #include "absl/strings/match.h"
-#include <google/rpc/error_details.pb.h>
-#include <google/rpc/status.pb.h>
+#include "google/rpc/error_details.pb.h"
+#include "google/rpc/status.pb.h"
 
 namespace google {
 namespace cloud {

@@ -21,13 +21,9 @@ namespace storage {
 namespace testing {
 
 using ::testing::Return;
-using ::testing::ReturnRef;
 
 ClientUnitTest::ClientUnitTest()
-    : mock_(std::make_shared<testing::MockClient>()),
-      client_options_(ClientOptions(oauth2::CreateAnonymousCredentials())) {
-  EXPECT_CALL(*mock_, client_options())
-      .WillRepeatedly(ReturnRef(client_options_));
+    : mock_(std::make_shared<testing::MockClient>()) {
   EXPECT_CALL(*mock_, options)
       .WillRepeatedly(Return(storage::internal::DefaultOptionsWithCredentials(
           Options{}

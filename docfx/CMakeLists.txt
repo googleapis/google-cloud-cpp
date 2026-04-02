@@ -72,13 +72,11 @@ add_library(
     toc_entry.cc
     toc_entry.h
     yaml_context.cc
-    yaml_context.h
-    yaml_emit.cc
-    yaml_emit.h)
+    yaml_context.h)
 google_cloud_cpp_add_common_options(docfx)
 target_include_directories(docfx PUBLIC "${PROJECT_SOURCE_DIR}")
 target_compile_features(docfx PUBLIC cxx_std_17)
-target_link_libraries(docfx PUBLIC pugixml::pugixml yaml-cpp
+target_link_libraries(docfx PUBLIC pugixml::pugixml yaml-cpp::yaml-cpp
                                    nlohmann_json::nlohmann_json)
 create_bazel_config(docfx YEAR "2023")
 

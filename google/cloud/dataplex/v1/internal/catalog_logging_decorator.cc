@@ -17,13 +17,16 @@
 // source: google/cloud/dataplex/v1/catalog.proto
 
 #include "google/cloud/dataplex/v1/internal/catalog_logging_decorator.h"
+#include "google/cloud/dataplex/v1/catalog.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/catalog.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -558,6 +561,19 @@ CatalogServiceLogging::CreateEntryLink(
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceLogging::UpdateEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request) {
+        return child_->UpdateEntryLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
 CatalogServiceLogging::DeleteEntryLink(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
@@ -570,6 +586,31 @@ CatalogServiceLogging::DeleteEntryLink(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dataplex::v1::LookupEntryLinksResponse>
+CatalogServiceLogging::LookupEntryLinks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::LookupEntryLinksRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::LookupEntryLinksRequest const& request) {
+        return child_->LookupEntryLinks(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+CatalogServiceLogging::LookupContext(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::LookupContextRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::LookupContextRequest const& request) {
+        return child_->LookupContext(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dataplex::v1::EntryLink>
 CatalogServiceLogging::GetEntryLink(
     grpc::ClientContext& context, Options const& options,
@@ -578,6 +619,128 @@ CatalogServiceLogging::GetEntryLink(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
         return child_->GetEntryLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceLogging::AsyncCreateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataplex::v1::CreateMetadataFeedRequest const&
+                 request) {
+        return child_->AsyncCreateMetadataFeed(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::CreateMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateMetadataFeedRequest const&
+                 request) {
+        return child_->CreateMetadataFeed(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceLogging::GetMetadataFeed(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::GetMetadataFeedRequest const& request) {
+        return child_->GetMetadataFeed(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataFeedsResponse>
+CatalogServiceLogging::ListMetadataFeeds(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListMetadataFeedsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::ListMetadataFeedsRequest const&
+                 request) {
+        return child_->ListMetadataFeeds(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceLogging::AsyncDeleteMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataplex::v1::DeleteMetadataFeedRequest const&
+                 request) {
+        return child_->AsyncDeleteMetadataFeed(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::DeleteMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::DeleteMetadataFeedRequest const&
+                 request) {
+        return child_->DeleteMetadataFeed(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceLogging::AsyncUpdateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataplex::v1::UpdateMetadataFeedRequest const&
+                 request) {
+        return child_->AsyncUpdateMetadataFeed(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::UpdateMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::UpdateMetadataFeedRequest const&
+                 request) {
+        return child_->UpdateMetadataFeed(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -723,3 +886,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

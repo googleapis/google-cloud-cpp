@@ -42,7 +42,7 @@ Options EngineServiceDefaultOptions(Options options) {
   if (!options.has<discoveryengine_v1::EngineServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::EngineServiceRetryPolicyOption>(
         discoveryengine_v1::EngineServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<discoveryengine_v1::EngineServiceBackoffPolicyOption>()) {

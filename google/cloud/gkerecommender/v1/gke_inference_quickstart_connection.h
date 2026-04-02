@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKERECOMMENDER_V1_GKE_INFERENCE_QUICKSTART_CONNECTION_H
 
 #include "google/cloud/gkerecommender/v1/gke_inference_quickstart_connection_idempotency_policy.h"
+#include "google/cloud/gkerecommender/v1/gkerecommender.pb.h"
 #include "google/cloud/gkerecommender/v1/internal/gke_inference_quickstart_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/gkerecommender/v1/gkerecommender.pb.h>
 #include <memory>
 
 namespace google {

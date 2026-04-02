@@ -44,7 +44,7 @@ Options InterconnectGroupsDefaultOptions(Options options) {
     options.set<
         compute_interconnect_groups_v1::InterconnectGroupsRetryPolicyOption>(
         compute_interconnect_groups_v1::
-            InterconnectGroupsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            InterconnectGroupsLimitedTimeRetryPolicy(std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_interconnect_groups_v1::

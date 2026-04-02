@@ -19,12 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_STUB_H
 
+#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -180,5 +183,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_STUB_H

@@ -19,9 +19,9 @@
 #include "google/cloud/documentai/v1/internal/document_processor_option_defaults.h"
 #include "google/cloud/documentai/v1/document_processor_connection.h"
 #include "google/cloud/documentai/v1/document_processor_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -47,7 +47,7 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
            .has<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()) {
     options.set<documentai_v1::DocumentProcessorServiceRetryPolicyOption>(
         documentai_v1::DocumentProcessorServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

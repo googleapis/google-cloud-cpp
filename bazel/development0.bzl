@@ -57,10 +57,10 @@ def gl_cpp_development0(name = None):
         http_archive,
         name = "com_google_benchmark",
         urls = [
-            "https://github.com/google/benchmark/archive/v1.9.2.tar.gz",
+            "https://github.com/google/benchmark/archive/v1.9.5.tar.gz",
         ],
-        sha256 = "409075176168dc46bbb81b74c1b4b6900385b5d16bfc181d678afb060d928bd3",
-        strip_prefix = "benchmark-1.9.2",
+        sha256 = "9631341c82bac4a288bef951f8b26b41f69021794184ece969f8473977eaa340",
+        strip_prefix = "benchmark-1.9.5",
     )
 
     # A YAML parser and generator, this is only used in //docfx and //generator.
@@ -69,8 +69,8 @@ def gl_cpp_development0(name = None):
         http_archive,
         name = "com_github_jbeder_yaml_cpp",
         urls = [
-            "https://github.com/jbeder/yaml-cpp/archive/0.8.0.tar.gz",
+            "https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.9.0.tar.gz",
         ],
-        sha256 = "fbe74bbdcee21d656715688706da3c8becfd946d92cd44705cc6098bb23b3a16",
-        strip_prefix = "yaml-cpp-0.8.0",
+        sha256 = "25cb043240f828a8c51beb830569634bc7ac603978e0f69d6b63558dadefd49a",
+        strip_prefix = "yaml-cpp-yaml-cpp-0.9.0",
     )

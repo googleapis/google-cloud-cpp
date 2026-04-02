@@ -15,6 +15,7 @@
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_api_key_credentials.h"
@@ -47,25 +48,6 @@ using ::google::cloud::oauth2_internal::Decorate;
 std::shared_ptr<oauth2_internal::Credentials> MakeErrorCredentials(
     Status status) {
   return std::make_shared<oauth2_internal::ErrorCredentials>(std::move(status));
-}
-
-std::shared_ptr<oauth2_internal::Credentials>
-CreateServiceAccountCredentialsFromJsonContents(
-    std::string const& contents, Options const& options,
-    oauth2_internal::HttpClientFactory client_factory) {
-  auto info =
-      oauth2_internal::ParseServiceAccountCredentials(contents, "memory");
-  if (!info) return MakeErrorCredentials(std::move(info).status());
-
-  // Verify this is usable before returning it.
-  auto const tp = std::chrono::system_clock::time_point{};
-  auto const components = AssertionComponentsFromInfo(*info, tp);
-  auto jwt = internal::MakeJWTAssertionNoThrow(
-      components.first, components.second, info->private_key);
-  if (!jwt) return MakeErrorCredentials(std::move(jwt).status());
-
-  return std::make_shared<oauth2_internal::ServiceAccountCredentials>(
-      *info, options, std::move(client_factory));
 }
 
 }  // namespace
@@ -120,10 +102,25 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ServiceAccountConfig const& cfg) override {
-      result = Decorate(
-          CreateServiceAccountCredentialsFromJsonContents(
-              cfg.json_object(), cfg.options(), std::move(client_factory_)),
-          cfg.options());
+      StatusOr<std::shared_ptr<oauth2_internal::Credentials>> creds;
+      if (cfg.file_path().has_value()) {
+        creds = oauth2_internal::CreateServiceAccountCredentialsFromFilePath(
+            *cfg.file_path(), cfg.options(), std::move(client_factory_));
+      } else if (cfg.json_object().has_value()) {
+        creds =
+            oauth2_internal::CreateServiceAccountCredentialsFromJsonContents(
+                *cfg.json_object(), cfg.options(), std::move(client_factory_));
+      } else {
+        creds = MakeErrorCredentials(internal::InternalError(
+            "ServiceAccountConfig has neither json_object nor file_path",
+            GCP_ERROR_INFO()));
+      }
+
+      if (creds.ok()) {
+        result = Decorate(*creds, cfg.options());
+      } else {
+        result = MakeErrorCredentials(std::move(creds).status());
+      }
     }
 
     void visit(ExternalAccountConfig const& cfg) override {

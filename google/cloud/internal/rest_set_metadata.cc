@@ -14,10 +14,10 @@
 
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/rest_options.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {

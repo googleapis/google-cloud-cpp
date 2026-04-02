@@ -42,7 +42,7 @@ Options CaseAttachmentServiceDefaultOptions(Options options) {
   if (!options.has<support_v2::CaseAttachmentServiceRetryPolicyOption>()) {
     options.set<support_v2::CaseAttachmentServiceRetryPolicyOption>(
         support_v2::CaseAttachmentServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<support_v2::CaseAttachmentServiceBackoffPolicyOption>()) {

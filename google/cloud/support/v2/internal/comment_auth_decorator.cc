@@ -17,9 +17,12 @@
 // source: google/cloud/support/v2/comment_service.proto
 
 #include "google/cloud/support/v2/internal/comment_auth_decorator.h"
-#include <google/cloud/support/v2/comment_service.grpc.pb.h>
+#include "google/cloud/support/v2/comment_service.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -52,3 +55,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

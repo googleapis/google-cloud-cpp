@@ -63,6 +63,12 @@ Idempotency StorageControlConnectionIdempotencyPolicy::RenameFolder(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::DeleteFolderRecursive(
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency StorageControlConnectionIdempotencyPolicy::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;

@@ -28,8 +28,6 @@ namespace cloud {
 namespace redis_cluster_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CloudRedisClusterTracingConnection
     : public redis_cluster_v1::CloudRedisClusterConnection {
  public:
@@ -176,8 +174,6 @@ class CloudRedisClusterTracingConnection
  private:
   std::shared_ptr<redis_cluster_v1::CloudRedisClusterConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

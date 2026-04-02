@@ -21,6 +21,9 @@
 #include <mutex>
 #include <vector>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
@@ -149,6 +152,16 @@ BigtableRoundRobin::AsyncCheckAndMutateRow(
                                          std::move(options), request);
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableRoundRobin::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  return Child()->AsyncPingAndWarm(cq, std::move(context), std::move(options),
+                                   request);
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableRoundRobin::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
@@ -181,3 +194,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

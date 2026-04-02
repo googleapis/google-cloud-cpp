@@ -51,6 +51,11 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
               (google::cloud::gkehub::v1::ListMembershipsRequest request),
               (override));
 
+  MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::Membership>),
+              ListBoundMemberships,
+              (google::cloud::gkehub::v1::ListBoundMembershipsRequest request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::Feature>), ListFeatures,
               (google::cloud::gkehub::v1::ListFeaturesRequest request),
               (override));
@@ -295,6 +300,784 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
       (google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
            request),
       (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateFleet(Matcher<google::cloud::gkehub::v1::CreateFleetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Fleet>>, CreateFleet,
+              (google::cloud::gkehub::v1::CreateFleetRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateFleet(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateFleet,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::CreateFleetRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateFleet(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Fleet>>, CreateFleet,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::gkehub::v1::Fleet>, GetFleet,
+              (google::cloud::gkehub::v1::GetFleetRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateFleet(Matcher<google::cloud::gkehub::v1::UpdateFleetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Fleet>>, UpdateFleet,
+              (google::cloud::gkehub::v1::UpdateFleetRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateFleet(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateFleet,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::UpdateFleetRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateFleet(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Fleet>>, UpdateFleet,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFleet(Matcher<google::cloud::gkehub::v1::DeleteFleetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteFleet,
+              (google::cloud::gkehub::v1::DeleteFleetRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteFleet(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteFleet,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::DeleteFleetRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteFleet(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteFleet, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::Fleet>), ListFleets,
+              (google::cloud::gkehub::v1::ListFleetsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::gkehub::v1::Namespace>, GetScopeNamespace,
+      (google::cloud::gkehub::v1::GetScopeNamespaceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateScopeNamespace(Matcher<google::cloud::gkehub::v1::CreateScopeNamespaceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::Namespace>>,
+      CreateScopeNamespace,
+      (google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateScopeNamespace(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateScopeNamespace,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateScopeNamespace(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Namespace>>,
+              CreateScopeNamespace,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateScopeNamespace(Matcher<google::cloud::gkehub::v1::UpdateScopeNamespaceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::Namespace>>,
+      UpdateScopeNamespace,
+      (google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateScopeNamespace(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateScopeNamespace,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateScopeNamespace(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Namespace>>,
+              UpdateScopeNamespace,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteScopeNamespace(Matcher<google::cloud::gkehub::v1::DeleteScopeNamespaceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+      DeleteScopeNamespace,
+      (google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteScopeNamespace(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteScopeNamespace,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteScopeNamespace(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteScopeNamespace,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::Namespace>),
+              ListScopeNamespaces,
+              (google::cloud::gkehub::v1::ListScopeNamespacesRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>,
+              GetScopeRBACRoleBinding,
+              (google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateScopeRBACRoleBinding(Matcher<google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>,
+      CreateScopeRBACRoleBinding,
+      (google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateScopeRBACRoleBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateScopeRBACRoleBinding,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateScopeRBACRoleBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>,
+              CreateScopeRBACRoleBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateScopeRBACRoleBinding(Matcher<google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>,
+      UpdateScopeRBACRoleBinding,
+      (google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateScopeRBACRoleBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateScopeRBACRoleBinding,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateScopeRBACRoleBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>,
+              UpdateScopeRBACRoleBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteScopeRBACRoleBinding(Matcher<google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+      DeleteScopeRBACRoleBinding,
+      (google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteScopeRBACRoleBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteScopeRBACRoleBinding,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteScopeRBACRoleBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteScopeRBACRoleBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>),
+      ListScopeRBACRoleBindings,
+      (google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::gkehub::v1::Scope>, GetScope,
+              (google::cloud::gkehub::v1::GetScopeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateScope(Matcher<google::cloud::gkehub::v1::CreateScopeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Scope>>, CreateScope,
+              (google::cloud::gkehub::v1::CreateScopeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateScope(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateScope,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::CreateScopeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateScope(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Scope>>, CreateScope,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateScope(Matcher<google::cloud::gkehub::v1::UpdateScopeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Scope>>, UpdateScope,
+              (google::cloud::gkehub::v1::UpdateScopeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateScope(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateScope,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::UpdateScopeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateScope(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Scope>>, UpdateScope,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteScope(Matcher<google::cloud::gkehub::v1::DeleteScopeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteScope,
+              (google::cloud::gkehub::v1::DeleteScopeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteScope(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteScope,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::DeleteScopeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteScope(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteScope, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::Scope>), ListScopes,
+              (google::cloud::gkehub::v1::ListScopesRequest request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::Scope>),
+              ListPermittedScopes,
+              (google::cloud::gkehub::v1::ListPermittedScopesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::gkehub::v1::MembershipBinding>,
+      GetMembershipBinding,
+      (google::cloud::gkehub::v1::GetMembershipBindingRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMembershipBinding(Matcher<google::cloud::gkehub::v1::CreateMembershipBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>,
+              CreateMembershipBinding,
+              (google::cloud::gkehub::v1::CreateMembershipBindingRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMembershipBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMembershipBinding,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::CreateMembershipBindingRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMembershipBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>,
+              CreateMembershipBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMembershipBinding(Matcher<google::cloud::gkehub::v1::UpdateMembershipBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>,
+              UpdateMembershipBinding,
+              (google::cloud::gkehub::v1::UpdateMembershipBindingRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateMembershipBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateMembershipBinding,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::UpdateMembershipBindingRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMembershipBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>,
+              UpdateMembershipBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMembershipBinding(Matcher<google::cloud::gkehub::v1::DeleteMembershipBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteMembershipBinding,
+              (google::cloud::gkehub::v1::DeleteMembershipBindingRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMembershipBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteMembershipBinding,
+              (NoAwaitTag,
+               google::cloud::gkehub::v1::DeleteMembershipBindingRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMembershipBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteMembershipBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::gkehub::v1::MembershipBinding>),
+      ListMembershipBindings,
+      (google::cloud::gkehub::v1::ListMembershipBindingsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>,
+      GetMembershipRBACRoleBinding,
+      (google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMembershipRBACRoleBinding(Matcher<google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>,
+      CreateMembershipRBACRoleBinding,
+      (google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMembershipRBACRoleBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateMembershipRBACRoleBinding,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMembershipRBACRoleBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>,
+              CreateMembershipRBACRoleBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMembershipRBACRoleBinding(Matcher<google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>,
+      UpdateMembershipRBACRoleBinding,
+      (google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateMembershipRBACRoleBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateMembershipRBACRoleBinding,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMembershipRBACRoleBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>,
+              UpdateMembershipRBACRoleBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMembershipRBACRoleBinding(Matcher<google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+      DeleteMembershipRBACRoleBinding,
+      (google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMembershipRBACRoleBinding(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteMembershipRBACRoleBinding,
+      (NoAwaitTag,
+       google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMembershipRBACRoleBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              DeleteMembershipRBACRoleBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>),
+              ListMembershipRBACRoleBindings,
+              (google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest
+                   request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::gkehub::v1::
+                           GenerateMembershipRBACRoleBindingYAMLResponse>,
+              GenerateMembershipRBACRoleBindingYAML,
+              (google::cloud::gkehub::v1::
+                   GenerateMembershipRBACRoleBindingYAMLRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -27,7 +27,7 @@ find_package(Protobuf CONFIG QUIET)
 if (NOT Protobuf_FOUND)
     find_package(Protobuf REQUIRED)
 endif ()
-include(IncludeNlohmannJson)
+find_package(nlohmann_json CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 
 add_library(
@@ -67,16 +67,6 @@ add_library(
     internal/format_class_comments.h
     internal/format_method_comments.cc
     internal/format_method_comments.h
-    internal/forwarding_client_generator.cc
-    internal/forwarding_client_generator.h
-    internal/forwarding_connection_generator.cc
-    internal/forwarding_connection_generator.h
-    internal/forwarding_idempotency_policy_generator.cc
-    internal/forwarding_idempotency_policy_generator.h
-    internal/forwarding_mock_connection_generator.cc
-    internal/forwarding_mock_connection_generator.h
-    internal/forwarding_options_generator.cc
-    internal/forwarding_options_generator.h
     internal/generator_interface.h
     internal/http_annotation_parser.cc
     internal/http_annotation_parser.h
@@ -160,7 +150,7 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
            protobuf::libprotoc
-           yaml-cpp)
+           yaml-cpp::yaml-cpp)
 google_cloud_cpp_add_common_options(google_cloud_cpp_generator)
 target_compile_options(google_cloud_cpp_generator
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})

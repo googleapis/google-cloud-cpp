@@ -1,6 +1,6 @@
-@com_google_googleapis//google/cloud/vision/v1:geometry.proto
-@com_google_googleapis//google/cloud/vision/v1:image_annotator.proto
-@com_google_googleapis//google/cloud/vision/v1:product_search.proto
-@com_google_googleapis//google/cloud/vision/v1:product_search_service.proto
-@com_google_googleapis//google/cloud/vision/v1:text_annotation.proto
-@com_google_googleapis//google/cloud/vision/v1:web_detection.proto
+@googleapis//google/cloud/vision/v1:geometry.proto
+@googleapis//google/cloud/vision/v1:image_annotator.proto
+@googleapis//google/cloud/vision/v1:product_search.proto
+@googleapis//google/cloud/vision/v1:product_search_service.proto
+@googleapis//google/cloud/vision/v1:text_annotation.proto
+@googleapis//google/cloud/vision/v1:web_detection.proto

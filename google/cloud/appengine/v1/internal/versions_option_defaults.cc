@@ -40,7 +40,7 @@ Options VersionsDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::VersionsRetryPolicyOption>()) {
     options.set<appengine_v1::VersionsRetryPolicyOption>(
-        appengine_v1::VersionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        appengine_v1::VersionsLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<appengine_v1::VersionsBackoffPolicyOption>()) {

@@ -17,9 +17,12 @@
 // source: google/iam/admin/v1/iam.proto
 
 #include "google/cloud/iam/admin/v1/internal/iam_auth_decorator.h"
-#include <google/iam/admin/v1/iam.grpc.pb.h>
+#include "google/iam/admin/v1/iam.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -269,3 +272,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_admin_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

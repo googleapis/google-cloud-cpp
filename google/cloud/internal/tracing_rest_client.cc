@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/tracing_rest_client.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/internal/trace_propagator.h"
@@ -23,6 +21,7 @@
 #include "absl/functional/function_ref.h"
 #include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
+#include "absl/strings/str_cat.h"
 #include <array>
 #include <cstdint>
 
@@ -72,21 +71,22 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
                        *context.local_port());
   }
   for (auto const& kv : context.headers()) {
-    auto const name = "http.request.header." + kv.first;
-    if (kv.second.empty()) {
+    auto const name = "http.request.header." + std::string{kv.first};
+    if (kv.second.EmptyValues()) {
       span->SetAttribute(name, "");
       continue;
     }
     if (absl::EqualsIgnoreCase(kv.first, "authorization")) {
-      span->SetAttribute(name, kv.second.front().substr(0, 32));
+      span->SetAttribute(name, kv.second.values().front().substr(0, 32));
       continue;
     }
     if (absl::EqualsIgnoreCase(kv.first, "x-goog-api-key")) {
       span->SetAttribute(
-          name, kv.second.front().substr(0, kApiKeyHintLength) + "...");
+          name,
+          kv.second.values().front().substr(0, kApiKeyHintLength) + "...");
       continue;
     }
-    span->SetAttribute(name, kv.second.front());
+    span->SetAttribute(name, kv.second.values().front());
   }
   if (!request_result || !(*request_result)) {
     return internal::EndSpan(*span, std::move(request_result));
@@ -231,22 +231,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
-
-#else
-
-namespace google {
-namespace cloud {
-namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::unique_ptr<RestClient> MakeTracingRestClient(
-    std::unique_ptr<RestClient> client) {
-  return client;
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace rest_internal
-}  // namespace cloud
-}  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

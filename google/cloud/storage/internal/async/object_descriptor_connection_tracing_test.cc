@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/storage/internal/async/object_descriptor_connection_tracing.h"
 #include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
@@ -23,7 +21,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock-matchers.h>
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -70,7 +68,7 @@ auto expect_no_context = [](auto f) {
 };
 
 TEST(ObjectDescriptorConnectionTracing, Read) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_unique<MockAsyncObjectDescriptorConnection>();
@@ -86,21 +84,22 @@ TEST(ObjectDescriptorConnectionTracing, Read) {
 
   actual.reset();
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              ElementsAre(AllOf(
-                  SpanNamed("test-span-name"),
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                  SpanHasEvents(AllOf(
-                      EventNamed("gl-cpp.open.read"),
-                      SpanEventAttributesAre(
-                          OTelAttribute<std::int64_t>("read-length", 200),
-                          OTelAttribute<std::int64_t>("read-start", 100),
-                          OTelAttribute<std::string>(sc::kThreadId, _)))))));
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("test-span-name"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanHasEvents(AllOf(
+              EventNamed("gl-cpp.open.read"),
+              SpanEventAttributesAre(
+                  OTelAttribute<std::int64_t>("read-length", 200),
+                  OTelAttribute<std::int64_t>("read-start", 100),
+                  OTelAttribute<std::string>(sc::thread::kThreadId, _)))))));
 }
 
 TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   auto mock_connection =
@@ -126,25 +125,26 @@ TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      spans, ElementsAre(AllOf(
-                 SpanNamed("test-span"),
-                 SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                 SpanHasInstrumentationScope(), SpanKindIsClient(),
-                 SpanEventsAre(
-                     AllOf(EventNamed("gl-cpp.open.read"),
-                           SpanEventAttributesAre(
-                               OTelAttribute<std::int64_t>("read-length", 0),
-                               OTelAttribute<std::int64_t>("read-start", 0),
-                               OTelAttribute<std::string>(sc::kThreadId, _))),
-                     AllOf(EventNamed("gl-cpp.read"),
-                           SpanEventAttributesAre(
-                               OTelAttribute<std::int64_t>(
-                                   "message.starting_offset", 123),
-                               OTelAttribute<std::string>(sc::kThreadId, _),
-                               OTelAttribute<std::int64_t>("rpc.message.id", 1),
-                               // THIS WAS THE MISSING ATTRIBUTE:
-                               OTelAttribute<std::string>("rpc.message.type",
-                                                          "RECEIVED")))))));
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("test-span"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanEventsAre(
+              AllOf(EventNamed("gl-cpp.open.read"),
+                    SpanEventAttributesAre(
+                        OTelAttribute<std::int64_t>("read-length", 0),
+                        OTelAttribute<std::int64_t>("read-start", 0),
+                        OTelAttribute<std::string>(sc::thread::kThreadId, _))),
+              AllOf(EventNamed("gl-cpp.read"),
+                    SpanEventAttributesAre(
+                        OTelAttribute<std::int64_t>("message.starting_offset",
+                                                    123),
+                        OTelAttribute<std::string>(sc::thread::kThreadId, _),
+                        OTelAttribute<std::int64_t>("rpc.message.id", 1),
+                        // THIS WAS THE MISSING ATTRIBUTE:
+                        OTelAttribute<std::string>("rpc.message.type",
+                                                   "RECEIVED")))))));
 }
 
 }  // namespace
@@ -152,5 +152,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

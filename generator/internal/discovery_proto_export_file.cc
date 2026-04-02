@@ -14,8 +14,8 @@
 
 #include "generator/internal/discovery_proto_export_file.h"
 #include "generator/internal/codegen_utils.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <fstream>
@@ -55,9 +55,9 @@ Status DiscoveryProtoExportFile::FormatFile(std::ostream& output_stream) const {
 )""");
   printer.Print("// IWYU pragma: begin_exports\n");
   for (auto const& p : proto_includes_) {
-    printer.Print("#include <");
+    printer.Print("#include \"");
     printer.Print(absl::StrReplaceAll(p, {{".proto", ".pb.h"}}));
-    printer.Print(">\n");
+    printer.Print("\"\n");
   }
   printer.Print("// IWYU pragma: end_exports\n");
   printer.Print(vars, R"""(

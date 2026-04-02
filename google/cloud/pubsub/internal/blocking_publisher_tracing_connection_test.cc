@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/pubsub/internal/blocking_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/blocking_publisher_connection.h"
 #include "google/cloud/pubsub/message.h"
@@ -25,7 +23,8 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -53,7 +52,7 @@ using ::testing::ElementsAre;
 using ::testing::Not;
 
 TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnSuccess) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockBlockingPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -79,24 +78,27 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnSuccess) {
           SpanNamed("test-topic create"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-topic"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName, "test-topic"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
               OTelAttribute<std::string>("gl-cpp.status_code", "OK"),
-              OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
-                                          "messaging.message.envelope.size",
-                                          45),
+              OTelAttribute<
+                  std::
+                      int64_t>(/*sc::messaging::kMessagingMessageEnvelopeSize=*/
+                               "messaging.message.envelope.size", 45),
               OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
               OTelAttribute<std::string>(
-                  sc::kCodeFunction, "pubsub::BlockingPublisher::Publish")))));
+                  sc::code::kCodeFunctionName,
+                  "pubsub::BlockingPublisher::Publish")))));
 }
 
 TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnError) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockBlockingPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -122,17 +124,19 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnError) {
           SpanNamed("test-topic create"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-topic"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName, "test-topic"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
               OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode),
-              OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
-                                          "messaging.message.envelope.size",
-                                          45)))));
+              OTelAttribute<
+                  std::
+                      int64_t>(/*sc::messaging::kMessagingMessageEnvelopeSize=*/
+                               "messaging.message.envelope.size", 45)))));
 }
 
 TEST(BlockingPublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
@@ -187,5 +191,3 @@ TEST(MakeBlockingPublisherTracingConnectionTest, CreateTracingConnection) {
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

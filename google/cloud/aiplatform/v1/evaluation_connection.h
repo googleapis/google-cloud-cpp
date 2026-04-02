@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_EVALUATION_CONNECTION_H
 
 #include "google/cloud/aiplatform/v1/evaluation_connection_idempotency_policy.h"
+#include "google/cloud/aiplatform/v1/evaluation_service.pb.h"
 #include "google/cloud/aiplatform/v1/internal/evaluation_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/aiplatform/v1/evaluation_service.pb.h>
 #include <memory>
 #include <string>
 

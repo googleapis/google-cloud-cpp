@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"

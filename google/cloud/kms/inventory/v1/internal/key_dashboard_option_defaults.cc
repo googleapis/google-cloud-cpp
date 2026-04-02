@@ -42,7 +42,7 @@ Options KeyDashboardServiceDefaultOptions(Options options) {
   if (!options.has<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()) {
     options.set<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>(
         kms_inventory_v1::KeyDashboardServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

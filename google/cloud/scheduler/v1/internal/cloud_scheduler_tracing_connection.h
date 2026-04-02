@@ -28,8 +28,6 @@ namespace cloud {
 namespace scheduler_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CloudSchedulerTracingConnection
     : public scheduler_v1::CloudSchedulerConnection {
  public:
@@ -73,8 +71,6 @@ class CloudSchedulerTracingConnection
  private:
   std::shared_ptr<scheduler_v1::CloudSchedulerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -18,8 +18,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
-#include <google/longrunning/operations.pb.h>
-#include <google/protobuf/any.pb.h>
+#include "google/longrunning/operations.pb.h"
+#include "google/protobuf/any.pb.h"
 #include <string>
 
 namespace google {

@@ -24,11 +24,11 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
 #include <algorithm>
 #include <chrono>

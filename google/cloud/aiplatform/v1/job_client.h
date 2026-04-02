@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -2133,7 +2133,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L394}
+  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L413}
   /// [google.cloud.aiplatform.v1.CancelBatchPredictionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1116}
   /// [google.cloud.aiplatform.v1.JobService.GetBatchPredictionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L311}
   ///
@@ -2172,7 +2172,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L394}
+  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L413}
   /// [google.cloud.aiplatform.v1.CancelBatchPredictionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1116}
   /// [google.cloud.aiplatform.v1.JobService.GetBatchPredictionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L311}
   ///

@@ -44,7 +44,7 @@ Options SqlAvailableDatabaseVersionsServiceDefaultOptions(Options options) {
           sql_v1::SqlAvailableDatabaseVersionsServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlAvailableDatabaseVersionsServiceRetryPolicyOption>(
         sql_v1::SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

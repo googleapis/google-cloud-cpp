@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
 #include <memory>
 
 namespace google {

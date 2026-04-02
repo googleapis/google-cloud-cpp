@@ -60,6 +60,20 @@ Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::CancelJob(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+StorageBatchOperationsConnectionIdempotencyPolicy::ListBucketOperations(
+    google::cloud::storagebatchoperations::v1::
+        ListBucketOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageBatchOperationsConnectionIdempotencyPolicy::GetBucketOperation(
+    google::cloud::storagebatchoperations::v1::
+        GetBucketOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency StorageBatchOperationsConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

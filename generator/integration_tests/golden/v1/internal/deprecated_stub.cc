@@ -19,9 +19,12 @@
 #include "generator/integration_tests/golden/v1/internal/deprecated_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <generator/integration_tests/test_deprecated.grpc.pb.h>
+#include "generator/integration_tests/test_deprecated.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -47,3 +50,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

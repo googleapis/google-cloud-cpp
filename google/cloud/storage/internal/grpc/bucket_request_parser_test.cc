@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/bucket_request_parser.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -462,15 +461,12 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
             default_kms_key: "test-only-kms-key"
             google_managed_encryption_enforcement_config {
               restriction_mode: "FullyRestricted"
-              effective_time { seconds: 1766175572 }
             }
             customer_managed_encryption_enforcement_config {
               restriction_mode: "NotRestricted"
-              effective_time { seconds: 1766175695 }
             }
             customer_supplied_encryption_enforcement_config {
               restriction_mode: "FullyRestricted"
-              effective_time { seconds: 1766175739 }
             }
           }
           autoclass { enabled: true }
@@ -746,15 +742,12 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
             default_kms_key: "test-only-kms-key"
             google_managed_encryption_enforcement_config {
               restriction_mode: "FullyRestricted"
-              effective_time { seconds: 1766176065 }
             }
             customer_managed_encryption_enforcement_config {
               restriction_mode: "NotRestricted"
-              effective_time { seconds: 1766176105 }
             }
             customer_supplied_encryption_enforcement_config {
               restriction_mode: "FullyRestricted"
-              effective_time { seconds: 1766176151 }
             }
           }
           autoclass { enabled: true }

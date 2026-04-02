@@ -42,7 +42,7 @@ Options UptimeCheckServiceDefaultOptions(Options options) {
   if (!options.has<monitoring_v3::UptimeCheckServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::UptimeCheckServiceRetryPolicyOption>(
         monitoring_v3::UptimeCheckServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<monitoring_v3::UptimeCheckServiceBackoffPolicyOption>()) {

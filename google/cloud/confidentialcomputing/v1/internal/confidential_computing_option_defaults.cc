@@ -44,7 +44,7 @@ Options ConfidentialComputingDefaultOptions(Options options) {
     options.set<
         confidentialcomputing_v1::ConfidentialComputingRetryPolicyOption>(
         confidentialcomputing_v1::ConfidentialComputingLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<confidentialcomputing_v1::

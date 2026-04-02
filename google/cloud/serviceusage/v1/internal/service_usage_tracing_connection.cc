@@ -27,8 +27,6 @@ namespace cloud {
 namespace serviceusage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ServiceUsageTracingConnection::ServiceUsageTracingConnection(
     std::shared_ptr<serviceusage_v1::ServiceUsageConnection> child)
     : child_(std::move(child)) {}
@@ -170,16 +168,12 @@ ServiceUsageTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<serviceusage_v1::ServiceUsageConnection>
 MakeServiceUsageTracingConnection(
     std::shared_ptr<serviceusage_v1::ServiceUsageConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ServiceUsageTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

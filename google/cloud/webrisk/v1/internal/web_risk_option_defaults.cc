@@ -41,7 +41,7 @@ Options WebRiskServiceDefaultOptions(Options options) {
   if (!options.has<webrisk_v1::WebRiskServiceRetryPolicyOption>()) {
     options.set<webrisk_v1::WebRiskServiceRetryPolicyOption>(
         webrisk_v1::WebRiskServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<webrisk_v1::WebRiskServiceBackoffPolicyOption>()) {

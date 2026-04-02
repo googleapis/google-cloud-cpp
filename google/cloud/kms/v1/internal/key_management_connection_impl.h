@@ -26,10 +26,13 @@
 #include "google/cloud/kms/v1/key_management_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -61,6 +64,9 @@ class KeyManagementServiceConnectionImpl
   StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
       google::cloud::kms::v1::ListImportJobsRequest request) override;
 
+  StreamRange<google::cloud::kms::v1::RetiredResource> ListRetiredResources(
+      google::cloud::kms::v1::ListRetiredResourcesRequest request) override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
       google::cloud::kms::v1::GetKeyRingRequest const& request) override;
 
@@ -77,6 +83,10 @@ class KeyManagementServiceConnectionImpl
   StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
       google::cloud::kms::v1::GetImportJobRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
+      google::cloud::kms::v1::GetRetiredResourceRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       google::cloud::kms::v1::CreateKeyRingRequest const& request) override;
 
@@ -86,6 +96,31 @@ class KeyManagementServiceConnectionImpl
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+  DeleteCryptoKey(
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKey(
+      NoAwaitTag,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+  DeleteCryptoKey(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+  DeleteCryptoKeyVersion(
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKeyVersion(
+      NoAwaitTag,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+  DeleteCryptoKeyVersion(
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
       google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request)

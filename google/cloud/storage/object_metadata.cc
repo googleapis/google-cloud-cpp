@@ -15,8 +15,8 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
@@ -73,6 +73,7 @@ bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
          && lhs.updated_ == rhs.updated_                    //
          && lhs.soft_delete_time_ == rhs.soft_delete_time_  //
          && lhs.hard_delete_time_ == rhs.hard_delete_time_  //
+         && lhs.contexts_ == rhs.contexts_                  //
       ;
 }
 
@@ -133,6 +134,9 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   if (rhs.has_hard_delete_time()) {
     os << ", hard_delete_time=" << FormatRfc3339(rhs.hard_delete_time());
   }
+  if (rhs.has_contexts()) {
+    os << ", contexts=" << rhs.contexts();
+  }
   return os << "}";
 }
 
@@ -143,6 +147,15 @@ std::string ObjectMetadataPatchBuilder::BuildPatch() const {
       tmp.RemoveField("metadata");
     } else {
       tmp.AddSubPatch("metadata", metadata_subpatch_);
+    }
+  }
+  if (contexts_subpatch_dirty_) {
+    if (contexts_custom_subpatch_.empty()) {
+      tmp.AddSubPatch("contexts",
+                      internal::PatchBuilder().RemoveField("custom"));
+    } else {
+      tmp.AddSubPatch("contexts", internal::PatchBuilder().AddSubPatch(
+                                      "custom", contexts_custom_subpatch_));
     }
   }
   return tmp.ToString();
@@ -268,6 +281,27 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata(
 ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetMetadata() {
   metadata_subpatch_.clear();
   metadata_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetContext(
+    std::string const& key, std::string const& value) {
+  contexts_custom_subpatch_.AddSubPatch(
+      key.c_str(), internal::PatchBuilder().SetStringField("value", value));
+  contexts_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContext(
+    std::string const& key) {
+  contexts_custom_subpatch_.RemoveField(key.c_str());
+  contexts_subpatch_dirty_ = true;
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetContexts() {
+  contexts_custom_subpatch_.clear();
+  contexts_subpatch_dirty_ = true;
   return *this;
 }
 

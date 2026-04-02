@@ -18,9 +18,12 @@
 
 #include "google/cloud/bigtable/internal/bigtable_auth_decorator.h"
 #include "google/cloud/internal/async_streaming_read_rpc_auth.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -221,6 +224,27 @@ BigtableAuth::AsyncCheckAndMutateRow(
       });
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableAuth::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::PingAndWarmResponse>(
+                  std::move(context).status()));
+        }
+        return child->AsyncPingAndWarm(cq, *std::move(context),
+                                       std::move(options), request);
+      });
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableAuth::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
@@ -267,3 +291,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

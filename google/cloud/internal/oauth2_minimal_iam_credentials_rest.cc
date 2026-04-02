@@ -14,10 +14,9 @@
 
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_credentials.h"
@@ -26,6 +25,8 @@
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -50,7 +51,7 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
   if (!auth_header) return std::move(auth_header).status();
 
   rest_internal::RestRequest rest_request;
-  rest_request.AddHeader(auth_header.value());
+  rest_request.AddHeader(rest_internal::HttpHeader(auth_header.value()));
   rest_request.AddHeader("Content-Type", "application/json");
   rest_request.SetPath(MakeRequestPath(request));
   nlohmann::json payload{

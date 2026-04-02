@@ -26,9 +26,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_107.pb.h>
-#include <google/cloud/compute/v1/internal/common_149.pb.h>
+#include "google/cloud/compute/v1/internal/common_016.pb.h"
+#include "google/cloud/compute/v1/internal/common_107.pb.h"
+#include "google/cloud/compute/v1/internal/common_149.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_PROTO_EXPORT_H

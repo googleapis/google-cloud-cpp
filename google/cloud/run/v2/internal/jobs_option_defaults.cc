@@ -40,7 +40,7 @@ Options JobsDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<run_v2::JobsRetryPolicyOption>()) {
     options.set<run_v2::JobsRetryPolicyOption>(
-        run_v2::JobsLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+        run_v2::JobsLimitedTimeRetryPolicy(std::chrono::minutes(10)).clone());
   }
   if (!options.has<run_v2::JobsBackoffPolicyOption>()) {
     options.set<run_v2::JobsBackoffPolicyOption>(

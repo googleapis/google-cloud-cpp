@@ -139,6 +139,16 @@ BigtableChannelRefresh::AsyncCheckAndMutateRow(
                                         std::move(options), request);
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableChannelRefresh::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  return child_->AsyncPingAndWarm(cq, std::move(context), std::move(options),
+                                  request);
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableChannelRefresh::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,

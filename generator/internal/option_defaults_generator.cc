@@ -100,7 +100,7 @@ Status OptionDefaultsGenerator::GenerateCc() {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
     case ServiceConfiguration::LOCATION_OPTIONALLY_DEPENDENT:
-      CcLocalIncludes({"google/cloud/internal/absl_str_cat_quiet.h"});
+      CcLocalIncludes({"absl/strings/str_cat.h"});
       break;
     default:
       break;
@@ -159,7 +159,7 @@ auto constexpr kBackoffScaling = 2.0;
   if (!options.has<$product_namespace$::$retry_policy_name$Option>()) {
     options.set<$product_namespace$::$retry_policy_name$Option>(
         $product_namespace$::$limited_time_retry_policy_name$(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(10)).clone());
   }
   if (!options.has<$product_namespace$::$service_name$BackoffPolicyOption>()) {
     options.set<$product_namespace$::$service_name$BackoffPolicyOption>(

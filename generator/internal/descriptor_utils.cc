@@ -26,19 +26,19 @@
 #include "generator/internal/resolve_method_return.h"
 #include "generator/internal/routing.h"
 #include "generator/internal/scaffold_generator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include "absl/types/variant.h"
-#include <google/api/annotations.pb.h>
-#include <google/api/http.pb.h>
-#include <google/api/routing.pb.h>
-#include <google/longrunning/operations.pb.h>
+#include "google/api/annotations.pb.h"
+#include "google/api/http.pb.h"
+#include "google/api/routing.pb.h"
+#include "google/longrunning/operations.pb.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/compiler/cpp/names.h>
 #include <regex>
@@ -309,6 +309,11 @@ ParameterCommentSubstitution substitutions[] = {
     // From google/cloud/dialogflow/cx/v3/transition_route_group.proto
     {"`projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>.",
      "`projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`."},
+
+    // From google/cloud/gkehub/v1/service.proto
+    {R"""(Given 'updated'
+ prefix to follow go/proto-best-practices-checkers#keyword_conflict)""",
+     R"""()"""},
 
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`

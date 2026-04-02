@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/strings/string_view.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

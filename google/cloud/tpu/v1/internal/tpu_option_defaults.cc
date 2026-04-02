@@ -40,7 +40,7 @@ Options TpuDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<tpu_v1::TpuRetryPolicyOption>()) {
     options.set<tpu_v1::TpuRetryPolicyOption>(
-        tpu_v1::TpuLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+        tpu_v1::TpuLimitedTimeRetryPolicy(std::chrono::minutes(10)).clone());
   }
   if (!options.has<tpu_v1::TpuBackoffPolicyOption>()) {
     options.set<tpu_v1::TpuBackoffPolicyOption>(

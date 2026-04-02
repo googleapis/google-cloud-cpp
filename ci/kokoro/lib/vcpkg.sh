@@ -32,7 +32,7 @@ install_vcpkg() {
   io::log "Downloading vcpkg into ${vcpkg_dir}..."
   VCPKG_VERSION="$(<ci/etc/vcpkg-version.txt)"
   url="https://github.com/microsoft/vcpkg/archive/${VCPKG_VERSION}.tar.gz"
-  if [[ "${VCPKG_VERSION}" =~ [0-9]{4}.[0-9]{2}.[0-9]{2} ]]; then
+  if [[ "${VCPKG_VERSION}" =~ [0-9]{4}\.[0-9]{2}\.[0-9]{2} ]]; then
     # vcpkg uses date-like tags for releases
     url="https://github.com/microsoft/vcpkg/archive/refs/tags/${VCPKG_VERSION}.tar.gz"
   fi

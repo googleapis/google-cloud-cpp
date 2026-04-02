@@ -19,14 +19,13 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "lineage/v1/",
     "v1/",
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/datacatalog/lineage/v1:lineage_cc_grpc",
-    "@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc",
+    "@googleapis//google/cloud/datacatalog/lineage/v1:lineage_cc_grpc",
+    "@googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc",
 ]
 
 cc_gapic_library(

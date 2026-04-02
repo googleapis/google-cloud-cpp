@@ -43,7 +43,7 @@ Options FirewallPoliciesDefaultOptions(Options options) {
     options.set<
         compute_firewall_policies_v1::FirewallPoliciesRetryPolicyOption>(
         compute_firewall_policies_v1::FirewallPoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_firewall_policies_v1::

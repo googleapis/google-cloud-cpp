@@ -40,7 +40,7 @@ Options ZonesDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_zones_v1::ZonesRetryPolicyOption>()) {
     options.set<compute_zones_v1::ZonesRetryPolicyOption>(
-        compute_zones_v1::ZonesLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        compute_zones_v1::ZonesLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_zones_v1::ZonesBackoffPolicyOption>()) {

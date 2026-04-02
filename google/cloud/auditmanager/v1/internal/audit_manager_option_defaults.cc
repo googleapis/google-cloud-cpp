@@ -42,7 +42,7 @@ Options AuditManagerDefaultOptions(Options options) {
   if (!options.has<auditmanager_v1::AuditManagerRetryPolicyOption>()) {
     options.set<auditmanager_v1::AuditManagerRetryPolicyOption>(
         auditmanager_v1::AuditManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<auditmanager_v1::AuditManagerBackoffPolicyOption>()) {

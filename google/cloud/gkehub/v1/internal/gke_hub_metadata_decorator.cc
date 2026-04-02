@@ -17,16 +17,20 @@
 // source: google/cloud/gkehub/v1/service.proto
 
 #include "google/cloud/gkehub/v1/internal/gke_hub_metadata_decorator.h"
+#include "google/cloud/gkehub/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/gkehub/v1/service.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -51,6 +55,16 @@ GkeHubMetadata::ListMemberships(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMemberships(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::ListBoundMembershipsResponse>
+GkeHubMetadata::ListBoundMemberships(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListBoundMembershipsRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("scope_name=", internal::UrlEncode(request.scope_name())));
+  return child_->ListBoundMemberships(context, options, request);
 }
 
 StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
@@ -208,6 +222,537 @@ GkeHubMetadata::GenerateConnectManifest(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncCreateFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateFleetRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateFleet(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::CreateFleet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateFleetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFleet(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::Fleet> GkeHubMetadata::GetFleet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetFleetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetFleet(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncUpdateFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateFleetRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("fleet.name=", internal::UrlEncode(request.fleet().name())));
+  return child_->AsyncUpdateFleet(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::UpdateFleet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateFleetRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("fleet.name=", internal::UrlEncode(request.fleet().name())));
+  return child_->UpdateFleet(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncDeleteFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteFleetRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteFleet(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::DeleteFleet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteFleetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFleet(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::ListFleetsResponse>
+GkeHubMetadata::ListFleets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListFleetsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListFleets(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::Namespace>
+GkeHubMetadata::GetScopeNamespace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetScopeNamespaceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetScopeNamespace(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncCreateScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateScopeNamespace(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::CreateScopeNamespace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateScopeNamespace(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncUpdateScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("scope_namespace.name=",
+                   internal::UrlEncode(request.scope_namespace().name())));
+  return child_->AsyncUpdateScopeNamespace(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::UpdateScopeNamespace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("scope_namespace.name=",
+                   internal::UrlEncode(request.scope_namespace().name())));
+  return child_->UpdateScopeNamespace(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncDeleteScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteScopeNamespace(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::DeleteScopeNamespace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteScopeNamespace(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopeNamespacesResponse>
+GkeHubMetadata::ListScopeNamespaces(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListScopeNamespacesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListScopeNamespaces(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubMetadata::GetScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetScopeRBACRoleBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncCreateScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateScopeRBACRoleBinding(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::CreateScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateScopeRBACRoleBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncUpdateScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("rbacrolebinding.name=",
+                   internal::UrlEncode(request.rbacrolebinding().name())));
+  return child_->AsyncUpdateScopeRBACRoleBinding(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::UpdateScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("rbacrolebinding.name=",
+                   internal::UrlEncode(request.rbacrolebinding().name())));
+  return child_->UpdateScopeRBACRoleBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncDeleteScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteScopeRBACRoleBinding(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::DeleteScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteScopeRBACRoleBinding(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopeRBACRoleBindingsResponse>
+GkeHubMetadata::ListScopeRBACRoleBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListScopeRBACRoleBindings(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::Scope> GkeHubMetadata::GetScope(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetScopeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetScope(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncCreateScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateScopeRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateScope(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::CreateScope(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateScopeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateScope(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncUpdateScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateScopeRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("scope.name=", internal::UrlEncode(request.scope().name())));
+  return child_->AsyncUpdateScope(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::UpdateScope(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateScopeRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("scope.name=", internal::UrlEncode(request.scope().name())));
+  return child_->UpdateScope(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncDeleteScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteScopeRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteScope(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubMetadata::DeleteScope(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteScopeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteScope(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopesResponse>
+GkeHubMetadata::ListScopes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListScopesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListScopes(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::ListPermittedScopesResponse>
+GkeHubMetadata::ListPermittedScopes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListPermittedScopesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListPermittedScopes(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::MembershipBinding>
+GkeHubMetadata::GetMembershipBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetMembershipBindingRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetMembershipBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncCreateMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMembershipBinding(cq, std::move(context),
+                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::CreateMembershipBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMembershipBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncUpdateMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("membership_binding.name=",
+                   internal::UrlEncode(request.membership_binding().name())));
+  return child_->AsyncUpdateMembershipBinding(cq, std::move(context),
+                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::UpdateMembershipBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("membership_binding.name=",
+                   internal::UrlEncode(request.membership_binding().name())));
+  return child_->UpdateMembershipBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncDeleteMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteMembershipBinding(cq, std::move(context),
+                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::DeleteMembershipBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMembershipBinding(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::ListMembershipBindingsResponse>
+GkeHubMetadata::ListMembershipBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListMembershipBindingsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListMembershipBindings(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubMetadata::GetMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetMembershipRBACRoleBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncCreateMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMembershipRBACRoleBinding(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::CreateMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMembershipRBACRoleBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncUpdateMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("rbacrolebinding.name=",
+                   internal::UrlEncode(request.rbacrolebinding().name())));
+  return child_->AsyncUpdateMembershipRBACRoleBinding(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::UpdateMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("rbacrolebinding.name=",
+                   internal::UrlEncode(request.rbacrolebinding().name())));
+  return child_->UpdateMembershipRBACRoleBinding(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubMetadata::AsyncDeleteMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteMembershipRBACRoleBinding(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubMetadata::DeleteMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMembershipRBACRoleBinding(context, options, request);
+}
+
+StatusOr<google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsResponse>
+GkeHubMetadata::ListMembershipRBACRoleBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListMembershipRBACRoleBindings(context, options, request);
+}
+
+StatusOr<
+    google::cloud::gkehub::v1::GenerateMembershipRBACRoleBindingYAMLResponse>
+GkeHubMetadata::GenerateMembershipRBACRoleBindingYAML(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::
+        GenerateMembershipRBACRoleBindingYAMLRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->GenerateMembershipRBACRoleBindingYAML(context, options,
+                                                       request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 GkeHubMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -247,3 +792,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

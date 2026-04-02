@@ -185,8 +185,6 @@ class ExtendLeasesHandle
   int attempts_ = 0;
 };
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TracingLeaseManagement : public LeaseManagement {
  public:
   TracingLeaseManagement(std::shared_ptr<LeaseManagement> child,
@@ -220,15 +218,6 @@ std::shared_ptr<LeaseManagement> MakeTracingLeaseManagement(
   return std::make_shared<TracingLeaseManagement>(std::move(impl),
                                                   std::move(batch_callback));
 }
-
-#else  // #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<LeaseManagement> MakeTracingLeaseManagement(
-    std::shared_ptr<LeaseManagement> impl, std::shared_ptr<BatchCallback>) {
-  return impl;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 

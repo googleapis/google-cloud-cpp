@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/bucket_name.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/strip.h"
 #include <ostream>
 #include <string>

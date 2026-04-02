@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CONNECTION_H
 
+#include "google/cloud/config/v1/config.pb.h"
 #include "google/cloud/config/v1/config_connection_idempotency_policy.h"
 #include "google/cloud/config/v1/internal/config_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/config/v1/config.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

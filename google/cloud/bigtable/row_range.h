@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
-#include <google/bigtable/v2/data.pb.h>
+#include "google/bigtable/v2/data.pb.h"
 #include <string>
 #include <utility>
 

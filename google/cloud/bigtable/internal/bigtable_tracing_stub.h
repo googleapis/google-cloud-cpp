@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class BigtableTracingStub : public BigtableStub {
  public:
@@ -117,6 +118,12 @@ class BigtableTracingStub : public BigtableStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;
 
+  future<StatusOr<google::bigtable::v2::PingAndWarmResponse>> AsyncPingAndWarm(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::PingAndWarmRequest const& request) override;
+
   future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
   AsyncReadModifyWriteRow(
       google::cloud::CompletionQueue& cq,
@@ -137,8 +144,6 @@ class BigtableTracingStub : public BigtableStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -152,5 +157,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_TRACING_STUB_H

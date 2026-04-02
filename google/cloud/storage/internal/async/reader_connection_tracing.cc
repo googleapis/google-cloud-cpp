@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <cstdint>
 #include <string>
 #include <utility>
@@ -27,7 +25,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = ::opentelemetry::trace::SemanticConventions;
+namespace sc = ::opentelemetry::semconv;
 
 class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
  public:
@@ -40,7 +38,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
     auto scope = opentelemetry::trace::Scope(span_);
     span_->AddEvent("gl-cpp.cancel",
                     {
-                        {sc::kThreadId, internal::CurrentThreadId()},
+                        {sc::thread::kThreadId, internal::CurrentThreadId()},
                     });
     return impl_->Cancel();
   }
@@ -56,7 +54,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
                 {
                     {/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
                     {/*sc::kRpcMessageId=*/"rpc.message.id", count},
-                    {sc::kThreadId, internal::CurrentThreadId()},
+                    {sc::thread::kThreadId, internal::CurrentThreadId()},
                 });
             return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
           }
@@ -66,7 +64,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
               {
                   {/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
                   {/*sc::kRpcMessageId=*/"rpc.message.id", count},
-                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {sc::thread::kThreadId, internal::CurrentThreadId()},
                   {"message.starting_offset", payload.offset()},
               });
           return r;
@@ -102,5 +100,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

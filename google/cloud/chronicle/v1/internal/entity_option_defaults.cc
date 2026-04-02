@@ -41,7 +41,7 @@ Options EntityServiceDefaultOptions(Options options) {
   if (!options.has<chronicle_v1::EntityServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::EntityServiceRetryPolicyOption>(
         chronicle_v1::EntityServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<chronicle_v1::EntityServiceBackoffPolicyOption>()) {

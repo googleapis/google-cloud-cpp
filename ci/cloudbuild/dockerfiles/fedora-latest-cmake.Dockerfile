@@ -40,13 +40,27 @@ RUN dnf makecache && dnf install -y "dnf-command(debuginfo-install)"
 RUN dnf makecache && dnf debuginfo-install -y libstdc++
 
 # These are used by the docfx tool.
-RUN dnf makecache && dnf install -y pugixml-devel yaml-cpp-devel
+RUN dnf makecache && dnf install -y pugixml-devel
+
+RUN dnf install -y valgrind
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
 RUN echo "root:cloudcxx" | chpasswd
+
+WORKDIR /var/tmp/build/
+RUN curl -fsSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.9.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=ON \
+        -DBUILD_TESTING=OFF \
+        -S . -B cmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 # Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 # when handling `.pc` files with lots of `Requires:` deps.  This problem is
@@ -70,12 +84,11 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # We disable the inline namespace because otherwise Abseil LTS updates break our
 # `check-api` build.
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
-    sed -i 's/^#define ABSL_OPTION_USE_INLINE_NAMESPACE 1$/#define ABSL_OPTION_USE_INLINE_NAMESPACE 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_CXX_STANDARD=17 \
       -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -GNinja -S . -B cmake-out && \
@@ -93,25 +106,12 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.16.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -DBENCHMARK_ENABLE_TESTING=OFF \
-      -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
-    ldconfig && cd /var/tmp && rm -fr build
-
-WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=yes \
-      -DCRC32C_BUILD_TESTS=OFF \
-      -DCRC32C_BUILD_BENCHMARKS=OFF \
-      -DCRC32C_USE_GLOG=OFF \
       -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
@@ -129,10 +129,11 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v29.4.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
@@ -141,16 +142,15 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v29.4.tar.gz 
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_CXX_STANDARD=14 \
+        -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
         -DBUILD_SHARED_LIBS=ON \
         -DWITH_EXAMPLES=OFF \
-        -DWITH_STL=CXX14 \
-        -DWITH_ABSEIL=ON \
+        -DWITH_STL=CXX17 \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -160,10 +160,11 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel re2-devel
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.69.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
       -DBUILD_SHARED_LIBS=ON \
       -DgRPC_INSTALL=ON \
       -DgRPC_BUILD_TESTS=OFF \

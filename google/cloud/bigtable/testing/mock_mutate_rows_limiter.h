@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_MUTATE_ROWS_LIMITER_H
 
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
-#include <google/bigtable/v2/bigtable.pb.h>
+#include "google/bigtable/v2/bigtable.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

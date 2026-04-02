@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_public_advertised_prefixes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class PublicAdvertisedPrefixesTracingConnection
     : public compute_public_advertised_prefixes_v1::
           PublicAdvertisedPrefixesConnection {
@@ -126,8 +124,6 @@ class PublicAdvertisedPrefixesTracingConnection
       compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

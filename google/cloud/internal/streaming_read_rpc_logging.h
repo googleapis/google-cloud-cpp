@@ -15,13 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_LOGGING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_LOGGING_H
 
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>

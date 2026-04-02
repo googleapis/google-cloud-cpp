@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace gkerecommender_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GkeInferenceQuickstartTracingStub::GkeInferenceQuickstartTracingStub(
     std::shared_ptr<GkeInferenceQuickstartStub> child)
@@ -114,19 +115,15 @@ GkeInferenceQuickstartTracingStub::FetchBenchmarkingData(
       context, *span, child_->FetchBenchmarkingData(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<GkeInferenceQuickstartStub>
 MakeGkeInferenceQuickstartTracingStub(
     std::shared_ptr<GkeInferenceQuickstartStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<GkeInferenceQuickstartTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkerecommender_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

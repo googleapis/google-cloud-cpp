@@ -27,8 +27,6 @@ namespace cloud {
 namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ContactCenterInsightsTracingConnection::ContactCenterInsightsTracingConnection(
     std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
         child)
@@ -1318,18 +1316,14 @@ Status ContactCenterInsightsTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
 MakeContactCenterInsightsTracingConnection(
     std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ContactCenterInsightsTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

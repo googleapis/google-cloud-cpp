@@ -28,8 +28,6 @@ namespace cloud {
 namespace translate_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TranslationServiceTracingConnection
     : public translate_v3::TranslationServiceConnection {
  public:
@@ -312,8 +310,6 @@ class TranslationServiceTracingConnection
  private:
   std::shared_ptr<translate_v3::TranslationServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

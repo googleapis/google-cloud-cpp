@@ -42,7 +42,7 @@ Options BackendServicesDefaultOptions(Options options) {
           compute_backend_services_v1::BackendServicesRetryPolicyOption>()) {
     options.set<compute_backend_services_v1::BackendServicesRetryPolicyOption>(
         compute_backend_services_v1::BackendServicesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

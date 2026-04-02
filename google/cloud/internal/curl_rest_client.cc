@@ -15,8 +15,6 @@
 #include "google/cloud/internal/curl_rest_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/internal/curl_options.h"
@@ -26,6 +24,8 @@
 #include "google/cloud/internal/tracing_rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/strip.h"
 
 namespace google {

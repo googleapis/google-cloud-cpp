@@ -19,10 +19,11 @@
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
+#include "absl/strings/str_cat.h"
+#include <google/storage/v2/storage.pb.h>
 #include <iterator>
 
 namespace google {
@@ -155,6 +156,15 @@ Status SetObjectMetadata(google::storage::v2::Object& resource,
     *resource.mutable_custom_time() =
         google::cloud::internal::ToProtoTimestamp(metadata.custom_time());
   }
+  if (metadata.has_contexts()) {
+    auto& custom_map = *resource.mutable_contexts()->mutable_custom();
+    for (auto const& kv : metadata.contexts().custom()) {
+      // In request, the create_time and update_time are ignored by the server,
+      // hence there is no need to parse them.
+      custom_map[kv.first].set_value(kv.second.value);
+    }
+  }
+
   return Status{};
 }
 
@@ -257,6 +267,48 @@ Status FinalizeChecksums(google::storage::v2::ObjectChecksums& checksums,
   return {};
 }
 
+void PatchGrpcMetadata(storage::ObjectMetadataPatchBuilder const& patch_builder,
+                       google::storage::v2::UpdateObjectRequest& result,
+                       google::storage::v2::Object& object) {
+  auto const& subpatch =
+      storage::internal::PatchBuilderDetails::GetMetadataSubPatch(
+          patch_builder);
+  if (subpatch.is_null()) {
+    object.clear_metadata();
+    result.mutable_update_mask()->add_paths("metadata");
+  } else {
+    for (auto const& kv : subpatch.items()) {
+      result.mutable_update_mask()->add_paths("metadata." + kv.key());
+      auto const& v = kv.value();
+      if (!v.is_string()) continue;
+      (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
+    }
+  }
+}
+
+void PatchGrpcContexts(storage::ObjectMetadataPatchBuilder const& patch_builder,
+                       google::storage::v2::UpdateObjectRequest& result,
+                       google::storage::v2::Object& object) {
+  auto const& contexts_subpatch =
+      storage::internal::PatchBuilderDetails::GetCustomContextsSubPatch(
+          patch_builder);
+  if (contexts_subpatch.is_null()) {
+    object.clear_contexts();
+    result.mutable_update_mask()->add_paths("contexts.custom");
+  } else {
+    for (auto const& kv : contexts_subpatch.items()) {
+      result.mutable_update_mask()->add_paths("contexts.custom." + kv.key());
+      auto const& v = kv.value();
+      if (v.is_object() && v.contains("value")) {
+        std::string value_str = v["value"].get<std::string>();
+        auto& payload =
+            (*object.mutable_contexts()->mutable_custom())[kv.key()];
+        payload.set_value(std::move(value_str));
+      }
+    }
+  }
+}
+
 }  // namespace
 
 StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
@@ -275,6 +327,13 @@ StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
     }
     for (auto const& kv : metadata.metadata()) {
       (*destination.mutable_metadata())[kv.first] = kv.second;
+    }
+    if (metadata.has_contexts()) {
+      for (auto const& kv : metadata.contexts().custom()) {
+        auto& payload =
+            (*destination.mutable_contexts()->mutable_custom())[kv.first];
+        payload.set_value(kv.second.value);
+      }
     }
     destination.set_content_encoding(metadata.content_encoding());
     destination.set_content_disposition(metadata.content_disposition());
@@ -441,20 +500,8 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     result.mutable_update_mask()->add_paths(field.grpc_name);
   }
 
-  auto const& subpatch =
-      storage::internal::PatchBuilderDetails::GetMetadataSubPatch(
-          request.patch());
-  if (subpatch.is_null()) {
-    object.clear_metadata();
-    result.mutable_update_mask()->add_paths("metadata");
-  } else {
-    for (auto const& kv : subpatch.items()) {
-      result.mutable_update_mask()->add_paths("metadata." + kv.key());
-      auto const& v = kv.value();
-      if (!v.is_string()) continue;
-      (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
-    }
-  }
+  PatchGrpcMetadata(request.patch(), result, object);
+  PatchGrpcContexts(request.patch(), result, object);
 
   // We need to check each modifiable field.
   struct StringField {
@@ -508,6 +555,19 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
   result.mutable_update_mask()->add_paths("metadata");
   for (auto const& kv : request.metadata().metadata()) {
     (*object.mutable_metadata())[kv.first] = kv.second;
+  }
+
+  if (request.metadata().has_contexts()) {
+    result.mutable_update_mask()->add_paths("contexts");
+    auto& custom_map = *object.mutable_contexts()->mutable_custom();
+
+    for (auto const& kv : request.metadata().contexts().custom()) {
+      google::storage::v2::ObjectCustomContextPayload& payload_ref =
+          custom_map[kv.first];
+      // In request, the create_time and update_time are ignored by
+      // the server, hence there is no need to parse them.
+      payload_ref.set_value(kv.second.value);
+    }
   }
 
   if (request.metadata().has_custom_time()) {

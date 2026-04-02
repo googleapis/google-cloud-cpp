@@ -17,9 +17,12 @@
 // source: google/monitoring/v3/metric_service.proto
 
 #include "google/cloud/monitoring/v3/internal/metric_auth_decorator.h"
-#include <google/monitoring/v3/metric_service.grpc.pb.h>
+#include "google/monitoring/v3/metric_service.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -130,3 +133,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -17,9 +17,12 @@
 // source: google/cloud/storagebatchoperations/v1/storage_batch_operations.proto
 
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_auth_decorator.h"
-#include <google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h>
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -96,6 +99,27 @@ StorageBatchOperationsAuth::CancelJob(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelJob(context, options, request);
+}
+
+StatusOr<
+    google::cloud::storagebatchoperations::v1::ListBucketOperationsResponse>
+StorageBatchOperationsAuth::ListBucketOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storagebatchoperations::v1::
+        ListBucketOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBucketOperations(context, options, request);
+}
+
+StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsAuth::GetBucketOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storagebatchoperations::v1::GetBucketOperationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBucketOperation(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -190,3 +214,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagebatchoperations_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

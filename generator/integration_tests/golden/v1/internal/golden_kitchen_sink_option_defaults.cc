@@ -42,7 +42,7 @@ Options GoldenKitchenSinkDefaultOptions(Options options) {
   if (!options.has<golden_v1::GoldenKitchenSinkRetryPolicyOption>()) {
     options.set<golden_v1::GoldenKitchenSinkRetryPolicyOption>(
         golden_v1::GoldenKitchenSinkLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(10)).clone());
   }
   if (!options.has<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()) {
     options.set<golden_v1::GoldenKitchenSinkBackoffPolicyOption>(

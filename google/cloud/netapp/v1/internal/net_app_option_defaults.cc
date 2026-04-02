@@ -40,7 +40,7 @@ Options NetAppDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<netapp_v1::NetAppRetryPolicyOption>()) {
     options.set<netapp_v1::NetAppRetryPolicyOption>(
-        netapp_v1::NetAppLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        netapp_v1::NetAppLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<netapp_v1::NetAppBackoffPolicyOption>()) {

@@ -27,8 +27,6 @@ namespace cloud {
 namespace gkerecommender_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 GkeInferenceQuickstartTracingConnection::
     GkeInferenceQuickstartTracingConnection(
         std::shared_ptr<gkerecommender_v1::GkeInferenceQuickstartConnection>
@@ -103,17 +101,13 @@ GkeInferenceQuickstartTracingConnection::FetchBenchmarkingData(
   return internal::EndSpan(*span, child_->FetchBenchmarkingData(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<gkerecommender_v1::GkeInferenceQuickstartConnection>
 MakeGkeInferenceQuickstartTracingConnection(
     std::shared_ptr<gkerecommender_v1::GkeInferenceQuickstartConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<GkeInferenceQuickstartTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

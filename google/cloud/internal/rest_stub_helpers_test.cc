@@ -17,9 +17,9 @@
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/longrunning/operations.pb.h>
-#include <google/protobuf/duration.pb.h>
-#include <google/protobuf/timestamp.pb.h>
+#include "google/longrunning/operations.pb.h"
+#include "google/protobuf/duration.pb.h"
+#include "google/protobuf/timestamp.pb.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <string>

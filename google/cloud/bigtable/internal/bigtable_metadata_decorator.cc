@@ -18,17 +18,20 @@
 
 #include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -655,6 +658,42 @@ BigtableMetadata::AsyncCheckAndMutateRow(
                                         std::move(options), request);
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableMetadata::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(2);
+
+  static auto* name_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::bigtable::v2::PingAndWarmRequest>{
+        "name=",
+        {
+            {[](google::bigtable::v2::PingAndWarmRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/instances/[^/]+)",
+                        std::regex::optimize}},
+        }};
+  }();
+  name_matcher->AppendParam(request, params);
+
+  if (!request.app_profile_id().empty()) {
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context, *options);
+  } else {
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncPingAndWarm(cq, std::move(context), std::move(options),
+                                  request);
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableMetadata::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
@@ -750,3 +789,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

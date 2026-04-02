@@ -444,7 +444,7 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
   auto retry = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       Options{}
-          .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
           .set<BackoffPolicyOption>(
               ExponentialBackoffPolicy(us(1), us(2), 2).clone())

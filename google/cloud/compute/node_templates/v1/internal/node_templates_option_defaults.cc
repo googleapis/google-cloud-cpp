@@ -42,7 +42,7 @@ Options NodeTemplatesDefaultOptions(Options options) {
            .has<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>()) {
     options.set<compute_node_templates_v1::NodeTemplatesRetryPolicyOption>(
         compute_node_templates_v1::NodeTemplatesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

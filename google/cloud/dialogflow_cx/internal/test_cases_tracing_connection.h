@@ -28,8 +28,6 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TestCasesTracingConnection : public dialogflow_cx::TestCasesConnection {
  public:
   ~TestCasesTracingConnection() override = default;
@@ -141,8 +139,6 @@ class TestCasesTracingConnection : public dialogflow_cx::TestCasesConnection {
  private:
   std::shared_ptr<dialogflow_cx::TestCasesConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

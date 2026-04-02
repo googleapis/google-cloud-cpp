@@ -67,6 +67,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "billing"
     "binaryauthorization"
     "certificatemanager"
+    "ces"
     "channel"
     "chronicle"
     "cloudbuild"
@@ -113,6 +114,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "gkehub"
     "gkemulticloud"
     "gkerecommender"
+    "hypercomputecluster"
     "iam"
     "iap"
     "ids"
@@ -185,15 +187,18 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "tpu"
     "trace"
     "translate"
+    "vectorsearch"
     "video"
     "videointelligence"
     "vision"
+    "visionai"
     "vmmigration"
     "vmwareengine"
     "vpcaccess"
     "webrisk"
     "websecurityscanner"
     "workflows"
+    "workloadmanager"
     "workstations")
 
 set(GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES
@@ -306,7 +311,8 @@ export_libraries_bzl()
 #   other feature, or even if no features are enabled.
 # ~~~
 macro (google_cloud_cpp_enable_deps)
-    find_package(opentelemetry-cpp CONFIG)
+    list(APPEND GOOGLE_CLOUD_CPP_ENABLE monitoring trace opentelemetry
+         universe_domain)
     if (__ga_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE
@@ -345,11 +351,6 @@ macro (google_cloud_cpp_enable_deps)
     if (asset IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 accesscontextmanager osconfig)
     endif ()
-    if (bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        if (opentelemetry-cpp_FOUND)
-            list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 opentelemetry)
-        endif ()
-    endif ()
     if (contentwarehouse IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 documentai)
     endif ()
@@ -359,13 +360,8 @@ macro (google_cloud_cpp_enable_deps)
     if (pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 iam)
     endif ()
-    if ((storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        # TODO(#13857) - remove backwards compatibility shims
-        OR (experimental-storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+    if (storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 storage)
-    endif ()
-    if (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 monitoring trace opentelemetry)
     endif ()
 endmacro ()
 
@@ -424,9 +420,7 @@ function (google_cloud_cpp_enable_features)
     foreach (feature IN LISTS GOOGLE_CLOUD_CPP_ENABLE)
         if ("${feature}" STREQUAL "generator")
             add_subdirectory(generator)
-        elseif (("${feature}" STREQUAL "storage_grpc")
-                # TODO(#13857) - remove backwards compatibility shims
-                OR ("${feature}" STREQUAL "experimental-storage_grpc"))
+        elseif ("${feature}" STREQUAL "storage_grpc")
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
             endif ()
@@ -529,9 +523,7 @@ endfunction ()
 
 function (google_cloud_cpp_define_dependent_legacy_feature_options)
     set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT OFF)
-    if ((storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        # TODO(#13857) - remove backwards compatibility shims
-        OR (experimental-storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+    if (storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT ON)
     endif ()
 

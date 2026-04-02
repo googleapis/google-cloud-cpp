@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -89,6 +88,12 @@ google::storage::v2::Object ExpectedFullObjectMetadata() {
     temporary_hold: true
     metadata: { key: "test-metadata-key1" value: "test-value1" }
     metadata: { key: "test-metadata-key2" value: "test-value2" }
+    contexts: {
+      custom: {
+        key: "custom-key-1"
+        value: { value: "custom-value-1" }
+      }
+    }
     event_based_hold: true
     custom_time { seconds: 1643126687 nanos: 123000000 }
   )pb";
@@ -114,6 +119,8 @@ storage::ObjectMetadata FullObjectMetadata() {
       .set_temporary_hold(true)
       .upsert_metadata("test-metadata-key1", "test-value1")
       .upsert_metadata("test-metadata-key2", "test-value2")
+      .set_contexts(storage::ObjectContexts().upsert(
+          "custom-key-1", {"custom-value-1", {}, {}}))
       .set_event_based_hold(true)
       .set_custom_time(std::chrono::system_clock::time_point{} +
                        std::chrono::seconds(1643126687) +
@@ -480,6 +487,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
           .SetContentType("test-content-type")
           .SetMetadata("test-metadata-key1", "test-value1")
           .SetMetadata("test-metadata-key2", "test-value2")
+          .SetContext("custom-key-1", "custom-value-1")
           .SetTemporaryHold(true)
           .SetAcl({
               storage::ObjectAccessControl{}
@@ -506,12 +514,13 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
   ASSERT_STATUS_OK(actual);
   // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
-  EXPECT_THAT(actual->update_mask().paths(),
-              UnorderedElementsAre(
-                  "acl", "content_encoding", "content_disposition",
-                  "cache_control", "content_language", "content_type",
-                  "metadata.test-metadata-key1", "metadata.test-metadata-key2",
-                  "temporary_hold", "event_based_hold", "custom_time"));
+  EXPECT_THAT(
+      actual->update_mask().paths(),
+      UnorderedElementsAre(
+          "acl", "content_encoding", "content_disposition", "cache_control",
+          "content_language", "content_type", "metadata.test-metadata-key1",
+          "metadata.test-metadata-key2", "temporary_hold", "event_based_hold",
+          "custom_time", "contexts.custom.custom-key-1"));
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -536,6 +545,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
           .ResetContentType()
           .ResetEventBasedHold()
           .ResetMetadata()
+          .ResetContexts()
           .ResetTemporaryHold()
           .ResetCustomTime());
 
@@ -548,7 +558,7 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
       UnorderedElementsAre("acl", "content_encoding", "content_disposition",
                            "cache_control", "content_language", "content_type",
                            "metadata", "temporary_hold", "event_based_hold",
-                           "custom_time"));
+                           "custom_time", "contexts.custom"));
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -605,6 +615,64 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestResetMetadata) {
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcObjectRequestParser, PatchObjectRequestContexts) {
+  auto constexpr kTextProto = R"pb(
+    object {
+      bucket: "projects/_/buckets/bucket-name"
+      name: "object-name"
+      contexts: {
+        custom: {
+          key: "custom-key-1"
+          value: { value: "custom-value-1" }
+        }
+      }
+    }
+    update_mask {}
+  )pb";
+  google::storage::v2::UpdateObjectRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+
+  storage::internal::PatchObjectRequest req(
+      "bucket-name", "object-name",
+      storage::ObjectMetadataPatchBuilder{}
+          .SetContext("custom-key-1", "custom-value-1")
+          .ResetContext("custom-key-2"));
+
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  // First check the paths. We do not care about their order, so checking them
+  // with IsProtoEqual does not work.
+  EXPECT_THAT(actual->update_mask().paths(),
+              UnorderedElementsAre("contexts.custom.custom-key-1",
+                                   "contexts.custom.custom-key-2"));
+  // Clear the paths, which we already compared, and compare the proto.
+  actual->mutable_update_mask()->clear_paths();
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, PatchObjectRequestResetContexts) {
+  auto constexpr kTextProto = R"pb(
+    object { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
+    update_mask {}
+  )pb";
+  google::storage::v2::UpdateObjectRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+
+  storage::internal::PatchObjectRequest req(
+      "bucket-name", "object-name",
+      storage::ObjectMetadataPatchBuilder{}.ResetContexts());
+
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  // First check the paths. We do not care about their order, so checking them
+  // with IsProtoEqual does not work.
+  EXPECT_THAT(actual->update_mask().paths(),
+              UnorderedElementsAre("contexts.custom"));
+  // Clear the paths, which we already compared, and compare the proto.
+  actual->mutable_update_mask()->clear_paths();
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
   auto constexpr kTextProto = R"pb(
     predefined_acl: "projectPrivate"
@@ -644,7 +712,7 @@ TEST(GrpcObjectRequestParser, UpdateObjectRequestAllOptions) {
       UnorderedElementsAre("acl", "content_encoding", "content_disposition",
                            "cache_control", "content_language", "content_type",
                            "metadata", "temporary_hold", "event_based_hold",
-                           "custom_time"));
+                           "custom_time", "contexts"));
   // Clear the paths, which we already compared, and test the rest
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));

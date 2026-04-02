@@ -42,7 +42,7 @@ Options RegionDiskTypesDefaultOptions(Options options) {
           compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>()) {
     options.set<compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>(
         compute_region_disk_types_v1::RegionDiskTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

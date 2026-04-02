@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_https_health_checks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class HttpsHealthChecksTracingConnection
     : public compute_https_health_checks_v1::HttpsHealthChecksConnection {
  public:
@@ -106,8 +104,6 @@ class HttpsHealthChecksTracingConnection
   std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

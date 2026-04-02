@@ -126,20 +126,24 @@ int DefaultConnectionPoolSize() {
 }
 
 Options HandleUniverseDomain(Options opts) {
-  if (!opts.has<DataEndpointOption>()) {
+  if (!opts.has<::google::cloud::bigtable_internal::DataEndpointOption>()) {
     auto ep = google::cloud::internal::UniverseDomainEndpoint(
         "bigtable.googleapis.com", opts);
-    opts.set<DataEndpointOption>(std::move(ep));
+    opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(
+        std::move(ep));
   }
-  if (!opts.has<AdminEndpointOption>()) {
+  if (!opts.has<::google::cloud::bigtable_internal::AdminEndpointOption>()) {
     auto ep = google::cloud::internal::UniverseDomainEndpoint(
         "bigtableadmin.googleapis.com", opts);
-    opts.set<AdminEndpointOption>(std::move(ep));
+    opts.set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+        std::move(ep));
   }
-  if (!opts.has<InstanceAdminEndpointOption>()) {
+  if (!opts.has<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>()) {
     auto ep = google::cloud::internal::UniverseDomainEndpoint(
         "bigtableadmin.googleapis.com", opts);
-    opts.set<InstanceAdminEndpointOption>(std::move(ep));
+    opts.set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+        std::move(ep));
   }
   return opts;
 }
@@ -153,14 +157,16 @@ Options DefaultOptions(Options opts) {
 
   if (opts.has<EndpointOption>()) {
     auto const& ep = opts.get<EndpointOption>();
-    if (!opts.has<DataEndpointOption>()) {
-      opts.set<DataEndpointOption>(ep);
+    if (!opts.has<::google::cloud::bigtable_internal::DataEndpointOption>()) {
+      opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(ep);
     }
-    if (!opts.has<AdminEndpointOption>()) {
-      opts.set<AdminEndpointOption>(ep);
+    if (!opts.has<::google::cloud::bigtable_internal::AdminEndpointOption>()) {
+      opts.set<::google::cloud::bigtable_internal::AdminEndpointOption>(ep);
     }
-    if (!opts.has<InstanceAdminEndpointOption>()) {
-      opts.set<InstanceAdminEndpointOption>(ep);
+    if (!opts.has<::google::cloud::bigtable_internal::
+                      InstanceAdminEndpointOption>()) {
+      opts.set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+          ep);
     }
   }
 
@@ -168,7 +174,7 @@ Options DefaultOptions(Options opts) {
       GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH").value_or("");
   if (absl::c_any_of(absl::StrSplit(direct_path, ','),
                      [](absl::string_view v) { return v == "bigtable"; })) {
-    opts.set<DataEndpointOption>(
+    opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(
             "google-c2p:///directpath-bigtable.googleapis.com")
         .set<AuthorityOption>("directpath-bigtable.googleapis.com");
 
@@ -180,15 +186,18 @@ Options DefaultOptions(Options opts) {
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator) {
-    opts.set<DataEndpointOption>(*emulator);
-    opts.set<AdminEndpointOption>(*emulator);
-    opts.set<InstanceAdminEndpointOption>(*emulator);
+    opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(*emulator);
+    opts.set<::google::cloud::bigtable_internal::AdminEndpointOption>(
+        *emulator);
+    opts.set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+        *emulator);
   }
 
   auto instance_admin_emulator =
       GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
   if (instance_admin_emulator) {
-    opts.set<InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
+    opts.set<::google::cloud::bigtable_internal::InstanceAdminEndpointOption>(
+        *std::move(instance_admin_emulator));
   }
 
   // Handle `UniverseDomainOption`. Note that we have already addressed the
@@ -285,17 +294,21 @@ Options DefaultDataOptions(Options opts) {
         "bigtable.googleapis.com", opts);
     opts.set<AuthorityOption>(std::move(ep));
   }
-  return opts.set<EndpointOption>(opts.get<DataEndpointOption>());
+  return opts.set<EndpointOption>(
+      opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
 }
 
 Options DefaultInstanceAdminOptions(Options opts) {
   opts = DefaultOptions(std::move(opts));
-  return opts.set<EndpointOption>(opts.get<InstanceAdminEndpointOption>());
+  return opts.set<EndpointOption>(
+      opts.get<
+          ::google::cloud::bigtable_internal::InstanceAdminEndpointOption>());
 }
 
 Options DefaultTableAdminOptions(Options opts) {
   opts = DefaultOptions(std::move(opts));
-  return opts.set<EndpointOption>(opts.get<AdminEndpointOption>());
+  return opts.set<EndpointOption>(
+      opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
 }
 
 }  // namespace internal

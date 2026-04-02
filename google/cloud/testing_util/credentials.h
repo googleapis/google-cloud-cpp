@@ -53,7 +53,11 @@ struct TestCredentialsVisitor : public internal::CredentialsVisitor {
   }
   void visit(internal::ServiceAccountConfig const& cfg) override {
     name = "ServiceAccountConfig";
-    json_object = cfg.json_object();
+    if (cfg.json_object()) {
+      json_object = *cfg.json_object();
+    } else {
+      json_object = "cfg.file_path testing not implemented";
+    }
   }
   void visit(internal::ExternalAccountConfig const& cfg) override {
     name = "ExternalAccountConfig";

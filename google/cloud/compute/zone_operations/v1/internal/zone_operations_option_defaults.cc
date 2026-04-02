@@ -42,7 +42,7 @@ Options ZoneOperationsDefaultOptions(Options options) {
           compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>()) {
     options.set<compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>(
         compute_zone_operations_v1::ZoneOperationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

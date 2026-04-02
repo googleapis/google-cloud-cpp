@@ -43,7 +43,7 @@ Options ContainerAnalysisDefaultOptions(Options options) {
            .has<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()) {
     options.set<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>(
         containeranalysis_v1::ContainerAnalysisLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

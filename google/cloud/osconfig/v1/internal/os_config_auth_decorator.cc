@@ -17,9 +17,12 @@
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
 #include "google/cloud/osconfig/v1/internal/os_config_auth_decorator.h"
-#include <google/cloud/osconfig/v1/osconfig_service.grpc.pb.h>
+#include "google/cloud/osconfig/v1/osconfig_service.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -143,3 +146,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

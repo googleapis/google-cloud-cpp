@@ -20,7 +20,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/synchronization/barrier.h"
-#include <google/bigtable/v2/data.pb.h>
+#include "google/bigtable/v2/data.pb.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>

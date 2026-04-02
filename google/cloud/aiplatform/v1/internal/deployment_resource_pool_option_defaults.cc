@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/deployment_resource_pool_option_defaults.h"
 #include "google/cloud/aiplatform/v1/deployment_resource_pool_connection.h"
 #include "google/cloud/aiplatform/v1/deployment_resource_pool_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -46,7 +46,7 @@ Options DeploymentResourcePoolServiceDefaultOptions(std::string const& location,
           aiplatform_v1::DeploymentResourcePoolServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::DeploymentResourcePoolServiceRetryPolicyOption>(
         aiplatform_v1::DeploymentResourcePoolServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

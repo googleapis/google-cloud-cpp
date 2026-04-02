@@ -40,7 +40,7 @@ Options CompletionDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<talent_v4::CompletionRetryPolicyOption>()) {
     options.set<talent_v4::CompletionRetryPolicyOption>(
-        talent_v4::CompletionLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        talent_v4::CompletionLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<talent_v4::CompletionBackoffPolicyOption>()) {

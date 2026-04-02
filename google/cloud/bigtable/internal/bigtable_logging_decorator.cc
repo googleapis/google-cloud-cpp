@@ -21,11 +21,14 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -301,6 +304,24 @@ BigtableLogging::AsyncCheckAndMutateRow(
       tracing_options_);
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableLogging::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::v2::PingAndWarmRequest const& request) {
+        return child_->AsyncPingAndWarm(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableLogging::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
@@ -341,3 +362,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

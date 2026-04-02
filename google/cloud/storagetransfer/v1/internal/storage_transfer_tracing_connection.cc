@@ -27,8 +27,6 @@ namespace cloud {
 namespace storagetransfer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 StorageTransferServiceTracingConnection::
     StorageTransferServiceTracingConnection(
         std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection>
@@ -217,18 +215,14 @@ Status StorageTransferServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection>
 MakeStorageTransferServiceTracingConnection(
     std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<StorageTransferServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

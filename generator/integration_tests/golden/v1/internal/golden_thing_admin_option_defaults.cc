@@ -42,7 +42,7 @@ Options GoldenThingAdminDefaultOptions(Options options) {
   if (!options.has<golden_v1::GoldenThingAdminRetryPolicyOption>()) {
     options.set<golden_v1::GoldenThingAdminRetryPolicyOption>(
         golden_v1::GoldenThingAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(10)).clone());
   }
   if (!options.has<golden_v1::GoldenThingAdminBackoffPolicyOption>()) {
     options.set<golden_v1::GoldenThingAdminBackoffPolicyOption>(

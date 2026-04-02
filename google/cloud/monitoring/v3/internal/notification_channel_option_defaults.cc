@@ -44,7 +44,7 @@ Options NotificationChannelServiceDefaultOptions(Options options) {
            .has<monitoring_v3::NotificationChannelServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::NotificationChannelServiceRetryPolicyOption>(
         monitoring_v3::NotificationChannelServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

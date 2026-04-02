@@ -20,6 +20,7 @@
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -134,15 +135,14 @@ TEST(MonitoringExporter, ExportSuccess) {
         auto& labels = *resource.mutable_labels();
         auto const& attributes = pda.attributes.GetAttributes();
         labels["project_id"] =
-            absl::get<std::string>(attributes.find("project_id")->second);
+            std::get<std::string>(attributes.find("project_id")->second);
         labels["instance"] =
-            absl::get<std::string>(attributes.find("instance")->second);
+            std::get<std::string>(attributes.find("instance")->second);
         labels["cluster"] =
-            absl::get<std::string>(attributes.find("cluster")->second);
+            std::get<std::string>(attributes.find("cluster")->second);
         labels["table"] =
-            absl::get<std::string>(attributes.find("table")->second);
-        labels["zone"] =
-            absl::get<std::string>(attributes.find("zone")->second);
+            std::get<std::string>(attributes.find("table")->second);
+        labels["zone"] = std::get<std::string>(attributes.find("zone")->second);
         return std::make_pair(labels["project_id"], resource);
       };
 

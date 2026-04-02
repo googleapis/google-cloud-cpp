@@ -27,8 +27,6 @@ namespace cloud {
 namespace video_transcoder_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TranscoderServiceTracingConnection::TranscoderServiceTracingConnection(
     std::shared_ptr<video_transcoder_v1::TranscoderServiceConnection> child)
     : child_(std::move(child)) {}
@@ -112,17 +110,13 @@ Status TranscoderServiceTracingConnection::DeleteJobTemplate(
   return internal::EndSpan(*span, child_->DeleteJobTemplate(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<video_transcoder_v1::TranscoderServiceConnection>
 MakeTranscoderServiceTracingConnection(
     std::shared_ptr<video_transcoder_v1::TranscoderServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<TranscoderServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

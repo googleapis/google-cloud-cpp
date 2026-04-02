@@ -28,8 +28,6 @@ namespace cloud {
 namespace storagecontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class StorageControlTracingConnection
     : public storagecontrol_v2::StorageControlConnection {
  public:
@@ -63,6 +61,20 @@ class StorageControlTracingConnection
       override;
 
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+  DeleteFolderRecursive(
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFolderRecursive(
+      NoAwaitTag,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+  DeleteFolderRecursive(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -171,8 +183,6 @@ class StorageControlTracingConnection
  private:
   std::shared_ptr<storagecontrol_v2::StorageControlConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

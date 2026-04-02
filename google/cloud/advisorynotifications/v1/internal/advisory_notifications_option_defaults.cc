@@ -46,7 +46,7 @@ Options AdvisoryNotificationsServiceDefaultOptions(Options options) {
                     AdvisoryNotificationsServiceRetryPolicyOption>(
         advisorynotifications_v1::
             AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<advisorynotifications_v1::

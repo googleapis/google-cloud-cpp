@@ -46,7 +46,7 @@ Options RegionSecurityPoliciesDefaultOptions(Options options) {
                     RegionSecurityPoliciesRetryPolicyOption>(
         compute_region_security_policies_v1::
             RegionSecurityPoliciesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_security_policies_v1::

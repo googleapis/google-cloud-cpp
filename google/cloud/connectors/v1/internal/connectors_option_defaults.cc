@@ -41,7 +41,7 @@ Options ConnectorsDefaultOptions(Options options) {
   if (!options.has<connectors_v1::ConnectorsRetryPolicyOption>()) {
     options.set<connectors_v1::ConnectorsRetryPolicyOption>(
         connectors_v1::ConnectorsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<connectors_v1::ConnectorsBackoffPolicyOption>()) {

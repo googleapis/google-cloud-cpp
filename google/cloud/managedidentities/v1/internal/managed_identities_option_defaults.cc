@@ -45,7 +45,7 @@ Options ManagedIdentitiesServiceDefaultOptions(Options options) {
     options.set<
         managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>(
         managedidentities_v1::ManagedIdentitiesServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<managedidentities_v1::

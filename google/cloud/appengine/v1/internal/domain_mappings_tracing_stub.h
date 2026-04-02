@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class DomainMappingsTracingStub : public DomainMappingsStub {
  public:
@@ -101,8 +102,6 @@ class DomainMappingsTracingStub : public DomainMappingsStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -116,5 +115,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_DOMAIN_MAPPINGS_TRACING_STUB_H

@@ -19,14 +19,13 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "budgets/v1/",
     "v1/",
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/billing/budgets/v1:budgets_cc_grpc",
-    "@com_google_googleapis//google/cloud/billing/v1:billing_cc_grpc",
+    "@googleapis//google/cloud/billing/budgets/v1:budgets_cc_grpc",
+    "@googleapis//google/cloud/billing/v1:billing_cc_grpc",
 ]
 
 cc_gapic_library(

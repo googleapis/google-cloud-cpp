@@ -16,9 +16,9 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_metadata.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 

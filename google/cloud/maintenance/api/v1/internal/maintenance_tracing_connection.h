@@ -28,8 +28,6 @@ namespace cloud {
 namespace maintenance_api_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class MaintenanceTracingConnection
     : public maintenance_api_v1::MaintenanceConnection {
  public:
@@ -64,8 +62,6 @@ class MaintenanceTracingConnection
  private:
   std::shared_ptr<maintenance_api_v1::MaintenanceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

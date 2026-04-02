@@ -15,12 +15,12 @@
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmark.h"
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/stream_range.h"
+#include "absl/strings/str_cat.h"
 #include "absl/time/time.h"
 #include <chrono>
 #include <future>

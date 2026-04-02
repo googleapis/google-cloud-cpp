@@ -14,11 +14,11 @@
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/status.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
@@ -362,16 +362,16 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetDefaultAcl() {
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
     BucketEncryption const& v) {
   internal::PatchBuilder builder;
-  builder.SetStringField("defaultKmsKeyName", v.default_kms_key_name);
+  if (v.default_kms_key_name.empty()) {
+    builder.RemoveField("defaultKmsKeyName");
+  } else {
+    builder.SetStringField("defaultKmsKeyName", v.default_kms_key_name);
+  }
 
   auto add_config_patch = [&](char const* name, auto const& config) {
     if (config.restriction_mode.empty()) return;
-    builder.AddSubPatch(
-        name, internal::PatchBuilder()
-                  .SetStringField("restrictionMode", config.restriction_mode)
-                  .SetStringField("effectiveTime",
-                                  google::cloud::internal::FormatRfc3339(
-                                      config.effective_time)));
+    builder.AddSubPatch(name, internal::PatchBuilder().SetStringField(
+                                  "restrictionMode", config.restriction_mode));
   };
   add_config_patch("googleManagedEncryptionEnforcementConfig",
                    v.google_managed_encryption_enforcement_config);

@@ -87,9 +87,11 @@ std::vector<std::string> const& ImpersonateServiceAccountConfig::delegates()
   return options_.get<DelegatesOption>();
 }
 
-ServiceAccountConfig::ServiceAccountConfig(std::string json_object,
-                                           Options opts)
+ServiceAccountConfig::ServiceAccountConfig(
+    absl::optional<std::string> json_object,
+    absl::optional<std::string> file_path, Options opts)
     : json_object_(std::move(json_object)),
+      file_path_(std::move(file_path)),
       options_(PopulateAuthOptions(std::move(opts))) {}
 
 ExternalAccountConfig::ExternalAccountConfig(std::string json_object,

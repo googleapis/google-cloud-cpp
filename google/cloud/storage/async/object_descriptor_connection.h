@@ -19,7 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <memory>
 

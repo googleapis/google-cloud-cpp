@@ -26,6 +26,9 @@
 #include <set>
 #include <string>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace iam_admin_v1_internal {
@@ -177,9 +180,10 @@ class IAMAuth : public IAMStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_admin_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_ADMIN_V1_INTERNAL_IAM_AUTH_DECORATOR_H

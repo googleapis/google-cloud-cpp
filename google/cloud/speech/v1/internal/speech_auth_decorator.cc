@@ -17,10 +17,13 @@
 // source: google/cloud/speech/v1/cloud_speech.proto
 
 #include "google/cloud/speech/v1/internal/speech_auth_decorator.h"
+#include "google/cloud/speech/v1/cloud_speech.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
-#include <google/cloud/speech/v1/cloud_speech.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -143,3 +146,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

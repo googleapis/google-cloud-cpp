@@ -41,7 +41,7 @@ Options GroupServiceDefaultOptions(Options options) {
   if (!options.has<monitoring_v3::GroupServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::GroupServiceRetryPolicyOption>(
         monitoring_v3::GroupServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<monitoring_v3::GroupServiceBackoffPolicyOption>()) {

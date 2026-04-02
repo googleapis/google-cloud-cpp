@@ -11,16 +11,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/strings/str_cat.h"
 #include <algorithm>
 #include <future>
 #include <random>
@@ -511,3 +511,4 @@ int main(int argc, char* argv[]) {
                                         : "database dropped\n");
   return 0;
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

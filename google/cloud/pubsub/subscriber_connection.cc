@@ -101,19 +101,6 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
   return MakeSubscriberConnection("", std::move(subscription), std::move(opts));
 }
 
-std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
-    Subscription subscription, SubscriberOptions options,
-    ConnectionOptions connection_options,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  auto opts = internal::MergeOptions(
-      pubsub_internal::MakeOptions(std::move(options)),
-      internal::MakeOptions(std::move(connection_options)));
-  if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
-  if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
-  return MakeSubscriberConnection(std::move(subscription), std::move(opts));
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 

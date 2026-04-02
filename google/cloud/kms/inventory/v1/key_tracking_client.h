@@ -92,10 +92,16 @@ class KeyTrackingServiceClient {
   // clang-format off
   ///
   /// Returns aggregate information about the resources protected by the given
-  /// Cloud KMS [CryptoKey][google.cloud.kms.v1.CryptoKey]. Only resources within
-  /// the same Cloud organization as the key will be returned. The project that
-  /// holds the key must be part of an organization in order for this call to
-  /// succeed.
+  /// Cloud KMS [CryptoKey][google.cloud.kms.v1.CryptoKey]. By default,
+  /// summary of resources within the same Cloud organization as the key will be
+  /// returned, which requires the KMS organization service account to be
+  /// configured(refer
+  /// https://docs.cloud.google.com/kms/docs/view-key-usage#required-roles).
+  /// If the KMS organization service account is not configured or key's project
+  /// is not part of an organization, set
+  /// [fallback_scope][google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest.fallback_scope]
+  /// to `FALLBACK_SCOPE_PROJECT` to retrieve a summary of protected resources
+  /// within the key's project.
   ///
   /// @param name  Required. The resource name of the
   ///  [CryptoKey][google.cloud.kms.v1.CryptoKey].
@@ -112,8 +118,9 @@ class KeyTrackingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L66}
-  /// [google.cloud.kms.inventory.v1.ProtectedResourcesSummary]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L79}
+  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L80}
+  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest.fallback_scope]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L92}
+  /// [google.cloud.kms.inventory.v1.ProtectedResourcesSummary]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L97}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
@@ -122,10 +129,16 @@ class KeyTrackingServiceClient {
   // clang-format off
   ///
   /// Returns aggregate information about the resources protected by the given
-  /// Cloud KMS [CryptoKey][google.cloud.kms.v1.CryptoKey]. Only resources within
-  /// the same Cloud organization as the key will be returned. The project that
-  /// holds the key must be part of an organization in order for this call to
-  /// succeed.
+  /// Cloud KMS [CryptoKey][google.cloud.kms.v1.CryptoKey]. By default,
+  /// summary of resources within the same Cloud organization as the key will be
+  /// returned, which requires the KMS organization service account to be
+  /// configured(refer
+  /// https://docs.cloud.google.com/kms/docs/view-key-usage#required-roles).
+  /// If the KMS organization service account is not configured or key's project
+  /// is not part of an organization, set
+  /// [fallback_scope][google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest.fallback_scope]
+  /// to `FALLBACK_SCOPE_PROJECT` to retrieve a summary of protected resources
+  /// within the key's project.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -146,8 +159,9 @@ class KeyTrackingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L66}
-  /// [google.cloud.kms.inventory.v1.ProtectedResourcesSummary]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L79}
+  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L80}
+  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest.fallback_scope]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L92}
+  /// [google.cloud.kms.inventory.v1.ProtectedResourcesSummary]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L97}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
@@ -159,10 +173,17 @@ class KeyTrackingServiceClient {
   // clang-format off
   ///
   /// Returns metadata about the resources protected by the given Cloud KMS
-  /// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the given Cloud organization.
+  /// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the given Cloud
+  /// organization/project.
   ///
-  /// @param scope  Required. Resource name of the organization.
-  ///  Example: organizations/123
+  /// @param scope  Required. A scope can be an organization or a project. Resources protected
+  ///  by the crypto key in provided scope will be returned.
+  ///  @n
+  ///  The following values are allowed:
+  ///  @n
+  ///  * organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/12345678")
+  ///  * projects/{PROJECT_ID} (e.g., "projects/foo-bar")
+  ///  * projects/{PROJECT_NUMBER} (e.g., "projects/12345678")
   /// @param crypto_key  Required. The resource name of the
   ///  [CryptoKey][google.cloud.kms.v1.CryptoKey].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -187,8 +208,8 @@ class KeyTrackingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L172}
-  /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
+  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L202}
+  /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L135}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
@@ -198,7 +219,8 @@ class KeyTrackingServiceClient {
   // clang-format off
   ///
   /// Returns metadata about the resources protected by the given Cloud KMS
-  /// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the given Cloud organization.
+  /// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the given Cloud
+  /// organization/project.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -228,8 +250,8 @@ class KeyTrackingServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L172}
-  /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
+  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L202}
+  /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L135}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>

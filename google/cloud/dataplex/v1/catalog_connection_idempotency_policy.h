@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_CATALOG_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_CATALOG_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/dataplex/v1/catalog.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataplex/v1/catalog.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -121,11 +121,35 @@ class CatalogServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CreateEntryLink(
       google::cloud::dataplex::v1::CreateEntryLinkRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateEntryLink(
+      google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request);
+
   virtual google::cloud::Idempotency DeleteEntryLink(
       google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request);
 
+  virtual google::cloud::Idempotency LookupEntryLinks(
+      google::cloud::dataplex::v1::LookupEntryLinksRequest request);
+
+  virtual google::cloud::Idempotency LookupContext(
+      google::cloud::dataplex::v1::LookupContextRequest const& request);
+
   virtual google::cloud::Idempotency GetEntryLink(
       google::cloud::dataplex::v1::GetEntryLinkRequest const& request);
+
+  virtual google::cloud::Idempotency CreateMetadataFeed(
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request);
+
+  virtual google::cloud::Idempotency GetMetadataFeed(
+      google::cloud::dataplex::v1::GetMetadataFeedRequest const& request);
+
+  virtual google::cloud::Idempotency ListMetadataFeeds(
+      google::cloud::dataplex::v1::ListMetadataFeedsRequest request);
+
+  virtual google::cloud::Idempotency DeleteMetadataFeed(
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateMetadataFeed(
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

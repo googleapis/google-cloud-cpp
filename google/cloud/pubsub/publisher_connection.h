@@ -19,7 +19,6 @@
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/pubsub/publisher_options.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
@@ -131,45 +130,6 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
  */
 std::shared_ptr<PublisherConnection> MakePublisherConnection(Topic topic,
                                                              Options opts = {});
-
-/**
- * Creates a new `PublisherConnection` object to work with `Publisher`.
- *
- * The `PublisherConnection` class is not intended for direct use in
- * applications, it is provided for applications wanting to mock the
- * `Publisher` behavior in their tests.
- *
- * @par Performance
- * Creating a new `PublisherConnection` is relatively expensive. This typically
- * initiate connections to the service, and therefore these objects should be
- * shared and reused when possible. Note that gRPC reuses existing OS resources
- * (sockets) whenever possible, so applications may experience better
- * performance on the second (and subsequent) calls to this function with the
- * identical values for @p options. However, this behavior is not guaranteed
- * and applications should not rely on it.
- *
- * @see `PublisherConnection`
- *
- * @param topic the Cloud Pub/Sub topic used by the returned
- *     `PublisherConnection`.
- * @param options configure the batching policy and other parameters in the
- *     returned connection.
- * @param connection_options (optional) general configuration for this
- *    connection, this type is also used to configure `pubsub::Subscriber`.
- * @param retry_policy (optional) configure the retry loop.
- * @param backoff_policy (optional) configure the backoff period between
- *    retries.
- *
- * @deprecated Please use the `MakePublisherConnection` method which accepts
- *     `google::cloud::Options` instead.
- */
-GOOGLE_CLOUD_CPP_DEPRECATED(
-    "use the overload consuming google::cloud::Options instead")
-std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    Topic topic, PublisherOptions options,
-    ConnectionOptions connection_options = {},
-    std::unique_ptr<RetryPolicy const> retry_policy = {},
-    std::unique_ptr<BackoffPolicy const> backoff_policy = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub

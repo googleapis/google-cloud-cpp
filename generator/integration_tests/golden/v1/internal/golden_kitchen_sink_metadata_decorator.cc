@@ -17,18 +17,21 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_metadata_decorator.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <generator/integration_tests/test.grpc.pb.h>
+#include "generator/integration_tests/test.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -284,3 +287,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

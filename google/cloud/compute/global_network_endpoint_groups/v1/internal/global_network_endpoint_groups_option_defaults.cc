@@ -47,7 +47,7 @@ Options GlobalNetworkEndpointGroupsDefaultOptions(Options options) {
                     GlobalNetworkEndpointGroupsRetryPolicyOption>(
         compute_global_network_endpoint_groups_v1::
             GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_global_network_endpoint_groups_v1::

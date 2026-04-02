@@ -120,7 +120,7 @@ class AutoscalingPolicyServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
+  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L292}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
@@ -153,7 +153,7 @@ class AutoscalingPolicyServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
+  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L292}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
@@ -184,7 +184,7 @@ class AutoscalingPolicyServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
+  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L335}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
@@ -219,7 +219,7 @@ class AutoscalingPolicyServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
+  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L335}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
@@ -256,7 +256,7 @@ class AutoscalingPolicyServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
+  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L315}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
@@ -286,7 +286,7 @@ class AutoscalingPolicyServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
+  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L315}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
@@ -330,7 +330,7 @@ class AutoscalingPolicyServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
+  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L363}
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
@@ -369,7 +369,7 @@ class AutoscalingPolicyServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
+  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L363}
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
@@ -403,7 +403,7 @@ class AutoscalingPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
+  /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L343}
   ///
   // clang-format on
   Status DeleteAutoscalingPolicy(std::string const& name, Options opts = {});
@@ -430,7 +430,7 @@ class AutoscalingPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
+  /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L343}
   ///
   // clang-format on
   Status DeleteAutoscalingPolicy(

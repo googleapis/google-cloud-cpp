@@ -20,9 +20,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NETWORK_ENDPOINT_GROUPS_V1_REGION_NETWORK_ENDPOINT_GROUPS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NETWORK_ENDPOINT_GROUPS_V1_REGION_NETWORK_ENDPOINT_GROUPS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.pb.h>
 #include <memory>
 
 namespace google {

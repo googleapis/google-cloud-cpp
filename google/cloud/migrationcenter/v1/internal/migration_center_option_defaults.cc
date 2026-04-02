@@ -42,7 +42,7 @@ Options MigrationCenterDefaultOptions(Options options) {
   if (!options.has<migrationcenter_v1::MigrationCenterRetryPolicyOption>()) {
     options.set<migrationcenter_v1::MigrationCenterRetryPolicyOption>(
         migrationcenter_v1::MigrationCenterLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<migrationcenter_v1::MigrationCenterBackoffPolicyOption>()) {

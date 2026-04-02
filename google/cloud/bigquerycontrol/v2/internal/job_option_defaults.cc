@@ -41,7 +41,7 @@ Options JobServiceDefaultOptions(Options options) {
   if (!options.has<bigquerycontrol_v2::JobServiceRetryPolicyOption>()) {
     options.set<bigquerycontrol_v2::JobServiceRetryPolicyOption>(
         bigquerycontrol_v2::JobServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<bigquerycontrol_v2::JobServiceBackoffPolicyOption>()) {

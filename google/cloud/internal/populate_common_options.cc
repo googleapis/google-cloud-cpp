@@ -15,12 +15,12 @@
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
 
 namespace google {

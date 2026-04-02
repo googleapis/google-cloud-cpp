@@ -1367,6 +1367,36 @@ DeveloperConnectConnectionImpl::DeleteSelf(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DeveloperConnectConnectionImpl::StartOAuth(
+    google::cloud::developerconnect::v1::StartOAuthRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartOAuth(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::StartOAuthRequest const&
+                 request) {
+        return stub_->StartOAuth(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DeveloperConnectConnectionImpl::FinishOAuth(
+    google::cloud::developerconnect::v1::FinishOAuthRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FinishOAuth(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::developerconnect::v1::FinishOAuthRequest const&
+                 request) {
+        return stub_->FinishOAuth(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 DeveloperConnectConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

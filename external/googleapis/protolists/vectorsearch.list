@@ -1,0 +1,6 @@
+@googleapis//google/cloud/vectorsearch/v1:common.proto
+@googleapis//google/cloud/vectorsearch/v1:data_object.proto
+@googleapis//google/cloud/vectorsearch/v1:data_object_search_service.proto
+@googleapis//google/cloud/vectorsearch/v1:data_object_service.proto
+@googleapis//google/cloud/vectorsearch/v1:embedding_config.proto
+@googleapis//google/cloud/vectorsearch/v1:vectorsearch_service.proto

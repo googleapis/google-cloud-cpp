@@ -40,7 +40,7 @@ Options ProductSearchDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<vision_v1::ProductSearchRetryPolicyOption>()) {
     options.set<vision_v1::ProductSearchRetryPolicyOption>(
-        vision_v1::ProductSearchLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        vision_v1::ProductSearchLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<vision_v1::ProductSearchBackoffPolicyOption>()) {

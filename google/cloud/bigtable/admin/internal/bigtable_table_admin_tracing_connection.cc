@@ -27,8 +27,6 @@ namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BigtableTableAdminTracingConnection::BigtableTableAdminTracingConnection(
     std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> child)
     : child_(std::move(child)) {}
@@ -501,17 +499,13 @@ BigtableTableAdminTracingConnection::AsyncCheckConsistency(
                            child_->AsyncCheckConsistency(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
 MakeBigtableTableAdminTracingConnection(
     std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<BigtableTableAdminTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

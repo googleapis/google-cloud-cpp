@@ -1,7 +1,7 @@
-@com_google_googleapis//google/cloud/gkemulticloud/v1:attached_resources.proto
-@com_google_googleapis//google/cloud/gkemulticloud/v1:attached_service.proto
-@com_google_googleapis//google/cloud/gkemulticloud/v1:aws_resources.proto
-@com_google_googleapis//google/cloud/gkemulticloud/v1:aws_service.proto
-@com_google_googleapis//google/cloud/gkemulticloud/v1:azure_resources.proto
-@com_google_googleapis//google/cloud/gkemulticloud/v1:azure_service.proto
-@com_google_googleapis//google/cloud/gkemulticloud/v1:common_resources.proto
+@googleapis//google/cloud/gkemulticloud/v1:attached_resources.proto
+@googleapis//google/cloud/gkemulticloud/v1:attached_service.proto
+@googleapis//google/cloud/gkemulticloud/v1:aws_resources.proto
+@googleapis//google/cloud/gkemulticloud/v1:aws_service.proto
+@googleapis//google/cloud/gkemulticloud/v1:azure_resources.proto
+@googleapis//google/cloud/gkemulticloud/v1:azure_service.proto
+@googleapis//google/cloud/gkemulticloud/v1:common_resources.proto

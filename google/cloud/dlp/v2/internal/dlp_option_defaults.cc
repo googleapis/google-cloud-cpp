@@ -40,7 +40,7 @@ Options DlpServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dlp_v2::DlpServiceRetryPolicyOption>()) {
     options.set<dlp_v2::DlpServiceRetryPolicyOption>(
-        dlp_v2::DlpServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        dlp_v2::DlpServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dlp_v2::DlpServiceBackoffPolicyOption>()) {

@@ -1,4 +1,4 @@
-@com_google_googleapis//google/cloud/billing/budgets/v1:budget_model.proto
-@com_google_googleapis//google/cloud/billing/budgets/v1:budget_service.proto
-@com_google_googleapis//google/cloud/billing/v1:cloud_billing.proto
-@com_google_googleapis//google/cloud/billing/v1:cloud_catalog.proto
+@googleapis//google/cloud/billing/budgets/v1:budget_model.proto
+@googleapis//google/cloud/billing/budgets/v1:budget_service.proto
+@googleapis//google/cloud/billing/v1:cloud_billing.proto
+@googleapis//google/cloud/billing/v1:cloud_catalog.proto

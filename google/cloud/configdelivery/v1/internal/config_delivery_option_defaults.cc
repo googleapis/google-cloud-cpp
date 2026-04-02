@@ -42,7 +42,7 @@ Options ConfigDeliveryDefaultOptions(Options options) {
   if (!options.has<configdelivery_v1::ConfigDeliveryRetryPolicyOption>()) {
     options.set<configdelivery_v1::ConfigDeliveryRetryPolicyOption>(
         configdelivery_v1::ConfigDeliveryLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<configdelivery_v1::ConfigDeliveryBackoffPolicyOption>()) {

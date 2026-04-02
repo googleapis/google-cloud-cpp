@@ -17,9 +17,7 @@
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <opentelemetry/trace/semantic_conventions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <memory>
 
 namespace google {
@@ -27,11 +25,9 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 namespace {
 
-namespace sc = ::opentelemetry::trace::SemanticConventions;
+namespace sc = ::opentelemetry::semconv;
 
 class AsyncObjectDescriptorConnectionTracing
     : public storage::ObjectDescriptorConnection {
@@ -55,7 +51,7 @@ class AsyncObjectDescriptorConnectionTracing
     internal::OTelScope scope(span_);
     auto result = impl_->Read(p);
     span_->AddEvent("gl-cpp.open.read",
-                    {{sc::kThreadId, internal::CurrentThreadId()},
+                    {{sc::thread::kThreadId, internal::CurrentThreadId()},
                      {"read-start", p.start},
                      {"read-length", p.length}});
     return MakeTracingReaderConnection(span_, std::move(result));
@@ -79,8 +75,6 @@ MakeTracingObjectDescriptorConnection(
   return std::make_unique<AsyncObjectDescriptorConnectionTracing>(
       std::move(span), std::move(impl));
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

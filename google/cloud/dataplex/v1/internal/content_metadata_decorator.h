@@ -26,6 +26,9 @@
 #include <memory>
 #include <string>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace dataplex_v1_internal {
@@ -38,40 +41,6 @@ class ContentServiceMetadata : public ContentServiceStub {
                          std::multimap<std::string, std::string> fixed_metadata,
                          std::string api_client_header = "");
 
-  StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::CreateContentRequest const& request)
-      override;
-
-  StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::UpdateContentRequest const& request)
-      override;
-
-  Status DeleteContent(grpc::ClientContext& context, Options const& options,
-                       google::cloud::dataplex::v1::DeleteContentRequest const&
-                           request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::GetContentRequest const& request) override;
-
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v1::GetIamPolicyRequest const& request) override;
-
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v1::SetIamPolicyRequest const& request) override;
-
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context, Options const& options,
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
-
-  StatusOr<google::cloud::dataplex::v1::ListContentResponse> ListContent(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::ListContentRequest const& request) override;
-
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -79,6 +48,18 @@ class ContentServiceMetadata : public ContentServiceStub {
   StatusOr<google::cloud::location::Location> GetLocation(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
@@ -110,5 +91,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_CONTENT_METADATA_DECORATOR_H

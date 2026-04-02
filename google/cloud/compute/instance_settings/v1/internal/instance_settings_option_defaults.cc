@@ -43,7 +43,7 @@ Options InstanceSettingsDefaultOptions(Options options) {
     options.set<
         compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>(
         compute_instance_settings_v1::InstanceSettingsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_instance_settings_v1::

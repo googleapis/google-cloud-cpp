@@ -19,14 +19,13 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "agentendpoint/v1/",
     "v1/",
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/osconfig/agentendpoint/v1:agentendpoint_cc_grpc",
-    "@com_google_googleapis//google/cloud/osconfig/v1:osconfig_cc_grpc",
+    "@googleapis//google/cloud/osconfig/agentendpoint/v1:agentendpoint_cc_grpc",
+    "@googleapis//google/cloud/osconfig/v1:osconfig_cc_grpc",
 ]
 
 cc_gapic_library(

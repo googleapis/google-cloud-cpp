@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
@@ -265,16 +265,6 @@ TEST(ProcessCommandLineArgs, ProcessArgAsyncOnlyRpc) {
               Contains(Pair("gen_async_rpcs", HasSubstr("AsyncOnly"))));
 }
 
-TEST(ProcessCommandLineArgs, ProcessArgNamespaceAlias) {
-  auto result = ProcessCommandLineArgs(
-      ",product_path=google/cloud/spanner/"
-      ",emulator_endpoint_env_var=SPANNER_EMULATOR_HOST"
-      ",backwards_compatibility_namespace_alias=true");
-  ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(*result, Contains(Pair("backwards_compatibility_namespace_alias",
-                                     HasSubstr("true"))));
-}
-
 TEST(ProcessCommandLineArgs, ProcessOmitClient) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/spanner/"
@@ -331,15 +321,6 @@ TEST(ProcessCommandLineArgs, ProcessExperimental) {
       ",experimental=true");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("experimental", "true")));
-}
-
-TEST(ProcessCommandLineArgs, ProcessArgForwardingProductPath) {
-  auto result = ProcessCommandLineArgs(
-      "product_path=/google/cloud/spanner/v1"
-      ",forwarding_product_path=google/cloud/spanner");
-  ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(*result, Contains(Pair("forwarding_product_path",
-                                     "google/cloud/spanner/")));
 }
 
 TEST(ProcessCommandLineArgs, ProcessServiceNameMapping) {

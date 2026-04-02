@@ -42,7 +42,7 @@ Options LivestreamServiceDefaultOptions(Options options) {
   if (!options.has<video_livestream_v1::LivestreamServiceRetryPolicyOption>()) {
     options.set<video_livestream_v1::LivestreamServiceRetryPolicyOption>(
         video_livestream_v1::LivestreamServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

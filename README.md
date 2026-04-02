@@ -10,6 +10,9 @@
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+> Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) for
+> details on updating existing applications using v1.x.y or v2.x.y.
+
 > Please check the [CHANGELOG] for important announcements and upcoming changes.
 
 ## Quickstart
@@ -173,6 +176,9 @@ See each library's `README.md` file for more information about:
 - [Certificate Manager API](google/cloud/certificatemanager/README.md)
   [[quickstart]](google/cloud/certificatemanager/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/certificatemanager/latest)
+- [Gemini Enterprise for Customer Experience API](google/cloud/ces/README.md)
+  [[quickstart]](google/cloud/ces/quickstart/README.md)
+  [[reference]](https://cloud.google.com/cpp/docs/reference/ces/latest)
 - [Cloud Channel API](google/cloud/channel/README.md)
   [[quickstart]](google/cloud/channel/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/channel/latest)
@@ -311,6 +317,9 @@ See each library's `README.md` file for more information about:
 - [GKE Recommender API](google/cloud/gkerecommender/README.md)
   [[quickstart]](google/cloud/gkerecommender/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/gkerecommender/latest)
+- [Cluster Director API](google/cloud/hypercomputecluster/README.md)
+  [[quickstart]](google/cloud/hypercomputecluster/quickstart/README.md)
+  [[reference]](https://cloud.google.com/cpp/docs/reference/hypercomputecluster/latest)
 - [Google Cloud IAM](google/cloud/iam/README.md)
   [[quickstart]](google/cloud/iam/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/iam/latest)
@@ -527,6 +536,9 @@ See each library's `README.md` file for more information about:
 - [Cloud Translation API](google/cloud/translate/README.md)
   [[quickstart]](google/cloud/translate/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/translate/latest)
+- [Vector Search API](google/cloud/vectorsearch/README.md)
+  [[quickstart]](google/cloud/vectorsearch/quickstart/README.md)
+  [[reference]](https://cloud.google.com/cpp/docs/reference/vectorsearch/latest)
 - [Video Services](google/cloud/video/README.md)
   [[quickstart]](google/cloud/video/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/video/latest)
@@ -536,6 +548,9 @@ See each library's `README.md` file for more information about:
 - [Cloud Vision API](google/cloud/vision/README.md)
   [[quickstart]](google/cloud/vision/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/vision/latest)
+- [Vision AI API](google/cloud/visionai/README.md)
+  [[quickstart]](google/cloud/visionai/quickstart/README.md)
+  [[reference]](https://cloud.google.com/cpp/docs/reference/visionai/latest)
 - [VM Migration API](google/cloud/vmmigration/README.md)
   [[quickstart]](google/cloud/vmmigration/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/vmmigration/latest)
@@ -554,6 +569,9 @@ See each library's `README.md` file for more information about:
 - [Workflow Executions API](google/cloud/workflows/README.md)
   [[quickstart]](google/cloud/workflows/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/workflows/latest)
+- [Workload Manager API](google/cloud/workloadmanager/README.md)
+  [[quickstart]](google/cloud/workloadmanager/quickstart/README.md)
+  [[reference]](https://cloud.google.com/cpp/docs/reference/workloadmanager/latest)
 - [Cloud Workstations API](google/cloud/workstations/README.md)
   [[quickstart]](google/cloud/workstations/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/workstations/latest)
@@ -583,8 +601,8 @@ run the examples included with the libraries.
 
 ### Building with Bazel
 
-This library requires Bazel >= 6.0. From the top-level directory, run the usual
-commands.
+This library requires Bazel >= 7.0. We recommend using Bazel modules instead of
+WORKSPACE files. From the top-level directory, run the usual commands.
 
 ```shell
 bazel build //...
@@ -592,7 +610,7 @@ bazel build //...
 
 ### Building with CMake
 
-This library requires CMake >= 3.10. If you are planning to install the
+This library requires CMake >= 3.22. If you are planning to install the
 libraries please consult the [packaging guide](/doc/packaging.md), these
 instructions will **NOT** produce artifacts that you can put in `/usr/local`, or
 share with your colleagues.
@@ -613,11 +631,11 @@ The binary artifacts, such as examples, will be placed in `cmake-out/`.
 - This project follows Google's
   [Foundational C++ Support Policy][support-policy], which is summarized in the
   [Foundational C++ Support Matrix][support-matrix].
-  - Language Version (>= C++14).
+  - Language Version (>= C++17).
   - Operating Systems: Windows, macOS, and Linux.
-  - Build Systems: Bazel (>= 6.0), CMake (>= 3.10).
-  - Compilers: GCC (>= 7.5), Clang (>= 6.0), MSVC (>= 2022), Apple Clang (>=
-    12).
+  - Build Systems: Bazel (>= 7.0), CMake (>= 3.22).
+  - Compilers: GCC (>= 7.5), Clang (>= 14.0.0), MSVC (>= 2022), Apple Clang (>=
+    17).
 - This project uses dependencies described in
   [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
 - This project works with or without exceptions enabled.

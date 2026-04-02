@@ -40,7 +40,7 @@ Options AdaptationDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<speech_v1::AdaptationRetryPolicyOption>()) {
     options.set<speech_v1::AdaptationRetryPolicyOption>(
-        speech_v1::AdaptationLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        speech_v1::AdaptationLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<speech_v1::AdaptationBackoffPolicyOption>()) {

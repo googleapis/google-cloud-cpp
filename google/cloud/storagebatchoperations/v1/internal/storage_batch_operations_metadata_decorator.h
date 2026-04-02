@@ -22,10 +22,13 @@
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -71,6 +74,17 @@ class StorageBatchOperationsMetadata : public StorageBatchOperationsStub {
   CancelJob(grpc::ClientContext& context, Options const& options,
             google::cloud::storagebatchoperations::v1::CancelJobRequest const&
                 request) override;
+
+  StatusOr<
+      google::cloud::storagebatchoperations::v1::ListBucketOperationsResponse>
+  ListBucketOperations(grpc::ClientContext& context, Options const& options,
+                       google::cloud::storagebatchoperations::v1::
+                           ListBucketOperationsRequest const& request) override;
+
+  StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+  GetBucketOperation(grpc::ClientContext& context, Options const& options,
+                     google::cloud::storagebatchoperations::v1::
+                         GetBucketOperationRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -122,5 +136,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagebatchoperations_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_INTERNAL_STORAGE_BATCH_OPERATIONS_METADATA_DECORATOR_H

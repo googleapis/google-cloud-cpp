@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/resource_names.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {

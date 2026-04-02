@@ -146,6 +146,43 @@ StorageBatchOperationsClient::CancelJob(
   return connection_->CancelJob(request);
 }
 
+StreamRange<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsClient::ListBucketOperations(std::string const& parent,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storagebatchoperations::v1::ListBucketOperationsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListBucketOperations(request);
+}
+
+StreamRange<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsClient::ListBucketOperations(
+    google::cloud::storagebatchoperations::v1::ListBucketOperationsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBucketOperations(std::move(request));
+}
+
+StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsClient::GetBucketOperation(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::storagebatchoperations::v1::GetBucketOperationRequest request;
+  request.set_name(name);
+  return connection_->GetBucketOperation(request);
+}
+
+StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsClient::GetBucketOperation(
+    google::cloud::storagebatchoperations::v1::GetBucketOperationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBucketOperation(request);
+}
+
 StreamRange<google::cloud::location::Location>
 StorageBatchOperationsClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

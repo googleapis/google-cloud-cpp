@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include "absl/strings/match.h"
-#include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <google/protobuf/text_format.h>
 #include <grpcpp/grpcpp.h>
 #include <sstream>

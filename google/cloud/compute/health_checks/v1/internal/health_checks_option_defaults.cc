@@ -41,7 +41,7 @@ Options HealthChecksDefaultOptions(Options options) {
   if (!options.has<compute_health_checks_v1::HealthChecksRetryPolicyOption>()) {
     options.set<compute_health_checks_v1::HealthChecksRetryPolicyOption>(
         compute_health_checks_v1::HealthChecksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options
