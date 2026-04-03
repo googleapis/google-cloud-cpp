@@ -68,7 +68,7 @@ class ObjectDescriptorConnection {
    * A descriptor is open if it has not been cancelled and has not hit a
    * permanent failure.
    */
-  virtual bool IsOpen() const = 0;
+  virtual bool IsOpen() const { return true; }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -239,6 +239,10 @@ AsyncConnectionImpl::Open(OpenParams p) {
     auto result = f.get();
     if (!result) return std::move(result).status();
 
+    // The descriptor remains open if at least one gRPC channel is in a
+    // functional state. We consider READY, IDLE, and CONNECTING to be functional.
+    // TRANSIENT_FAILURE and SHUTDOWN are not included because they indicate
+    // a definitive loss of connectivity or terminal closure.
     auto transport_ok = [refresh] {
       if (!refresh) return true;
       auto const& channels = refresh->channels();
