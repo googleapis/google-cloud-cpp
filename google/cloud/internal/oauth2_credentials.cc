@@ -22,6 +22,23 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+StatusOr<std::vector<rest_internal::HttpHeader>>
+Credentials::AuthenticationHeaders(std::chrono::system_clock::time_point tp,
+                                   std::string_view endpoint) {
+  std::vector<rest_internal::HttpHeader> headers;
+  auto authorization = Authorization(tp);
+  if (!authorization) return std::move(authorization).status();
+  headers.push_back(*std::move(authorization));
+
+  auto allowed_locations = AllowedLocations(tp, endpoint);
+  // Not all credential types support the x-allowed-locations header. For those
+  // that do, if there is a problem retrieving the header, omit the header.
+  if (allowed_locations.ok() && !allowed_locations->empty()) {
+    headers.push_back(*std::move(allowed_locations));
+  }
+  return headers;
+}
+
 StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
     absl::optional<std::string> const&, std::string const&) const {
   return internal::UnimplementedError(
@@ -46,21 +63,18 @@ StatusOr<std::string> Credentials::project_id(
   return project_id();
 }
 
-StatusOr<std::pair<std::string, std::string>> Credentials::AuthenticationHeader(
+StatusOr<rest_internal::HttpHeader> Credentials::Authorization(
     std::chrono::system_clock::time_point tp) {
   auto token = GetToken(tp);
   if (!token) return std::move(token).status();
-  if (token->token.empty()) return std::make_pair(std::string{}, std::string{});
-  return std::make_pair(std::string{"Authorization"},
-                        absl::StrCat("Bearer ", token->token));
+  if (token->token.empty()) return rest_internal::HttpHeader{};
+  return rest_internal::HttpHeader{"authorization",
+                                   absl::StrCat("Bearer ", token->token)};
 }
 
-StatusOr<std::string> AuthenticationHeaderJoined(
-    Credentials& credentials, std::chrono::system_clock::time_point tp) {
-  auto header = credentials.AuthenticationHeader(tp);
-  if (!header) return std::move(header).status();
-  if (header->first.empty()) return std::string{};
-  return absl::StrCat(header->first, ": ", header->second);
+StatusOr<rest_internal::HttpHeader> Credentials::AllowedLocations(
+    std::chrono::system_clock::time_point, std::string_view) {
+  return {};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

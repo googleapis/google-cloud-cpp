@@ -16,12 +16,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 
 #include "google/cloud/access_token.h"
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/options.h"
-#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
-#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -46,18 +45,33 @@ class Credentials {
   virtual ~Credentials() = default;
 
   /**
-   * Obtains an access token.
+   * Returns header pairs used for authentication.
    *
-   * Most implementations will cache the access token and (if possible) refresh
-   * the token before it expires. Refreshing the token may fail, as it often
-   * requires making HTTP requests.  In that case, the last error is returned.
+   * This is the correct method to call for authentication headers for use in
+   * making an RPC to a GCP service. All the necessary headers are returned
+   * for whatever the combination of underlying Credential type and RPC
+   * endpoint.
+   *
+   * In most cases, this is the "Authorization" HTTP header. For API key
+   * credentials, it is the "X-Goog-Api-Key" header. It may also include the
+   * "x-allowed-locations" header if applicable.
+   *
+   * If unable to obtain a value for the header, which could happen for
+   * `Credentials` that need to be periodically refreshed, the underlying
+   * `Status` will indicate failure details from the refresh HTTP request.
+   * Otherwise, the returned value will contain the header pair to be used in
+   * HTTP requests.
    *
    * @param tp the current time, most callers should provide
    *     `std::chrono::system_clock::now()`. In tests, other value may be
    *     considered.
+   *
+   * @param endpoint the endpoint of the GCP service the RPC request will be
+   *     sent to.
    */
-  virtual StatusOr<AccessToken> GetToken(
-      std::chrono::system_clock::time_point tp) = 0;
+  virtual StatusOr<std::vector<rest_internal::HttpHeader>>
+  AuthenticationHeaders(std::chrono::system_clock::time_point tp,
+                        std::string_view endpoint);
 
   /**
    * Try to sign @p string_to_sign using @p service_account.
@@ -109,35 +123,44 @@ class Credentials {
   virtual StatusOr<std::string> project_id(Options const&) const;
 
   /**
-   * Returns a header pair used for authentication.
+   * Returns only the "authorization" header if applicable for the credential
+   * type.
    *
-   * In most cases, this is the "Authorization" HTTP header. For API key
-   * credentials, it is the "X-Goog-Api-Key" header.
-   *
-   * If unable to obtain a value for the header, which could happen for
-   * `Credentials` that need to be periodically refreshed, the underlying
-   * `Status` will indicate failure details from the refresh HTTP request.
-   * Otherwise, the returned value will contain the header pair to be used in
-   * HTTP requests.
+   * @param tp the current time, most callers should provide
+   *     `std::chrono::system_clock::now()`. In tests, other value may be
+   *     considered.
    */
-  virtual StatusOr<std::pair<std::string, std::string>> AuthenticationHeader(
+  virtual StatusOr<rest_internal::HttpHeader> Authorization(
       std::chrono::system_clock::time_point tp);
-};
 
-/**
- * Returns a header pair as a single string to be used for authentication.
- *
- * In most cases, this is the "Authorization" HTTP header. For API key
- * credentials, it is the "X-Goog-Api-Key" header.
- *
- * If unable to obtain a value for the header, which could happen for
- * `Credentials` that need to be periodically refreshed, the underlying `Status`
- * will indicate failure details from the refresh HTTP request. Otherwise, the
- * returned value will contain the header pair to be used in HTTP requests.
- */
-StatusOr<std::string> AuthenticationHeaderJoined(
-    Credentials& credentials, std::chrono::system_clock::time_point tp =
-                                  std::chrono::system_clock::now());
+  /**
+   * Returns only the "x-allowed-locations" header if applicable for the
+   * credential type.
+   *
+   * @param tp the current time, most callers should provide
+   *     `std::chrono::system_clock::now()`. In tests, other value may be
+   *     considered.
+   *
+   * @param endpoint the endpoint of the GCP service the RPC request will be
+   *     sent to.
+   */
+  virtual StatusOr<rest_internal::HttpHeader> AllowedLocations(
+      std::chrono::system_clock::time_point tp, std::string_view endpoint);
+
+  /**
+   * Obtains an access token.
+   *
+   * Most implementations will cache the access token and (if possible) refresh
+   * the token before it expires. Refreshing the token may fail, as it often
+   * requires making HTTP requests.  In that case, the last error is returned.
+   *
+   * @param tp the current time, most callers should provide
+   *     `std::chrono::system_clock::now()`. In tests, other value may be
+   *     considered.
+   */
+  virtual StatusOr<AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) = 0;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
