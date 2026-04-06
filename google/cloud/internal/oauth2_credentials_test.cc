@@ -60,6 +60,17 @@ TEST(Credentials, AuthenticationHeaderError) {
   EXPECT_EQ(actual.status(), UnavailableError("try-again"));
 }
 
+TEST(Credentials, AuthenticationHeaderEmpty) {
+  MockCredentials mock;
+  EXPECT_CALL(mock, GetToken)
+      .WillOnce(Return(AccessToken{"", std::chrono::system_clock::now()}));
+  EXPECT_CALL(mock, AllowedLocations)
+      .WillOnce(Return(rest_internal::HttpHeader()));
+  auto actual = mock.AuthenticationHeaders(std::chrono::system_clock::now(),
+                                           "my-endpoint");
+  EXPECT_THAT(actual, IsOkAndHolds(std::vector<rest_internal::HttpHeader>{}));
+}
+
 TEST(Credentials, ProjectId) {
   MockCredentials mock;
   EXPECT_THAT(mock.project_id(), Not(IsOk()));

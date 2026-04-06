@@ -28,7 +28,7 @@ Credentials::AuthenticationHeaders(std::chrono::system_clock::time_point tp,
   std::vector<rest_internal::HttpHeader> headers;
   auto authorization = Authorization(tp);
   if (!authorization) return std::move(authorization).status();
-  headers.push_back(*std::move(authorization));
+  if (!authorization->empty()) headers.push_back(*std::move(authorization));
 
   auto allowed_locations = AllowedLocations(tp, endpoint);
   // Not all credential types support the x-allowed-locations header. For those
