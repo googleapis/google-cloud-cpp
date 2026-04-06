@@ -4,7 +4,15 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.47.1 - TBD
+## v2.47.1 - 2026-04
+
+### Storage
+
+- fix(storage): add samples for bucket encryption enforcement config ([#16062](https://github.com/googleapis/google-cloud-cpp/pull/16062))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-01-30T21:16:31-08:00](https://github.com/googleapis/googleapis/tree/c0fcb35628690e9eb15dcefae41c651c67cd050b)
 
 ## v2.47.0 - 2026-02
 
