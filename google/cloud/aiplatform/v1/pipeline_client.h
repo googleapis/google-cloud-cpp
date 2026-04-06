@@ -442,7 +442,7 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineService.GetTrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L58}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L127}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L123}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelTrainingPipeline(std::string const& name, Options opts = {});
@@ -485,7 +485,7 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineService.GetTrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L58}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L127}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L123}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelTrainingPipeline(
@@ -973,7 +973,7 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L142}
   /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L135}
   /// [google.cloud.aiplatform.v1.PipelineService.GetPipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L122}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelPipelineJob(std::string const& name, Options opts = {});
@@ -1015,7 +1015,7 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L142}
   /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L135}
   /// [google.cloud.aiplatform.v1.PipelineService.GetPipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L122}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelPipelineJob(
@@ -1553,7 +1553,7 @@ class PipelineServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -1592,7 +1592,7 @@ class PipelineServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

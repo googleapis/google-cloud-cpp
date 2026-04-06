@@ -34,6 +34,192 @@ DataformAuth::DataformAuth(
     std::shared_ptr<DataformStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
+StatusOr<google::cloud::dataform::v1::TeamFolder> DataformAuth::GetTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetTeamFolder(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformAuth::CreateTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTeamFolder(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformAuth::UpdateTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTeamFolder(context, options, request);
+}
+
+Status DataformAuth::DeleteTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTeamFolder(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformAuth::AsyncDeleteTeamFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteTeamFolderTree(cq, *std::move(context),
+                                                std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> DataformAuth::DeleteTeamFolderTree(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTeamFolderTree(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryTeamFolderContentsResponse>
+DataformAuth::QueryTeamFolderContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->QueryTeamFolderContents(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::SearchTeamFoldersResponse>
+DataformAuth::SearchTeamFolders(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::SearchTeamFoldersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SearchTeamFolders(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformAuth::GetFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::GetFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetFolder(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformAuth::CreateFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFolder(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformAuth::UpdateFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFolder(context, options, request);
+}
+
+Status DataformAuth::DeleteFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFolder(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformAuth::AsyncDeleteFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteFolderTree(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> DataformAuth::DeleteFolderTree(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFolderTree(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryFolderContentsResponse>
+DataformAuth::QueryFolderContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryFolderContentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->QueryFolderContents(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryUserRootContentsResponse>
+DataformAuth::QueryUserRootContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryUserRootContentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->QueryUserRootContents(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>> DataformAuth::AsyncMoveFolder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncMoveFolder(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> DataformAuth::MoveFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MoveFolder(context, options, request);
+}
+
 StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
 DataformAuth::ListRepositories(
     grpc::ClientContext& context, Options const& options,
@@ -75,6 +261,34 @@ Status DataformAuth::DeleteRepository(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteRepository(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformAuth::AsyncMoveRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncMoveRepository(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> DataformAuth::MoveRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MoveRepository(context, options, request);
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -519,6 +733,31 @@ StatusOr<google::cloud::dataform::v1::Config> DataformAuth::UpdateConfig(
   return child_->UpdateConfig(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> DataformAuth::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> DataformAuth::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestIamPermissions(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataformAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -536,29 +775,73 @@ StatusOr<google::cloud::location::Location> DataformAuth::GetLocation(
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DataformAuth::SetIamPolicy(
+StatusOr<google::longrunning::ListOperationsResponse>
+DataformAuth::ListOperations(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::SetIamPolicyRequest const& request) {
+    google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, options, request);
+  return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DataformAuth::GetIamPolicy(
+StatusOr<google::longrunning::Operation> DataformAuth::GetOperation(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::GetIamPolicyRequest const& request) {
+    google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, options, request);
+  return child_->GetOperation(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformAuth::TestIamPermissions(
+Status DataformAuth::DeleteOperation(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, options, request);
+  return child_->DeleteOperation(context, options, request);
+}
+
+Status DataformAuth::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelOperation(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformAuth::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+future<Status> DataformAuth::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) return make_ready_future(std::move(context).status());
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

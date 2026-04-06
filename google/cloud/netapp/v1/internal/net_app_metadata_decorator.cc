@@ -268,6 +268,26 @@ StatusOr<google::longrunning::Operation> NetAppMetadata::RevertVolume(
   return child_->RevertVolume(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncEstablishVolumePeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncEstablishVolumePeering(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::EstablishVolumePeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->EstablishVolumePeering(context, options, request);
+}
+
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 NetAppMetadata::ListSnapshots(
     grpc::ClientContext& context, Options const& options,
@@ -1135,6 +1155,46 @@ StatusOr<google::longrunning::Operation> NetAppMetadata::DeleteHostGroup(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteHostGroup(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+NetAppMetadata::ExecuteOntapPost(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapPostRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("ontap_path=", internal::UrlEncode(request.ontap_path())));
+  return child_->ExecuteOntapPost(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+NetAppMetadata::ExecuteOntapGet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapGetRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("ontap_path=", internal::UrlEncode(request.ontap_path())));
+  return child_->ExecuteOntapGet(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+NetAppMetadata::ExecuteOntapDelete(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("ontap_path=", internal::UrlEncode(request.ontap_path())));
+  return child_->ExecuteOntapDelete(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+NetAppMetadata::ExecuteOntapPatch(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("ontap_path=", internal::UrlEncode(request.ontap_path())));
+  return child_->ExecuteOntapPatch(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

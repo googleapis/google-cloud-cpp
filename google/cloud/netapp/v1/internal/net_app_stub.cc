@@ -348,6 +348,38 @@ StatusOr<google::longrunning::Operation> DefaultNetAppStub::RevertVolume(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncEstablishVolumePeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::EstablishVolumePeeringRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncEstablishVolumePeering(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetAppStub::EstablishVolumePeering(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->EstablishVolumePeering(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 DefaultNetAppStub::ListSnapshots(
     grpc::ClientContext& context, Options const&,
@@ -1568,6 +1600,54 @@ StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteHostGroup(
     google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteHostGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+DefaultNetAppStub::ExecuteOntapPost(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ExecuteOntapPostRequest const& request) {
+  google::cloud::netapp::v1::ExecuteOntapPostResponse response;
+  auto status = grpc_stub_->ExecuteOntapPost(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+DefaultNetAppStub::ExecuteOntapGet(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ExecuteOntapGetRequest const& request) {
+  google::cloud::netapp::v1::ExecuteOntapGetResponse response;
+  auto status = grpc_stub_->ExecuteOntapGet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+DefaultNetAppStub::ExecuteOntapDelete(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request) {
+  google::cloud::netapp::v1::ExecuteOntapDeleteResponse response;
+  auto status = grpc_stub_->ExecuteOntapDelete(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+DefaultNetAppStub::ExecuteOntapPatch(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request) {
+  google::cloud::netapp::v1::ExecuteOntapPatchResponse response;
+  auto status = grpc_stub_->ExecuteOntapPatch(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

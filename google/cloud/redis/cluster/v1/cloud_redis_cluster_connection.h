@@ -230,6 +230,12 @@ class CloudRedisClusterConnection {
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request);
 
+  virtual StatusOr<
+      google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request);
+
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   RescheduleClusterMaintenance(
       google::cloud::redis::cluster::v1::

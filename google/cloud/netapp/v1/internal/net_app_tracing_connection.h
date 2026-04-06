@@ -153,6 +153,18 @@ class NetAppTracingConnection : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::netapp::v1::Volume>> EstablishVolumePeering(
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> EstablishVolumePeering(
+      NoAwaitTag,
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::Volume>> EstablishVolumePeering(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::netapp::v1::Snapshot> ListSnapshots(
       google::cloud::netapp::v1::ListSnapshotsRequest request) override;
 
@@ -614,6 +626,22 @@ class NetAppTracingConnection : public netapp_v1::NetAppConnection {
 
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteHostGroup(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+  ExecuteOntapPost(google::cloud::netapp::v1::ExecuteOntapPostRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse> ExecuteOntapGet(
+      google::cloud::netapp::v1::ExecuteOntapGetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+  ExecuteOntapDelete(google::cloud::netapp::v1::ExecuteOntapDeleteRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+  ExecuteOntapPatch(google::cloud::netapp::v1::ExecuteOntapPatchRequest const&
+                        request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

@@ -59,12 +59,23 @@ struct DataformConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-dataform-options
+ */
+struct DataformPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to Dataform.
  *
  * @ingroup google-cloud-dataform-options
  */
 using DataformPolicyOptionList =
     OptionList<DataformRetryPolicyOption, DataformBackoffPolicyOption,
+               DataformPollingPolicyOption,
                DataformConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

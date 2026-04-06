@@ -148,6 +148,18 @@ MemorystoreTracingConnection::GetCertificateAuthority(
   return internal::EndSpan(*span, child_->GetCertificateAuthority(request));
 }
 
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreTracingConnection::GetSharedRegionalCertificateAuthority(
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::"
+      "GetSharedRegionalCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->GetSharedRegionalCertificateAuthority(request));
+}
+
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreTracingConnection::RescheduleMaintenance(
     google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&

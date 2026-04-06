@@ -31,6 +31,211 @@ DataformTracingConnection::DataformTracingConnection(
     std::shared_ptr<dataform_v1::DataformConnection> child)
     : child_(std::move(child)) {}
 
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformTracingConnection::GetTeamFolder(
+    google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::GetTeamFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTeamFolder(request));
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformTracingConnection::CreateTeamFolder(
+    google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::CreateTeamFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTeamFolder(request));
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformTracingConnection::UpdateTeamFolder(
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::UpdateTeamFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTeamFolder(request));
+}
+
+Status DataformTracingConnection::DeleteTeamFolder(
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::DeleteTeamFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTeamFolder(request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformTracingConnection::DeleteTeamFolderTree(
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::DeleteTeamFolderTree");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTeamFolderTree(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataformTracingConnection::DeleteTeamFolderTree(
+    NoAwaitTag,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::DeleteTeamFolderTree");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteTeamFolderTree(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformTracingConnection::DeleteTeamFolderTree(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::DeleteTeamFolderTree");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTeamFolderTree(operation));
+}
+
+StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                TeamFolderContentsEntry>
+DataformTracingConnection::QueryTeamFolderContents(
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::QueryTeamFolderContents");
+  internal::OTelScope scope(span);
+  auto sr = child_->QueryTeamFolderContents(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+          TeamFolderContentsEntry>(std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                TeamFolderSearchResult>
+DataformTracingConnection::SearchTeamFolders(
+    google::cloud::dataform::v1::SearchTeamFoldersRequest request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::SearchTeamFolders");
+  internal::OTelScope scope(span);
+  auto sr = child_->SearchTeamFolders(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataform::v1::SearchTeamFoldersResponse::
+          TeamFolderSearchResult>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::dataform::v1::Folder>
+DataformTracingConnection::GetFolder(
+    google::cloud::dataform::v1::GetFolderRequest const& request) {
+  auto span = internal::MakeSpan("dataform_v1::DataformConnection::GetFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFolder(request));
+}
+
+StatusOr<google::cloud::dataform::v1::Folder>
+DataformTracingConnection::CreateFolder(
+    google::cloud::dataform::v1::CreateFolderRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::CreateFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateFolder(request));
+}
+
+StatusOr<google::cloud::dataform::v1::Folder>
+DataformTracingConnection::UpdateFolder(
+    google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::UpdateFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateFolder(request));
+}
+
+Status DataformTracingConnection::DeleteFolder(
+    google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::DeleteFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteFolder(request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformTracingConnection::DeleteFolderTree(
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::DeleteFolderTree");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteFolderTree(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataformTracingConnection::DeleteFolderTree(
+    NoAwaitTag,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::DeleteFolderTree");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteFolderTree(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformTracingConnection::DeleteFolderTree(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::DeleteFolderTree");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFolderTree(operation));
+}
+
+StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                FolderContentsEntry>
+DataformTracingConnection::QueryFolderContents(
+    google::cloud::dataform::v1::QueryFolderContentsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::QueryFolderContents");
+  internal::OTelScope scope(span);
+  auto sr = child_->QueryFolderContents(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataform::v1::QueryFolderContentsResponse::
+          FolderContentsEntry>(std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                RootContentsEntry>
+DataformTracingConnection::QueryUserRootContents(
+    google::cloud::dataform::v1::QueryUserRootContentsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataform_v1::DataformConnection::QueryUserRootContents");
+  internal::OTelScope scope(span);
+  auto sr = child_->QueryUserRootContents(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataform::v1::QueryUserRootContentsResponse::
+          RootContentsEntry>(std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformTracingConnection::MoveFolder(
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  auto span = internal::MakeSpan("dataform_v1::DataformConnection::MoveFolder");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->MoveFolder(request));
+}
+
+StatusOr<google::longrunning::Operation> DataformTracingConnection::MoveFolder(
+    NoAwaitTag, google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  auto span = internal::MakeSpan("dataform_v1::DataformConnection::MoveFolder");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->MoveFolder(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformTracingConnection::MoveFolder(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("dataform_v1::DataformConnection::MoveFolder");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->MoveFolder(operation));
+}
+
 StreamRange<google::cloud::dataform::v1::Repository>
 DataformTracingConnection::ListRepositories(
     google::cloud::dataform::v1::ListRepositoriesRequest request) {
@@ -75,6 +280,35 @@ Status DataformTracingConnection::DeleteRepository(
       internal::MakeSpan("dataform_v1::DataformConnection::DeleteRepository");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteRepository(request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformTracingConnection::MoveRepository(
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::MoveRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->MoveRepository(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataformTracingConnection::MoveRepository(
+    NoAwaitTag,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::MoveRepository");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->MoveRepository(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformTracingConnection::MoveRepository(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::MoveRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->MoveRepository(operation));
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -551,6 +785,31 @@ DataformTracingConnection::UpdateConfig(
   return internal::EndSpan(*span, child_->UpdateConfig(request));
 }
 
+StatusOr<google::iam::v1::Policy> DataformTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::Policy> DataformTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 StreamRange<google::cloud::location::Location>
 DataformTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -571,29 +830,40 @@ DataformTracingConnection::GetLocation(
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-StatusOr<google::iam::v1::Policy> DataformTracingConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StreamRange<google::longrunning::Operation>
+DataformTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   auto span =
-      internal::MakeSpan("dataform_v1::DataformConnection::SetIamPolicy");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+      internal::MakeSpan("dataform_v1::DataformConnection::ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(sr));
 }
 
-StatusOr<google::iam::v1::Policy> DataformTracingConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::longrunning::Operation>
+DataformTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto span =
-      internal::MakeSpan("dataform_v1::DataformConnection::GetIamPolicy");
+      internal::MakeSpan("dataform_v1::DataformConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+  return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformTracingConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+Status DataformTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto span =
-      internal::MakeSpan("dataform_v1::DataformConnection::TestIamPermissions");
+      internal::MakeSpan("dataform_v1::DataformConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+  return internal::EndSpan(*span, child_->DeleteOperation(request));
+}
+
+Status DataformTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataform_v1::DataformConnection::CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 std::shared_ptr<dataform_v1::DataformConnection> MakeDataformTracingConnection(

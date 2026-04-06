@@ -146,6 +146,17 @@ CloudRedisClusterAuth::GetClusterCertificateAuthority(
   return child_->GetClusterCertificateAuthority(context, options, request);
 }
 
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+CloudRedisClusterAuth::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSharedRegionalCertificateAuthority(context, options,
+                                                       request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterAuth::AsyncRescheduleClusterMaintenance(
     google::cloud::CompletionQueue& cq,
