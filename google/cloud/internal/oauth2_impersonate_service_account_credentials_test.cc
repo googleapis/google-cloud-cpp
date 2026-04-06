@@ -155,6 +155,12 @@ class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
  public:
   MOCK_METHOD(StatusOr<google::cloud::AccessToken>, GenerateAccessToken,
               (GenerateAccessTokenRequest const&), (override));
+  MOCK_METHOD(StatusOr<AllowedLocationsResponse>, AllowedLocations,
+              (ServiceAccountAllowedLocationsRequest const&), (override));
+  MOCK_METHOD(StatusOr<AllowedLocationsResponse>, AllowedLocations,
+              (WorkloadIdentityAllowedLocationsRequest const&), (override));
+  MOCK_METHOD(StatusOr<AllowedLocationsResponse>, AllowedLocations,
+              (WorkforceIdentityAllowedLocationsRequest const&), (override));
   MOCK_METHOD(StatusOr<std::string>, universe_domain, (Options const& options),
               (override, const));
 };
