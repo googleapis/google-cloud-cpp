@@ -462,15 +462,12 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
             default_kms_key: "test-only-kms-key"
             google_managed_encryption_enforcement_config {
               restriction_mode: "FullyRestricted"
-              effective_time { seconds: 1766175572 }
             }
             customer_managed_encryption_enforcement_config {
               restriction_mode: "NotRestricted"
-              effective_time { seconds: 1766175695 }
             }
             customer_supplied_encryption_enforcement_config {
               restriction_mode: "FullyRestricted"
-              effective_time { seconds: 1766175739 }
             }
           }
           autoclass { enabled: true }
@@ -746,15 +743,12 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
             default_kms_key: "test-only-kms-key"
             google_managed_encryption_enforcement_config {
               restriction_mode: "FullyRestricted"
-              effective_time { seconds: 1766176065 }
             }
             customer_managed_encryption_enforcement_config {
               restriction_mode: "NotRestricted"
-              effective_time { seconds: 1766176105 }
             }
             customer_supplied_encryption_enforcement_config {
               restriction_mode: "FullyRestricted"
-              effective_time { seconds: 1766176151 }
             }
           }
           autoclass { enabled: true }
