@@ -66,7 +66,7 @@ void ObjectDescriptorImpl::Start(
 
 bool ObjectDescriptorImpl::IsOpen() const {
   {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::scoped_lock<std::mutex> lk(mu_);
     if (cancelled_) return false;
     if (stream_manager_->Empty()) return false;
   }
