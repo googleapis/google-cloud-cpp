@@ -67,21 +67,18 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section datacatalog-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `datacatalog_lineage_v1::LineageClient`:
+For example, this will override the retry policies for `datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient`:
 
-@snippet lineage_client_samples.cc set-retry-policy
+@snippet config_management_client_samples.cc set-retry-policy
 
 This assumes you have created a custom idempotency policy. Such as:
 
-@snippet lineage_client_samples.cc custom-idempotency-policy
-
-This will override the polling policies for `datacatalog_lineage_v1::LineageClient`
-
-@snippet lineage_client_samples.cc set-polling-policy
+@snippet config_management_client_samples.cc custom-idempotency-policy
 
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient](@ref datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient-retry-snippet)
 - [\c datacatalog_lineage_v1::LineageClient](@ref datacatalog_lineage_v1::LineageClient-retry-snippet)
 - [\c datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-retry-snippet)
 - [\c datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-retry-snippet)
@@ -100,6 +97,18 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient-retry-snippet Override datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient Retry Policies
+
+This shows how to override the retry policies for datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient:
+
+@snippet google/cloud/datacatalog/lineage/configmanagement/v1/samples/config_management_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/datacatalog/lineage/configmanagement/v1/samples/config_management_client_samples.cc custom-idempotency-policy
+
+*/
 
 /*! @page datacatalog_lineage_v1::LineageClient-retry-snippet Override datacatalog_lineage_v1::LineageClient Retry Policies
 

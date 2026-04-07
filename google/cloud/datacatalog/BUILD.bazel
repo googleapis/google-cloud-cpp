@@ -19,11 +19,13 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
+    "lineage/configmanagement/v1/",
     "lineage/v1/",
     "v1/",
 ]
 
 googleapis_deps = [
+    "@googleapis//google/cloud/datacatalog/lineage/configmanagement/v1:configmanagement_cc_grpc",
     "@googleapis//google/cloud/datacatalog/lineage/v1:lineage_cc_grpc",
     "@googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc",
 ]

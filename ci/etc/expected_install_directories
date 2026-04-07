@@ -669,6 +669,10 @@
 ./include/google/cloud/contentwarehouse/v1/mocks
 ./include/google/cloud/datacatalog
 ./include/google/cloud/datacatalog/lineage
+./include/google/cloud/datacatalog/lineage/configmanagement
+./include/google/cloud/datacatalog/lineage/configmanagement/v1
+./include/google/cloud/datacatalog/lineage/configmanagement/v1/internal
+./include/google/cloud/datacatalog/lineage/configmanagement/v1/mocks
 ./include/google/cloud/datacatalog/lineage/v1
 ./include/google/cloud/datacatalog/lineage/v1/internal
 ./include/google/cloud/datacatalog/lineage/v1/mocks

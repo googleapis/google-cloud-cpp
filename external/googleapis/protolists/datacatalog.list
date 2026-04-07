@@ -1,3 +1,4 @@
+@googleapis//google/cloud/datacatalog/lineage/configmanagement/v1:configmanagement.proto
 @googleapis//google/cloud/datacatalog/lineage/v1:lineage.proto
 @googleapis//google/cloud/datacatalog/v1:bigquery.proto
 @googleapis//google/cloud/datacatalog/v1:common.proto
