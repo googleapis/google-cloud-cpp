@@ -93,6 +93,14 @@ google::spanner::v1::TransactionOptions MakeOpts(
         ProtoIsolationLevel(current.get<TransactionIsolationLevelOption>()));
   }
 
+  if (opts.read_write().read_lock_mode() ==
+          google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+              TransactionOptions_ReadWrite_ReadLockMode_READ_LOCK_MODE_UNSPECIFIED &&
+      current.has<TransactionReadLockModeOption>()) {
+    opts.mutable_read_write()->set_read_lock_mode(
+        ProtoReadLockMode(current.get<TransactionReadLockModeOption>()));
+  }
+
   return opts;
 }
 
