@@ -357,6 +357,37 @@ StatusOr<google::longrunning::Operation> NetAppLogging::RevertVolume(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncEstablishVolumePeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::EstablishVolumePeeringRequest const&
+                 request) {
+        return child_->AsyncEstablishVolumePeering(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::EstablishVolumePeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::EstablishVolumePeeringRequest const&
+                 request) {
+        return child_->EstablishVolumePeering(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 NetAppLogging::ListSnapshots(
     grpc::ClientContext& context, Options const& options,
@@ -1602,6 +1633,57 @@ StatusOr<google::longrunning::Operation> NetAppLogging::DeleteHostGroup(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
         return child_->DeleteHostGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+NetAppLogging::ExecuteOntapPost(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapPostRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::ExecuteOntapPostRequest const& request) {
+        return child_->ExecuteOntapPost(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+NetAppLogging::ExecuteOntapGet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapGetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::ExecuteOntapGetRequest const& request) {
+        return child_->ExecuteOntapGet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+NetAppLogging::ExecuteOntapDelete(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request) {
+        return child_->ExecuteOntapDelete(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+NetAppLogging::ExecuteOntapPatch(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request) {
+        return child_->ExecuteOntapPatch(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

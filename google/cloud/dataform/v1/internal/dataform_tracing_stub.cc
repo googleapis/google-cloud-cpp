@@ -32,6 +32,225 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataformTracingStub::DataformTracingStub(std::shared_ptr<DataformStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformTracingStub::GetTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetTeamFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetTeamFolder(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformTracingStub::CreateTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateTeamFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateTeamFolder(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformTracingStub::UpdateTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "UpdateTeamFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateTeamFolder(context, options, request));
+}
+
+Status DataformTracingStub::DeleteTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteTeamFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTeamFolder(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformTracingStub::AsyncDeleteTeamFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteTeamFolderTree");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteTeamFolderTree(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataformTracingStub::DeleteTeamFolderTree(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteTeamFolderTree");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteTeamFolderTree(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::QueryTeamFolderContentsResponse>
+DataformTracingStub::QueryTeamFolderContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "QueryTeamFolderContents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->QueryTeamFolderContents(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::SearchTeamFoldersResponse>
+DataformTracingStub::SearchTeamFolders(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::SearchTeamFoldersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "SearchTeamFolders");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->SearchTeamFolders(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformTracingStub::GetFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::GetFolderRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetFolder(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformTracingStub::CreateFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateFolder(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformTracingStub::UpdateFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "UpdateFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateFolder(context, options, request));
+}
+
+Status DataformTracingStub::DeleteFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFolder(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformTracingStub::AsyncDeleteFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteFolderTree");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteFolderTree(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DataformTracingStub::DeleteFolderTree(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteFolderTree");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFolderTree(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::QueryFolderContentsResponse>
+DataformTracingStub::QueryFolderContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryFolderContentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "QueryFolderContents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->QueryFolderContents(context, options, request));
+}
+
+StatusOr<google::cloud::dataform::v1::QueryUserRootContentsResponse>
+DataformTracingStub::QueryUserRootContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryUserRootContentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "QueryUserRootContents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->QueryUserRootContents(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformTracingStub::AsyncMoveFolder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "MoveFolder");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncMoveFolder(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DataformTracingStub::MoveFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "MoveFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->MoveFolder(context, options, request));
+}
+
 StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
 DataformTracingStub::ListRepositories(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +308,32 @@ Status DataformTracingStub::DeleteRepository(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteRepository(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformTracingStub::AsyncMoveRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "MoveRepository");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncMoveRepository(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DataformTracingStub::MoveRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "MoveRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->MoveRepository(context, options, request));
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -698,6 +943,40 @@ StatusOr<google::cloud::dataform::v1::Config> DataformTracingStub::UpdateConfig(
                            child_->UpdateConfig(context, options, request));
 }
 
+StatusOr<google::iam::v1::Policy> DataformTracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy> DataformTracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataformTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -721,38 +1000,77 @@ StatusOr<google::cloud::location::Location> DataformTracingStub::GetLocation(
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy> DataformTracingStub::SetIamPolicy(
+StatusOr<google::longrunning::ListOperationsResponse>
+DataformTracingStub::ListOperations(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::SetIamPolicyRequest const& request) {
+    google::longrunning::ListOperationsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
-                                     "SetIamPolicy");
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicy(context, options, request));
+                           child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy> DataformTracingStub::GetIamPolicy(
+StatusOr<google::longrunning::Operation> DataformTracingStub::GetOperation(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::GetIamPolicyRequest const& request) {
+    google::longrunning::GetOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
-                                     "GetIamPolicy");
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicy(context, options, request));
+                           child_->GetOperation(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformTracingStub::TestIamPermissions(
+Status DataformTracingStub::DeleteOperation(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::longrunning::DeleteOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
-                                     "TestIamPermissions");
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteOperation(context, options, request));
+}
+
+Status DataformTracingStub::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CancelOperation(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformTracingStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<Status> DataformTracingStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 std::shared_ptr<DataformStub> MakeDataformTracingStub(

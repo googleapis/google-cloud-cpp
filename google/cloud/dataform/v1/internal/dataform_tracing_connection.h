@@ -37,6 +37,92 @@ class DataformTracingConnection : public dataform_v1::DataformConnection {
 
   Options options() override { return child_->options(); }
 
+  StatusOr<google::cloud::dataform::v1::TeamFolder> GetTeamFolder(
+      google::cloud::dataform::v1::GetTeamFolderRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataform::v1::TeamFolder> CreateTeamFolder(
+      google::cloud::dataform::v1::CreateTeamFolderRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataform::v1::TeamFolder> UpdateTeamFolder(
+      google::cloud::dataform::v1::UpdateTeamFolderRequest const& request)
+      override;
+
+  Status DeleteTeamFolder(
+      google::cloud::dataform::v1::DeleteTeamFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+  DeleteTeamFolderTree(
+      google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTeamFolderTree(
+      NoAwaitTag,
+      google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+  DeleteTeamFolderTree(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                  TeamFolderContentsEntry>
+  QueryTeamFolderContents(
+      google::cloud::dataform::v1::QueryTeamFolderContentsRequest request)
+      override;
+
+  StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                  TeamFolderSearchResult>
+  SearchTeamFolders(
+      google::cloud::dataform::v1::SearchTeamFoldersRequest request) override;
+
+  StatusOr<google::cloud::dataform::v1::Folder> GetFolder(
+      google::cloud::dataform::v1::GetFolderRequest const& request) override;
+
+  StatusOr<google::cloud::dataform::v1::Folder> CreateFolder(
+      google::cloud::dataform::v1::CreateFolderRequest const& request) override;
+
+  StatusOr<google::cloud::dataform::v1::Folder> UpdateFolder(
+      google::cloud::dataform::v1::UpdateFolderRequest const& request) override;
+
+  Status DeleteFolder(
+      google::cloud::dataform::v1::DeleteFolderRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+  DeleteFolderTree(google::cloud::dataform::v1::DeleteFolderTreeRequest const&
+                       request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteFolderTree(
+      NoAwaitTag,
+      google::cloud::dataform::v1::DeleteFolderTreeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+  DeleteFolderTree(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                  FolderContentsEntry>
+  QueryFolderContents(
+      google::cloud::dataform::v1::QueryFolderContentsRequest request) override;
+
+  StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                  RootContentsEntry>
+  QueryUserRootContents(
+      google::cloud::dataform::v1::QueryUserRootContentsRequest request)
+      override;
+
+  future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>> MoveFolder(
+      google::cloud::dataform::v1::MoveFolderRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> MoveFolder(
+      NoAwaitTag,
+      google::cloud::dataform::v1::MoveFolderRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>> MoveFolder(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::dataform::v1::Repository> ListRepositories(
       google::cloud::dataform::v1::ListRepositoriesRequest request) override;
 
@@ -55,6 +141,18 @@ class DataformTracingConnection : public dataform_v1::DataformConnection {
   Status DeleteRepository(
       google::cloud::dataform::v1::DeleteRepositoryRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+  MoveRepository(google::cloud::dataform::v1::MoveRepositoryRequest const&
+                     request) override;
+
+  StatusOr<google::longrunning::Operation> MoveRepository(
+      NoAwaitTag,
+      google::cloud::dataform::v1::MoveRepositoryRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+  MoveRepository(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
   CommitRepositoryChanges(
@@ -262,20 +360,32 @@ class DataformTracingConnection : public dataform_v1::DataformConnection {
   StatusOr<google::cloud::dataform::v1::Config> UpdateConfig(
       google::cloud::dataform::v1::UpdateConfigRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dataform_v1::DataformConnection> child_;

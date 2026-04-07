@@ -291,6 +291,17 @@ class NetAppConnection {
   virtual future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
       google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  EstablishVolumePeering(
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> EstablishVolumePeering(
+      NoAwaitTag,
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  EstablishVolumePeering(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::netapp::v1::Snapshot> ListSnapshots(
       google::cloud::netapp::v1::ListSnapshotsRequest request);
 
@@ -723,6 +734,22 @@ class NetAppConnection {
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteHostGroup(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+  ExecuteOntapPost(
+      google::cloud::netapp::v1::ExecuteOntapPostRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+  ExecuteOntapGet(
+      google::cloud::netapp::v1::ExecuteOntapGetRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+  ExecuteOntapDelete(
+      google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+  ExecuteOntapPatch(
+      google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

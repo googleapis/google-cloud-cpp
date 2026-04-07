@@ -78,6 +78,9 @@ class NetAppConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RevertVolume(
       google::cloud::netapp::v1::RevertVolumeRequest const& request);
 
+  virtual google::cloud::Idempotency EstablishVolumePeering(
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request);
+
   virtual google::cloud::Idempotency ListSnapshots(
       google::cloud::netapp::v1::ListSnapshotsRequest request);
 
@@ -237,6 +240,18 @@ class NetAppConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteHostGroup(
       google::cloud::netapp::v1::DeleteHostGroupRequest const& request);
+
+  virtual google::cloud::Idempotency ExecuteOntapPost(
+      google::cloud::netapp::v1::ExecuteOntapPostRequest const& request);
+
+  virtual google::cloud::Idempotency ExecuteOntapGet(
+      google::cloud::netapp::v1::ExecuteOntapGetRequest const& request);
+
+  virtual google::cloud::Idempotency ExecuteOntapDelete(
+      google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request);
+
+  virtual google::cloud::Idempotency ExecuteOntapPatch(
+      google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

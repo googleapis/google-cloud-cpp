@@ -93,6 +93,13 @@ class CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request) = 0;
 
+  virtual StatusOr<
+      google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncRescheduleClusterMaintenance(
       google::cloud::CompletionQueue& cq,
@@ -267,6 +274,13 @@ class DefaultCloudRedisClusterStub : public CloudRedisClusterStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request) override;
+
+  StatusOr<
+      google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncRescheduleClusterMaintenance(

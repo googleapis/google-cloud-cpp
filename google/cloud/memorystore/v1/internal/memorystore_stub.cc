@@ -162,6 +162,20 @@ DefaultMemorystoreStub::GetCertificateAuthority(
   return response;
 }
 
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+DefaultMemorystoreStub::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  google::cloud::memorystore::v1::SharedRegionalCertificateAuthority response;
+  auto status = grpc_stub_->GetSharedRegionalCertificateAuthority(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultMemorystoreStub::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,

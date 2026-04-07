@@ -145,6 +145,17 @@ MemorystoreAuth::GetCertificateAuthority(
   return child_->GetCertificateAuthority(context, options, request);
 }
 
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreAuth::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSharedRegionalCertificateAuthority(context, options,
+                                                       request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,

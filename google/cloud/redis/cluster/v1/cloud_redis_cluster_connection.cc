@@ -129,6 +129,13 @@ CloudRedisClusterConnection::GetClusterCertificateAuthority(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+CloudRedisClusterConnection::GetSharedRegionalCertificateAuthority(
+    google::cloud::redis::cluster::v1::
+        GetSharedRegionalCertificateAuthorityRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterConnection::RescheduleClusterMaintenance(
     google::cloud::redis::cluster::v1::

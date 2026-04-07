@@ -408,6 +408,29 @@ future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::RevertVolume(
   return connection_->RevertVolume(operation);
 }
 
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppClient::EstablishVolumePeering(
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishVolumePeering(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::EstablishVolumePeering(
+    NoAwaitTag,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishVolumePeering(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppClient::EstablishVolumePeering(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishVolumePeering(operation);
+}
+
 StreamRange<google::cloud::netapp::v1::Snapshot> NetAppClient::ListSnapshots(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -2011,6 +2034,38 @@ NetAppClient::DeleteHostGroup(google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteHostGroup(operation);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+NetAppClient::ExecuteOntapPost(
+    google::cloud::netapp::v1::ExecuteOntapPostRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExecuteOntapPost(request);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+NetAppClient::ExecuteOntapGet(
+    google::cloud::netapp::v1::ExecuteOntapGetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExecuteOntapGet(request);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+NetAppClient::ExecuteOntapDelete(
+    google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExecuteOntapDelete(request);
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+NetAppClient::ExecuteOntapPatch(
+    google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExecuteOntapPatch(request);
 }
 
 StreamRange<google::cloud::location::Location> NetAppClient::ListLocations(

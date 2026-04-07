@@ -121,6 +121,13 @@ MemorystoreConnection::GetCertificateAuthority(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreConnection::GetSharedRegionalCertificateAuthority(
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreConnection::RescheduleMaintenance(
     google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&) {

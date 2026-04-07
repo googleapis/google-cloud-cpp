@@ -150,6 +150,21 @@ CloudRedisClusterTracingStub::GetClusterCertificateAuthority(
       child_->GetClusterCertificateAuthority(context, options, request));
 }
 
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+CloudRedisClusterTracingStub::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.redis.cluster.v1.CloudRedisCluster",
+                             "GetSharedRegionalCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetSharedRegionalCertificateAuthority(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterTracingStub::AsyncRescheduleClusterMaintenance(
     google::cloud::CompletionQueue& cq,

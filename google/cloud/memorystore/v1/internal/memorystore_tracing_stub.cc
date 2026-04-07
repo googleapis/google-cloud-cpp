@@ -149,6 +149,20 @@ MemorystoreTracingStub::GetCertificateAuthority(
       child_->GetCertificateAuthority(context, options, request));
 }
 
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreTracingStub::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetSharedRegionalCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetSharedRegionalCertificateAuthority(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,

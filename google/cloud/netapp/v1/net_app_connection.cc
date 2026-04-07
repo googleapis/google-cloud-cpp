@@ -259,6 +259,30 @@ NetAppConnection::RevertVolume(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppConnection::EstablishVolumePeering(
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Volume>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnection::EstablishVolumePeering(
+    NoAwaitTag,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppConnection::EstablishVolumePeering(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Volume>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::netapp::v1::Snapshot>
 NetAppConnection::ListSnapshots(
     google::cloud::netapp::v1::
@@ -1106,6 +1130,30 @@ NetAppConnection::DeleteHostGroup(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+NetAppConnection::ExecuteOntapPost(
+    google::cloud::netapp::v1::ExecuteOntapPostRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+NetAppConnection::ExecuteOntapGet(
+    google::cloud::netapp::v1::ExecuteOntapGetRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+NetAppConnection::ExecuteOntapDelete(
+    google::cloud::netapp::v1::ExecuteOntapDeleteRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+NetAppConnection::ExecuteOntapPatch(
+    google::cloud::netapp::v1::ExecuteOntapPatchRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::location::Location> NetAppConnection::ListLocations(
