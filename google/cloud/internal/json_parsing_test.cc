@@ -25,10 +25,11 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 
-TEST(ExternalAccountParsing, ValidateStringFieldSuccess) {
+TEST(JsonParsingTest, ValidateStringFieldSuccess) {
   auto const json = nlohmann::json{{"someField", "value"}};
   auto actual = ValidateStringField(
       json, "someField", "test-object",
@@ -37,7 +38,7 @@ TEST(ExternalAccountParsing, ValidateStringFieldSuccess) {
   EXPECT_EQ(*actual, "value");
 }
 
-TEST(ExternalAccountParsing, ValidateStringFieldMissing) {
+TEST(JsonParsingTest, ValidateStringFieldMissing) {
   auto const json = nlohmann::json{{"some-field", "value"}};
   auto actual = ValidateStringField(
       json, "missingField", "test-object",
@@ -51,7 +52,7 @@ TEST(ExternalAccountParsing, ValidateStringFieldMissing) {
               Contains(Pair("origin", "test")));
 }
 
-TEST(ExternalAccountParsing, ValidateStringFieldNotString) {
+TEST(JsonParsingTest, ValidateStringFieldNotString) {
   auto const json =
       nlohmann::json{{"some-field", "value"}, {"wrongType", true}};
   auto actual = ValidateStringField(
@@ -66,7 +67,7 @@ TEST(ExternalAccountParsing, ValidateStringFieldNotString) {
               Contains(Pair("origin", "test")));
 }
 
-TEST(ExternalAccountParsing, ValidateStringFieldDefaultSuccess) {
+TEST(JsonParsingTest, ValidateStringFieldDefaultSuccess) {
   auto const json = nlohmann::json{{"someField", "value"}};
   auto actual = ValidateStringField(
       json, "someField", "test-object", "default-value",
@@ -75,7 +76,7 @@ TEST(ExternalAccountParsing, ValidateStringFieldDefaultSuccess) {
   EXPECT_EQ(*actual, "value");
 }
 
-TEST(ExternalAccountParsing, ValidateStringFieldDefaultMissing) {
+TEST(JsonParsingTest, ValidateStringFieldDefaultMissing) {
   auto const json = nlohmann::json{{"anotherField", "value"}};
   auto actual = ValidateStringField(
       json, "someField", "test-object", "default-value",
@@ -84,7 +85,7 @@ TEST(ExternalAccountParsing, ValidateStringFieldDefaultMissing) {
   EXPECT_EQ(*actual, "default-value");
 }
 
-TEST(ExternalAccountParsing, ValidateStringFieldDefaultNotInt) {
+TEST(JsonParsingTest, ValidateStringFieldDefaultNotInt) {
   auto const json =
       nlohmann::json{{"some-field", "value"}, {"wrongType", true}};
   auto actual = ValidateStringField(
@@ -99,7 +100,7 @@ TEST(ExternalAccountParsing, ValidateStringFieldDefaultNotInt) {
               Contains(Pair("origin", "test")));
 }
 
-TEST(ExternalAccountParsing, ValidateIntFieldSuccess) {
+TEST(JsonParsingTest, ValidateIntFieldSuccess) {
   auto const json = nlohmann::json{{"someField", 42}};
   auto actual = ValidateIntField(
       json, "someField", "test-object",
@@ -108,7 +109,7 @@ TEST(ExternalAccountParsing, ValidateIntFieldSuccess) {
   EXPECT_EQ(*actual, 42);
 }
 
-TEST(ExternalAccountParsing, ValidateIntFieldMissing) {
+TEST(JsonParsingTest, ValidateIntFieldMissing) {
   auto const json = nlohmann::json{{"some-field", 42}};
   auto actual = ValidateIntField(
       json, "missingField", "test-object",
@@ -122,7 +123,7 @@ TEST(ExternalAccountParsing, ValidateIntFieldMissing) {
               Contains(Pair("origin", "test")));
 }
 
-TEST(ExternalAccountParsing, ValidateIntFieldNotString) {
+TEST(JsonParsingTest, ValidateIntFieldNotString) {
   auto const json =
       nlohmann::json{{"some-field", "value"}, {"wrongType", true}};
   auto actual = ValidateIntField(
@@ -137,7 +138,7 @@ TEST(ExternalAccountParsing, ValidateIntFieldNotString) {
               Contains(Pair("origin", "test")));
 }
 
-TEST(ExternalAccountParsing, ValidateIntFieldDefaultSuccess) {
+TEST(JsonParsingTest, ValidateIntFieldDefaultSuccess) {
   auto const json = nlohmann::json{{"someField", 42}};
   auto actual = ValidateIntField(
       json, "someField", "test-object", 42,
@@ -146,7 +147,7 @@ TEST(ExternalAccountParsing, ValidateIntFieldDefaultSuccess) {
   EXPECT_EQ(*actual, 42);
 }
 
-TEST(ExternalAccountParsing, ValidateIntFieldDefaultMissing) {
+TEST(JsonParsingTest, ValidateIntFieldDefaultMissing) {
   auto const json = nlohmann::json{{"anotherField", "value"}};
   auto actual = ValidateIntField(
       json, "someField", "test-object", 42,
@@ -155,11 +156,48 @@ TEST(ExternalAccountParsing, ValidateIntFieldDefaultMissing) {
   EXPECT_EQ(*actual, 42);
 }
 
-TEST(ExternalAccountParsing, ValidateIntFieldDefaultNotString) {
+TEST(JsonParsingTest, ValidateIntFieldDefaultNotString) {
   auto const json =
       nlohmann::json{{"some-field", "value"}, {"wrongType", true}};
   auto actual = ValidateIntField(
       json, "wrongType", "test-object", 42,
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               AllOf(HasSubstr("wrongType"),
+                                     HasSubstr("test-object"))));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("filename", "/dev/null")));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("origin", "test")));
+}
+
+TEST(JsonParsingTest, ValidateStringArrayFieldSuccess) {
+  auto const json = nlohmann::json{{"someField", {"value1", "value2"}}};
+  auto actual = ValidateStringArrayField(
+      json, "someField", "test-object",
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, ElementsAre("value1", "value2"));
+}
+
+TEST(JsonParsingTest, ValidateStringArrayFieldMissing) {
+  auto const json = nlohmann::json{{"some-field", {"value1", "value2"}}};
+  auto actual = ValidateStringArrayField(
+      json, "missingField", "test-object",
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               AllOf(HasSubstr("missingField"),
+                                     HasSubstr("test-object"))));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("filename", "/dev/null")));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("origin", "test")));
+}
+
+TEST(JsonParsingTest, ValidateStringArrayFieldNotString) {
+  auto const json = nlohmann::json({"wrongType", {"value1", true}});
+  auto actual = ValidateStringArrayField(
+      json, "wrongType", "test-object",
       internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                AllOf(HasSubstr("wrongType"),
