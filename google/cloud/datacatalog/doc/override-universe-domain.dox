@@ -6,12 +6,13 @@ client library. Use `AddUniverseDomainOption` when initializing the client
 library to change this default.
 
 <!-- inject-universe-domain-snippet-start -->
-For example, this will override the default universe domain for `datacatalog_lineage_v1::LineageClient`:
+For example, this will override the default universe domain for `datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient`:
 
-@snippet lineage_client_samples.cc set-client-universe-domain
+@snippet config_management_client_samples.cc set-client-universe-domain
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient](@ref datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient-universe-domain-snippet)
 - [\c datacatalog_lineage_v1::LineageClient](@ref datacatalog_lineage_v1::LineageClient-universe-domain-snippet)
 - [\c datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-universe-domain-snippet)
 - [\c datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-universe-domain-snippet)
@@ -22,6 +23,12 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-universe-domain-pages-start -->
+
+/*! @page datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient-universe-domain-snippet Override datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient Universe Domain
+
+@snippet google/cloud/datacatalog/lineage/configmanagement/v1/samples/config_management_client_samples.cc set-client-universe-domain
+
+*/
 
 /*! @page datacatalog_lineage_v1::LineageClient-universe-domain-snippet Override datacatalog_lineage_v1::LineageClient Universe Domain
 
