@@ -1966,6 +1966,13 @@ service {
 
 # Dataplex
 service {
+  service_proto_path: "google/cloud/dataplex/v1/business_glossary.proto"
+  product_path: "google/cloud/dataplex/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/dataplex/v1/catalog.proto"
   product_path: "google/cloud/dataplex/v1"
   initial_copyright_year: "2024"
@@ -1973,9 +1980,23 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/dataplex/v1/cmek.proto"
+  product_path: "google/cloud/dataplex/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/dataplex/v1/content.proto"
   product_path: "google/cloud/dataplex/v1"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dataplex/v1/data_products.proto"
+  product_path: "google/cloud/dataplex/v1"
+  initial_copyright_year: "2026"
   retryable_status_codes: ["kUnavailable"]
 }
 

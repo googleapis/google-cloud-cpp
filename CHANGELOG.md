@@ -13,6 +13,12 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 - Added Data Lineage Config Management library.
 
+### [Dataplex](/google/cloud/dataplex/README.md)
+
+- Added Business Glossary library.
+- Added CMEK library.
+- Added Data Products library.
+
 ## v3.3.0 - 2026-03
 
 ### New Libraries
@@ -20,9 +26,9 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
-- [Gemini Enterprise for Customer Experience API](google/cloud/ces/README.md)
-- [Cluster Director API](google/cloud/hypercomputecluster/README.md)
-- [Vector Search API](google/cloud/vectorsearch/README.md)
+- [Gemini Enterprise for Customer Experience API](/google/cloud/ces/README.md)
+- [Cluster Director API](/google/cloud/hypercomputecluster/README.md)
+- [Vector Search API](/google/cloud/vectorsearch/README.md)
 - [Vision AI API](/google/cloud/visionai/README.md)
 - [Workload Manager](/google/cloud/workloadmanager/README.md)
 
