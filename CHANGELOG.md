@@ -9,6 +9,10 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.4.0 - TBD
 
+### [Data Catalog](/google/cloud/datacatalog/README.md)
+
+- Added Data Lineage Config Management library.
+
 ## v3.3.0 - 2026-03
 
 ### New Libraries

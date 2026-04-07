@@ -118,7 +118,8 @@ declare -A -r LIBRARIES=(
   ["datacatalog"]="$(
     printf ",%s" \
       "@googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc" \
-      "@googleapis//google/cloud/datacatalog/lineage/v1:lineage_cc_grpc"
+      "@googleapis//google/cloud/datacatalog/lineage/v1:lineage_cc_grpc" \
+      "@googleapis//google/cloud/datacatalog/lineage/configmanagement/v1:configmanagement_cc_grpc"
   )"
   ["dataform"]="$(
     printf ",%s" \
