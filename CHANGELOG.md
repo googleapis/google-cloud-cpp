@@ -19,6 +19,10 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 - Added CMEK library.([#16072](https://github.com/googleapis/google-cloud-cpp/pull/16072))
 - Added Data Products library.([#16072](https://github.com/googleapis/google-cloud-cpp/pull/16072))
 
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): add IsOpen API for zonal read operation ([#16063](https://github.com/googleapis/google-cloud-cpp/pull/16063))
+
 ### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
 
 - This release is based on definitions as of [2026-04-02T09:44:56-07:00](https://github.com/googleapis/googleapis/tree/c8ca5bce5cbabac76b8619bd8d63ac10bb0561a9)
