@@ -34,11 +34,13 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     std::unique_ptr<storage::ResumePolicy> resume_policy,
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
-    std::shared_ptr<OpenStream> stream, Options options)
+    std::shared_ptr<OpenStream> stream, Options options,
+    std::function<bool()> transport_ok)
     : resume_policy_prototype_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
-      options_(std::move(options)) {
+      options_(std::move(options)),
+      transport_ok_(std::move(transport_ok)) {
   stream_manager_ = std::make_unique<StreamManager>(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
       std::make_shared<ReadStream>(std::move(stream),
@@ -62,8 +64,18 @@ void ObjectDescriptorImpl::Start(
   }
 }
 
+bool ObjectDescriptorImpl::IsOpen() const {
+  {
+    std::scoped_lock<std::mutex> lk(mu_);
+    if (cancelled_) return false;
+    if (stream_manager_->Empty()) return false;
+  }
+  return !transport_ok_ || transport_ok_();
+}
+
 void ObjectDescriptorImpl::Cancel() {
   std::unique_lock<std::mutex> lk(mu_);
+  if (cancelled_) return;
   cancelled_ = true;
   if (stream_manager_) stream_manager_->CancelAll();
   if (pending_stream_.valid()) pending_stream_.cancel();

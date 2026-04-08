@@ -46,6 +46,7 @@ class AsyncObjectDescriptorConnectionTracing
   absl::optional<google::storage::v2::Object> metadata() const override {
     return impl_->metadata();
   }
+  bool IsOpen() const override { return impl_->IsOpen(); }
 
   std::unique_ptr<storage::AsyncReaderConnection> Read(ReadParams p) override {
     internal::OTelScope scope(span_);

@@ -186,6 +186,15 @@ TEST(ObjectDescriptor, ReadExceedsMaxRange) {
   EXPECT_FALSE(token.valid());
 }
 
+TEST(ObjectDescriptor, IsOpen) {
+  auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
+  EXPECT_CALL(*mock, IsOpen).WillOnce(Return(true)).WillOnce(Return(false));
+
+  auto tested = ObjectDescriptor(mock);
+  EXPECT_TRUE(tested.IsOpen());
+  EXPECT_FALSE(tested.IsOpen());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
