@@ -334,9 +334,11 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto factory = WriteResultFactory(
       [stub = stub_, cq = cq_, retry = std::move(retry),
        // NOLINTNEXTLINE(bugprone-lambda-function-name)
-       backoff = std::move(backoff), current, function_name = __func__](
+       backoff = std::move(backoff), current, function_name = __func__,
+       // Use shared_ptr to propagate RoutingHeaderOptions across retries.
+       current_routing_options = std::make_shared<RoutingHeaderOptions>()](
           google::storage::v2::BidiWriteObjectRequest req) {
-        auto call = [stub, request = std::move(req)](
+        auto call = [stub, request = std::move(req), current_routing_options](
                         CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
@@ -351,9 +353,11 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
 
           // Apply the routing header
           if (request.has_write_object_spec())
-            ApplyRoutingHeaders(*context, request.write_object_spec());
+            ApplyRoutingHeaders(*context, request.write_object_spec(),
+                                *current_routing_options);
           else
-            ApplyRoutingHeaders(*context, request.append_object_spec());
+            ApplyRoutingHeaders(*context, request.append_object_spec(),
+                                *current_routing_options);
 
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
@@ -362,18 +366,23 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
               std::move(rpc));
           request.set_state_lookup(true);
           auto open = std::make_shared<WriteObject>(std::move(rpc), request);
-          return open->Call().then([open, &request](auto f) mutable {
-            open.reset();
-            auto response = f.get();
-            if (!response) {
-              google::rpc::Status grpc_status =
-                  ExtractGrpcStatus(response.status());
-              EnsureFirstMessageAppendObjectSpec(request, grpc_status);
-              ApplyWriteRedirectErrors(*request.mutable_append_object_spec(),
-                                       grpc_status);
-            }
-            return response;
-          });
+          return open->Call().then(
+              [open, &request, current_routing_options](auto f) mutable {
+                open.reset();
+                auto response = f.get();
+                if (!response) {
+                  google::rpc::Status grpc_status =
+                      ExtractGrpcStatus(response.status());
+                  // Handle redirect and get info for updating routing options.
+                  BidiWriteRedirectInfo redirect_info =
+                      HandleBidiWriteRedirect(request, grpc_status);
+
+                  // Update RoutingHeaderOptions for the next attempt.
+                  current_routing_options->routing_token =
+                      redirect_info.routing_token;
+                }
+                return response;
+              });
         };
 
         return google::cloud::internal::AsyncRetryLoop(

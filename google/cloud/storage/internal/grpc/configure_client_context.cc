@@ -44,17 +44,27 @@ void ApplyRoutingHeaders(
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         google::storage::v2::WriteObjectSpec const& spec) {
-  context.AddMetadata(
-      "x-goog-request-params",
-      "bucket=" + google::cloud::internal::UrlEncode(spec.resource().bucket()));
+                         google::storage::v2::WriteObjectSpec const& spec,
+                         RoutingHeaderOptions const& options) {
+  std::string params =
+      "bucket=" + google::cloud::internal::UrlEncode(spec.resource().bucket());
+  if (!options.routing_token.empty()) {
+    params += "&routing_token=" +
+              google::cloud::internal::UrlEncode(options.routing_token);
+  }
+  context.AddMetadata("x-goog-request-params", params);
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         google::storage::v2::AppendObjectSpec const& spec) {
-  context.AddMetadata(
-      "x-goog-request-params",
-      "bucket=" + google::cloud::internal::UrlEncode(spec.bucket()));
+                         google::storage::v2::AppendObjectSpec const& spec,
+                         RoutingHeaderOptions const& options) {
+  std::string params =
+      "bucket=" + google::cloud::internal::UrlEncode(spec.bucket());
+  if (!options.routing_token.empty()) {
+    params += "&routing_token=" +
+              google::cloud::internal::UrlEncode(options.routing_token);
+  }
+  context.AddMetadata("x-goog-request-params", params);
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,

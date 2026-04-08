@@ -21,6 +21,8 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
+#include "google/cloud/internal/status_payload_keys.h"
+#include "google/cloud/status.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -647,6 +649,49 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFailsWithoutError) {
   ASSERT_THAT(next.second, "Finish");
   next.first.set_value(true);  // Return success from Finish()
   EXPECT_THAT(query.get(), StatusIs(StatusCode::kInternal));
+}
+
+TEST(AsyncWriterConnectionTest, QueryFailsWithRedirect) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Read).WillOnce([&]() {
+    return sequencer.PushBack("Read").then(
+        [](auto) { return absl::optional<Response>(); });
+  });
+
+  google::rpc::Status rpc_status;
+  rpc_status.set_code(static_cast<int>(StatusCode::kAborted));
+  rpc_status.set_message("redirect");
+  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.mutable_write_handle()->set_handle("redirect-handle");
+  redirect.set_routing_token("redirect-token");
+  redirect.set_generation(4321);
+  rpc_status.add_details()->PackFrom(redirect);
+  std::string rpc_status_payload;
+  ASSERT_TRUE(rpc_status.SerializeToString(&rpc_status_payload));
+  Status status(StatusCode::kAborted, "redirect");
+  internal::SetPayload(status, internal::StatusPayloadGrpcProto(),
+                       rpc_status_payload);
+
+  EXPECT_CALL(*mock, Finish).WillOnce([&, status] {
+    return sequencer.PushBack("Finish").then([s = status](auto f) -> Status {
+      if (f.get()) return Status{};
+      return s;
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto query = tested->Query();
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read");
+  next.first.set_value(false);  // Detect error from Read()
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(false);  // Return error from Finish()
+  EXPECT_THAT(query.get(), StatusIs(StatusCode::kAborted));
 }
 
 TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
