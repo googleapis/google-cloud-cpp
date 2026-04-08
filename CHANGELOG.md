@@ -7,17 +7,21 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.4.0 - TBD
+## v3.4.0 - 2026-04
 
 ### [Data Catalog](/google/cloud/datacatalog/README.md)
 
-- Added Data Lineage Config Management library.
+- Added Data Lineage Config Management library.([#16069](https://github.com/googleapis/google-cloud-cpp/pull/16069))
 
 ### [Dataplex](/google/cloud/dataplex/README.md)
 
-- Added Business Glossary library.
-- Added CMEK library.
-- Added Data Products library.
+- Added Business Glossary library.([#16072](https://github.com/googleapis/google-cloud-cpp/pull/16072))
+- Added CMEK library.([#16072](https://github.com/googleapis/google-cloud-cpp/pull/16072))
+- Added Data Products library.([#16072](https://github.com/googleapis/google-cloud-cpp/pull/16072))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-04-02T09:44:56-07:00](https://github.com/googleapis/googleapis/tree/c8ca5bce5cbabac76b8619bd8d63ac10bb0561a9)
 
 ## v3.3.0 - 2026-03
 
