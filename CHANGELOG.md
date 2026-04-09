@@ -9,6 +9,12 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.4.0 - 2026-04
 
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- Dynamic Channel Pool support has been added as an opt-in feature. It can be
+  enabled via the [InstanceChannelAffinityOption](https://github.com/googleapis/google-cloud-cpp/blob/f3de489be4caaaf17e589c7fd7e427488c474f61/google/cloud/bigtable/options.h#L186)
+  and configured via the [DynamicChannelPoolSizingPolicyOption](https://github.com/googleapis/google-cloud-cpp/blob/f3de489be4caaaf17e589c7fd7e427488c474f61/google/cloud/bigtable/options.h#L222).
+
 ### [Data Catalog](/google/cloud/datacatalog/README.md)
 
 - Added Data Lineage Config Management library.([#16069](https://github.com/googleapis/google-cloud-cpp/pull/16069))
@@ -18,6 +24,10 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 - Added Business Glossary library.([#16072](https://github.com/googleapis/google-cloud-cpp/pull/16072))
 - Added CMEK library.([#16072](https://github.com/googleapis/google-cloud-cpp/pull/16072))
 - Added Data Products library.([#16072](https://github.com/googleapis/google-cloud-cpp/pull/16072))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): set read lock mode at client level ([#16068](https://github.com/googleapis/google-cloud-cpp/pull/16068))
 
 ### [Storage](/google/cloud/storage/README.md)
 
