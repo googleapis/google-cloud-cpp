@@ -377,9 +377,16 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
                   BidiWriteRedirectInfo redirect_info =
                       HandleBidiWriteRedirect(request, grpc_status);
 
-                  // Update RoutingHeaderOptions for the next attempt.
-                  current_routing_options->routing_token =
-                      redirect_info.routing_token;
+                  // Only update the routing token if the new info has a
+                  // non-empty token.
+                  // Otherwise, retain the existing token for subsequent
+                  // retries.
+                  if (!redirect_info.routing_token.empty() &&
+                      current_routing_options->routing_token !=
+                          redirect_info.routing_token) {
+                    current_routing_options->routing_token =
+                        redirect_info.routing_token;
+                  }
                 }
                 return response;
               });
