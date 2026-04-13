@@ -67,6 +67,7 @@ enum HttpStatusCode : std::int32_t {
   kInternalServerError = 500,
   kBadGateway = 502,
   kServiceUnavailable = 503,
+  kGatewayTimeout = 504,
 };
 
 // This class contains the results of making a request to a RESTful service.
