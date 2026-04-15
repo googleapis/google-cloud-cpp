@@ -198,7 +198,8 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
   // Workforce Identity is handled at the org level and requires the userProject
   // header. Workload Identity is handled at the project level and doesn't
   // require the header.
-  if (info_.IsWorkforceIdentityFederation()) {
+  if (info_.IsWorkforceIdentityFederation() &&
+      info_.workforce_pool_user_project.has_value()) {
     form_data.emplace_back(
         "options", absl::StrCat(R"({"userProject": ")",
                                 *info_.workforce_pool_user_project, R"("})"));
