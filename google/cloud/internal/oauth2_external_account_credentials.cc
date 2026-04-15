@@ -25,6 +25,7 @@
 #include "google/cloud/internal/rest_client.h"
 #include "absl/strings/str_cat.h"
 #include <nlohmann/json.hpp>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -49,7 +50,27 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSource(
       GCP_ERROR_INFO().WithContext(ec));
 }
 
+absl::optional<WorkloadIdentityFederationInfo> WorkloadIdentityFromAudience(
+    std::string const& audience) {
+  auto constexpr kPattern =
+      R"""(iam.googleapis.com/projects/([^/]+)/locations/global/workloadIdentityPools/([^/]+)/)""";
+  static auto* re = new std::regex{kPattern, std::regex::optimize};
+  std::smatch match;
+  if (!std::regex_search(audience, match, *re)) {
+    return absl::nullopt;
+  }
+  return WorkloadIdentityFederationInfo{match[1], match[2]};
+}
+
 }  // namespace
+
+bool ExternalAccountInfo::IsWorkforceIdentityFederation() const {
+  return workforce_pool_user_project.has_value();
+}
+
+bool ExternalAccountInfo::IsWorkloadIdentityFederation() const {
+  return workload_info.has_value();
+}
 
 /// Parse a JSON string with an external account configuration.
 StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
@@ -70,6 +91,10 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
 
   auto audience = ValidateStringField(json, "audience", "credentials-file", ec);
   if (!audience) return std::move(audience).status();
+
+  // extract workload project_number and pool_id from audience, if it exists
+  auto workload_identity = WorkloadIdentityFromAudience(*audience);
+
   auto subject_token_type =
       ValidateStringField(json, "subject_token_type", "credentials-file", ec);
   if (!subject_token_type) return std::move(subject_token_type).status();
@@ -108,7 +133,8 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
                                   *std::move(source),
                                   absl::nullopt,
                                   *std::move(universe_domain),
-                                  std::move(workforce_pool_user_project)};
+                                  std::move(workforce_pool_user_project),
+                                  std::move(workload_identity)};
 
   it = json.find("service_account_impersonation_url");
   if (it == json.end()) return info;
@@ -161,7 +187,7 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
   // Workforce Identity is handled at the org level and requires the userProject
   // header. Workload Identity is handled at the project level and doesn't
   // require the header.
-  if (info_.workforce_pool_user_project) {
+  if (info_.IsWorkforceIdentityFederation()) {
     form_data.emplace_back(
         "options", absl::StrCat(R"({"userProject": ")",
                                 *info_.workforce_pool_user_project, R"("})"));
@@ -219,6 +245,22 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
       ValidateIntField(access, "expires_in", "token-exchange-response", ec);
   if (!expires_in) return std::move(expires_in).status();
   return AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
+}
+
+Credentials::AllowedLocationsRequestType
+ExternalAccountCredentials::AllowedLocationsRequest() const {
+  Credentials::AllowedLocationsRequestType request = std::monostate{};
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  if (info_.IsWorkforceIdentityFederation()) {
+    request = WorkforceIdentityAllowedLocationsRequest{
+        *info_.workforce_pool_user_project};
+  } else if (info_.IsWorkloadIdentityFederation()) {
+    request = WorkloadIdentityAllowedLocationsRequest{
+        info_.workload_info->project_id, info_.workload_info->pool_id};
+  }
+#endif
+  return request;
 }
 
 StatusOr<AccessToken> ExternalAccountCredentials::GetTokenImpersonation(

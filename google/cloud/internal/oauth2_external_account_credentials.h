@@ -55,6 +55,11 @@ struct ExternalAccountImpersonationConfig {
   std::chrono::seconds token_lifetime;
 };
 
+struct WorkloadIdentityFederationInfo {
+  std::string project_id;
+  std::string pool_id;
+};
+
 /**
  * An external account configuration.
  *
@@ -69,6 +74,9 @@ struct ExternalAccountInfo {
   absl::optional<ExternalAccountImpersonationConfig> impersonation_config;
   std::string universe_domain;
   absl::optional<std::string> workforce_pool_user_project;
+  absl::optional<WorkloadIdentityFederationInfo> workload_info;
+  bool IsWorkforceIdentityFederation() const;
+  bool IsWorkloadIdentityFederation() const;
 };
 
 /// Parse a JSON string with an external account configuration.
@@ -88,6 +96,8 @@ class ExternalAccountCredentials : public oauth2_internal::Credentials {
   StatusOr<std::string> universe_domain(Options const&) const override {
     return info_.universe_domain;
   }
+
+  AllowedLocationsRequestType AllowedLocationsRequest() const override;
 
  private:
   StatusOr<AccessToken> GetTokenImpersonation(std::string const& access_token,

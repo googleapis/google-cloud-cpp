@@ -66,9 +66,12 @@ class ImpersonateServiceAccountCredentials
     return stub_->universe_domain(options);
   }
 
+  AllowedLocationsRequestType AllowedLocationsRequest() const override;
+
  private:
   std::shared_ptr<MinimalIamCredentialsRest> stub_;
-  GenerateAccessTokenRequest request_;
+  GenerateAccessTokenRequest access_token_request_;
+  ServiceAccountAllowedLocationsRequest allowed_locations_request_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

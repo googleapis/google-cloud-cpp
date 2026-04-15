@@ -22,12 +22,26 @@
 #include "google/cloud/version.h"
 #include <chrono>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+struct ServiceAccountAllowedLocationsRequest {
+  std::string service_account_email;
+};
+
+struct WorkloadIdentityAllowedLocationsRequest {
+  std::string project_id;
+  std::string pool_id;
+};
+
+struct WorkforceIdentityAllowedLocationsRequest {
+  std::string pool_id;
+};
 
 /**
  * Interface for OAuth 2.0 credentials for use with Google's Unified Auth Client
@@ -69,9 +83,8 @@ class Credentials {
    * @param endpoint the endpoint of the GCP service the RPC request will be
    *     sent to.
    */
-  virtual StatusOr<std::vector<rest_internal::HttpHeader>>
-  AuthenticationHeaders(std::chrono::system_clock::time_point tp,
-                        std::string_view endpoint);
+  StatusOr<std::vector<rest_internal::HttpHeader>> AuthenticationHeaders(
+      std::chrono::system_clock::time_point tp, std::string_view endpoint);
 
   /**
    * Try to sign @p string_to_sign using @p service_account.
@@ -160,6 +173,20 @@ class Credentials {
    */
   virtual StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) = 0;
+
+  using AllowedLocationsRequestType =
+      std::variant<std::monostate, ServiceAccountAllowedLocationsRequest,
+                   WorkforceIdentityAllowedLocationsRequest,
+                   WorkloadIdentityAllowedLocationsRequest>;
+  /**
+   * Obtains the request type from the underlying credential, if supported.
+   *
+   * Not all credential types support the `x-allowed-locations` header, but
+   * those that do vary in the data needed to format the request to IAM.
+   */
+  virtual AllowedLocationsRequestType AllowedLocationsRequest() const {
+    return std::monostate{};
+  }
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
