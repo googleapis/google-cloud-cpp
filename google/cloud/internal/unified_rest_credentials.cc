@@ -81,9 +81,10 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(GoogleDefaultCredentialsConfig const& cfg) override {
       auto credentials =
           google::cloud::oauth2_internal::GoogleDefaultCredentials(
-              cfg.options(), std::move(client_factory_));
+              cfg.options(), client_factory_);
       if (credentials) {
-        result = Decorate(*std::move(credentials), cfg.options());
+        result = Decorate(*std::move(credentials), std::move(client_factory_),
+                          cfg.options());
         return;
       }
       result = MakeErrorCredentials(std::move(credentials).status());
@@ -97,19 +98,20 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(ImpersonateServiceAccountConfig const& cfg) override {
       result = std::make_shared<
           oauth2_internal::ImpersonateServiceAccountCredentials>(
-          cfg, std::move(client_factory_));
-      result = Decorate(std::move(result), cfg.options());
+          cfg, client_factory_);
+      result = Decorate(std::move(result), std::move(client_factory_),
+                        cfg.options());
     }
 
     void visit(ServiceAccountConfig const& cfg) override {
       StatusOr<std::shared_ptr<oauth2_internal::Credentials>> creds;
       if (cfg.file_path().has_value()) {
         creds = oauth2_internal::CreateServiceAccountCredentialsFromFilePath(
-            *cfg.file_path(), cfg.options(), std::move(client_factory_));
+            *cfg.file_path(), cfg.options(), client_factory_);
       } else if (cfg.json_object().has_value()) {
         creds =
             oauth2_internal::CreateServiceAccountCredentialsFromJsonContents(
-                *cfg.json_object(), cfg.options(), std::move(client_factory_));
+                *cfg.json_object(), cfg.options(), client_factory_);
       } else {
         creds = MakeErrorCredentials(internal::InternalError(
             "ServiceAccountConfig has neither json_object nor file_path",
@@ -117,7 +119,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       }
 
       if (creds.ok()) {
-        result = Decorate(*creds, cfg.options());
+        result = Decorate(*creds, std::move(client_factory_), cfg.options());
       } else {
         result = MakeErrorCredentials(std::move(creds).status());
       }
@@ -131,10 +133,11 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
         result = MakeErrorCredentials(std::move(info).status());
         return;
       }
-      result = Decorate(
+      auto creds =
           std::make_shared<oauth2_internal::ExternalAccountCredentials>(
-              *std::move(info), std::move(client_factory_), cfg.options()),
-          cfg.options());
+              *std::move(info), client_factory_, cfg.options());
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }
 
     void visit(ApiKeyConfig const& cfg) override {
@@ -143,11 +146,11 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ComputeEngineCredentialsConfig const& cfg) override {
-      result = Decorate(
-          std::make_shared<
-              google::cloud::oauth2_internal::ComputeEngineCredentials>(
-              cfg.options(), std::move(client_factory_)),
-          cfg.options());
+      auto creds = std::make_shared<
+          google::cloud::oauth2_internal::ComputeEngineCredentials>(
+          cfg.options(), client_factory_);
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }
 
    private:

@@ -244,7 +244,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
       ScopedEnvironment(oauth2_internal::GoogleGcloudAdcFileEnvVar(), filename);
   auto const now = std::chrono::system_clock::now();
 
-  auto metadata_client = []() {
+  auto metadata_client_1 = []() {
     auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
         Property(&RestRequest::path,
@@ -258,6 +258,27 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
             Status{StatusCode::kPermissionDenied, "uh-oh - GCE metadata"}));
     return client;
   }();
+
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  // If the first MDS call is not successful in updating the service account
+  // email, we will try again.
+  auto metadata_client_2 = []() {
+    auto client = std::make_unique<MockRestClient>();
+    auto expected_request = AllOf(
+        Property(&RestRequest::path,
+                 absl::StrCat("http://metadata.google.internal/",
+                              "computeMetadata/v1/instance/service-accounts/",
+                              "default/")),
+        Property(&RestRequest::headers,
+                 Contains(Pair("metadata-flavor", Contains("Google")))));
+    EXPECT_CALL(*client, Get(_, expected_request))
+        .WillOnce(Return(
+            Status{StatusCode::kPermissionDenied, "uh-oh - GCE metadata"}));
+    return client;
+  }();
+#endif
+
   auto token_client = []() {
     auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
@@ -275,7 +296,11 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call)
-      .WillOnce(Return(ByMove(std::move(metadata_client))))
+      .WillOnce(Return(ByMove(std::move(metadata_client_1))))
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+      .WillOnce(Return(ByMove(std::move(metadata_client_2))))
+#endif
       .WillOnce(Return(ByMove(std::move(token_client))));
 
   auto const config = internal::GoogleDefaultCredentialsConfig(Options{});
