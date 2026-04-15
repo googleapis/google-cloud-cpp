@@ -55,6 +55,10 @@ struct ExternalAccountImpersonationConfig {
   std::chrono::seconds token_lifetime;
 };
 
+struct WorkforceIdentityFederationInfo {
+  std::string pool_id;
+};
+
 struct WorkloadIdentityFederationInfo {
   std::string project_id;
   std::string pool_id;
@@ -74,7 +78,9 @@ struct ExternalAccountInfo {
   absl::optional<ExternalAccountImpersonationConfig> impersonation_config;
   std::string universe_domain;
   absl::optional<std::string> workforce_pool_user_project;
-  absl::optional<WorkloadIdentityFederationInfo> workload_info;
+  std::variant<std::monostate, WorkforceIdentityFederationInfo,
+               WorkloadIdentityFederationInfo>
+      identity_federation_info;
   bool IsWorkforceIdentityFederation() const;
   bool IsWorkloadIdentityFederation() const;
 };
