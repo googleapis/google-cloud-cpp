@@ -146,11 +146,23 @@ ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config,
     std::shared_ptr<MinimalIamCredentialsRest> stub)
-    : stub_(std::move(stub)), request_(MakeRequest(config)) {}
+    : stub_(std::move(stub)),
+      access_token_request_(MakeRequest(config)),
+      allowed_locations_request_({config.target_service_account()}) {}
 
 StatusOr<AccessToken> ImpersonateServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point /*tp*/) {
-  return stub_->GenerateAccessToken(request_);
+  return stub_->GenerateAccessToken(access_token_request_);
+}
+
+Credentials::AllowedLocationsRequestType
+ImpersonateServiceAccountCredentials::AllowedLocationsRequest() const {
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  return allowed_locations_request_;
+#else
+  return std::monostate{};
+#endif
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

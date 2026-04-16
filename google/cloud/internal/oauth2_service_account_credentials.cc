@@ -370,6 +370,16 @@ StatusOr<std::string> ServiceAccountCredentials::project_id(
   return project_id();
 }
 
+Credentials::AllowedLocationsRequestType
+ServiceAccountCredentials::AllowedLocationsRequest() const {
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  return ServiceAccountAllowedLocationsRequest{info_.client_email};
+#else
+  return std::monostate{};
+#endif
+}
+
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
   // Custom universe domains are only supported with JWT, not OAuth tokens.
   if (info.universe_domain.has_value() &&

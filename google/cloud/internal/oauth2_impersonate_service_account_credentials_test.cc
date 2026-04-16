@@ -36,6 +36,7 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Optional;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 auto constexpr kFullValidConfig = R"""({
   "service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/sa3@developer.gserviceaccount.com:generateAccessToken",
@@ -165,6 +166,10 @@ class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
               (override, const));
 };
 
+MATCHER_P(RequestServiceAccountEmailIs, email, "has service account email") {
+  return email == arg.service_account_email;
+}
+
 TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
   auto const now = std::chrono::system_clock::now();
 
@@ -193,6 +198,16 @@ TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
 
   token = under_test.GetToken(now + minutes(45));
   ASSERT_THAT(token, StatusIs(StatusCode::kPermissionDenied));
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  EXPECT_THAT(
+      under_test.AllowedLocationsRequest(),
+      VariantWith<ServiceAccountAllowedLocationsRequest>(
+          RequestServiceAccountEmailIs("test-only-invalid@test.invalid")));
+#else
+  EXPECT_THAT(under_test.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate()));
+#endif
 }
 
 TEST(ParseImpersonatedServiceAccountCredentialsWithoutAction, Success) {

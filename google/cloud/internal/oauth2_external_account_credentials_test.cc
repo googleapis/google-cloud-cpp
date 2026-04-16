@@ -54,6 +54,7 @@ using ::testing::Property;
 using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
+using ::testing::VariantWith;
 
 using MockClientFactory =
     ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
@@ -135,6 +136,15 @@ struct TestOnlyOption {
   using Type = std::string;
 };
 
+MATCHER_P(WorkforceIdentityIs, pool_id, "has pool_id") {
+  return pool_id == arg.pool_id;
+}
+
+MATCHER_P2(WorkloadIdentityIs, project_id, pool_id,
+           "has project_id and pool_id") {
+  return project_id == arg.project_id && pool_id == arg.pool_id;
+}
+
 TEST(ExternalAccount, ParseAwsSuccess) {
   // To simplify the test we provide all the parameters via environment
   // variables and avoid using imdsv2.
@@ -180,6 +190,9 @@ TEST(ExternalAccount, ParseAwsSuccess) {
   EXPECT_EQ(actual->subject_token_type, kTestTokenType);
   EXPECT_EQ(actual->token_url, "test-token-url");
   EXPECT_EQ(actual->universe_domain, kUniverseDomain);
+  EXPECT_THAT(actual->identity_federation_info,
+              VariantWith<WorkloadIdentityFederationInfo>(
+                  WorkloadIdentityIs("$PROJECT_NUMBER", "$POOL_ID")));
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
@@ -305,10 +318,13 @@ TEST(ExternalAccount, ParseWithImpersonationDefaultLifetimeSuccess) {
             std::chrono::seconds(3600));
 }
 
-TEST(ExternalAccount, ParseUserProjectSuccess) {
+TEST(ExternalAccount, ParseWorkforceIdentityFederationSuccess) {
+  auto constexpr kWorkforceAudience =
+      "//iam.googleapis.com/locations/global/workforcePools/$POOL_ID/providers/"
+      "PROVIDER_ID";
   auto const configuration = nlohmann::json{
       {"type", "external_account"},
-      {"audience", "test-audience"},
+      {"audience", kWorkforceAudience},
       {"subject_token_type", "test-subject-token-type"},
       {"token_url", "test-token-url"},
       {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
@@ -319,11 +335,14 @@ TEST(ExternalAccount, ParseUserProjectSuccess) {
   auto const actual =
       ParseExternalAccountConfiguration(configuration.dump(), ec);
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(actual->audience, "test-audience");
+  EXPECT_EQ(actual->audience, kWorkforceAudience);
   EXPECT_EQ(actual->subject_token_type, "test-subject-token-type");
   EXPECT_EQ(actual->token_url, "test-token-url");
   EXPECT_THAT(actual->workforce_pool_user_project,
               Optional(std::string("project-id-or-name")));
+  EXPECT_THAT(actual->identity_federation_info,
+              VariantWith<WorkforceIdentityFederationInfo>(
+                  WorkforceIdentityIs("$POOL_ID")));
 }
 
 TEST(ExternalAccount, ParseNotJson) {
@@ -676,11 +695,20 @@ TEST(ExternalAccount, Working) {
   auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
-  auto const info =
-      ExternalAccountInfo{"test-audience", "test-subject-token-type",
-                          test_url,        mock_source,
-                          absl::nullopt,   {},
-                          absl::nullopt};
+
+  auto constexpr kTestAudience =
+      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
+      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID";
+
+  auto const info = ExternalAccountInfo{
+      kTestAudience,
+      "test-subject-token-type",
+      test_url,
+      mock_source,
+      absl::nullopt,
+      {},
+      absl::nullopt,
+      WorkloadIdentityFederationInfo{"$PROJECT_NUMBER", "$POOL_ID"}};
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call(make_expected_options())).WillOnce([&]() {
@@ -693,7 +721,7 @@ TEST(ExternalAccount, Working) {
             Pair("requested_token_type",
                  "urn:ietf:params:oauth:token-type:access_token"),
             Pair("scope", "https://www.googleapis.com/auth/cloud-platform"),
-            Pair("audience", "test-audience"),
+            Pair("audience", kTestAudience),
             Pair("subject_token_type", "test-subject-token-type"),
             Pair("subject_token", "test-subject-token")));
     EXPECT_CALL(*mock, Post(_, expected_request, expected_payload))
@@ -710,6 +738,15 @@ TEST(ExternalAccount, Working) {
   ASSERT_STATUS_OK(access_token);
   EXPECT_EQ(access_token->expiration, now + expected_expires_in);
   EXPECT_EQ(access_token->token, expected_access_token);
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<WorkloadIdentityAllowedLocationsRequest>(
+                  WorkloadIdentityIs("$PROJECT_NUMBER", "$POOL_ID")));
+#else
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate{}));
+#endif
 }
 
 TEST(ExternalAccount, WorkingWorkforceIdentity) {
@@ -725,13 +762,15 @@ TEST(ExternalAccount, WorkingWorkforceIdentity) {
   auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
-  auto const info = ExternalAccountInfo{"test-audience",
-                                        "test-subject-token-type",
-                                        test_url,
-                                        mock_source,
-                                        absl::nullopt,
-                                        {},
-                                        "project-id-or-name"};
+  auto const info =
+      ExternalAccountInfo{"test-audience",
+                          "test-subject-token-type",
+                          test_url,
+                          mock_source,
+                          absl::nullopt,
+                          {},
+                          "project-id-or-name",
+                          WorkforceIdentityFederationInfo{"$POOL_ID"}};
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call(make_expected_options())).WillOnce([&]() {
@@ -762,6 +801,15 @@ TEST(ExternalAccount, WorkingWorkforceIdentity) {
   ASSERT_STATUS_OK(access_token);
   EXPECT_EQ(access_token->expiration, now + expected_expires_in);
   EXPECT_EQ(access_token->token, expected_access_token);
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<WorkforceIdentityAllowedLocationsRequest>(
+                  WorkforceIdentityIs("$POOL_ID")));
+#else
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate{}));
+#endif
 }
 
 TEST(ExternalAccount, WorkingWithImpersonation) {
@@ -803,7 +851,8 @@ TEST(ExternalAccount, WorkingWithImpersonation) {
                           ExternalAccountImpersonationConfig{
                               impersonate_test_url, impersonate_test_lifetime},
                           {},
-                          absl::nullopt};
+                          absl::nullopt,
+                          std::monostate{}};
 
   auto sts_client = [&] {
     auto expected_sts_request = Property(&RestRequest::path, sts_test_url);
@@ -875,7 +924,7 @@ TEST(ExternalAccount, HandleHttpError) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -914,7 +963,7 @@ TEST(ExternalAccount, HandleHttpPartialError) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -954,7 +1003,7 @@ TEST(ExternalAccount, HandleNotJson) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -994,7 +1043,7 @@ TEST(ExternalAccount, HandleNotJsonObject) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1040,7 +1089,7 @@ TEST(ExternalAccount, MissingToken) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1075,7 +1124,7 @@ TEST(ExternalAccount, MissingIssuedTokenType) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1110,7 +1159,7 @@ TEST(ExternalAccount, MissingTokenType) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1145,7 +1194,7 @@ TEST(ExternalAccount, InvalidIssuedTokenType) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1182,7 +1231,7 @@ TEST(ExternalAccount, InvalidTokenType) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1220,7 +1269,7 @@ TEST(ExternalAccount, MissingExpiresIn) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
@@ -1256,7 +1305,7 @@ TEST(ExternalAccount, InvalidExpiresIn) {
       ExternalAccountInfo{"test-audience", "test-subject-token-type",
                           test_url,        mock_source,
                           absl::nullopt,   {},
-                          absl::nullopt};
+                          absl::nullopt,   std::monostate{}};
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = std::make_unique<MockRestClient>();
