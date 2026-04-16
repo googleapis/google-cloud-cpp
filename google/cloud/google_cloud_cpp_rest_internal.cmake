@@ -92,6 +92,8 @@ add_library(
     internal/oauth2_minimal_iam_credentials_rest.h
     internal/oauth2_refreshing_credentials_wrapper.cc
     internal/oauth2_refreshing_credentials_wrapper.h
+    internal/oauth2_regional_access_boundary_token_manager.cc
+    internal/oauth2_regional_access_boundary_token_manager.h
     internal/oauth2_service_account_credentials.cc
     internal/oauth2_service_account_credentials.h
     internal/oauth2_universe_domain.cc
@@ -284,6 +286,7 @@ if (BUILD_TESTING)
         internal/oauth2_logging_credentials_test.cc
         internal/oauth2_minimal_iam_credentials_rest_test.cc
         internal/oauth2_refreshing_credentials_wrapper_test.cc
+        internal/oauth2_regional_access_boundary_token_manager_test.cc
         internal/oauth2_service_account_credentials_test.cc
         internal/oauth2_universe_domain_test.cc
         internal/populate_rest_options_test.cc
