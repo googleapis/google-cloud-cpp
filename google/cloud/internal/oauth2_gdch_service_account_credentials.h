@@ -1,0 +1,216 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_GDCH_SERVICE_ACCOUNT_CREDENTIALS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_GDCH_SERVICE_ACCOUNT_CREDENTIALS_H
+
+#include "google/cloud/internal/oauth2_credential_constants.h"
+#include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
+#include <chrono>
+#include <optional>
+#include <string>
+#include <vector>
+
+namespace google {
+namespace cloud {
+namespace oauth2_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/// Object to hold information used to instantiate an
+/// GDCHServiceAccountCredentials.
+struct GDCHServiceAccountCredentialsInfo {
+  // From json file
+  std::string project_id;
+  std::string private_key_id;
+  std::string private_key;
+  std::string service_identity_name;
+  std::string ca_cert_path;
+  std::string token_uri;
+
+  // Additional data provided by the user.
+  std::string audience;
+};
+
+/// Parses a refresh response JSON string to create an access token.
+StatusOr<AccessToken> ParseGDCHServiceAccountRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now);
+
+/**
+ * Splits a GDCHServiceAccountCredentialsInfo into header and payload components
+ * and uses the current time to make a JWT assertion.
+ *
+ * @see
+ * https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
+ *
+ * @see https://tools.ietf.org/html/rfc7523
+ */
+std::pair<std::string, std::string> GDCHAssertionComponentsFromInfo(
+    GDCHServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point now);
+
+/**
+ * Given a key and a JSON header and payload, creates a JWT assertion string.
+ *
+ * @see https://tools.ietf.org/html/rfc7519
+ */
+std::string MakeGDCHJWTAssertion(std::string const& header,
+                                 std::string const& payload,
+                                 std::string const& pem_contents);
+
+/// Uses a GDCHServiceAccountCredentialsInfo and the current time to construct a
+/// JWT assertion. The assertion combined with the grant type is used to create
+/// the refresh payload.
+std::vector<std::pair<std::string, std::string>>
+CreateGDCHServiceAccountRefreshPayload(
+    GDCHServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point now);
+
+/**
+ * Creates a GDCHServiceAccountCredentials from a JSON string.
+ */
+StatusOr<std::shared_ptr<Credentials>>
+CreateGDCHServiceAccountCredentialsFromJsonContents(
+    std::string const& contents, Options const& options,
+    HttpClientFactory client_factory);
+
+/**
+ * Creates a GDCHServiceAccountCredentials from a JSON file at the specified
+ * path.
+ */
+StatusOr<std::shared_ptr<Credentials>>
+CreateGDCHServiceAccountCredentialsFromJsonFilePath(
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory);
+
+/**
+ * Creates a GDCHServiceAccountCredentials from a file at the specified path.
+ */
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateGDCHServiceAccountCredentialsFromFilePath(
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory);
+
+/**
+ * Implements GDCH service account credentials for REST clients.
+ *
+ * This class is not intended for use by application developers. But it is
+ * sufficiently complex that it deserves documentation for library developers.
+ *
+ * // TODO(sdhart): update this documentation
+ * This class description assumes that you are familiar with [service accounts],
+ * and [service account keys].
+ *
+ * Use `ParseGDCHServiceAccountCredentials()` to parse a service account key. If
+ * the key is parsed successfully, you can create an instance of this class
+ * using its result. The service account key is never sent to Google for
+ * authentication. Instead, this class creates temporary access tokens, either
+ * self-signed JWT (as described in [aip/4111]), or OAuth access tokens (see
+ * [aip/4112]).
+ *
+ * To understand how these work it is useful to be familiar with [JWTs]. If you
+ * already know what these, feel free to skip this paragraph. JWTs are
+ * (relatively long) strings consisting of three (base64-encoded) components.
+ * The first two are base64 encoded JSON objects. These fields in these objects
+ * are often referred as "claims".  For example, the `iat` (Issued At-Time)
+ * field, asserts or claims that the token was created at a certain time. The
+ * third component in a JWT is a signature created using some secret. In our
+ * case the signature is always created using the [RS256] signing algorithm.
+ * One of the claims is always the
+ * identifier for the service account key. Google Cloud has the public key
+ * associated with each service account key and can use this to verify that the
+ * JWT was actually signed by the service account key claimed by the JWT.
+ *
+ * With self-signed JWT, the token is created locally, the payload contains
+ * either an audience (`"aud"`) or scope (`"scope"`) claim (but not both)
+ * describing the service or services that the token grants access to. Setting
+ * a more restrictive scope or audience allows applications to create tokens
+ * that restrict the access for a service account. This class **only** supports
+ * scope-based self-signed JWTs.
+ *
+ * With OAuth-based access tokens the client library creates a JWT and makes a
+ * HTTP request to convert this JWT into an access token. In general,
+ * self-signed JWTs are preferred over OAuth-based access tokens. On the other
+ * hand, our implementation of OAuth-based access tokens has more flight hours,
+ * and has been tested in more environments (on-prem, VPC-SC with different
+ * restrictions, etc.).
+ *
+ * Since access tokens are relatively expensive to create this class caches the
+ * access tokens until they are about to expire. Use the
+ * `AuthenticationHeader()` to get the current access token.
+ *
+ * [aip/4111]: https://google.aip.dev/auth/4111
+ * [aip/4112]: https://google.aip.dev/auth/4112
+ * [RS256]: https://datatracker.ietf.org/doc/html/rfc7518
+ * [JWTs]: https://en.wikipedia.org/wiki/JSON_Web_Token
+ * [service accounts]:
+ * https://cloud.google.com/iam/docs/overview#service_account
+ *
+ * [iam-overview]:
+ * https://cloud.google.com/iam/docs/overview
+ *
+ * [service account keys]:
+ * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
+ */
+class GDCHServiceAccountCredentials : public oauth2_internal::Credentials {
+ public:
+  /**
+   * Creates an instance of GDCHServiceAccountCredentials.
+   *
+   * @param rest_client a dependency injection point. It makes it possible to
+   *     mock internal REST types. This should generally not be overridden
+   *     except for testing.
+   * @param current_time_fn a dependency injection point to fetch the current
+   *     time. This should generally not be overridden except for testing.
+   */
+  GDCHServiceAccountCredentials(GDCHServiceAccountCredentialsInfo info,
+                                Options options,
+                                HttpClientFactory client_factory);
+
+  /**
+   * Returns a key value pair for an "Authorization" header.
+   */
+  StatusOr<AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
+
+  std::string AccountEmail() const override {
+    return info_.service_identity_name;
+  }
+
+  std::string KeyId() const override { return info_.private_key_id; }
+
+  StatusOr<std::string> project_id() const override;
+  StatusOr<std::string> project_id(Options const&) const override;
+
+ private:
+  GDCHServiceAccountCredentialsInfo info_;
+  Options options_;
+  HttpClientFactory client_factory_;
+};
+
+/// Parses the contents of a JSON keyfile into a
+/// GDCHServiceAccountCredentialsInfo.
+StatusOr<GDCHServiceAccountCredentialsInfo> ParseGDCHServiceAccountCredentials(
+    std::string const& content, std::string const& source);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace oauth2_internal
+}  // namespace cloud
+}  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_GDCH_SERVICE_ACCOUNT_CREDENTIALS_H

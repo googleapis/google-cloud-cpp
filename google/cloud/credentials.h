@@ -476,6 +476,16 @@ struct ScopesOption {
 };
 
 /**
+ * Configure the audience for `MakeGDCHServiceAccountCredentials`.
+ *
+ * @ingroup options
+ * @ingroup guac
+ */
+struct AudienceOption {
+  using Type = std::string;
+};
+
+/**
  * Overrides the subject for `MakeServiceAccountCredentials` and
  * `MakeServiceAccountCredentialsFromFile()`.
  *

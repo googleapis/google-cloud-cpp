@@ -20,6 +20,7 @@
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
+#include "google/cloud/internal/oauth2_gdch_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
@@ -98,6 +99,14 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
         std::make_unique<ImpersonateServiceAccountCredentials>(
             config, std::move(rest_stub)));
   }
+  if (cred_type == "gdch_service_account") {
+    auto info = ParseGDCHServiceAccountCredentials(contents, path);
+    if (!info) return std::move(info).status();
+    return std::unique_ptr<Credentials>(
+        std::make_unique<GDCHServiceAccountCredentials>(
+            *info, options, std::move(client_factory)));
+  }
+
   return internal::InvalidArgumentError(
       "Unsupported credential type (" + cred_type +
           ") when reading Application Default Credentials file "
