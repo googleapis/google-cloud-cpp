@@ -1266,6 +1266,67 @@ TEST(WriteConnectionBuffered, SetFinalizedIsIdempotent) {
   next.first.set_value(true);
 }
 
+TEST(WriteConnectionBuffered, ResetWriteOffsetOnResume) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto* mock_ptr = mock.get();
+
+  EXPECT_CALL(*mock_ptr, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock_ptr, PersistedState)
+      .WillOnce(
+          Return(MakePersistedState(0)));  // Initial state: 0 bytes persisted.
+
+  EXPECT_CALL(*mock_ptr, Write).WillOnce([&](auto) {
+    return sequencer.PushBack("Write").then([](auto f) {
+      if (!f.get()) return TransientError();  // This write will fail.
+      return Status{};
+    });
+  });
+
+  MockFactory mock_factory;
+  auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
+  auto* resumed_mock_ptr = resumed_mock.get();
+
+  EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
+    return sequencer.PushBack("Resume").then([&](auto) {
+      // The resumed connection reports that 1024 bytes have been persisted.
+      EXPECT_CALL(*resumed_mock_ptr, PersistedState)
+          .WillRepeatedly(Return(MakePersistedState(1024)));
+      // We expect the next write on the resumed stream to send the remaining
+      // 1024 bytes. If the write offset was not reset to 0, this size would be
+      // incorrect.
+      EXPECT_CALL(*resumed_mock_ptr, Write).WillOnce([&](auto payload) {
+        EXPECT_EQ(payload.size(), 1024);
+        return sequencer.PushBack("ResumedWrite").then([](auto) {
+          return Status{};
+        });
+      });
+      return make_status_or(std::unique_ptr<storage::AsyncWriterConnection>(
+          std::move(resumed_mock)));
+    });
+  });
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  // Write a total of 2048 bytes.
+  auto write = connection->Write(TestPayload(2048));
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Resume");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "ResumedWrite");
+  next.first.set_value(true);
+
+  EXPECT_STATUS_OK(write.get());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
