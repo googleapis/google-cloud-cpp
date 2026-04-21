@@ -35,8 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::MakeJWTAssertionNoThrow;
 
-StatusOr<GDCHServiceAccountCredentialsInfo> ParseGDCHServiceAccountCredentials(
-    std::string const& content, std::string const& source) {
+StatusOr<GDCHServiceAccountCredentials::Info>
+GDCHServiceAccountCredentials::Parse(std::string const& content,
+                                     std::string const& source) {
   auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
     return internal::InvalidArgumentError(absl::StrCat(
@@ -46,7 +47,7 @@ StatusOr<GDCHServiceAccountCredentialsInfo> ParseGDCHServiceAccountCredentials(
 
   using Validator =
       std::function<Status(absl::string_view name, nlohmann::json::iterator)>;
-  using Store = std::function<void(GDCHServiceAccountCredentialsInfo&,
+  using Store = std::function<void(GDCHServiceAccountCredentials::Info&,
                                    nlohmann::json::iterator const&)>;
   auto non_empty_field = [&](absl::string_view name,
                              nlohmann::json::iterator const& l) {
@@ -72,39 +73,39 @@ StatusOr<GDCHServiceAccountCredentialsInfo> ParseGDCHServiceAccountCredentials(
     Store store;
   };
   std::vector<Field> fields{{"project_id", required_field,
-                             [](GDCHServiceAccountCredentialsInfo& info,
+                             [](GDCHServiceAccountCredentials::Info& info,
                                 nlohmann::json::iterator const& l) {
                                info.project_id = l->get<std::string>();
                              }},
                             {"private_key_id", required_field,
-                             [&](GDCHServiceAccountCredentialsInfo& info,
+                             [&](GDCHServiceAccountCredentials::Info& info,
                                  nlohmann::json::iterator const& l) {
                                if (l == credentials.end()) return;
                                info.private_key_id = l->get<std::string>();
                              }},
                             {"private_key", required_field,
-                             [](GDCHServiceAccountCredentialsInfo& info,
+                             [](GDCHServiceAccountCredentials::Info& info,
                                 nlohmann::json::iterator const& l) {
                                info.private_key = l->get<std::string>();
                              }},
                             {"name", required_field,
-                             [&](GDCHServiceAccountCredentialsInfo& info,
+                             [&](GDCHServiceAccountCredentials::Info& info,
                                  nlohmann::json::iterator const& l) {
                                info.service_identity_name =
                                    l->get<std::string>();
                              }},
                             {"ca_cert_path", required_field,
-                             [&](GDCHServiceAccountCredentialsInfo& info,
+                             [&](GDCHServiceAccountCredentials::Info& info,
                                  nlohmann::json::iterator const& l) {
                                info.ca_cert_path = l->get<std::string>();
                              }},
                             {"token_uri", required_field,
-                             [&](GDCHServiceAccountCredentialsInfo& info,
+                             [&](GDCHServiceAccountCredentials::Info& info,
                                  nlohmann::json::iterator const& l) {
                                info.token_uri = l->get<std::string>();
                              }}};
 
-  auto info = GDCHServiceAccountCredentialsInfo{};
+  auto info = GDCHServiceAccountCredentials::Info{};
   for (auto& f : fields) {
     auto l = credentials.find(f.name);
     if (l != credentials.end() && !l->is_string()) {
@@ -120,8 +121,9 @@ StatusOr<GDCHServiceAccountCredentialsInfo> ParseGDCHServiceAccountCredentials(
   return info;
 }
 
-std::pair<std::string, std::string> GDCHAssertionComponentsFromInfo(
-    GDCHServiceAccountCredentialsInfo const& info,
+std::pair<std::string, std::string>
+GDCHServiceAccountCredentials::AssertionComponentsFromInfo(
+    GDCHServiceAccountCredentials::Info const& info,
     std::chrono::system_clock::time_point now) {
   nlohmann::json assertion_header = {{"alg", "RS256"}, {"typ", "JWT"}};
   if (!info.private_key_id.empty()) {
@@ -151,28 +153,27 @@ std::pair<std::string, std::string> GDCHAssertionComponentsFromInfo(
   return std::make_pair(assertion_header.dump(), assertion_payload.dump());
 }
 
-std::string MakeGDCHJWTAssertion(std::string const& header,
-                                 std::string const& payload,
-                                 std::string const& pem_contents) {
+std::string GDCHServiceAccountCredentials::MakeJWTAssertion(
+    std::string const& header, std::string const& payload,
+    std::string const& pem_contents) {
   return internal::MakeJWTAssertionNoThrow(header, payload, pem_contents)
       .value();
 }
 
 std::vector<std::pair<std::string, std::string>>
-CreateGDCHServiceAccountRefreshPayload(
-    GDCHServiceAccountCredentialsInfo const& info,
+GDCHServiceAccountCredentials::CreateRefreshPayload(
+    GDCHServiceAccountCredentials::Info const& info,
     std::chrono::system_clock::time_point now) {
-  auto [header, payload] = GDCHAssertionComponentsFromInfo(info, now);
+  auto [header, payload] = AssertionComponentsFromInfo(info, now);
   return {
       {"grant_type", "urn:ietf:params:oauth:token-type:token-exchange"},
       {"audience", info.audience},
       {"requested_token_type", "urn:ietf:params:oauth:token-type:access_token"},
-      {"subject_token",
-       MakeGDCHJWTAssertion(header, payload, info.private_key)},
+      {"subject_token", MakeJWTAssertion(header, payload, info.private_key)},
       {"subject_token_type", "urn:k8s:params:oauth:token-type:serviceaccount"}};
 }
 
-StatusOr<AccessToken> ParseGDCHServiceAccountRefreshResponse(
+StatusOr<AccessToken> GDCHServiceAccountCredentials::ParseRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now) {
   auto status_code = response.StatusCode();
@@ -194,28 +195,33 @@ StatusOr<AccessToken> ParseGDCHServiceAccountRefreshResponse(
   return AccessToken{access_token.value("access_token", ""), now + expires_in};
 }
 
-StatusOr<std::unique_ptr<Credentials>> GDCHServiceAccountCredentials::
-    CreateFromJsonContents(
-        std::string const& contents, Options const& options,
-        HttpClientFactory client_factory) {
+StatusOr<std::unique_ptr<Credentials>>
+GDCHServiceAccountCredentials::CreateFromInfo(
+    Info info, Options const& options, HttpClientFactory client_factory) {
   if (!options.has<AudienceOption>()) {
     return internal::InvalidArgumentError(
         "Creation of GDCH Service Account credentials requires the "
         "AudienceOption to be set.",
         GCP_ERROR_INFO());
   }
-  auto info = ParseGDCHServiceAccountCredentials(contents, "memory");
-  if (!info) return info.status();
   // Verify this is usable before returning it.
   auto const tp = std::chrono::system_clock::time_point{};
-  auto const components = GDCHAssertionComponentsFromInfo(*info, tp);
-  auto jwt = MakeJWTAssertionNoThrow(components.first, components.second,
-                                     info->private_key);
+  auto const [header, payload] = AssertionComponentsFromInfo(info, tp);
+  auto jwt = MakeJWTAssertionNoThrow(header, payload, info.private_key);
   if (!jwt) return jwt.status();
   return StatusOr<std::unique_ptr<Credentials>>(
       std::unique_ptr<GDCHServiceAccountCredentials>(
-          new GDCHServiceAccountCredentials(*info, options,
+          new GDCHServiceAccountCredentials(std::move(info), options,
                                             std::move(client_factory))));
+}
+
+StatusOr<std::unique_ptr<Credentials>>
+GDCHServiceAccountCredentials::CreateFromJsonContents(
+    std::string const& contents, Options const& options,
+    HttpClientFactory client_factory) {
+  auto info = Parse(contents, "memory");
+  if (!info) return info.status();
+  return CreateFromInfo(*std::move(info), options, std::move(client_factory));
 }
 
 StatusOr<std::unique_ptr<Credentials>>
@@ -230,18 +236,14 @@ GDCHServiceAccountCredentials::CreateFromFilePath(
                                   GCP_ERROR_INFO());
   }
   std::string contents(std::istreambuf_iterator<char>{is}, {});
-  return CreateFromJsonContents(
-      std::move(contents), options, std::move(client_factory));
+  return CreateFromJsonContents(std::move(contents), options,
+                                std::move(client_factory));
 }
 
 GDCHServiceAccountCredentials::GDCHServiceAccountCredentials(
-    GDCHServiceAccountCredentialsInfo info, Options options,
-    HttpClientFactory client_factory)
+    Info info, Options options, HttpClientFactory client_factory)
     : info_(std::move(info)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          Options{}.set<ServiceAccountCredentialsTokenUriOption>(
-              info_.token_uri))),
+      options_(std::move(options)),
       client_factory_(std::move(client_factory)) {
   if (options_.has<AudienceOption>()) {
     info_.audience = options_.get<AudienceOption>();
@@ -253,12 +255,12 @@ StatusOr<AccessToken> GDCHServiceAccountCredentials::GetToken(
   auto client = client_factory_(options_);
   rest_internal::RestRequest request;
   request.SetPath(info_.token_uri);
-  auto payload = CreateGDCHServiceAccountRefreshPayload(info_, tp);
+  auto payload = CreateRefreshPayload(info_, tp);
   rest_internal::RestContext context;
   auto response = client->Post(context, request, payload);
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
-  return ParseServiceAccountRefreshResponse(**response, tp);
+  return ParseRefreshResponse(**response, tp);
 }
 
 StatusOr<std::string> GDCHServiceAccountCredentials::project_id() const {

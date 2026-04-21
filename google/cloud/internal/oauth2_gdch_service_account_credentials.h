@@ -30,56 +30,6 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Object to hold information used to instantiate an
-/// GDCHServiceAccountCredentials.
-struct GDCHServiceAccountCredentialsInfo {
-  // From json file
-  std::string project_id;
-  std::string private_key_id;
-  std::string private_key;
-  std::string service_identity_name;
-  std::string ca_cert_path;
-  std::string token_uri;
-
-  // Additional data provided by the user.
-  std::string audience;
-};
-
-/// Parses a refresh response JSON string to create an access token.
-StatusOr<AccessToken> ParseGDCHServiceAccountRefreshResponse(
-    rest_internal::RestResponse& response,
-    std::chrono::system_clock::time_point now);
-
-/**
- * Splits a GDCHServiceAccountCredentialsInfo into header and payload components
- * and uses the current time to make a JWT assertion.
- *
- * @see
- * https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
- *
- * @see https://tools.ietf.org/html/rfc7523
- */
-std::pair<std::string, std::string> GDCHAssertionComponentsFromInfo(
-    GDCHServiceAccountCredentialsInfo const& info,
-    std::chrono::system_clock::time_point now);
-
-/**
- * Given a key and a JSON header and payload, creates a JWT assertion string.
- *
- * @see https://tools.ietf.org/html/rfc7519
- */
-std::string MakeGDCHJWTAssertion(std::string const& header,
-                                 std::string const& payload,
-                                 std::string const& pem_contents);
-
-/// Uses a GDCHServiceAccountCredentialsInfo and the current time to construct a
-/// JWT assertion. The assertion combined with the grant type is used to create
-/// the refresh payload.
-std::vector<std::pair<std::string, std::string>>
-CreateGDCHServiceAccountRefreshPayload(
-    GDCHServiceAccountCredentialsInfo const& info,
-    std::chrono::system_clock::time_point now);
-
 /**
  * Implements GDCH service account credentials for REST clients.
  *
@@ -143,26 +93,79 @@ CreateGDCHServiceAccountRefreshPayload(
  */
 class GDCHServiceAccountCredentials : public oauth2_internal::Credentials {
  public:
+  /// Object to hold information used to instantiate an
+  /// GDCHServiceAccountCredentials.
+  struct Info {
+    // From json file
+    std::string project_id;
+    std::string private_key_id;
+    std::string private_key;
+    std::string service_identity_name;
+    std::string ca_cert_path;
+    std::string token_uri;
+
+    // Additional data provided by the user.
+    std::string audience;
+  };
+
+  /// Parses the contents of a JSON keyfile into a
+  /// GDCHServiceAccountCredentialsInfo.
+  static StatusOr<Info> Parse(std::string const& content,
+                              std::string const& source);
+
+  /**
+   * Creates a GDCHServiceAccountCredentials from a
+   * GDCHServiceAccountCredentialsInfo.
+   */
+  static StatusOr<std::unique_ptr<Credentials>> CreateFromInfo(
+      Info info, Options const& options, HttpClientFactory client_factory);
+
   /**
    * Creates a GDCHServiceAccountCredentials from a JSON string.
    */
-  static StatusOr<std::unique_ptr<Credentials>>
-  CreateFromJsonContents(
+  static StatusOr<std::unique_ptr<Credentials>> CreateFromJsonContents(
       std::string const& contents, Options const& options,
       HttpClientFactory client_factory);
 
   /**
    * Creates a GDCHServiceAccountCredentials from a file at the specified path.
    */
-
-  static StatusOr<std::unique_ptr<Credentials>>
-  CreateFromFilePath(
+  static StatusOr<std::unique_ptr<Credentials>> CreateFromFilePath(
       std::string const& path, Options const& options,
       HttpClientFactory client_factory);
 
+  /// Parses a refresh response JSON string to create an access token.
+  static StatusOr<AccessToken> ParseRefreshResponse(
+      rest_internal::RestResponse& response,
+      std::chrono::system_clock::time_point now);
+
   /**
-   * Returns a key value pair for an "Authorization" header.
+   * Splits a GDCHServiceAccountCredentialsInfo into header and payload
+   * components and uses the current time to make a JWT assertion.
+   *
+   * @see
+   * https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
+   *
+   * @see https://tools.ietf.org/html/rfc7523
    */
+  static std::pair<std::string, std::string> AssertionComponentsFromInfo(
+      Info const& info, std::chrono::system_clock::time_point now);
+
+  /**
+   * Given a key and a JSON header and payload, creates a JWT assertion string.
+   *
+   * @see https://tools.ietf.org/html/rfc7519
+   */
+  static std::string MakeJWTAssertion(std::string const& header,
+                                      std::string const& payload,
+                                      std::string const& pem_contents);
+
+  /// Uses a GDCHServiceAccountCredentialsInfo and the current time to construct
+  /// a JWT assertion. The assertion combined with the grant type is used to
+  /// create the refresh payload.
+  static std::vector<std::pair<std::string, std::string>> CreateRefreshPayload(
+      Info const& info, std::chrono::system_clock::time_point now);
+
   StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
@@ -176,28 +179,13 @@ class GDCHServiceAccountCredentials : public oauth2_internal::Credentials {
   StatusOr<std::string> project_id(Options const&) const override;
 
  private:
-  /**
-   * Creates an instance of GDCHServiceAccountCredentials.
-   *
-   * @param rest_client a dependency injection point. It makes it possible to
-   *     mock internal REST types. This should generally not be overridden
-   *     except for testing.
-   * @param current_time_fn a dependency injection point to fetch the current
-   *     time. This should generally not be overridden except for testing.
-   */
-  GDCHServiceAccountCredentials(GDCHServiceAccountCredentialsInfo info,
-                                Options options,
+  GDCHServiceAccountCredentials(Info info, Options options,
                                 HttpClientFactory client_factory);
 
-  GDCHServiceAccountCredentialsInfo info_;
+  Info info_;
   Options options_;
   HttpClientFactory client_factory_;
 };
-
-/// Parses the contents of a JSON keyfile into a
-/// GDCHServiceAccountCredentialsInfo.
-StatusOr<GDCHServiceAccountCredentialsInfo> ParseGDCHServiceAccountCredentials(
-    std::string const& content, std::string const& source);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal

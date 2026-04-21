@@ -128,7 +128,7 @@ TEST(GDCHServiceAccountCredentialsTest,
       {"iss", iss_sub_value}, {"sub", iss_sub_value}, {"aud", kTokenUri},
       {"iat", iat},           {"exp", exp},
   };
-  auto const assertion = MakeGDCHJWTAssertion(
+  auto const assertion = GDCHServiceAccountCredentials::MakeJWTAssertion(
       expected_header.dump(), expected_payload.dump(), kPrivateKey);
 
   auto token_client = [=] {
@@ -162,10 +162,9 @@ TEST(GDCHServiceAccountCredentialsTest,
   EXPECT_CALL(mock_client_factory, Call)
       .WillOnce(Return(ByMove(std::move(token_client))));
 
-  auto credentials = GDCHServiceAccountCredentials::
-      CreateFromJsonContents(
-          MakeTestContents(), Options{}.set<AudienceOption>(kAudience),
-          mock_client_factory.AsStdFunction());
+  auto credentials = GDCHServiceAccountCredentials::CreateFromJsonContents(
+      MakeTestContents(), Options{}.set<AudienceOption>(kAudience),
+      mock_client_factory.AsStdFunction());
   ASSERT_STATUS_OK(credentials);
   auto const tp = std::chrono::system_clock::from_time_t(kFixedJwtTimestamp);
   // Calls Refresh to obtain the access token for our authorization header.
@@ -200,7 +199,7 @@ TEST(GDCHServiceAccountCredentialsTest, ParseSimple) {
       "token_uri": "https://gdc.token.uri/v1/token"
 })""";
 
-  auto actual = ParseGDCHServiceAccountCredentials(contents, "test-data");
+  auto actual = GDCHServiceAccountCredentials::Parse(contents, "test-data");
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->project_id, Eq("test-project-id"));
   EXPECT_THAT(actual->private_key_id, Eq("not-a-key-id-just-for-testing"));
@@ -214,7 +213,8 @@ TEST(GDCHServiceAccountCredentialsTest, ParseSimple) {
 TEST(GDCHServiceAccountCredentialsTest, ParseInvalidContentsFails) {
   std::string config = R"""( not-a-valid-json-string )""";
 
-  auto actual = ParseGDCHServiceAccountCredentials(config, "test-as-a-source");
+  auto actual =
+      GDCHServiceAccountCredentials::Parse(config, "test-as-a-source");
   EXPECT_THAT(actual,
               StatusIs(Not(StatusCode::kOk),
                        AllOf(HasSubstr("Invalid GDCHServiceAccountCredentials"),
@@ -236,7 +236,8 @@ TEST(GDCHServiceAccountCredentialsTest, ParseEmptyFieldFails) {
                             "name", "ca_cert_path", "token_uri"}) {
     auto json = nlohmann::json::parse(contents);
     json[field] = "";
-    auto actual = ParseGDCHServiceAccountCredentials(json.dump(), "test-data");
+    auto actual =
+        GDCHServiceAccountCredentials::Parse(json.dump(), "test-data");
     EXPECT_THAT(actual,
                 StatusIs(Not(StatusCode::kOk),
                          AllOf(HasSubstr(field), HasSubstr(" field is empty"),
@@ -259,7 +260,8 @@ TEST(GDCHServiceAccountCredentialsTest, ParseInvalidTypeFieldFails) {
                             "name", "ca_cert_path", "token_uri"}) {
     auto json = nlohmann::json::parse(contents);
     json[field] = true;
-    auto actual = ParseGDCHServiceAccountCredentials(json.dump(), "test-data");
+    auto actual =
+        GDCHServiceAccountCredentials::Parse(json.dump(), "test-data");
     EXPECT_THAT(
         actual,
         StatusIs(Not(StatusCode::kOk),
@@ -284,7 +286,8 @@ TEST(GDCHServiceAccountCredentialsTest, ParseMissingFieldFails) {
                             "name", "ca_cert_path", "token_uri"}) {
     auto json = nlohmann::json::parse(contents);
     json.erase(field);
-    auto actual = ParseGDCHServiceAccountCredentials(json.dump(), "test-data");
+    auto actual =
+        GDCHServiceAccountCredentials::Parse(json.dump(), "test-data");
     EXPECT_THAT(actual,
                 StatusIs(Not(StatusCode::kOk),
                          AllOf(HasSubstr(field), HasSubstr(" field is missing"),
@@ -296,10 +299,9 @@ TEST(GDCHServiceAccountCredentialsTest, ProjectIdDefined) {
   MockHttpClientFactory mock_http_client_factory;
   EXPECT_CALL(mock_http_client_factory, Call).Times(0);
 
-  auto credentials = GDCHServiceAccountCredentials::
-      CreateFromJsonContents(
-          MakeTestContents(), Options{}.set<AudienceOption>(kAudience),
-          mock_http_client_factory.AsStdFunction());
+  auto credentials = GDCHServiceAccountCredentials::CreateFromJsonContents(
+      MakeTestContents(), Options{}.set<AudienceOption>(kAudience),
+      mock_http_client_factory.AsStdFunction());
   ASSERT_STATUS_OK(credentials);
   EXPECT_THAT((*credentials)->project_id(), IsOkAndHolds(kProjectId));
   EXPECT_THAT((*credentials)->project_id({}), IsOkAndHolds(kProjectId));
@@ -309,10 +311,8 @@ TEST(GDCHServiceAccountCredentialsTest, MissingAudienceOption) {
   MockHttpClientFactory mock_http_client_factory;
   EXPECT_CALL(mock_http_client_factory, Call).Times(0);
 
-  auto credentials = GDCHServiceAccountCredentials::
-      CreateFromJsonContents(
-          MakeTestContents(), Options{},
-          mock_http_client_factory.AsStdFunction());
+  auto credentials = GDCHServiceAccountCredentials::CreateFromJsonContents(
+      MakeTestContents(), Options{}, mock_http_client_factory.AsStdFunction());
   EXPECT_THAT(credentials,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("requires the AudienceOption to be set")));
@@ -321,10 +321,11 @@ TEST(GDCHServiceAccountCredentialsTest, MissingAudienceOption) {
 /// @test Verify we can obtain JWT assertion components given the info parsed
 /// from a keyfile.
 TEST(GDCHServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
-  auto info = ParseGDCHServiceAccountCredentials(MakeTestContents(), "test");
+  auto info = GDCHServiceAccountCredentials::Parse(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   auto const now = std::chrono::system_clock::now();
-  auto components = GDCHAssertionComponentsFromInfo(*info, now);
+  auto components =
+      GDCHServiceAccountCredentials::AssertionComponentsFromInfo(*info, now);
 
   auto header = nlohmann::json::parse(components.first);
   EXPECT_THAT(header.value("alg", ""), Eq("RS256"));
@@ -346,13 +347,14 @@ TEST(GDCHServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
 /// @test Verify we can construct a JWT assertion given the info parsed from a
 /// keyfile.
 TEST(GDCHServiceAccountCredentialsTest, MakeGDCHJWTAssertion) {
-  auto info = ParseGDCHServiceAccountCredentials(MakeTestContents(), "test");
+  auto info = GDCHServiceAccountCredentials::Parse(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
 
   auto const tp = std::chrono::system_clock::from_time_t(kFixedJwtTimestamp);
-  auto components = GDCHAssertionComponentsFromInfo(*info, tp);
-  auto assertion = MakeGDCHJWTAssertion(components.first, components.second,
-                                        info->private_key);
+  auto components =
+      GDCHServiceAccountCredentials::AssertionComponentsFromInfo(*info, tp);
+  auto assertion = GDCHServiceAccountCredentials::MakeJWTAssertion(
+      components.first, components.second, info->private_key);
 
   std::vector<std::string> actual_tokens = absl::StrSplit(assertion, '.');
   ASSERT_THAT(actual_tokens.size(), Eq(3));
@@ -391,14 +393,16 @@ TEST(GDCHServiceAccountCredentialsTest, MakeGDCHJWTAssertion) {
 /// info parsed from a keyfile.
 TEST(GDCHServiceAccountCredentialsTest,
      CreateGDCHServiceAccountRefreshPayload) {
-  auto info = ParseGDCHServiceAccountCredentials(MakeTestContents(), "test");
+  auto info = GDCHServiceAccountCredentials::Parse(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   info->audience = kAudience;
   auto const now = std::chrono::system_clock::now();
-  auto components = GDCHAssertionComponentsFromInfo(*info, now);
-  auto assertion = MakeGDCHJWTAssertion(components.first, components.second,
-                                        info->private_key);
-  auto actual_payload = CreateGDCHServiceAccountRefreshPayload(*info, now);
+  auto components =
+      GDCHServiceAccountCredentials::AssertionComponentsFromInfo(*info, now);
+  auto assertion = GDCHServiceAccountCredentials::MakeJWTAssertion(
+      components.first, components.second, info->private_key);
+  auto actual_payload =
+      GDCHServiceAccountCredentials::CreateRefreshPayload(*info, now);
 
   EXPECT_THAT(
       actual_payload,
@@ -438,12 +442,14 @@ TEST(GDCHServiceAccountCredentialsTest,
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r2))));
 
   auto const now = std::chrono::system_clock::now();
-  auto status = ParseGDCHServiceAccountRefreshResponse(*mock_response1, now);
+  auto status =
+      GDCHServiceAccountCredentials::ParseRefreshResponse(*mock_response1, now);
   EXPECT_THAT(status,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Could not find all required fields")));
 
-  status = ParseGDCHServiceAccountRefreshResponse(*mock_response2, now);
+  status =
+      GDCHServiceAccountCredentials::ParseRefreshResponse(*mock_response2, now);
   EXPECT_THAT(status,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Could not find all required fields")));
@@ -467,7 +473,8 @@ TEST(GDCHServiceAccountCredentialsTest,
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r1))));
 
   auto const now = std::chrono::system_clock::now();
-  auto token = ParseGDCHServiceAccountRefreshResponse(*mock_response1, now);
+  auto token =
+      GDCHServiceAccountCredentials::ParseRefreshResponse(*mock_response1, now);
   ASSERT_STATUS_OK(token);
   EXPECT_THAT(token->expiration, Eq(now + expires_in));
   EXPECT_THAT(token->token, Eq("access-token-r1"));
