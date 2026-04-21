@@ -81,32 +81,6 @@ CreateGDCHServiceAccountRefreshPayload(
     std::chrono::system_clock::time_point now);
 
 /**
- * Creates a GDCHServiceAccountCredentials from a JSON string.
- */
-StatusOr<std::shared_ptr<Credentials>>
-CreateGDCHServiceAccountCredentialsFromJsonContents(
-    std::string const& contents, Options const& options,
-    HttpClientFactory client_factory);
-
-/**
- * Creates a GDCHServiceAccountCredentials from a JSON file at the specified
- * path.
- */
-StatusOr<std::shared_ptr<Credentials>>
-CreateGDCHServiceAccountCredentialsFromJsonFilePath(
-    std::string const& path, Options const& options,
-    HttpClientFactory client_factory);
-
-/**
- * Creates a GDCHServiceAccountCredentials from a file at the specified path.
- */
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateGDCHServiceAccountCredentialsFromFilePath(
-    std::string const& path, Options const& options,
-    HttpClientFactory client_factory);
-
-/**
  * Implements GDCH service account credentials for REST clients.
  *
  * This class is not intended for use by application developers. But it is
@@ -170,17 +144,21 @@ CreateGDCHServiceAccountCredentialsFromFilePath(
 class GDCHServiceAccountCredentials : public oauth2_internal::Credentials {
  public:
   /**
-   * Creates an instance of GDCHServiceAccountCredentials.
-   *
-   * @param rest_client a dependency injection point. It makes it possible to
-   *     mock internal REST types. This should generally not be overridden
-   *     except for testing.
-   * @param current_time_fn a dependency injection point to fetch the current
-   *     time. This should generally not be overridden except for testing.
+   * Creates a GDCHServiceAccountCredentials from a JSON string.
    */
-  GDCHServiceAccountCredentials(GDCHServiceAccountCredentialsInfo info,
-                                Options options,
-                                HttpClientFactory client_factory);
+  static StatusOr<std::unique_ptr<Credentials>>
+  CreateGDCHServiceAccountCredentialsFromJsonContents(
+      std::string const& contents, Options const& options,
+      HttpClientFactory client_factory);
+
+  /**
+   * Creates a GDCHServiceAccountCredentials from a file at the specified path.
+   */
+
+  static StatusOr<std::unique_ptr<Credentials>>
+  CreateGDCHServiceAccountCredentialsFromFilePath(
+      std::string const& path, Options const& options,
+      HttpClientFactory client_factory);
 
   /**
    * Returns a key value pair for an "Authorization" header.
@@ -198,6 +176,19 @@ class GDCHServiceAccountCredentials : public oauth2_internal::Credentials {
   StatusOr<std::string> project_id(Options const&) const override;
 
  private:
+  /**
+   * Creates an instance of GDCHServiceAccountCredentials.
+   *
+   * @param rest_client a dependency injection point. It makes it possible to
+   *     mock internal REST types. This should generally not be overridden
+   *     except for testing.
+   * @param current_time_fn a dependency injection point to fetch the current
+   *     time. This should generally not be overridden except for testing.
+   */
+  GDCHServiceAccountCredentials(GDCHServiceAccountCredentialsInfo info,
+                                Options options,
+                                HttpClientFactory client_factory);
+
   GDCHServiceAccountCredentialsInfo info_;
   Options options_;
   HttpClientFactory client_factory_;

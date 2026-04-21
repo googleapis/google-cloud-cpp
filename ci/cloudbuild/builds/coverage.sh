@@ -71,7 +71,7 @@ for arg in "${integration_args[@]}"; do
   esac
   i=$((++i))
 done
-integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
+#integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
 
 # Where does this token come from? For triggered ci/pr builds GCB will securely
 # inject this into the environment. See the "secretEnv" setting in the

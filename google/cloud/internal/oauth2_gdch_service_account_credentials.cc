@@ -181,23 +181,29 @@ StatusOr<AccessToken> ParseGDCHServiceAccountRefreshResponse(
   auto access_token = nlohmann::json::parse(*payload, nullptr, false);
   if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
       access_token.count("expires_in") == 0 ||
-      access_token.count("token_type") == 0) {
+      access_token.count("token_type") == 0 ||
+      access_token.count("issued_token_type") == 0) {
     auto error_payload =
         *payload +
         "Could not find all required fields in response (access_token,"
-        " expires_in, token_type) while trying to obtain an access token for"
-        " GDCH service account credentials.";
+        " expires_in, token_type, issued_token_type) while trying to obtain an"
+        " access token for GDCH service account credentials.";
     return AsStatus(status_code, error_payload);
   }
-
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   return AccessToken{access_token.value("access_token", ""), now + expires_in};
 }
 
-StatusOr<std::shared_ptr<Credentials>>
-CreateGDCHServiceAccountCredentialsFromJsonContents(
-    std::string const& contents, Options const& options,
-    HttpClientFactory client_factory) {
+StatusOr<std::unique_ptr<Credentials>> GDCHServiceAccountCredentials::
+    CreateGDCHServiceAccountCredentialsFromJsonContents(
+        std::string const& contents, Options const& options,
+        HttpClientFactory client_factory) {
+  if (!options.has<AudienceOption>()) {
+    return internal::InvalidArgumentError(
+        "Creation of GDCH Service Account credentials requires the "
+        "AudienceOption to be set.",
+        GCP_ERROR_INFO());
+  }
   auto info = ParseGDCHServiceAccountCredentials(contents, "memory");
   if (!info) return info.status();
   // Verify this is usable before returning it.
@@ -206,13 +212,14 @@ CreateGDCHServiceAccountCredentialsFromJsonContents(
   auto jwt = MakeJWTAssertionNoThrow(components.first, components.second,
                                      info->private_key);
   if (!jwt) return jwt.status();
-  return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<GDCHServiceAccountCredentials>(
-          *info, options, std::move(client_factory)));
+  return StatusOr<std::unique_ptr<Credentials>>(
+      std::unique_ptr<GDCHServiceAccountCredentials>(
+          new GDCHServiceAccountCredentials(*info, options,
+                                            std::move(client_factory))));
 }
 
-StatusOr<std::shared_ptr<Credentials>>
-CreateGDCHServiceAccountCredentialsFromJsonFilePath(
+StatusOr<std::unique_ptr<Credentials>>
+GDCHServiceAccountCredentials::CreateGDCHServiceAccountCredentialsFromFilePath(
     std::string const& path, Options const& options,
     HttpClientFactory client_factory) {
   std::ifstream is(path);
@@ -225,15 +232,6 @@ CreateGDCHServiceAccountCredentialsFromJsonFilePath(
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   return CreateGDCHServiceAccountCredentialsFromJsonContents(
       std::move(contents), options, std::move(client_factory));
-}
-
-StatusOr<std::shared_ptr<Credentials>>
-CreateGDCHServiceAccountCredentialsFromFilePath(
-    std::string const& path, Options const& options,
-    HttpClientFactory client_factory) {
-  auto credentials = CreateGDCHServiceAccountCredentialsFromJsonFilePath(
-      path, options, client_factory);
-  return credentials;
 }
 
 GDCHServiceAccountCredentials::GDCHServiceAccountCredentials(

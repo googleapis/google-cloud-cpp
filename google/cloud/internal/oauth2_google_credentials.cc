@@ -100,11 +100,14 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
             config, std::move(rest_stub)));
   }
   if (cred_type == "gdch_service_account") {
-    auto info = ParseGDCHServiceAccountCredentials(contents, path);
-    if (!info) return std::move(info).status();
-    return std::unique_ptr<Credentials>(
-        std::make_unique<GDCHServiceAccountCredentials>(
-            *info, options, std::move(client_factory)));
+    return GDCHServiceAccountCredentials::
+        CreateGDCHServiceAccountCredentialsFromJsonContents(
+            contents, options, std::move(client_factory));
+    // auto info = ParseGDCHServiceAccountCredentials(contents, path);
+    // if (!info) return std::move(info).status();
+    // return std::unique_ptr<Credentials>(
+    //     std::make_unique<GDCHServiceAccountCredentials>(
+    //         *info, options, std::move(client_factory)));
   }
 
   return internal::InvalidArgumentError(
