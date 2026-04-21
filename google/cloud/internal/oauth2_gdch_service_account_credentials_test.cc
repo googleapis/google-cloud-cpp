@@ -171,9 +171,9 @@ TEST(GDCHServiceAccountCredentialsTest,
   // Calls Refresh to obtain the access token for our authorization header.
   auto token = (*credentials)->GetToken(tp);
   ASSERT_STATUS_OK(token);
-  EXPECT_EQ(token->token, "access-token-value");
-  EXPECT_EQ(token->expiration, tp + std::chrono::seconds(3599));
-  
+  EXPECT_THAT(token->token, Eq("access-token-value"));
+  EXPECT_THAT(token->expiration, Eq(tp + std::chrono::seconds(3599)));
+
   EXPECT_THAT((*credentials)->AccountEmail(), Eq(kServiceIdentityName));
   EXPECT_THAT((*credentials)->KeyId(), Eq(kPrivateKeyId));
 }
@@ -202,12 +202,12 @@ TEST(GDCHServiceAccountCredentialsTest, ParseSimple) {
 
   auto actual = ParseGDCHServiceAccountCredentials(contents, "test-data");
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ("test-project-id", actual->project_id);
-  EXPECT_EQ("not-a-key-id-just-for-testing", actual->private_key_id);
-  EXPECT_EQ("not-a-valid-key-just-for-testing", actual->private_key);
-  EXPECT_EQ("test-service-identity", actual->service_identity_name);
-  EXPECT_EQ("/test/ca.crt", actual->ca_cert_path);
-  EXPECT_EQ("https://gdc.token.uri/v1/token", actual->token_uri);
+  EXPECT_THAT(actual->project_id, Eq("test-project-id"));
+  EXPECT_THAT(actual->private_key_id, Eq("not-a-key-id-just-for-testing"));
+  EXPECT_THAT(actual->private_key, Eq("not-a-valid-key-just-for-testing"));
+  EXPECT_THAT(actual->service_identity_name, Eq("test-service-identity"));
+  EXPECT_THAT(actual->ca_cert_path, Eq("/test/ca.crt"));
+  EXPECT_THAT(actual->token_uri, Eq("https://gdc.token.uri/v1/token"));
 }
 
 /// @test Verify that invalid contents result in a readable error.
@@ -313,8 +313,9 @@ TEST(GDCHServiceAccountCredentialsTest, MissingAudienceOption) {
       CreateGDCHServiceAccountCredentialsFromJsonContents(
           MakeTestContents(), Options{},
           mock_http_client_factory.AsStdFunction());
-  EXPECT_THAT(credentials, StatusIs(StatusCode::kInvalidArgument,
-    HasSubstr("requires the AudienceOption to be set")));
+  EXPECT_THAT(credentials,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("requires the AudienceOption to be set")));
 }
 
 /// @test Verify we can obtain JWT assertion components given the info parsed
@@ -326,20 +327,20 @@ TEST(GDCHServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
   auto components = GDCHAssertionComponentsFromInfo(*info, now);
 
   auto header = nlohmann::json::parse(components.first);
-  EXPECT_EQ("RS256", header.value("alg", ""));
-  EXPECT_EQ("JWT", header.value("typ", ""));
-  EXPECT_EQ(info->private_key_id, header.value("kid", ""));
+  EXPECT_THAT(header.value("alg", ""), Eq("RS256"));
+  EXPECT_THAT(header.value("typ", ""), Eq("JWT"));
+  EXPECT_THAT(header.value("kid", ""), Eq(info->private_key_id));
 
   auto payload = nlohmann::json::parse(components.second);
-  EXPECT_EQ(std::chrono::system_clock::to_time_t(now), payload.value("iat", 0));
-  EXPECT_EQ(
-      std::chrono::system_clock::to_time_t(now + std::chrono::seconds(3600)),
-      payload.value("exp", 0));
+  EXPECT_THAT(payload.value("iat", 0),
+              Eq(std::chrono::system_clock::to_time_t(now)));
+  EXPECT_THAT(payload.value("exp", 0), Eq(std::chrono::system_clock::to_time_t(
+                                           now + std::chrono::seconds(3600))));
   auto const iss_sub_value = absl::StrCat("system:serviceaccount:", kProjectId,
                                           ":", kServiceIdentityName);
-  EXPECT_EQ(iss_sub_value, payload.value("iss", ""));
-  EXPECT_EQ(iss_sub_value, payload.value("sub", ""));
-  EXPECT_EQ(info->token_uri, payload.value("aud", ""));
+  EXPECT_THAT(payload.value("iss", ""), Eq(iss_sub_value));
+  EXPECT_THAT(payload.value("sub", ""), Eq(iss_sub_value));
+  EXPECT_THAT(payload.value("aud", ""), Eq(info->token_uri));
 }
 
 /// @test Verify we can construct a JWT assertion given the info parsed from a
@@ -354,7 +355,7 @@ TEST(GDCHServiceAccountCredentialsTest, MakeGDCHJWTAssertion) {
                                         info->private_key);
 
   std::vector<std::string> actual_tokens = absl::StrSplit(assertion, '.');
-  ASSERT_EQ(actual_tokens.size(), 3);
+  ASSERT_THAT(actual_tokens.size(), Eq(3));
   std::vector<std::vector<std::uint8_t>> decoded(actual_tokens.size());
   std::transform(
       actual_tokens.begin(), actual_tokens.end(), decoded.begin(),
@@ -364,14 +365,14 @@ TEST(GDCHServiceAccountCredentialsTest, MakeGDCHJWTAssertion) {
   auto const signature =
       SignUsingSha256(actual_tokens[0] + '.' + actual_tokens[1], kPrivateKey);
   ASSERT_STATUS_OK(signature);
-  EXPECT_EQ(*signature, decoded[2]);
+  EXPECT_THAT(*signature, Eq(decoded[2]));
 
   // Verify the header and payloads are valid.
   auto const header =
       nlohmann::json::parse(decoded[0].begin(), decoded[0].end());
   auto const expected_header =
       nlohmann::json{{"alg", "RS256"}, {"typ", "JWT"}, {"kid", kPrivateKeyId}};
-  EXPECT_EQ(header, expected_header);
+  EXPECT_THAT(header, Eq(expected_header));
 
   auto const payload = nlohmann::json::parse(decoded[1]);
   auto const iat = static_cast<std::intmax_t>(kFixedJwtTimestamp);
@@ -383,7 +384,7 @@ TEST(GDCHServiceAccountCredentialsTest, MakeGDCHJWTAssertion) {
       {"iat", iat},           {"exp", exp},
   };
 
-  EXPECT_EQ(payload, expected_payload);
+  EXPECT_THAT(payload, Eq(expected_payload));
 }
 
 /// @test Verify we can construct a service account refresh payload given the
@@ -466,11 +467,10 @@ TEST(GDCHServiceAccountCredentialsTest,
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r1))));
 
   auto const now = std::chrono::system_clock::now();
-  auto status = ParseGDCHServiceAccountRefreshResponse(*mock_response1, now);
-  EXPECT_STATUS_OK(status);
-  auto token = *status;
-  EXPECT_EQ(token.expiration, now + expires_in);
-  EXPECT_EQ(token.token, "access-token-r1");
+  auto token = ParseGDCHServiceAccountRefreshResponse(*mock_response1, now);
+  ASSERT_STATUS_OK(token);
+  EXPECT_THAT(token->expiration, Eq(now + expires_in));
+  EXPECT_THAT(token->token, Eq("access-token-r1"));
 }
 
 }  // namespace
