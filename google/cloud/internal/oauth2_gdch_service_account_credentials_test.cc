@@ -163,7 +163,7 @@ TEST(GDCHServiceAccountCredentialsTest,
       .WillOnce(Return(ByMove(std::move(token_client))));
 
   auto credentials = GDCHServiceAccountCredentials::
-      CreateGDCHServiceAccountCredentialsFromJsonContents(
+      CreateFromJsonContents(
           MakeTestContents(), Options{}.set<AudienceOption>(kAudience),
           mock_client_factory.AsStdFunction());
   ASSERT_STATUS_OK(credentials);
@@ -297,7 +297,7 @@ TEST(GDCHServiceAccountCredentialsTest, ProjectIdDefined) {
   EXPECT_CALL(mock_http_client_factory, Call).Times(0);
 
   auto credentials = GDCHServiceAccountCredentials::
-      CreateGDCHServiceAccountCredentialsFromJsonContents(
+      CreateFromJsonContents(
           MakeTestContents(), Options{}.set<AudienceOption>(kAudience),
           mock_http_client_factory.AsStdFunction());
   ASSERT_STATUS_OK(credentials);
@@ -310,7 +310,7 @@ TEST(GDCHServiceAccountCredentialsTest, MissingAudienceOption) {
   EXPECT_CALL(mock_http_client_factory, Call).Times(0);
 
   auto credentials = GDCHServiceAccountCredentials::
-      CreateGDCHServiceAccountCredentialsFromJsonContents(
+      CreateFromJsonContents(
           MakeTestContents(), Options{},
           mock_http_client_factory.AsStdFunction());
   EXPECT_THAT(credentials,

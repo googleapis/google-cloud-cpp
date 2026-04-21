@@ -195,7 +195,7 @@ StatusOr<AccessToken> ParseGDCHServiceAccountRefreshResponse(
 }
 
 StatusOr<std::unique_ptr<Credentials>> GDCHServiceAccountCredentials::
-    CreateGDCHServiceAccountCredentialsFromJsonContents(
+    CreateFromJsonContents(
         std::string const& contents, Options const& options,
         HttpClientFactory client_factory) {
   if (!options.has<AudienceOption>()) {
@@ -219,7 +219,7 @@ StatusOr<std::unique_ptr<Credentials>> GDCHServiceAccountCredentials::
 }
 
 StatusOr<std::unique_ptr<Credentials>>
-GDCHServiceAccountCredentials::CreateGDCHServiceAccountCredentialsFromFilePath(
+GDCHServiceAccountCredentials::CreateFromFilePath(
     std::string const& path, Options const& options,
     HttpClientFactory client_factory) {
   std::ifstream is(path);
@@ -230,7 +230,7 @@ GDCHServiceAccountCredentials::CreateGDCHServiceAccountCredentialsFromFilePath(
                                   GCP_ERROR_INFO());
   }
   std::string contents(std::istreambuf_iterator<char>{is}, {});
-  return CreateGDCHServiceAccountCredentialsFromJsonContents(
+  return CreateFromJsonContents(
       std::move(contents), options, std::move(client_factory));
 }
 

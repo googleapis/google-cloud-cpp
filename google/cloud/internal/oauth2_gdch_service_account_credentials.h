@@ -147,7 +147,7 @@ class GDCHServiceAccountCredentials : public oauth2_internal::Credentials {
    * Creates a GDCHServiceAccountCredentials from a JSON string.
    */
   static StatusOr<std::unique_ptr<Credentials>>
-  CreateGDCHServiceAccountCredentialsFromJsonContents(
+  CreateFromJsonContents(
       std::string const& contents, Options const& options,
       HttpClientFactory client_factory);
 
@@ -156,7 +156,7 @@ class GDCHServiceAccountCredentials : public oauth2_internal::Credentials {
    */
 
   static StatusOr<std::unique_ptr<Credentials>>
-  CreateGDCHServiceAccountCredentialsFromFilePath(
+  CreateFromFilePath(
       std::string const& path, Options const& options,
       HttpClientFactory client_factory);
 
