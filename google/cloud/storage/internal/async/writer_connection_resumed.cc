@@ -324,7 +324,15 @@ class AsyncWriterConnectionResumedState
       // beginning of this truncated buffer.
       write_offset_ = 0;
     } else {
-      write_offset_ -= static_cast<std::size_t>(n);
+      // While rare, it is possible that n >= write_offset_ (i.e. the server has
+      // persisted more than we have sent) if, for example, multiple clients
+      // resume the same upload. If that is the case, all the bytes covered by
+      // write_offset_ have been flushed and we can reset it to 0.
+      if (static_cast<std::size_t>(n) >= write_offset_) {
+        write_offset_ = 0;
+      } else {
+        write_offset_ -= static_cast<std::size_t>(n);
+      }
     }
     // If the buffer is small enough, collect all the handlers to notify them.
     auto const handlers = ClearHandlersIfEmpty(lk);

@@ -11,10 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #include "google/cloud/storage/internal/async/writer_connection_resumed.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/storage/async/connection.h"
+#include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
@@ -633,15 +633,15 @@ TEST(WriterConnectionResumed, ResetWriteOffsetOnResume) {
       .WillRepeatedly(Return(Status()));
 
   EXPECT_CALL(*mock_ptr, PersistedState)
-      .WillOnce(
-          Return(MakePersistedState(0)))  // Initial state: 0 bytes persisted.
-      .WillOnce(Return(
-          MakePersistedState(1024)));  // Resumed state: 1024 bytes persisted.
+      .WillOnce(Return(MakePersistedState(0)))
+      .WillOnce(Return(MakePersistedState(1024)));
+
+  auto const payload = TestPayload(2048);
 
   EXPECT_CALL(*mock_ptr, Flush(_)).WillOnce([&](auto) {
     return sequencer.PushBack("Flush").then([](auto f) {
       if (f.get()) return Status{};
-      return TransientError();  // Return a transient error to trigger resume.
+      return TransientError();
     });
   });
 
@@ -652,9 +652,8 @@ TEST(WriterConnectionResumed, ResetWriteOffsetOnResume) {
           google::storage::v2::BidiWriteObjectResponse>>();
   auto* mock_stream_ptr = mock_stream.get();
 
-  // The mock factory is called when the connection resumes.
   EXPECT_CALL(mock_factory, Call(_))
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest) {
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const&) {
         WriteObject::WriteResult result;
         result.stream = std::move(mock_stream);
         result.first_response.mutable_write_handle()->set_handle("new-handle");
@@ -664,22 +663,19 @@ TEST(WriterConnectionResumed, ResetWriteOffsetOnResume) {
             });
       });
 
-  // After resuming, the connection should write the remaining payload.
   EXPECT_CALL(*mock_stream_ptr, Write(_, _))
       .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
                     grpc::WriteOptions) {
-        // We expect the next write on the resumed stream to send the remaining
-        // 1024 bytes. If the write offset was not reset to 0, this size would
-        // be incorrect.
-        EXPECT_EQ(request.checksummed_data().content().size(), 1024);
+        EXPECT_EQ(GetContent(request.checksummed_data()).size(), 1024);
+        EXPECT_EQ(GetContent(request.checksummed_data()),
+                  std::string(1024, 'A'));
         return sequencer.PushBack("StreamWrite").then([](auto) {
           return true;
         });
       })
       .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
                     grpc::WriteOptions) {
-        // Expect a final "ghost" write to flush.
-        EXPECT_TRUE(request.checksummed_data().content().empty());
+        EXPECT_TRUE(GetContent(request.checksummed_data()).empty());
         EXPECT_TRUE(request.flush());
         return sequencer.PushBack("GhostWrite").then([](auto) { return true; });
       });
@@ -708,8 +704,7 @@ TEST(WriterConnectionResumed, ResetWriteOffsetOnResume) {
       mock_factory.AsStdFunction(), std::move(mock), initial_request, mock_hash,
       first_response, Options{});
 
-  // Write a total of 2048 bytes.
-  auto write = connection->Write(TestPayload(2048));
+  auto write = connection->Write(payload);
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
