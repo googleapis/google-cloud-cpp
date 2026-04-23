@@ -63,6 +63,9 @@ class VectorSearchServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CreateIndex(
       google::cloud::vectorsearch::v1::CreateIndexRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateIndex(
+      google::cloud::vectorsearch::v1::UpdateIndexRequest const& request);
+
   virtual google::cloud::Idempotency DeleteIndex(
       google::cloud::vectorsearch::v1::DeleteIndexRequest const& request);
 

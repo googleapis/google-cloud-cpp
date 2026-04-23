@@ -92,8 +92,10 @@ class ConfigClient {
   /// returned.
   /// This method supports pagination.
   ///
-  /// @param parent  Required. The parent resource name, in the format
-  ///  `organizations/{organization}/locations/{location}`.
+  /// @param parent  Required. The parent resource name, in one of the following formats:
+  ///  - `organizations/{organization}/locations/{location}`
+  ///  - `projects/{project}/locations/{location}`.
+  ///  @n
   ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -117,8 +119,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworksRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L187}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L251}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworksRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L221}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -159,8 +161,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworksRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L187}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L251}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworksRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L221}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -176,8 +178,12 @@ class ConfigClient {
   /// To retrieve a specific major version, include `major_revision_id` in
   /// the request.
   ///
-  /// @param name  Required. The name of the framework to retrieve, in the format
-  ///  `organizations/{organization}/locations/{location}/frameworks/{framework_id}`
+  /// @param name  Required. The name of the framework to retrieve, in one of the following
+  ///  formats:
+  ///  `organizations/{organization}/locations/{location}/frameworks/{framework}`
+  ///  or
+  ///  `projects/{project}/locations/{location}/frameworks/{framework}`.
+  ///  @n
   ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -192,8 +198,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L222}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L251}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L258}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework> GetFramework(
@@ -226,8 +232,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L222}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L251}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L258}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework> GetFramework(
@@ -241,8 +247,10 @@ class ConfigClient {
   /// You can't create built-in frameworks because those are managed by
   /// Google.
   ///
-  /// @param parent  Required. The parent resource name, in the format
-  ///  `organizations/{organization}/locations/{location}`.
+  /// @param parent  Required. The parent resource name, in one of the following formats:
+  ///  - `organizations/{organization}/locations/{location}`
+  ///  - `projects/{project}/locations/{location}`.
+  ///  @n
   ///  The only supported location is `global`.
   /// @param framework  Required. The resource being created.
   /// @param framework_id  Required. The identifier (ID) of the framework. The ID is not the full name
@@ -260,8 +268,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L239}
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L279}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L251}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -295,8 +303,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L239}
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L279}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L251}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -339,8 +347,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
-  /// [google.cloud.cloudsecuritycompliance.v1.UpdateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L259}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L251}
+  /// [google.cloud.cloudsecuritycompliance.v1.UpdateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L301}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -382,8 +390,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L239}
-  /// [google.cloud.cloudsecuritycompliance.v1.UpdateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L259}
+  /// [google.cloud.cloudsecuritycompliance.v1.Framework]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L251}
+  /// [google.cloud.cloudsecuritycompliance.v1.UpdateFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L301}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::Framework>
@@ -402,8 +410,11 @@ class ConfigClient {
   /// - You can't delete frameworks that are deployed to a resource.
   /// - You can't restore a deleted framework. This action is permanent.
   ///
-  /// @param name  Required. The name of the resource, in the format
-  ///  `organizations/{organization}/locations/{location}/frameworks/{framework}`.
+  /// @param name  Required. The name of the resource, in one of the following formats:
+  ///  `organizations/{organization}/locations/{location}/frameworks/{framework}`
+  ///  or
+  ///  `projects/{project}/locations/{location}/frameworks/{framework}`.
+  ///  @n
   ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -416,7 +427,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L276}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L318}
   ///
   // clang-format on
   Status DeleteFramework(std::string const& name, Options opts = {});
@@ -448,7 +459,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L276}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L318}
   ///
   // clang-format on
   Status DeleteFramework(
@@ -463,8 +474,10 @@ class ConfigClient {
   /// is returned.
   /// This method supports pagination.
   ///
-  /// @param parent  Required. The parent resource name, in the format
-  ///  `organizations/{organization}/locations/{location}`.
+  /// @param parent  Required. The parent resource name, in one of the following formats:
+  ///  - `organizations/{organization}/locations/{location}`
+  ///  - `projects/{project}/locations/{location}`.
+  ///  @n
   ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -488,8 +501,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L289}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L374}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L334}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -530,8 +543,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L289}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L374}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L334}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -550,8 +563,12 @@ class ConfigClient {
   /// To retrieve a specific major version, include `major_revision_id` in
   /// the request.
   ///
-  /// @param name  Required. The name of the cloud control to retrieve, in the format
-  ///  `organizations/{organization}/locations/{location}/cloudControls/{cloud_control}`.
+  /// @param name  Required. The name of the cloud control to retrieve, in one of the
+  ///  following formats:
+  ///  `organizations/{organization}/locations/{location}/cloudControls/{cloud_control}`
+  ///  or
+  ///  `projects/{project}/locations/{location}/cloudControls/{cloud_control}`.
+  ///  @n
   ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -566,8 +583,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L328}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L374}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -602,8 +619,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L328}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L374}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L375}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -619,8 +636,10 @@ class ConfigClient {
   /// You can't create built-in cloud controls because those are managed by
   /// Google.
   ///
-  /// @param parent  Required. The parent resource name, in the format
-  ///  `organizations/{organization}/locations/{location}`.
+  /// @param parent  Required. The parent resource name, in one of the following formats:
+  ///  - `organizations/{organization}/locations/{location}`.
+  ///  - `projects/{project}/locations/{location}`.
+  ///  @n
   ///  The only supported location is `global`.
   /// @param cloud_control  Required. The cloud control that's being created.
   /// @param cloud_control_id  Required. The identifier for the cloud control, which is the last segment
@@ -639,8 +658,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L345}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L374}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L396}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -676,8 +695,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L345}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L374}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L396}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -728,8 +747,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
-  /// [google.cloud.cloudsecuritycompliance.v1.UpdateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L366}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L374}
+  /// [google.cloud.cloudsecuritycompliance.v1.UpdateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L419}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -772,8 +791,8 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L347}
-  /// [google.cloud.cloudsecuritycompliance.v1.UpdateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L366}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControl]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L374}
+  /// [google.cloud.cloudsecuritycompliance.v1.UpdateCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L419}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControl>
@@ -792,8 +811,12 @@ class ConfigClient {
   ///   by a framework.
   /// - You can't restore a deleted cloud control. This action is permanent.
   ///
-  /// @param name  Required. The name of the cloud control to delete, in the format
-  ///  `organizations/{organization}/locations/{location}/CloudControls/{CloudControl}`.
+  /// @param name  Required. The name of the cloud control to delete, in one of the following
+  ///  formats:
+  ///  `organizations/{organization}/locations/{location}/CloudControls/{CloudControl}`
+  ///  or
+  ///  `projects/{project}/locations/{location}/CloudControls/{CloudControl}`.
+  ///  @n
   ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -806,7 +829,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L389}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L442}
   ///
   // clang-format on
   Status DeleteCloudControl(std::string const& name, Options opts = {});
@@ -839,7 +862,7 @@ class ConfigClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L389}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteCloudControlRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/config.proto#L442}
   ///
   // clang-format on
   Status DeleteCloudControl(google::cloud::cloudsecuritycompliance::v1::

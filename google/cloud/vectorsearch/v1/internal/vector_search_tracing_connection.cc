@@ -190,6 +190,34 @@ VectorSearchServiceTracingConnection::CreateIndex(
   return internal::EndSpan(std::move(span), child_->CreateIndex(operation));
 }
 
+future<StatusOr<google::cloud::vectorsearch::v1::Index>>
+VectorSearchServiceTracingConnection::UpdateIndex(
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vectorsearch_v1::VectorSearchServiceConnection::UpdateIndex");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateIndex(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceTracingConnection::UpdateIndex(
+    NoAwaitTag,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vectorsearch_v1::VectorSearchServiceConnection::UpdateIndex");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateIndex(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vectorsearch::v1::Index>>
+VectorSearchServiceTracingConnection::UpdateIndex(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vectorsearch_v1::VectorSearchServiceConnection::UpdateIndex");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateIndex(operation));
+}
+
 future<StatusOr<google::cloud::vectorsearch::v1::OperationMetadata>>
 VectorSearchServiceTracingConnection::DeleteIndex(
     google::cloud::vectorsearch::v1::DeleteIndexRequest const& request) {

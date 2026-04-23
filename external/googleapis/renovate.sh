@@ -24,18 +24,25 @@ function banner() {
   SEPARATOR=Y
 }
 
-banner "Determining googleapis HEAD commit and tarball checksum"
+if [ $# -lt 1 ]; then
+    echo "Error: MODULE_VERSION (0.0.0-<date>-<sha>) from BCR must be specified"
+    exit 1
+fi
+
+MODULE_VERSION=$1
+
+banner "Determining googleapis COMMIT and COMMIT_DATE from BCR module"
+MODULE_DOWNLOAD="$(mktemp -d)"
+echo ${MODULE_DOWNLOAD}
+curl -fsSL "https://raw.githubusercontent.com/bazelbuild/bazel-central-registry/refs/heads/main/modules/googleapis/${MODULE_VERSION}/source.json" -o "${MODULE_DOWNLOAD}/source.json"
+COMMIT=$(sed -n 's/.*\/googleapis\/archive\/\(.*\)\.zip",/\1/p' "${MODULE_DOWNLOAD}/source.json")
+echo "COMMIT=${COMMIT}"
+COMMIT_DATE=$(echo "${MODULE_VERSION}" | sed -n 's/0\.0\.0-\(.*\)-.*/\1/p')
+echo "COMMIT_DATE=${COMMIT_DATE}"
+rm -rf "${MODULE_DOWNLOAD}"
+
+banner "Determining googleapis ${COMMIT} tarball checksum"
 REPO="googleapis/googleapis"
-BRANCH="master"
-if [[ -z "${COMMIT}" ]]; then
-  COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.VERSION.sha" \
-    "https://api.github.com/repos/${REPO}/commits/${BRANCH}")
-fi
-
-if [[ -z "$COMMIT_DATE" ]]; then
-  COMMIT_DATE=$(date +%Y-%m-%d)
-fi
-
 DOWNLOAD="$(mktemp)"
 curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gcloud storage cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
@@ -51,24 +58,17 @@ until grep -q "/googleapis/archive/${REV_COMMIT}\.tar" bazel/workspace0.bzl; do
 done
 rm -f "${DOWNLOAD}"
 
-banner "Updating Cache for Bazel"
-#bazel/deps-cache.py -p
-
 banner "Updating Bazel/CMake dependencies"
 sed -i -f - bazel/workspace0.bzl <<EOT
-  /name = "com_google_googleapis",/,/strip_prefix = "/ {
-    s;/com_google_googleapis/.*.tar.gz",;/com_google_googleapis/${COMMIT}.tar.gz",;
+  /name = "googleapis",/,/strip_prefix = "/ {
+    s;/googleapis/.*.tar.gz",;/googleapis/${COMMIT}.tar.gz",;
     s;/${REPO}/archive/.*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
     s/sha256 = ".*",/sha256 = "${SHA256}",/
     s/strip_prefix = "googleapis-.*",/strip_prefix = "googleapis-${COMMIT}",/
   }
 EOT
 sed -i -f - MODULE.bazel <<EOT
-  /module_name = "googleapis",/,/^)/ {
-    s;/${REPO}/archive/.*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
-    s;integrity = "sha256-.*",;integrity = "sha256-${SHA256_BASE64}",;
-    s/strip_prefix = "googleapis-.*",/strip_prefix = "googleapis-${COMMIT}",/
-  }
+    s/name = "googleapis", version = "0.0.0-.*"/name = "googleapis", version = "${MODULE_VERSION}"/
 EOT
 sed -i -f - cmake/GoogleapisConfig.cmake <<EOT
   /^set(_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA$/ {

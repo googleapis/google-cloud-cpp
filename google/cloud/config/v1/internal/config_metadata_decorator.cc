@@ -400,6 +400,152 @@ ConfigMetadata::UpdateAutoMigrationConfig(
   return child_->UpdateAutoMigrationConfig(context, options, request);
 }
 
+StatusOr<google::cloud::config::v1::DeploymentGroup>
+ConfigMetadata::GetDeploymentGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetDeploymentGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDeploymentGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigMetadata::AsyncCreateDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDeploymentGroup(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigMetadata::CreateDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDeploymentGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigMetadata::AsyncUpdateDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("deployment_group.name=",
+                   internal::UrlEncode(request.deployment_group().name())));
+  return child_->AsyncUpdateDeploymentGroup(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigMetadata::UpdateDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("deployment_group.name=",
+                   internal::UrlEncode(request.deployment_group().name())));
+  return child_->UpdateDeploymentGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigMetadata::AsyncDeleteDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDeploymentGroup(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigMetadata::DeleteDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDeploymentGroup(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::ListDeploymentGroupsResponse>
+ConfigMetadata::ListDeploymentGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListDeploymentGroupsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDeploymentGroups(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigMetadata::AsyncProvisionDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncProvisionDeploymentGroup(cq, std::move(context),
+                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigMetadata::ProvisionDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ProvisionDeploymentGroup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigMetadata::AsyncDeprovisionDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeprovisionDeploymentGroup(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigMetadata::DeprovisionDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeprovisionDeploymentGroup(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigMetadata::GetDeploymentGroupRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDeploymentGroupRevision(context, options, request);
+}
+
+StatusOr<google::cloud::config::v1::ListDeploymentGroupRevisionsResponse>
+ConfigMetadata::ListDeploymentGroupRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListDeploymentGroupRevisionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDeploymentGroupRevisions(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

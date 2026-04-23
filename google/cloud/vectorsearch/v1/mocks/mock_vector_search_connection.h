@@ -228,6 +228,44 @@ class MockVectorSearchServiceConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// UpdateIndex(Matcher<google::cloud::vectorsearch::v1::UpdateIndexRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vectorsearch::v1::Index>>, UpdateIndex,
+      (google::cloud::vectorsearch::v1::UpdateIndexRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateIndex(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateIndex,
+      (NoAwaitTag,
+       google::cloud::vectorsearch::v1::UpdateIndexRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::vectorsearch::v1::Index>>,
+              UpdateIndex, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// DeleteIndex(Matcher<google::cloud::vectorsearch::v1::DeleteIndexRequest
   /// const&>(_)))
   /// @endcode

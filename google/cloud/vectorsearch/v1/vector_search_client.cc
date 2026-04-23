@@ -284,6 +284,50 @@ VectorSearchServiceClient::CreateIndex(
   return connection_->CreateIndex(operation);
 }
 
+future<StatusOr<google::cloud::vectorsearch::v1::Index>>
+VectorSearchServiceClient::UpdateIndex(
+    google::cloud::vectorsearch::v1::Index const& index,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vectorsearch::v1::UpdateIndexRequest request;
+  *request.mutable_index() = index;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateIndex(request);
+}
+
+StatusOr<google::longrunning::Operation> VectorSearchServiceClient::UpdateIndex(
+    NoAwaitTag, google::cloud::vectorsearch::v1::Index const& index,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vectorsearch::v1::UpdateIndexRequest request;
+  *request.mutable_index() = index;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateIndex(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vectorsearch::v1::Index>>
+VectorSearchServiceClient::UpdateIndex(
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIndex(request);
+}
+
+StatusOr<google::longrunning::Operation> VectorSearchServiceClient::UpdateIndex(
+    NoAwaitTag,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIndex(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::vectorsearch::v1::Index>>
+VectorSearchServiceClient::UpdateIndex(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateIndex(operation);
+}
+
 future<StatusOr<google::cloud::vectorsearch::v1::OperationMetadata>>
 VectorSearchServiceClient::DeleteIndex(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
