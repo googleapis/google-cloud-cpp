@@ -25,15 +25,14 @@ function banner() {
 }
 
 if [ $# -lt 1 ]; then
-    echo "Error: MODULE_VERSION (0.0.0-<date>-<sha>) from BCR must be specified"
-    exit 1
+  echo "Error: MODULE_VERSION (0.0.0-<date>-<sha>) from BCR must be specified"
+  exit 1
 fi
 
 MODULE_VERSION=$1
 
 banner "Determining googleapis COMMIT and COMMIT_DATE from BCR module"
 MODULE_DOWNLOAD="$(mktemp -d)"
-echo ${MODULE_DOWNLOAD}
 curl -fsSL "https://raw.githubusercontent.com/bazelbuild/bazel-central-registry/refs/heads/main/modules/googleapis/${MODULE_VERSION}/source.json" -o "${MODULE_DOWNLOAD}/source.json"
 COMMIT=$(sed -n 's/.*\/googleapis\/archive\/\(.*\)\.zip",/\1/p' "${MODULE_DOWNLOAD}/source.json")
 echo "COMMIT=${COMMIT}"
