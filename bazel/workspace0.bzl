@@ -136,7 +136,7 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "googleapis",
         urls = [
-            "https://github.com/googleapis/20ac242a6b3a723cb10c1a0201209261addaf7d8.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/20ac242a6b3a723cb10c1a0201209261addaf7d8.tar.gz",
         ],
         sha256 = "2e54dd6e7829afa9f382b67b3eea6730963df65381255f012ac4bd23b3654fb5",
         strip_prefix = "googleapis-20ac242a6b3a723cb10c1a0201209261addaf7d8",

@@ -34,7 +34,7 @@ MODULE_VERSION=$1
 banner "Determining googleapis COMMIT and COMMIT_DATE from BCR module"
 MODULE_DOWNLOAD="$(mktemp -d)"
 curl -fsSL "https://raw.githubusercontent.com/bazelbuild/bazel-central-registry/refs/heads/main/modules/googleapis/${MODULE_VERSION}/source.json" -o "${MODULE_DOWNLOAD}/source.json"
-COMMIT=$(sed -n 's/.*\/googleapis\/archive\/\(.*\)\.zip",/\1/p' "${MODULE_DOWNLOAD}/source.json")
+COMMIT=$(sed -n 's/.*\/googleapis\/archive\/\([0-9a-f]*\)\.zip.*/\1/p' "${MODULE_DOWNLOAD}/source.json")
 echo "COMMIT=${COMMIT}"
 COMMIT_DATE=$(echo "${MODULE_VERSION}" | sed -n 's/0\.0\.0-\(.*\)-.*/\1/p')
 echo "COMMIT_DATE=${COMMIT_DATE}"
@@ -60,10 +60,9 @@ rm -f "${DOWNLOAD}"
 banner "Updating Bazel/CMake dependencies"
 sed -i -f - bazel/workspace0.bzl <<EOT
   /name = "googleapis",/,/strip_prefix = "/ {
-    s;/googleapis/.*.tar.gz",;/googleapis/${COMMIT}.tar.gz",;
-    s;/${REPO}/archive/.*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
-    s/sha256 = ".*",/sha256 = "${SHA256}",/
-    s/strip_prefix = "googleapis-.*",/strip_prefix = "googleapis-${COMMIT}",/
+    s;/${REPO}/archive/[0-9a-f]*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
+    s/sha256 = "[0-9a-f]*",/sha256 = "${SHA256}",/
+    s/strip_prefix = "googleapis-[0-9a-f]*",/strip_prefix = "googleapis-${COMMIT}",/
   }
 EOT
 sed -i -f - MODULE.bazel <<EOT
