@@ -229,6 +229,7 @@ add_library(
     mutation_branch.h
     mutations.cc
     mutations.h
+    options.cc
     options.h
     polling_policy.cc
     polling_policy.h
@@ -476,6 +477,7 @@ if (BUILD_TESTING)
         mocks/mock_row_reader_test.cc
         mutation_batcher_test.cc
         mutations_test.cc
+        options_test.cc
         polling_policy_test.cc
         prepared_query_test.cc
         query_row_test.cc
