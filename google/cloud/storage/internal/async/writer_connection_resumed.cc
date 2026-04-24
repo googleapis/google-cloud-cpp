@@ -298,8 +298,7 @@ class AsyncWriterConnectionResumedState
     return tmp;
   }
 
-  void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size,
-               bool is_resume = false) {
+  void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
     auto handle = impl_->WriteHandle();
     if (handle) {
       latest_write_handle_ = *std::move(handle);
@@ -318,7 +317,7 @@ class AsyncWriterConnectionResumedState
     }
     resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
     buffer_offset_ = persisted_size;
-    if (is_resume) {
+    if (state_ == State::kResuming) {
       // Since the buffer has been modified to start exactly at the point of the
       // resume, the next write on this new stream should start from the
       // beginning of this truncated buffer.
@@ -452,7 +451,7 @@ class AsyncWriterConnectionResumedState
         options_, initial_request_, std::move(res->stream), hash_function_,
         persisted_offset, false);
     // OnQuery will restart the WriteLoop if necessary.
-    OnQuery(std::move(lk), persisted_offset, /*is_resume=*/true);
+    OnQuery(std::move(lk), persisted_offset);
   }
 
   void SetFinalized(std::unique_lock<std::mutex> lk,
