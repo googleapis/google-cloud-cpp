@@ -281,7 +281,8 @@ class AsyncWriterConnectionBufferedState
     return tmp;
   }
 
-  void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
+  void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size,
+               bool is_resume = false) {
     if (persisted_size < buffer_offset_) {
       auto id = UploadId(lk);
       return SetError(std::move(lk),
@@ -297,7 +298,22 @@ class AsyncWriterConnectionBufferedState
     }
     resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
     buffer_offset_ = persisted_size;
-    write_offset_ -= static_cast<std::size_t>(n);
+    if (is_resume) {
+      // Since the buffer has been modified to start exactly at the point of the
+      // resume, the next write on this new stream should start from the
+      // beginning of this truncated buffer.
+      write_offset_ = 0;
+    } else {
+      // While rare, it is possible that n >= write_offset_ (i.e. the server has
+      // persisted more than we have sent) if, for example, multiple clients
+      // resume the same upload. If that is the case, all the bytes covered by
+      // write_offset_ have been flushed and we can reset it to 0.
+      if (static_cast<std::size_t>(n) >= write_offset_) {
+        write_offset_ = 0;
+      } else {
+        write_offset_ -= static_cast<std::size_t>(n);
+      }
+    }
     // If the buffer is small enough, collect all the handlers to notify them.
     auto const handlers = ClearHandlersIfEmpty(lk);
     // SetFlushed will release the lock before returning.
@@ -382,7 +398,7 @@ class AsyncWriterConnectionBufferedState
                                              std::move(state)));
     }
     // Regular resume succeeded, object not finalized. Continue writing.
-    OnQuery(std::move(lk), absl::get<std::int64_t>(state));
+    OnQuery(std::move(lk), absl::get<std::int64_t>(state), /*is_resume=*/true);
   }
 
   void SetFinalized(std::unique_lock<std::mutex> lk,
