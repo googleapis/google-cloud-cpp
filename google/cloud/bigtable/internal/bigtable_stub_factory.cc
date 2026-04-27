@@ -117,8 +117,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
         self->set_last_refresh_status(s);
       }
       if (!s.ok()) {
-        if (s.code() == StatusCode::kPermissionDenied ||
-            s.code() == StatusCode::kNotFound) {
+        if (ChannelUsage<BigtableStub>::IsSuccessfulRefreshStatus(s)) {
           GCP_LOG(WARNING)
               << "Connection refreshed; treating received Status as non-error: "
               << s;
