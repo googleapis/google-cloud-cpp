@@ -117,7 +117,14 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
         self->set_last_refresh_status(s);
       }
       if (!s.ok()) {
-        GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << s;
+        if (s.code() == StatusCode::kPermissionDenied ||
+            s.code() == StatusCode::kNotFound) {
+          GCP_LOG(WARNING)
+              << "Connection refreshed; treating received Status as non-error: "
+              << s;
+        } else {
+          GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << s;
+        }
       }
     };
 

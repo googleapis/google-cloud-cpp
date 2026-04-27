@@ -45,7 +45,7 @@ class ChannelUsage : public std::enable_shared_from_this<ChannelUsage<T>> {
 
   StatusOr<int> instant_outstanding_rpcs() {
     std::scoped_lock lk(mu_);
-    if (!last_refresh_status_.ok()) return last_refresh_status_;
+    if (!IsRefreshSuccessful(lk)) return last_refresh_status_;
     return outstanding_rpcs_;
   }
 
@@ -78,6 +78,14 @@ class ChannelUsage : public std::enable_shared_from_this<ChannelUsage<T>> {
   }
 
  private:
+  bool IsRefreshSuccessful(std::scoped_lock<std::mutex> const&) const {
+    // kPermissionDenied and kNotFound are considered acceptable as those may
+    // result from a permissions configuration issue and not an actual failure.
+    return last_refresh_status_.code() == StatusCode::kOk ||
+           last_refresh_status_.code() == StatusCode::kPermissionDenied ||
+           last_refresh_status_.code() == StatusCode::kNotFound;
+  }
+
   mutable std::mutex mu_;
   std::shared_ptr<T> stub_;
   int outstanding_rpcs_ = 0;
