@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_options.h"
+#include "google/cloud/bigtable/options.h"
 #include <memory>
 #include <thread>
 #include <utility>
@@ -30,8 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigtableInstanceAdminClient::BigtableInstanceAdminClient(
     std::shared_ptr<BigtableInstanceAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(bigtable_internal::MergeOptions(std::move(opts),
+                                               connection_->options())) {}
 BigtableInstanceAdminClient::~BigtableInstanceAdminClient() = default;
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -40,7 +41,8 @@ BigtableInstanceAdminClient::CreateInstance(
     google::bigtable::admin::v2::Instance const& instance,
     std::map<std::string, google::bigtable::admin::v2::Cluster> const& clusters,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateInstanceRequest request;
   request.set_parent(parent);
   request.set_instance_id(instance_id);
@@ -55,7 +57,8 @@ BigtableInstanceAdminClient::CreateInstance(
     google::bigtable::admin::v2::Instance const& instance,
     std::map<std::string, google::bigtable::admin::v2::Cluster> const& clusters,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateInstanceRequest request;
   request.set_parent(parent);
   request.set_instance_id(instance_id);
@@ -68,7 +71,8 @@ future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminClient::CreateInstance(
     google::bigtable::admin::v2::CreateInstanceRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
@@ -77,21 +81,24 @@ BigtableInstanceAdminClient::CreateInstance(
     NoAwaitTag,
     google::bigtable::admin::v2::CreateInstanceRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminClient::CreateInstance(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(operation);
 }
 
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminClient::GetInstance(std::string const& name,
                                          Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::GetInstanceRequest request;
   request.set_name(name);
   return connection_->GetInstance(request);
@@ -101,14 +108,16 @@ StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminClient::GetInstance(
     google::bigtable::admin::v2::GetInstanceRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
 BigtableInstanceAdminClient::ListInstances(std::string const& parent,
                                            Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ListInstancesRequest request;
   request.set_parent(parent);
   return connection_->ListInstances(request);
@@ -118,14 +127,16 @@ StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
 BigtableInstanceAdminClient::ListInstances(
     google::bigtable::admin::v2::ListInstancesRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(request);
 }
 
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminClient::UpdateInstance(
     google::bigtable::admin::v2::Instance const& request, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
@@ -133,7 +144,8 @@ future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminClient::PartialUpdateInstance(
     google::bigtable::admin::v2::Instance const& instance,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::PartialUpdateInstanceRequest request;
   *request.mutable_instance() = instance;
   *request.mutable_update_mask() = update_mask;
@@ -144,7 +156,8 @@ StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminClient::PartialUpdateInstance(
     NoAwaitTag, google::bigtable::admin::v2::Instance const& instance,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::PartialUpdateInstanceRequest request;
   *request.mutable_instance() = instance;
   *request.mutable_update_mask() = update_mask;
@@ -155,7 +168,8 @@ future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminClient::PartialUpdateInstance(
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->PartialUpdateInstance(request);
 }
 
@@ -164,20 +178,23 @@ BigtableInstanceAdminClient::PartialUpdateInstance(
     NoAwaitTag,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->PartialUpdateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminClient::PartialUpdateInstance(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->PartialUpdateInstance(operation);
 }
 
 Status BigtableInstanceAdminClient::DeleteInstance(std::string const& name,
                                                    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::DeleteInstanceRequest request;
   request.set_name(name);
   return connection_->DeleteInstance(request);
@@ -186,7 +203,8 @@ Status BigtableInstanceAdminClient::DeleteInstance(std::string const& name,
 Status BigtableInstanceAdminClient::DeleteInstance(
     google::bigtable::admin::v2::DeleteInstanceRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
@@ -194,7 +212,8 @@ future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::CreateCluster(
     std::string const& parent, std::string const& cluster_id,
     google::bigtable::admin::v2::Cluster const& cluster, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateClusterRequest request;
   request.set_parent(parent);
   request.set_cluster_id(cluster_id);
@@ -206,7 +225,8 @@ StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminClient::CreateCluster(
     NoAwaitTag, std::string const& parent, std::string const& cluster_id,
     google::bigtable::admin::v2::Cluster const& cluster, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateClusterRequest request;
   request.set_parent(parent);
   request.set_cluster_id(cluster_id);
@@ -218,7 +238,8 @@ future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::CreateCluster(
     google::bigtable::admin::v2::CreateClusterRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(request);
 }
 
@@ -227,20 +248,23 @@ BigtableInstanceAdminClient::CreateCluster(
     NoAwaitTag,
     google::bigtable::admin::v2::CreateClusterRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::CreateCluster(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(operation);
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
 BigtableInstanceAdminClient::GetCluster(std::string const& name, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::GetClusterRequest request;
   request.set_name(name);
   return connection_->GetCluster(request);
@@ -250,14 +274,16 @@ StatusOr<google::bigtable::admin::v2::Cluster>
 BigtableInstanceAdminClient::GetCluster(
     google::bigtable::admin::v2::GetClusterRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCluster(request);
 }
 
 StatusOr<google::bigtable::admin::v2::ListClustersResponse>
 BigtableInstanceAdminClient::ListClusters(std::string const& parent,
                                           Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ListClustersRequest request;
   request.set_parent(parent);
   return connection_->ListClusters(request);
@@ -267,14 +293,16 @@ StatusOr<google::bigtable::admin::v2::ListClustersResponse>
 BigtableInstanceAdminClient::ListClusters(
     google::bigtable::admin::v2::ListClustersRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->ListClusters(request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::UpdateCluster(
     google::bigtable::admin::v2::Cluster const& request, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(request);
 }
 
@@ -282,14 +310,16 @@ StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminClient::UpdateCluster(
     NoAwaitTag, google::bigtable::admin::v2::Cluster const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::UpdateCluster(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(operation);
 }
 
@@ -297,7 +327,8 @@ future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::PartialUpdateCluster(
     google::bigtable::admin::v2::Cluster const& cluster,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::PartialUpdateClusterRequest request;
   *request.mutable_cluster() = cluster;
   *request.mutable_update_mask() = update_mask;
@@ -308,7 +339,8 @@ StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminClient::PartialUpdateCluster(
     NoAwaitTag, google::bigtable::admin::v2::Cluster const& cluster,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::PartialUpdateClusterRequest request;
   *request.mutable_cluster() = cluster;
   *request.mutable_update_mask() = update_mask;
@@ -319,7 +351,8 @@ future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::PartialUpdateCluster(
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->PartialUpdateCluster(request);
 }
 
@@ -328,20 +361,23 @@ BigtableInstanceAdminClient::PartialUpdateCluster(
     NoAwaitTag,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->PartialUpdateCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminClient::PartialUpdateCluster(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->PartialUpdateCluster(operation);
 }
 
 Status BigtableInstanceAdminClient::DeleteCluster(std::string const& name,
                                                   Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::DeleteClusterRequest request;
   request.set_name(name);
   return connection_->DeleteCluster(request);
@@ -350,7 +386,8 @@ Status BigtableInstanceAdminClient::DeleteCluster(std::string const& name,
 Status BigtableInstanceAdminClient::DeleteCluster(
     google::bigtable::admin::v2::DeleteClusterRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCluster(request);
 }
 
@@ -358,7 +395,8 @@ StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminClient::CreateAppProfile(
     std::string const& parent, std::string const& app_profile_id,
     google::bigtable::admin::v2::AppProfile const& app_profile, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateAppProfileRequest request;
   request.set_parent(parent);
   request.set_app_profile_id(app_profile_id);
@@ -370,14 +408,16 @@ StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminClient::CreateAppProfile(
     google::bigtable::admin::v2::CreateAppProfileRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAppProfile(request);
 }
 
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminClient::GetAppProfile(std::string const& name,
                                            Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::GetAppProfileRequest request;
   request.set_name(name);
   return connection_->GetAppProfile(request);
@@ -387,14 +427,16 @@ StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminClient::GetAppProfile(
     google::bigtable::admin::v2::GetAppProfileRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAppProfile(request);
 }
 
 StreamRange<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminClient::ListAppProfiles(std::string const& parent,
                                              Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ListAppProfilesRequest request;
   request.set_parent(parent);
   return connection_->ListAppProfiles(request);
@@ -403,7 +445,8 @@ BigtableInstanceAdminClient::ListAppProfiles(std::string const& parent,
 StreamRange<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminClient::ListAppProfiles(
     google::bigtable::admin::v2::ListAppProfilesRequest request, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAppProfiles(std::move(request));
 }
 
@@ -411,7 +454,8 @@ future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminClient::UpdateAppProfile(
     google::bigtable::admin::v2::AppProfile const& app_profile,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::UpdateAppProfileRequest request;
   *request.mutable_app_profile() = app_profile;
   *request.mutable_update_mask() = update_mask;
@@ -422,7 +466,8 @@ StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminClient::UpdateAppProfile(
     NoAwaitTag, google::bigtable::admin::v2::AppProfile const& app_profile,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::UpdateAppProfileRequest request;
   *request.mutable_app_profile() = app_profile;
   *request.mutable_update_mask() = update_mask;
@@ -433,7 +478,8 @@ future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminClient::UpdateAppProfile(
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAppProfile(request);
 }
 
@@ -442,21 +488,24 @@ BigtableInstanceAdminClient::UpdateAppProfile(
     NoAwaitTag,
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAppProfile(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminClient::UpdateAppProfile(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAppProfile(operation);
 }
 
 Status BigtableInstanceAdminClient::DeleteAppProfile(std::string const& name,
                                                      bool ignore_warnings,
                                                      Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::DeleteAppProfileRequest request;
   request.set_name(name);
   request.set_ignore_warnings(ignore_warnings);
@@ -466,13 +515,15 @@ Status BigtableInstanceAdminClient::DeleteAppProfile(std::string const& name,
 Status BigtableInstanceAdminClient::DeleteAppProfile(
     google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAppProfile(request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::GetIamPolicy(
     std::string const& resource, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
@@ -480,14 +531,16 @@ StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::GetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
     std::string const& resource, google::iam::v1::Policy const& policy,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -498,7 +551,8 @@ StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
     std::string const& resource, IamUpdater const& updater, Options opts) {
   internal::CheckExpectedOptions<BigtableInstanceAdminBackoffPolicyOption>(
       opts, __func__);
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
@@ -531,7 +585,8 @@ StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
@@ -539,7 +594,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableInstanceAdminClient::TestIamPermissions(
     std::string const& resource, std::vector<std::string> const& permissions,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -549,14 +605,16 @@ BigtableInstanceAdminClient::TestIamPermissions(
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableInstanceAdminClient::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::bigtable::admin::v2::HotTablet>
 BigtableInstanceAdminClient::ListHotTablets(std::string const& parent,
                                             Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ListHotTabletsRequest request;
   request.set_parent(parent);
   return connection_->ListHotTablets(request);
@@ -565,7 +623,8 @@ BigtableInstanceAdminClient::ListHotTablets(std::string const& parent,
 StreamRange<google::bigtable::admin::v2::HotTablet>
 BigtableInstanceAdminClient::ListHotTablets(
     google::bigtable::admin::v2::ListHotTabletsRequest request, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->ListHotTablets(std::move(request));
 }
 
@@ -574,7 +633,8 @@ BigtableInstanceAdminClient::CreateLogicalView(
     std::string const& parent,
     google::bigtable::admin::v2::LogicalView const& logical_view,
     std::string const& logical_view_id, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateLogicalViewRequest request;
   request.set_parent(parent);
   *request.mutable_logical_view() = logical_view;
@@ -587,7 +647,8 @@ BigtableInstanceAdminClient::CreateLogicalView(
     NoAwaitTag, std::string const& parent,
     google::bigtable::admin::v2::LogicalView const& logical_view,
     std::string const& logical_view_id, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateLogicalViewRequest request;
   request.set_parent(parent);
   *request.mutable_logical_view() = logical_view;
@@ -599,7 +660,8 @@ future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminClient::CreateLogicalView(
     google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLogicalView(request);
 }
 
@@ -608,21 +670,24 @@ BigtableInstanceAdminClient::CreateLogicalView(
     NoAwaitTag,
     google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLogicalView(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminClient::CreateLogicalView(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLogicalView(operation);
 }
 
 StatusOr<google::bigtable::admin::v2::LogicalView>
 BigtableInstanceAdminClient::GetLogicalView(std::string const& name,
                                             Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::GetLogicalViewRequest request;
   request.set_name(name);
   return connection_->GetLogicalView(request);
@@ -632,14 +697,16 @@ StatusOr<google::bigtable::admin::v2::LogicalView>
 BigtableInstanceAdminClient::GetLogicalView(
     google::bigtable::admin::v2::GetLogicalViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLogicalView(request);
 }
 
 StreamRange<google::bigtable::admin::v2::LogicalView>
 BigtableInstanceAdminClient::ListLogicalViews(std::string const& parent,
                                               Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ListLogicalViewsRequest request;
   request.set_parent(parent);
   return connection_->ListLogicalViews(request);
@@ -649,7 +716,8 @@ StreamRange<google::bigtable::admin::v2::LogicalView>
 BigtableInstanceAdminClient::ListLogicalViews(
     google::bigtable::admin::v2::ListLogicalViewsRequest request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLogicalViews(std::move(request));
 }
 
@@ -657,7 +725,8 @@ future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminClient::UpdateLogicalView(
     google::bigtable::admin::v2::LogicalView const& logical_view,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::UpdateLogicalViewRequest request;
   *request.mutable_logical_view() = logical_view;
   *request.mutable_update_mask() = update_mask;
@@ -668,7 +737,8 @@ StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminClient::UpdateLogicalView(
     NoAwaitTag, google::bigtable::admin::v2::LogicalView const& logical_view,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::UpdateLogicalViewRequest request;
   *request.mutable_logical_view() = logical_view;
   *request.mutable_update_mask() = update_mask;
@@ -679,7 +749,8 @@ future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminClient::UpdateLogicalView(
     google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLogicalView(request);
 }
 
@@ -688,20 +759,23 @@ BigtableInstanceAdminClient::UpdateLogicalView(
     NoAwaitTag,
     google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLogicalView(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminClient::UpdateLogicalView(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLogicalView(operation);
 }
 
 Status BigtableInstanceAdminClient::DeleteLogicalView(std::string const& name,
                                                       Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::DeleteLogicalViewRequest request;
   request.set_name(name);
   return connection_->DeleteLogicalView(request);
@@ -710,7 +784,8 @@ Status BigtableInstanceAdminClient::DeleteLogicalView(std::string const& name,
 Status BigtableInstanceAdminClient::DeleteLogicalView(
     google::bigtable::admin::v2::DeleteLogicalViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLogicalView(request);
 }
 
@@ -719,7 +794,8 @@ BigtableInstanceAdminClient::CreateMaterializedView(
     std::string const& parent,
     google::bigtable::admin::v2::MaterializedView const& materialized_view,
     std::string const& materialized_view_id, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateMaterializedViewRequest request;
   request.set_parent(parent);
   *request.mutable_materialized_view() = materialized_view;
@@ -732,7 +808,8 @@ BigtableInstanceAdminClient::CreateMaterializedView(
     NoAwaitTag, std::string const& parent,
     google::bigtable::admin::v2::MaterializedView const& materialized_view,
     std::string const& materialized_view_id, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::CreateMaterializedViewRequest request;
   request.set_parent(parent);
   *request.mutable_materialized_view() = materialized_view;
@@ -744,7 +821,8 @@ future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminClient::CreateMaterializedView(
     google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMaterializedView(request);
 }
 
@@ -753,21 +831,24 @@ BigtableInstanceAdminClient::CreateMaterializedView(
     NoAwaitTag,
     google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMaterializedView(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminClient::CreateMaterializedView(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMaterializedView(operation);
 }
 
 StatusOr<google::bigtable::admin::v2::MaterializedView>
 BigtableInstanceAdminClient::GetMaterializedView(std::string const& name,
                                                  Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::GetMaterializedViewRequest request;
   request.set_name(name);
   return connection_->GetMaterializedView(request);
@@ -777,14 +858,16 @@ StatusOr<google::bigtable::admin::v2::MaterializedView>
 BigtableInstanceAdminClient::GetMaterializedView(
     google::bigtable::admin::v2::GetMaterializedViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMaterializedView(request);
 }
 
 StreamRange<google::bigtable::admin::v2::MaterializedView>
 BigtableInstanceAdminClient::ListMaterializedViews(std::string const& parent,
                                                    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::ListMaterializedViewsRequest request;
   request.set_parent(parent);
   return connection_->ListMaterializedViews(request);
@@ -794,7 +877,8 @@ StreamRange<google::bigtable::admin::v2::MaterializedView>
 BigtableInstanceAdminClient::ListMaterializedViews(
     google::bigtable::admin::v2::ListMaterializedViewsRequest request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMaterializedViews(std::move(request));
 }
 
@@ -802,7 +886,8 @@ future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminClient::UpdateMaterializedView(
     google::bigtable::admin::v2::MaterializedView const& materialized_view,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::UpdateMaterializedViewRequest request;
   *request.mutable_materialized_view() = materialized_view;
   *request.mutable_update_mask() = update_mask;
@@ -814,7 +899,8 @@ BigtableInstanceAdminClient::UpdateMaterializedView(
     NoAwaitTag,
     google::bigtable::admin::v2::MaterializedView const& materialized_view,
     google::protobuf::FieldMask const& update_mask, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::UpdateMaterializedViewRequest request;
   *request.mutable_materialized_view() = materialized_view;
   *request.mutable_update_mask() = update_mask;
@@ -825,7 +911,8 @@ future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminClient::UpdateMaterializedView(
     google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMaterializedView(request);
 }
 
@@ -834,20 +921,23 @@ BigtableInstanceAdminClient::UpdateMaterializedView(
     NoAwaitTag,
     google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMaterializedView(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminClient::UpdateMaterializedView(
     google::longrunning::Operation const& operation, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMaterializedView(operation);
 }
 
 Status BigtableInstanceAdminClient::DeleteMaterializedView(
     std::string const& name, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   google::bigtable::admin::v2::DeleteMaterializedViewRequest request;
   request.set_name(name);
   return connection_->DeleteMaterializedView(request);
@@ -856,7 +946,8 @@ Status BigtableInstanceAdminClient::DeleteMaterializedView(
 Status BigtableInstanceAdminClient::DeleteMaterializedView(
     google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request,
     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(
+      bigtable_internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMaterializedView(request);
 }
 

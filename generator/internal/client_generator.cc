@@ -24,6 +24,7 @@
 #include "absl/strings/str_replace.h"
 #include "google/api/client.pb.h"
 #include <google/protobuf/descriptor.h>
+#include <absl/strings/match.h>
 
 namespace google {
 namespace cloud {
@@ -456,7 +457,10 @@ Status ClientGenerator::GenerateCc() {
   if (MethodSignatureUsesDeprecatedField()) {
     CcLocalIncludes({"google/cloud/internal/disable_deprecation_warnings.inc"});
   }
-  CcLocalIncludes({vars("client_header_path")});
+  CcLocalIncludes({vars("client_header_path"),
+                   absl::StartsWithIgnoreCase(vars("service_name"), "Bigtable")
+                       ? "google/cloud/bigtable/options.h"
+                       : ""});
   CcSystemIncludes({"memory"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     CcLocalIncludes({vars("options_header_path")});
@@ -473,7 +477,7 @@ $client_class_name$::$client_class_name$()""");
   CcPrint(R"""(
     std::shared_ptr<$connection_class_name$> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
+      options_($merge_options_fn$(std::move(opts),
       connection_->options())) {}
 $client_class_name$::~$client_class_name$() = default;
 )""");
@@ -488,7 +492,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $response_type$>>
 $client_class_name$::Async$method_name$(Options opts) {
   internal::OptionsSpan span(
-      internal::MergeOptions(std::move(opts), options_));
+      $merge_options_fn$(std::move(opts), options_));
   return connection_->Async$method_name$();
 }
 )""");
@@ -513,7 +517,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    {"\n$return_type$\n"},
                    // clang-format off
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -529,7 +533,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                     "\nfuture<Status>\n",
                     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -541,7 +545,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                     "\nStatus\n",
                     "\nStatusOr<$longrunning_operation_type$>\n"},
                   {start_method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -554,7 +558,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    // clang-format off
                    {"\nStreamRange<$range_output_type$>\n"},
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -567,7 +571,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    // clang-format off
                    {"\nStreamRange<$response_type$>\n"},
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -591,7 +595,7 @@ $client_class_name$::Async$method_name$(Options opts) {
              " Options opts) {\n"
              "  internal::CheckExpectedOptions<$service_name$"
              "BackoffPolicyOption>(opts, __func__);\n"
-             "  internal::OptionsSpan span(internal::MergeOptions("
+             "  internal::OptionsSpan span($merge_options_fn$("
              "std::move(opts), options_));\n"},
             {"  "},
             {ProtoNameToCppName(
@@ -644,7 +648,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                  // clang-format off
    {"$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
     "}\n"}  // clang-format on
@@ -659,7 +663,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
     "}\n"},
@@ -671,7 +675,7 @@ $client_class_name$::Async$method_name$(Options opts) {
    {"$client_class_name$::$method_name$(NoAwaitTag"
     ", $request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(NoAwaitTag{}, request);\n"
     "}\n"},
@@ -682,7 +686,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"$client_class_name$::$method_name$("
     "$longrunning_operation_type$ const& operation, Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(operation);\n"},
    {"}\n"}  // clang-format on
@@ -694,7 +698,7 @@ $client_class_name$::Async$method_name$(Options opts) {
    {"\nStreamRange<$range_output_type$>\n"
     "$client_class_name$::$method_name$($request_type$ request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(std::move(request));\n"
     "}\n"}  // clang-format on
@@ -706,7 +710,7 @@ $client_class_name$::Async$method_name$(Options opts) {
    {"\nStreamRange<$response_type$>\n"
     "$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
     "}\n"}  // clang-format on
@@ -733,7 +737,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"\nfuture<$return_type$>\n"},
                   // clang-format off
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -752,7 +756,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                 // clang-format off
    {"$client_class_name$::Async$method_name$($request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->Async$method_name$(request);\n"
     "}\n"}  // clang-format on
@@ -768,7 +772,7 @@ $client_class_name$::Async$method_name$(Options opts) {
         method.return_type(), R"""( $client_class_name$::)""", method.name(),
         absl::StrReplaceAll(method.parameters(), {{" = {}", ""}}),
         absl::StrFormat(R"""( {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span($merge_options_fn$(std::move(opts), options_));
   return connection_->%s(request);
 }
 )""",
