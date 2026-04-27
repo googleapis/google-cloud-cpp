@@ -194,8 +194,8 @@ class Table {
       : table_(std::move(tr)),
         table_name_(table_.FullName()),
         connection_(std::move(conn)),
-        options_(google::cloud::internal::MergeOptions(
-            std::move(options), connection_->options())) {}
+        options_(bigtable_internal::MergeOptions(std::move(options),
+                                                 connection_->options())) {}
 
   std::string const& table_name() const { return table_name_; }
   std::string const& app_profile_id() const {
@@ -755,7 +755,7 @@ class Table {
     };
 
     google::cloud::internal::OptionsSpan span(
-        google::cloud::internal::MergeOptions(std::move(opts), options_));
+        bigtable_internal::MergeOptions(std::move(opts), options_));
     connection_->AsyncReadRows(table_name_, std::move(on_row_fn),
                                std::move(on_finish_fn), std::move(row_set),
                                rows_limit, std::move(filter));
