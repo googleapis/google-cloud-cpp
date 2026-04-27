@@ -602,7 +602,7 @@ class NetAppClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.netapp.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/netapp/v1/cloud_netapp_service.proto#L891}
-  /// [google.cloud.netapp.v1.ValidateDirectoryServiceRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L330}
+  /// [google.cloud.netapp.v1.ValidateDirectoryServiceRequest]: @googleapis_reference_link{google/cloud/netapp/v1/storage_pool.proto#L334}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1285,7 +1285,7 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.EstablishVolumePeeringRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L999}
+  /// [google.cloud.netapp.v1.EstablishVolumePeeringRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L1018}
   /// [google.cloud.netapp.v1.Volume]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L231}
   ///
   // clang-format on
@@ -5691,8 +5691,8 @@ class NetAppClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.netapp.v1.RestoreBackupFilesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L970}
-  /// [google.cloud.netapp.v1.RestoreBackupFilesResponse]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L995}
+  /// [google.cloud.netapp.v1.RestoreBackupFilesRequest]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L989}
+  /// [google.cloud.netapp.v1.RestoreBackupFilesResponse]: @googleapis_reference_link{google/cloud/netapp/v1/volume.proto#L1014}
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>

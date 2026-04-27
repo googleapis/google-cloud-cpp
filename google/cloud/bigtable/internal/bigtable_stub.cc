@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/status_or.h"
 #include "google/bigtable/v2/bigtable.grpc.pb.h"
@@ -136,6 +137,67 @@ DefaultBigtableStub::ExecuteQuery(
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::ExecuteQueryResponse>>(std::move(context),
                                                    std::move(stream));
+}
+
+StatusOr<google::bigtable::v2::ClientConfiguration>
+DefaultBigtableStub::GetClientConfiguration(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::v2::GetClientConfigurationRequest const& request) {
+  google::bigtable::v2::ClientConfiguration response;
+  auto status =
+      grpc_stub_->GetClientConfiguration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+DefaultBigtableStub::AsyncOpenTable(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncOpenTable(context, cq);
+      });
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+DefaultBigtableStub::AsyncOpenAuthorizedView(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncOpenAuthorizedView(context, cq);
+      });
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+DefaultBigtableStub::AsyncOpenMaterializedView(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncOpenMaterializedView(context, cq);
+      });
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<

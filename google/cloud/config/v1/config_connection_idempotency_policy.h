@@ -128,6 +128,36 @@ class ConfigConnectionIdempotencyPolicy {
       google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
           request);
 
+  virtual google::cloud::Idempotency GetDeploymentGroup(
+      google::cloud::config::v1::GetDeploymentGroupRequest const& request);
+
+  virtual google::cloud::Idempotency CreateDeploymentGroup(
+      google::cloud::config::v1::CreateDeploymentGroupRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateDeploymentGroup(
+      google::cloud::config::v1::UpdateDeploymentGroupRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteDeploymentGroup(
+      google::cloud::config::v1::DeleteDeploymentGroupRequest const& request);
+
+  virtual google::cloud::Idempotency ListDeploymentGroups(
+      google::cloud::config::v1::ListDeploymentGroupsRequest request);
+
+  virtual google::cloud::Idempotency ProvisionDeploymentGroup(
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeprovisionDeploymentGroup(
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetDeploymentGroupRevision(
+      google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListDeploymentGroupRevisions(
+      google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

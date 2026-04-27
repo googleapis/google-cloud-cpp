@@ -171,6 +171,29 @@ VectorSearchServiceMetadata::CreateIndex(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VectorSearchServiceMetadata::AsyncUpdateIndex(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("index.name=", internal::UrlEncode(request.index().name())));
+  return child_->AsyncUpdateIndex(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceMetadata::UpdateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("index.name=", internal::UrlEncode(request.index().name())));
+  return child_->UpdateIndex(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VectorSearchServiceMetadata::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

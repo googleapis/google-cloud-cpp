@@ -206,6 +206,36 @@ DefaultVectorSearchServiceStub::CreateIndex(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultVectorSearchServiceStub::AsyncUpdateIndex(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vectorsearch::v1::UpdateIndexRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::vectorsearch::v1::UpdateIndexRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateIndex(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVectorSearchServiceStub::UpdateIndex(
+    grpc::ClientContext& context, Options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultVectorSearchServiceStub::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

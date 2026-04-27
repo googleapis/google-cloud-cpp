@@ -189,6 +189,32 @@ VectorSearchServiceTracingStub::CreateIndex(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VectorSearchServiceTracingStub::AsyncUpdateIndex(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vectorsearch.v1.VectorSearchService", "UpdateIndex");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateIndex(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceTracingStub::UpdateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vectorsearch.v1.VectorSearchService", "UpdateIndex");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateIndex(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VectorSearchServiceTracingStub::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

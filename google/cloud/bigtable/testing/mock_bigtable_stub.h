@@ -132,6 +132,35 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
                google::cloud::internal::ImmutableOptions,
                google::bigtable::v2::PrepareQueryRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::bigtable::v2::ClientConfiguration>,
+              GetClientConfiguration,
+              (grpc::ClientContext&, Options const&,
+               google::bigtable::v2::GetClientConfigurationRequest const&),
+              (override));
+  MOCK_METHOD((std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+                   google::bigtable::v2::SessionRequest,
+                   google::bigtable::v2::SessionResponse>>),
+              AsyncOpenTable,
+              (google::cloud::CompletionQueue const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
+              (override));
+  MOCK_METHOD((std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+                   google::bigtable::v2::SessionRequest,
+                   google::bigtable::v2::SessionResponse>>),
+              AsyncOpenAuthorizedView,
+              (google::cloud::CompletionQueue const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
+              (override));
+  MOCK_METHOD((std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+                   google::bigtable::v2::SessionRequest,
+                   google::bigtable::v2::SessionResponse>>),
+              AsyncOpenMaterializedView,
+              (google::cloud::CompletionQueue const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
+              (override));
 };
 
 class MockMutateRowsStream : public google::cloud::internal::StreamingReadRpc<

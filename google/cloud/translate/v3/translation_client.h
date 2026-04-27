@@ -2169,7 +2169,7 @@ class TranslationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.translation.v3.AdaptiveMtTranslateRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L152}
-  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L249}
+  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L252}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
@@ -2201,7 +2201,7 @@ class TranslationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.translation.v3.AdaptiveMtTranslateRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L152}
-  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L249}
+  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L252}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
@@ -2228,8 +2228,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L263}
-  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L296}
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L266}
+  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L299}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
@@ -2258,8 +2258,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L263}
-  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L296}
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L266}
+  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L299}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
@@ -2283,7 +2283,7 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L308}
+  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L311}
   ///
   // clang-format on
   Status DeleteAdaptiveMtFile(std::string const& name, Options opts = {});
@@ -2309,7 +2309,7 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L308}
+  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L311}
   ///
   // clang-format on
   Status DeleteAdaptiveMtFile(
@@ -2337,8 +2337,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L320}
-  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L341}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L323}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L344}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
@@ -2368,8 +2368,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L320}
-  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L341}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L323}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L344}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
@@ -2407,8 +2407,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L263}
-  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L348}
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L266}
+  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L351}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
@@ -2446,8 +2446,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L263}
-  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L348}
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L266}
+  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L351}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
@@ -2486,8 +2486,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L383}
-  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L416}
+  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L386}
+  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L419}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
@@ -2525,8 +2525,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L383}
-  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L416}
+  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L386}
+  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L419}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
