@@ -117,7 +117,13 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
         self->set_last_refresh_status(s);
       }
       if (!s.ok()) {
-        GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << s;
+        if (ChannelUsage<BigtableStub>::IsSuccessfulRefreshStatus(s)) {
+          GCP_LOG(WARNING)
+              << "Connection refreshed; treating received Status as non-error: "
+              << s;
+        } else {
+          GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << s;
+        }
       }
     };
 
