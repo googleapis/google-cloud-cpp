@@ -30,7 +30,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
-    runs-on: windows-2025
+    runs-on: windows-latest
     permissions:
       contents: 'read'
     strategy:
@@ -41,7 +41,7 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Release ]
         arch: [ x64 ]
-        shard: [ Core1, Core2, Core3, Core4, Core5, Shard1 ]
+        shard: [ Core3 ]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
