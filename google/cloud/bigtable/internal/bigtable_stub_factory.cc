@@ -48,7 +48,7 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
-std::string FeaturesMetadata() {
+std::string CreateFeaturesMetadata(bool is_direct_path) {
   google::bigtable::v2::FeatureFlags proto;
   proto.set_reverse_scans(true);
   proto.set_last_scanned_row_responses(true);
@@ -56,11 +56,22 @@ std::string FeaturesMetadata() {
   proto.set_mutate_rows_rate_limit2(true);
   proto.set_routing_cookie(true);
   proto.set_retry_info(true);
-  if (bigtable::internal::IsDirectPath()) {
+  if (is_direct_path) {
     proto.set_traffic_director_enabled(true);
     proto.set_direct_access_requested(true);
   }
   return internal::UrlsafeBase64Encode(proto.SerializeAsString());
+}
+
+std::string FeaturesMetadata() {
+  if (bigtable::internal::IsDirectPath()) {
+    static auto const* const kDirectPathFeatures =
+        new std::string(CreateFeaturesMetadata(true));
+    return *kDirectPathFeatures;
+  }
+  static auto const* const kFeatures =
+      new std::string(CreateFeaturesMetadata(false));
+  return *kFeatures;
 }
 
 std::shared_ptr<BigtableStub> ApplyCommonDecorators(
