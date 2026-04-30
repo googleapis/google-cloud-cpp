@@ -49,23 +49,18 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 }
 
 std::string FeaturesMetadata() {
-  auto const is_direct_path = bigtable::internal::IsDirectPath();
-
-  auto const* const kFeatures = new auto([is_direct_path] {
-    google::bigtable::v2::FeatureFlags proto;
-    proto.set_reverse_scans(true);
-    proto.set_last_scanned_row_responses(true);
-    proto.set_mutate_rows_rate_limit(true);
-    proto.set_mutate_rows_rate_limit2(true);
-    proto.set_routing_cookie(true);
-    proto.set_retry_info(true);
-    if (is_direct_path) {
-      proto.set_traffic_director_enabled(true);
-      proto.set_direct_access_requested(true);
-    }
-    return internal::UrlsafeBase64Encode(proto.SerializeAsString());
-  }());
-  return *kFeatures;
+  google::bigtable::v2::FeatureFlags proto;
+  proto.set_reverse_scans(true);
+  proto.set_last_scanned_row_responses(true);
+  proto.set_mutate_rows_rate_limit(true);
+  proto.set_mutate_rows_rate_limit2(true);
+  proto.set_routing_cookie(true);
+  proto.set_retry_info(true);
+  if (bigtable::internal::IsDirectPath()) {
+    proto.set_traffic_director_enabled(true);
+    proto.set_direct_access_requested(true);
+  }
+  return internal::UrlsafeBase64Encode(proto.SerializeAsString());
 }
 
 std::shared_ptr<BigtableStub> ApplyCommonDecorators(
