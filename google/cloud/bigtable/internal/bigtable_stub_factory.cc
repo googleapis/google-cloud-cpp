@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/internal/bigtable_round_robin_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -48,7 +49,9 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 }
 
 std::string FeaturesMetadata() {
-  static auto const* const kFeatures = new auto([] {
+  auto const is_direct_path = bigtable::internal::IsDirectPath();
+
+  auto const* const kFeatures = new auto([is_direct_path] {
     google::bigtable::v2::FeatureFlags proto;
     proto.set_reverse_scans(true);
     proto.set_last_scanned_row_responses(true);
@@ -56,6 +59,10 @@ std::string FeaturesMetadata() {
     proto.set_mutate_rows_rate_limit2(true);
     proto.set_routing_cookie(true);
     proto.set_retry_info(true);
+    if (is_direct_path) {
+      proto.set_traffic_director_enabled(true);
+      proto.set_direct_access_requested(true);
+    }
     return internal::UrlsafeBase64Encode(proto.SerializeAsString());
   }());
   return *kFeatures;
