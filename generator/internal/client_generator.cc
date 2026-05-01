@@ -20,11 +20,11 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "google/api/client.pb.h"
 #include <google/protobuf/descriptor.h>
-#include <absl/strings/match.h>
 
 namespace google {
 namespace cloud {
