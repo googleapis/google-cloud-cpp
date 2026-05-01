@@ -222,6 +222,7 @@ google_cloud_cpp_bigtable_srcs = [
     "internal/traced_row_reader.cc",
     "mutation_batcher.cc",
     "mutations.cc",
+    "options.cc",
     "polling_policy.cc",
     "prepared_query.cc",
     "query_row.cc",

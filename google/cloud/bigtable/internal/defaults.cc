@@ -36,8 +36,9 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
 namespace {
+
+using ::google::cloud::bigtable_internal::MergeOptions;
 
 auto constexpr kBackoffScaling = 2.0;
 
@@ -219,8 +220,7 @@ Options DefaultOptions(Options opts) {
                           ::google::cloud::internal::DefaultTracingOptions())
                       .set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
 
-  opts = google::cloud::internal::MergeOptions(std::move(opts),
-                                               std::move(defaults));
+  opts = MergeOptions(std::move(opts), std::move(defaults));
 
   if (!emulator) opts = DefaultConnectionRefreshOptions(std::move(opts));
   opts = DefaultChannelArgumentOptions(std::move(opts));
