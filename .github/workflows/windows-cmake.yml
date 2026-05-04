@@ -30,7 +30,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
-    runs-on: windows-latest
+    runs-on: windows-arm64
     permissions:
       contents: 'read'
     strategy:
