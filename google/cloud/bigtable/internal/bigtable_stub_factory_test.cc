@@ -20,14 +20,17 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
+#include "google/bigtable/v2/feature_flags.pb.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <regex>
@@ -283,6 +286,86 @@ TEST(BigtableStubFactory, LoggingDisabled) {
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
 
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
+}
+
+TEST(BigtableStubFactory, FeaturesFlagsCloudDirectPath) {
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce([](grpc::ClientContext& context, Options const&,
+                         google::bigtable::v2::MutateRowRequest const&) {
+              ValidateMetadataFixture fixture;
+              auto headers = fixture.GetMetadata(context);
+              auto it = headers.find("bigtable-features");
+              EXPECT_NE(it, headers.end());
+              auto decoded = internal::UrlsafeBase64Decode(it->second);
+              EXPECT_STATUS_OK(decoded);
+              if (!decoded) return internal::AbortedError("fail to decode");
+              google::bigtable::v2::FeatureFlags proto;
+              EXPECT_TRUE(proto.ParseFromArray(
+                  decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_TRUE(proto.traffic_director_enabled());
+              EXPECT_TRUE(proto.direct_access_requested());
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  testing_util::SetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  auto auth = MakeStubFactoryMockAuth();
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(auth), std::move(cq),
+      Options{}
+          .set<EndpointOption>("localhost:1")
+          .set<GrpcNumChannelsOption>(1)
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  (void)stub->MutateRow(context, Options{}, {});
+  testing_util::UnsetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
+}
+
+TEST(BigtableStubFactory, FeaturesFlagsBigtableDirectPath) {
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce([](grpc::ClientContext& context, Options const&,
+                         google::bigtable::v2::MutateRowRequest const&) {
+              ValidateMetadataFixture fixture;
+              auto headers = fixture.GetMetadata(context);
+              auto it = headers.find("bigtable-features");
+              EXPECT_NE(it, headers.end());
+              auto decoded = internal::UrlsafeBase64Decode(it->second);
+              EXPECT_STATUS_OK(decoded);
+              if (!decoded) return internal::AbortedError("fail to decode");
+              google::bigtable::v2::FeatureFlags proto;
+              EXPECT_TRUE(proto.ParseFromArray(
+                  decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_TRUE(proto.traffic_director_enabled());
+              EXPECT_TRUE(proto.direct_access_requested());
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  testing_util::SetEnv("CBT_ENABLE_DIRECTPATH", "true");
+  auto auth = MakeStubFactoryMockAuth();
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(auth), std::move(cq),
+      Options{}
+          .set<EndpointOption>("localhost:1")
+          .set<GrpcNumChannelsOption>(1)
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  (void)stub->MutateRow(context, Options{}, {});
+  testing_util::UnsetEnv("CBT_ENABLE_DIRECTPATH");
 }
 
 TEST(BigtableStubFactory, FeaturesFlags) {
