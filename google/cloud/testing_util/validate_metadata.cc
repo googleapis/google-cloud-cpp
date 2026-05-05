@@ -69,7 +69,13 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
     std::regex assign_re("([^=]+)=([^=]+)");
     std::smatch match_res;
     std::string s = i->str();
-    bool const matched = std::regex_match(s, match_res, assign_re);
+    bool matched = std::regex_match(s, match_res, assign_re);
+    // A special case for app_profile_id because an empty app profile is treated
+    // as the default app profile. We allow it structurally, but skip inserting
+    // it into the map to avoid mismatches against empty expectations.
+    if (!matched && s == "app_profile_id=") {
+      continue;
+    }
     EXPECT_TRUE(matched)
         << "Bad header format. The header should be a series of \"a=b\" "
            "delimited with \"&\", but is \"" +

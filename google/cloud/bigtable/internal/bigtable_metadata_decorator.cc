@@ -76,10 +76,8 @@ BigtableMetadata::ReadRows(
   }();
   table_name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -131,10 +129,8 @@ BigtableMetadata::SampleRowKeys(
   }();
   table_name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -165,10 +161,8 @@ StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
   std::vector<std::string> params;
   params.reserve(2);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -205,10 +199,8 @@ BigtableMetadata::MutateRows(
   std::vector<std::string> params;
   params.reserve(2);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -244,10 +236,8 @@ BigtableMetadata::CheckAndMutateRow(
   std::vector<std::string> params;
   params.reserve(2);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -296,10 +286,8 @@ BigtableMetadata::PingAndWarm(
   }();
   name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   if (params.empty()) {
     SetMetadata(context, options);
@@ -316,10 +304,8 @@ BigtableMetadata::ReadModifyWriteRow(
   std::vector<std::string> params;
   params.reserve(2);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -368,10 +354,8 @@ BigtableMetadata::PrepareQuery(
   }();
   name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   if (params.empty()) {
     SetMetadata(context, options);
@@ -402,10 +386,8 @@ BigtableMetadata::ExecuteQuery(
   }();
   name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   if (params.empty()) {
     SetMetadata(*context, options);
@@ -487,10 +469,8 @@ BigtableMetadata::AsyncReadRows(
   }();
   table_name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -545,10 +525,8 @@ BigtableMetadata::AsyncSampleRowKeys(
   }();
   table_name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -583,10 +561,8 @@ BigtableMetadata::AsyncMutateRow(
   std::vector<std::string> params;
   params.reserve(2);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -626,10 +602,8 @@ BigtableMetadata::AsyncMutateRows(
   std::vector<std::string> params;
   params.reserve(2);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -668,10 +642,8 @@ BigtableMetadata::AsyncCheckAndMutateRow(
   std::vector<std::string> params;
   params.reserve(2);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -723,10 +695,8 @@ BigtableMetadata::AsyncPingAndWarm(
   }();
   name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   if (params.empty()) {
     SetMetadata(*context, *options);
@@ -746,10 +716,8 @@ BigtableMetadata::AsyncReadModifyWriteRow(
   std::vector<std::string> params;
   params.reserve(2);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -801,10 +769,8 @@ BigtableMetadata::AsyncPrepareQuery(
   }();
   name_matcher->AppendParam(request, params);
 
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.push_back(absl::StrCat("app_profile_id=",
+                                internal::UrlEncode(request.app_profile_id())));
 
   if (params.empty()) {
     SetMetadata(*context, *options);
