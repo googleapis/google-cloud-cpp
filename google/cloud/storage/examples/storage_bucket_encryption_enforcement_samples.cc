@@ -25,7 +25,8 @@ namespace {
 void GetBucketEncryptionEnforcementConfig(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [get bucket encryption enforcement config] [START storage_get_bucket_encryption_enforcement_config]
+  //! [get bucket encryption enforcement config]
+  //! [START storage_get_bucket_encryption_enforcement_config]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -64,14 +65,16 @@ void GetBucketEncryptionEnforcementConfig(
                      encryption.customer_supplied_encryption_enforcement_config)
               << "\n";
   }
-  //! [get bucket encryption enforcement config] [END storage_get_bucket_encryption_enforcement_config]
+  //! [get bucket encryption enforcement config]
+  //! [END storage_get_bucket_encryption_enforcement_config]
   (std::move(client), argv.at(0));
 }
 
 void SetBucketEncryptionEnforcementConfig(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [set bucket encryption enforcement config] [START storage_set_bucket_encryption_enforcement_config]
+  //! [set bucket encryption enforcement config]
+  //! [START storage_set_bucket_encryption_enforcement_config]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& project_id,
@@ -124,14 +127,16 @@ void SetBucketEncryptionEnforcementConfig(
               << create_bucket("rc-" + bucket_name, csek_encryption)->name()
               << " created with a policy to restrict CSEK.\n";
   }
-  //! [set bucket encryption enforcement config] [END storage_set_bucket_encryption_enforcement_config]
+  //! [set bucket encryption enforcement config]
+  //! [END storage_set_bucket_encryption_enforcement_config]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateBucketEncryptionEnforcementConfig(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [update bucket encryption enforcement config] [START storage_update_bucket_encryption_enforcement_config]
+  //! [update bucket encryption enforcement config]
+  //! [START storage_update_bucket_encryption_enforcement_config]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -166,7 +171,8 @@ void UpdateBucketEncryptionEnforcementConfig(
               << "GMEK is now fully restricted, and CMEK enforcement has been "
                  "removed.\n";
   }
-  //! [update bucket encryption enforcement config] [END storage_update_bucket_encryption_enforcement_config]
+  //! [update bucket encryption enforcement config]
+  //! [END storage_update_bucket_encryption_enforcement_config]
   (std::move(client), argv.at(0));
 }
 
