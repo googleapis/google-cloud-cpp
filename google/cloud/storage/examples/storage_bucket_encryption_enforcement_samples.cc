@@ -65,8 +65,8 @@ void GetBucketEncryptionEnforcementConfig(
                      encryption.customer_supplied_encryption_enforcement_config)
               << "\n";
   }
-  //! [get bucket encryption enforcement config]
   //! [END storage_get_bucket_encryption_enforcement_config]
+  //! [get bucket encryption enforcement config]
   (std::move(client), argv.at(0));
 }
 
@@ -127,8 +127,8 @@ void SetBucketEncryptionEnforcementConfig(
               << create_bucket("rc-" + bucket_name, csek_encryption)->name()
               << " created with a policy to restrict CSEK.\n";
   }
-  //! [set bucket encryption enforcement config]
   //! [END storage_set_bucket_encryption_enforcement_config]
+  //! [set bucket encryption enforcement config]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -171,8 +171,8 @@ void UpdateBucketEncryptionEnforcementConfig(
               << "GMEK is now fully restricted, and CMEK enforcement has been "
                  "removed.\n";
   }
-  //! [update bucket encryption enforcement config]
   //! [END storage_update_bucket_encryption_enforcement_config]
+  //! [update bucket encryption enforcement config]
   (std::move(client), argv.at(0));
 }
 
