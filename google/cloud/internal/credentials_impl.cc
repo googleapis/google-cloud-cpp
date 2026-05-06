@@ -106,6 +106,11 @@ ApiKeyConfig::ApiKeyConfig(std::string api_key, Options opts)
 ComputeEngineCredentialsConfig::ComputeEngineCredentialsConfig(Options opts)
     : options_(PopulateAuthOptions(std::move(opts))) {}
 
+AuthorizedUserConfig::AuthorizedUserConfig(std::string json_object,
+                                           Options opts)
+    : json_object_(std::move(json_object)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

@@ -124,6 +124,17 @@ TEST(Credentials, ApiKeyCredentials) {
   EXPECT_EQ("api-key", visitor.api_key);
 }
 
+TEST(Credentials, AuthorizedUserCredentials) {
+  auto credentials = experimental::MakeUserAccountCredentials(
+      "test-only-invalid", Options{}.set<ScopesOption>({"scope1", "scope2"}));
+  TestCredentialsVisitor visitor;
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  ASSERT_EQ("AuthorizedUserConfig", visitor.name);
+  EXPECT_EQ("test-only-invalid", visitor.json_object);
+  EXPECT_THAT(visitor.options.get<ScopesOption>(),
+              ElementsAre("scope1", "scope2"));
+}
+
 TEST(PopulateAuthOptions, EmptyOptions) {
   auto result_options = PopulateAuthOptions(Options{});
 

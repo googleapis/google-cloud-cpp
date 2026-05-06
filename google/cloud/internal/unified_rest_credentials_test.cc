@@ -438,6 +438,44 @@ TEST(UnifiedRestCredentialsTest, ServiceAccount) {
   EXPECT_EQ(access_token->token, *jwt);
 }
 
+TEST(UnifiedRestCredentialsTest, AuthorizedUser) {
+  auto const token_uri = std::string{"https://user-refresh.example.com"};
+  auto const contents = nlohmann::json{
+      {"client_id", "a-client-id.example.com"},
+      {"client_secret", "a-123456ABCDEF"},
+      {"refresh_token", "1/THETOKEN"},
+      {"type", "authorized_user"},
+      {"token_uri", token_uri},
+  };
+
+  auto const now = std::chrono::system_clock::now();
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce([token_uri]() {
+    auto client = std::make_unique<MockRestClient>();
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto expected_request = Property(&RestRequest::path, token_uri);
+    auto expected_form_data = MatcherCast<FormDataType const&>(IsSupersetOf({
+        Pair("grant_type", "refresh_token"),
+        Pair("client_id", "a-client-id.example.com"),
+        Pair("client_secret", "a-123456ABCDEF"),
+        Pair("refresh_token", "1/THETOKEN"),
+    }));
+    EXPECT_CALL(*client, Post(_, expected_request, expected_form_data))
+        .WillOnce(Return(
+            Status{StatusCode::kPermissionDenied, "uh-oh - user refresh"}));
+    return client;
+  });
+
+  auto const config =
+      internal::AuthorizedUserConfig(contents.dump(), Options{});
+  auto credentials = MapCredentials(config, client_factory.AsStdFunction());
+
+  auto access_token = credentials->GetToken(now);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kPermissionDenied, "uh-oh - user refresh"));
+}
+
 TEST(UnifiedRestCredentialsTest, ExternalAccount) {
   // This sets up a mocked request for the subject token.
   auto const subject_url = std::string{"https://test-only-oidc.example.com/"};

@@ -41,6 +41,7 @@ class ServiceAccountConfig;
 class ExternalAccountConfig;
 class ApiKeyConfig;
 class ComputeEngineCredentialsConfig;
+class AuthorizedUserConfig;
 
 std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status);
 
@@ -56,6 +57,7 @@ class CredentialsVisitor {
   virtual void visit(ExternalAccountConfig const&) = 0;
   virtual void visit(ApiKeyConfig const&) = 0;
   virtual void visit(ComputeEngineCredentialsConfig const&) = 0;
+  virtual void visit(AuthorizedUserConfig const&) = 0;
 
   static void dispatch(Credentials const& credentials,
                        CredentialsVisitor& visitor);
@@ -203,6 +205,21 @@ class ComputeEngineCredentialsConfig : public Credentials {
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
+  Options options_;
+};
+
+class AuthorizedUserConfig : public Credentials {
+ public:
+  AuthorizedUserConfig(std::string json_object, Options opts);
+  ~AuthorizedUserConfig() override = default;
+
+  std::string const& json_object() const { return json_object_; }
+  Options const& options() const { return options_; }
+
+ private:
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+
+  std::string json_object_;
   Options options_;
 };
 

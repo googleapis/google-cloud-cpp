@@ -72,6 +72,11 @@ struct TestCredentialsVisitor : public internal::CredentialsVisitor {
     name = "ComputeEngineCredentialsConfig";
     options = cfg.options();
   }
+  void visit(internal::AuthorizedUserConfig const& cfg) override {
+    name = "AuthorizedUserConfig";
+    json_object = cfg.json_object();
+    options = cfg.options();
+  }
 };
 
 }  // namespace testing_util
