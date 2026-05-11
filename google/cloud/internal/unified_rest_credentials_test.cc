@@ -525,6 +525,16 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
               StatusIs(StatusCode::kPermissionDenied, "uh-oh - STS exchange"));
 }
 
+TEST(UnifiedRestCredentialsTest, AuthorizedUserParseError) {
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+
+  auto const config = internal::AuthorizedUserConfig("invalid-json", Options{});
+  auto credentials = MapCredentials(config, client_factory.AsStdFunction());
+  auto access_token = credentials->GetToken(std::chrono::system_clock::now());
+  EXPECT_THAT(access_token, Not(IsOk()));
+}
+
 TEST(UnifiedRestCredentialsTest, ApiKey) {
   auto creds = MakeApiKeyCredentials("api-key");
   ASSERT_THAT(creds, NotNull());

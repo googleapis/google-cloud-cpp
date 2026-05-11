@@ -164,8 +164,8 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       }
       auto creds = std::make_shared<oauth2_internal::AuthorizedUserCredentials>(
           *info, cfg.options(), client_factory_);
-      result = Decorate(std::move(creds), std::move(client_factory_),
-                        cfg.options());
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }
 
    private:
