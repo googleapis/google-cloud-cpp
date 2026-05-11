@@ -55,10 +55,11 @@ review the [Authentication methods at Google][authentication-quickstart].
    project. As it is often the case with C++ libraries, compiling these
    dependencies may take several minutes.
 
-1. Run the example, changing the placeholder(s) to appropriate values:
+1. Run the example, changing the placeholder(s) to appropriate values (the app
+   profile ID is optional):
 
    ```bash
-   bazel run :quickstart -- [GCP PROJECT] [CLOUD BIGTABLE INSTANCE] [CLOUD BIGTABLE TABLE]
+   bazel run :quickstart -- [GCP PROJECT] [CLOUD BIGTABLE INSTANCE] [CLOUD BIGTABLE TABLE] [[APP PROFILE ID]]
    ```
 
 ## Using with CMake
@@ -92,10 +93,11 @@ review the [Authentication methods at Google][authentication-quickstart].
    cmake --build .build
    ```
 
-1. Run the example, changing the placeholder(s) to appropriate values:
+1. Run the example, changing the placeholder(s) to appropriate values (the app
+   profile ID is optional):
 
    ```bash
-   .build/quickstart [GCP PROJECT] [CLOUD BIGTABLE INSTANCE] [CLOUD BIGTABLE TABLE]
+   .build/quickstart [GCP PROJECT] [CLOUD BIGTABLE INSTANCE] [CLOUD BIGTABLE TABLE] [[APP PROFILE ID]]
    ```
 
 ## Platform Specific Notes
