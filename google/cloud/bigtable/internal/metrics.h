@@ -73,11 +73,10 @@ bool IsConnectivityError(google::cloud::Status const& status,
 absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context);
-absl::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromTrailingMetadata(
+// Retrieve the peer info from server headers or trailers. Returns nullopt if
+// not found or decoding or parsing fails.
+std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
     grpc::ClientContext const& client_context);
-std::string TransportTypeToString(
-    google::bigtable::v2::PeerInfo::TransportType type);
-
 absl::optional<double> GetServerLatencyFromInitialMetadata(
     grpc::ClientContext const& client_context);
 

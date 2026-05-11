@@ -115,45 +115,31 @@ GetResponseParamsFromTrailingMetadata(
   return absl::nullopt;
 }
 
-absl::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromTrailingMetadata(
+std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
     grpc::ClientContext const& client_context) {
-  auto metadata = client_context.GetServerTrailingMetadata();
-  // Base64 encoded peer info header key defined by the server.
-  auto iter = metadata.find("bigtable-peer-info");
-  if (iter == metadata.end()) return absl::nullopt;
+  // The peer info is sent in the initial metadata and encoded in WebSafeBase64.
   std::string decoded;
-  if (!absl::Base64Unescape(
-          absl::string_view{iter->second.data(), iter->second.size()},
+  auto const& init_metadata = client_context.GetServerInitialMetadata();
+  auto iter_init = init_metadata.find("bigtable-peer-info");
+  if (iter_init == init_metadata.end() ||
+      !absl::WebSafeBase64Unescape(
+          absl::string_view{iter_init->second.data(), iter_init->second.size()},
           &decoded)) {
-    return absl::nullopt;
+    // Find it in trailing metadata if not found in initial metadata or failed
+    // to decode.
+    auto const& trailing_metadata = client_context.GetServerTrailingMetadata();
+    auto iter_trailing = trailing_metadata.find("bigtable-peer-info");
+    if (iter_trailing == trailing_metadata.end() ||
+        !absl::WebSafeBase64Unescape(
+            absl::string_view{iter_trailing->second.data(),
+                              iter_trailing->second.size()},
+            &decoded)) {
+      return std::nullopt;
+    }
   }
   google::bigtable::v2::PeerInfo p;
   if (p.ParseFromString(decoded)) return p;
-  return absl::nullopt;
-}
-
-std::string TransportTypeToString(
-    google::bigtable::v2::PeerInfo::TransportType type) {
-  switch (type) {
-    case google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_UNKNOWN:
-      return "transport_type_unknown";
-    case google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_EXTERNAL:
-      return "transport_type_external";
-    case google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_CLOUD_PATH:
-      return "transport_type_cloud_path";
-    case google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_DIRECT_ACCESS:
-      return "transport_type_direct_access";
-    case google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_SESSION_UNKNOWN:
-      return "transport_type_session_unknown";
-    case google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_SESSION_EXTERNAL:
-      return "transport_type_session_external";
-    case google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_SESSION_CLOUD_PATH:
-      return "transport_type_session_cloud_path";
-    case google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_SESSION_DIRECT_ACCESS:
-      return "transport_type_session_direct_access";
-    default:
-      return "transport_type_unknown";
-  }
+  return std::nullopt;
 }
 
 absl::optional<double> GetServerLatencyFromInitialMetadata(
@@ -252,7 +238,7 @@ AttemptLatency::AttemptLatency(
 
 void AttemptLatency::PreCall(opentelemetry::context::Context const&,
                              PreCallParams const& p) {
-  attempt_start_ = std::move(p.attempt_start);
+  attempt_start_ = p.attempt_start;
 }
 
 void AttemptLatency::PostCall(opentelemetry::context::Context const& context,
@@ -289,7 +275,7 @@ AttemptLatency2::AttemptLatency2(
 
 void AttemptLatency2::PreCall(opentelemetry::context::Context const&,
                               PreCallParams const& p) {
-  attempt_start_ = std::move(p.attempt_start);
+  attempt_start_ = p.attempt_start;
 }
 
 void AttemptLatency2::PostCall(opentelemetry::context::Context const& context,
@@ -300,10 +286,12 @@ void AttemptLatency2::PostCall(opentelemetry::context::Context const& context,
     resource_labels_.cluster = response_params->cluster_id();
     resource_labels_.zone = response_params->zone_id();
   }
-  auto peer_info = GetPeerInfoFromTrailingMetadata(client_context);
-  peer_info_labels_.transport_type = TransportTypeToString(
-      peer_info ? peer_info->transport_type()
-                : google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_UNKNOWN);
+
+  auto peer_info = GetPeerInfoFromServerMetadata(client_context);
+  peer_info_labels_.transport_type =
+      absl::AsciiStrToLower(google::bigtable::v2::PeerInfo::TransportType_Name(
+          peer_info ? peer_info->transport_type()
+                    : google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_UNKNOWN));
   if (peer_info) {
     peer_info_labels_.transport_region =
         peer_info->application_frontend_region();

@@ -287,20 +287,68 @@ TEST(GetResponseParamsFromMetadata, EmptyHeader) {
   EXPECT_FALSE(result);
 }
 
-TEST(GetPeerInfoFromMetadata, NonEmptyHeader) {
-  google::bigtable::v2::PeerInfo expected_peer_info;
-  expected_peer_info.set_transport_type(
-      google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_DIRECT_ACCESS);
-  expected_peer_info.set_application_frontend_region("my-region");
-  expected_peer_info.set_application_frontend_subzone("my-subzone");
-  grpc::ClientContext client_context;
+struct CreateServerMetadataOptions {
+  bool include_peer_info = true;
+  bool include_response_params = true;
+};
+
+// Helper function to create server metadata by populating the initial and
+// trailers based on the options.
+void CreateServerMetadata(grpc::ClientContext& client_context,
+                          CreateServerMetadataOptions const& options =
+                              CreateServerMetadataOptions{}) {
   RpcMetadata server_metadata;
+  if (options.include_peer_info) {
+    google::bigtable::v2::PeerInfo peer_info;
+    peer_info.set_transport_type(
+        google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_DIRECT_ACCESS);
+    peer_info.set_application_frontend_region("my-region");
+    peer_info.set_application_frontend_subzone("my-subzone");
+    server_metadata.headers.emplace(
+        "bigtable-peer-info",
+        absl::WebSafeBase64Escape(peer_info.SerializeAsString()));
+  }
+  if (options.include_response_params) {
+    google::bigtable::v2::ResponseParams expected_response_params;
+    expected_response_params.set_cluster_id("my-cluster");
+    expected_response_params.set_zone_id("my-zone");
+    server_metadata.trailers.emplace(
+        "x-goog-ext-425905942-bin",
+        expected_response_params.SerializeAsString());
+  }
+
+  SetServerMetadata(client_context, server_metadata);
+}
+
+TEST(GetPeerInfoFromMetadata, NonEmptyHeaderInitial) {
+  grpc::ClientContext client_context;
+  CreateServerMetadata(client_context,
+                       CreateServerMetadataOptions{true, false});
+
+  auto result = GetPeerInfoFromServerMetadata(client_context);
+  ASSERT_TRUE(result);
+  EXPECT_THAT(result->transport_type(),
+              Eq(google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_DIRECT_ACCESS));
+  EXPECT_THAT(result->application_frontend_region(), Eq("my-region"));
+  EXPECT_THAT(result->application_frontend_subzone(), Eq("my-subzone"));
+}
+
+TEST(GetPeerInfoFromMetadata, NonEmptyHeaderTrailers) {
+  grpc::ClientContext client_context;
+  google::bigtable::v2::PeerInfo peer_info;
+  peer_info.set_transport_type(
+      google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_DIRECT_ACCESS);
+  peer_info.set_application_frontend_region("my-region");
+  peer_info.set_application_frontend_subzone("my-subzone");
+  RpcMetadata server_metadata;
+  // Set the trailers instead of headers to test that the function handles
+  // both.
   server_metadata.trailers.emplace(
       "bigtable-peer-info",
-      absl::Base64Escape(expected_peer_info.SerializeAsString()));
+      absl::WebSafeBase64Escape(peer_info.SerializeAsString()));
   SetServerMetadata(client_context, server_metadata);
 
-  auto result = GetPeerInfoFromTrailingMetadata(client_context);
+  auto result = GetPeerInfoFromServerMetadata(client_context);
   ASSERT_TRUE(result);
   EXPECT_THAT(result->transport_type(),
               Eq(google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_DIRECT_ACCESS));
@@ -310,20 +358,20 @@ TEST(GetPeerInfoFromMetadata, NonEmptyHeader) {
 
 TEST(GetPeerInfoFromMetadata, EmptyHeader) {
   grpc::ClientContext client_context;
-  RpcMetadata server_metadata;
-  SetServerMetadata(client_context, server_metadata);
+  // The server metadata is empty when both options are false.
+  CreateServerMetadata(client_context,
+                       CreateServerMetadataOptions{false, false});
 
-  EXPECT_THAT(GetPeerInfoFromTrailingMetadata(client_context),
-              Eq(absl::nullopt));
+  EXPECT_THAT(GetPeerInfoFromServerMetadata(client_context), Eq(std::nullopt));
 }
 
-TEST(GetPeerInfoFromMetadata, EmptyString) {
+TEST(GetPeerInfoFromMetadata, EmptyStringInitial) {
   grpc::ClientContext client_context;
   RpcMetadata server_metadata;
-  server_metadata.trailers.emplace("bigtable-peer-info", "");
+  server_metadata.headers.emplace("bigtable-peer-info", "");
   SetServerMetadata(client_context, server_metadata);
 
-  auto result = GetPeerInfoFromTrailingMetadata(client_context);
+  auto result = GetPeerInfoFromServerMetadata(client_context);
   ASSERT_TRUE(result);
   EXPECT_THAT(result->transport_type(),
               Eq(google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_UNKNOWN));
@@ -331,14 +379,62 @@ TEST(GetPeerInfoFromMetadata, EmptyString) {
   EXPECT_THAT(result->application_frontend_subzone(), Eq(""));
 }
 
-TEST(GetPeerInfoFromMetadata, InvalidBase64) {
+TEST(GetPeerInfoFromMetadata, EmptyStringTrailers) {
   grpc::ClientContext client_context;
   RpcMetadata server_metadata;
-  server_metadata.trailers.emplace("bigtable-peer-info", "invalid-base64!");
+  server_metadata.trailers.emplace("bigtable-peer-info", "");
   SetServerMetadata(client_context, server_metadata);
 
-  EXPECT_THAT(GetPeerInfoFromTrailingMetadata(client_context),
-              Eq(absl::nullopt));
+  auto result = GetPeerInfoFromServerMetadata(client_context);
+  ASSERT_TRUE(result);
+  EXPECT_THAT(result->transport_type(),
+              Eq(google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_UNKNOWN));
+  EXPECT_THAT(result->application_frontend_region(), Eq(""));
+  EXPECT_THAT(result->application_frontend_subzone(), Eq(""));
+}
+
+TEST(GetPeerInfoFromMetadata, InvalidBase64Initial) {
+  {
+    grpc::ClientContext client_context;
+    RpcMetadata server_metadata;
+    server_metadata.headers.emplace("bigtable-peer-info", "invalid-base64!");
+    SetServerMetadata(client_context, server_metadata);
+
+    EXPECT_THAT(GetPeerInfoFromServerMetadata(client_context),
+                Eq(std::nullopt));
+  }
+  {
+    grpc::ClientContext client_context;
+    RpcMetadata server_metadata;
+    server_metadata.headers.emplace("bigtable-peer-info",
+                                    "invalid+websafe/base64");
+    SetServerMetadata(client_context, server_metadata);
+
+    EXPECT_THAT(GetPeerInfoFromServerMetadata(client_context),
+                Eq(std::nullopt));
+  }
+}
+
+TEST(GetPeerInfoFromMetadata, InvalidBase64Trailers) {
+  {
+    grpc::ClientContext client_context;
+    RpcMetadata server_metadata;
+    server_metadata.trailers.emplace("bigtable-peer-info", "invalid-base64!");
+    SetServerMetadata(client_context, server_metadata);
+
+    EXPECT_THAT(GetPeerInfoFromServerMetadata(client_context),
+                Eq(std::nullopt));
+  }
+  {
+    grpc::ClientContext client_context;
+    RpcMetadata server_metadata;
+    server_metadata.trailers.emplace("bigtable-peer-info",
+                                     "invalid+websafe/base64");
+    SetServerMetadata(client_context, server_metadata);
+
+    EXPECT_THAT(GetPeerInfoFromServerMetadata(client_context),
+                Eq(std::nullopt));
+  }
 }
 
 std::unordered_map<std::string, std::string> MakeAttributesMap(
@@ -355,41 +451,6 @@ std::unordered_map<std::string, std::string> MakeAttributesMap(
     return true;
   });
   return m;
-}
-
-struct CreateServerMetadataOptions {
-  bool include_peer_info = true;
-  bool include_response_params = true;
-};
-
-// Helper function to create server metadata by populating the trailers based on
-// the options.
-void CreateServerMetadata(grpc::ClientContext& client_context,
-                          CreateServerMetadataOptions const& options =
-                              CreateServerMetadataOptions{}) {
-  RpcMetadata server_metadata;
-  if (options.include_peer_info) {
-    google::bigtable::v2::PeerInfo peer_info;
-    peer_info.set_transport_type(
-        google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_DIRECT_ACCESS);
-    peer_info.set_application_frontend_region("my-region");
-    peer_info.set_application_frontend_subzone("my-subzone");
-    server_metadata.trailers.emplace(
-        "bigtable-peer-info",
-        absl::Base64Escape(peer_info.SerializeAsString()));
-  }
-  if (options.include_response_params) {
-    google::bigtable::v2::ResponseParams expected_response_params;
-    expected_response_params.set_cluster_id("my-cluster");
-    expected_response_params.set_zone_id("my-zone");
-    server_metadata.trailers.emplace(
-        "x-goog-ext-425905942-bin",
-        expected_response_params.SerializeAsString());
-  }
-
-  if (!server_metadata.trailers.empty()) {
-    SetServerMetadata(client_context, server_metadata);
-  }
 }
 
 void SetClusterZone(grpc::ClientContext& client_context) {
