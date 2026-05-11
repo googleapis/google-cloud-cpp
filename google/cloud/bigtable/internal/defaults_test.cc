@@ -504,7 +504,7 @@ TEST(EndpointEnvTest, CloudDirectPathEnabled) {
   ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", absl::nullopt);
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("c2p:///bigtable.googleapis.com",
+  EXPECT_EQ("google-c2p:///bigtable.googleapis.com",
             opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
   EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
   // Admin endpoints are not affected.
@@ -525,7 +525,7 @@ TEST(EndpointEnvTest, BigtableDirectPathEnabled) {
   ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "true");
 
   auto opts = DefaultOptions();
-  EXPECT_EQ("c2p:///bigtable.googleapis.com",
+  EXPECT_EQ("google-c2p:///bigtable.googleapis.com",
             opts.get<::google::cloud::bigtable_internal::DataEndpointOption>());
   EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
   // Admin endpoints are not affected.
@@ -564,7 +564,8 @@ TEST(EndpointEnvTest, CloudDirectPathOverridesUserEndpoints) {
 
   auto opts = DefaultDataOptions(
       Options{}.set<EndpointOption>("ignored").set<AuthorityOption>("ignored"));
-  EXPECT_EQ("c2p:///bigtable.googleapis.com", opts.get<EndpointOption>());
+  EXPECT_EQ("google-c2p:///bigtable.googleapis.com",
+            opts.get<EndpointOption>());
   EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
 }
 
@@ -574,7 +575,8 @@ TEST(EndpointEnvTest, BigtableDirectPathOverridesUserEndpoints) {
 
   auto opts = DefaultDataOptions(
       Options{}.set<EndpointOption>("ignored").set<AuthorityOption>("ignored"));
-  EXPECT_EQ("c2p:///bigtable.googleapis.com", opts.get<EndpointOption>());
+  EXPECT_EQ("google-c2p:///bigtable.googleapis.com",
+            opts.get<EndpointOption>());
   EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
 }
 
