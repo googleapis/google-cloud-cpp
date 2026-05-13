@@ -605,6 +605,14 @@ struct ReturnPartialSuccess
   }
 };
 
+struct DeleteSourceObjects
+    : public internal::WellKnownParameter<DeleteSourceObjects, bool> {
+  using WellKnownParameter<DeleteSourceObjects, bool>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "deleteSourceObjects";
+  }
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
