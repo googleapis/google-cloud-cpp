@@ -371,6 +371,9 @@ StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
         request.GetOption<storage::IfMetagenerationMatch>().value());
   }
   result.set_kms_key(request.GetOption<storage::KmsKeyName>().value_or(""));
+  if (request.GetOption<storage::DeleteSourceObjects>().value_or(false)) {
+    result.set_delete_source_objects(true);
+  }
   return result;
 }
 
