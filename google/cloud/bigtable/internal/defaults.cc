@@ -186,7 +186,7 @@ Options DefaultOptions(Options opts) {
   // Set the specific data endpoints if Direct Path is enabled.
   if (IsDirectPath()) {
     opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-            "c2p:///bigtable.googleapis.com")
+            "google-c2p:///bigtable.googleapis.com")
         .set<AuthorityOption>("bigtable.googleapis.com");
   }
 
