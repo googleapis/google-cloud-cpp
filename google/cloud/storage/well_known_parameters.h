@@ -605,6 +605,9 @@ struct ReturnPartialSuccess
   }
 };
 
+/**
+ * Controls if the source objects should be deleted after a successful compose.
+ */
 struct DeleteSourceObjects
     : public internal::WellKnownParameter<DeleteSourceObjects, bool> {
   using WellKnownParameter<DeleteSourceObjects, bool>::WellKnownParameter;
