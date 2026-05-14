@@ -7,7 +7,21 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.5.0 - TBD
+## v3.5.0 - 2026-05
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- fix(bigtable): treat NOT_FOUND and PERMISSION_DENIED on channel refresh as success ([#16086](https://github.com/googleapis/google-cloud-cpp/pull/16086))
+- feat(bigtable): add DeadlineOption ([#16085](https://github.com/googleapis/google-cloud-cpp/pull/16085))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): Reset write offset on gRPC BidiWriteObject resumable uploads ([#16083](https://github.com/googleapis/google-cloud-cpp/pull/16083))
+- fix(storage): Handle request transformation after gRPC BidiWriteObject redirects ([#16073](https://github.com/googleapis/google-cloud-cpp/pull/16073))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-04-22T13:12:27-07:00](https://github.com/googleapis/googleapis/tree/20ac242a6b3a723cb10c1a0201209261addaf7d8)
 
 ## v3.4.0 - 2026-04
 
