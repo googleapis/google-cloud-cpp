@@ -147,6 +147,120 @@ NetworkSecurityAuth::DeleteAuthorizationPolicy(
   return child_->DeleteAuthorizationPolicy(context, options, request);
 }
 
+StatusOr<google::cloud::networksecurity::v1::
+             ListBackendAuthenticationConfigsResponse>
+NetworkSecurityAuth::ListBackendAuthenticationConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::
+        ListBackendAuthenticationConfigsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBackendAuthenticationConfigs(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+NetworkSecurityAuth::GetBackendAuthenticationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::
+        GetBackendAuthenticationConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBackendAuthenticationConfig(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncCreateBackendAuthenticationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        CreateBackendAuthenticationConfigRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateBackendAuthenticationConfig(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::CreateBackendAuthenticationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        CreateBackendAuthenticationConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackendAuthenticationConfig(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncUpdateBackendAuthenticationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        UpdateBackendAuthenticationConfigRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateBackendAuthenticationConfig(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::UpdateBackendAuthenticationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        UpdateBackendAuthenticationConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackendAuthenticationConfig(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncDeleteBackendAuthenticationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        DeleteBackendAuthenticationConfigRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteBackendAuthenticationConfig(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::DeleteBackendAuthenticationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        DeleteBackendAuthenticationConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackendAuthenticationConfig(context, options, request);
+}
+
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
 NetworkSecurityAuth::ListServerTlsPolicies(
     grpc::ClientContext& context, Options const& options,
@@ -371,6 +485,558 @@ NetworkSecurityAuth::DeleteClientTlsPolicy(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteClientTlsPolicy(context, options, request);
+}
+
+StatusOr<
+    google::cloud::networksecurity::v1::ListGatewaySecurityPoliciesResponse>
+NetworkSecurityAuth::ListGatewaySecurityPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::
+        ListGatewaySecurityPoliciesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGatewaySecurityPolicies(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+NetworkSecurityAuth::GetGatewaySecurityPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::GetGatewaySecurityPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGatewaySecurityPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncCreateGatewaySecurityPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateGatewaySecurityPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::CreateGatewaySecurityPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGatewaySecurityPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncUpdateGatewaySecurityPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateGatewaySecurityPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::UpdateGatewaySecurityPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGatewaySecurityPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncDeleteGatewaySecurityPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteGatewaySecurityPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::DeleteGatewaySecurityPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGatewaySecurityPolicy(context, options, request);
+}
+
+StatusOr<
+    google::cloud::networksecurity::v1::ListGatewaySecurityPolicyRulesResponse>
+NetworkSecurityAuth::ListGatewaySecurityPolicyRules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::
+        ListGatewaySecurityPolicyRulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGatewaySecurityPolicyRules(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+NetworkSecurityAuth::GetGatewaySecurityPolicyRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::
+        GetGatewaySecurityPolicyRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGatewaySecurityPolicyRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncCreateGatewaySecurityPolicyRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRuleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateGatewaySecurityPolicyRule(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::CreateGatewaySecurityPolicyRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGatewaySecurityPolicyRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncUpdateGatewaySecurityPolicyRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRuleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateGatewaySecurityPolicyRule(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::UpdateGatewaySecurityPolicyRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGatewaySecurityPolicyRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncDeleteGatewaySecurityPolicyRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRuleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteGatewaySecurityPolicyRule(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::DeleteGatewaySecurityPolicyRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGatewaySecurityPolicyRule(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::ListUrlListsResponse>
+NetworkSecurityAuth::ListUrlLists(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::ListUrlListsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListUrlLists(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::UrlList>
+NetworkSecurityAuth::GetUrlList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::GetUrlListRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetUrlList(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncCreateUrlList(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::CreateUrlListRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateUrlList(cq, *std::move(context),
+                                         std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetworkSecurityAuth::CreateUrlList(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateUrlListRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateUrlList(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncUpdateUrlList(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::UpdateUrlListRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateUrlList(cq, *std::move(context),
+                                         std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetworkSecurityAuth::UpdateUrlList(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateUrlListRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateUrlList(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncDeleteUrlList(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::DeleteUrlListRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteUrlList(cq, *std::move(context),
+                                         std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetworkSecurityAuth::DeleteUrlList(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteUrlListRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteUrlList(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::ListTlsInspectionPoliciesResponse>
+NetworkSecurityAuth::ListTlsInspectionPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::ListTlsInspectionPoliciesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListTlsInspectionPolicies(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+NetworkSecurityAuth::GetTlsInspectionPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::GetTlsInspectionPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetTlsInspectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncCreateTlsInspectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::CreateTlsInspectionPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateTlsInspectionPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::CreateTlsInspectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateTlsInspectionPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTlsInspectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncUpdateTlsInspectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::UpdateTlsInspectionPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateTlsInspectionPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::UpdateTlsInspectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateTlsInspectionPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTlsInspectionPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncDeleteTlsInspectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::DeleteTlsInspectionPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteTlsInspectionPolicy(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityAuth::DeleteTlsInspectionPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteTlsInspectionPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTlsInspectionPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::ListAuthzPoliciesResponse>
+NetworkSecurityAuth::ListAuthzPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::ListAuthzPoliciesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAuthzPolicies(context, options, request);
+}
+
+StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>
+NetworkSecurityAuth::GetAuthzPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networksecurity::v1::GetAuthzPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAuthzPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncCreateAuthzPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateAuthzPolicy(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetworkSecurityAuth::CreateAuthzPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAuthzPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncUpdateAuthzPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateAuthzPolicy(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetworkSecurityAuth::UpdateAuthzPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAuthzPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkSecurityAuth::AsyncDeleteAuthzPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteAuthzPolicy(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetworkSecurityAuth::DeleteAuthzPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAuthzPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

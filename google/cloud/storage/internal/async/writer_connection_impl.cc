@@ -248,9 +248,7 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
         .then([this](auto g) {
           auto result = g.get();
           google::rpc::Status grpc_status = ExtractGrpcStatus(result);
-          EnsureFirstMessageAppendObjectSpec(request_, grpc_status);
-          ApplyWriteRedirectErrors(*request_.mutable_append_object_spec(),
-                                   grpc_status);
+          HandleBidiWriteRedirect(request_, grpc_status);
           return StatusOr<std::int64_t>(std::move(result));
         });
   }

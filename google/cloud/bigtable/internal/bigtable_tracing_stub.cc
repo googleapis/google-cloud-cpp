@@ -17,6 +17,7 @@
 // source: google/bigtable/v2/bigtable.proto
 
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/async_streaming_read_rpc_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
@@ -150,6 +151,72 @@ BigtableTracingStub::ExecuteQuery(
   auto stream = child_->ExecuteQuery(context, options, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::bigtable::v2::ExecuteQueryResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
+StatusOr<google::bigtable::v2::ClientConfiguration>
+BigtableTracingStub::GetClientConfiguration(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
+                                     "GetClientConfiguration");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetClientConfiguration(context, options, request));
+}
+
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::bigtable::v2::SessionRequest,
+                               google::bigtable::v2::SessionResponse>>
+BigtableTracingStub::AsyncOpenTable(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "OpenTable");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->AsyncOpenTable(cq, context, std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::bigtable::v2::SessionRequest,
+                               google::bigtable::v2::SessionResponse>>
+BigtableTracingStub::AsyncOpenAuthorizedView(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
+                                     "OpenAuthorizedView");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream =
+      child_->AsyncOpenAuthorizedView(cq, context, std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::bigtable::v2::SessionRequest,
+                               google::bigtable::v2::SessionResponse>>
+BigtableTracingStub::AsyncOpenMaterializedView(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
+                                     "OpenMaterializedView");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream =
+      child_->AsyncOpenMaterializedView(cq, context, std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 

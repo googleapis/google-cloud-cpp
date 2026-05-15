@@ -25,6 +25,7 @@
 #include "google/cloud/internal/rest_client.h"
 #include "absl/strings/str_cat.h"
 #include <nlohmann/json.hpp>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -49,7 +50,40 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSource(
       GCP_ERROR_INFO().WithContext(ec));
 }
 
+std::variant<std::monostate, WorkforceIdentityFederationInfo,
+             WorkloadIdentityFederationInfo>
+IdentityFederationFromAudience(std::string const& audience) {
+  auto constexpr kWorkloadPattern =
+      R"""(iam.googleapis.com/projects/([^/]+)/locations/global/workloadIdentityPools/([^/]+)/)""";
+  static auto* workload_re =
+      new std::regex{kWorkloadPattern, std::regex::optimize};
+
+  auto constexpr kWorkforcePattern =
+      R"""(iam.googleapis.com/locations/global/workforcePools/([^/]+)/)""";
+  static auto* workforce_re =
+      new std::regex{kWorkforcePattern, std::regex::optimize};
+
+  std::smatch match;
+  if (std::regex_search(audience, match, *workload_re)) {
+    return WorkloadIdentityFederationInfo{match[1], match[2]};
+  }
+  if (std::regex_search(audience, match, *workforce_re)) {
+    return WorkforceIdentityFederationInfo{match[1]};
+  }
+  return std::monostate{};
+}
+
 }  // namespace
+
+bool ExternalAccountInfo::IsWorkforceIdentityFederation() const {
+  return std::holds_alternative<WorkforceIdentityFederationInfo>(
+      identity_federation_info);
+}
+
+bool ExternalAccountInfo::IsWorkloadIdentityFederation() const {
+  return std::holds_alternative<WorkloadIdentityFederationInfo>(
+      identity_federation_info);
+}
 
 /// Parse a JSON string with an external account configuration.
 StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
@@ -70,6 +104,8 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
 
   auto audience = ValidateStringField(json, "audience", "credentials-file", ec);
   if (!audience) return std::move(audience).status();
+  auto identity_federation = IdentityFederationFromAudience(*audience);
+
   auto subject_token_type =
       ValidateStringField(json, "subject_token_type", "credentials-file", ec);
   if (!subject_token_type) return std::move(subject_token_type).status();
@@ -108,7 +144,8 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
                                   *std::move(source),
                                   absl::nullopt,
                                   *std::move(universe_domain),
-                                  std::move(workforce_pool_user_project)};
+                                  std::move(workforce_pool_user_project),
+                                  std::move(identity_federation)};
 
   it = json.find("service_account_impersonation_url");
   if (it == json.end()) return info;
@@ -161,7 +198,8 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
   // Workforce Identity is handled at the org level and requires the userProject
   // header. Workload Identity is handled at the project level and doesn't
   // require the header.
-  if (info_.workforce_pool_user_project) {
+  if (info_.IsWorkforceIdentityFederation() &&
+      info_.workforce_pool_user_project.has_value()) {
     form_data.emplace_back(
         "options", absl::StrCat(R"({"userProject": ")",
                                 *info_.workforce_pool_user_project, R"("})"));
@@ -219,6 +257,25 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
       ValidateIntField(access, "expires_in", "token-exchange-response", ec);
   if (!expires_in) return std::move(expires_in).status();
   return AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
+}
+
+Credentials::AllowedLocationsRequestType
+ExternalAccountCredentials::AllowedLocationsRequest() const {
+  Credentials::AllowedLocationsRequestType request = std::monostate{};
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  if (info_.IsWorkforceIdentityFederation()) {
+    auto wif = std::get<WorkforceIdentityFederationInfo>(
+        info_.identity_federation_info);
+    request = WorkforceIdentityAllowedLocationsRequest{wif.pool_id};
+  } else if (info_.IsWorkloadIdentityFederation()) {
+    auto wif = std::get<WorkloadIdentityFederationInfo>(
+        info_.identity_federation_info);
+    request =
+        WorkloadIdentityAllowedLocationsRequest{wif.project_id, wif.pool_id};
+  }
+#endif
+  return request;
 }
 
 StatusOr<AccessToken> ExternalAccountCredentials::GetTokenImpersonation(

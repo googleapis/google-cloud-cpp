@@ -56,6 +56,7 @@ using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Property;
 using ::testing::Return;
+using ::testing::VariantWith;
 
 using MockHttpClientFactory =
     ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
@@ -138,6 +139,10 @@ std::string MakeUniverseDomainTestContents() {
   return json.dump();
 }
 
+MATCHER_P(RequestServiceAccountEmailIs, email, "has service account email") {
+  return email == arg.service_account_email;
+}
+
 void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
                                       std::string const& assertion,
                                       std::time_t assertion_time) {
@@ -181,6 +186,15 @@ void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
   ASSERT_STATUS_OK(token);
   EXPECT_EQ(token->token, "access-token-value");
   EXPECT_EQ(token->expiration, tp + std::chrono::seconds(1234));
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<ServiceAccountAllowedLocationsRequest>(
+                  RequestServiceAccountEmailIs(kClientEmail)));
+#else
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate()));
+#endif
 }
 
 TEST(ServiceAccountCredentialsTest, ServiceAccountUseOAuth) {

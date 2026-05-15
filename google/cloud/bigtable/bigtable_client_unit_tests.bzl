@@ -72,6 +72,7 @@ bigtable_client_unit_tests = [
     "mocks/mock_row_reader_test.cc",
     "mutation_batcher_test.cc",
     "mutations_test.cc",
+    "options_test.cc",
     "polling_policy_test.cc",
     "prepared_query_test.cc",
     "query_row_test.cc",

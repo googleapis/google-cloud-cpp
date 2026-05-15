@@ -21,6 +21,8 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/status_payload_keys.h"
+#include "google/cloud/status.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
@@ -70,35 +72,14 @@ std::shared_ptr<storage::AsyncConnection> MakeTestConnection(
                              TestOptions(std::move(options)));
 }
 
-// Creates a mock bidirectional stream that simulates a successful append flow.
-std::unique_ptr<AsyncBidiWriteObjectStream> MakeSuccessfulAppendStream(
+// Creates a mock bidirectional stream with common expectations for append
+// flows.
+std::unique_ptr<MockAsyncBidiWriteObjectStream> MakeCommonAppendStream(
     AsyncSequencer<bool>& sequencer, std::int64_t persisted_size) {
   auto stream = std::make_unique<MockAsyncBidiWriteObjectStream>();
   EXPECT_CALL(*stream, Start).WillOnce([&] {
     return sequencer.PushBack("Start");
   });
-  // The first write is a "state lookup" write. It should not contain a payload.
-  // The server responds with the current persisted size of the object.
-  EXPECT_CALL(*stream, Write)
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
-                    grpc::WriteOptions wopt) {
-        EXPECT_TRUE(request.state_lookup());
-        EXPECT_FALSE(wopt.is_last_message());
-        return sequencer.PushBack("Write(StateLookup)");
-      })
-      // Subsequent writes carry data.
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const&,
-                    grpc::WriteOptions wopt) {
-        EXPECT_FALSE(wopt.is_last_message());
-        return sequencer.PushBack("Write(data)");
-      })
-      // The finalize write marks the end of the stream.
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
-                    grpc::WriteOptions wopt) {
-        EXPECT_TRUE(request.finish_write());
-        EXPECT_TRUE(wopt.is_last_message());
-        return sequencer.PushBack("Write(Finalize)");
-      });
 
   // The first `Read()` call after the state lookup confirms the persisted size.
   EXPECT_CALL(*stream, Read)
@@ -129,8 +110,111 @@ std::unique_ptr<AsyncBidiWriteObjectStream> MakeSuccessfulAppendStream(
   EXPECT_CALL(*stream, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
   });
+  return stream;
+}
 
-  return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
+std::unique_ptr<AsyncBidiWriteObjectStream> MakeRedirectAppendStream(
+    AsyncSequencer<bool>& sequencer, std::int64_t persisted_size,
+    absl::string_view expected_handle, std::int64_t expected_generation,
+    absl::string_view expected_routing_token) {
+  auto stream = MakeCommonAppendStream(sequencer, persisted_size);
+  // The first write is a "state lookup" write. It should not contain a payload.
+  // The server responds with the current persisted size of the object.
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&sequencer, expected_handle, expected_generation,
+                 expected_routing_token](
+                    google::storage::v2::BidiWriteObjectRequest const& request,
+                    grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.state_lookup());
+        EXPECT_FALSE(wopt.is_last_message());
+        EXPECT_TRUE(request.has_append_object_spec());
+        EXPECT_EQ(request.append_object_spec().write_handle().handle(),
+                  expected_handle);
+        EXPECT_EQ(request.append_object_spec().generation(),
+                  expected_generation);
+        EXPECT_EQ(request.append_object_spec().routing_token(),
+                  expected_routing_token);
+        return sequencer.PushBack("Write(StateLookup)");
+      })
+      // Subsequent writes carry data.
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const&,
+                    grpc::WriteOptions wopt) {
+        EXPECT_FALSE(wopt.is_last_message());
+        return sequencer.PushBack("Write(data)");
+      })
+      // The finalize write marks the end of the stream.
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
+                    grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        return sequencer.PushBack("Write(Finalize)");
+      });
+  return stream;
+}
+
+std::unique_ptr<AsyncBidiWriteObjectStream> MakeRedirectAppendStreamNoHandle(
+    AsyncSequencer<bool>& sequencer, std::int64_t persisted_size,
+    absl::string_view expected_bucket, absl::string_view expected_object_name) {
+  auto stream = MakeCommonAppendStream(sequencer, persisted_size);
+  // The first write is a "state lookup" write. It should not contain a payload.
+  // The server responds with the current persisted size of the object.
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&sequencer, expected_bucket, expected_object_name](
+                    google::storage::v2::BidiWriteObjectRequest const& request,
+                    grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.state_lookup());
+        EXPECT_FALSE(wopt.is_last_message());
+        EXPECT_FALSE(request.has_append_object_spec());
+        EXPECT_TRUE(request.has_write_object_spec());
+        EXPECT_EQ(request.write_object_spec().resource().name(),
+                  expected_object_name);
+        EXPECT_EQ(request.write_object_spec().resource().bucket(),
+                  expected_bucket);
+        return sequencer.PushBack("Write(StateLookup)");
+      })
+      // Subsequent writes carry data.
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const&,
+                    grpc::WriteOptions wopt) {
+        EXPECT_FALSE(wopt.is_last_message());
+        return sequencer.PushBack("Write(data)");
+      })
+      // The finalize write marks the end of the stream.
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
+                    grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        return sequencer.PushBack("Write(Finalize)");
+      });
+  return stream;
+}
+
+// Creates a mock bidirectional stream that simulates a successful append flow.
+std::unique_ptr<AsyncBidiWriteObjectStream> MakeSuccessfulAppendStream(
+    AsyncSequencer<bool>& sequencer, std::int64_t persisted_size) {
+  auto stream = MakeCommonAppendStream(sequencer, persisted_size);
+  // The first write is a "state lookup" write. It should not contain a payload.
+  // The server responds with the current persisted size of the object.
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
+                    grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.state_lookup());
+        EXPECT_FALSE(wopt.is_last_message());
+        return sequencer.PushBack("Write(StateLookup)");
+      })
+      // Subsequent writes carry data.
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const&,
+                    grpc::WriteOptions wopt) {
+        EXPECT_FALSE(wopt.is_last_message());
+        return sequencer.PushBack("Write(data)");
+      })
+      // The finalize write marks the end of the stream.
+      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
+                    grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        return sequencer.PushBack("Write(Finalize)");
+      });
+  return stream;
 }
 
 // Creates a mock stream that returns an error.
@@ -346,6 +430,201 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadPermanentError) {
 
   auto r = pending.get();
   EXPECT_THAT(r, StatusIs(PermanentError().code()));
+}
+
+TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirect) {
+  auto constexpr kRequestText = R"pb(
+    write_object_spec {
+      resource {
+        bucket: "projects/_/buckets/test-bucket"
+        name: "test-object"
+        content_type: "text/plain"
+      }
+    }
+  )pb";
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+
+  google::rpc::Status rpc_status;
+  rpc_status.set_code(static_cast<int>(StatusCode::kAborted));
+  rpc_status.set_message("redirect");
+  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.mutable_write_handle()->set_handle("redirect-handle");
+  redirect.set_routing_token("redirect-token");
+  redirect.set_generation(4321);
+  rpc_status.add_details()->PackFrom(redirect);
+  std::string rpc_status_payload;
+  ASSERT_TRUE(rpc_status.SerializeToString(&rpc_status_payload));
+  Status status(StatusCode::kAborted, "redirect");
+  internal::SetPayload(status, internal::StatusPayloadGrpcProto(),
+                       rpc_status_payload);
+
+  // Simulate one redirect failure, followed by a success.
+  EXPECT_CALL(*mock, AsyncBidiWriteObject)
+      .WillOnce([&] { return MakeErrorBidiWriteStream(sequencer, status); })
+      .WillOnce([&] {
+        return MakeRedirectAppendStream(sequencer, 1024, "redirect-handle",
+                                        4321, "redirect-token");
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kRequestText, &request));
+  auto pending = connection->StartAppendableObjectUpload(
+      {std::move(request), connection->options()});
+
+  // First attempt fails with redirect.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);  // The stream fails to start.
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  // Retry attempt succeeds.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(StateLookup)");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(PersistedSize)");
+  next.first.set_value(true);
+
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto writer = *std::move(r);
+  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 1024);
+
+  // Write some data.
+  auto w1 = writer->Write(storage::WritePayload("some data"));
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(data)");
+  next.first.set_value(true);
+  EXPECT_STATUS_OK(w1.get());
+
+  // Finalize the upload.
+  auto w2 = writer->Finalize({});
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(Finalize)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(FinalObject)");
+  next.first.set_value(true);
+
+  auto response = w2.get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
+  EXPECT_EQ(response->name(), "test-object");
+  EXPECT_EQ(response->size(), 1024 + 1024);
+
+  writer.reset();
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirectNoHandle) {
+  auto constexpr kRequestText = R"pb(
+    write_object_spec {
+      resource {
+        bucket: "projects/_/buckets/test-bucket"
+        name: "test-object"
+        content_type: "text/plain"
+      }
+    }
+  )pb";
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+
+  google::rpc::Status rpc_status;
+  rpc_status.set_code(static_cast<int>(StatusCode::kAborted));
+  rpc_status.set_message("redirect");
+  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.set_routing_token("redirect-token");
+  redirect.set_generation(4321);
+  rpc_status.add_details()->PackFrom(redirect);
+  std::string rpc_status_payload;
+  ASSERT_TRUE(rpc_status.SerializeToString(&rpc_status_payload));
+  Status status(StatusCode::kAborted, "redirect");
+  internal::SetPayload(status, internal::StatusPayloadGrpcProto(),
+                       rpc_status_payload);
+
+  // Simulate one redirect failure, followed by a success.
+  EXPECT_CALL(*mock, AsyncBidiWriteObject)
+      .WillOnce([&] { return MakeErrorBidiWriteStream(sequencer, status); })
+      .WillOnce([&] {
+        return MakeRedirectAppendStreamNoHandle(
+            sequencer, 1024, "projects/_/buckets/test-bucket", "test-object");
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kRequestText, &request));
+  auto pending = connection->StartAppendableObjectUpload(
+      {std::move(request), connection->options()});
+
+  // First attempt fails with redirect.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);  // The stream fails to start.
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  // Retry attempt succeeds.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(StateLookup)");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(PersistedSize)");
+  next.first.set_value(true);
+
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto writer = *std::move(r);
+  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 1024);
+
+  // Write some data.
+  auto w1 = writer->Write(storage::WritePayload("some data"));
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(data)");
+  next.first.set_value(true);
+  EXPECT_STATUS_OK(w1.get());
+
+  // Finalize the upload.
+  auto w2 = writer->Finalize({});
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(Finalize)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(FinalObject)");
+  next.first.set_value(true);
+
+  auto response = w2.get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
+  EXPECT_EQ(response->name(), "test-object");
+  EXPECT_EQ(response->size(), 1024 + 1024);
+
+  writer.reset();
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
 }
 
 }  // namespace

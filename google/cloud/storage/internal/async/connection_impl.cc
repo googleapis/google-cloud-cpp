@@ -55,6 +55,7 @@
 #include "google/cloud/internal/async_streaming_read_rpc_timeout.h"
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
+#include <grpcpp/grpcpp.h>
 #include <memory>
 #include <utility>
 
@@ -231,19 +232,33 @@ AsyncConnectionImpl::Open(OpenParams p) {
 
   auto pending = factory(std::move(initial_request));
   using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
-  return pending.then(
-      [rp = std::move(resume_policy), fa = std::move(factory),
-       rs = std::move(p.read_spec),
-       options = std::move(p.options)](auto f) mutable -> StatusOr<ReturnType> {
-        auto result = f.get();
-        if (!result) return std::move(result).status();
+  return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
+                       rs = std::move(p.read_spec),
+                       options = std::move(p.options), refresh = refresh_](
+                          auto f) mutable -> StatusOr<ReturnType> {
+    auto result = f.get();
+    if (!result) return std::move(result).status();
 
-        auto impl = std::make_shared<ObjectDescriptorImpl>(
-            std::move(rp), std::move(fa), std::move(rs),
-            std::move(result->stream), std::move(options));
-        impl->Start(std::move(result->first_response));
-        return ReturnType(impl);
-      });
+    // The descriptor remains open if at least one gRPC channel is in a
+    // functional state. We consider READY, IDLE, and CONNECTING to be
+    // functional. TRANSIENT_FAILURE and SHUTDOWN are not included because they
+    // indicate a definitive loss of connectivity or terminal closure.
+    auto transport_ok = [refresh] {
+      if (!refresh) return true;
+      auto const& channels = refresh->channels();
+      return std::any_of(
+          channels.begin(), channels.end(), [](auto const& channel) {
+            auto state = channel->GetState(false);
+            return state == GRPC_CHANNEL_READY || state == GRPC_CHANNEL_IDLE ||
+                   state == GRPC_CHANNEL_CONNECTING;
+          });
+    };
+    auto impl = std::make_shared<ObjectDescriptorImpl>(
+        std::move(rp), std::move(fa), std::move(rs), std::move(result->stream),
+        std::move(options), std::move(transport_ok));
+    impl->Start(std::move(result->first_response));
+    return ReturnType(impl);
+  });
 }
 
 future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>
@@ -319,9 +334,11 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto factory = WriteResultFactory(
       [stub = stub_, cq = cq_, retry = std::move(retry),
        // NOLINTNEXTLINE(bugprone-lambda-function-name)
-       backoff = std::move(backoff), current, function_name = __func__](
+       backoff = std::move(backoff), current, function_name = __func__,
+       // Use shared_ptr to propagate RoutingHeaderOptions across retries.
+       current_routing_options = std::make_shared<RoutingHeaderOptions>()](
           google::storage::v2::BidiWriteObjectRequest req) {
-        auto call = [stub, request = std::move(req)](
+        auto call = [stub, request = std::move(req), current_routing_options](
                         CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
@@ -336,9 +353,11 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
 
           // Apply the routing header
           if (request.has_write_object_spec())
-            ApplyRoutingHeaders(*context, request.write_object_spec());
+            ApplyRoutingHeaders(*context, request.write_object_spec(),
+                                *current_routing_options);
           else
-            ApplyRoutingHeaders(*context, request.append_object_spec());
+            ApplyRoutingHeaders(*context, request.append_object_spec(),
+                                *current_routing_options);
 
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
@@ -347,18 +366,30 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
               std::move(rpc));
           request.set_state_lookup(true);
           auto open = std::make_shared<WriteObject>(std::move(rpc), request);
-          return open->Call().then([open, &request](auto f) mutable {
-            open.reset();
-            auto response = f.get();
-            if (!response) {
-              google::rpc::Status grpc_status =
-                  ExtractGrpcStatus(response.status());
-              EnsureFirstMessageAppendObjectSpec(request, grpc_status);
-              ApplyWriteRedirectErrors(*request.mutable_append_object_spec(),
-                                       grpc_status);
-            }
-            return response;
-          });
+          return open->Call().then(
+              [open, &request, current_routing_options](auto f) mutable {
+                open.reset();
+                auto response = f.get();
+                if (!response) {
+                  google::rpc::Status grpc_status =
+                      ExtractGrpcStatus(response.status());
+                  // Handle redirect and get info for updating routing options.
+                  BidiWriteRedirectInfo redirect_info =
+                      HandleBidiWriteRedirect(request, grpc_status);
+
+                  // Only update the routing token if the new info has a
+                  // non-empty token.
+                  // Otherwise, retain the existing token for subsequent
+                  // retries.
+                  if (!redirect_info.routing_token.empty() &&
+                      current_routing_options->routing_token !=
+                          redirect_info.routing_token) {
+                    current_routing_options->routing_token =
+                        redirect_info.routing_token;
+                  }
+                }
+                return response;
+              });
         };
 
         return google::cloud::internal::AsyncRetryLoop(

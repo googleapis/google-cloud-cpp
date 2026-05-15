@@ -53,6 +53,7 @@ using ::testing::Property;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
+using ::testing::VariantWith;
 
 using MockHttpClientFactory =
     ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
@@ -387,6 +388,10 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
                        HasSubstr("Could not find all required fields")));
 }
 
+MATCHER_P(RequestServiceAccountEmailIs, email, "has service account email") {
+  return email == arg.service_account_email;
+}
+
 /// @test Verify that we can force a refresh of the service account email.
 TEST(ComputeEngineCredentialsTest, AccountEmail) {
   auto const alias = std::string{"default"};
@@ -416,6 +421,15 @@ TEST(ComputeEngineCredentialsTest, AccountEmail) {
   auto refreshed_email = credentials.AccountEmail();
   EXPECT_EQ(email, refreshed_email);
   EXPECT_EQ(credentials.service_account_email(), refreshed_email);
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<ServiceAccountAllowedLocationsRequest>(
+                  RequestServiceAccountEmailIs(email)));
+#else
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate()));
+#endif
 }
 
 auto expected_universe_domain_request = []() {

@@ -30,6 +30,7 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient](@ref google::cloud::datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient)
 - [\c datacatalog_lineage_v1::LineageClient](@ref google::cloud::datacatalog_lineage_v1::LineageClient)
 - [\c datacatalog_v1::DataCatalogClient](@ref google::cloud::datacatalog_v1::DataCatalogClient)
 - [\c datacatalog_v1::PolicyTagManagerClient](@ref google::cloud::datacatalog_v1::PolicyTagManagerClient)

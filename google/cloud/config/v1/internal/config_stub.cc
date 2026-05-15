@@ -522,6 +522,218 @@ DefaultConfigStub::UpdateAutoMigrationConfig(
   return response;
 }
 
+StatusOr<google::cloud::config::v1::DeploymentGroup>
+DefaultConfigStub::GetDeploymentGroup(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::GetDeploymentGroupRequest const& request) {
+  google::cloud::config::v1::DeploymentGroup response;
+  auto status = grpc_stub_->GetDeploymentGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultConfigStub::AsyncCreateDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::config::v1::CreateDeploymentGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::config::v1::CreateDeploymentGroupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDeploymentGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConfigStub::CreateDeploymentGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDeploymentGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultConfigStub::AsyncUpdateDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::config::v1::UpdateDeploymentGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::config::v1::UpdateDeploymentGroupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateDeploymentGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConfigStub::UpdateDeploymentGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDeploymentGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultConfigStub::AsyncDeleteDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::config::v1::DeleteDeploymentGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::config::v1::DeleteDeploymentGroupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDeploymentGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConfigStub::DeleteDeploymentGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDeploymentGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::config::v1::ListDeploymentGroupsResponse>
+DefaultConfigStub::ListDeploymentGroups(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::ListDeploymentGroupsRequest const& request) {
+  google::cloud::config::v1::ListDeploymentGroupsResponse response;
+  auto status = grpc_stub_->ListDeploymentGroups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultConfigStub::AsyncProvisionDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncProvisionDeploymentGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConfigStub::ProvisionDeploymentGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ProvisionDeploymentGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultConfigStub::AsyncDeprovisionDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeprovisionDeploymentGroup(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConfigStub::DeprovisionDeploymentGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeprovisionDeploymentGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+DefaultConfigStub::GetDeploymentGroupRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+        request) {
+  google::cloud::config::v1::DeploymentGroupRevision response;
+  auto status =
+      grpc_stub_->GetDeploymentGroupRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::config::v1::ListDeploymentGroupRevisionsResponse>
+DefaultConfigStub::ListDeploymentGroupRevisions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::config::v1::ListDeploymentGroupRevisionsRequest const&
+        request) {
+  google::cloud::config::v1::ListDeploymentGroupRevisionsResponse response;
+  auto status =
+      grpc_stub_->ListDeploymentGroupRevisions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConfigStub::ListLocations(
     grpc::ClientContext& context, Options const&,

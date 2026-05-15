@@ -52,6 +52,8 @@ std::pair<AsyncReader, AsyncToken> ObjectDescriptor::ReadLast(
   return {AsyncReader(std::move(reader)), std::move(token)};
 }
 
+bool ObjectDescriptor::IsOpen() const { return impl_->IsOpen(); }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud

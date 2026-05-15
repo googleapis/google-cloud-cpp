@@ -57,6 +57,10 @@ class MemorystoreConnectionIdempotencyPolicy {
       google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
           request);
 
+  virtual google::cloud::Idempotency GetSharedRegionalCertificateAuthority(
+      google::cloud::memorystore::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request);
+
   virtual google::cloud::Idempotency RescheduleMaintenance(
       google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
           request);

@@ -76,6 +76,14 @@ class ObjectDescriptor {
    */
   std::pair<AsyncReader, AsyncToken> ReadLast(std::int64_t limit);
 
+  /**
+   * Returns true if the descriptor is open.
+   *
+   * A descriptor is open if it has not been cancelled and has not hit a
+   * permanent failure.
+   */
+  bool IsOpen() const;
+
  private:
   std::shared_ptr<ObjectDescriptorConnection> impl_;
 };

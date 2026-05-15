@@ -92,6 +92,13 @@ class CloudRedisClusterTracingStub : public CloudRedisClusterStub {
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request) override;
 
+  StatusOr<
+      google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncRescheduleClusterMaintenance(
       google::cloud::CompletionQueue& cq,

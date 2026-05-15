@@ -21,9 +21,9 @@ set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 
 project(
     google-cloud-cpp
-    VERSION 3.4.0
+    VERSION 3.5.0
     LANGUAGES CXX)
-set(PROJECT_VERSION_PRE_RELEASE "rc")
+set(PROJECT_VERSION_PRE_RELEASE "")
 
 if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")
     set(PROJECT_VERSION "${PROJECT_VERSION}-${PROJECT_VERSION_PRE_RELEASE}")

@@ -134,6 +134,34 @@ class BigtableRandomTwoLeastUsed : public BigtableStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::PrepareQueryRequest const& request) override;
 
+  StatusOr<google::bigtable::v2::ClientConfiguration> GetClientConfiguration(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::v2::GetClientConfigurationRequest const& request)
+      override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>>
+  AsyncOpenTable(google::cloud::CompletionQueue const& cq,
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>>
+  AsyncOpenAuthorizedView(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::bigtable::v2::SessionRequest,
+      google::bigtable::v2::SessionResponse>>
+  AsyncOpenMaterializedView(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
  private:
   std::shared_ptr<DynamicChannelPool<BigtableStub>> pool_;
 };

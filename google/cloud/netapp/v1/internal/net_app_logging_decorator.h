@@ -160,6 +160,18 @@ class NetAppLogging : public NetAppStub {
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncEstablishVolumePeering(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> EstablishVolumePeering(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
+      override;
+
   StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse> ListSnapshots(
       grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::ListSnapshotsRequest const& request) override;
@@ -638,6 +650,26 @@ class NetAppLogging : public NetAppStub {
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::DeleteHostGroupRequest const& request)
       override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+  ExecuteOntapPost(grpc::ClientContext& context, Options const& options,
+                   google::cloud::netapp::v1::ExecuteOntapPostRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse> ExecuteOntapGet(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::ExecuteOntapGetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+  ExecuteOntapDelete(grpc::ClientContext& context, Options const& options,
+                     google::cloud::netapp::v1::ExecuteOntapDeleteRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+  ExecuteOntapPatch(grpc::ClientContext& context, Options const& options,
+                    google::cloud::netapp::v1::ExecuteOntapPatchRequest const&
+                        request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
