@@ -55,6 +55,14 @@ TEST_F(GrpcConfigureClientContext, AddIdempotencyToken) {
               Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
 }
 
+TEST_F(GrpcConfigureClientContext, AddIdempotencyTokenString) {
+  grpc::ClientContext ctx;
+  AddIdempotencyToken(ctx, "token-123");
+  auto metadata = GetMetadata(ctx);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
+}
+
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
   grpc::ClientContext ctx;
   ApplyQueryParameters(
