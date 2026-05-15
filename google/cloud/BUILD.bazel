@@ -238,7 +238,7 @@ cc_library(
     srcs = google_cloud_cpp_rest_internal_srcs,
     hdrs = google_cloud_cpp_rest_internal_hdrs,
     # TODO(#16079): Remove macro definition when GA.
-    # cxxopts = ["-DGOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB"],
+    cxxopts = ["-DGOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB"],
     linkopts = select({
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
@@ -276,7 +276,7 @@ cc_library(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     # TODO(#16079): Remove macro definition when GA.
-    # cxxopts = ["-DGOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB"],
+    cxxopts = ["-DGOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB"],
     deps = [
         ":google_cloud_cpp_rest_internal",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
