@@ -94,9 +94,16 @@ AsyncWriterConnectionImpl::~AsyncWriterConnectionImpl() {
   // (2) calls to `Write()`, `Finalize()`, and `Query()` must have completed
   //     by the time the destructor is called
   Finish();
+
+  // We use a local copy of `impl` moved under lock to avoid
+  // data races with concurrent calls to `Finish()` from callbacks.
+  std::unique_lock<std::mutex> lk(mu_);
+  auto impl = std::move(impl_);
+  lk.unlock();
+
   // When `impl_->Finish()` is satisfied then `finished_` is satisfied too.
   // This extends the lifetime of `impl_` until it is safe to delete.
-  finished_.then([impl = std::move(impl_)](auto) mutable {
+  finished_.then([impl = std::move(impl)](auto) mutable {
     // Break the ownership cycle between the completion queue and this callback.
     impl.reset();
   });
@@ -213,7 +220,11 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
         .then(transform);
   }
   offset_ += upload_size;
-  return impl_->Read()
+
+  std::unique_lock<std::mutex> lk(mu_);
+  auto impl = impl_;
+  lk.unlock();
+  return impl->Read()
       .then([this](auto f) { return OnQuery(f.get()); })
       .then([this](auto g) -> StatusOr<google::storage::v2::Object> {
         auto status = g.get();
@@ -258,11 +269,15 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
 }
 
 future<Status> AsyncWriterConnectionImpl::Finish() {
+  std::unique_lock<std::mutex> lk(mu_);
   if (std::exchange(finish_called_, true)) {
     return make_ready_future(
         internal::CancelledError("already finished", GCP_ERROR_INFO()));
   }
-  return impl_->Finish().then([p = std::move(on_finish_)](auto f) mutable {
+  auto impl = impl_;
+  lk.unlock();
+
+  return impl->Finish().then([p = std::move(on_finish_)](auto f) mutable {
     p.set_value();
     return f.get();
   });
