@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:40
+FROM fedora:44
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -27,12 +27,12 @@ RUN dnf makecache && \
     dnf install -y \
         gmock-devel \
         google-benchmark-devel \
-        grpc-devel \
         gtest-devel \
         json-devel \
         libcurl-devel \
+        libpfm-devel \
         openssl-devel \
-        protobuf-devel \
+        openssl-devel-engine \
         pugixml-devel
 
 # This is used in the `publish-docs` build
@@ -89,6 +89,42 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+WORKDIR /var/tmp/build/protobuf
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/grpc
+RUN dnf makecache && dnf install -y c-ares-devel re2-devel
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DBUILD_SHARED_LIBS=ON \
+      -DgRPC_INSTALL=ON \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DgRPC_ABSL_PROVIDER=package \
+      -DgRPC_CARES_PROVIDER=package \
+      -DgRPC_PROTOBUF_PROVIDER=package \
+      -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
+      -DgRPC_RE2_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_ZLIB_PROVIDER=package \
+      -DgRPC_OPENTELEMETRY_PROVIDER=package \
+      -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+
 WORKDIR /var/tmp/sccache
 RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \
     tar -zxf - --strip-components=1 && \
@@ -97,6 +133,7 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/scca
     chmod +x /usr/local/bin/sccache
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
+RUN (echo /usr/local/lib; echo /usr/local/lib64) | tee /etc/ld.so.conf.d/local.conf
 RUN ldconfig /usr/local/lib*
 
 # Install the Google Cloud CLI (formerly Google Cloud SDK).

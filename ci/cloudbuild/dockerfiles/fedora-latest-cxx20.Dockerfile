@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:40
+FROM fedora:44
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -22,7 +22,8 @@ ARG ARCH=amd64
 RUN dnf makecache && \
     dnf install -y autoconf automake \
         clang cmake diffutils findutils gcc-c++ git \
-        make ninja-build patch python3 \
+        libpfm-devel make ninja-build \
+        openssl-devel openssl-devel-engine patch python3 \
         python-pip tar unzip wget which zip zlib-devel
 
 # Install the development packages for libcurl and OpenSSL. Neither are affected
@@ -185,6 +186,10 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/scca
     mv sccache /usr/local/bin/sccache && \
     chmod +x /usr/local/bin/sccache
 
+# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
+RUN (echo /usr/local/lib; echo /usr/local/lib64) | tee /etc/ld.so.conf.d/local.conf
+RUN ldconfig /usr/local/lib*
+
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
@@ -195,6 +200,3 @@ ENV CLOUDSDK_PYTHON=python3.10
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-
-# Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
-RUN ldconfig /usr/local/lib*

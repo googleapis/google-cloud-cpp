@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:40
+FROM fedora:44
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
@@ -26,13 +26,14 @@ RUN dnf makecache && \
 RUN dnf makecache && dnf debuginfo-install -y glibc
 # ```
 
-# Fedora:40 includes packages, with recent enough versions, for most of the
+# Fedora:44 includes packages, with recent enough versions, for most of the
 # direct dependencies of `google-cloud-cpp`.
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y protobuf-compiler protobuf-devel grpc-cpp grpc-devel \
-        json-devel libcurl-devel openssl-devel
+    dnf install -y  \
+        json-devel libcurl-devel libpfm-devel \
+        openssl-devel openssl-devel-engine
 # ```
 
 # #### Patching pkg-config
@@ -63,6 +64,23 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
 # ```
 
+# #### Protobuf
+
+# ```bash
+WORKDIR /var/tmp/build/protobuf
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+# ```
+
 # #### opentelemetry-cpp
 
 # ```bash
@@ -83,6 +101,33 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
     ldconfig
 # ```
 
+# #### gRPC
+
+# ```bash
+WORKDIR /var/tmp/build/grpc
+RUN dnf makecache && dnf install -y c-ares-devel re2-devel
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DBUILD_SHARED_LIBS=ON \
+      -DgRPC_INSTALL=ON \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DgRPC_ABSL_PROVIDER=package \
+      -DgRPC_CARES_PROVIDER=package \
+      -DgRPC_PROTOBUF_PROVIDER=package \
+      -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
+      -DgRPC_RE2_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_ZLIB_PROVIDER=package \
+      -DgRPC_OPENTELEMETRY_PROVIDER=package \
+      -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+# ```
+
 ## [DONE packaging.md]
 
 RUN dnf makecache && dnf install -y gdb
@@ -95,4 +140,5 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/scca
     chmod +x /usr/local/bin/sccache
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
+RUN (echo /usr/local/lib; echo /usr/local/lib64) | tee /etc/ld.so.conf.d/local.conf
 RUN ldconfig /usr/local/lib*

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:40
+FROM fedora:44
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -23,8 +23,8 @@ RUN dnf makecache && \
     dnf install -y abi-compliance-checker autoconf automake \
         clang clang-analyzer clang-tools-extra \
         cmake diffutils findutils gcc-c++ git \
-        libcurl-devel llvm make ninja-build \
-        openssl-devel patch python python3 \
+        libcurl-devel libpfm-devel llvm make ninja-build \
+        openssl-devel openssl-devel-engine patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
 # Install the Python modules needed to run the storage emulator
