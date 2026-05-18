@@ -40,6 +40,11 @@ Idempotency CaseAttachmentServiceConnectionIdempotencyPolicy::ListAttachments(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CaseAttachmentServiceConnectionIdempotencyPolicy::GetAttachment(
+    google::cloud::support::v2::GetAttachmentRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CaseAttachmentServiceConnectionIdempotencyPolicy>
 MakeDefaultCaseAttachmentServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CaseAttachmentServiceConnectionIdempotencyPolicy>();

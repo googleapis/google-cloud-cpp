@@ -51,6 +51,18 @@ CaseAttachmentServiceLogging::ListAttachments(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceLogging::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetAttachmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::support::v2::GetAttachmentRequest const& request) {
+        return child_->GetAttachment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud

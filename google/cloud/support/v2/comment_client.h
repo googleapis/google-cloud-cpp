@@ -113,7 +113,7 @@ class CommentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
-  /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L67}
+  /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L104}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Comment> ListComments(
@@ -152,7 +152,7 @@ class CommentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
-  /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L67}
+  /// [google.cloud.support.v2.ListCommentsRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L104}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Comment> ListComments(
@@ -181,7 +181,7 @@ class CommentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
-  /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L96}
+  /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L133}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
@@ -214,11 +214,125 @@ class CommentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
-  /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L96}
+  /// [google.cloud.support.v2.CreateCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L133}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
       google::cloud::support::v2::CreateCommentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve a comment.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// comment="projects/some-project/cases/43595344/comments/234567890"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$comment"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  ///
+  /// request = supportApiService.cases().comments().get(
+  ///     name="projects/some-project/cases/43595344/comments/234567890",
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param name  Required. The name of the comment to retrieve.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Comment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
+  /// [google.cloud.support.v2.GetCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L147}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::support::v2::Comment> GetComment(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve a comment.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// comment="projects/some-project/cases/43595344/comments/234567890"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$comment"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  ///
+  /// request = supportApiService.cases().comments().get(
+  ///     name="projects/some-project/cases/43595344/comments/234567890",
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.GetCommentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Comment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Comment]: @googleapis_reference_link{google/cloud/support/v2/comment.proto#L37}
+  /// [google.cloud.support.v2.GetCommentRequest]: @googleapis_reference_link{google/cloud/support/v2/comment_service.proto#L147}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::support::v2::Comment> GetComment(
+      google::cloud::support::v2::GetCommentRequest const& request,
       Options opts = {});
 
  private:

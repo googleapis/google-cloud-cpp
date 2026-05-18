@@ -216,6 +216,8 @@ std::string FormatMethodComments(
   }
   std::string doxygen_formatted_function_comments =
       method_source_location.leading_comments;
+  absl::StrReplaceAll({{"$", "$$"}}, &doxygen_formatted_function_comments);
+
   for (auto& sub : substitutions) {
     sub.uses += absl::StrReplaceAll({{sub.before, sub.after}},
                                     &doxygen_formatted_function_comments);

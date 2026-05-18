@@ -66,6 +66,21 @@ CommentServiceClient::CreateComment(
   return connection_->CreateComment(request);
 }
 
+StatusOr<google::cloud::support::v2::Comment> CommentServiceClient::GetComment(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::support::v2::GetCommentRequest request;
+  request.set_name(name);
+  return connection_->GetComment(request);
+}
+
+StatusOr<google::cloud::support::v2::Comment> CommentServiceClient::GetComment(
+    google::cloud::support::v2::GetCommentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetComment(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2
 }  // namespace cloud

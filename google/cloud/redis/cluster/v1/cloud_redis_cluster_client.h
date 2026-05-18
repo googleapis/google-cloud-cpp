@@ -142,8 +142,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L396}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L405}
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
@@ -189,8 +189,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L396}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L405}
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
@@ -217,8 +217,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L464}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L473}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
@@ -247,8 +247,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L464}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L473}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
@@ -291,8 +291,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L445}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L454}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
@@ -348,8 +348,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L445}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L454}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
@@ -412,7 +412,7 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L475}
+  /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L484}
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
@@ -464,7 +464,7 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L475}
+  /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L484}
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
@@ -543,8 +543,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L367}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L376}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
@@ -605,8 +605,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L367}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L376}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
@@ -661,8 +661,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1459}
-  /// [google.cloud.redis.cluster.v1.GetClusterCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L490}
+  /// [google.cloud.redis.cluster.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1468}
+  /// [google.cloud.redis.cluster.v1.GetClusterCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L499}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
@@ -691,8 +691,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1459}
-  /// [google.cloud.redis.cluster.v1.GetClusterCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L490}
+  /// [google.cloud.redis.cluster.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1468}
+  /// [google.cloud.redis.cluster.v1.GetClusterCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L499}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
@@ -722,8 +722,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1416}
-  /// [google.cloud.redis.cluster.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1381}
+  /// [google.cloud.redis.cluster.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1425}
+  /// [google.cloud.redis.cluster.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1390}
   ///
   // clang-format on
   StatusOr<
@@ -755,8 +755,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1416}
-  /// [google.cloud.redis.cluster.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1381}
+  /// [google.cloud.redis.cluster.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1425}
+  /// [google.cloud.redis.cluster.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1390}
   ///
   // clang-format on
   StatusOr<
@@ -798,8 +798,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.RescheduleClusterMaintenanceRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1598}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.RescheduleClusterMaintenanceRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1607}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
@@ -856,8 +856,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
-  /// [google.cloud.redis.cluster.v1.RescheduleClusterMaintenanceRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1598}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
+  /// [google.cloud.redis.cluster.v1.RescheduleClusterMaintenanceRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L1607}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
@@ -930,8 +930,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.BackupCollection]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L934}
-  /// [google.cloud.redis.cluster.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L503}
+  /// [google.cloud.redis.cluster.v1.BackupCollection]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L943}
+  /// [google.cloud.redis.cluster.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L512}
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
@@ -973,8 +973,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.BackupCollection]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L934}
-  /// [google.cloud.redis.cluster.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L503}
+  /// [google.cloud.redis.cluster.v1.BackupCollection]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L943}
+  /// [google.cloud.redis.cluster.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L512}
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
@@ -1002,8 +1002,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.BackupCollection]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L934}
-  /// [google.cloud.redis.cluster.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L552}
+  /// [google.cloud.redis.cluster.v1.BackupCollection]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L943}
+  /// [google.cloud.redis.cluster.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L561}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
@@ -1032,8 +1032,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.BackupCollection]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L934}
-  /// [google.cloud.redis.cluster.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L552}
+  /// [google.cloud.redis.cluster.v1.BackupCollection]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L943}
+  /// [google.cloud.redis.cluster.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L561}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
@@ -1070,8 +1070,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L976}
-  /// [google.cloud.redis.cluster.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L565}
+  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L985}
+  /// [google.cloud.redis.cluster.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L574}
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::Backup> ListBackups(
@@ -1109,8 +1109,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L976}
-  /// [google.cloud.redis.cluster.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L565}
+  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L985}
+  /// [google.cloud.redis.cluster.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L574}
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::Backup> ListBackups(
@@ -1136,8 +1136,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L976}
-  /// [google.cloud.redis.cluster.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L603}
+  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L985}
+  /// [google.cloud.redis.cluster.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L612}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
@@ -1166,8 +1166,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L976}
-  /// [google.cloud.redis.cluster.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L603}
+  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L985}
+  /// [google.cloud.redis.cluster.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L612}
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
@@ -1200,7 +1200,7 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L613}
+  /// [google.cloud.redis.cluster.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L622}
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
@@ -1252,7 +1252,7 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L613}
+  /// [google.cloud.redis.cluster.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L622}
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
@@ -1318,8 +1318,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L976}
-  /// [google.cloud.redis.cluster.v1.ExportBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L629}
+  /// [google.cloud.redis.cluster.v1.Backup]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L985}
+  /// [google.cloud.redis.cluster.v1.ExportBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L638}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Backup>> ExportBackup(
@@ -1392,8 +1392,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.BackupClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L645}
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
+  /// [google.cloud.redis.cluster.v1.BackupClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L654}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> BackupCluster(
@@ -1454,8 +1454,8 @@ class CloudRedisClusterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.redis.cluster.v1.BackupClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L645}
-  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L664}
+  /// [google.cloud.redis.cluster.v1.BackupClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L654}
+  /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L673}
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> BackupCluster(

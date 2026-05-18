@@ -48,6 +48,23 @@ CaseAttachmentServiceClient::ListAttachments(
   return connection_->ListAttachments(std::move(request));
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceClient::GetAttachment(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::support::v2::GetAttachmentRequest request;
+  request.set_name(name);
+  return connection_->GetAttachment(request);
+}
+
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceClient::GetAttachment(
+    google::cloud::support::v2::GetAttachmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAttachment(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2
 }  // namespace cloud

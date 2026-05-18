@@ -46,6 +46,10 @@ class CommentServiceStub {
   virtual StatusOr<google::cloud::support::v2::Comment> CreateComment(
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::support::v2::Comment> GetComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetCommentRequest const& request) = 0;
 };
 
 class DefaultCommentServiceStub : public CommentServiceStub {
@@ -62,6 +66,10 @@ class DefaultCommentServiceStub : public CommentServiceStub {
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
+
+  StatusOr<google::cloud::support::v2::Comment> GetComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetCommentRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::support::v2::CommentService::StubInterface>

@@ -152,6 +152,18 @@ SpannerAuth::BatchWrite(std::shared_ptr<grpc::ClientContext> context,
   return child_->BatchWrite(std::move(context), options, request);
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+SpannerAuth::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::spanner::v1::CacheUpdate>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->FetchCacheUpdate(std::move(context), options, request);
+}
+
 future<StatusOr<google::spanner::v1::Session>> SpannerAuth::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

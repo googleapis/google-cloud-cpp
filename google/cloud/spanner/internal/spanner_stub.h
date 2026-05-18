@@ -101,6 +101,12 @@ class SpannerStub {
              Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) = 0;
 
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::CacheUpdate>>
+  FetchCacheUpdate(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::spanner::v1::FetchCacheUpdateRequest const& request) = 0;
+
   virtual future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -190,6 +196,12 @@ class DefaultSpannerStub : public SpannerStub {
   BatchWrite(std::shared_ptr<grpc::ClientContext> context,
              Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::CacheUpdate>>
+  FetchCacheUpdate(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::spanner::v1::FetchCacheUpdateRequest const& request) override;
 
   future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
       google::cloud::CompletionQueue& cq,

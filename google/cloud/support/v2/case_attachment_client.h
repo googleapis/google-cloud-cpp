@@ -116,7 +116,7 @@ class CaseAttachmentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L40}
-  /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L53}
+  /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L91}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
@@ -155,11 +155,127 @@ class CaseAttachmentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L40}
-  /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L53}
+  /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L91}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
       google::cloud::support::v2::ListAttachmentsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve an attachment associated with a support case.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// attachment="projects/some-project/cases/23598314/attachments/0684M00000P3h1fQAB"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$attachment"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = (
+  ///     supportApiService.cases()
+  ///     .attachments()
+  ///     .get(name="projects/some-project/cases/43595344/attachments/0684M00000P3h1fQAB")
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param name  Required. The name of the attachment to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Attachment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L40}
+  /// [google.cloud.support.v2.GetAttachmentRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L116}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::support::v2::Attachment> GetAttachment(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Retrieve an attachment associated with a support case.
+  ///
+  /// EXAMPLES:
+  ///
+  /// cURL:
+  ///
+  /// ```shell
+  /// attachment="projects/some-project/cases/23598314/attachments/0684M00000P3h1fQAB"
+  /// curl \
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  ///   "https://cloudsupport.googleapis.com/v2/$attachment"
+  /// ```
+  ///
+  /// Python:
+  ///
+  /// ```python
+  /// import googleapiclient.discovery
+  ///
+  /// api_version = "v2"
+  /// supportApiService = googleapiclient.discovery.build(
+  ///     serviceName="cloudsupport",
+  ///     version=api_version,
+  ///     discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}",
+  /// )
+  /// request = (
+  ///     supportApiService.cases()
+  ///     .attachments()
+  ///     .get(name="projects/some-project/cases/43595344/attachments/0684M00000P3h1fQAB")
+  /// )
+  /// print(request.execute())
+  /// ```
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.support.v2.GetAttachmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.support.v2.Attachment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.support.v2.Attachment]: @googleapis_reference_link{google/cloud/support/v2/attachment.proto#L40}
+  /// [google.cloud.support.v2.GetAttachmentRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L116}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::support::v2::Attachment> GetAttachment(
+      google::cloud::support::v2::GetAttachmentRequest const& request,
       Options opts = {});
 
  private:

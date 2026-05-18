@@ -190,6 +190,9 @@ class CaseAttachmentServiceConnection {
 
   virtual StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
       google::cloud::support::v2::ListAttachmentsRequest request);
+
+  virtual StatusOr<google::cloud::support::v2::Attachment> GetAttachment(
+      google::cloud::support::v2::GetAttachmentRequest const& request);
 };
 
 /**

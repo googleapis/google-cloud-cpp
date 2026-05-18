@@ -117,7 +117,7 @@ class MemorystoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1346}
+  /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1364}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
@@ -156,7 +156,7 @@ class MemorystoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1346}
+  /// [google.cloud.memorystore.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1364}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
@@ -182,7 +182,7 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1387}
+  /// [google.cloud.memorystore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1405}
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
   ///
   // clang-format on
@@ -212,7 +212,7 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1387}
+  /// [google.cloud.memorystore.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1405}
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
   ///
   // clang-format on
@@ -257,7 +257,7 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1399}
+  /// [google.cloud.memorystore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1417}
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
   ///
   // clang-format on
@@ -312,7 +312,7 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1399}
+  /// [google.cloud.memorystore.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1417}
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
   ///
   // clang-format on
@@ -376,7 +376,7 @@ class MemorystoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1444}
+  /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1462}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
@@ -429,7 +429,7 @@ class MemorystoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1444}
+  /// [google.cloud.memorystore.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1462}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
@@ -490,8 +490,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1473}
-  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1766}
+  /// [google.cloud.memorystore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1491}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1784}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -541,8 +541,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1473}
-  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1766}
+  /// [google.cloud.memorystore.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1491}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1784}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -599,8 +599,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1685}
-  /// [google.cloud.memorystore.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1672}
+  /// [google.cloud.memorystore.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1703}
+  /// [google.cloud.memorystore.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1690}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
@@ -629,8 +629,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1685}
-  /// [google.cloud.memorystore.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1672}
+  /// [google.cloud.memorystore.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1703}
+  /// [google.cloud.memorystore.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1690}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
@@ -660,8 +660,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1753}
-  /// [google.cloud.memorystore.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1718}
+  /// [google.cloud.memorystore.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1771}
+  /// [google.cloud.memorystore.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1736}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
@@ -692,8 +692,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1753}
-  /// [google.cloud.memorystore.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1718}
+  /// [google.cloud.memorystore.v1.GetSharedRegionalCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1771}
+  /// [google.cloud.memorystore.v1.SharedRegionalCertificateAuthority]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1736}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
@@ -733,7 +733,7 @@ class MemorystoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1313}
+  /// [google.cloud.memorystore.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1331}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -791,7 +791,7 @@ class MemorystoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
-  /// [google.cloud.memorystore.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1313}
+  /// [google.cloud.memorystore.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1331}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -864,8 +864,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L741}
-  /// [google.cloud.memorystore.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1503}
+  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L759}
+  /// [google.cloud.memorystore.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1521}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::BackupCollection>
@@ -907,8 +907,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L741}
-  /// [google.cloud.memorystore.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1503}
+  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L759}
+  /// [google.cloud.memorystore.v1.ListBackupCollectionsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1521}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::BackupCollection>
@@ -936,8 +936,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L741}
-  /// [google.cloud.memorystore.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1552}
+  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L759}
+  /// [google.cloud.memorystore.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1570}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::BackupCollection>
@@ -966,8 +966,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L741}
-  /// [google.cloud.memorystore.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1552}
+  /// [google.cloud.memorystore.v1.BackupCollection]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L759}
+  /// [google.cloud.memorystore.v1.GetBackupCollectionRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1570}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::BackupCollection>
@@ -1003,8 +1003,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L799}
-  /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1565}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
+  /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1583}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::Backup> ListBackups(
@@ -1042,8 +1042,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L799}
-  /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1565}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
+  /// [google.cloud.memorystore.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1583}
   ///
   // clang-format on
   StreamRange<google::cloud::memorystore::v1::Backup> ListBackups(
@@ -1069,8 +1069,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L799}
-  /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1603}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
+  /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1621}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
@@ -1099,8 +1099,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L799}
-  /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1603}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
+  /// [google.cloud.memorystore.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1621}
   ///
   // clang-format on
   StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
@@ -1133,8 +1133,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1615}
-  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1766}
+  /// [google.cloud.memorystore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1633}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1784}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -1185,8 +1185,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1615}
-  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1766}
+  /// [google.cloud.memorystore.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1633}
+  /// [google.cloud.memorystore.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1784}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -1253,8 +1253,8 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L799}
-  /// [google.cloud.memorystore.v1.ExportBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1633}
+  /// [google.cloud.memorystore.v1.Backup]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L817}
+  /// [google.cloud.memorystore.v1.ExportBackupRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1651}
   ///
   // clang-format on
   future<StatusOr<google::cloud::memorystore::v1::Backup>> ExportBackup(
@@ -1327,7 +1327,7 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1651}
+  /// [google.cloud.memorystore.v1.BackupInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1669}
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
   ///
   // clang-format on
@@ -1389,7 +1389,7 @@ class MemorystoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.memorystore.v1.BackupInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1651}
+  /// [google.cloud.memorystore.v1.BackupInstanceRequest]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L1669}
   /// [google.cloud.memorystore.v1.Instance]: @googleapis_reference_link{google/cloud/memorystore/v1/memorystore.proto#L277}
   ///
   // clang-format on
