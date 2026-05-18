@@ -36,6 +36,12 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 
+auto constexpr kEndpointThatUsesRAB = "storage.googleapis.com";
+
+MATCHER_P(NonEmptyHttpHeaderNameIs, header_name, "has non-empty header named") {
+  return header_name == arg.name() && !arg.EmptyValues();
+}
+
 StatusOr<std::unique_ptr<RestResponse>> RetryRestRequest(
     std::function<StatusOr<std::unique_ptr<RestResponse>>()> const& request) {
   auto backoff = google::cloud::ExponentialBackoffPolicy(
@@ -171,6 +177,134 @@ TEST(UnifiedRestCredentialsIntegrationTest, ServiceAccountCredentials) {
   ASSERT_NO_FATAL_FAILURE(
       MakeBigQueryRpcCall(Options{}.set<UnifiedCredentialsOption>(
           MakeServiceAccountCredentials(contents))));
+}
+
+TEST(UnifiedRestCredentialsIntegrationTest, RABServiceAccountCredentialsOAuth) {
+  ScopedEnvironment self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
+  auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
+  ASSERT_TRUE(env.has_value());
+  std::string key_file = std::move(*env);
+  std::ifstream is(key_file);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+
+  auto creds = MakeServiceAccountCredentials(contents);
+  auto creds_rest = MapCredentials(*creds);
+
+  auto headers = creds_rest->AuthenticationHeaders(
+      std::chrono::system_clock::now(), kEndpointThatUsesRAB);
+  EXPECT_THAT(headers,
+              testing_util::IsOkAndHolds(::testing::Contains(
+                  NonEmptyHttpHeaderNameIs(std::string{"authorization"}))));
+
+  // x-allowed-locations header is fetched asynchronously.
+  for (auto delay : {2, 3, 5}) {
+    std::this_thread::sleep_for(std::chrono::seconds(delay));
+    headers = creds_rest->AuthenticationHeaders(
+        std::chrono::system_clock::now(), kEndpointThatUsesRAB);
+    if (headers->size() > 1) break;
+  }
+
+  EXPECT_THAT(
+      headers,
+      testing_util::IsOkAndHolds(::testing::Contains(
+          NonEmptyHttpHeaderNameIs(std::string{"x-allowed-locations"}))));
+}
+
+TEST(UnifiedRestCredentialsIntegrationTest, RABServiceAccountCredentialsJWT) {
+  auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
+  ASSERT_TRUE(env.has_value());
+  std::string key_file = std::move(*env);
+  std::ifstream is(key_file);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+
+  auto creds = MakeServiceAccountCredentials(contents);
+  auto creds_rest = MapCredentials(*creds);
+
+  auto headers = creds_rest->AuthenticationHeaders(
+      std::chrono::system_clock::now(), kEndpointThatUsesRAB);
+  EXPECT_THAT(headers,
+              testing_util::IsOkAndHolds(::testing::Contains(
+                  NonEmptyHttpHeaderNameIs(std::string{"authorization"}))));
+
+  // x-allowed-locations header is fetched asynchronously.
+  for (auto delay : {2, 3, 5}) {
+    std::this_thread::sleep_for(std::chrono::seconds(delay));
+    headers = creds_rest->AuthenticationHeaders(
+        std::chrono::system_clock::now(), kEndpointThatUsesRAB);
+    if (headers->size() > 1) break;
+  }
+
+  EXPECT_THAT(
+      headers,
+      testing_util::IsOkAndHolds(::testing::Contains(
+          NonEmptyHttpHeaderNameIs(std::string{"x-allowed-locations"}))));
+}
+
+TEST(UnifiedRestCredentialsIntegrationTest,
+     RABImpersonateServiceAccountCredentialsJWT) {
+  auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
+  ASSERT_TRUE(env.has_value());
+  std::string key_file = std::move(*env);
+  std::ifstream is(key_file);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+
+  std::string impersonated_service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_PUBSUB_TEST_IMPERSONATED_SERVICE_ACCOUNT")
+          .value_or("");
+
+  auto sa_creds = MakeServiceAccountCredentials(contents);
+  auto impersonate_creds = MakeImpersonateServiceAccountCredentials(
+      sa_creds, impersonated_service_account);
+  auto creds_rest = MapCredentials(*impersonate_creds);
+
+  auto headers = creds_rest->AuthenticationHeaders(
+      std::chrono::system_clock::now(), kEndpointThatUsesRAB);
+  EXPECT_THAT(headers,
+              testing_util::IsOkAndHolds(::testing::Contains(
+                  NonEmptyHttpHeaderNameIs(std::string{"authorization"}))));
+
+  // x-allowed-locations header is fetched asynchronously.
+  for (auto delay : {2, 3, 5}) {
+    std::this_thread::sleep_for(std::chrono::seconds(delay));
+    headers = creds_rest->AuthenticationHeaders(
+        std::chrono::system_clock::now(), kEndpointThatUsesRAB);
+    if (headers->size() > 1) break;
+  }
+
+  EXPECT_THAT(
+      headers,
+      testing_util::IsOkAndHolds(::testing::Contains(
+          NonEmptyHttpHeaderNameIs(std::string{"x-allowed-locations"}))));
+}
+
+TEST(UnifiedRestCredentialsIntegrationTest, RABComputeEngineCredentials) {
+  auto oauth2_creds = MapCredentials(*MakeComputeEngineCredentials());
+  auto token = oauth2_creds->GetToken(std::chrono::system_clock::now());
+  // This test only works if we're running in a Google Production VM. Running in
+  // other environments will always fail.
+  if (!token.ok()) GTEST_SKIP();
+
+  auto headers = oauth2_creds->AuthenticationHeaders(
+      std::chrono::system_clock::now(), kEndpointThatUsesRAB);
+  EXPECT_THAT(headers,
+              testing_util::IsOkAndHolds(::testing::Contains(
+                  NonEmptyHttpHeaderNameIs(std::string{"authorization"}))));
+
+  // x-allowed-locations header is fetched asynchronously.
+  for (auto delay : {2, 3, 5}) {
+    std::this_thread::sleep_for(std::chrono::seconds(delay));
+    headers = oauth2_creds->AuthenticationHeaders(
+        std::chrono::system_clock::now(), kEndpointThatUsesRAB);
+    if (headers->size() > 1) break;
+  }
+
+  EXPECT_THAT(
+      headers,
+      testing_util::IsOkAndHolds(::testing::Contains(
+          NonEmptyHttpHeaderNameIs(std::string{"x-allowed-locations"}))));
 }
 
 TEST(UnifiedRestCredentialsIntegrationTest, StorageGoogleDefaultCredentials) {
