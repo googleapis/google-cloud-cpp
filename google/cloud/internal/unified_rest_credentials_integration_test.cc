@@ -203,7 +203,7 @@ TEST(UnifiedRestCredentialsIntegrationTest, RABServiceAccountCredentialsOAuth) {
     std::this_thread::sleep_for(std::chrono::seconds(delay));
     headers = creds_rest->AuthenticationHeaders(
         std::chrono::system_clock::now(), kEndpointThatUsesRAB);
-    if (headers->size() > 1) break;
+    if (headers.ok() && headers->size() > 1) break;
   }
 
   EXPECT_THAT(
@@ -233,7 +233,7 @@ TEST(UnifiedRestCredentialsIntegrationTest, RABServiceAccountCredentialsJWT) {
     std::this_thread::sleep_for(std::chrono::seconds(delay));
     headers = creds_rest->AuthenticationHeaders(
         std::chrono::system_clock::now(), kEndpointThatUsesRAB);
-    if (headers->size() > 1) break;
+    if (headers.ok() && headers->size() > 1) break;
   }
 
   EXPECT_THAT(
@@ -271,7 +271,7 @@ TEST(UnifiedRestCredentialsIntegrationTest,
     std::this_thread::sleep_for(std::chrono::seconds(delay));
     headers = creds_rest->AuthenticationHeaders(
         std::chrono::system_clock::now(), kEndpointThatUsesRAB);
-    if (headers->size() > 1) break;
+    if (headers.ok() && headers->size() > 1) break;
   }
 
   EXPECT_THAT(
@@ -298,7 +298,7 @@ TEST(UnifiedRestCredentialsIntegrationTest, RABComputeEngineCredentials) {
     std::this_thread::sleep_for(std::chrono::seconds(delay));
     headers = oauth2_creds->AuthenticationHeaders(
         std::chrono::system_clock::now(), kEndpointThatUsesRAB);
-    if (headers->size() > 1) break;
+    if (headers.ok() && headers->size() > 1) break;
   }
 
   EXPECT_THAT(
