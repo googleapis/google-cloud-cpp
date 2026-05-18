@@ -172,8 +172,8 @@ class CaseAttachmentServiceClient {
   ///
   /// ```shell
   /// attachment="projects/some-project/cases/23598314/attachments/0684M00000P3h1fQAB"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$attachment"
   /// ```
   ///
@@ -227,8 +227,8 @@ class CaseAttachmentServiceClient {
   ///
   /// ```shell
   /// attachment="projects/some-project/cases/23598314/attachments/0684M00000P3h1fQAB"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$attachment"
   /// ```
   ///

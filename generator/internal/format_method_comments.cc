@@ -197,6 +197,10 @@ MethodCommentSubstitution substitutions[] = {
     // process.
     {R"""(---)""", R"""(-)"""},
 
+    // Some google/cloud/support/v2/* protos have example bash commands with
+    // continuation characters.
+    {"\\\n", "\n"},
+
     // Add Doxygen-style comments
     {"\n", "\n  ///"},
 

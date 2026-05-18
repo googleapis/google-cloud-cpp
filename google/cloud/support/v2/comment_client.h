@@ -231,8 +231,8 @@ class CommentServiceClient {
   ///
   /// ```shell
   /// comment="projects/some-project/cases/43595344/comments/234567890"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$comment"
   /// ```
   ///
@@ -285,8 +285,8 @@ class CommentServiceClient {
   ///
   /// ```shell
   /// comment="projects/some-project/cases/43595344/comments/234567890"
-  /// curl \
-  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+  /// curl
+  ///   --header "Authorization: Bearer $(gcloud auth print-access-token)"
   ///   "https://cloudsupport.googleapis.com/v2/$comment"
   /// ```
   ///
