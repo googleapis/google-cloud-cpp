@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -348,6 +349,27 @@ TEST(GrpcObjectReadSource, StallTimeout) {
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
   EXPECT_THAT(response, StatusIs(StatusCode::kDeadlineExceeded));
+}
+
+TEST(GrpcObjectReadSource, ChecksumMismatch) {
+  auto mock = std::make_unique<MockObjectMediaStream>();
+  std::string const contents = "0123456789";
+
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&contents](storage_proto::ReadObjectResponse* r) {
+        SetContent(*r, contents);
+        r->mutable_checksummed_data()->set_crc32c(123); // Wrong CRC
+        return absl::nullopt;
+      });
+
+  auto hash_function = std::make_shared<storage::internal::Crc32cMessageHashFunction>(
+      storage::internal::CreateNullHashFunction());
+
+  GrpcObjectReadSource tested(MakeSimpleTimerSource(), std::move(mock), std::move(hash_function));
+  std::vector<char> buffer(1024);
+  auto response = tested.Read(buffer.data(), buffer.size());
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument, HasSubstr("mismatched crc32c checksum")));
 }
 
 }  // namespace

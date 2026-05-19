@@ -31,6 +31,7 @@
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_status.h"
@@ -445,9 +446,14 @@ GrpcStub::ReadObject(rest_internal::RestContext& context,
     };
   }
 
+  auto hash_function =
+      std::make_shared<storage::internal::Crc32cMessageHashFunction>(
+          storage::internal::CreateHashFunction(request));
+
   return std::unique_ptr<storage::internal::ObjectReadSource>(
       std::make_unique<GrpcObjectReadSource>(std::move(timer_source),
-                                             std::move(stream)));
+                                             std::move(stream),
+                                             std::move(hash_function)));
 }
 
 StatusOr<storage::internal::ListObjectsResponse> GrpcStub::ListObjects(
