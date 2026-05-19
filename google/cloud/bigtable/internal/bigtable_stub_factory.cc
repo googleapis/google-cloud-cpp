@@ -60,7 +60,7 @@ std::string CreateFeaturesMetadata(bool is_direct_path) {
     proto.set_traffic_director_enabled(true);
     proto.set_direct_access_requested(true);
   }
-  return internal::UrlsafeBase64Encode(proto.SerializeAsString());
+  return internal::UrlsafeBase64EncodeWithPadding(proto.SerializeAsString());
 }
 
 std::string FeaturesMetadata() {
