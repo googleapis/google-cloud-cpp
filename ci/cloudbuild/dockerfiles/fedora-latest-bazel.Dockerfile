@@ -64,3 +64,6 @@ RUN go version
 WORKDIR /var/tmp/downloads/cloud-bigtable-clients-test
 RUN curl -fsSL https://github.com/googleapis/cloud-bigtable-clients-test/archive/v0.0.4.tar.gz | \
     tar -xzf - --strip-components=1
+
+# Fedora 44 changed where it stores CA certs.
+RUN ln -sf /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem /etc/pki/tls/certs/ca-certificates.crt

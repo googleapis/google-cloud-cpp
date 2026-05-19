@@ -33,5 +33,7 @@ args+=(
   --enable_workspace
   # Only run the unit tests, no need to waste time running everything.
   --test_tag_filters=-integration-test
+  # Disable warnings as errors for boringssl.
+  --per_file_copt=boringssl//@-Wno-error
 )
 io::run bazel test "${args[@]}" -- "${BAZEL_TARGETS[@]}"
