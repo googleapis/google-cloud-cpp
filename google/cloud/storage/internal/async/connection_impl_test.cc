@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/retry_policy.h"
+#include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/options.h"
@@ -105,9 +106,14 @@ TEST_F(AsyncConnectionImplTest, ComposeObject) {
           return StatusOr<google::storage::v2::Object>(TransientError());
         });
       })
-      .WillOnce([&](CompletionQueue&, auto,
+      .WillOnce([&](CompletionQueue&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
                     google::cloud::internal::ImmutableOptions const& options,
                     google::storage::v2::ComposeObjectRequest const& request) {
+        EXPECT_THAT(
+            GetMetadata(*context),
+            testing::Contains(testing::Pair("x-goog-gcs-idempotency-token",
+                                            testing::Not(testing::IsEmpty()))));
         // Verify at least one option is initialized with the correct value.
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto expected = google::storage::v2::ComposeObjectRequest{};
@@ -205,9 +211,14 @@ TEST_F(AsyncConnectionImplTest, DeleteObject) {
           return TransientError();
         });
       })
-      .WillOnce([&](CompletionQueue&, auto,
+      .WillOnce([&](CompletionQueue&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
                     google::cloud::internal::ImmutableOptions const& options,
                     google::storage::v2::DeleteObjectRequest const& request) {
+        EXPECT_THAT(
+            GetMetadata(*context),
+            testing::Contains(testing::Pair("x-goog-gcs-idempotency-token",
+                                            testing::Not(testing::IsEmpty()))));
         // Verify at least one option is initialized with the correct values.
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         google::storage::v2::DeleteObjectRequest expected;
@@ -342,6 +353,63 @@ TEST_F(AsyncConnectionImplTest, RewriteObject) {
   EXPECT_EQ(next.second, "RewriteObject(2)");
   next.first.set_value(true);
   EXPECT_THAT(r1.get(), IsOkAndHolds(match_progress(1000, 3000)));
+}
+
+TEST_F(AsyncConnectionImplTest, AppendableObjectUploadToken) {
+  auto constexpr kRequestText = R"pb(
+    write_object_spec {
+      resource {
+        bucket: "projects/_/buckets/test-bucket"
+        name: "test-object"
+        content_type: "text/plain"
+      }
+    }
+  )pb";
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+
+  EXPECT_CALL(*mock, AsyncBidiWriteObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const& context,
+                    internal::ImmutableOptions const&) {
+        EXPECT_THAT(
+            GetMetadata(*context),
+            testing::Contains(testing::Pair("x-goog-gcs-idempotency-token",
+                                            testing::Not(testing::IsEmpty()))));
+
+        auto stream = std::make_unique<::google::cloud::storage::testing::
+                                           MockAsyncBidiWriteObjectStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&] {
+          return sequencer.PushBack("Start");
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([&] {
+          return sequencer.PushBack("Finish").then(
+              [](auto) { return Status(StatusCode::kCancelled, "cancelled"); });
+        });
+        using AsyncBidiWriteObjectStream =
+            ::google::cloud::AsyncStreamingReadWriteRpc<
+                google::storage::v2::BidiWriteObjectRequest,
+                google::storage::v2::BidiWriteObjectResponse>;
+        return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kRequestText, &request));
+  auto pending = connection->StartAppendableObjectUpload(
+      {std::move(request), connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);  // Fail to start
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  EXPECT_THAT(pending.get(), StatusIs(StatusCode::kCancelled));
 }
 
 }  // namespace

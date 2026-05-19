@@ -37,6 +37,9 @@ struct RoutingHeaderOptions {
 void AddIdempotencyToken(grpc::ClientContext& ctx,
                          rest_internal::RestContext const& context);
 
+/// Configures @p ctx using @p token.
+void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token);
+
 /**
  * Inject request query parameters into grpc::ClientContext.
  *

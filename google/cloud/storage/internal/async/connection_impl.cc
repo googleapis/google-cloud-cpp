@@ -169,7 +169,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
 
     auto hash_function = CreateHashFunction(*options);
     ApplyRoutingHeaders(*context, request.write_object_spec());
-    context->AddMetadata("x-goog-gcs-idempotency-token", id);
+    AddIdempotencyToken(*context, id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), options);
     rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
                                                 std::move(rpc));
@@ -336,13 +336,14 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
        // NOLINTNEXTLINE(bugprone-lambda-function-name)
        backoff = std::move(backoff), current, function_name = __func__,
        // Use shared_ptr to propagate RoutingHeaderOptions across retries.
-       current_routing_options = std::make_shared<RoutingHeaderOptions>()](
+       current_routing_options = std::make_shared<RoutingHeaderOptions>(),
+       id = invocation_id_generator_.MakeInvocationId()](
           google::storage::v2::BidiWriteObjectRequest req) {
-        auto call = [stub, request = std::move(req), current_routing_options](
-                        CompletionQueue& cq,
-                        std::shared_ptr<grpc::ClientContext> context,
-                        google::cloud::internal::ImmutableOptions options,
-                        RequestPlaceholder const&) mutable
+        auto call = [stub, request = std::move(req), current_routing_options,
+                     id](CompletionQueue& cq,
+                         std::shared_ptr<grpc::ClientContext> context,
+                         google::cloud::internal::ImmutableOptions options,
+                         RequestPlaceholder const&) mutable
             -> future<StatusOr<WriteObject::WriteResult>> {
           auto start_timeout = ScaleStallTimeout(
               options->get<storage::TransferStallTimeoutOption>(),
@@ -358,6 +359,8 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
           else
             ApplyRoutingHeaders(*context, request.append_object_spec(),
                                 *current_routing_options);
+
+          AddIdempotencyToken(*context, id);
 
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
@@ -507,11 +510,12 @@ AsyncConnectionImpl::ComposeObject(ComposeObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto const idempotency =
       idempotency_policy(*current)->ComposeObject(p.request);
-  auto call = [stub = stub_](
+  auto call = [stub = stub_, id = invocation_id_generator_.MakeInvocationId()](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::ComposeObjectRequest const& request) {
+    AddIdempotencyToken(*context, id);
     return stub->AsyncComposeObject(cq, std::move(context), std::move(options),
                                     request);
   };
@@ -530,10 +534,11 @@ future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
   auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
       std::move(retry), std::move(backoff), idempotency, cq_,
-      [stub = stub_](CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::storage::v2::DeleteObjectRequest const& proto) {
+      [stub = stub_, id = invocation_id_generator_.MakeInvocationId()](
+          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::storage::v2::DeleteObjectRequest const& proto) {
+        AddIdempotencyToken(*context, id);
         return stub->AsyncDeleteObject(cq, std::move(context),
                                        std::move(options), proto);
       },

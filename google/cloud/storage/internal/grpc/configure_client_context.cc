@@ -47,6 +47,10 @@ void AddIdempotencyToken(grpc::ClientContext& ctx,
   }
 }
 
+void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token) {
+  ctx.AddMetadata(kIdempotencyTokenHeader, token);
+}
+
 void ApplyRoutingHeaders(
     grpc::ClientContext& context,
     storage::internal::InsertObjectMediaRequest const& request) {
