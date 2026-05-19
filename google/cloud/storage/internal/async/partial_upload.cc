@@ -53,6 +53,7 @@ void PartialUpload::Write() {
   if (last_message) {
     if (action_ == LastMessageAction::kFinalizeWithChecksum) {
       auto status = Finalize(request_, wopt, *hash_function_);
+      std::cout << "Finalize status: " << status.message() << std::endl;
       if (!status.ok()) return WriteError(std::move(status));
     } else if (action_ == LastMessageAction::kFinalize) {
       request_.set_finish_write(true);

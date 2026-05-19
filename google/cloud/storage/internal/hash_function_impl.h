@@ -106,6 +106,8 @@ class MD5HashFunction : public HashFunction {
 class Crc32cHashFunction : public HashFunction {
  public:
   Crc32cHashFunction() = default;
+  Crc32cHashFunction(std::uint32_t initial_crc, std::int64_t initial_offset)
+      : current_(initial_crc), minimum_offset_(initial_offset) {}
 
   Crc32cHashFunction(Crc32cHashFunction const&) = delete;
   Crc32cHashFunction& operator=(Crc32cHashFunction const&) = delete;
