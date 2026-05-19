@@ -21,25 +21,24 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::bigtable_internal::MergeOptions;
 using ::google::cloud::internal::OptionsSpan;
 
 StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,
                                              SqlStatement const& statement,
                                              Options opts) {
-  OptionsSpan span(MergeOptions(std::move(opts), opts_));
+  OptionsSpan span(bigtable_internal::MergeOptions(std::move(opts), opts_));
   return conn_->PrepareQuery({instance, statement});
 }
 
 future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
     InstanceResource const& instance, SqlStatement const& statement,
     Options opts) {
-  OptionsSpan span(MergeOptions(std::move(opts), opts_));
+  OptionsSpan span(bigtable_internal::MergeOptions(std::move(opts), opts_));
   return conn_->AsyncPrepareQuery({instance, statement});
 }
 
 RowStream Client::ExecuteQuery(BoundQuery&& bound_query, Options opts) {
-  OptionsSpan span(MergeOptions(std::move(opts), opts_));
+  OptionsSpan span(bigtable_internal::MergeOptions(std::move(opts), opts_));
   return conn_->ExecuteQuery({std::move(bound_query)});
 }
 

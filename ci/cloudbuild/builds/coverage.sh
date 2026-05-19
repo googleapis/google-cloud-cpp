@@ -21,8 +21,10 @@ source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 
-export CC=gcc
-export CXX=g++
+#export CC=gcc
+#export CXX=g++
+export CC=clang
+export CXX=clang++
 
 # Explicitly list the patterns that match hand-crafted code. Excluding the
 # generated code results in a longer list and more maintenance.
