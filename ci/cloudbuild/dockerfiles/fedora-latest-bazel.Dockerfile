@@ -67,3 +67,4 @@ RUN curl -fsSL https://github.com/googleapis/cloud-bigtable-clients-test/archive
 
 # Fedora 44 changed where it stores CA certs.
 RUN ln -sf /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem /etc/pki/tls/certs/ca-certificates.crt
+

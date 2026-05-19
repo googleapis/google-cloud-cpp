@@ -32,10 +32,12 @@ read -r ENABLED_FEATURES < <(features::always_build_cmake)
 ENABLED_FEATURES="${ENABLED_FEATURES},__ga_libraries__"
 readonly ENABLED_FEATURES
 
+# Enabling deprecated-declarations requires operator<=>()
 io::run cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_STANDARD=20 \
   -DGOOGLE_CLOUD_CPP_ENABLE_CLANG_ABI_COMPAT_17=ON \
-  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
+  -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations"
 io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
