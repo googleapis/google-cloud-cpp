@@ -371,6 +371,12 @@ StatusOr<google::storage::v2::ComposeObjectRequest> ToProto(
         request.GetOption<storage::IfMetagenerationMatch>().value());
   }
   result.set_kms_key(request.GetOption<storage::KmsKeyName>().value_or(""));
+  // Using `GetOption` with `value_or(false)` ensures that
+  // `delete_source_objects` is only set to `true` if explicitly
+  // requested, preserving the default behavior (no deletion) otherwise.
+  if (request.GetOption<storage::DeleteSourceObjects>().value_or(false)) {
+    result.set_delete_source_objects(true);
+  }
   return result;
 }
 

@@ -293,6 +293,82 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
   EXPECT_EQ(meta->size() * 2, composed_meta->size());
 }
 
+TEST_F(ObjectRewriteIntegrationTest, ComposeDeleteSourceObjectsFalse) {
+  auto client = MakeIntegrationTestClient();
+
+  auto object_name1 = MakeRandomObjectName();
+  StatusOr<ObjectMetadata> meta1 = client.InsertObject(
+      bucket_name_, object_name1, LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta1);
+  ScheduleForDelete(*meta1);
+
+  auto object_name2 = MakeRandomObjectName();
+  StatusOr<ObjectMetadata> meta2 = client.InsertObject(
+      bucket_name_, object_name2, LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta2);
+  ScheduleForDelete(*meta2);
+
+  auto composed_object_name = MakeRandomObjectName();
+  std::vector<ComposeSourceObject> source_objects = {{object_name1, {}, {}},
+                                                     {object_name2, {}, {}}};
+
+  StatusOr<ObjectMetadata> composed_meta = client.ComposeObject(
+      bucket_name_, source_objects, composed_object_name,
+      WithObjectMetadata(ObjectMetadata().set_content_type("plain/text")),
+      DeleteSourceObjects(false));
+  ASSERT_STATUS_OK(composed_meta);
+  ScheduleForDelete(*composed_meta);
+
+  EXPECT_EQ(meta1->size() + meta2->size(), composed_meta->size());
+
+  auto check1 = client.GetObjectMetadata(bucket_name_, object_name1);
+  EXPECT_STATUS_OK(check1) << "Source object 1 (" << object_name1
+                           << ") should NOT have been deleted.";
+
+  auto check2 = client.GetObjectMetadata(bucket_name_, object_name2);
+  EXPECT_STATUS_OK(check2) << "Source object 2 (" << object_name2
+                           << ") should NOT have been deleted.";
+}
+
+TEST_F(ObjectRewriteIntegrationTest, ComposeDeleteSourceObjectsTrue) {
+  auto client = MakeIntegrationTestClient();
+
+  auto object_name1 = MakeRandomObjectName();
+  StatusOr<ObjectMetadata> meta1 = client.InsertObject(
+      bucket_name_, object_name1, LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta1);
+  ScheduleForDelete(*meta1);
+
+  auto object_name2 = MakeRandomObjectName();
+  StatusOr<ObjectMetadata> meta2 = client.InsertObject(
+      bucket_name_, object_name2, LoremIpsum(), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta2);
+  ScheduleForDelete(*meta2);
+
+  auto composed_object_name = MakeRandomObjectName();
+  std::vector<ComposeSourceObject> source_objects = {{object_name1, {}, {}},
+                                                     {object_name2, {}, {}}};
+
+  StatusOr<ObjectMetadata> composed_meta = client.ComposeObject(
+      bucket_name_, source_objects, composed_object_name,
+      WithObjectMetadata(ObjectMetadata().set_content_type("plain/text")),
+      DeleteSourceObjects(true));
+  ASSERT_STATUS_OK(composed_meta);
+  ScheduleForDelete(*composed_meta);
+
+  EXPECT_EQ(meta1->size() + meta2->size(), composed_meta->size());
+
+  auto check1 = client.GetObjectMetadata(bucket_name_, object_name1);
+  EXPECT_FALSE(check1.ok());
+  EXPECT_EQ(StatusCode::kNotFound, check1.status().code())
+      << "Source object 1 (" << object_name1 << ") should have been deleted.";
+
+  auto check2 = client.GetObjectMetadata(bucket_name_, object_name2);
+  EXPECT_FALSE(check2.ok());
+  EXPECT_EQ(StatusCode::kNotFound, check2.status().code())
+      << "Source object 2 (" << object_name2 << ") should have been deleted.";
+}
+
 TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
