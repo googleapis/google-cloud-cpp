@@ -31,7 +31,9 @@ GrpcObjectReadSource::GrpcObjectReadSource(
     std::shared_ptr<storage::internal::HashFunction> hash_function)
     : timer_source_(std::move(timer_source)),
       stream_(std::move(stream)),
-      hash_function_(std::move(hash_function)) {}
+      hash_function_(hash_function
+                         ? std::move(hash_function)
+                         : storage::internal::CreateNullHashFunction()) {}
 
 StatusOr<storage::internal::HttpResponse> GrpcObjectReadSource::Close() {
   if (stream_) stream_ = nullptr;
