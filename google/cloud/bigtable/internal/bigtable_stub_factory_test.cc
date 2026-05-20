@@ -54,7 +54,6 @@ using ::testing::IsEmpty;
 using ::testing::MockFunction;
 using ::testing::Not;
 using ::testing::Optional;
-using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
 
@@ -300,12 +299,21 @@ TEST(BigtableStubFactory, FeaturesFlagsCloudDirectPath) {
               auto headers = fixture.GetMetadata(context);
               auto it = headers.find("bigtable-features");
               EXPECT_NE(it, headers.end());
+              if (it == headers.end())
+                return internal::AbortedError("header not found");
               auto decoded = internal::UrlsafeBase64Decode(it->second);
               EXPECT_STATUS_OK(decoded);
               if (!decoded) return internal::AbortedError("fail to decode");
               google::bigtable::v2::FeatureFlags proto;
               EXPECT_TRUE(proto.ParseFromArray(
                   decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_TRUE(proto.reverse_scans());
+              EXPECT_TRUE(proto.last_scanned_row_responses());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit2());
+              EXPECT_TRUE(proto.routing_cookie());
+              EXPECT_TRUE(proto.retry_info());
+              EXPECT_TRUE(proto.peer_info());
               EXPECT_TRUE(proto.traffic_director_enabled());
               EXPECT_TRUE(proto.direct_access_requested());
               return internal::AbortedError("fail");
@@ -341,11 +349,20 @@ TEST(BigtableStubFactory, FeaturesFlagsBigtableDirectPath) {
               auto it = headers.find("bigtable-features");
               EXPECT_NE(it, headers.end());
               auto decoded = internal::UrlsafeBase64Decode(it->second);
+              if (it == headers.end())
+                return internal::AbortedError("header not found");
               EXPECT_STATUS_OK(decoded);
               if (!decoded) return internal::AbortedError("fail to decode");
               google::bigtable::v2::FeatureFlags proto;
               EXPECT_TRUE(proto.ParseFromArray(
                   decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_TRUE(proto.reverse_scans());
+              EXPECT_TRUE(proto.last_scanned_row_responses());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit2());
+              EXPECT_TRUE(proto.routing_cookie());
+              EXPECT_TRUE(proto.retry_info());
+              EXPECT_TRUE(proto.peer_info());
               EXPECT_TRUE(proto.traffic_director_enabled());
               EXPECT_TRUE(proto.direct_access_requested());
               return internal::AbortedError("fail");
@@ -378,10 +395,25 @@ TEST(BigtableStubFactory, FeaturesFlags) {
                          google::bigtable::v2::MutateRowRequest const&) {
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
-              EXPECT_THAT(
-                  headers,
-                  Contains(Pair("bigtable-features",
-                                AllOf(Not(IsEmpty()), IsWebSafeBase64()))));
+              auto it = headers.find("bigtable-features");
+              EXPECT_NE(it, headers.end());
+              if (it == headers.end())
+                return internal::AbortedError("header not found");
+              auto decoded = internal::UrlsafeBase64Decode(it->second);
+              EXPECT_STATUS_OK(decoded);
+              if (!decoded) return internal::AbortedError("fail to decode");
+              google::bigtable::v2::FeatureFlags proto;
+              EXPECT_TRUE(proto.ParseFromArray(
+                  decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_TRUE(proto.reverse_scans());
+              EXPECT_TRUE(proto.last_scanned_row_responses());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit2());
+              EXPECT_TRUE(proto.routing_cookie());
+              EXPECT_TRUE(proto.retry_info());
+              EXPECT_TRUE(proto.peer_info());
+              EXPECT_FALSE(proto.traffic_director_enabled());
+              EXPECT_FALSE(proto.direct_access_requested());
               return internal::AbortedError("fail");
             });
         return mock;

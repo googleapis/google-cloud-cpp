@@ -56,6 +56,7 @@ std::string CreateFeaturesMetadata(bool is_direct_path) {
   proto.set_mutate_rows_rate_limit2(true);
   proto.set_routing_cookie(true);
   proto.set_retry_info(true);
+  proto.set_peer_info(true);
   if (is_direct_path) {
     proto.set_traffic_director_enabled(true);
     proto.set_direct_access_requested(true);
