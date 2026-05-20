@@ -51,6 +51,14 @@ StatusOr<google::cloud::support::v2::Comment> CommentServiceAuth::CreateComment(
   return child_->CreateComment(context, options, request);
 }
 
+StatusOr<google::cloud::support::v2::Comment> CommentServiceAuth::GetComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetComment(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud

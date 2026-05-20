@@ -54,6 +54,10 @@ class MockCommentServiceConnection
   MOCK_METHOD(StatusOr<google::cloud::support::v2::Comment>, CreateComment,
               (google::cloud::support::v2::CreateCommentRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::support::v2::Comment>, GetComment,
+              (google::cloud::support::v2::GetCommentRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

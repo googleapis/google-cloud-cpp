@@ -39,6 +39,9 @@ class CaseAttachmentServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListAttachments(
       google::cloud::support::v2::ListAttachmentsRequest request);
+
+  virtual google::cloud::Idempotency GetAttachment(
+      google::cloud::support::v2::GetAttachmentRequest const& request);
 };
 
 std::unique_ptr<CaseAttachmentServiceConnectionIdempotencyPolicy>

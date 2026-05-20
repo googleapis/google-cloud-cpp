@@ -46,6 +46,10 @@ class CaseAttachmentServiceAuth : public CaseAttachmentServiceStub {
       google::cloud::support::v2::ListAttachmentsRequest const& request)
       override;
 
+  StatusOr<google::cloud::support::v2::Attachment> GetAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetAttachmentRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<CaseAttachmentServiceStub> child_;

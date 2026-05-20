@@ -234,6 +234,19 @@ LineageAuth::BatchSearchLinkProcesses(
   return child_->BatchSearchLinkProcesses(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>>
+LineageAuth::SearchLineageStreaming(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->SearchLineageStreaming(std::move(context), options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 LineageAuth::ListOperations(
     grpc::ClientContext& context, Options const& options,

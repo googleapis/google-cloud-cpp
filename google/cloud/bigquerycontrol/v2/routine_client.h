@@ -108,7 +108,7 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L529}
+  /// [google.cloud.bigquery.v2.GetRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L534}
   /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L83}
   ///
   // clang-format on
@@ -139,7 +139,7 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.InsertRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L541}
+  /// [google.cloud.bigquery.v2.InsertRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L546}
   /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L83}
   ///
   // clang-format on
@@ -172,7 +172,7 @@ class RoutineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L83}
-  /// [google.cloud.bigquery.v2.UpdateRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L553}
+  /// [google.cloud.bigquery.v2.UpdateRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L558}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Routine> UpdateRoutine(
@@ -200,7 +200,7 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L568}
+  /// [google.cloud.bigquery.v2.DeleteRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L573}
   ///
   // clang-format on
   Status DeleteRoutine(
@@ -231,8 +231,8 @@ class RoutineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListRoutinesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L580}
-  /// [google.cloud.bigquery.v2.ListRoutinesResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L602}
+  /// [google.cloud.bigquery.v2.ListRoutinesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L585}
+  /// [google.cloud.bigquery.v2.ListRoutinesResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L607}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse> ListRoutines(

@@ -57,6 +57,18 @@ CommentServiceTracingStub::CreateComment(
                            child_->CreateComment(context, options, request));
 }
 
+StatusOr<google::cloud::support::v2::Comment>
+CommentServiceTracingStub::GetComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService",
+                                     "GetComment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetComment(context, options, request));
+}
+
 std::shared_ptr<CommentServiceStub> MakeCommentServiceTracingStub(
     std::shared_ptr<CommentServiceStub> stub) {
   return std::make_shared<CommentServiceTracingStub>(std::move(stub));

@@ -57,6 +57,15 @@ CaseAttachmentServiceMetadata::ListAttachments(
   return child_->ListAttachments(context, options, request);
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceMetadata::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetAttachmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAttachment(context, options, request);
+}
+
 void CaseAttachmentServiceMetadata::SetMetadata(
     grpc::ClientContext& context, Options const& options,
     std::string const& request_params) {

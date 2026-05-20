@@ -45,6 +45,18 @@ CaseAttachmentServiceTracingStub::ListAttachments(
                            child_->ListAttachments(context, options, request));
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceTracingStub::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.support.v2.CaseAttachmentService", "GetAttachment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAttachment(context, options, request));
+}
+
 std::shared_ptr<CaseAttachmentServiceStub> MakeCaseAttachmentServiceTracingStub(
     std::shared_ptr<CaseAttachmentServiceStub> stub) {
   return std::make_shared<CaseAttachmentServiceTracingStub>(std::move(stub));

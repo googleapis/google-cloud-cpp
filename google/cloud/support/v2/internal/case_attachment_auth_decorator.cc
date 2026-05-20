@@ -43,6 +43,15 @@ CaseAttachmentServiceAuth::ListAttachments(
   return child_->ListAttachments(context, options, request);
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceAuth::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetAttachmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAttachment(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud

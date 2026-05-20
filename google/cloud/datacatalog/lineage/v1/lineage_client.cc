@@ -360,6 +360,16 @@ LineageClient::BatchSearchLinkProcesses(
   return connection_->BatchSearchLinkProcesses(std::move(request));
 }
 
+StreamRange<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+LineageClient::SearchLineageStreaming(
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SearchLineageStreaming(request);
+}
+
 StreamRange<google::longrunning::Operation> LineageClient::ListOperations(
     std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

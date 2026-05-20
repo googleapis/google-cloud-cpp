@@ -46,6 +46,12 @@ CaseAttachmentServiceConnection::ListAttachments(
       StreamRange<google::cloud::support::v2::Attachment>>();
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceConnection::GetAttachment(
+    google::cloud::support::v2::GetAttachmentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CaseAttachmentServiceConnection>
 MakeCaseAttachmentServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

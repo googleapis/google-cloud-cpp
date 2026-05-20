@@ -45,6 +45,18 @@ DefaultCaseAttachmentServiceStub::ListAttachments(
   return response;
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+DefaultCaseAttachmentServiceStub::GetAttachment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::support::v2::GetAttachmentRequest const& request) {
+  google::cloud::support::v2::Attachment response;
+  auto status = grpc_stub_->GetAttachment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud

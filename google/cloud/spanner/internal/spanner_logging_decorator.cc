@@ -227,6 +227,31 @@ SpannerLogging::BatchWrite(
       std::move(context), options, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+SpannerLogging::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::spanner::v1::FetchCacheUpdateRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::spanner::v1::CacheUpdate>> {
+        auto stream =
+            child_->FetchCacheUpdate(std::move(context), options, request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::spanner::v1::CacheUpdate>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::spanner::v1::Session>>
 SpannerLogging::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,
