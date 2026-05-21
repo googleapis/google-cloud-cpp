@@ -413,7 +413,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
         if (rpc->first_response.has_resource()) {
           auto const& resource = rpc->first_response.resource();
           if (current->get<storage::EnableCrc32cValidationOption>() &&
-              resource.has_checksums()) {
+              resource.has_checksums() && resource.checksums().has_crc32c()) {
             hash = std::make_shared<storage::internal::Crc32cHashFunction>(
                 resource.checksums().crc32c(), resource.size());
           } else {
