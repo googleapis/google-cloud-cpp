@@ -20,10 +20,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -41,6 +41,7 @@ class ServiceAccountConfig;
 class ExternalAccountConfig;
 class ApiKeyConfig;
 class ComputeEngineCredentialsConfig;
+class GDCHServiceAccountConfig;
 
 std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status);
 
@@ -56,6 +57,7 @@ class CredentialsVisitor {
   virtual void visit(ExternalAccountConfig const&) = 0;
   virtual void visit(ApiKeyConfig const&) = 0;
   virtual void visit(ComputeEngineCredentialsConfig const&) = 0;
+  virtual void visit(GDCHServiceAccountConfig const&) = 0;
 
   static void dispatch(Credentials const& credentials,
                        CredentialsVisitor& visitor);
@@ -147,20 +149,18 @@ class ServiceAccountConfig : public Credentials {
   // Only one of json_object or file_path should have a value.
   // TODO(#15886): Use the C++ type system to make better constructors that
   //   enforces this comment.
-  ServiceAccountConfig(absl::optional<std::string> json_object,
-                       absl::optional<std::string> file_path, Options opts);
+  ServiceAccountConfig(std::optional<std::string> json_object,
+                       std::optional<std::string> file_path, Options opts);
 
-  absl::optional<std::string> const& json_object() const {
-    return json_object_;
-  }
-  absl::optional<std::string> const& file_path() const { return file_path_; }
+  std::optional<std::string> const& json_object() const { return json_object_; }
+  std::optional<std::string> const& file_path() const { return file_path_; }
   Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
-  absl::optional<std::string> json_object_;
-  absl::optional<std::string> file_path_;
+  std::optional<std::string> json_object_;
+  std::optional<std::string> file_path_;
   Options options_;
 };
 
@@ -203,6 +203,29 @@ class ComputeEngineCredentialsConfig : public Credentials {
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
+  Options options_;
+};
+
+class GDCHServiceAccountConfig : public Credentials {
+ public:
+  GDCHServiceAccountConfig(std::string json_object, std::string audience,
+                           Options opts);
+  GDCHServiceAccountConfig(std::string audience, Options opts);
+
+  ~GDCHServiceAccountConfig() override = default;
+
+  std::optional<std::string> const& file_path() const { return file_path_; }
+  std::string const& json_object() const { return json_object_; }
+  std::string const& audience() const { return audience_; }
+  Options const& options() const { return options_; }
+
+ private:
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+
+  std::optional<std::string> file_path_ = std::nullopt;
+  ;
+  std::string json_object_;
+  std::string audience_;
   Options options_;
 };
 

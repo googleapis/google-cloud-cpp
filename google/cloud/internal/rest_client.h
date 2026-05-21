@@ -23,6 +23,7 @@
 #include "google/cloud/rest_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <nlohmann/json_fwd.hpp>
 #include <string>
 #include <utility>
 #include <vector>
@@ -85,6 +86,9 @@ class RestClient {
   virtual StatusOr<std::unique_ptr<RestResponse>> Post(
       RestContext& context, RestRequest const& request,
       std::vector<std::pair<std::string, std::string>> const& form_data) = 0;
+  // virtual StatusOr<std::unique_ptr<RestResponse>> Post(
+  //     RestContext& context, RestRequest const& request,
+  //     nlohmann::json const& json_payload) = 0;
   virtual StatusOr<std::unique_ptr<RestResponse>> Put(
       RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) = 0;

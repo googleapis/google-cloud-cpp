@@ -14,16 +14,13 @@
 
 #include "google/cloud/internal/oauth2_gdch_service_account_credentials.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
-#include "google/cloud/internal/oauth2_universe_domain.h"
 #include "google/cloud/internal/parse_service_account_p12_file.h"
 #include "google/cloud/internal/rest_response.h"
-#include "google/cloud/internal/sign_using_sha256.h"
 #include "absl/strings/str_join.h"
-#include "absl/strings/str_replace.h"
+#include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <functional>
@@ -38,6 +35,7 @@ using ::google::cloud::internal::MakeJWTAssertionNoThrow;
 StatusOr<GDCHServiceAccountCredentials::Info>
 GDCHServiceAccountCredentials::Parse(std::string const& content,
                                      std::string const& source) {
+  std::cout << __func__ << std::endl;
   auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
     return internal::InvalidArgumentError(absl::StrCat(
@@ -47,8 +45,10 @@ GDCHServiceAccountCredentials::Parse(std::string const& content,
 
   using Validator =
       std::function<Status(absl::string_view name, nlohmann::json::iterator)>;
-  using Store = std::function<void(GDCHServiceAccountCredentials::Info&,
-                                   nlohmann::json::iterator const&)>;
+  using Store = std::function<void(Info&, nlohmann::json::iterator const&)>;
+  auto optional_field = [](absl::string_view, nlohmann::json::iterator const&) {
+    return Status{};
+  };
   auto non_empty_field = [&](absl::string_view name,
                              nlohmann::json::iterator const& l) {
     if (l == credentials.end()) return Status{};
@@ -72,40 +72,39 @@ GDCHServiceAccountCredentials::Parse(std::string const& content,
     Validator validator;
     Store store;
   };
-  std::vector<Field> fields{{"project_id", required_field,
-                             [](GDCHServiceAccountCredentials::Info& info,
-                                nlohmann::json::iterator const& l) {
-                               info.project_id = l->get<std::string>();
-                             }},
-                            {"private_key_id", required_field,
-                             [&](GDCHServiceAccountCredentials::Info& info,
-                                 nlohmann::json::iterator const& l) {
-                               if (l == credentials.end()) return;
-                               info.private_key_id = l->get<std::string>();
-                             }},
-                            {"private_key", required_field,
-                             [](GDCHServiceAccountCredentials::Info& info,
-                                nlohmann::json::iterator const& l) {
-                               info.private_key = l->get<std::string>();
-                             }},
-                            {"name", required_field,
-                             [&](GDCHServiceAccountCredentials::Info& info,
-                                 nlohmann::json::iterator const& l) {
-                               info.service_identity_name =
-                                   l->get<std::string>();
-                             }},
-                            {"ca_cert_path", required_field,
-                             [&](GDCHServiceAccountCredentials::Info& info,
-                                 nlohmann::json::iterator const& l) {
-                               info.ca_cert_path = l->get<std::string>();
-                             }},
-                            {"token_uri", required_field,
-                             [&](GDCHServiceAccountCredentials::Info& info,
-                                 nlohmann::json::iterator const& l) {
-                               info.token_uri = l->get<std::string>();
-                             }}};
+  std::vector<Field> fields{
+      {"project", required_field,
+       [](Info& info, nlohmann::json::iterator const& l) {
+         info.project_id = l->get<std::string>();
+       }},
+      {"private_key_id", required_field,
+       [&](Info& info, nlohmann::json::iterator const& l) {
+         if (l == credentials.end()) return;
+         info.private_key_id = l->get<std::string>();
+       }},
+      {"private_key", required_field,
+       [](Info& info, nlohmann::json::iterator const& l) {
+         info.private_key = l->get<std::string>();
+       }},
+      {"name", required_field,
+       [&](Info& info, nlohmann::json::iterator const& l) {
+         info.service_identity_name = l->get<std::string>();
+       }},
+      {"ca_cert_path", optional_field,
+       [&](Info& info, nlohmann::json::iterator const& l) {
+         if (l == credentials.end()) return;
+         info.ca_cert_path = l->get<std::string>();
+         std::cout << __func__ << ": ca_cert_path=" << info.ca_cert_path
+                   << std::endl;
+       }},
+      {"token_uri", required_field,
+       [&](Info& info, nlohmann::json::iterator const& l) {
+         info.token_uri = l->get<std::string>();
+       }}};
 
-  auto info = GDCHServiceAccountCredentials::Info{};
+  std::cout << __func__ << ": start parsing" << std::endl;
+
+  Info info;
   for (auto& f : fields) {
     auto l = credentials.find(f.name);
     if (l != credentials.end() && !l->is_string()) {
@@ -115,22 +114,28 @@ GDCHServiceAccountCredentials::Parse(std::string const& content,
           source));
     }
     auto status = f.validator(f.name, l);
-    if (!status.ok()) return status;
+    if (!status.ok()) {
+      std::cout << __func__ << ": parsing error" << std::endl;
+      return status;
+    }
     f.store(info, l);
   }
+
+  std::cout << __func__ << ": successfully parsed" << std::endl;
+
   return info;
 }
 
 std::pair<std::string, std::string>
 GDCHServiceAccountCredentials::AssertionComponentsFromInfo(
-    GDCHServiceAccountCredentials::Info const& info,
-    std::chrono::system_clock::time_point now) {
-  nlohmann::json assertion_header = {{"alg", "RS256"}, {"typ", "JWT"}};
+    Info const& info, std::chrono::system_clock::time_point now) {
+  nlohmann::json assertion_header = {{"alg", "ES256"}, {"typ", "JWT"}};
   if (!info.private_key_id.empty()) {
     assertion_header["kid"] = info.private_key_id;
   }
 
-  auto expiration = now + GoogleOAuthAccessTokenLifetime();
+  // auto expiration = now + GoogleOAuthAccessTokenLifetime();
+  auto expiration = now + std::chrono::seconds(600);
   // As much as possible, do the time arithmetic using the std::chrono types.
   // Convert to an integer only when we are dealing with timestamps since the
   // epoch. Note that we cannot use `time_t` directly because that might be a
@@ -156,20 +161,24 @@ GDCHServiceAccountCredentials::AssertionComponentsFromInfo(
 std::string GDCHServiceAccountCredentials::MakeJWTAssertion(
     std::string const& header, std::string const& payload,
     std::string const& pem_contents) {
-  return internal::MakeJWTAssertionNoThrow(header, payload, pem_contents)
+  return internal::MakeJWTAssertionNoThrow(
+             header, payload, pem_contents,
+             google::cloud::internal::JWTAlg::ES256)
       .value();
 }
 
-std::vector<std::pair<std::string, std::string>>
-GDCHServiceAccountCredentials::CreateRefreshPayload(
-    GDCHServiceAccountCredentials::Info const& info,
-    std::chrono::system_clock::time_point now) {
+nlohmann::json GDCHServiceAccountCredentials::CreateRefreshPayload(
+    Info const& info, std::chrono::system_clock::time_point now) {
   auto [header, payload] = AssertionComponentsFromInfo(info, now);
-  return {
+  std::cout << __func__ << ": header=" << header << std::endl;
+  std::cout << __func__ << ": payload=" << payload << std::endl;
+  auto jwt = MakeJWTAssertion(header, payload, info.private_key);
+  std::cout << __func__ << ": jwt=" << jwt << std::endl;
+  return nlohmann::json{
       {"grant_type", "urn:ietf:params:oauth:token-type:token-exchange"},
       {"audience", info.audience},
       {"requested_token_type", "urn:ietf:params:oauth:token-type:access_token"},
-      {"subject_token", MakeJWTAssertion(header, payload, info.private_key)},
+      {"subject_token", std::move(jwt)},
       {"subject_token_type", "urn:k8s:params:oauth:token-type:serviceaccount"}};
 }
 
@@ -179,17 +188,18 @@ StatusOr<AccessToken> GDCHServiceAccountCredentials::ParseRefreshResponse(
   auto status_code = response.StatusCode();
   auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
   if (!payload.ok()) return std::move(payload).status();
+  auto payload_copy = *payload;
   auto access_token = nlohmann::json::parse(*payload, nullptr, false);
   if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
       access_token.count("expires_in") == 0 ||
       access_token.count("token_type") == 0 ||
       access_token.count("issued_token_type") == 0) {
     auto error_payload =
-        *payload +
+        payload_copy +
         "Could not find all required fields in response (access_token,"
         " expires_in, token_type, issued_token_type) while trying to obtain an"
         " access token for GDCH service account credentials.";
-    return AsStatus(status_code, error_payload);
+    return internal::InvalidArgumentError(error_payload, GCP_ERROR_INFO());
   }
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   return AccessToken{access_token.value("access_token", ""), now + expires_in};
@@ -228,6 +238,10 @@ StatusOr<std::unique_ptr<Credentials>>
 GDCHServiceAccountCredentials::CreateFromFilePath(
     std::string const& path, Options const& options,
     HttpClientFactory client_factory) {
+  if (path.empty()) {
+    return internal::InvalidArgumentError(
+        "GOOGLE_APPLICATION_CREDENTIALS env var was empty.", GCP_ERROR_INFO());
+  }
   std::ifstream is(path);
   if (!is.is_open()) {
     // We use kUnknown here because we don't know if the file does not exist, or
@@ -252,12 +266,21 @@ GDCHServiceAccountCredentials::GDCHServiceAccountCredentials(
 
 StatusOr<AccessToken> GDCHServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
-  auto client = client_factory_(options_);
+  Options options = options_;
+  if (!info_.ca_cert_path.empty()) {
+    std::cout << __func__ << ": set ca_cert_path=" << info_.ca_cert_path
+              << std::endl;
+    options.set<CARootsFilePathOption>(info_.ca_cert_path);
+  } else {
+    std::cout << __func__ << ": did NOT set ca_cert_path" << std::endl;
+  }
+  auto client = client_factory_(std::move(options));
   rest_internal::RestRequest request;
   request.SetPath(info_.token_uri);
+  request.AddHeader("Content-Type", "application/json");
   auto payload = CreateRefreshPayload(info_, tp);
   rest_internal::RestContext context;
-  auto response = client->Post(context, request, payload);
+  auto response = client->Post(context, request, {payload.dump()});
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
   return ParseRefreshResponse(**response, tp);

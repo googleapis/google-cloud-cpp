@@ -221,6 +221,26 @@ TEST(UnifiedRestCredentialsIntegrationTest, StorageSelfSignedJWT) {
           MakeServiceAccountCredentials(contents))));
 }
 
+MATCHER(AccessTokenIsSTSBearer, "access token is STS Bearer") {
+  return absl::StartsWith(arg.token, "STS-Bearer-");
+}
+
+TEST(UnifiedRestCredentialsIntegrationTest, GDCHServiceAccountCredentials) {
+  auto key_file_env =
+      internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_GDCH_KEY_FILE");
+  if (!key_file_env.has_value()) GTEST_SKIP();
+  std::ifstream is(*key_file_env);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+  ASSERT_THAT(contents, testing::Not(testing::IsEmpty()));
+
+  std::string const kAudience = "global-api";
+  auto gdch_creds = MakeGDCHServiceAccountCredentials(contents, kAudience);
+  EXPECT_THAT(gdch_creds, testing::NotNull());
+  auto oauth2_creds = MapCredentials(*gdch_creds);
+  EXPECT_THAT(oauth2_creds->GetToken(std::chrono::system_clock::now()),
+              testing_util::IsOkAndHolds(AccessTokenIsSTSBearer()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

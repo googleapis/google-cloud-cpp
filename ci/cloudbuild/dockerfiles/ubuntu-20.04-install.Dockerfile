@@ -13,6 +13,8 @@
 # limitations under the License.
 
 FROM ubuntu:20.04
+ARG NCPU=4
+ARG ARCH=amd64
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -198,6 +200,10 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/scca
     mkdir -p /usr/local/bin && \
     mv sccache /usr/local/bin/sccache && \
     chmod +x /usr/local/bin/sccache
+
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.28.1/bazelisk-linux-${ARCH}" && \
+    chmod +x /usr/bin/bazelisk && \
+    ln -s /usr/bin/bazelisk /usr/bin/bazel
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*

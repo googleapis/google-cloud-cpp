@@ -100,7 +100,7 @@ auto constexpr kTokenUri = "https://gdc.token.uri/v1/token";
 
 nlohmann::json TestContents() {
   return nlohmann::json{
-      {"project_id", kProjectId},    {"private_key_id", kPrivateKeyId},
+      {"project", kProjectId},       {"private_key_id", kPrivateKeyId},
       {"private_key", kPrivateKey},  {"name", kServiceIdentityName},
       {"ca_cert_path", kCaCertPath}, {"token_uri", kTokenUri},
   };
@@ -191,7 +191,7 @@ TEST(GDCHServiceAccountCredentialsTest, ParseInvalidJson) {
 /// @test Verify that parsing a service account JSON string works.
 TEST(GDCHServiceAccountCredentialsTest, ParseSimple) {
   std::string contents = R"""({
-      "project_id": "test-project-id",
+      "project": "test-project-id",
       "private_key_id": "not-a-key-id-just-for-testing",
       "private_key": "not-a-valid-key-just-for-testing",
       "name": "test-service-identity",
@@ -224,7 +224,7 @@ TEST(GDCHServiceAccountCredentialsTest, ParseInvalidContentsFails) {
 /// @test Parsing a service account JSON string should detect empty fields.
 TEST(GDCHServiceAccountCredentialsTest, ParseEmptyFieldFails) {
   std::string contents = R"""({
-      "project_id": "test-project-id",
+      "project": "test-project-id",
       "private_key_id": "not-a-key-id-just-for-testing",
       "private_key": "not-a-valid-key-just-for-testing",
       "name": "test-service-identity",
@@ -232,8 +232,8 @@ TEST(GDCHServiceAccountCredentialsTest, ParseEmptyFieldFails) {
       "token_uri": "https://gdc.token.uri/v1/token"
 })""";
 
-  for (auto const& field : {"project_id", "private_key_id", "private_key",
-                            "name", "ca_cert_path", "token_uri"}) {
+  for (auto const& field :
+       {"project", "private_key_id", "private_key", "name", "token_uri"}) {
     auto json = nlohmann::json::parse(contents);
     json[field] = "";
     auto actual =
@@ -248,7 +248,7 @@ TEST(GDCHServiceAccountCredentialsTest, ParseEmptyFieldFails) {
 /// @test Parsing a service account JSON string should detect invalid fields.
 TEST(GDCHServiceAccountCredentialsTest, ParseInvalidTypeFieldFails) {
   std::string contents = R"""({
-      "project_id": "test-project-id",
+      "project": "test-project-id",
       "private_key_id": "not-a-key-id-just-for-testing",
       "private_key": "not-a-valid-key-just-for-testing",
       "name": "test-service-identity",
@@ -256,8 +256,8 @@ TEST(GDCHServiceAccountCredentialsTest, ParseInvalidTypeFieldFails) {
       "token_uri": "https://gdc.token.uri/v1/token"
 })""";
 
-  for (auto const& field : {"project_id", "private_key_id", "private_key",
-                            "name", "ca_cert_path", "token_uri"}) {
+  for (auto const& field : {"project", "private_key_id", "private_key", "name",
+                            "ca_cert_path", "token_uri"}) {
     auto json = nlohmann::json::parse(contents);
     json[field] = true;
     auto actual =
@@ -274,16 +274,15 @@ TEST(GDCHServiceAccountCredentialsTest, ParseInvalidTypeFieldFails) {
 /// @test Parsing a service account JSON string should detect missing fields.
 TEST(GDCHServiceAccountCredentialsTest, ParseMissingFieldFails) {
   std::string contents = R"""({
-      "project_id": "test-project-id",
+      "project": "test-project-id",
       "private_key_id": "not-a-key-id-just-for-testing",
       "private_key": "not-a-valid-key-just-for-testing",
       "name": "test-service-identity",
-      "ca_cert_path": "/test/ca.crt",
       "token_uri": "https://gdc.token.uri/v1/token"
 })""";
 
-  for (auto const& field : {"project_id", "private_key_id", "private_key",
-                            "name", "ca_cert_path", "token_uri"}) {
+  for (auto const& field :
+       {"project", "private_key_id", "private_key", "name", "token_uri"}) {
     auto json = nlohmann::json::parse(contents);
     json.erase(field);
     auto actual =

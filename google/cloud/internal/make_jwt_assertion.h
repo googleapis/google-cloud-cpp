@@ -23,10 +23,13 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+enum class JWTAlg { RS256, ES256 };
+
 StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
                                               std::string const& payload,
-                                              std::string const& pem_contents);
-
+                                              std::string const& pem_contents,
+                                              JWTAlg alg = JWTAlg::RS256);
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

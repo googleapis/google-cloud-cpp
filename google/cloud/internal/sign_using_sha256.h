@@ -34,7 +34,11 @@ namespace internal {
  *   array to a format more suitable for transmission over HTTP.
  */
 StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
-    std::string const& str, std::string const& pem_contents);
+    std::string const& str, std::string const& pem_contents,
+    bool convert_der_to_raw = false);
+
+// StatusOr<std::vector<std::uint8_t>> ConvertSignatureFromDERToRaw(
+//   std::vector<std::uint8_t> der_signature);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

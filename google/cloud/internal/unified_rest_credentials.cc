@@ -23,6 +23,7 @@
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
+#include "google/cloud/internal/oauth2_gdch_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
@@ -39,6 +40,7 @@ using ::google::cloud::internal::ComputeEngineCredentialsConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
+using ::google::cloud::internal::GDCHServiceAccountConfig;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
@@ -151,6 +153,31 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
           cfg.options(), client_factory_);
       result =
           Decorate(std::move(creds), std::move(client_factory_), cfg.options());
+    }
+    void visit(GDCHServiceAccountConfig const& cfg) override {
+      Options audience_option;
+      // TODO(sdhart): reconsider AudienceOption and require users to explicitly
+      // call `MakeGDCHServiceAccountCredentials`.
+      if (!cfg.audience().empty()) {
+        audience_option.set<AudienceOption>(cfg.audience());
+      }
+      auto options = internal::MergeOptions(cfg.options(), audience_option);
+
+      StatusOr<std::unique_ptr<oauth2_internal::Credentials>> creds;
+      if (cfg.file_path().has_value()) {
+        creds =
+            oauth2_internal::GDCHServiceAccountCredentials::CreateFromFilePath(
+                *cfg.file_path(), options, client_factory_);
+      } else {
+        creds = oauth2_internal::GDCHServiceAccountCredentials::
+            CreateFromJsonContents(cfg.json_object(), options, client_factory_);
+      }
+      if (!creds.ok()) {
+        result = MakeErrorCredentials(std::move(creds).status());
+      } else {
+        result = Decorate(*std::move(creds), std::move(client_factory_),
+                          std::move(options));
+      }
     }
 
    private:

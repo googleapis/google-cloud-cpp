@@ -454,6 +454,40 @@ std::shared_ptr<Credentials> MakeApiKeyCredentials(std::string api_key,
 std::shared_ptr<Credentials> MakeComputeEngineCredentials(Options opts = {});
 
 /**
+ * Creates credentials for a Google Distributed Cloud Hosting (GDCH) Service
+ * Account.
+ *
+ * @see https://docs.cloud.google.com/distributed-cloud/hosted/docs/latest/gdcag
+ *     for more information on GDCH air-gapped environments.
+ *
+ *
+ * @see https://cloud.google.com/docs/authentication for more information on
+ *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
+ *
+ * [aip/4115]: https://google.aip.dev/auth/4115
+ *
+ * @ingroup guac
+ *
+ * @param json_object service account configuration as a JSON string. If
+ *     omitted, the contents of the file at GOOGLE_APPLICATION_CREDENTIALS is
+ *     used.
+ *
+ * @param audience authentication endpoint for the service identity used if
+ *     AudienceOption not present in opts.
+ *
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
+ */
+std::shared_ptr<Credentials> MakeGDCHServiceAccountCredentials(
+    std::string json_object, std::string audience, Options opts = {});
+std::shared_ptr<Credentials> MakeGDCHServiceAccountCredentials(
+    std::string audience, Options opts = {});
+
+/**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
  *
  * @ingroup options

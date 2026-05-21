@@ -217,7 +217,8 @@ StatusOr<AccessToken> ParseServiceAccountRefreshResponse(
         "Could not find all required fields in response (access_token,"
         " expires_in, token_type) while trying to obtain an access token for"
         " service account credentials.";
-    return AsStatus(status_code, error_payload);
+    return internal::InternalError(error_payload, GCP_ERROR_INFO());
+    // return AsStatus(status_code, error_payload);
   }
 
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));

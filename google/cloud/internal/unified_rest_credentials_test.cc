@@ -125,10 +125,12 @@ std::unique_ptr<RestResponse> MakeMockResponse(std::string contents) {
   return response;
 }
 
+auto constexpr kProjectId = "invalid-test-only-project";
+
 nlohmann::json MakeServiceAccountContents() {
   return nlohmann::json{
       {"type", "service_account"},
-      {"project_id", "invalid-test-only-project"},
+      {"project_id", kProjectId},
       {"private_key_id", kServiceAccountKeyId},
       {"private_key", kWellFormattedKey},
       {"client_email", kServiceAccountEmail},
@@ -140,6 +142,19 @@ nlohmann::json MakeServiceAccountContents() {
       {"client_x509_cert_url",
        "https://www.googleapis.com/robot/v1/metadata/x509/"
        "foo-email%40invalid-test-only-project.iam.gserviceaccount.com"},
+  };
+}
+
+auto constexpr kCaCertPath = "/test/ca.crt";
+auto constexpr kTokenUri = "https://gdc.token.uri/v1/token";
+nlohmann::json MakeGDCHServiceAccountContents() {
+  return nlohmann::json{
+      {"project_id", kProjectId},
+      {"private_key_id", kServiceAccountKeyId},
+      {"private_key", kWellFormattedKey},
+      {"name", kServiceAccountEmail},
+      {"ca_cert_path", kCaCertPath},
+      {"token_uri", kTokenUri},
   };
 }
 
@@ -498,6 +513,112 @@ TEST(UnifiedRestCredentialsTest, ApiKey) {
       oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
   EXPECT_THAT(header,
               IsOkAndHolds(Contains(HttpHeader("x-goog-api-key", "api-key"))));
+}
+
+TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountNoAudience) {
+  auto creds = MakeGDCHServiceAccountCredentials(
+      MakeGDCHServiceAccountContents().dump(), {}, {});
+  ASSERT_THAT(creds, NotNull());
+
+  auto oauth2_creds = MapCredentials(*creds);
+  ASSERT_THAT(oauth2_creds, NotNull());
+
+  auto header =
+      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
+  EXPECT_THAT(header,
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("Audience")));
+}
+
+TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceParameter) {
+  auto constexpr kAudience = "test-audience";
+  auto const post_response = std::string{R"""({
+    "access_token":"access-token-value",
+    "issued_token_type":"urn:ietf:params:oauth:token-type:access_token",
+    "token_type":"Bearer",
+    "expires_in":3599
+  })"""};
+
+  auto token_client = [=] {
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto mock = std::make_unique<MockRestClient>();
+    auto expected_request = Property(&RestRequest::path, kTokenUri);
+    auto expected_form_data =
+        MatcherCast<FormDataType const&>(Contains(Pair("audience", kAudience)));
+    EXPECT_CALL(*mock, Post(_, expected_request, expected_form_data))
+        .WillOnce([post_response]() {
+          auto response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*response), ExtractPayload)
+              .WillOnce(
+                  Return(ByMove(MakeMockHttpPayloadSuccess(post_response))));
+          return std::unique_ptr<rest_internal::RestResponse>(
+              std::move(response));
+        });
+    return mock;
+  }();
+
+  MockClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(token_client))));
+
+  auto creds = MakeGDCHServiceAccountCredentials(
+      MakeGDCHServiceAccountContents().dump(), kAudience, {});
+  ASSERT_THAT(creds, NotNull());
+
+  auto oauth2_creds =
+      MapCredentials(*creds, mock_client_factory.AsStdFunction());
+  ASSERT_THAT(oauth2_creds, NotNull());
+
+  auto header =
+      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
+}
+
+TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceOption) {
+  auto constexpr kAudience = "test-audience";
+  auto const post_response = std::string{R"""({
+    "access_token":"access-token-value",
+    "issued_token_type":"urn:ietf:params:oauth:token-type:access_token",
+    "token_type":"Bearer",
+    "expires_in":3599
+  })"""};
+
+  auto token_client = [=] {
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto mock = std::make_unique<MockRestClient>();
+    auto expected_request = Property(&RestRequest::path, kTokenUri);
+    auto expected_form_data =
+        MatcherCast<FormDataType const&>(Contains(Pair("audience", kAudience)));
+    EXPECT_CALL(*mock, Post(_, expected_request, expected_form_data))
+        .WillOnce([post_response]() {
+          auto response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*response), ExtractPayload)
+              .WillOnce(
+                  Return(ByMove(MakeMockHttpPayloadSuccess(post_response))));
+          return std::unique_ptr<rest_internal::RestResponse>(
+              std::move(response));
+        });
+    return mock;
+  }();
+
+  MockClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(token_client))));
+
+  auto creds = MakeGDCHServiceAccountCredentials(
+      MakeGDCHServiceAccountContents().dump(), "audience-arg-not-used",
+      Options{}.set<AudienceOption>(kAudience));
+
+  ASSERT_THAT(creds, NotNull());
+
+  auto oauth2_creds =
+      MapCredentials(*creds, mock_client_factory.AsStdFunction());
+  ASSERT_THAT(oauth2_creds, NotNull());
+
+  auto header =
+      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
 }
 
 TEST(UnifiedRestCredentialsTest, LoadError) {

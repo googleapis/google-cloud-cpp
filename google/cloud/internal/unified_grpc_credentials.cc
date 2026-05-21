@@ -153,6 +153,16 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     void visit(ComputeEngineCredentialsConfig const&) override {
       result = std::make_unique<GrpcComputeEngineAuthentication>(options);
     }
+    void visit(GDCHServiceAccountConfig const&) override {
+      result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+          ErrorCredentialsConfig{
+              UnimplementedError("GDCHServiceAccountCredentials are not yet "
+                                 "supported for gRPC endpoints",
+                                 GCP_ERROR_INFO())});
+      // if file path is specified, read json from it, handle errors
+      // else use json from cfg
+      // create
+    }
 
   } visitor(std::move(cq), std::move(options));
 

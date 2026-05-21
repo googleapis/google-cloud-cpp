@@ -17,7 +17,9 @@
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
 #include <openssl/bio.h>
+#include <openssl/bn.h>
 #include <openssl/buffer.h>
+#include <openssl/ecdsa.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/md5.h>
@@ -74,10 +76,68 @@ std::string CaptureSslErrors() {
   return msg;
 }
 
+bool der_to_raw_ecdsa_signature_openssl(unsigned char const* der_sig,
+                                        size_t der_len, int coord_size,
+                                        std::vector<uint8_t>& raw_sig) {
+  if (!der_sig || der_len == 0) {
+    std::cerr << "Error: Input DER signature is empty." << std::endl;
+    return false;
+  }
+
+  // d2i_ECDSA_SIG modifies the input pointer, so make a copy
+  unsigned char const* p = der_sig;
+  ECDSA_SIG* ecdsa_sig = d2i_ECDSA_SIG(NULL, &p, der_len);
+
+  if (!ecdsa_sig) {
+    char err_buf[256];
+    ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
+    std::cerr << "Error parsing DER signature: " << err_buf << std::endl;
+    return false;
+  }
+
+  const BIGNUM *r, *s;
+  ECDSA_SIG_get0(ecdsa_sig, &r, &s);
+
+  if (!r || !s) {
+    std::cerr << "Error: Could not get r or s from ECDSA_SIG." << std::endl;
+    ECDSA_SIG_free(ecdsa_sig);
+    return false;
+  }
+
+  raw_sig.resize(2 * coord_size);
+  unsigned char* raw_sig_ptr = raw_sig.data();
+
+  // Convert r to binary, padded to coord_size
+  int r_len = BN_bn2binpad(r, &raw_sig_ptr[0], coord_size);
+  if (r_len != coord_size) {
+    char err_buf[256];
+    ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
+    std::cerr << "Error converting r to binary (expected " << coord_size
+              << " bytes, got " << r_len << "): " << err_buf << std::endl;
+    ECDSA_SIG_free(ecdsa_sig);
+    return false;
+  }
+
+  // Convert s to binary, padded to coord_size
+  int s_len = BN_bn2binpad(s, &raw_sig_ptr[coord_size], coord_size);
+  if (s_len != coord_size) {
+    char err_buf[256];
+    ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
+    std::cerr << "Error converting s to binary (expected " << coord_size
+              << " bytes, got " << s_len << "): " << err_buf << std::endl;
+    ECDSA_SIG_free(ecdsa_sig);
+    return false;
+  }
+
+  ECDSA_SIG_free(ecdsa_sig);
+  return true;
+}
+
 }  // namespace
 
 StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
-    std::string const& str, std::string const& pem_contents) {
+    std::string const& str, std::string const& pem_contents,
+    bool convert_der_to_raw) {
   ERR_clear_error();
   auto pem_buffer = std::unique_ptr<BIO, OpenSslDeleter>(BIO_new_mem_buf(
       pem_contents.data(), static_cast<int>(pem_contents.length())));
@@ -155,8 +215,16 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
         GCP_ERROR_INFO());
   }
 
-  return StatusOr<std::vector<std::uint8_t>>(
-      {buffer.begin(), std::next(buffer.begin(), actual_len)});
+  std::vector<std::uint8_t> sig{buffer.begin(),
+                                std::next(buffer.begin(), actual_len)};
+  std::vector<std::uint8_t> raw_sig;
+  if (convert_der_to_raw) {
+    std::cout << __func__ << ": convert der to raw" << std::endl;
+    der_to_raw_ecdsa_signature_openssl(sig.data(), sig.size(), 32, raw_sig);
+    return StatusOr<std::vector<std::uint8_t>>(raw_sig);
+  }
+  std::cout << __func__ << ": DO NOT convert der to raw" << std::endl;
+  return StatusOr<std::vector<std::uint8_t>>(sig);
 }
 
 }  // namespace internal

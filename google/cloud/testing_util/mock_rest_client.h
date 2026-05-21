@@ -45,6 +45,11 @@ class MockRestClient : public rest_internal::RestClient {
                rest_internal::RestRequest const& request,
                (std::vector<std::pair<std::string, std::string>> const&)),
               (override));
+  // MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Post,
+  //             (rest_internal::RestContext&,
+  //              rest_internal::RestRequest const& request,
+  //              (nlohmann::json const&)),
+  //             (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Put,
               (rest_internal::RestContext&, rest_internal::RestRequest const&,
                std::vector<absl::Span<char const>> const&),
