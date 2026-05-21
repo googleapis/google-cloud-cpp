@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/connection_impl.h"
-#include <iostream>
 #include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/read_all.h"
@@ -403,7 +402,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto pending = factory(std::move(request));
   return pending.then(
       [current, request = std::move(p.request), persisted_size,
-       fa = std::move(factory), stub = stub_](auto f) mutable
+       fa = std::move(factory)](auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
@@ -412,7 +411,6 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
         std::unique_ptr<AsyncWriterConnectionImpl> impl;
         
         if (rpc->first_response.has_resource()) {
-          std::cout << "connection_impl: First response has resource" << std::endl;
           auto const& resource = rpc->first_response.resource();
           if (current->get<storage::EnableCrc32cValidationOption>() &&
               resource.has_checksums()) {
@@ -425,42 +423,11 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
               current, request, std::move(rpc->stream), hash,
               resource, false);
         } else {
-          std::cout << "connection_impl: First response has persisted_size: " << rpc->first_response.persisted_size() << std::endl;
           persisted_size = rpc->first_response.persisted_size();
-          
-          // Fallback: Fetch metadata synchronously
-          google::storage::v2::GetObjectRequest get_request;
-          if (request.has_append_object_spec()) {
-            get_request.set_bucket(request.append_object_spec().bucket());
-            get_request.set_object(request.append_object_spec().object());
-            get_request.set_generation(request.append_object_spec().generation());
-          } else if (request.has_write_object_spec()) {
-            get_request.set_bucket(request.write_object_spec().resource().bucket());
-            get_request.set_object(request.write_object_spec().resource().name());
-          }
-          
-          grpc::ClientContext context;
-          auto get_response = stub->GetObject(context, *current, get_request);
-          if (get_response.ok()) {
-            std::cout << "connection_impl: Fetched metadata successfully!" << std::endl;
-            auto const& resource = *get_response;
-            if (current->get<storage::EnableCrc32cValidationOption>() &&
-                resource.has_checksums()) {
-              hash = std::make_shared<storage::internal::Crc32cHashFunction>(
-                  resource.checksums().crc32c(), resource.size());
-            } else {
-              hash = CreateHashFunction(*current);
-            }
-            impl = std::make_unique<AsyncWriterConnectionImpl>(
-                current, request, std::move(rpc->stream), hash,
-                resource, false);
-          } else {
-            std::cout << "connection_impl: Failed to fetch metadata: " << get_response.status().message() << std::endl;
-            hash = CreateHashFunction(*current);
-            impl = std::make_unique<AsyncWriterConnectionImpl>(
-                current, request, std::move(rpc->stream), hash, persisted_size,
-                false);
-          }
+          hash = CreateHashFunction(*current);
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash, persisted_size,
+              false);
         }
         return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
                                            std::move(request), std::move(hash),

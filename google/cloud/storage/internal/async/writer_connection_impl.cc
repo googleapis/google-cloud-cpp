@@ -145,7 +145,6 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
       action = PartialUpload::kFinalize;
     }
   }
-  std::cout << "Action: " << action << std::endl;
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
                                   std::move(p), std::move(action));
   return coro->Start().then([coro, size, this](auto f) mutable {
@@ -260,7 +259,25 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
     latest_write_handle_ = response->write_handle();
   }
   if (response->has_persisted_size()) {
+    absl::optional<google::storage::v2::Object> old_obj;
+    if (absl::holds_alternative<google::storage::v2::Object>(persisted_state_)) {
+      old_obj = absl::get<google::storage::v2::Object>(persisted_state_);
+    }
+
     persisted_state_ = response->persisted_size();
+
+    if (response->has_persisted_data_checksums()) {
+      auto const& checksums = response->persisted_data_checksums();
+      if (checksums.has_crc32c()) {
+        google::storage::v2::Object obj;
+        obj.set_size(response->persisted_size());
+        *obj.mutable_checksums() = checksums;
+        if (old_obj) {
+          obj.set_generation(old_obj->generation());
+        }
+        persisted_state_ = obj;
+      }
+    }
     return make_ready_future(make_status_or(response->persisted_size()));
   }
   if (response->has_resource()) {

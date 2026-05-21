@@ -236,38 +236,36 @@ TEST_F(AsyncClientIntegrationTest, StartAppendableUploadEmpty) {
   auto client = MakeGrpcClient(project_id);
 
   auto bucket_name = std::string{"gcs-grpc-team-fastbyte-bajajnehaa-test-us-west4"};
-  auto object_name = "vaibhav-test-file-113";
+  auto object_name = "vaibhav-test-file-117";
   auto placement = gcs::BucketCustomPlacementConfig{{"us-west4-a"}};
   // auto hns = gcs::BucketHierarchicalNamespace{true};
   auto ubla = gcs::BucketIamConfiguration{gcs::UniformBucketLevelAccess{true, {}}, absl::nullopt};
 
   auto constexpr kBlockSize = 1024*1024;
-  auto constexpr kBlockCount = 1000;
+  auto constexpr kBlockCount = 10;
   auto const block = MakeRandomData(kBlockSize);
   auto const block2 = MakeRandomData(kBlockSize);
 
   auto async = MakeAsyncClient(project_id);
   
-  // auto w = async.StartAppendableObjectUpload(BucketName(bucket_name), object_name)
-  //               .get();
-  // ASSERT_STATUS_OK(w);
+  auto w = async.StartAppendableObjectUpload(BucketName(bucket_name), object_name)
+                .get();
+  ASSERT_STATUS_OK(w);
 
-  // AsyncWriter writer;
-  // AsyncToken token;
-  // std::tie(writer, token) = *std::move(w);
-  // for (int i = 0; i < kBlockCount; ++i) {
-  //   std::cout << "Writing data iteration #" << i << std::endl;
-  //   auto p = writer.Write(std::move(token), WritePayload(block)).get();
-  //   ASSERT_STATUS_OK(p);
-  //   token = *std::move(p);
-  // }
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+  for (int i = 0; i < kBlockCount; ++i) {
+    auto p = writer.Write(std::move(token), WritePayload(block)).get();
+    ASSERT_STATUS_OK(p);
+    token = *std::move(p);
+  }
 
-  // auto state = writer.PersistedState();
-  // ASSERT_TRUE(absl::holds_alternative<google::storage::v2::Object>(state));
-  // auto generation = absl::get<google::storage::v2::Object>(state).generation();
-  // std::cout << "Initial generation: " << generation << std::endl;
+  auto state = writer.PersistedState();
+  ASSERT_TRUE(absl::holds_alternative<google::storage::v2::Object>(state));
+  auto generation = absl::get<google::storage::v2::Object>(state).generation();
 
-  auto w1 = async.ResumeAppendableObjectUpload(BucketName(bucket_name), object_name, 1779125190298918)
+  auto w1 = async.ResumeAppendableObjectUpload(BucketName(bucket_name), object_name, generation)
                 .get();
 
   ASSERT_STATUS_OK(w1);
@@ -277,7 +275,6 @@ TEST_F(AsyncClientIntegrationTest, StartAppendableUploadEmpty) {
   std::tie(writer1, token1) = *std::move(w1);
 
   for (int i = 0; i < kBlockCount; ++i) {
-    std::cout << "Writing resumed data iteration #" << i << std::endl;
     auto p = writer1.Write(std::move(token1), WritePayload(block)).get();
     ASSERT_STATUS_OK(p);
     token1 = *std::move(p);
@@ -285,11 +282,9 @@ TEST_F(AsyncClientIntegrationTest, StartAppendableUploadEmpty) {
 
   auto metadata = writer1.Finalize(std::move(token1)).get();
   ASSERT_STATUS_OK(metadata);
-  // ScheduleForDelete(*metadata);
+  ScheduleForDelete(*metadata);
   
-  std::cout << "Finalized Object metadata: " << metadata->DebugString() << std::endl;
-  
-  EXPECT_EQ(1,2);
+  EXPECT_EQ(metadata->size(), 2 * kBlockCount * kBlockSize);
 
 //   auto spec = google::storage::v2::BidiReadObjectSpec{};
 //   // std::cout << object_metadata->bucket() << "\n";
@@ -357,7 +352,6 @@ TEST_F(AsyncClientIntegrationTest, StartAppendableUploadEmpty) {
   // }
 
 //   auto ans = block + block + block;
-  EXPECT_EQ(1,2);
 }
 
 
