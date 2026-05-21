@@ -16,14 +16,14 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_READ_SOURCE_H
 
 #include "google/cloud/storage/internal/grpc/buffer_read_object_data.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "absl/functional/function_ref.h"
-#include "google/cloud/storage/internal/hash_function.h"
-#include "google/storage/v2/storage.pb.h"
 #include "absl/types/optional.h"
+#include "google/storage/v2/storage.pb.h"
 #include <functional>
 #include <string>
 

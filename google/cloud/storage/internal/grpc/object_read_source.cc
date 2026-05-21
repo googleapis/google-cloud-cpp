@@ -80,7 +80,11 @@ StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
       return result;
     }
     auto handle_status = HandleResponse(result, buf, n, std::move(response));
-    if (!handle_status.ok()) return handle_status;
+    if (!handle_status.ok()) {
+      status_ = handle_status;
+      stream_.reset();
+      return status_;
+    }
   }
 
   return result;
@@ -96,8 +100,7 @@ Status GrpcObjectReadSource::HandleResponse(
   // empty.
   if (response.has_checksummed_data()) {
     auto const& data = response.checksummed_data();
-    auto status = hash_function_->Update(offset_.value_or(0),
-                                         GetContent(data),
+    auto status = hash_function_->Update(offset_.value_or(0), GetContent(data),
                                          data.crc32c());
     if (!status.ok()) return status;
 
