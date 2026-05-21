@@ -35,7 +35,6 @@ using ::google::cloud::internal::MakeJWTAssertionNoThrow;
 StatusOr<GDCHServiceAccountCredentials::Info>
 GDCHServiceAccountCredentials::Parse(std::string const& content,
                                      std::string const& source) {
-  std::cout << __func__ << std::endl;
   auto credentials = nlohmann::json::parse(content, nullptr, false);
   if (credentials.is_discarded()) {
     return internal::InvalidArgumentError(absl::StrCat(
@@ -94,15 +93,11 @@ GDCHServiceAccountCredentials::Parse(std::string const& content,
        [&](Info& info, nlohmann::json::iterator const& l) {
          if (l == credentials.end()) return;
          info.ca_cert_path = l->get<std::string>();
-         std::cout << __func__ << ": ca_cert_path=" << info.ca_cert_path
-                   << std::endl;
        }},
       {"token_uri", required_field,
        [&](Info& info, nlohmann::json::iterator const& l) {
          info.token_uri = l->get<std::string>();
        }}};
-
-  std::cout << __func__ << ": start parsing" << std::endl;
 
   Info info;
   for (auto& f : fields) {
@@ -114,15 +109,9 @@ GDCHServiceAccountCredentials::Parse(std::string const& content,
           source));
     }
     auto status = f.validator(f.name, l);
-    if (!status.ok()) {
-      std::cout << __func__ << ": parsing error" << std::endl;
-      return status;
-    }
+    if (!status.ok()) return status;
     f.store(info, l);
   }
-
-  std::cout << __func__ << ": successfully parsed" << std::endl;
-
   return info;
 }
 
@@ -134,8 +123,7 @@ GDCHServiceAccountCredentials::AssertionComponentsFromInfo(
     assertion_header["kid"] = info.private_key_id;
   }
 
-  // auto expiration = now + GoogleOAuthAccessTokenLifetime();
-  auto expiration = now + std::chrono::seconds(600);
+  auto expiration = now + GoogleOAuthAccessTokenLifetime();
   // As much as possible, do the time arithmetic using the std::chrono types.
   // Convert to an integer only when we are dealing with timestamps since the
   // epoch. Note that we cannot use `time_t` directly because that might be a
@@ -158,27 +146,23 @@ GDCHServiceAccountCredentials::AssertionComponentsFromInfo(
   return std::make_pair(assertion_header.dump(), assertion_payload.dump());
 }
 
-std::string GDCHServiceAccountCredentials::MakeJWTAssertion(
+StatusOr<std::string> GDCHServiceAccountCredentials::MakeJWTAssertion(
     std::string const& header, std::string const& payload,
     std::string const& pem_contents) {
-  return internal::MakeJWTAssertionNoThrow(
-             header, payload, pem_contents,
-             google::cloud::internal::JWTAlg::ES256)
-      .value();
+  return internal::MakeJWTAssertionNoThrow(header, payload, pem_contents,
+                                           internal::SignatureFormat::kRaw);
 }
 
-nlohmann::json GDCHServiceAccountCredentials::CreateRefreshPayload(
+StatusOr<nlohmann::json> GDCHServiceAccountCredentials::CreateRefreshPayload(
     Info const& info, std::chrono::system_clock::time_point now) {
   auto [header, payload] = AssertionComponentsFromInfo(info, now);
-  std::cout << __func__ << ": header=" << header << std::endl;
-  std::cout << __func__ << ": payload=" << payload << std::endl;
   auto jwt = MakeJWTAssertion(header, payload, info.private_key);
-  std::cout << __func__ << ": jwt=" << jwt << std::endl;
+  if (!jwt) return std::move(jwt.status());
   return nlohmann::json{
       {"grant_type", "urn:ietf:params:oauth:token-type:token-exchange"},
       {"audience", info.audience},
       {"requested_token_type", "urn:ietf:params:oauth:token-type:access_token"},
-      {"subject_token", std::move(jwt)},
+      {"subject_token", std::move(*jwt)},
       {"subject_token_type", "urn:k8s:params:oauth:token-type:serviceaccount"}};
 }
 
@@ -217,7 +201,7 @@ GDCHServiceAccountCredentials::CreateFromInfo(
   // Verify this is usable before returning it.
   auto const tp = std::chrono::system_clock::time_point{};
   auto const [header, payload] = AssertionComponentsFromInfo(info, tp);
-  auto jwt = MakeJWTAssertionNoThrow(header, payload, info.private_key);
+  auto jwt = MakeJWTAssertion(header, payload, info.private_key);
   if (!jwt) return jwt.status();
   return StatusOr<std::unique_ptr<Credentials>>(
       std::unique_ptr<GDCHServiceAccountCredentials>(
@@ -268,19 +252,16 @@ StatusOr<AccessToken> GDCHServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
   Options options = options_;
   if (!info_.ca_cert_path.empty()) {
-    std::cout << __func__ << ": set ca_cert_path=" << info_.ca_cert_path
-              << std::endl;
     options.set<CARootsFilePathOption>(info_.ca_cert_path);
-  } else {
-    std::cout << __func__ << ": did NOT set ca_cert_path" << std::endl;
   }
   auto client = client_factory_(std::move(options));
   rest_internal::RestRequest request;
   request.SetPath(info_.token_uri);
   request.AddHeader("Content-Type", "application/json");
   auto payload = CreateRefreshPayload(info_, tp);
+  if (!payload) return std::move(payload).status();
   rest_internal::RestContext context;
-  auto response = client->Post(context, request, {payload.dump()});
+  auto response = client->Post(context, request, {payload->dump()});
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
   return ParseRefreshResponse(**response, tp);

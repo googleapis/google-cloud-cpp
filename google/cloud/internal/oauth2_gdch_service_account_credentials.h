@@ -100,14 +100,14 @@ class GDCHServiceAccountCredentials : public Credentials {
   /// Given a key and a JSON header and payload, creates a JWT assertion string.
   ///
   /// @see https://tools.ietf.org/html/rfc7519
-  static std::string MakeJWTAssertion(std::string const& header,
-                                      std::string const& payload,
-                                      std::string const& pem_contents);
+  static StatusOr<std::string> MakeJWTAssertion(
+      std::string const& header, std::string const& payload,
+      std::string const& pem_contents);
 
   /// Uses a GDCHServiceAccountCredentialsInfo and the current time to construct
   /// a JWT assertion. The assertion combined with the grant_type and audience
   /// is used to create the refresh payload.
-  static nlohmann::json CreateRefreshPayload(
+  static StatusOr<nlohmann::json> CreateRefreshPayload(
       Info const& info, std::chrono::system_clock::time_point now);
 
   StatusOr<AccessToken> GetToken(

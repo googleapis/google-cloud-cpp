@@ -27,6 +27,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
+ * OpenSSL outputs DER format signatures by default. RFC-7515 (JWT/JWS)
+ * specifies the Raw format should be used.
+ */
+enum class SignatureFormat { kDER, kRaw };
+
+/**
  * Signs a string with the private key from a PEM container.
  *
  * @return Returns the signature as an *unencoded* byte array. The caller
@@ -35,10 +41,7 @@ namespace internal {
  */
 StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
     std::string const& str, std::string const& pem_contents,
-    bool convert_der_to_raw = false);
-
-// StatusOr<std::vector<std::uint8_t>> ConvertSignatureFromDERToRaw(
-//   std::vector<std::uint8_t> der_signature);
+    SignatureFormat format = SignatureFormat::kDER);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

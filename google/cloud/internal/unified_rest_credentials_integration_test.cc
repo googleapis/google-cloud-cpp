@@ -34,7 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::IsEmpty;
+using ::testing::Not;
+using ::testing::NotNull;
 
 StatusOr<std::unique_ptr<RestResponse>> RetryRestRequest(
     std::function<StatusOr<std::unique_ptr<RestResponse>>()> const& request) {
@@ -231,14 +235,14 @@ TEST(UnifiedRestCredentialsIntegrationTest, GDCHServiceAccountCredentials) {
   if (!key_file_env.has_value()) GTEST_SKIP();
   std::ifstream is(*key_file_env);
   auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
-  ASSERT_THAT(contents, testing::Not(testing::IsEmpty()));
+  ASSERT_THAT(contents, Not(IsEmpty()));
 
-  std::string const kAudience = "global-api";
-  auto gdch_creds = MakeGDCHServiceAccountCredentials(contents, kAudience);
-  EXPECT_THAT(gdch_creds, testing::NotNull());
+  std::string const audience = "global-api";
+  auto gdch_creds = MakeGDCHServiceAccountCredentials(contents, audience);
+  ASSERT_THAT(gdch_creds, NotNull());
   auto oauth2_creds = MapCredentials(*gdch_creds);
   EXPECT_THAT(oauth2_creds->GetToken(std::chrono::system_clock::now()),
-              testing_util::IsOkAndHolds(AccessTokenIsSTSBearer()));
+              IsOkAndHolds(AccessTokenIsSTSBearer()));
 }
 
 }  // namespace
