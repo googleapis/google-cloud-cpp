@@ -628,7 +628,8 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirectNoHandle) {
   next.first.set_value(true);
 }
 
-TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadWithChecksum) {
+TEST_F(AsyncConnectionImplAppendableTest,
+       StartAppendableObjectUploadWithChecksum) {
   auto constexpr kRequestText = R"pb(
     write_object_spec {
       resource {
@@ -645,7 +646,7 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadWithChecksu
   initial_resource.set_bucket("projects/_/buckets/test-bucket");
   initial_resource.set_name("test-object");
   initial_resource.set_size(1024);
-  initial_resource.mutable_checksums()->set_crc32c(12345); // Some dummy CRC
+  initial_resource.mutable_checksums()->set_crc32c(12345);  // Some dummy CRC
 
   auto stream = std::make_unique<MockAsyncBidiWriteObjectStream>();
   EXPECT_CALL(*stream, Start).WillOnce([&] {
@@ -666,7 +667,8 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadWithChecksu
             .then([initial_resource](auto) {
               auto response = google::storage::v2::BidiWriteObjectResponse{};
               *response.mutable_resource() = initial_resource;
-              response.mutable_resource()->set_size(initial_resource.size() + 9); // "some data" size is 9
+              response.mutable_resource()->set_size(
+                  initial_resource.size() + 9);  // "some data" size is 9
               return absl::make_optional(std::move(response));
             });
       });
@@ -692,7 +694,8 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadWithChecksu
                     grpc::WriteOptions wopt) {
         EXPECT_TRUE(request.finish_write());
         EXPECT_TRUE(wopt.is_last_message());
-        // Here we expect full checksums to be set because we had the resource in takeover.
+        // Here we expect full checksums to be set because we had the resource
+        // in takeover.
         EXPECT_TRUE(request.has_object_checksums());
         return sequencer.PushBack("Write(Finalize)");
       });
@@ -728,7 +731,7 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadWithChecksu
   auto r = pending.get();
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
-  
+
   // Write some data.
   auto w1 = writer->Write(storage::WritePayload("some data"));
   next = sequencer.PopFrontWithName();
@@ -747,7 +750,7 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadWithChecksu
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
-  
+
   writer.reset();
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");

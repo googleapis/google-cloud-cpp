@@ -141,7 +141,8 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
   auto action = PartialUpload::kFinalizeWithChecksum;
   if (request_.has_append_object_spec() ||
       request_.write_object_spec().appendable()) {
-    if (!absl::holds_alternative<google::storage::v2::Object>(persisted_state_)) {
+    if (!absl::holds_alternative<google::storage::v2::Object>(
+            persisted_state_)) {
       action = PartialUpload::kFinalize;
     }
   }
@@ -260,7 +261,8 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
   }
   if (response->has_persisted_size()) {
     absl::optional<google::storage::v2::Object> old_obj;
-    if (absl::holds_alternative<google::storage::v2::Object>(persisted_state_)) {
+    if (absl::holds_alternative<google::storage::v2::Object>(
+            persisted_state_)) {
       old_obj = absl::get<google::storage::v2::Object>(persisted_state_);
     }
 
