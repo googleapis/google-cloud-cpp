@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -698,6 +699,8 @@ TEST_F(AsyncConnectionImplAppendableTest,
         // Here we expect full checksums to be set because we had the resource
         // in takeover.
         EXPECT_TRUE(request.has_object_checksums());
+        auto expected_crc = google::cloud::storage_internal::ExtendCrc32c(12345, "some data");
+        EXPECT_EQ(request.object_checksums().crc32c(), expected_crc);
         return sequencer.PushBack("Write(Finalize)");
       });
 
