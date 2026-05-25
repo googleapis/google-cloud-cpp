@@ -171,8 +171,8 @@ void UpdateBucketEncryptionEnforcementConfig(
               << "GMEK is now fully restricted, and CMEK enforcement has been "
                  "removed.\n";
   }
-  //! [update bucket encryption enforcement config]
   //! [END storage_update_bucket_encryption_enforcement_config]
+  //! [update bucket encryption enforcement config]
   (std::move(client), argv.at(0));
 }
 
