@@ -685,11 +685,12 @@ TEST_F(AsyncConnectionImplAppendableTest,
         EXPECT_FALSE(wopt.is_last_message());
         return sequencer.PushBack("Write(StateLookup)");
       })
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& /*request*/,
-                    grpc::WriteOptions wopt) {
-        EXPECT_FALSE(wopt.is_last_message());
-        return sequencer.PushBack("Write(data)");
-      })
+      .WillOnce(
+          [&](google::storage::v2::BidiWriteObjectRequest const& /*request*/,
+              grpc::WriteOptions wopt) {
+            EXPECT_FALSE(wopt.is_last_message());
+            return sequencer.PushBack("Write(data)");
+          })
       .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
                     grpc::WriteOptions wopt) {
         EXPECT_TRUE(request.finish_write());
