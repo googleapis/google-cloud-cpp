@@ -135,8 +135,8 @@ void SetBucketEncryptionEnforcementConfig(
 void UpdateBucketEncryptionEnforcementConfig(
     google::cloud::storage::Client client,
     std::vector<std::string> const& argv) {
-  //! [update bucket encryption enforcement config]
   //! [START storage_update_bucket_encryption_enforcement_config]
+  //! [update bucket encryption enforcement config]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
@@ -171,8 +171,8 @@ void UpdateBucketEncryptionEnforcementConfig(
               << "GMEK is now fully restricted, and CMEK enforcement has been "
                  "removed.\n";
   }
-  //! [END storage_update_bucket_encryption_enforcement_config]
   //! [update bucket encryption enforcement config]
+  //! [END storage_update_bucket_encryption_enforcement_config]
   (std::move(client), argv.at(0));
 }
 
