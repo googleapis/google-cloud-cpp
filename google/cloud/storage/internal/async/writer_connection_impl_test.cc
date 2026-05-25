@@ -837,6 +837,73 @@ TEST(AsyncWriterConnectionTest, QueryUpdatesHandle) {
   EXPECT_EQ(seen_handles[0], "queried-handle");
 }
 
+TEST(AsyncWriterConnectionTest, CloseEmpty) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.flush());
+        EXPECT_TRUE(request.state_lookup());
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
+                  "test-only-algo");
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto close = tested->Close(WritePayload{});
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+
+  EXPECT_THAT(close.get(), IsOk());
+  tested = {};
+}
+
+TEST(AsyncWriterConnectionTest, CloseError) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write).WillOnce([&](Request const&, grpc::WriteOptions) {
+    return sequencer.PushBack("Write");
+  });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto response = tested->Close(WritePayload{});
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(false);  // Detect an error on Write()
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(false);  // Return error from Finish()
+  EXPECT_THAT(response.get(), StatusIs(PermanentError().code()));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

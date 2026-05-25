@@ -65,6 +65,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload) override;
   future<Status> Flush(storage::WritePayload payload) override;
+  future<Status> Close(storage::WritePayload payload) override;
   future<StatusOr<std::int64_t>> Query() override;
   RpcMetadata GetRequestMetadata() override;
 
@@ -83,6 +84,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
 
   future<Status> OnPartialUpload(std::size_t upload_size,
                                  StatusOr<bool> success);
+  future<Status> OnClose(std::size_t upload_size, StatusOr<bool> success);
   future<StatusOr<google::storage::v2::Object>> OnFinalUpload(
       std::size_t upload_size, StatusOr<bool> success);
   future<StatusOr<std::int64_t>> OnQuery(

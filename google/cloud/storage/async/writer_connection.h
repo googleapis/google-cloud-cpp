@@ -116,6 +116,12 @@ class AsyncWriterConnection {
   /// Uploads some data to the service and flushes the value.
   virtual future<Status> Flush(WritePayload payload) = 0;
 
+  /// Cleanly flushes pending data and piggybacks a stream half-close
+  /// (WritesDone).
+  virtual future<Status> Close(WritePayload payload) {
+    return Flush(std::move(payload));
+  }
+
   /// Wait for the result of a `Flush()` call.
   virtual future<StatusOr<std::int64_t>> Query() = 0;
 
