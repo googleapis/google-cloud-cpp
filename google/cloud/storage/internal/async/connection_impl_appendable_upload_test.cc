@@ -699,7 +699,8 @@ TEST_F(AsyncConnectionImplAppendableTest,
         // Here we expect full checksums to be set because we had the resource
         // in takeover.
         EXPECT_TRUE(request.has_object_checksums());
-        auto expected_crc = google::cloud::storage_internal::ExtendCrc32c(12345, "some data");
+        auto expected_crc =
+            google::cloud::storage_internal::ExtendCrc32c(12345, "some data");
         EXPECT_EQ(request.object_checksums().crc32c(), expected_crc);
         return sequencer.PushBack("Write(Finalize)");
       });
