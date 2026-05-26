@@ -125,6 +125,12 @@ class AsyncWriterConnection {
   /// Returns the latest write handle, if any.
   virtual absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
       const = 0;
+
+  /// Returns the latest persisted data checksums, if any.
+  virtual absl::optional<google::storage::v2::ObjectChecksums>
+  PersistedChecksums() const {
+    return absl::nullopt;
+  }
 };
 
 /**
