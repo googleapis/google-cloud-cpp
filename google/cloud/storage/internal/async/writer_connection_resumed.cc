@@ -445,7 +445,8 @@ class AsyncWriterConnectionResumedState
     if (res->first_response.has_resource()) {
       if (!res->first_response.has_write_handle()) {
         // Found finalized object (maybe finalized concurrently or resumed).
-        return SetFinalized(std::move(lk), res->first_response.resource());
+        return SetFinalized(std::move(lk),
+                            std::move(*res->first_response.mutable_resource()));
       }
       persisted_offset = res->first_response.resource().size();
     } else if (res->first_response.has_persisted_size()) {
