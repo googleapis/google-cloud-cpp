@@ -90,6 +90,10 @@ class DataScanServiceTracingConnection
   StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
       google::cloud::dataplex::v1::ListDataScanJobsRequest request) override;
 
+  StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+  CancelDataScanJob(google::cloud::dataplex::v1::CancelDataScanJobRequest const&
+                        request) override;
+
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
   GenerateDataQualityRules(
       google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&

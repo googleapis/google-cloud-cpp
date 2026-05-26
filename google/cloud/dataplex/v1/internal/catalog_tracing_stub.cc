@@ -420,6 +420,18 @@ CatalogServiceTracingStub::LookupEntry(
                            child_->LookupEntry(context, options, request));
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry>
+CatalogServiceTracingStub::ModifyEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "ModifyEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ModifyEntry(context, options, request));
+}
+
 StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
 CatalogServiceTracingStub::SearchEntries(
     grpc::ClientContext& context, Options const& options,

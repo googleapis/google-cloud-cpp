@@ -121,6 +121,12 @@ DataProductServiceConnection::UpdateDataProduct(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceConnection::RequestDataProductAccess(
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataAsset>>
 DataProductServiceConnection::CreateDataAsset(
     google::cloud::dataplex::v1::CreateDataAssetRequest const&) {

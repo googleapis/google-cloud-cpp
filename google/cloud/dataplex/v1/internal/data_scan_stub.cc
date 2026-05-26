@@ -184,6 +184,18 @@ DefaultDataScanServiceStub::ListDataScanJobs(
   return response;
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DefaultDataScanServiceStub::CancelDataScanJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  google::cloud::dataplex::v1::CancelDataScanJobResponse response;
+  auto status = grpc_stub_->CancelDataScanJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DefaultDataScanServiceStub::GenerateDataQualityRules(
     grpc::ClientContext& context, Options const&,

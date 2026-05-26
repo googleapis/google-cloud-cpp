@@ -127,8 +127,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L469}
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
+  /// [google.cloud.dataplex.v1.CreateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L470}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L244}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -189,8 +189,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L469}
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
+  /// [google.cloud.dataplex.v1.CreateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L470}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L244}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -262,8 +262,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
-  /// [google.cloud.dataplex.v1.UpdateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L496}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L244}
+  /// [google.cloud.dataplex.v1.UpdateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L497}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -323,8 +323,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
-  /// [google.cloud.dataplex.v1.UpdateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L496}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L244}
+  /// [google.cloud.dataplex.v1.UpdateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L497}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -397,8 +397,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L568}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L569}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -455,8 +455,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L568}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L569}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -531,8 +531,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
-  /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L524}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L244}
+  /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L525}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -573,8 +573,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
-  /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L524}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L244}
+  /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L525}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -602,8 +602,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
-  /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L512}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L244}
+  /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L513}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -635,8 +635,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
-  /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L512}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L244}
+  /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L513}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -679,8 +679,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L698}
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
+  /// [google.cloud.dataplex.v1.CreateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L699}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L375}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -743,8 +743,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L698}
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
+  /// [google.cloud.dataplex.v1.CreateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L699}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L375}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -818,8 +818,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
-  /// [google.cloud.dataplex.v1.UpdateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L726}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L375}
+  /// [google.cloud.dataplex.v1.UpdateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L727}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -881,8 +881,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
-  /// [google.cloud.dataplex.v1.UpdateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L726}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L375}
+  /// [google.cloud.dataplex.v1.UpdateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L727}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -958,8 +958,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L800}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L801}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1017,8 +1017,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L800}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L801}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1094,8 +1094,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
-  /// [google.cloud.dataplex.v1.ListDataAttributeBindingsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L753}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L375}
+  /// [google.cloud.dataplex.v1.ListDataAttributeBindingsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L754}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1136,8 +1136,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
-  /// [google.cloud.dataplex.v1.ListDataAttributeBindingsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L753}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L375}
+  /// [google.cloud.dataplex.v1.ListDataAttributeBindingsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L754}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1167,8 +1167,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
-  /// [google.cloud.dataplex.v1.GetDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L741}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L375}
+  /// [google.cloud.dataplex.v1.GetDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L742}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1200,8 +1200,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
-  /// [google.cloud.dataplex.v1.GetDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L741}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L375}
+  /// [google.cloud.dataplex.v1.GetDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L742}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1246,8 +1246,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L586}
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
+  /// [google.cloud.dataplex.v1.CreateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L587}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L305}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1308,8 +1308,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L586}
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
+  /// [google.cloud.dataplex.v1.CreateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L587}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L305}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1381,8 +1381,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
-  /// [google.cloud.dataplex.v1.UpdateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L613}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L305}
+  /// [google.cloud.dataplex.v1.UpdateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L614}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1442,8 +1442,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
-  /// [google.cloud.dataplex.v1.UpdateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L613}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L305}
+  /// [google.cloud.dataplex.v1.UpdateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L614}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1515,8 +1515,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L682}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L683}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1572,8 +1572,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L682}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L683}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1647,8 +1647,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
-  /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L639}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L305}
+  /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L640}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1689,8 +1689,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
-  /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L639}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L305}
+  /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L640}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1719,8 +1719,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
-  /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L627}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L305}
+  /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L628}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -1752,8 +1752,8 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
-  /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L627}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L305}
+  /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L628}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")

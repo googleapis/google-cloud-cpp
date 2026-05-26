@@ -243,6 +243,23 @@ DataScanServiceClient::ListDataScanJobs(
   return connection_->ListDataScanJobs(std::move(request));
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceClient::CancelDataScanJob(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CancelDataScanJobRequest request;
+  request.set_name(name);
+  return connection_->CancelDataScanJob(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceClient::CancelDataScanJob(
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelDataScanJob(request);
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceClient::GenerateDataQualityRules(std::string const& name,
                                                 Options opts) {

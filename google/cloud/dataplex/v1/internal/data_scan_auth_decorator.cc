@@ -163,6 +163,15 @@ DataScanServiceAuth::ListDataScanJobs(
   return child_->ListDataScanJobs(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceAuth::CancelDataScanJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelDataScanJob(context, options, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceAuth::GenerateDataQualityRules(
     grpc::ClientContext& context, Options const& options,
