@@ -23,6 +23,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -236,6 +237,65 @@ TEST(RewriterConnectionImplTest, TooManyTransients) {
 
   auto r1 = connection->Iterate();
   EXPECT_THAT(r1.get(), StatusIs(TransientError().status().code()));
+}
+
+TEST(RewriterConnectionImplTest, IterateReusesIdempotencyTokenOnRetry) {
+  google::cloud::testing_util::ValidateMetadataFixture
+      validate_metadata_fixture;
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<MockStorageStub>();
+  std::string first_token;
+
+  EXPECT_CALL(*mock, AsyncRewriteObject)
+      .WillOnce([&](auto&, auto const& context, auto const&,
+                    google::storage::v2::RewriteObjectRequest const&) {
+        auto metadata = validate_metadata_fixture.GetMetadata(*context);
+        auto l = metadata.find("x-goog-gcs-idempotency-token");
+        EXPECT_NE(l, metadata.end());
+        if (l != metadata.end()) {
+          first_token = l->second;
+          EXPECT_FALSE(first_token.empty());
+        }
+
+        return sequencer.PushBack("RewriteObject(1)").then([](auto) {
+          return TransientError();
+        });
+      })
+      .WillOnce([&](auto&, auto const& context, auto const&,
+                    google::storage::v2::RewriteObjectRequest const&) {
+        auto metadata = validate_metadata_fixture.GetMetadata(*context);
+        auto l = metadata.find("x-goog-gcs-idempotency-token");
+        EXPECT_NE(l, metadata.end());
+        if (l != metadata.end()) {
+          EXPECT_EQ(l->second, first_token);
+        }
+
+        return sequencer.PushBack("RewriteObject(2)").then([](auto) {
+          google::storage::v2::RewriteResponse response;
+          response.set_total_bytes_rewritten(1000);
+          response.set_object_size(3000);
+          response.set_rewrite_token("test-rewrite-token");
+          return make_status_or(response);
+        });
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = std::make_shared<RewriterConnectionImpl>(
+      pool.cq(), std::move(mock), TestOptions(), MakeRequest());
+
+  auto r1 = connection->Iterate();
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "RewriteObject(1)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "RewriteObject(2)");
+  next.first.set_value(true);
+  EXPECT_THAT(
+      r1.get(),
+      IsOkAndHolds(ResultOf(
+          "total bytes",
+          [](RewriteResponse const& v) { return v.total_bytes_rewritten(); },
+          1000)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
