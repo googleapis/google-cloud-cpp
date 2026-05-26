@@ -424,9 +424,13 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
         } else {
           persisted_size = rpc->first_response.persisted_size();
           hash = CreateHashFunction(*current);
+          absl::optional<google::storage::v2::ObjectChecksums> checksums;
+          if (rpc->first_response.has_persisted_data_checksums()) {
+            checksums = rpc->first_response.persisted_data_checksums();
+          }
           impl = std::make_unique<AsyncWriterConnectionImpl>(
               current, request, std::move(rpc->stream), hash, persisted_size,
-              false);
+              false, checksums);
         }
         return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
                                            std::move(request), std::move(hash),

@@ -18,6 +18,8 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "absl/strings/cord.h"
 #include <cstdint>
 #include <deque>
@@ -447,9 +449,22 @@ class AsyncWriterConnectionResumedState
     }
     // Regular resume succeeded, object not finalized. Continue writing.
     auto persisted_offset = absl::get<std::int64_t>(state);
+
+    auto impl_concrete = dynamic_cast<AsyncWriterConnectionImpl*>(impl_.get());
+    auto checksums = impl_concrete != nullptr
+                         ? impl_concrete->PersistedChecksums()
+                         : absl::nullopt;
+
+    auto hash = hash_function_;
+    if (checksums && checksums->has_crc32c()) {
+      hash = std::make_shared<
+          ::google::cloud::storage::internal::Crc32cHashFunction>(
+          checksums->crc32c(), persisted_offset);
+    }
+
     impl_ = std::make_unique<AsyncWriterConnectionImpl>(
-        options_, initial_request_, std::move(res->stream), hash_function_,
-        persisted_offset, false);
+        options_, initial_request_, std::move(res->stream), std::move(hash),
+        persisted_offset, false, checksums);
     // OnQuery will restart the WriteLoop if necessary.
     OnQuery(std::move(lk), persisted_offset);
   }
