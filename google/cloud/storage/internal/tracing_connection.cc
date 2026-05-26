@@ -31,6 +31,17 @@ TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
 
 Options TracingConnection::options() const { return impl_->options(); }
 
+void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
+                                   storage::BucketMetadata const& metadata) {
+  std::string id = "projects/" + std::to_string(metadata.project_number()) + "/buckets/" + metadata.name();
+  std::string location = metadata.location();
+  if (metadata.location_type() == "multi-region" || metadata.location_type() == "dual-region") {
+    location = "global";
+  }
+  span.SetAttribute("gcp.resource.destination.id", id);
+  span.SetAttribute("gcp.resource.destination.location", location);
+}
+
 StatusOr<storage::internal::ListBucketsResponse> TracingConnection::ListBuckets(
     storage::internal::ListBucketsRequest const& request) {
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
@@ -43,14 +54,18 @@ StatusOr<storage::BucketMetadata> TracingConnection::CreateBucket(
     storage::internal::CreateBucketRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CreateBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->CreateBucket(request));
+  auto result = impl_->CreateBucket(request);
+  if (result.ok()) EnrichSpan(*span, *result);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketMetadata> TracingConnection::GetBucketMetadata(
     storage::internal::GetBucketMetadataRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::GetBucketMetadata");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->GetBucketMetadata(request));
+  auto result = impl_->GetBucketMetadata(request);
+  if (result.ok()) EnrichSpan(*span, *result);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteBucket(
@@ -64,14 +79,18 @@ StatusOr<storage::BucketMetadata> TracingConnection::UpdateBucket(
     storage::internal::UpdateBucketRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::UpdateBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->UpdateBucket(request));
+  auto result = impl_->UpdateBucket(request);
+  if (result.ok()) EnrichSpan(*span, *result);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketMetadata> TracingConnection::PatchBucket(
     storage::internal::PatchBucketRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::PatchBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->PatchBucket(request));
+  auto result = impl_->PatchBucket(request);
+  if (result.ok()) EnrichSpan(*span, *result);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::NativeIamPolicy> TracingConnection::GetNativeBucketIamPolicy(
@@ -100,7 +119,9 @@ StatusOr<storage::BucketMetadata> TracingConnection::LockBucketRetentionPolicy(
     storage::internal::LockBucketRetentionPolicyRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::LockBucketRetentionPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->LockBucketRetentionPolicy(request));
+  auto result = impl_->LockBucketRetentionPolicy(request);
+  if (result.ok()) EnrichSpan(*span, *result);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::InsertObjectMedia(
