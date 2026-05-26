@@ -784,7 +784,9 @@ TEST(WriterConnectionResumed, ResumeUsesSizeFromFirstResponse) {
       .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
                     grpc::WriteOptions) {
         EXPECT_EQ(request.write_offset(), 2048);
-        return sequencer.PushBack("StateLookupWrite").then([](auto) { return true; });
+        return sequencer.PushBack("StateLookupWrite").then([](auto) {
+          return true;
+        });
       })
       .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
                     grpc::WriteOptions) {

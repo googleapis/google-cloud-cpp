@@ -454,8 +454,9 @@ class AsyncWriterConnectionResumedState
       auto state = impl_->PersistedState();
       if (absl::holds_alternative<google::storage::v2::Object>(state)) {
         // Found finalized object (maybe finalized concurrently or resumed).
-        return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
-                                               std::move(state)));
+        return SetFinalized(
+            std::move(lk),
+            absl::get<google::storage::v2::Object>(std::move(state)));
       }
       persisted_offset = absl::get<std::int64_t>(state);
     }
