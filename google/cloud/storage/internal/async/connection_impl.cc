@@ -110,13 +110,13 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
   return storage::internal::CreateNullHashFunction();
 }
 
-StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>
-MakeAppendableWriter(
+StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
     google::cloud::internal::ImmutableOptions const& current,
     google::storage::v2::BidiWriteObjectRequest request,
     std::int64_t persisted_size,
     std::function<future<StatusOr<WriteObject::WriteResult>>(
-        google::storage::v2::BidiWriteObjectRequest)> factory,
+        google::storage::v2::BidiWriteObjectRequest)>
+        factory,
     StatusOr<WriteObject::WriteResult> rpc) {
   if (!rpc) return std::move(rpc).status();
 
@@ -127,7 +127,8 @@ MakeAppendableWriter(
     auto const& resource = rpc->first_response.resource();
     if (current->get<storage::EnableCrc32cValidationOption>() &&
         resource.has_checksums() && resource.checksums().has_crc32c()) {
-      hash = std::make_shared<::google::cloud::storage::internal::Crc32cHashFunction>(
+      hash = std::make_shared<
+          ::google::cloud::storage::internal::Crc32cHashFunction>(
           resource.checksums().crc32c(), resource.size());
     } else {
       hash = CreateHashFunction(*current);
@@ -138,11 +139,12 @@ MakeAppendableWriter(
     persisted_size = rpc->first_response.persisted_size();
     hash = CreateHashFunction(*current);
     auto checksums = rpc->first_response.has_persisted_data_checksums()
-                         ? absl::make_optional(rpc->first_response.persisted_data_checksums())
+                         ? absl::make_optional(
+                               rpc->first_response.persisted_data_checksums())
                          : absl::nullopt;
     impl = std::make_unique<AsyncWriterConnectionImpl>(
-        current, request, std::move(rpc->stream), hash, persisted_size,
-        false, checksums);
+        current, request, std::move(rpc->stream), hash, persisted_size, false,
+        checksums);
   }
   return MakeWriterConnectionResumed(std::move(factory), std::move(impl),
                                      std::move(request), std::move(hash),
@@ -443,7 +445,8 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
       [current, request = std::move(p.request), persisted_size,
        fa = std::move(factory)](auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-        return MakeAppendableWriter(current, std::move(request), persisted_size, std::move(fa), f.get());
+        return MakeAppendableWriter(current, std::move(request), persisted_size,
+                                    std::move(fa), f.get());
       });
 }
 
