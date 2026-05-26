@@ -61,7 +61,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
     return latest_write_handle_;
   }
   absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums()
-      const {
+      const override {
     return persisted_data_checksums_;
   }
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()

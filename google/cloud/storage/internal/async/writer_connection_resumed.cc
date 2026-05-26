@@ -450,10 +450,7 @@ class AsyncWriterConnectionResumedState
     // Regular resume succeeded, object not finalized. Continue writing.
     auto persisted_offset = absl::get<std::int64_t>(state);
 
-    auto* impl_concrete = dynamic_cast<AsyncWriterConnectionImpl*>(impl_.get());
-    auto checksums = impl_concrete != nullptr
-                         ? impl_concrete->PersistedChecksums()
-                         : absl::nullopt;
+    auto checksums = impl_->PersistedChecksums();
 
     auto hash = hash_function_;
     if (checksums && checksums->has_crc32c()) {
