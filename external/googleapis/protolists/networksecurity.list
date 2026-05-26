@@ -18,6 +18,7 @@
 @googleapis//google/cloud/networksecurity/v1:security_profile_group_threatprevention.proto
 @googleapis//google/cloud/networksecurity/v1:security_profile_group_urlfiltering.proto
 @googleapis//google/cloud/networksecurity/v1:server_tls_policy.proto
+@googleapis//google/cloud/networksecurity/v1:sse_realm.proto
 @googleapis//google/cloud/networksecurity/v1:tls.proto
 @googleapis//google/cloud/networksecurity/v1:tls_inspection_policy.proto
 @googleapis//google/cloud/networksecurity/v1:url_list.proto
