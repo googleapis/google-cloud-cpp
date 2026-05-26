@@ -441,14 +441,24 @@ class AsyncWriterConnectionResumedState
       return SetError(std::move(lk), std::move(res).status());
     }
     // Regular resume attempt succeeded. Check state.
-    auto state = impl_->PersistedState();
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-      // Found finalized object (maybe finalized concurrently or resumed).
-      return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
-                                             std::move(state)));
+    std::int64_t persisted_offset = 0;
+    if (res->first_response.has_resource()) {
+      if (!res->first_response.has_write_handle()) {
+        // Found finalized object (maybe finalized concurrently or resumed).
+        return SetFinalized(std::move(lk), res->first_response.resource());
+      }
+      persisted_offset = res->first_response.resource().size();
+    } else if (res->first_response.has_persisted_size()) {
+      persisted_offset = res->first_response.persisted_size();
+    } else {
+      auto state = impl_->PersistedState();
+      if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+        // Found finalized object (maybe finalized concurrently or resumed).
+        return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
+                                               std::move(state)));
+      }
+      persisted_offset = absl::get<std::int64_t>(state);
     }
-    // Regular resume succeeded, object not finalized. Continue writing.
-    auto persisted_offset = absl::get<std::int64_t>(state);
 
     auto checksums = impl_->PersistedChecksums();
 
