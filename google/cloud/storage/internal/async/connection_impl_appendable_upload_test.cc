@@ -764,7 +764,8 @@ TEST_F(AsyncConnectionImplAppendableTest,
   next.first.set_value(true);
 }
 
-TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadWithChecksum) {
+TEST_F(AsyncConnectionImplAppendableTest,
+       ResumeAppendableObjectUploadWithChecksum) {
   auto constexpr kRequestText = R"pb(
     append_object_spec { object: "test-object" }
   )pb";
@@ -781,25 +782,24 @@ TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadWithChecks
 
   EXPECT_CALL(*stream, Read)
       .WillOnce([&] {
-        return sequencer.PushBack("Read(PersistedSize)")
-            .then([](auto) {
-              auto response = google::storage::v2::BidiWriteObjectResponse{};
-              response.set_persisted_size(kPersistedSize);
-              response.mutable_persisted_data_checksums()->set_crc32c(kPersistedCrc);
-              return absl::make_optional(std::move(response));
-            });
+        return sequencer.PushBack("Read(PersistedSize)").then([](auto) {
+          auto response = google::storage::v2::BidiWriteObjectResponse{};
+          response.set_persisted_size(kPersistedSize);
+          response.mutable_persisted_data_checksums()->set_crc32c(
+              kPersistedCrc);
+          return absl::make_optional(std::move(response));
+        });
       })
       .WillOnce([&] {
-        return sequencer.PushBack("Read(FinalObject)")
-            .then([](auto) {
-              auto response = google::storage::v2::BidiWriteObjectResponse{};
-              auto object = google::storage::v2::Object{};
-              object.set_bucket("projects/_/buckets/test-bucket");
-              object.set_name("test-object");
-              object.set_size(kPersistedSize + 9);
-              *response.mutable_resource() = std::move(object);
-              return absl::make_optional(std::move(response));
-            });
+        return sequencer.PushBack("Read(FinalObject)").then([](auto) {
+          auto response = google::storage::v2::BidiWriteObjectResponse{};
+          auto object = google::storage::v2::Object{};
+          object.set_bucket("projects/_/buckets/test-bucket");
+          object.set_name("test-object");
+          object.set_size(kPersistedSize + 9);
+          *response.mutable_resource() = std::move(object);
+          return absl::make_optional(std::move(response));
+        });
       });
 
   EXPECT_CALL(*stream, Cancel).Times(1);
@@ -814,11 +814,12 @@ TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadWithChecks
         EXPECT_FALSE(wopt.is_last_message());
         return sequencer.PushBack("Write(StateLookup)");
       })
-      .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& /*request*/,
-                    grpc::WriteOptions wopt) {
-        EXPECT_FALSE(wopt.is_last_message());
-        return sequencer.PushBack("Write(data)");
-      })
+      .WillOnce(
+          [&](google::storage::v2::BidiWriteObjectRequest const& /*request*/,
+              grpc::WriteOptions wopt) {
+            EXPECT_FALSE(wopt.is_last_message());
+            return sequencer.PushBack("Write(data)");
+          })
       .WillOnce([&](google::storage::v2::BidiWriteObjectRequest const& request,
                     grpc::WriteOptions wopt) {
         EXPECT_TRUE(request.finish_write());
@@ -828,9 +829,10 @@ TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadWithChecks
         return sequencer.PushBack("Write(Finalize)");
       });
 
-  EXPECT_CALL(*mock, AsyncBidiWriteObject).WillOnce([&](auto const&, auto, auto) {
-    return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
-  });
+  EXPECT_CALL(*mock, AsyncBidiWriteObject)
+      .WillOnce([&](auto const&, auto, auto) {
+        return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
+      });
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto options = TestOptions().set<storage::EnableCrc32cValidationOption>(true);

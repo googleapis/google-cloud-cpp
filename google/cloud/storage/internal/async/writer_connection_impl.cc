@@ -16,9 +16,9 @@
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/partial_upload.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
-#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -50,9 +50,9 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    std::int64_t persisted_size,
-    bool first_request,
-    absl::optional<google::storage::v2::ObjectChecksums> persisted_data_checksums)
+    std::int64_t persisted_size, bool first_request,
+    absl::optional<google::storage::v2::ObjectChecksums>
+        persisted_data_checksums)
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
           std::move(hash_function), PersistedStateType(persisted_size),
@@ -75,9 +75,9 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    PersistedStateType persisted_state, std::int64_t offset,
-    bool first_request,
-    absl::optional<google::storage::v2::ObjectChecksums> persisted_data_checksums)
+    PersistedStateType persisted_state, std::int64_t offset, bool first_request,
+    absl::optional<google::storage::v2::ObjectChecksums>
+        persisted_data_checksums)
     : options_(std::move(options)),
       impl_(std::move(impl)),
       request_(std::move(request)),

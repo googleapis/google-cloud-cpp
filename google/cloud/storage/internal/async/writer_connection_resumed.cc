@@ -18,14 +18,14 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storage/internal/async/writer_connection_impl.h"
-#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "absl/strings/cord.h"
 #include <cstdint>
 #include <deque>
 #include <memory>
 #include <mutex>
 #include <vector>
+#include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 
 namespace google {
 namespace cloud {

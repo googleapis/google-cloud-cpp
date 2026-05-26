@@ -42,9 +42,9 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      std::int64_t persisted_size,
-      bool first_request = true,
-      absl::optional<google::storage::v2::ObjectChecksums> persisted_data_checksums = absl::nullopt);
+      std::int64_t persisted_size, bool first_request = true,
+      absl::optional<google::storage::v2::ObjectChecksums>
+          persisted_data_checksums = absl::nullopt);
   explicit AsyncWriterConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::BidiWriteObjectRequest request,
@@ -60,7 +60,8 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       const override {
     return latest_write_handle_;
   }
-  absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums() const {
+  absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums()
+      const {
     return persisted_data_checksums_;
   }
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
@@ -83,7 +84,8 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       PersistedStateType persisted_state, std::int64_t offset,
       bool first_request = true,
-      absl::optional<google::storage::v2::ObjectChecksums> persisted_data_checksums = absl::nullopt);
+      absl::optional<google::storage::v2::ObjectChecksums>
+          persisted_data_checksums = absl::nullopt);
 
   google::storage::v2::BidiWriteObjectRequest MakeRequest();
 
@@ -120,7 +122,8 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   absl::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 
   // Track the latest persisted data checksums seen in responses.
-  absl::optional<google::storage::v2::ObjectChecksums> persisted_data_checksums_;
+  absl::optional<google::storage::v2::ObjectChecksums>
+      persisted_data_checksums_;
 
   std::mutex mu_;
 };
