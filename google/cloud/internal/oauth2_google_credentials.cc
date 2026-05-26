@@ -99,6 +99,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
         std::make_unique<ImpersonateServiceAccountCredentials>(
             config, std::move(rest_stub)));
   }
+  // TODO(sdhart): this needs test coverage
   if (cred_type == "gdch_service_account") {
     auto info = GDCHServiceAccountCredentials::Parse(contents, path);
     if (!info) return std::move(info).status();

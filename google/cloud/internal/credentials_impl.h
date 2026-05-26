@@ -223,7 +223,6 @@ class GDCHServiceAccountConfig : public Credentials {
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   std::optional<std::string> file_path_ = std::nullopt;
-  ;
   std::string json_object_;
   std::string audience_;
   Options options_;

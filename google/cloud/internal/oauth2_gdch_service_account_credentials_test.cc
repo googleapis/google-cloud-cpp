@@ -49,6 +49,7 @@ using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::MatcherCast;
 using ::testing::Not;
 using ::testing::Pair;
@@ -414,8 +415,7 @@ TEST(GDCHServiceAccountCredentialsTest,
   EXPECT_THAT(actual_payload->value("audience", ""), Eq(kAudience));
   EXPECT_THAT(actual_payload->value("requested_token_type", ""),
               Eq("urn:ietf:params:oauth:token-type:access_token"));
-  EXPECT_THAT(actual_payload->value("subject_token", ""),
-              Not(::testing::IsEmpty()));
+  EXPECT_THAT(actual_payload->value("subject_token", ""), Not(IsEmpty()));
   EXPECT_THAT(actual_payload->value("subject_token_type", ""),
               Eq("urn:k8s:params:oauth:token-type:serviceaccount"));
 }

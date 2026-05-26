@@ -23,7 +23,6 @@
 #include "google/cloud/rest_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <nlohmann/json_fwd.hpp>
 #include <string>
 #include <utility>
 #include <vector>

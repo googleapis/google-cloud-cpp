@@ -217,6 +217,7 @@ StatusOr<AccessToken> ParseServiceAccountRefreshResponse(
         "Could not find all required fields in response (access_token,"
         " expires_in, token_type) while trying to obtain an access token for"
         " service account credentials.";
+    // TODO(sdhart): verify this is the error we want to return.
     return internal::InternalError(error_payload, GCP_ERROR_INFO());
     // return AsStatus(status_code, error_payload);
   }

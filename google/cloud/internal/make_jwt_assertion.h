@@ -35,6 +35,7 @@ StatusOr<std::string> MakeJWTAssertionNoThrow(
     std::string const& header, std::string const& payload,
     std::string const& pem_contents,
     SignatureFormat format = SignatureFormat::kDER);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
