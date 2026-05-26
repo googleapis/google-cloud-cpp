@@ -4196,7 +4196,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
-  /// [google.cloud.networksecurity.v1.ListAuthzPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L580}
+  /// [google.cloud.networksecurity.v1.ListAuthzPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L599}
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::AuthzPolicy>
@@ -4235,7 +4235,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
-  /// [google.cloud.networksecurity.v1.ListAuthzPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L580}
+  /// [google.cloud.networksecurity.v1.ListAuthzPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L599}
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::AuthzPolicy>
@@ -4264,7 +4264,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
-  /// [google.cloud.networksecurity.v1.GetAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L618}
+  /// [google.cloud.networksecurity.v1.GetAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L637}
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::AuthzPolicy> GetAuthzPolicy(
@@ -4294,7 +4294,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
-  /// [google.cloud.networksecurity.v1.GetAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L618}
+  /// [google.cloud.networksecurity.v1.GetAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L637}
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::AuthzPolicy> GetAuthzPolicy(
@@ -4330,7 +4330,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
-  /// [google.cloud.networksecurity.v1.CreateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L544}
+  /// [google.cloud.networksecurity.v1.CreateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L563}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
@@ -4386,7 +4386,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
-  /// [google.cloud.networksecurity.v1.CreateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L544}
+  /// [google.cloud.networksecurity.v1.CreateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L563}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
@@ -4456,7 +4456,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
-  /// [google.cloud.networksecurity.v1.UpdateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L631}
+  /// [google.cloud.networksecurity.v1.UpdateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L650}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
@@ -4511,7 +4511,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
-  /// [google.cloud.networksecurity.v1.UpdateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L631}
+  /// [google.cloud.networksecurity.v1.UpdateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L650}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
@@ -4577,7 +4577,7 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.DeleteAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L663}
+  /// [google.cloud.networksecurity.v1.DeleteAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L682}
   /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
   ///
   // clang-format on
@@ -4628,7 +4628,7 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.DeleteAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L663}
+  /// [google.cloud.networksecurity.v1.DeleteAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L682}
   /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
   ///
   // clang-format on

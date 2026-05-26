@@ -103,6 +103,9 @@ class CatalogServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency LookupEntry(
       google::cloud::dataplex::v1::LookupEntryRequest const& request);
 
+  virtual google::cloud::Idempotency ModifyEntry(
+      google::cloud::dataplex::v1::ModifyEntryRequest const& request);
+
   virtual google::cloud::Idempotency SearchEntries(
       google::cloud::dataplex::v1::SearchEntriesRequest request);
 

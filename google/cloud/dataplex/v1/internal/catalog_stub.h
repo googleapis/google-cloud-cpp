@@ -191,6 +191,10 @@ class CatalogServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::LookupEntryRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::dataplex::v1::Entry> ModifyEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::ModifyEntryRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
   SearchEntries(
       grpc::ClientContext& context, Options const& options,
@@ -521,6 +525,10 @@ class DefaultCatalogServiceStub : public CatalogServiceStub {
   StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::LookupEntryRequest const& request) override;
+
+  StatusOr<google::cloud::dataplex::v1::Entry> ModifyEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::ModifyEntryRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse> SearchEntries(
       grpc::ClientContext& context, Options const& options,

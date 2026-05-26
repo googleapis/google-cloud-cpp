@@ -55,6 +55,10 @@ class DataProductServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateDataProduct(
       google::cloud::dataplex::v1::UpdateDataProductRequest const& request);
 
+  virtual google::cloud::Idempotency RequestDataProductAccess(
+      google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+          request);
+
   virtual google::cloud::Idempotency CreateDataAsset(
       google::cloud::dataplex::v1::CreateDataAssetRequest const& request);
 

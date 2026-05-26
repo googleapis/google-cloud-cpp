@@ -160,6 +160,20 @@ DataProductServiceLogging::UpdateDataProduct(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceLogging::RequestDataProductAccess(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+                 request) {
+        return child_->RequestDataProductAccess(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataProductServiceLogging::AsyncCreateDataAsset(
     google::cloud::CompletionQueue& cq,

@@ -59,6 +59,12 @@ Idempotency DataProductServiceConnectionIdempotencyPolicy::UpdateDataProduct(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+DataProductServiceConnectionIdempotencyPolicy::RequestDataProductAccess(
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DataProductServiceConnectionIdempotencyPolicy::CreateDataAsset(
     google::cloud::dataplex::v1::CreateDataAssetRequest const&) {
   return Idempotency::kNonIdempotent;

@@ -465,6 +465,17 @@ StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceLogging::LookupEntry(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceLogging::ModifyEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+        return child_->ModifyEntry(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
 CatalogServiceLogging::SearchEntries(
     grpc::ClientContext& context, Options const& options,

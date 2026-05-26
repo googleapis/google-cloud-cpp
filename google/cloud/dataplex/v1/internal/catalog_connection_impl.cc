@@ -1134,6 +1134,20 @@ CatalogServiceConnectionImpl::LookupEntry(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry>
+CatalogServiceConnectionImpl::ModifyEntry(
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ModifyEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+        return stub_->ModifyEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
 CatalogServiceConnectionImpl::SearchEntries(
     google::cloud::dataplex::v1::SearchEntriesRequest request) {

@@ -128,7 +128,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L324}
+  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L327}
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
@@ -182,7 +182,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L324}
+  /// [google.cloud.dataplex.v1.CreateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L327}
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
@@ -245,7 +245,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L354}
+  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L357}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
@@ -298,7 +298,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L354}
+  /// [google.cloud.dataplex.v1.UpdateLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L357}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
@@ -359,8 +359,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L369}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L372}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
@@ -412,8 +412,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L369}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L372}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
@@ -477,7 +477,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L379}
+  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L382}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
@@ -516,7 +516,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
-  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L379}
+  /// [google.cloud.dataplex.v1.ListLakesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L382}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
@@ -541,7 +541,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L452}
+  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L455}
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
@@ -571,7 +571,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L452}
+  /// [google.cloud.dataplex.v1.GetLakeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L455}
   /// [google.cloud.dataplex.v1.Lake]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
   ///
   // clang-format on
@@ -608,7 +608,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L421}
+  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L424}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
@@ -647,7 +647,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L421}
+  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L424}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
@@ -690,7 +690,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L462}
+  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L465}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -744,7 +744,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L462}
+  /// [google.cloud.dataplex.v1.CreateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L465}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -806,7 +806,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L490}
+  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L493}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -859,7 +859,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L490}
+  /// [google.cloud.dataplex.v1.UpdateZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L493}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -921,8 +921,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L505}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L508}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
@@ -974,8 +974,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L505}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L508}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
@@ -1037,7 +1037,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L515}
+  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L518}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -1076,7 +1076,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L515}
+  /// [google.cloud.dataplex.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L518}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -1102,7 +1102,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L572}
+  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L575}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -1132,7 +1132,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L572}
+  /// [google.cloud.dataplex.v1.GetZoneRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L575}
   /// [google.cloud.dataplex.v1.Zone]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L150}
   ///
   // clang-format on
@@ -1169,7 +1169,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L551}
+  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L554}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
@@ -1208,7 +1208,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L551}
+  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L554}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
@@ -1251,7 +1251,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L582}
+  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L585}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
@@ -1306,7 +1306,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L582}
+  /// [google.cloud.dataplex.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L585}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
@@ -1369,7 +1369,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L609}
+  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L612}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
@@ -1422,7 +1422,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L609}
+  /// [google.cloud.dataplex.v1.UpdateAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L612}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
@@ -1484,8 +1484,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L624}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L627}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
@@ -1537,8 +1537,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L624}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L627}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
@@ -1602,7 +1602,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L634}
+  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L637}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
@@ -1641,7 +1641,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L634}
+  /// [google.cloud.dataplex.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L637}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
@@ -1668,7 +1668,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
+  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L695}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(std::string const& name,
@@ -1698,7 +1698,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Asset]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L505}
-  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L692}
+  /// [google.cloud.dataplex.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L695}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(
@@ -1734,7 +1734,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L671}
+  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L674}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
@@ -1773,7 +1773,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Action]: @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L315}
-  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L671}
+  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L674}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
@@ -1808,7 +1808,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L732}
+  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L735}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -1862,7 +1862,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L732}
+  /// [google.cloud.dataplex.v1.CreateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L735}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -1925,7 +1925,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
-  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L752}
+  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L755}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
@@ -1978,7 +1978,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
-  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L752}
+  /// [google.cloud.dataplex.v1.UpdateTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L755}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
@@ -2038,8 +2038,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L767}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
@@ -2090,8 +2090,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L767}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
@@ -2153,7 +2153,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L777}
+  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L780}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -2192,7 +2192,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L777}
+  /// [google.cloud.dataplex.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L780}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -2218,7 +2218,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L816}
+  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L819}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -2248,7 +2248,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L816}
+  /// [google.cloud.dataplex.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L819}
   /// [google.cloud.dataplex.v1.Task]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
   ///
   // clang-format on
@@ -2285,7 +2285,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
-  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L868}
+  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L871}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
@@ -2324,7 +2324,7 @@ class DataplexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
-  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L868}
+  /// [google.cloud.dataplex.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L871}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
@@ -2349,8 +2349,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
-  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L862}
+  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L838}
+  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L865}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
@@ -2379,8 +2379,8 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L835}
-  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L862}
+  /// [google.cloud.dataplex.v1.RunTaskRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L838}
+  /// [google.cloud.dataplex.v1.RunTaskResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L865}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
@@ -2406,7 +2406,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L826}
+  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L829}
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
   ///
   // clang-format on
@@ -2436,7 +2436,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L826}
+  /// [google.cloud.dataplex.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L829}
   /// [google.cloud.dataplex.v1.Job]: @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L328}
   ///
   // clang-format on
@@ -2461,7 +2461,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L899}
+  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L902}
   ///
   // clang-format on
   Status CancelJob(std::string const& name, Options opts = {});
@@ -2487,7 +2487,7 @@ class DataplexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L899}
+  /// [google.cloud.dataplex.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L902}
   ///
   // clang-format on
   Status CancelJob(google::cloud::dataplex::v1::CancelJobRequest const& request,

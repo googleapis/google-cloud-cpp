@@ -414,6 +414,15 @@ CatalogServiceTracingConnection::LookupEntry(
   return internal::EndSpan(*span, child_->LookupEntry(request));
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry>
+CatalogServiceTracingConnection::ModifyEntry(
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::CatalogServiceConnection::ModifyEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ModifyEntry(request));
+}
+
 StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
 CatalogServiceTracingConnection::SearchEntries(
     google::cloud::dataplex::v1::SearchEntriesRequest request) {
