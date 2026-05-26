@@ -41,6 +41,7 @@ using ::google::cloud::testing_util::SpanIsRoot;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
@@ -105,6 +106,31 @@ TEST(TracingClientTest, CreateBucket) {
                       "gl-cpp.status_code", code_str)))));
 }
 
+TEST(TracingClientTest, CreateBucketSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, CreateBucket).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual = under_test.CreateBucket(storage::internal::CreateBucketRequest());
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("storage::Client::CreateBucket"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(
+                      OTelAttribute<std::string>("gcp.resource.destination.id", "projects/123456/buckets/test-bucket"),
+                      OTelAttribute<std::string>("gcp.resource.destination.location", "us-east1")))));
+}
+
 TEST(TracingClientTest, GetBucketMetadata) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
@@ -126,6 +152,32 @@ TEST(TracingClientTest, GetBucketMetadata) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, GetBucketMetadataSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual = under_test.GetBucketMetadata(
+      storage::internal::GetBucketMetadataRequest("test-bucket"));
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("storage::Client::GetBucketMetadata"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(
+                      OTelAttribute<std::string>("gcp.resource.destination.id", "projects/123456/buckets/test-bucket"),
+                      OTelAttribute<std::string>("gcp.resource.destination.location", "us-east1")))));
 }
 
 TEST(TracingClientTest, DeleteBucket) {
@@ -174,6 +226,31 @@ TEST(TracingClientTest, UpdateBucket) {
                       "gl-cpp.status_code", code_str)))));
 }
 
+TEST(TracingClientTest, UpdateBucketSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, UpdateBucket).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual = under_test.UpdateBucket(storage::internal::UpdateBucketRequest());
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("storage::Client::UpdateBucket"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(
+                      OTelAttribute<std::string>("gcp.resource.destination.id", "projects/123456/buckets/test-bucket"),
+                      OTelAttribute<std::string>("gcp.resource.destination.location", "us-east1")))));
+}
+
 TEST(TracingClientTest, PatchBucket) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
@@ -194,6 +271,31 @@ TEST(TracingClientTest, PatchBucket) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, PatchBucketSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, PatchBucket).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual = under_test.PatchBucket(storage::internal::PatchBucketRequest());
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("storage::Client::PatchBucket"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(
+                      OTelAttribute<std::string>("gcp.resource.destination.id", "projects/123456/buckets/test-bucket"),
+                      OTelAttribute<std::string>("gcp.resource.destination.location", "us-east1")))));
 }
 
 TEST(TracingClientTest, GetNativeBucketIamPolicy) {
@@ -288,6 +390,32 @@ TEST(TracingClientTest, LockBucketRetentionPolicy) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, LockBucketRetentionPolicySuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, LockBucketRetentionPolicy).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual = under_test.LockBucketRetentionPolicy(
+      storage::internal::LockBucketRetentionPolicyRequest());
+  EXPECT_THAT(actual, IsOk());
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("storage::Client::LockBucketRetentionPolicy"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(
+                      OTelAttribute<std::string>("gcp.resource.destination.id", "projects/123456/buckets/test-bucket"),
+                      OTelAttribute<std::string>("gcp.resource.destination.location", "us-east1")))));
 }
 
 TEST(TracingClientTest, InsertObjectMedia) {

@@ -178,6 +178,9 @@ class TracingConnection : public storage::internal::StorageConnection {
   std::vector<std::string> InspectStackStructure() const override;
 
  private:
+  void EnrichSpan(opentelemetry::trace::Span& span,
+                  storage::BucketMetadata const& metadata);
+
   std::shared_ptr<StorageConnection> impl_;
 };
 
