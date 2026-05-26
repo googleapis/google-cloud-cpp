@@ -17,6 +17,7 @@
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include <openssl/bio.h>
 #include <openssl/bn.h>
 #include <openssl/buffer.h>
@@ -48,6 +49,7 @@ struct OpenSslDeleter {
 
   void operator()(EVP_PKEY* ptr) { EVP_PKEY_free(ptr); }
   void operator()(BIO* ptr) { BIO_free(ptr); }
+  void operator()(ECDSA_SIG* ptr) { ECDSA_SIG_free(ptr); }
 };
 
 std::unique_ptr<EVP_MD_CTX, OpenSslDeleter> GetDigestCtx() {
@@ -84,9 +86,8 @@ Status DERToRawSignature(unsigned char const* der_sig, size_t der_len,
                                           GCP_ERROR_INFO());
   }
 
-  // d2i_ECDSA_SIG modifies the input pointer, so make a copy
-  unsigned char const* p = der_sig;
-  ECDSA_SIG* ecdsa_sig = d2i_ECDSA_SIG(NULL, &p, der_len);
+  auto ecdsa_sig = std::unique_ptr<ECDSA_SIG, OpenSslDeleter>(
+      d2i_ECDSA_SIG(NULL, &der_sig, der_len));
 
   if (!ecdsa_sig) {
     char err_buf[256];
@@ -96,43 +97,40 @@ Status DERToRawSignature(unsigned char const* der_sig, size_t der_len,
         GCP_ERROR_INFO());
   }
 
-  const BIGNUM *r, *s;
-  ECDSA_SIG_get0(ecdsa_sig, &r, &s);
+  const BIGNUM* r;
+  const BIGNUM* s;
+  ECDSA_SIG_get0(ecdsa_sig.get(), &r, &s);
 
   if (!r || !s) {
     auto err_msg = "Error: Could not get r or s from ECDSA_SIG.";
-    ECDSA_SIG_free(ecdsa_sig);
     return internal::InvalidArgumentError(err_msg, GCP_ERROR_INFO());
   }
 
   raw_sig.resize(2 * coord_size);
   unsigned char* raw_sig_ptr = raw_sig.data();
 
-  // Convert r to binary, padded to coord_size
+  auto constexpr kErrorMessage =
+      R"""(Error converting %s to binary (expected %d bytes, got %d): %s)""";
+  // Convert r to binary, padded to coord_size.
   int r_len = BN_bn2binpad(r, &raw_sig_ptr[0], coord_size);
   if (r_len != coord_size) {
     char err_buf[256];
     ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
     auto err_msg =
-        absl::StrCat("Error converting r to binary (expected ", coord_size,
-                     " bytes, got ", r_len, "): ", err_buf);
-    ECDSA_SIG_free(ecdsa_sig);
+        absl::StrFormat(kErrorMessage, "r", coord_size, r_len, err_buf);
     return internal::InvalidArgumentError(err_msg, GCP_ERROR_INFO());
   }
 
-  // Convert s to binary, padded to coord_size
+  // Convert s to binary, padded to coord_size.
   int s_len = BN_bn2binpad(s, &raw_sig_ptr[coord_size], coord_size);
   if (s_len != coord_size) {
     char err_buf[256];
     ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
     auto err_msg =
-        absl::StrCat("Error converting s to binary (expected ", coord_size,
-                     " bytes, got ", s_len, "): ", err_buf);
-    ECDSA_SIG_free(ecdsa_sig);
+        absl::StrFormat(kErrorMessage, "s", coord_size, s_len, err_buf);
     return internal::InvalidArgumentError(err_msg, GCP_ERROR_INFO());
   }
 
-  ECDSA_SIG_free(ecdsa_sig);
   return {};
 }
 

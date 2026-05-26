@@ -62,47 +62,6 @@ Status MakeRequestWithPayload(
   }
 
   std::size_t content_length = 0;
-  std::cout << __func__ << ": payload=" << std::endl;
-  for (auto const& p : payload) {
-    std::cout << __func__ << std::string(p.begin(), p.end()) << std::endl;
-    content_length += p.size();
-  }
-
-  impl.SetHeader(HttpHeader("Content-Length", std::to_string(content_length)));
-  return impl.MakeRequest(http_method, context, payload);
-}
-#if 0
-
-Status MakeRequestWithPayload(
-    CurlImpl::HttpMethod http_method, RestContext& context,
-    RestRequest const&, CurlImpl& impl,
-    nlohmann::json const& json_payload) {
-
-  impl.SetHeader(HttpHeader("content-type", "application/json"));
-  impl.SetHeader(HttpHeader("content-length", std::to_string(json_payload.size())));
-  return impl.MakeRequest(http_method, context, json_payload);
-
-  // If no Content-Type is specified for the payload, default to
-  // application/x-www-form-urlencoded and encode the payload accordingly before
-  // making the request.
-  auto content_type = request.GetHeader("Content-Type");
-  if (content_type.empty()) content_type = context.GetHeader("Content-Type");
-  if (content_type.empty()) {
-    std::string encoded_payload;
-    impl.SetHeader(
-        HttpHeader("content-type", "application/x-www-form-urlencoded"));
-    std::string concatenated_payload;
-    for (auto const& p : payload) {
-      concatenated_payload += std::string(p.begin(), p.end());
-    }
-    encoded_payload = impl.MakeEscapedString(concatenated_payload);
-    impl.SetHeader(
-        HttpHeader("Content-Length", std::to_string(encoded_payload.size())));
-    return impl.MakeRequest(http_method, context,
-                            {{encoded_payload.data(), encoded_payload.size()}});
-  }
-
-  std::size_t content_length = 0;
   for (auto const& p : payload) {
     content_length += p.size();
   }
@@ -110,7 +69,6 @@ Status MakeRequestWithPayload(
   impl.SetHeader(HttpHeader("Content-Length", std::to_string(content_length)));
   return impl.MakeRequest(http_method, context, payload);
 }
-#endif
 
 std::string FormatHostHeaderValue(absl::string_view hostname) {
   if (!absl::ConsumePrefix(&hostname, "https://")) {
@@ -237,12 +195,6 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
   auto options = internal::MergeOptions(context.options(), options_);
   auto impl = CreateCurlImpl(context, request, options);
   if (!impl.ok()) return impl.status();
-  std::cout << __func__ << ": payload=Spans" << std::endl;
-  // for (auto const& p : payload) {
-  //   std::cout << __func__ << ": payload=" << std::string(p.begin(), p.end())
-  //   <<
-  //     std::endl;
-  // }
   Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, context,
                                            request, **impl, payload);
   if (!response.ok()) return response;
@@ -263,7 +215,6 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
         out->append(
             absl::StrCat(i.first, "=", (*impl)->MakeEscapedString(i.second)));
       });
-  std::cout << __func__ << ": form_payload=" << form_payload << std::endl;
   std::vector<absl::Span<char const>> span_payload{form_payload};
   Status response =
       MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, context, request,
@@ -272,21 +223,6 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
   return {std::unique_ptr<CurlRestResponse>(
       new CurlRestResponse(std::move(options), std::move(*impl)))};
 }
-
-// StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
-//       RestContext& context, RestRequest const& request,
-//       nlohmann::json const& json_payload) {
-//   context.AddHeader("content-type", "application/json");
-//   auto options = internal::MergeOptions(context.options(), options_);
-//   auto impl = CreateCurlImpl(context, request, options);
-//   if (!impl.ok()) return impl.status();
-//   Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost,
-//   context,
-//                                            request, **impl, json_payload);
-//   if (!response.ok()) return response;
-//   return {std::unique_ptr<CurlRestResponse>(
-//       new CurlRestResponse(std::move(options), std::move(*impl)))};
-// }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
     RestContext& context, RestRequest const& request,

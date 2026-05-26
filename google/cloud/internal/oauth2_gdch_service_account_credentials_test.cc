@@ -85,6 +85,32 @@ nlohmann::json TestContents() {
 
 std::string MakeTestContents() { return TestContents().dump(); }
 
+MATCHER_P(JsonPayloadIs, payload, "JSON payload is") {
+  if ((arg.empty() && !payload.empty()) || (!arg.empty() && payload.empty())) {
+    return false;
+  }
+  if (arg.empty() && payload.empty()) return true;
+
+  // When calling RestClient::Post with string or json, the payload will be a
+  // std::vector with at most 1 element.
+  auto json_payload = nlohmann::json{payload[0]};
+  auto json_arg =
+      nlohmann::json::parse(std::string{arg[0].data(), arg[0].size()});
+  if (json_arg.is_discarded()) return false;
+
+  // The value of the subject_token is based on a random key, so just check if
+  // it is present.
+  if (json_arg.erase("subject_token") != 1) return false;
+  if (json_arg.size() != json_payload.size()) return false;
+
+  // Compare the remaining items.
+  for (auto const& p : json_payload.items()) {
+    auto a = json_arg.value(p.key(), "");
+    if (a != p.value()) return false;
+  }
+  return true;
+}
+
 /// @test Verify that we can create service account credentials from a keyfile.
 TEST(GDCHServiceAccountCredentialsTest,
      RefreshingSendsCorrectRequestBodyAndParsesResponse) {
@@ -105,25 +131,27 @@ TEST(GDCHServiceAccountCredentialsTest,
       {"iss", iss_sub_value}, {"sub", iss_sub_value}, {"aud", kTokenUri},
       {"iat", iat},           {"exp", exp},
   };
-  auto const assertion = GDCHServiceAccountCredentials::MakeJWTAssertion(
-      expected_header.dump(), expected_payload.dump(), kPrivateKey);
+  // auto const assertion = GDCHServiceAccountCredentials::MakeJWTAssertion(
+  //     expected_header.dump(), expected_payload.dump(), kPrivateKey);
 
   auto token_client = [=] {
     using FormDataType = std::vector<absl::Span<char const>>;
     auto mock = std::make_unique<MockRestClient>();
     auto expected_request = Property(&RestRequest::path, kTokenUri);
-    // auto expected_form_data = MatcherCast<FormDataType const&>(AllOf(
-    // Contains(Pair("grant_type",
-    //               "urn:ietf:params:oauth:token-type:token-exchange")),
-    // Contains(Pair("audience", kAudience)),
-    // Contains(Pair("requested_token_type",
-    //               "urn:ietf:params:oauth:token-type:access_token")),
-    // Contains(Pair("subject_token", assertion)),
-    // Contains(Pair(absl::Span<char const>("subject_token_type"),
-    //               absl::Span<char
-    //               const>("urn:k8s:params:oauth:token-type:serviceaccount")))));
-    EXPECT_CALL(*mock,
-                Post(_, expected_request, ::testing::A<FormDataType const&>()))
+    auto expected_form_data = MatcherCast<FormDataType const&>(JsonPayloadIs(
+        nlohmann::json{std::unordered_map<std::string, std::string>{
+            std::pair<std::string, std::string>{
+                "grant_type",
+                "urn:ietf:params:oauth:token-type:token-exchange"},
+            std::pair<std::string, std::string>{"audience", kAudience},
+            std::pair<std::string, std::string>{
+                "requested_token_type",
+                "urn:ietf:params:oauth:token-type:access_token"},
+            std::pair<std::string, std::string>{
+                "subject_token_type",
+                "urn:k8s:params:oauth:token-type:serviceaccount"}}}));
+
+    EXPECT_CALL(*mock, Post(_, expected_request, expected_form_data))
         .WillOnce([post_response]() {
           auto response = std::make_unique<MockRestResponse>();
           EXPECT_CALL(*response, StatusCode)
@@ -380,19 +408,16 @@ TEST(GDCHServiceAccountCredentialsTest,
 
   auto actual_payload =
       GDCHServiceAccountCredentials::CreateRefreshPayload(*info, now);
-
-  // EXPECT_THAT(
-  //     actual_payload,
-  //     IsOkAndHolds(Contains(Pair("grant_type",
-  //                   "urn:ietf:params:oauth:token-type:token-exchange"))));
-  // EXPECT_THAT(actual_payload, Contains(Pair("audience", kAudience)));
-  // EXPECT_THAT(actual_payload,
-  //             Contains(Pair("requested_token_type",
-  //                           "urn:ietf:params:oauth:token-type:access_token")));
-  // EXPECT_THAT(actual_payload, Contains(Pair("subject_token", assertion)));
-  // EXPECT_THAT(actual_payload,
-  //             Contains(Pair("subject_token_type",
-  //                           "urn:k8s:params:oauth:token-type:serviceaccount")));
+  ASSERT_STATUS_OK(actual_payload);
+  EXPECT_THAT(actual_payload->value("grant_type", ""),
+              Eq("urn:ietf:params:oauth:token-type:token-exchange"));
+  EXPECT_THAT(actual_payload->value("audience", ""), Eq(kAudience));
+  EXPECT_THAT(actual_payload->value("requested_token_type", ""),
+              Eq("urn:ietf:params:oauth:token-type:access_token"));
+  EXPECT_THAT(actual_payload->value("subject_token", ""),
+              Not(::testing::IsEmpty()));
+  EXPECT_THAT(actual_payload->value("subject_token_type", ""),
+              Eq("urn:k8s:params:oauth:token-type:serviceaccount"));
 }
 
 /// @test Parsing a refresh response with missing fields results in failure.

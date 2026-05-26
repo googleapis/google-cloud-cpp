@@ -66,9 +66,6 @@ class CurlRestClient : public RestClient {
       RestContext& context, RestRequest const& request,
       std::vector<std::pair<std::string, std::string>> const& form_data)
       override;
-  // StatusOr<std::unique_ptr<RestResponse>> Post(
-  //       RestContext& context, RestRequest const& request,
-  //       nlohmann::json const& json_payload) override;
   StatusOr<std::unique_ptr<RestResponse>> Put(
       RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;

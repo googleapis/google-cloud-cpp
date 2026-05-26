@@ -86,9 +86,6 @@ class RestClient {
   virtual StatusOr<std::unique_ptr<RestResponse>> Post(
       RestContext& context, RestRequest const& request,
       std::vector<std::pair<std::string, std::string>> const& form_data) = 0;
-  // virtual StatusOr<std::unique_ptr<RestResponse>> Post(
-  //     RestContext& context, RestRequest const& request,
-  //     nlohmann::json const& json_payload) = 0;
   virtual StatusOr<std::unique_ptr<RestResponse>> Put(
       RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) = 0;
