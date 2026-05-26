@@ -17,10 +17,10 @@
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
-#include "google/cloud/storage/testing/canonical_errors.h"
-#include "google/cloud/storage/internal/crc32c.h"
-#include "google/cloud/storage/internal/async/writer_connection_impl.h"
 #include "google/cloud/storage/internal/async/write_object.h"
+#include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/internal/crc32c.h"
+#include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -846,11 +846,11 @@ TEST_F(AsyncConnectionImplAppendableTest,
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
   next.first.set_value(true);
-  
+
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write(StateLookup)");
   next.first.set_value(true);
-  
+
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read(PersistedSize)");
   next.first.set_value(true);

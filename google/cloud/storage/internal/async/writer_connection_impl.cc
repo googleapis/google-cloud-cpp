@@ -68,7 +68,8 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
           std::move(hash_function), PersistedStateType(metadata),
-          /*offset=*/metadata.size(), std::move(first_request), absl::nullopt) {}
+          /*offset=*/metadata.size(), std::move(first_request), absl::nullopt) {
+}
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
@@ -148,7 +149,8 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
   auto action = PartialUpload::kFinalizeWithChecksum;
   if (request_.has_append_object_spec() ||
       request_.write_object_spec().appendable()) {
-    if (!absl::holds_alternative<google::storage::v2::Object>(persisted_state_) &&
+    if (!absl::holds_alternative<google::storage::v2::Object>(
+            persisted_state_) &&
         !persisted_data_checksums_.has_value()) {
       action = PartialUpload::kFinalize;
     }
