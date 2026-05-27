@@ -60,6 +60,10 @@ void PartialUpload::Write() {
     } else if (action_ == LastMessageAction::kFlush) {
       request_.set_flush(true);
       request_.set_state_lookup(true);
+    } else if (action_ == LastMessageAction::kFlushAndClose) {
+      request_.set_flush(true);
+      request_.set_state_lookup(true);
+      wopt.set_last_message();
     }
   }
   (void)rpc_->Write(request_, std::move(wopt))

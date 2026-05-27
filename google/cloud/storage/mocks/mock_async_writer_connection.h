@@ -37,6 +37,7 @@ class MockAsyncWriterConnection : public storage::AsyncWriterConnection {
   MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, Finalize,
               (storage::WritePayload), (override));
   MOCK_METHOD(future<Status>, Flush, (storage::WritePayload), (override));
+  MOCK_METHOD(future<Status>, Close, (storage::WritePayload), (override));
   MOCK_METHOD(future<StatusOr<std::int64_t>>, Query, (), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (override));
 };

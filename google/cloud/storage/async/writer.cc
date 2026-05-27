@@ -104,7 +104,7 @@ future<Status> AsyncWriter::Close() {
         "closed stream", GCP_ERROR_INFO()));
   }
 
-  return impl_->Flush(WritePayload{}).then([impl = std::move(impl_)](auto f) {
+  return impl_->Close(WritePayload{}).then([impl = std::move(impl_)](auto f) {
     return f.get();
   });
 }

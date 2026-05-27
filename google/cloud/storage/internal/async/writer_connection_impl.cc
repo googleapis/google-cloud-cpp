@@ -176,6 +176,19 @@ future<Status> AsyncWriterConnectionImpl::Flush(storage::WritePayload payload) {
   });
 }
 
+future<Status> AsyncWriterConnectionImpl::Close(storage::WritePayload payload) {
+  auto write = MakeRequest();
+  auto p = WritePayloadImpl::GetImpl(payload);
+  auto size = p.size();
+  auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
+                                  std::move(p), PartialUpload::kFlushAndClose);
+
+  return coro->Start().then([coro, size, this](auto f) mutable {
+    coro.reset();  // breaks the cycle between the completion queue and coro
+    return OnClose(size, f.get());
+  });
+}
+
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
   return impl_->Read().then([this](auto f) { return OnQuery(f.get()); });
 }
@@ -213,6 +226,19 @@ future<Status> AsyncWriterConnectionImpl::OnPartialUpload(
   }
   offset_ += upload_size;
   return make_ready_future(Status{});
+}
+
+future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
+                                                  StatusOr<bool> success) {
+  if (!success) {
+    return Finish().then(HandleFinishAfterError(std::move(success).status()));
+  }
+  if (!*success) {
+    return Finish().then(
+        HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
+  }
+  offset_ += upload_size;
+  return Finish().then([](auto f) { return f.get(); });
 }
 
 future<StatusOr<google::storage::v2::Object>>
