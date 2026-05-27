@@ -888,7 +888,8 @@ TEST(WriterConnectionResumed, ResumeUsesChecksumsFromFirstResponse) {
         result.first_response.mutable_write_handle()->set_handle("new-handle");
         result.first_response.set_persisted_size(2048);
         // Set checksums in response!
-        result.first_response.mutable_persisted_data_checksums()->set_crc32c(12345);
+        result.first_response.mutable_persisted_data_checksums()->set_crc32c(
+            12345);
         return sequencer.PushBack("Factory").then(
             [r = std::move(result)](auto) mutable {
               return StatusOr<WriteObject::WriteResult>(std::move(r));
