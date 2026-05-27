@@ -125,7 +125,7 @@ TEST(Credentials, ApiKeyCredentials) {
 }
 
 TEST(Credentials, AuthorizedUserCredentials) {
-  auto credentials = experimental::MakeUserAccountCredentials(
+  auto credentials = MakeUserAccountCredentials(
       "test-only-invalid", Options{}.set<ScopesOption>({"scope1", "scope2"}));
   TestCredentialsVisitor visitor;
   CredentialsVisitor::dispatch(*credentials, visitor);
