@@ -18,7 +18,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### Updated Libraries
 
-- [Network Security API] has been updated with several additional services ([]()) 
+- [Network Security API] has been updated with several additional services ([#16122](https://github.com/googleapis/google-cloud-cpp/pull/16122)) 
 
 ## v3.5.0 - 2026-05
 
