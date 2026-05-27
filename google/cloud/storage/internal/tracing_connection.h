@@ -18,8 +18,14 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
+#include "absl/types/optional.h"
+#include <future>
+#include <list>
 #include <memory>
+#include <mutex>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 namespace google {
@@ -27,10 +33,70 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+struct BucketCacheEntry {
+  std::string id;
+  std::string location;
+};
+
+class BucketMetadataCache {
+ public:
+  explicit BucketMetadataCache(std::size_t max_size = 10000)
+      : max_size_(max_size) {}
+
+  absl::optional<BucketCacheEntry> Get(std::string const& bucket_name) {
+    std::lock_guard<std::mutex> lock(mu_);
+    auto it = map_.find(bucket_name);
+    if (it == map_.end()) return absl::nullopt;
+
+    list_.erase(it->second.second);
+    list_.push_front(bucket_name);
+    it->second.second = list_.begin();
+    return it->second.first;
+  }
+
+  void Put(std::string const& bucket_name, BucketCacheEntry entry) {
+    std::lock_guard<std::mutex> lock(mu_);
+    auto it = map_.find(bucket_name);
+    if (it != map_.end()) {
+      it->second.first = entry;
+      list_.erase(it->second.second);
+      list_.push_front(bucket_name);
+      it->second.second = list_.begin();
+      return;
+    }
+
+    if (map_.size() >= max_size_) {
+      auto oldest = list_.back();
+      list_.pop_back();
+      map_.erase(oldest);
+    }
+
+    list_.push_front(bucket_name);
+    map_[bucket_name] = {std::move(entry), list_.begin()};
+  }
+
+  void Invalidate(std::string const& bucket_name) {
+    std::lock_guard<std::mutex> lock(mu_);
+    auto it = map_.find(bucket_name);
+    if (it != map_.end()) {
+      list_.erase(it->second.second);
+      map_.erase(it);
+    }
+  }
+
+ private:
+  std::size_t max_size_;
+  std::mutex mu_;
+  std::list<std::string> list_;
+  std::unordered_map<std::string, std::pair<BucketCacheEntry,
+                                            std::list<std::string>::iterator>>
+      map_;
+};
+
 class TracingConnection : public storage::internal::StorageConnection {
  public:
   explicit TracingConnection(std::shared_ptr<StorageConnection> impl);
-  ~TracingConnection() override = default;
+  ~TracingConnection() override;
 
   Options options() const override;
 
@@ -179,9 +245,31 @@ class TracingConnection : public storage::internal::StorageConnection {
 
  private:
   void EnrichSpan(opentelemetry::trace::Span& span,
+                  std::string const& bucket_name);
+  void EnrichSpan(opentelemetry::trace::Span& span,
                   storage::BucketMetadata const& metadata);
+  void MaybeTriggerBackgroundFetch(std::string const& bucket_name);
+  void CleanupCompletedTasks();
+
+  template <typename T>
+  void MaybeInvalidate(StatusOr<T> const& result,
+                       std::string const& bucket_name) {
+    if (!result.ok() && result.status().code() == StatusCode::kNotFound) {
+      cache_.Invalidate(bucket_name);
+    }
+  }
+
+  void MaybeInvalidate(Status const& status, std::string const& bucket_name) {
+    if (!status.ok() && status.code() == StatusCode::kNotFound) {
+      cache_.Invalidate(bucket_name);
+    }
+  }
 
   std::shared_ptr<StorageConnection> impl_;
+  BucketMetadataCache cache_;
+  std::mutex mu_;
+  std::unordered_set<std::string> in_flight_fetch_;
+  std::vector<std::future<void>> bg_tasks_;
 };
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
