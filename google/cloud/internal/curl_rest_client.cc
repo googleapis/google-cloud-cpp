@@ -215,11 +215,8 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
         out->append(
             absl::StrCat(i.first, "=", (*impl)->MakeEscapedString(i.second)));
       });
-  // TODO(sdhart): do we still need this conversion?
-  std::vector<absl::Span<char const>> span_payload{form_payload};
-  Status response =
-      MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, context, request,
-                             **impl, std::move(span_payload));
+  Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, context,
+                                           request, **impl, {form_payload});
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
       new CurlRestResponse(std::move(options), std::move(*impl)))};
