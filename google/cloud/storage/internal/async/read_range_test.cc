@@ -16,6 +16,8 @@
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_values.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
+#include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -189,6 +191,40 @@ TEST(ReadRange, HashFunctionCalled) {
 
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
   actual.OnRead(std::move(data));
+}
+
+TEST(ReadRange, FullObjectChecksumValidationMismatch) {
+  auto hash_function = std::make_shared<storage::internal::Crc32cHashFunction>();
+  auto hash_validator = std::make_unique<storage::internal::Crc32cHashValidator>();
+  
+  storage::internal::HashValues expected_hashes;
+  expected_hashes.crc32c = "n3tPLw=="; // Some expected hash
+  hash_validator->ProcessHashValues(expected_hashes);
+
+  ReadRange actual(0, 10, hash_function, std::move(hash_validator));
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "1234567890" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: true
+  )pb";
+
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+  
+  EXPECT_TRUE(actual.IsDone());
+  
+  // First read gets the data
+  EXPECT_TRUE(pending.is_ready());
+  EXPECT_THAT(pending.get(), VariantWith<ReadPayload>(_));
+              
+  // Second read gets the error
+  auto next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(), VariantWith<Status>(StatusIs(StatusCode::kDataLoss)));
 }
 
 }  // namespace

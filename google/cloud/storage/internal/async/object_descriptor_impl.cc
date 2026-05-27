@@ -157,12 +157,9 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       std::shared_ptr<storage::internal::HashFunction>(
           storage::internal::CreateNullHashFunction());
   if (options_.get<storage::EnableCrc32cValidationOption>()) {
-    std::cout << "Creating Crc32cMessageHashFunction with Crc32cHashFunction child\n";
     hash_function =
         std::make_shared<storage::internal::Crc32cMessageHashFunction>(
             std::make_unique<storage::internal::Crc32cHashFunction>());
-  } else {
-    std::cout << "Creating NullHashFunction\n";
   }
 
   std::unique_ptr<storage::internal::HashValidator> hash_validator =
@@ -186,7 +183,6 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     // Process the expected hashes from metadata
     storage::internal::HashValues hashes;
     if (metadata_->has_checksums()) {
-      std::cout << "Metadata has checksums\n";
       auto const& checksums = metadata_->checksums();
       if (checksums.has_crc32c()) {
         hashes = Merge(std::move(hashes),
@@ -198,8 +194,6 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
                        storage::internal::HashValues{
                            {}, storage_internal::MD5FromProto(checksums.md5_hash())});
       }
-    } else {
-      std::cout << "Metadata does NOT have checksums\n";
     }
     hash_validator->ProcessHashValues(hashes);
   }

@@ -73,10 +73,7 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   if (status_) return;
   if (data.range_end()) {
     status_ = Status{};
-    std::cout << "Full range/object read completed.\n";
-    auto computed_hashes = hash_function_->Finish();
-    std::cout << "Computed hashes: " << storage::internal::Format(computed_hashes) << "\n";
-    auto result = std::move(*hash_validator_).Finish(std::move(computed_hashes));
+    auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
     if (result.is_mismatch) {
       status_ = google::cloud::internal::DataLossError(
           absl::StrCat("mismatched checksums detected at the end of the "
@@ -84,7 +81,6 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
                        FormatReceivedHashes(result), "}, computed={",
                        FormatComputedHashes(result), "}"),
           GCP_ERROR_INFO());
-      std::cout << status_->message() << "\n";
     }
   }
 
@@ -96,9 +92,7 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
     status_ = std::move(status);
     return Notify(std::move(lk), ReadPayloadImpl::Make(std::move(content)));
   }
-  if (hash_function_->Name() != "null") {
-    std::cout << "Chunk validated successfully at offset " << offset_ << " size " << content.size() << "\n";
-  }
+
 
   offset_ += content.size();
   if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
