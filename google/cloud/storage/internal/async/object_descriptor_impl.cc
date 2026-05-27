@@ -19,6 +19,10 @@
 #include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
+#include "google/cloud/storage/internal/hash_validator.h"
+#include "google/cloud/storage/internal/hash_values.h"
+#include "google/cloud/storage/internal/hash_validator_impl.h"
+#include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/rpc/status.pb.h"
@@ -152,12 +156,55 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   std::shared_ptr<storage::internal::HashFunction> hash_function =
       std::shared_ptr<storage::internal::HashFunction>(
           storage::internal::CreateNullHashFunction());
-  if (options_.has<storage::EnableCrc32cValidationOption>()) {
+  if (options_.get<storage::EnableCrc32cValidationOption>()) {
+    std::cout << "Creating Crc32cMessageHashFunction with Crc32cHashFunction child\n";
     hash_function =
         std::make_shared<storage::internal::Crc32cMessageHashFunction>(
-            storage::internal::CreateNullHashFunction());
+            std::make_unique<storage::internal::Crc32cHashFunction>());
+  } else {
+    std::cout << "Creating NullHashFunction\n";
   }
-  auto range = std::make_shared<ReadRange>(p.start, p.length, hash_function);
+
+  std::unique_ptr<storage::internal::HashValidator> hash_validator =
+      storage::internal::CreateNullHashValidator();
+
+  // Check if it's a full object read and metadata is available
+  if (p.start == 0 && metadata_.has_value() && (p.length == 0 || p.length >= metadata_->size())) {
+    auto const enable_crc32c = options_.get<storage::EnableCrc32cValidationOption>();
+    auto const enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+
+    if (enable_crc32c && enable_md5) {
+      hash_validator = std::make_unique<storage::internal::CompositeValidator>(
+          std::make_unique<storage::internal::Crc32cHashValidator>(),
+          std::make_unique<storage::internal::MD5HashValidator>());
+    } else if (enable_crc32c) {
+      hash_validator = std::make_unique<storage::internal::Crc32cHashValidator>();
+    } else if (enable_md5) {
+      hash_validator = std::make_unique<storage::internal::MD5HashValidator>();
+    }
+
+    // Process the expected hashes from metadata
+    storage::internal::HashValues hashes;
+    if (metadata_->has_checksums()) {
+      std::cout << "Metadata has checksums\n";
+      auto const& checksums = metadata_->checksums();
+      if (checksums.has_crc32c()) {
+        hashes = Merge(std::move(hashes),
+                       storage::internal::HashValues{
+                           storage_internal::Crc32cFromProto(checksums.crc32c()), {}});
+      }
+      if (!checksums.md5_hash().empty()) {
+        hashes = Merge(std::move(hashes),
+                       storage::internal::HashValues{
+                           {}, storage_internal::MD5FromProto(checksums.md5_hash())});
+      }
+    } else {
+      std::cout << "Metadata does NOT have checksums\n";
+    }
+    hash_validator->ProcessHashValues(hashes);
+  }
+
+  auto range = std::make_shared<ReadRange>(p.start, p.length, hash_function, std::move(hash_validator));
 
   std::unique_lock<std::mutex> lk(mu_);
   if (stream_manager_->Empty()) {

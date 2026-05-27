@@ -15,7 +15,10 @@
 #include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_cat.h"
+#include <iostream>
 
 namespace google {
 namespace cloud {
@@ -68,7 +71,22 @@ void ReadRange::OnFinish(Status status) {
 void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   std::unique_lock<std::mutex> lk(mu_);
   if (status_) return;
-  if (data.range_end()) status_ = Status{};
+  if (data.range_end()) {
+    status_ = Status{};
+    std::cout << "Full range/object read completed.\n";
+    auto computed_hashes = hash_function_->Finish();
+    std::cout << "Computed hashes: " << storage::internal::Format(computed_hashes) << "\n";
+    auto result = std::move(*hash_validator_).Finish(std::move(computed_hashes));
+    if (result.is_mismatch) {
+      status_ = google::cloud::internal::DataLossError(
+          absl::StrCat("mismatched checksums detected at the end of the "
+                       "download, received={",
+                       FormatReceivedHashes(result), "}, computed={",
+                       FormatComputedHashes(result), "}"),
+          GCP_ERROR_INFO());
+      std::cout << status_->message() << "\n";
+    }
+  }
 
   auto* check_summed_data = data.mutable_checksummed_data();
   auto content = StealMutableContent(*data.mutable_checksummed_data());
@@ -77,6 +95,9 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   if (!status.ok()) {
     status_ = std::move(status);
     return Notify(std::move(lk), ReadPayloadImpl::Make(std::move(content)));
+  }
+  if (hash_function_->Name() != "null") {
+    std::cout << "Chunk validated successfully at offset " << offset_ << " size " << content.size() << "\n";
   }
 
   offset_ += content.size();

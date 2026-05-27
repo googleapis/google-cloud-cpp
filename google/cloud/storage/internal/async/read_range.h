@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
@@ -46,10 +47,13 @@ class ReadRange {
 
   ReadRange(std::int64_t offset, std::int64_t length,
             std::shared_ptr<storage::internal::HashFunction> hash_function =
-                storage::internal::CreateNullHashFunction())
+                storage::internal::CreateNullHashFunction(),
+            std::unique_ptr<storage::internal::HashValidator> hash_validator =
+                storage::internal::CreateNullHashValidator())
       : offset_(offset),
         length_(length),
-        hash_function_(std::move(hash_function)) {}
+        hash_function_(std::move(hash_function)),
+        hash_validator_(std::move(hash_validator)) {}
 
   bool IsDone() const;
 
@@ -71,6 +75,7 @@ class ReadRange {
   absl::optional<Status> status_;
   absl::optional<promise<ReadResponse>> wait_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
+  std::unique_ptr<storage::internal::HashValidator> hash_validator_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
