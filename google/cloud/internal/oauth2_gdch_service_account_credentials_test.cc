@@ -89,23 +89,21 @@ MATCHER_P(JsonPayloadIs, payload, "JSON payload is") {
   }
   if (arg.empty() && payload.empty()) return true;
 
-  // When calling RestClient::Post with string or json, the payload will be a
-  // std::vector with at most 1 element.
-  auto json_payload = nlohmann::json{payload[0]};
   auto json_arg =
       nlohmann::json::parse(std::string{arg[0].data(), arg[0].size()});
-  if (json_arg.is_discarded()) return false;
+  if (json_arg.is_discarded() || !json_arg.is_object()) return false;
 
   // The value of the subject_token is based on a random key, so just check if
   // it is present.
   if (json_arg.erase("subject_token") != 1) return false;
-  if (json_arg.size() != json_payload.size()) return false;
+  if (json_arg.size() != payload.size()) return false;
 
   // Compare the remaining items.
-  auto const& items = json_payload.items();
+  auto const& items = payload.items();
   return std::all_of(items.begin(), items.end(), [&json_arg](auto const& p) {
     return p.value() == json_arg.value(p.key(), "");
   });
+  return true;
 }
 
 /// @test Verify that we can create service account credentials from a keyfile.
@@ -128,25 +126,19 @@ TEST(GDCHServiceAccountCredentialsTest,
       {"iss", iss_sub_value}, {"sub", iss_sub_value}, {"aud", kTokenUri},
       {"iat", iat},           {"exp", exp},
   };
-  // auto const assertion = GDCHServiceAccountCredentials::MakeJWTAssertion(
-  //     expected_header.dump(), expected_payload.dump(), kPrivateKey);
+
+  auto const expected_json_payload = nlohmann::json{
+      {"grant_type", "urn:ietf:params:oauth:token-type:token-exchange"},
+      {"audience", kAudience},
+      {"requested_token_type", "urn:ietf:params:oauth:token-type:access_token"},
+      {"subject_token_type", "urn:k8s:params:oauth:token-type:serviceaccount"}};
 
   auto token_client = [=] {
     using FormDataType = std::vector<absl::Span<char const>>;
     auto mock = std::make_unique<MockRestClient>();
     auto expected_request = Property(&RestRequest::path, kTokenUri);
-    auto expected_form_data = MatcherCast<FormDataType const&>(JsonPayloadIs(
-        nlohmann::json{std::unordered_map<std::string, std::string>{
-            std::pair<std::string, std::string>{
-                "grant_type",
-                "urn:ietf:params:oauth:token-type:token-exchange"},
-            std::pair<std::string, std::string>{"audience", kAudience},
-            std::pair<std::string, std::string>{
-                "requested_token_type",
-                "urn:ietf:params:oauth:token-type:access_token"},
-            std::pair<std::string, std::string>{
-                "subject_token_type",
-                "urn:k8s:params:oauth:token-type:serviceaccount"}}}));
+    auto expected_form_data =
+        MatcherCast<FormDataType const&>(JsonPayloadIs(expected_json_payload));
 
     EXPECT_CALL(*mock, Post(_, expected_request, expected_form_data))
         .WillOnce([post_response]() {
