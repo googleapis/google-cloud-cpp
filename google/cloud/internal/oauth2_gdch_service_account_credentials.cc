@@ -36,7 +36,7 @@ StatusOr<GDCHServiceAccountCredentials::Info>
 GDCHServiceAccountCredentials::Parse(std::string const& content,
                                      std::string const& source) {
   auto credentials = nlohmann::json::parse(content, nullptr, false);
-  if (credentials.is_discarded()) {
+  if (credentials.is_discarded() || !credentials.is_object()) {
     return internal::InvalidArgumentError(absl::StrCat(
         "Invalid GDCHServiceAccountCredentials, parsing failed on ",
         "data loaded from ", source));
@@ -192,12 +192,6 @@ StatusOr<AccessToken> GDCHServiceAccountCredentials::ParseRefreshResponse(
 StatusOr<std::unique_ptr<Credentials>>
 GDCHServiceAccountCredentials::CreateFromInfo(
     Info info, Options const& options, HttpClientFactory client_factory) {
-  if (!options.has<AudienceOption>()) {
-    return internal::InvalidArgumentError(
-        "Creation of GDCH Service Account credentials requires the "
-        "AudienceOption to be set.",
-        GCP_ERROR_INFO());
-  }
   // Verify this is usable before returning it.
   auto const tp = std::chrono::system_clock::time_point{};
   auto const [header, payload] = AssertionComponentsFromInfo(info, tp);
@@ -211,17 +205,18 @@ GDCHServiceAccountCredentials::CreateFromInfo(
 
 StatusOr<std::unique_ptr<Credentials>>
 GDCHServiceAccountCredentials::CreateFromJsonContents(
-    std::string const& contents, Options const& options,
-    HttpClientFactory client_factory) {
+    std::string const& contents, std::string const& audience,
+    Options const& options, HttpClientFactory client_factory) {
   auto info = Parse(contents, "memory");
   if (!info) return info.status();
+  info->audience = audience;
   return CreateFromInfo(*std::move(info), options, std::move(client_factory));
 }
 
 StatusOr<std::unique_ptr<Credentials>>
 GDCHServiceAccountCredentials::CreateFromFilePath(
-    std::string const& path, Options const& options,
-    HttpClientFactory client_factory) {
+    std::string const& path, std::string const& audience,
+    Options const& options, HttpClientFactory client_factory) {
   if (path.empty()) {
     return internal::InvalidArgumentError(
         "GOOGLE_APPLICATION_CREDENTIALS env var was empty.", GCP_ERROR_INFO());
@@ -234,7 +229,7 @@ GDCHServiceAccountCredentials::CreateFromFilePath(
                                   GCP_ERROR_INFO());
   }
   std::string contents(std::istreambuf_iterator<char>{is}, {});
-  return CreateFromJsonContents(std::move(contents), options,
+  return CreateFromJsonContents(std::move(contents), audience, options,
                                 std::move(client_factory));
 }
 
@@ -242,11 +237,7 @@ GDCHServiceAccountCredentials::GDCHServiceAccountCredentials(
     Info info, Options options, HttpClientFactory client_factory)
     : info_(std::move(info)),
       options_(std::move(options)),
-      client_factory_(std::move(client_factory)) {
-  if (options_.has<AudienceOption>()) {
-    info_.audience = options_.get<AudienceOption>();
-  }
-}
+      client_factory_(std::move(client_factory)) {}
 
 StatusOr<AccessToken> GDCHServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {

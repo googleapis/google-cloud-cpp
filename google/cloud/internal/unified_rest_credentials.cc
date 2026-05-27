@@ -155,22 +155,16 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
           Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }
     void visit(GDCHServiceAccountConfig const& cfg) override {
-      Options audience_option;
-      // TODO(sdhart): reconsider AudienceOption and require users to explicitly
-      // call `MakeGDCHServiceAccountCredentials`.
-      if (!cfg.audience().empty()) {
-        audience_option.set<AudienceOption>(cfg.audience());
-      }
-      auto options = internal::MergeOptions(cfg.options(), audience_option);
-
+      auto options = cfg.options();
       StatusOr<std::unique_ptr<oauth2_internal::Credentials>> creds;
       if (cfg.file_path().has_value()) {
         creds =
             oauth2_internal::GDCHServiceAccountCredentials::CreateFromFilePath(
-                *cfg.file_path(), options, client_factory_);
+                *cfg.file_path(), cfg.audience(), options, client_factory_);
       } else {
         creds = oauth2_internal::GDCHServiceAccountCredentials::
-            CreateFromJsonContents(cfg.json_object(), options, client_factory_);
+            CreateFromJsonContents(cfg.json_object(), cfg.audience(), options,
+                                   client_factory_);
       }
       if (!creds.ok()) {
         result = MakeErrorCredentials(std::move(creds).status());

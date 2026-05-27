@@ -171,7 +171,7 @@ TEST(GDCHServiceAccountCredentialsTest,
       .WillOnce(Return(ByMove(std::move(token_client))));
 
   auto credentials = GDCHServiceAccountCredentials::CreateFromJsonContents(
-      MakeTestContents(), Options{}.set<AudienceOption>(kAudience),
+      MakeTestContents(), kAudience, Options{},
       mock_client_factory.AsStdFunction());
   ASSERT_STATUS_OK(credentials);
   auto const tp = std::chrono::system_clock::from_time_t(kFixedJwtTimestamp);
@@ -307,22 +307,11 @@ TEST(GDCHServiceAccountCredentialsTest, ProjectIdDefined) {
   EXPECT_CALL(mock_http_client_factory, Call).Times(0);
 
   auto credentials = GDCHServiceAccountCredentials::CreateFromJsonContents(
-      MakeTestContents(), Options{}.set<AudienceOption>(kAudience),
+      MakeTestContents(), kAudience, Options{},
       mock_http_client_factory.AsStdFunction());
   ASSERT_STATUS_OK(credentials);
   EXPECT_THAT((*credentials)->project_id(), IsOkAndHolds(kProjectId));
   EXPECT_THAT((*credentials)->project_id({}), IsOkAndHolds(kProjectId));
-}
-
-TEST(GDCHServiceAccountCredentialsTest, MissingAudienceOption) {
-  MockHttpClientFactory mock_http_client_factory;
-  EXPECT_CALL(mock_http_client_factory, Call).Times(0);
-
-  auto credentials = GDCHServiceAccountCredentials::CreateFromJsonContents(
-      MakeTestContents(), Options{}, mock_http_client_factory.AsStdFunction());
-  EXPECT_THAT(credentials,
-              StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("requires the AudienceOption to be set")));
 }
 
 /// @test Verify we can obtain JWT assertion components given the info parsed

@@ -127,14 +127,12 @@ TEST(Credentials, ApiKeyCredentials) {
 TEST(Credentials, GDCHServiceAccountCredentials) {
   TestCredentialsVisitor visitor;
 
-  auto credentials = MakeGDCHServiceAccountCredentials(
-      "test-json", "test-audience",
-      Options{}.set<AudienceOption>("test-audience-option"));
+  auto credentials =
+      MakeGDCHServiceAccountCredentials("test-json", "test-audience");
   CredentialsVisitor::dispatch(*credentials, visitor);
   EXPECT_EQ("GDCHServiceAccountConfig", visitor.name);
   EXPECT_EQ("test-json", visitor.json_object);
   EXPECT_EQ("test-audience", visitor.audience);
-  EXPECT_EQ("test-audience-option", visitor.options.get<AudienceOption>());
 }
 
 TEST(PopulateAuthOptions, EmptyOptions) {

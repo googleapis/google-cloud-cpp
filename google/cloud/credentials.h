@@ -475,8 +475,7 @@ std::shared_ptr<Credentials> MakeComputeEngineCredentials(Options opts = {});
  *     omitted, the contents of the file at GOOGLE_APPLICATION_CREDENTIALS is
  *     used.
  *
- * @param audience authentication endpoint for the service identity used if
- *     AudienceOption not present in opts.
+ * @param audience authentication endpoint for the service identity.
  *
  * @param opts optional configuration values.  Note that the effect of these
  *     parameters depends on the underlying transport. For example,
@@ -507,16 +506,6 @@ struct DelegatesOption {
  */
 struct ScopesOption {
   using Type = std::vector<std::string>;
-};
-
-/**
- * Configure the audience for `MakeGDCHServiceAccountCredentials`.
- *
- * @ingroup options
- * @ingroup guac
- */
-struct AudienceOption {
-  using Type = std::string;
 };
 
 /**

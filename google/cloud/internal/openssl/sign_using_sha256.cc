@@ -16,6 +16,7 @@
 #include "google/cloud/internal/sign_using_sha256.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include <openssl/bio.h>
 #include <openssl/bn.h>

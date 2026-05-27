@@ -21,6 +21,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <nlohmann/json_fwd.hpp>
 #include <chrono>
 #include <memory>
 #include <string>
@@ -77,13 +78,13 @@ class GDCHServiceAccountCredentials : public Credentials {
 
   /// Creates a GDCHServiceAccountCredentials from a JSON string.
   static StatusOr<std::unique_ptr<Credentials>> CreateFromJsonContents(
-      std::string const& contents, Options const& options,
-      HttpClientFactory client_factory);
+      std::string const& contents, std::string const& audience,
+      Options const& options, HttpClientFactory client_factory);
 
   /// Creates a GDCHServiceAccountCredentials from a file at the specified path.
   static StatusOr<std::unique_ptr<Credentials>> CreateFromFilePath(
-      std::string const& path, Options const& options,
-      HttpClientFactory client_factory);
+      std::string const& path, std::string const& audience,
+      Options const& options, HttpClientFactory client_factory);
 
   /// Parses a refresh response JSON string to create an access token.
   static StatusOr<AccessToken> ParseRefreshResponse(

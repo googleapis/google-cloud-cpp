@@ -102,6 +102,14 @@ YvLLIc82V7eqcVJTZtaFkuht68qu/Jn1ezbzJMJ4YXDYo1+KFi+2CAGR06QILb+I
 lUtj+/nH3HDQjM4ltYfTPUg=
 -----END PRIVATE KEY-----
 )""";
+// This is an invalidated private key. It was created using the Google Cloud
+// Platform console, but then the key (and service account) were deleted.
+auto constexpr kWellFormattedECKey = R"""(-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIDGD4hNeIBG3lo4BKS1k4jpYhbnJSZwAuUwyK8wEiOP5oAoGCCqGSM49
+AwEHoUQDQgAEWK7gDAGAAzOfl6pHhpmvjbTeUPyclQk7+HgAWE6uGUtox/U8/sQQ
+X3IM7YomoAWiNKWwBVskpXWj7L9dLkqhyQ==
+-----END EC PRIVATE KEY-----
+)""";
 
 std::string TempKeyFileName() {
   static auto generator =
@@ -149,9 +157,9 @@ auto constexpr kCaCertPath = "/test/ca.crt";
 auto constexpr kTokenUri = "https://gdc.token.uri/v1/token";
 nlohmann::json MakeGDCHServiceAccountContents() {
   return nlohmann::json{
-      {"project_id", kProjectId},
+      {"project", kProjectId},
       {"private_key_id", kServiceAccountKeyId},
-      {"private_key", kWellFormattedKey},
+      {"private_key", kWellFormattedECKey},
       {"name", kServiceAccountEmail},
       {"ca_cert_path", kCaCertPath},
       {"token_uri", kTokenUri},
@@ -515,20 +523,6 @@ TEST(UnifiedRestCredentialsTest, ApiKey) {
               IsOkAndHolds(Contains(HttpHeader("x-goog-api-key", "api-key"))));
 }
 
-TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountNoAudience) {
-  auto creds = MakeGDCHServiceAccountCredentials(
-      MakeGDCHServiceAccountContents().dump(), {}, {});
-  ASSERT_THAT(creds, NotNull());
-
-  auto oauth2_creds = MapCredentials(*creds);
-  ASSERT_THAT(oauth2_creds, NotNull());
-
-  auto header =
-      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
-  EXPECT_THAT(header,
-              StatusIs(StatusCode::kInvalidArgument, HasSubstr("Audience")));
-}
-
 TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceParameter) {
   auto constexpr kAudience = "test-audience";
   auto const post_response = std::string{R"""({
@@ -539,12 +533,10 @@ TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceParameter) {
   })"""};
 
   auto token_client = [=] {
-    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    using PayloadType = std::vector<absl::Span<char const>>;
     auto mock = std::make_unique<MockRestClient>();
     auto expected_request = Property(&RestRequest::path, kTokenUri);
-    auto expected_form_data =
-        MatcherCast<FormDataType const&>(Contains(Pair("audience", kAudience)));
-    EXPECT_CALL(*mock, Post(_, expected_request, expected_form_data))
+    EXPECT_CALL(*mock, Post(_, expected_request, A<PayloadType const&>()))
         .WillOnce([post_response]() {
           auto response = std::make_unique<MockRestResponse>();
           EXPECT_CALL(*response, StatusCode)
@@ -570,55 +562,11 @@ TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceParameter) {
       MapCredentials(*creds, mock_client_factory.AsStdFunction());
   ASSERT_THAT(oauth2_creds, NotNull());
 
-  auto header =
-      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
-}
+  auto header = oauth2_creds->AuthenticationHeaders(
+      std::chrono::system_clock::now(), "service.googleapis.com");
 
-TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceOption) {
-  auto constexpr kAudience = "test-audience";
-  auto const post_response = std::string{R"""({
-    "access_token":"access-token-value",
-    "issued_token_type":"urn:ietf:params:oauth:token-type:access_token",
-    "token_type":"Bearer",
-    "expires_in":3599
-  })"""};
-
-  auto token_client = [=] {
-    using FormDataType = std::vector<std::pair<std::string, std::string>>;
-    auto mock = std::make_unique<MockRestClient>();
-    auto expected_request = Property(&RestRequest::path, kTokenUri);
-    auto expected_form_data =
-        MatcherCast<FormDataType const&>(Contains(Pair("audience", kAudience)));
-    EXPECT_CALL(*mock, Post(_, expected_request, expected_form_data))
-        .WillOnce([post_response]() {
-          auto response = std::make_unique<MockRestResponse>();
-          EXPECT_CALL(*response, StatusCode)
-              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-          EXPECT_CALL(std::move(*response), ExtractPayload)
-              .WillOnce(
-                  Return(ByMove(MakeMockHttpPayloadSuccess(post_response))));
-          return std::unique_ptr<rest_internal::RestResponse>(
-              std::move(response));
-        });
-    return mock;
-  }();
-
-  MockClientFactory mock_client_factory;
-  EXPECT_CALL(mock_client_factory, Call)
-      .WillOnce(Return(ByMove(std::move(token_client))));
-
-  auto creds = MakeGDCHServiceAccountCredentials(
-      MakeGDCHServiceAccountContents().dump(), "audience-arg-not-used",
-      Options{}.set<AudienceOption>(kAudience));
-
-  ASSERT_THAT(creds, NotNull());
-
-  auto oauth2_creds =
-      MapCredentials(*creds, mock_client_factory.AsStdFunction());
-  ASSERT_THAT(oauth2_creds, NotNull());
-
-  auto header =
-      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
+  EXPECT_THAT(header, IsOkAndHolds(Contains(HttpHeader(
+                          "Authorization", "Bearer access-token-value"))));
 }
 
 TEST(UnifiedRestCredentialsTest, LoadError) {
