@@ -3113,6 +3113,62 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/dns_threat_detector.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/sse_realm.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/firewall_activation.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/intercept.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/address_group.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/security_profile_group_service.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/mirroring.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Network Services (aka Traffic Director)
 service {
   service_proto_path: "google/cloud/networkservices/v1/network_services.proto"
