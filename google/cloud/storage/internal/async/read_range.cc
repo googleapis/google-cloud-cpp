@@ -93,7 +93,6 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
     return Notify(std::move(lk), ReadPayloadImpl::Make(std::move(content)));
   }
 
-
   offset_ += content.size();
   if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
   auto p = ReadPayloadImpl::Make(std::move(content));

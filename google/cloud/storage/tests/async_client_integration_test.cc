@@ -1007,7 +1007,10 @@ TEST_F(AsyncClientIntegrationTest, Open) {
 TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
   if (!UsingEmulator()) GTEST_SKIP();
   auto async =
-      AsyncClient(TestOptions().set<storage::MaximumRangeSizeOption>(1024));
+      AsyncClient(TestOptions()
+                      .set<storage::MaximumRangeSizeOption>(1024)
+                      .set<storage::EnableCrc32cValidationOption>(false)
+                      .set<storage::EnableMD5ValidationOption>(false));
   auto client = MakeIntegrationTestClient(true, TestOptions());
   auto object_name = MakeRandomObjectName();
 
