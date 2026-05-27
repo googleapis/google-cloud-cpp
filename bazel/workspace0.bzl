@@ -150,7 +150,7 @@ def gl_cpp_workspace0(name = None):
             #"googleapis.patch",
 
             # Mirrors the patch from the current bazel module
-            "//bazel:remove_upb_c_rules.patch",
+            Label("//bazel:remove_upb_c_rules.patch"),
         ],
         patch_tool = "patch",
 
