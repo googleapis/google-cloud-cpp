@@ -7,9 +7,22 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `networksecurity_v1::NetworkSecurityClient`:
+For example, this will override the default endpoint for `networksecurity_v1::AddressGroupServiceClient`:
 
-@snippet network_security_client_samples.cc set-client-endpoint
+@snippet address_group_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c networksecurity_v1::AddressGroupServiceClient](@ref networksecurity_v1::AddressGroupServiceClient-endpoint-snippet)
+- [\c networksecurity_v1::DnsThreatDetectorServiceClient](@ref networksecurity_v1::DnsThreatDetectorServiceClient-endpoint-snippet)
+- [\c networksecurity_v1::FirewallActivationClient](@ref networksecurity_v1::FirewallActivationClient-endpoint-snippet)
+- [\c networksecurity_v1::InterceptClient](@ref networksecurity_v1::InterceptClient-endpoint-snippet)
+- [\c networksecurity_v1::MirroringClient](@ref networksecurity_v1::MirroringClient-endpoint-snippet)
+- [\c networksecurity_v1::NetworkSecurityClient](@ref networksecurity_v1::NetworkSecurityClient-endpoint-snippet)
+- [\c networksecurity_v1::OrganizationAddressGroupServiceClient](@ref networksecurity_v1::OrganizationAddressGroupServiceClient-endpoint-snippet)
+- [\c networksecurity_v1::OrganizationSecurityProfileGroupServiceClient](@ref networksecurity_v1::OrganizationSecurityProfileGroupServiceClient-endpoint-snippet)
+- [\c networksecurity_v1::SecurityProfileGroupServiceClient](@ref networksecurity_v1::SecurityProfileGroupServiceClient-endpoint-snippet)
+- [\c networksecurity_v1::SSERealmServiceClient](@ref networksecurity_v1::SSERealmServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -17,9 +30,63 @@ For example, this will override the default endpoint for `networksecurity_v1::Ne
 
 // <!-- inject-endpoint-pages-start -->
 
+/*! @page networksecurity_v1::AddressGroupServiceClient-endpoint-snippet Override networksecurity_v1::AddressGroupServiceClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/address_group_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networksecurity_v1::DnsThreatDetectorServiceClient-endpoint-snippet Override networksecurity_v1::DnsThreatDetectorServiceClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/dns_threat_detector_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networksecurity_v1::FirewallActivationClient-endpoint-snippet Override networksecurity_v1::FirewallActivationClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/firewall_activation_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networksecurity_v1::InterceptClient-endpoint-snippet Override networksecurity_v1::InterceptClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/intercept_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networksecurity_v1::MirroringClient-endpoint-snippet Override networksecurity_v1::MirroringClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/mirroring_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page networksecurity_v1::NetworkSecurityClient-endpoint-snippet Override networksecurity_v1::NetworkSecurityClient Endpoint Configuration
 
 @snippet google/cloud/networksecurity/v1/samples/network_security_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networksecurity_v1::OrganizationAddressGroupServiceClient-endpoint-snippet Override networksecurity_v1::OrganizationAddressGroupServiceClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/organization_address_group_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networksecurity_v1::OrganizationSecurityProfileGroupServiceClient-endpoint-snippet Override networksecurity_v1::OrganizationSecurityProfileGroupServiceClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/organization_security_profile_group_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networksecurity_v1::SecurityProfileGroupServiceClient-endpoint-snippet Override networksecurity_v1::SecurityProfileGroupServiceClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/security_profile_group_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networksecurity_v1::SSERealmServiceClient-endpoint-snippet Override networksecurity_v1::SSERealmServiceClient Endpoint Configuration
+
+@snippet google/cloud/networksecurity/v1/samples/sse_realm_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->
