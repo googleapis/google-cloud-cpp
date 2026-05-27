@@ -155,7 +155,7 @@ StatusOr<nlohmann::json> GDCHServiceAccountCredentials::CreateRefreshPayload(
     Info const& info, std::chrono::system_clock::time_point now) {
   auto [header, payload] = AssertionComponentsFromInfo(info, now);
   auto jwt = MakeJWTAssertion(header, payload, info.private_key);
-  if (!jwt) return std::move(jwt.status());
+  if (!jwt) return jwt.status();
   return nlohmann::json{
       {"grant_type", "urn:ietf:params:oauth:token-type:token-exchange"},
       {"audience", info.audience},
@@ -171,13 +171,14 @@ StatusOr<AccessToken> GDCHServiceAccountCredentials::ParseRefreshResponse(
   if (!payload.ok()) return std::move(payload).status();
   auto payload_copy = *payload;
   auto access_token = nlohmann::json::parse(*payload, nullptr, false);
-  if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
+  if (access_token.is_discarded() || !access_token.is_object() ||
+      access_token.count("access_token") == 0 ||
       access_token.count("expires_in") == 0 ||
       access_token.count("token_type") == 0 ||
       access_token.count("issued_token_type") == 0) {
     auto error_payload =
         payload_copy +
-        "Could not find all required fields in response (access_token,"
+        ": Could not find all required fields in response (access_token,"
         " expires_in, token_type, issued_token_type) while trying to obtain an"
         " access token for GDCH service account credentials.";
     return internal::InvalidArgumentError(error_payload, GCP_ERROR_INFO());

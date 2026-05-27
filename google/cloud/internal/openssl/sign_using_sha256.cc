@@ -82,8 +82,8 @@ std::string CaptureSslErrors() {
 Status DERToRawSignature(unsigned char const* der_sig, size_t der_len,
                          int coord_size, std::vector<uint8_t>& raw_sig) {
   if (!der_sig || der_len == 0) {
-    return internal::InvalidArgumentError("Input DER signature is empty.",
-                                          GCP_ERROR_INFO());
+    return InvalidArgumentError("Input DER signature is empty.",
+                                GCP_ERROR_INFO());
   }
 
   auto ecdsa_sig = std::unique_ptr<ECDSA_SIG, OpenSslDeleter>(
@@ -103,7 +103,7 @@ Status DERToRawSignature(unsigned char const* der_sig, size_t der_len,
 
   if (!r || !s) {
     auto const* err_msg = "Error: Could not get r or s from ECDSA_SIG.";
-    return internal::InvalidArgumentError(err_msg, GCP_ERROR_INFO());
+    return InvalidArgumentError(err_msg, GCP_ERROR_INFO());
   }
 
   raw_sig.resize(2 * coord_size);
@@ -118,7 +118,7 @@ Status DERToRawSignature(unsigned char const* der_sig, size_t der_len,
     ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
     auto err_msg =
         absl::StrFormat(kErrorMessage, "r", coord_size, r_len, err_buf);
-    return internal::InvalidArgumentError(err_msg, GCP_ERROR_INFO());
+    return InvalidArgumentError(err_msg, GCP_ERROR_INFO());
   }
 
   // Convert s to binary, padded to coord_size.
@@ -128,7 +128,7 @@ Status DERToRawSignature(unsigned char const* der_sig, size_t der_len,
     ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
     auto err_msg =
         absl::StrFormat(kErrorMessage, "s", coord_size, s_len, err_buf);
-    return internal::InvalidArgumentError(err_msg, GCP_ERROR_INFO());
+    return InvalidArgumentError(err_msg, GCP_ERROR_INFO());
   }
 
   return {};
