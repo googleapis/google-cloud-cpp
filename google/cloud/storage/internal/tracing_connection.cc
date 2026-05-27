@@ -53,7 +53,73 @@ TracingConnection::AsyncRunner const& TracingConnection::runner() {
 
 BucketMetadataCache& TracingConnection::cache() const { return *cache_; }
 
+TracingConnection::~TracingConnection() {
+  for (auto& f : bg_tasks_) {
+    if (f.valid()) f.wait();
+  }
+}
+
 Options TracingConnection::options() const { return impl_->options(); }
+
+void TracingConnection::CleanupCompletedTasks() {
+  std::lock_guard<std::mutex> lock(mu_);
+  bg_tasks_.erase(std::remove_if(bg_tasks_.begin(), bg_tasks_.end(),
+                                 [](std::future<void> const& f) {
+                                   return f.wait_for(std::chrono::seconds(0)) ==
+                                          std::future_status::ready;
+                                 }),
+                  bg_tasks_.end());
+}
+
+void TracingConnection::MaybeTriggerBackgroundFetch(
+    std::string const& bucket_name) {
+  CleanupCompletedTasks();
+
+  std::lock_guard<std::mutex> lock(mu_);
+  if (in_flight_fetch_.find(bucket_name) != in_flight_fetch_.end()) {
+    return;
+  }
+
+  in_flight_fetch_.insert(bucket_name);
+
+  auto f = std::async(std::launch::async, [this, bucket_name]() {
+    storage::internal::GetBucketMetadataRequest request(bucket_name);
+    auto result = impl_->GetBucketMetadata(request);
+
+    BucketCacheEntry entry;
+    if (result.ok()) {
+      entry.id = "projects/" + std::to_string(result->project_number()) +
+                 "/buckets/" + result->name();
+      entry.location = result->location();
+      if (result->location_type() == "multi-region" ||
+          result->location_type() == "dual-region") {
+        entry.location = "global";
+      }
+      cache_.Put(bucket_name, std::move(entry));
+    } else if (result.status().code() == StatusCode::kPermissionDenied) {
+      entry.id = "projects/_/buckets/" + bucket_name;
+      entry.location = "global";
+      cache_.Put(bucket_name, std::move(entry));
+    }
+
+    std::lock_guard<std::mutex> lock(mu_);
+    in_flight_fetch_.erase(bucket_name);
+  });
+
+  bg_tasks_.push_back(std::move(f));
+}
+
+void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
+                                   std::string const& bucket_name) {
+  if (bucket_name.empty()) return;
+  auto entry = cache_.Get(bucket_name);
+  if (entry.has_value()) {
+    span.SetAttribute("gcp.resource.destination.id", entry->id);
+    span.SetAttribute("gcp.resource.destination.location", entry->location);
+  } else {
+    MaybeTriggerBackgroundFetch(bucket_name);
+  }
+}
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    BucketCacheEntry const& entry) {
