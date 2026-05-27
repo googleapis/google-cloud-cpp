@@ -16,6 +16,10 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Data Analytics API with Gemini](/google/cloud/geminidataanalytics/README.md)
 
+### Updated Libraries
+
+- [Network Security API] has been updated with several additional services ([]()) 
+
 ## v3.5.0 - 2026-05
 
 ### [Bigtable](/google/cloud/bigtable/README.md)
