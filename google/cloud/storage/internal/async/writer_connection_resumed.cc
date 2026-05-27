@@ -442,15 +442,24 @@ class AsyncWriterConnectionResumedState
     }
     // Regular resume attempt succeeded. Check state.
     std::int64_t persisted_offset = 0;
+    absl::optional<google::storage::v2::ObjectChecksums> checksums;
+
     if (res->first_response.has_resource()) {
       if (!res->first_response.has_write_handle()) {
         // Found finalized object (maybe finalized concurrently or resumed).
         return SetFinalized(std::move(lk),
                             std::move(*res->first_response.mutable_resource()));
       }
-      persisted_offset = res->first_response.resource().size();
+      auto const& resource = res->first_response.resource();
+      persisted_offset = resource.size();
+      if (resource.has_checksums()) {
+        checksums = resource.checksums();
+      }
     } else if (res->first_response.has_persisted_size()) {
       persisted_offset = res->first_response.persisted_size();
+      if (res->first_response.has_persisted_data_checksums()) {
+        checksums = res->first_response.persisted_data_checksums();
+      }
     } else {
       auto state = impl_->PersistedState();
       if (absl::holds_alternative<google::storage::v2::Object>(state)) {
@@ -460,9 +469,8 @@ class AsyncWriterConnectionResumedState
             absl::get<google::storage::v2::Object>(std::move(state)));
       }
       persisted_offset = absl::get<std::int64_t>(state);
+      checksums = impl_->PersistedChecksums();
     }
-
-    auto checksums = impl_->PersistedChecksums();
 
     auto hash = hash_function_;
     if (checksums && checksums->has_crc32c()) {
