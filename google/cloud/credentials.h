@@ -31,18 +31,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Credentials;
 namespace internal {
 class CredentialsVisitor;
-
-/**
- * Creates user account credentials from a user account JSON key.
- *
- * User account credentials contain a refresh token, client ID, and client
- * secret, typically obtained via OAuth 2.0 authorization flow.
- *
- * @param json_object the user account configuration as a JSON string.
- * @param opts optional configuration values.
- */
-std::shared_ptr<Credentials> MakeUserAccountCredentials(std::string json_object,
-                                                        Options opts = {});
 }  // namespace internal
 
 namespace experimental {

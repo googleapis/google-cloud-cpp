@@ -74,16 +74,6 @@ std::shared_ptr<Credentials> MakeComputeEngineCredentials(Options opts) {
       std::move(opts));
 }
 
-namespace internal {
-
-std::shared_ptr<Credentials> MakeUserAccountCredentials(std::string json_object,
-                                                        Options opts) {
-  return std::make_shared<AuthorizedUserConfig>(std::move(json_object),
-                                                std::move(opts));
-}
-
-}  // namespace internal
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

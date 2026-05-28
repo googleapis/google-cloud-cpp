@@ -33,6 +33,12 @@ std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status) {
       std::move(error_status));
 }
 
+std::shared_ptr<Credentials> MakeUserAccountCredentials(std::string json_object,
+                                                        Options opts) {
+  return std::make_shared<AuthorizedUserConfig>(std::move(json_object),
+                                                std::move(opts));
+}
+
 Options PopulateAuthOptions(Options options) {
   // First set any defaults that may be missing.
   options =
