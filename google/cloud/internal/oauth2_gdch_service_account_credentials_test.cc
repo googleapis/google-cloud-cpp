@@ -99,7 +99,7 @@ MATCHER_P(JsonPayloadIs, payload, "JSON payload is") {
   if (json_arg.size() != payload.size()) return false;
 
   // Compare the remaining items.
-  auto const& items = payload.items();
+  auto items = payload.items();
   return std::all_of(items.begin(), items.end(), [&json_arg](auto const& p) {
     return p.value() == json_arg.value(p.key(), "");
   });
