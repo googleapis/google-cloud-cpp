@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include <chrono>
 
@@ -115,6 +116,19 @@ ComputeEngineCredentialsConfig::ComputeEngineCredentialsConfig(Options opts)
 AuthorizedUserConfig::AuthorizedUserConfig(std::string json_object,
                                            Options opts)
     : json_object_(std::move(json_object)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
+
+GDCHServiceAccountConfig::GDCHServiceAccountConfig(std::string json_object,
+                                                   std::string audience,
+                                                   Options opts)
+    : json_object_(std::move(json_object)),
+      audience_(std::move(audience)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
+
+GDCHServiceAccountConfig::GDCHServiceAccountConfig(std::string audience,
+                                                   Options opts)
+    : file_path_(GetEnv("GOOGLE_APPLICATION_CREDENTIALS").value_or("")),
+      audience_(std::move(audience)),
       options_(PopulateAuthOptions(std::move(opts))) {}
 
 }  // namespace internal

@@ -31,6 +31,7 @@ struct TestCredentialsVisitor : public internal::CredentialsVisitor {
   internal::ImpersonateServiceAccountConfig const* impersonate = nullptr;
   std::string json_object;
   std::string api_key;
+  std::string audience;
   Options options;
 
   void visit(internal::ErrorCredentialsConfig const&) override {
@@ -75,6 +76,12 @@ struct TestCredentialsVisitor : public internal::CredentialsVisitor {
   void visit(internal::AuthorizedUserConfig const& cfg) override {
     name = "AuthorizedUserConfig";
     json_object = cfg.json_object();
+    options = cfg.options();
+  }
+  void visit(internal::GDCHServiceAccountConfig const& cfg) override {
+    name = "GDCHServiceAccountConfig";
+    json_object = cfg.json_object();
+    audience = cfg.audience();
     options = cfg.options();
   }
 };
