@@ -163,10 +163,15 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
         creds =
             oauth2_internal::GDCHServiceAccountCredentials::CreateFromFilePath(
                 *cfg.file_path(), cfg.audience(), options, client_factory_);
-      } else {
+      } else if (!cfg.json_object().empty()) {
         creds = oauth2_internal::GDCHServiceAccountCredentials::
             CreateFromJsonContents(cfg.json_object(), cfg.audience(), options,
                                    client_factory_);
+      } else {
+        creds = internal::InvalidArgumentError(
+            "GDCH ServiceAccount Credentials require either a JSON object or "
+            "the "
+            "GOOGLE_APPLICATION_CREDENTIALS environment variable to be set");
       }
       if (!creds.ok()) {
         result = MakeErrorCredentials(std::move(creds).status());

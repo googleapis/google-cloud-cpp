@@ -127,7 +127,7 @@ GDCHServiceAccountConfig::GDCHServiceAccountConfig(std::string json_object,
 
 GDCHServiceAccountConfig::GDCHServiceAccountConfig(std::string audience,
                                                    Options opts)
-    : file_path_(GetEnv("GOOGLE_APPLICATION_CREDENTIALS").value_or("")),
+    : file_path_(GetEnv("GOOGLE_APPLICATION_CREDENTIALS")),
       audience_(std::move(audience)),
       options_(PopulateAuthOptions(std::move(opts))) {}
 
