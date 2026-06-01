@@ -33,6 +33,12 @@ std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status) {
       std::move(error_status));
 }
 
+std::shared_ptr<Credentials> MakeUserAccountCredentials(std::string json_object,
+                                                        Options opts) {
+  return std::make_shared<AuthorizedUserConfig>(std::move(json_object),
+                                                std::move(opts));
+}
+
 Options PopulateAuthOptions(Options options) {
   // First set any defaults that may be missing.
   options =
@@ -105,6 +111,11 @@ ApiKeyConfig::ApiKeyConfig(std::string api_key, Options opts)
 
 ComputeEngineCredentialsConfig::ComputeEngineCredentialsConfig(Options opts)
     : options_(PopulateAuthOptions(std::move(opts))) {}
+
+AuthorizedUserConfig::AuthorizedUserConfig(std::string json_object,
+                                           Options opts)
+    : json_object_(std::move(json_object)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

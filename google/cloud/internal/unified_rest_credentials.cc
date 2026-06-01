@@ -19,6 +19,7 @@
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_api_key_credentials.h"
+#include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
@@ -35,6 +36,7 @@ namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
 using ::google::cloud::internal::ApiKeyConfig;
+using ::google::cloud::internal::AuthorizedUserConfig;
 using ::google::cloud::internal::ComputeEngineCredentialsConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
@@ -149,6 +151,19 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       auto creds = std::make_shared<
           google::cloud::oauth2_internal::ComputeEngineCredentials>(
           cfg.options(), client_factory_);
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
+    }
+
+    void visit(AuthorizedUserConfig const& cfg) override {
+      auto info = oauth2_internal::ParseAuthorizedUserCredentials(
+          cfg.json_object(), "MakeUserAccountCredentials");
+      if (!info) {
+        result = MakeErrorCredentials(std::move(info).status());
+        return;
+      }
+      auto creds = std::make_shared<oauth2_internal::AuthorizedUserCredentials>(
+          *info, cfg.options(), client_factory_);
       result =
           Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }

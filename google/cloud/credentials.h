@@ -28,6 +28,7 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class Credentials;
 namespace internal {
 class CredentialsVisitor;
 }  // namespace internal

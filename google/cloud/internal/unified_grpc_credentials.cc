@@ -153,6 +153,14 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     void visit(ComputeEngineCredentialsConfig const&) override {
       result = std::make_unique<GrpcComputeEngineAuthentication>(options);
     }
+    void visit(AuthorizedUserConfig const&) override {
+      result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+          ErrorCredentialsConfig{UnimplementedError(
+              "User account credentials (MakeUserAccountCredentials) are not "
+              "supported with gRPC transport. Use Google Default Credentials "
+              "or Access Token Credentials instead.",
+              GCP_ERROR_INFO())});
+    }
 
   } visitor(std::move(cq), std::move(options));
 
