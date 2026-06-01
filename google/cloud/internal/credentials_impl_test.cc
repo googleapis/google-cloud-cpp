@@ -97,11 +97,14 @@ TEST(Credentials, ImpersonateServiceAccountCredentialsDefaultWithOptions) {
 }
 
 TEST(Credentials, ServiceAccount) {
+  // If MakeServiceAccountCredentials treats this string as a JSON object:
   auto credentials = MakeServiceAccountCredentials("test-only-invalid");
   TestCredentialsVisitor visitor;
   CredentialsVisitor::dispatch(*credentials, visitor);
   ASSERT_EQ("ServiceAccountConfig", visitor.name);
+  // Update: Ensure the correct field is populated and the other is empty
   EXPECT_EQ("test-only-invalid", visitor.json_object);
+  EXPECT_EQ(absl::nullopt, visitor.file_path);
 }
 
 TEST(Credentials, ExternalAccount) {

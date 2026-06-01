@@ -156,13 +156,22 @@ class ImpersonateServiceAccountConfig : public Credentials {
   Options options_;
 };
 
+struct ServiceAccountFilePath {
+  std::string value;
+  explicit ServiceAccountFilePath(std::string p) : value(std::move(p)) {}
+};
+
+struct ServiceAccountJsonObject {
+  std::string value;
+  explicit ServiceAccountJsonObject(std::string j) : value(std::move(j)) {}
+};
+
 class ServiceAccountConfig : public Credentials {
  public:
-  // Only one of json_object or file_path should have a value.
-  // TODO(#15886): Use the C++ type system to make better constructors that
-  //   enforces this comment.
-  ServiceAccountConfig(absl::optional<std::string> json_object,
-                       absl::optional<std::string> file_path, Options opts);
+  // Just declarations ending with a semicolon
+  explicit ServiceAccountConfig(ServiceAccountFilePath path, Options opts);
+
+  explicit ServiceAccountConfig(ServiceAccountJsonObject json, Options opts);
 
   absl::optional<std::string> const& json_object() const {
     return json_object_;
