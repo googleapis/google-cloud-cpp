@@ -84,6 +84,12 @@ class BucketMetadataCache {
     }
   }
 
+  void Clear() {
+    std::lock_guard<std::mutex> lock(mu_);
+    map_.clear();
+    list_.clear();
+  }
+
  private:
   std::size_t max_size_;
   std::mutex mu_;
@@ -97,6 +103,8 @@ class TracingConnection : public storage::internal::StorageConnection {
  public:
   explicit TracingConnection(std::shared_ptr<StorageConnection> impl);
   ~TracingConnection() override;
+
+  static void ResetCacheForTesting();
 
   Options options() const override;
 
@@ -255,18 +263,19 @@ class TracingConnection : public storage::internal::StorageConnection {
   void MaybeInvalidate(StatusOr<T> const& result,
                        std::string const& bucket_name) {
     if (!result.ok() && result.status().code() == StatusCode::kNotFound) {
-      cache_.Invalidate(bucket_name);
+      cache().Invalidate(bucket_name);
     }
   }
 
   void MaybeInvalidate(Status const& status, std::string const& bucket_name) {
     if (!status.ok() && status.code() == StatusCode::kNotFound) {
-      cache_.Invalidate(bucket_name);
+      cache().Invalidate(bucket_name);
     }
   }
 
+  static BucketMetadataCache& cache();
+
   std::shared_ptr<StorageConnection> impl_;
-  BucketMetadataCache cache_;
   std::mutex mu_;
   std::unordered_set<std::string> in_flight_fetch_;
   std::vector<std::future<void>> bg_tasks_;

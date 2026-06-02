@@ -188,6 +188,7 @@ TEST(TracingClientTest, GetBucketMetadataSuccess) {
 }
 
 TEST(TracingClientTest, BucketMetadataCacheSuccess) {
+  TracingConnection::ResetCacheForTesting();
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
 
