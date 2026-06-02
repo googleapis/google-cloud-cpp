@@ -161,6 +161,13 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
               "or Access Token Credentials instead.",
               GCP_ERROR_INFO())});
     }
+    void visit(GDCHServiceAccountConfig const&) override {
+      result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+          ErrorCredentialsConfig{
+              UnimplementedError("GDCHServiceAccountCredentials are not yet "
+                                 "supported for gRPC endpoints",
+                                 GCP_ERROR_INFO())});
+    }
 
   } visitor(std::move(cq), std::move(options));
 

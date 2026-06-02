@@ -24,6 +24,7 @@
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
+#include "google/cloud/internal/oauth2_gdch_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
@@ -41,6 +42,7 @@ using ::google::cloud::internal::ComputeEngineCredentialsConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
+using ::google::cloud::internal::GDCHServiceAccountConfig;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
@@ -153,6 +155,30 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
           cfg.options(), client_factory_);
       result =
           Decorate(std::move(creds), std::move(client_factory_), cfg.options());
+    }
+    void visit(GDCHServiceAccountConfig const& cfg) override {
+      auto options = cfg.options();
+      StatusOr<std::unique_ptr<oauth2_internal::Credentials>> creds;
+      if (cfg.file_path().has_value()) {
+        creds =
+            oauth2_internal::GDCHServiceAccountCredentials::CreateFromFilePath(
+                *cfg.file_path(), cfg.audience(), options, client_factory_);
+      } else if (!cfg.json_object().empty()) {
+        creds = oauth2_internal::GDCHServiceAccountCredentials::
+            CreateFromJsonContents(cfg.json_object(), cfg.audience(), options,
+                                   client_factory_);
+      } else {
+        creds = internal::InvalidArgumentError(
+            "GDCH ServiceAccount Credentials require either a JSON object or "
+            "the "
+            "GOOGLE_APPLICATION_CREDENTIALS environment variable to be set");
+      }
+      if (!creds.ok()) {
+        result = MakeErrorCredentials(std::move(creds).status());
+      } else {
+        result = Decorate(*std::move(creds), std::move(client_factory_),
+                          std::move(options));
+      }
     }
 
     void visit(AuthorizedUserConfig const& cfg) override {
