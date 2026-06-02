@@ -64,9 +64,7 @@ BucketMetadataCache& TracingConnection::cache() {
   return instance;
 }
 
-void TracingConnection::ResetCacheForTesting() {
-  cache().Clear();
-}
+void TracingConnection::ResetCacheForTesting() { cache().Clear(); }
 
 Options TracingConnection::options() const { return impl_->options(); }
 
