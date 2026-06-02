@@ -59,6 +59,15 @@ TracingConnection::~TracingConnection() {
   }
 }
 
+BucketMetadataCache& TracingConnection::cache() {
+  static BucketMetadataCache instance(10000);
+  return instance;
+}
+
+void TracingConnection::ResetCacheForTesting() {
+  cache().Clear();
+}
+
 Options TracingConnection::options() const { return impl_->options(); }
 
 void TracingConnection::CleanupCompletedTasks() {
@@ -95,11 +104,11 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
           result->location_type() == "dual-region") {
         entry.location = "global";
       }
-      cache_.Put(bucket_name, std::move(entry));
+      cache().Put(bucket_name, std::move(entry));
     } else if (result.status().code() == StatusCode::kPermissionDenied) {
       entry.id = "projects/_/buckets/" + bucket_name;
       entry.location = "global";
-      cache_.Put(bucket_name, std::move(entry));
+      cache().Put(bucket_name, std::move(entry));
     }
 
     std::lock_guard<std::mutex> lock(mu_);
@@ -112,7 +121,7 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    std::string const& bucket_name) {
   if (bucket_name.empty()) return;
-  auto entry = cache_.Get(bucket_name);
+  auto entry = cache().Get(bucket_name);
   if (entry.has_value()) {
     span.SetAttribute("gcp.resource.destination.id", entry->id);
     span.SetAttribute("gcp.resource.destination.location", entry->location);
