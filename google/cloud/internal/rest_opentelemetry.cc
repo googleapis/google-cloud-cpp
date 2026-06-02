@@ -81,7 +81,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
        {/*sc::kUrlFull=*/"url.full", request.path()}},
       options);
   for (auto const& kv : request.headers()) {
-    auto const name = "http.request.header." + std::string{kv.first};
+    auto const name = std::string("http.request.header.") + kv.first.name();
     if (kv.second.EmptyValues()) {
       span->SetAttribute(name, "");
       continue;

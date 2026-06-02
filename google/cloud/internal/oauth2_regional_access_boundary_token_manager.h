@@ -183,7 +183,8 @@ class RegionalAccessBoundaryTokenManager
                                stub = iam_stub_,
                                retry_policy = retry_policy_->clone(),
                                backoff_policy = backoff_policy_->clone(),
-                               options = options_]() mutable {
+                               options = options_,
+                               kLocation = kLocation]() mutable {
       auto refresh_attempt_fn = [stub](rest_internal::RestContext&,
                                        Options const&, Request const& request) {
         return stub->AllowedLocations(request);
