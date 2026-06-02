@@ -81,6 +81,12 @@ class BucketMetadataCache {
     }
   }
 
+  void Clear() {
+    std::lock_guard<std::mutex> lock(mu_);
+    map_.clear();
+    list_.clear();
+  }
+
  private:
   std::size_t max_size_;
   std::mutex mu_;
@@ -96,6 +102,8 @@ class TracingConnection : public storage::internal::StorageConnection {
   explicit TracingConnection(std::shared_ptr<StorageConnection> impl,
                              AsyncRunner runner = {});
   ~TracingConnection() override;
+
+  static void ResetCacheForTesting();
 
   Options options() const override;
 
@@ -266,6 +274,8 @@ class TracingConnection : public storage::internal::StorageConnection {
   BucketMetadataCache& cache() const;
 
   AsyncRunner const& runner();
+
+  static BucketMetadataCache& cache();
 
   std::shared_ptr<StorageConnection> impl_;
   std::shared_ptr<BucketMetadataCache> cache_;
