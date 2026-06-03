@@ -243,7 +243,12 @@ Credentials::AllowedLocationsRequestType
 ComputeEngineCredentials::AllowedLocationsRequest() const {
   // TODO(#16079): Remove conditional and else clause when GA.
 #ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
-  return ServiceAccountAllowedLocationsRequest{AccountEmail()};
+  auto email = AccountEmail();
+  // RAB only supports values that contain the '@' character.
+  if (absl::StrContains(email, "@")) {
+    return ServiceAccountAllowedLocationsRequest{std::move(email)};
+  }
+  return std::monostate{};
 #else
   return std::monostate{};
 #endif
