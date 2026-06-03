@@ -158,14 +158,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   //
   // Note that MD5 validation is not supported for partial/ranged reads because
   // GCS does not compute or send chunk-level MD5 checksums (unlike CRC32C,
-  // which is validated per-chunk on the gRPC layer). Additionally, composite
-  // objects in GCS do not have MD5 hashes, making MD5 validation generally
-  // less universal than CRC32C.
-  //
-  // For these reasons, MD5 validation was not originally included for
-  // ObjectDescriptor, which is optimized for arbitrary random-access/ranged
-  // reads. However, we support it here for full-object reads to align with
-  // the validation capabilities of `AsyncClient::ReadObject`.
+  // which is validated per-chunk on the gRPC layer).
   bool is_full_read = (p.start == 0 && metadata_.has_value() &&
                        (p.length == 0 || p.length >= metadata_->size()));
   auto const enable_crc32c =
