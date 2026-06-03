@@ -22,6 +22,7 @@
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
+#include <thread>
 #include <utility>
 
 namespace google {
@@ -33,6 +34,7 @@ namespace {
 using ::google::cloud::storage::testing::MockClient;
 using ::google::cloud::storage::testing::MockObjectReadSource;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
+using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::OTelAttribute;
@@ -196,7 +198,7 @@ TEST(TracingClientTest, BucketMetadataCacheSuccess) {
   auto bg_fetch_future = bg_fetch_done.get_future();
 
   EXPECT_CALL(*mock, GetObjectMetadata).WillOnce([](auto const&) {
-    return PermanentError();
+    return TransientError();
   });
 
   EXPECT_CALL(*mock, GetBucketMetadata)
@@ -218,6 +220,7 @@ TEST(TracingClientTest, BucketMetadataCacheSuccess) {
                                                   "test-object"));
 
   bg_fetch_future.wait_for(std::chrono::seconds(5));
+  std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
   EXPECT_CALL(*mock, DeleteObject).WillOnce([](auto const&) {
     return PermanentError();
