@@ -153,13 +153,49 @@ void ObjectDescriptorImpl::MakeSubsequentStream() {
 
 std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     ReadParams p) {
-  std::shared_ptr<storage::internal::HashFunction> hash_function =
-      std::shared_ptr<storage::internal::HashFunction>(
-          storage::internal::CreateNullHashFunction());
-  if (options_.get<storage::EnableCrc32cValidationOption>()) {
+  // Full-object checksum validation (both CRC32C and MD5) is only supported for
+  // full-object reads (starting at offset 0 and reading the entire object).
+  //
+  // Note that MD5 validation is not supported for partial/ranged reads because
+  // GCS does not compute or send chunk-level MD5 checksums (unlike CRC32C,
+  // which is validated per-chunk on the gRPC layer). Additionally, composite
+  // objects in GCS do not have MD5 hashes, making MD5 validation generally
+  // less universal than CRC32C.
+  //
+  // For these reasons, MD5 validation was not originally included for
+  // ObjectDescriptor, which is optimized for arbitrary random-access/ranged
+  // reads. However, we support it here for full-object reads to align with
+  // the validation capabilities of `AsyncClient::ReadObject`.
+  bool is_full_read = (p.start == 0 && metadata_.has_value() &&
+                       (p.length == 0 || p.length >= metadata_->size()));
+  auto const enable_crc32c =
+      options_.get<storage::EnableCrc32cValidationOption>();
+  auto const enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+
+  std::shared_ptr<storage::internal::HashFunction> hash_function;
+
+  if (enable_crc32c) {
+    std::unique_ptr<storage::internal::HashFunction> child;
+    if (is_full_read) {
+      if (enable_md5) {
+        child = std::make_unique<storage::internal::CompositeFunction>(
+            std::make_unique<storage::internal::Crc32cHashFunction>(),
+            storage::internal::MD5HashFunction::Create());
+      } else {
+        child = std::make_unique<storage::internal::Crc32cHashFunction>();
+      }
+    } else {
+      child = storage::internal::CreateNullHashFunction();
+    }
     hash_function =
         std::make_shared<storage::internal::Crc32cMessageHashFunction>(
-            std::make_unique<storage::internal::Crc32cHashFunction>());
+            std::move(child));
+  } else if (enable_md5 && is_full_read) {
+    hash_function = std::shared_ptr<storage::internal::HashFunction>(
+        storage::internal::MD5HashFunction::Create());
+  } else {
+    hash_function = std::shared_ptr<storage::internal::HashFunction>(
+        storage::internal::CreateNullHashFunction());
   }
 
   std::unique_ptr<storage::internal::HashValidator> hash_validator =
