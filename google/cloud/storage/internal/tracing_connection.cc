@@ -86,36 +86,39 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
     return;
   }
 
-  auto f = std::async(std::launch::async, [this, bucket_name]() {
-    storage::internal::GetBucketMetadataRequest request(bucket_name);
-    auto result = impl_->GetBucketMetadata(request);
-    std::cout << "BG Thread: GetBucketMetadata returned ok: " << result.ok()
-              << "\n";
-    if (!result.ok()) {
-      std::cout << "BG Thread: GetBucketMetadata status: "
-                << result.status().message()
-                << " code: " << static_cast<int>(result.status().code())
-                << "\n";
-    }
+  auto current_options = google::cloud::internal::SaveCurrentOptions();
+  auto f =
+      std::async(std::launch::async, [this, bucket_name, current_options]() {
+        google::cloud::internal::OptionsSpan span(current_options);
+        storage::internal::GetBucketMetadataRequest request(bucket_name);
+        auto result = impl_->GetBucketMetadata(request);
+        std::cout << "BG Thread: GetBucketMetadata returned ok: " << result.ok()
+                  << "\n";
+        if (!result.ok()) {
+          std::cout << "BG Thread: GetBucketMetadata status: "
+                    << result.status().message()
+                    << " code: " << static_cast<int>(result.status().code())
+                    << "\n";
+        }
 
-    BucketCacheEntry entry;
-    if (result.ok()) {
-      entry.id = "projects/" + std::to_string(result->project_number()) +
-                 "/buckets/" + result->name();
-      entry.location = result->location();
-      if (result->location_type() == "multi-region" ||
-          result->location_type() == "dual-region") {
-        entry.location = "global";
-      }
-      cache().Put(bucket_name, std::move(entry));
-    } else if (result.status().code() == StatusCode::kPermissionDenied) {
-      entry.id = "projects/_/buckets/" + bucket_name;
-      entry.location = "global";
-      cache().Put(bucket_name, std::move(entry));
-    }
+        BucketCacheEntry entry;
+        if (result.ok()) {
+          entry.id = "projects/" + std::to_string(result->project_number()) +
+                     "/buckets/" + result->name();
+          entry.location = result->location();
+          if (result->location_type() == "multi-region" ||
+              result->location_type() == "dual-region") {
+            entry.location = "global";
+          }
+          cache().Put(bucket_name, std::move(entry));
+        } else if (result.status().code() == StatusCode::kPermissionDenied) {
+          entry.id = "projects/_/buckets/" + bucket_name;
+          entry.location = "global";
+          cache().Put(bucket_name, std::move(entry));
+        }
 
-    cache().EndFetch(bucket_name);
-  });
+        cache().EndFetch(bucket_name);
+      });
 
   bg_tasks_.push_back(std::move(f));
 }
