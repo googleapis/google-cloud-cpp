@@ -82,16 +82,21 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
     std::string const& bucket_name) {
   CleanupCompletedTasks();
 
-  std::lock_guard<std::mutex> lock(mu_);
-  if (in_flight_fetch_.find(bucket_name) != in_flight_fetch_.end()) {
+  if (!cache().StartFetch(bucket_name)) {
     return;
   }
-
-  in_flight_fetch_.insert(bucket_name);
 
   auto f = std::async(std::launch::async, [this, bucket_name]() {
     storage::internal::GetBucketMetadataRequest request(bucket_name);
     auto result = impl_->GetBucketMetadata(request);
+    std::cout << "BG Thread: GetBucketMetadata returned ok: " << result.ok()
+              << "\n";
+    if (!result.ok()) {
+      std::cout << "BG Thread: GetBucketMetadata status: "
+                << result.status().message()
+                << " code: " << static_cast<int>(result.status().code())
+                << "\n";
+    }
 
     BucketCacheEntry entry;
     if (result.ok()) {
@@ -109,8 +114,7 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
       cache().Put(bucket_name, std::move(entry));
     }
 
-    std::lock_guard<std::mutex> lock(mu_);
-    in_flight_fetch_.erase(bucket_name);
+    cache().EndFetch(bucket_name);
   });
 
   bg_tasks_.push_back(std::move(f));
