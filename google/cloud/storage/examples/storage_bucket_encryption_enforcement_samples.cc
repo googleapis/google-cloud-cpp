@@ -65,8 +65,8 @@ void GetBucketEncryptionEnforcementConfig(
                      encryption.customer_supplied_encryption_enforcement_config)
               << "\n";
   }
-  //! [get bucket encryption enforcement config]
   //! [END storage_get_bucket_encryption_enforcement_config]
+  //! [get bucket encryption enforcement config]
   (std::move(client), argv.at(0));
 }
 
