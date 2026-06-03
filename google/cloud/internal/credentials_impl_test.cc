@@ -135,6 +135,17 @@ TEST(Credentials, AuthorizedUserCredentials) {
               ElementsAre("scope1", "scope2"));
 }
 
+TEST(Credentials, GDCHServiceAccountCredentials) {
+  TestCredentialsVisitor visitor;
+
+  auto credentials =
+      MakeGDCHServiceAccountCredentials("test-json", "test-audience");
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  EXPECT_EQ("GDCHServiceAccountConfig", visitor.name);
+  EXPECT_EQ("test-json", visitor.json_object);
+  EXPECT_EQ("test-audience", visitor.audience);
+}
+
 TEST(PopulateAuthOptions, EmptyOptions) {
   auto result_options = PopulateAuthOptions(Options{});
 
