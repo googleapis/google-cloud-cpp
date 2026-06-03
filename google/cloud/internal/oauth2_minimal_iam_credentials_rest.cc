@@ -45,6 +45,10 @@ std::string IamCredentialsEndpoint(
 
 using ::google::cloud::internal::InvalidArgumentError;
 
+bool AllowedLocationsResponse::IsUnbounded() const {
+  return !encoded_locations.empty() && encoded_locations == "0x0";
+}
+
 MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
     std::shared_ptr<oauth2_internal::Credentials> credentials, Options options,
     HttpClientFactory client_factory)

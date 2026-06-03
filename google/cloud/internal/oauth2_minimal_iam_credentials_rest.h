@@ -40,6 +40,7 @@ struct GenerateAccessTokenRequest {
 };
 
 struct AllowedLocationsResponse {
+  bool IsUnbounded() const;
   std::vector<std::string> locations;
   std::string encoded_locations;
 };
