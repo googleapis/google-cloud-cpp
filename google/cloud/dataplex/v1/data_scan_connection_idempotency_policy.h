@@ -64,6 +64,9 @@ class DataScanServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListDataScanJobs(
       google::cloud::dataplex::v1::ListDataScanJobsRequest request);
 
+  virtual google::cloud::Idempotency CancelDataScanJob(
+      google::cloud::dataplex::v1::CancelDataScanJobRequest const& request);
+
   virtual google::cloud::Idempotency GenerateDataQualityRules(
       google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
           request);

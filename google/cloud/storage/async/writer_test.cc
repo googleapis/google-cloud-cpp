@@ -188,7 +188,7 @@ TEST(AsyncWriterTest, MultipleFlushesAreQueuedAndSequential) {
 TEST(AsyncWriterTest, Close) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+  EXPECT_CALL(*mock, Close(WritePayloadContents(IsEmpty()))).WillOnce([] {
     return make_ready_future(Status{});
   });
 
@@ -205,7 +205,7 @@ TEST(AsyncWriterTest, CloseOnDefaultConstructed) {
 
 TEST(AsyncWriterTest, CloseOnMovedWriter) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
-  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+  EXPECT_CALL(*mock, Close(WritePayloadContents(IsEmpty()))).WillOnce([] {
     return make_ready_future(Status{});
   });
   AsyncWriter writer(std::move(mock));
@@ -217,7 +217,7 @@ TEST(AsyncWriterTest, CloseOnMovedWriter) {
 TEST(AsyncWriterTest, ErrorOnWriteAfterClose) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   auto* mock_ptr = mock.get();
-  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+  EXPECT_CALL(*mock, Close(WritePayloadContents(IsEmpty()))).WillOnce([] {
     return make_ready_future(Status{});
   });
 
@@ -232,7 +232,7 @@ TEST(AsyncWriterTest, ErrorOnWriteAfterClose) {
 
 TEST(AsyncWriterTest, ErrorOnClose) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
-  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+  EXPECT_CALL(*mock, Close(WritePayloadContents(IsEmpty()))).WillOnce([] {
     return make_ready_future(PermanentError());
   });
 

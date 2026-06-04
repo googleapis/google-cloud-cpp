@@ -204,6 +204,26 @@ DataProductServiceClient::UpdateDataProduct(
   return connection_->UpdateDataProduct(operation);
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceClient::RequestDataProductAccess(
+    std::string const& parent,
+    google::cloud::dataplex::v1::ChangeRequest const& change_request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::RequestDataProductAccessRequest request;
+  request.set_parent(parent);
+  *request.mutable_change_request() = change_request;
+  return connection_->RequestDataProductAccess(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceClient::RequestDataProductAccess(
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RequestDataProductAccess(request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataAsset>>
 DataProductServiceClient::CreateDataAsset(
     std::string const& parent,

@@ -1,0 +1,36 @@
+/*!
+@page geminidataanalytics-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `geminidataanalytics_v1::DataAgentServiceClient`:
+
+@snippet data_agent_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c geminidataanalytics_v1::DataAgentServiceClient](@ref geminidataanalytics_v1::DataAgentServiceClient-endpoint-snippet)
+- [\c geminidataanalytics_v1::DataChatServiceClient](@ref geminidataanalytics_v1::DataChatServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page geminidataanalytics_v1::DataAgentServiceClient-endpoint-snippet Override geminidataanalytics_v1::DataAgentServiceClient Endpoint Configuration
+
+@snippet google/cloud/geminidataanalytics/v1/samples/data_agent_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page geminidataanalytics_v1::DataChatServiceClient-endpoint-snippet Override geminidataanalytics_v1::DataChatServiceClient Endpoint Configuration
+
+@snippet google/cloud/geminidataanalytics/v1/samples/data_chat_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

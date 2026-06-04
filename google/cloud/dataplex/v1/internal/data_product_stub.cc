@@ -151,6 +151,20 @@ DefaultDataProductServiceStub::UpdateDataProduct(
   return response;
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DefaultDataProductServiceStub::RequestDataProductAccess(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+        request) {
+  google::cloud::dataplex::v1::RequestDataProductAccessResponse response;
+  auto status =
+      grpc_stub_->RequestDataProductAccess(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataProductServiceStub::AsyncCreateDataAsset(
     google::cloud::CompletionQueue& cq,

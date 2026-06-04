@@ -351,6 +351,15 @@ CatalogServiceMetadata::LookupEntry(
   return child_->LookupEntry(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry>
+CatalogServiceMetadata::ModifyEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ModifyEntry(context, options, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
 CatalogServiceMetadata::SearchEntries(
     grpc::ClientContext& context, Options const& options,

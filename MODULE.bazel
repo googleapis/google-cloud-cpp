@@ -44,7 +44,7 @@ bazel_dep(name = "yaml-cpp", version = "0.9.0", dev_dependency = True, repo_name
 bazel_dep(name = "pugixml", version = "1.15", dev_dependency = True, repo_name = "com_github_zeux_pugixml")
 
 # Pin this to fix a break in bazel/deps-cache.py
-bazel_dep(name = "protoc-gen-validate", version = "1.2.1.bcr.2", dev_dependency = True, repo_name = "com_envoyproxy_protoc_gen_validate")
+bazel_dep(name = "protoc-gen-validate", version = "1.3.3", dev_dependency = True, repo_name = "com_envoyproxy_protoc_gen_validate")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
@@ -53,6 +53,6 @@ python.toolchain(
 )
 
 bazel_dep(name = "grpc", version = "1.76.0.bcr.1")
-bazel_dep(name = "googleapis", version = "0.0.0-20260514-1dbb1a14")
+bazel_dep(name = "googleapis", version = "0.0.0-20260525-ef19b7b7")
 bazel_dep(name = "googleapis-cc", version = "1.1.5")
 bazel_dep(name = "googleapis-grpc-cc", version = "1.1.5")

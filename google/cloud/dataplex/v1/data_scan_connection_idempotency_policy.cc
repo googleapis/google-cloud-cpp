@@ -74,6 +74,11 @@ Idempotency DataScanServiceConnectionIdempotencyPolicy::ListDataScanJobs(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DataScanServiceConnectionIdempotencyPolicy::CancelDataScanJob(
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 DataScanServiceConnectionIdempotencyPolicy::GenerateDataQualityRules(
     google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&) {

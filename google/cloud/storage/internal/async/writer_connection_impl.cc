@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -49,11 +50,14 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    std::int64_t persisted_size, bool first_request)
+    std::int64_t persisted_size, bool first_request,
+    absl::optional<google::storage::v2::ObjectChecksums>
+        persisted_data_checksums)
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
           std::move(hash_function), PersistedStateType(persisted_size),
-          /*offset=*/persisted_size, std::move(first_request)) {}
+          /*offset=*/persisted_size, std::move(first_request),
+          std::move(persisted_data_checksums)) {}
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
@@ -64,14 +68,17 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
           std::move(hash_function), PersistedStateType(metadata),
-          /*offset=*/metadata.size(), std::move(first_request)) {}
+          /*offset=*/metadata.size(), std::move(first_request), absl::nullopt) {
+}
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
     google::storage::v2::BidiWriteObjectRequest request,
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    PersistedStateType persisted_state, std::int64_t offset, bool first_request)
+    PersistedStateType persisted_state, std::int64_t offset, bool first_request,
+    absl::optional<google::storage::v2::ObjectChecksums>
+        persisted_data_checksums)
     : options_(std::move(options)),
       impl_(std::move(impl)),
       request_(std::move(request)),
@@ -79,7 +86,8 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
       persisted_state_(std::move(persisted_state)),
       offset_(offset),
       first_request_(std::move(first_request)),
-      finished_(on_finish_.get_future()) {
+      finished_(on_finish_.get_future()),
+      persisted_data_checksums_(std::move(persisted_data_checksums)) {
   request_.clear_object_checksums();
   request_.set_state_lookup(false);
   request_.set_flush(false);
@@ -138,10 +146,15 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto action = request_.has_append_object_spec() ||
-                        request_.write_object_spec().appendable()
-                    ? PartialUpload::kFinalize
-                    : PartialUpload::kFinalizeWithChecksum;
+  auto action = PartialUpload::kFinalizeWithChecksum;
+  if (request_.has_append_object_spec() ||
+      request_.write_object_spec().appendable()) {
+    if (!absl::holds_alternative<google::storage::v2::Object>(
+            persisted_state_) &&
+        !persisted_data_checksums_.has_value()) {
+      action = PartialUpload::kFinalize;
+    }
+  }
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
                                   std::move(p), std::move(action));
   return coro->Start().then([coro, size, this](auto f) mutable {
@@ -160,6 +173,19 @@ future<Status> AsyncWriterConnectionImpl::Flush(storage::WritePayload payload) {
   return coro->Start().then([coro, size, this](auto f) mutable {
     coro.reset();  // breaks the cycle between the completion queue and coro
     return OnPartialUpload(size, f.get());
+  });
+}
+
+future<Status> AsyncWriterConnectionImpl::Close(storage::WritePayload payload) {
+  auto write = MakeRequest();
+  auto p = WritePayloadImpl::GetImpl(payload);
+  auto size = p.size();
+  auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
+                                  std::move(p), PartialUpload::kFlushAndClose);
+
+  return coro->Start().then([coro, size, this](auto f) mutable {
+    coro.reset();  // breaks the cycle between the completion queue and coro
+    return OnClose(size, f.get());
   });
 }
 
@@ -200,6 +226,19 @@ future<Status> AsyncWriterConnectionImpl::OnPartialUpload(
   }
   offset_ += upload_size;
   return make_ready_future(Status{});
+}
+
+future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
+                                                  StatusOr<bool> success) {
+  if (!success) {
+    return Finish().then(HandleFinishAfterError(std::move(success).status()));
+  }
+  if (!*success) {
+    return Finish().then(
+        HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
+  }
+  offset_ += upload_size;
+  return Finish().then([](auto f) { return f.get(); });
 }
 
 future<StatusOr<google::storage::v2::Object>>
@@ -257,6 +296,13 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
   }
   if (response->has_persisted_size()) {
     persisted_state_ = response->persisted_size();
+
+    if (response->has_persisted_data_checksums()) {
+      auto const& checksums = response->persisted_data_checksums();
+      if (checksums.has_crc32c()) {
+        persisted_data_checksums_ = checksums;
+      }
+    }
     return make_ready_future(make_status_or(response->persisted_size()));
   }
   if (response->has_resource()) {

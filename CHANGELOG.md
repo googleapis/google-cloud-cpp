@@ -9,6 +9,24 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.6.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Data Analytics API with Gemini](/google/cloud/geminidataanalytics/README.md)
+
+### Updated Libraries
+
+- [Network Security API] has been updated with several additional services ([#16122](https://github.com/googleapis/google-cloud-cpp/pull/16122)) 
+
+### Auth
+
+- [Google Distributed Cloud Hosting (GDCH) Service Account credentials](https://docs.cloud.google.com/distributed-cloud/hosted/docs/latest/gdcag/platform/pa-user/service-identity)
+  are now supported for REST endpoints. Support for gRPC endpoints will be
+  available in a future release.
+
+
 ## v3.5.0 - 2026-05
 
 ### [Bigtable](/google/cloud/bigtable/README.md)

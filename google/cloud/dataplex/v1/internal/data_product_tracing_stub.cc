@@ -138,6 +138,21 @@ DataProductServiceTracingStub::UpdateDataProduct(
       context, *span, child_->UpdateDataProduct(context, options, request));
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceTracingStub::RequestDataProductAccess(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataProductService",
+                             "RequestDataProductAccess");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->RequestDataProductAccess(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataProductServiceTracingStub::AsyncCreateDataAsset(
     google::cloud::CompletionQueue& cq,

@@ -146,6 +146,18 @@ TEST(UnifiedGrpcCredentialsTest, WithApiKeyCredentials) {
   EXPECT_THAT(headers, Contains(Pair("x-goog-api-key", "api-key")));
 }
 
+TEST(UnifiedGrpcCredentialsTest, WithAuthorizedUserCredentials) {
+  CompletionQueue cq;
+  auto creds = AuthorizedUserConfig("{}", Options{});
+  auto auth = CreateAuthenticationStrategy(creds, cq);
+  ASSERT_THAT(auth, NotNull());
+  EXPECT_TRUE(auth->RequiresConfigureContext());
+
+  grpc::ClientContext context;
+  auto configured_context = auth->ConfigureContext(context);
+  EXPECT_THAT(configured_context, StatusIs(StatusCode::kUnimplemented));
+}
+
 TEST(UnifiedGrpcCredentialsTest, LoadCAInfoNotSet) {
   auto contents = LoadCAInfo(Options{});
   EXPECT_FALSE(contents.has_value());

@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/async/writer_connection_resumed.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
+#include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
@@ -439,17 +441,47 @@ class AsyncWriterConnectionResumedState
       return SetError(std::move(lk), std::move(res).status());
     }
     // Regular resume attempt succeeded. Check state.
-    auto state = impl_->PersistedState();
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-      // Found finalized object (maybe finalized concurrently or resumed).
-      return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
-                                             std::move(state)));
+    std::int64_t persisted_offset = 0;
+    absl::optional<google::storage::v2::ObjectChecksums> checksums;
+
+    if (res->first_response.has_resource()) {
+      if (!res->first_response.has_write_handle()) {
+        // Found finalized object (maybe finalized concurrently or resumed).
+        return SetFinalized(std::move(lk),
+                            std::move(*res->first_response.mutable_resource()));
+      }
+      auto const& resource = res->first_response.resource();
+      persisted_offset = resource.size();
+      if (resource.has_checksums()) {
+        checksums = resource.checksums();
+      }
+    } else if (res->first_response.has_persisted_size()) {
+      persisted_offset = res->first_response.persisted_size();
+      if (res->first_response.has_persisted_data_checksums()) {
+        checksums = res->first_response.persisted_data_checksums();
+      }
+    } else {
+      auto state = impl_->PersistedState();
+      if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+        // Found finalized object (maybe finalized concurrently or resumed).
+        return SetFinalized(
+            std::move(lk),
+            absl::get<google::storage::v2::Object>(std::move(state)));
+      }
+      persisted_offset = absl::get<std::int64_t>(state);
+      checksums = impl_->PersistedChecksums();
     }
-    // Regular resume succeeded, object not finalized. Continue writing.
-    auto persisted_offset = absl::get<std::int64_t>(state);
+
+    auto hash = hash_function_;
+    if (checksums && checksums->has_crc32c()) {
+      hash = std::make_shared<
+          ::google::cloud::storage::internal::Crc32cHashFunction>(
+          checksums->crc32c(), persisted_offset);
+    }
+
     impl_ = std::make_unique<AsyncWriterConnectionImpl>(
-        options_, initial_request_, std::move(res->stream), hash_function_,
-        persisted_offset, false);
+        options_, initial_request_, std::move(res->stream), std::move(hash),
+        persisted_offset, false, checksums);
     // OnQuery will restart the WriteLoop if necessary.
     OnQuery(std::move(lk), persisted_offset);
   }

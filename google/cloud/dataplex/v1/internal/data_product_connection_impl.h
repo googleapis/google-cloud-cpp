@@ -95,6 +95,11 @@ class DataProductServiceConnectionImpl
   future<StatusOr<google::cloud::dataplex::v1::DataProduct>> UpdateDataProduct(
       google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+  RequestDataProductAccess(
+      google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::dataplex::v1::DataAsset>> CreateDataAsset(
       google::cloud::dataplex::v1::CreateDataAssetRequest const& request)
       override;

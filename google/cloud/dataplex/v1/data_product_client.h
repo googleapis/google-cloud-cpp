@@ -126,8 +126,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L370}
-  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L163}
+  /// [google.cloud.dataplex.v1.CreateDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L404}
+  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L179}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataProduct>> CreateDataProduct(
@@ -181,8 +181,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L370}
-  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L163}
+  /// [google.cloud.dataplex.v1.CreateDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L404}
+  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L179}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataProduct>> CreateDataProduct(
@@ -245,8 +245,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L399}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L433}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -297,8 +297,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L399}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L433}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -355,8 +355,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L163}
-  /// [google.cloud.dataplex.v1.GetDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L423}
+  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L179}
+  /// [google.cloud.dataplex.v1.GetDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L457}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataProduct> GetDataProduct(
@@ -385,8 +385,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L163}
-  /// [google.cloud.dataplex.v1.GetDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L423}
+  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L179}
+  /// [google.cloud.dataplex.v1.GetDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L457}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataProduct> GetDataProduct(
@@ -425,8 +425,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L163}
-  /// [google.cloud.dataplex.v1.ListDataProductsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L436}
+  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L179}
+  /// [google.cloud.dataplex.v1.ListDataProductsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L470}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataProduct> ListDataProducts(
@@ -464,8 +464,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L163}
-  /// [google.cloud.dataplex.v1.ListDataProductsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L436}
+  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L179}
+  /// [google.cloud.dataplex.v1.ListDataProductsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L470}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataProduct> ListDataProducts(
@@ -501,8 +501,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L163}
-  /// [google.cloud.dataplex.v1.UpdateDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L496}
+  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L179}
+  /// [google.cloud.dataplex.v1.UpdateDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L530}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataProduct>> UpdateDataProduct(
@@ -554,8 +554,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L163}
-  /// [google.cloud.dataplex.v1.UpdateDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L496}
+  /// [google.cloud.dataplex.v1.DataProduct]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L179}
+  /// [google.cloud.dataplex.v1.UpdateDataProductRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L530}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataProduct>> UpdateDataProduct(
@@ -589,6 +589,74 @@ class DataProductServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataProduct>> UpdateDataProduct(
       google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Requests access to a data product. This will trigger an access approval
+  /// workflow, and the requester will need to wait for the approval to be
+  /// granted before they will be able to access the data product assets.
+  ///
+  /// @param parent  Required. The resource name of the data product.
+  ///  Format:
+  ///  projects/{project_number}/locations/{location_id}/dataProducts/{data_product_id}
+  /// @param change_request  Required. The change request for the data product access request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.RequestDataProductAccessResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.RequestDataProductAccessRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L547}
+  /// [google.cloud.dataplex.v1.RequestDataProductAccessResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L567}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+  RequestDataProductAccess(
+      std::string const& parent,
+      google::cloud::dataplex::v1::ChangeRequest const& change_request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Requests access to a data product. This will trigger an access approval
+  /// workflow, and the requester will need to wait for the approval to be
+  /// granted before they will be able to access the data product assets.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.RequestDataProductAccessRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.RequestDataProductAccessResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.RequestDataProductAccessRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L547}
+  /// [google.cloud.dataplex.v1.RequestDataProductAccessResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L567}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+  RequestDataProductAccess(
+      google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -626,8 +694,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L513}
-  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L281}
+  /// [google.cloud.dataplex.v1.CreateDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L577}
+  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAsset>> CreateDataAsset(
@@ -681,8 +749,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L513}
-  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L281}
+  /// [google.cloud.dataplex.v1.CreateDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L577}
+  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L315}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAsset>> CreateDataAsset(
@@ -745,8 +813,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L281}
-  /// [google.cloud.dataplex.v1.UpdateDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L543}
+  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L315}
+  /// [google.cloud.dataplex.v1.UpdateDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L607}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAsset>> UpdateDataAsset(
@@ -798,8 +866,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L281}
-  /// [google.cloud.dataplex.v1.UpdateDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L543}
+  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L315}
+  /// [google.cloud.dataplex.v1.UpdateDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L607}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAsset>> UpdateDataAsset(
@@ -861,8 +929,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L559}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L623}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -912,8 +980,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L559}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L623}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -970,8 +1038,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L281}
-  /// [google.cloud.dataplex.v1.GetDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L582}
+  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L315}
+  /// [google.cloud.dataplex.v1.GetDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L646}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataAsset> GetDataAsset(
@@ -1000,8 +1068,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L281}
-  /// [google.cloud.dataplex.v1.GetDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L582}
+  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L315}
+  /// [google.cloud.dataplex.v1.GetDataAssetRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L646}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataAsset> GetDataAsset(
@@ -1037,8 +1105,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L281}
-  /// [google.cloud.dataplex.v1.ListDataAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L595}
+  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L315}
+  /// [google.cloud.dataplex.v1.ListDataAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L659}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataAsset> ListDataAssets(
@@ -1076,8 +1144,8 @@ class DataProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L281}
-  /// [google.cloud.dataplex.v1.ListDataAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L595}
+  /// [google.cloud.dataplex.v1.DataAsset]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L315}
+  /// [google.cloud.dataplex.v1.ListDataAssetsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_products.proto#L659}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataAsset> ListDataAssets(
