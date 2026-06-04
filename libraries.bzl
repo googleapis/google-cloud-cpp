@@ -169,6 +169,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "filestore",
     "financialservices",
     "functions",
+    "geminidataanalytics",
     "gkebackup",
     "gkeconnect",
     "gkehub",

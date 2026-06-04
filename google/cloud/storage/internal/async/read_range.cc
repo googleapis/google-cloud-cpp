@@ -15,7 +15,10 @@
 #include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_cat.h"
+#include <iostream>
 
 namespace google {
 namespace cloud {
@@ -68,8 +71,6 @@ void ReadRange::OnFinish(Status status) {
 void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   std::unique_lock<std::mutex> lk(mu_);
   if (status_) return;
-  if (data.range_end()) status_ = Status{};
-
   auto* check_summed_data = data.mutable_checksummed_data();
   auto content = StealMutableContent(*data.mutable_checksummed_data());
   auto status =
@@ -82,6 +83,19 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   offset_ += content.size();
   if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
   auto p = ReadPayloadImpl::Make(std::move(content));
+
+  if (data.range_end()) {
+    status_ = Status{};
+    auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
+    if (result.is_mismatch) {
+      status_ = google::cloud::internal::DataLossError(
+          absl::StrCat("mismatched checksums detected at the end of the "
+                       "download, received={",
+                       FormatReceivedHashes(result), "}, computed={",
+                       FormatComputedHashes(result), "}"),
+          GCP_ERROR_INFO());
+    }
+  }
   if (wait_) {
     if (!payload_) return Notify(std::move(lk), std::move(p));
     GCP_LOG(FATAL) << "broken class invariant, `payload_` set when there is an"

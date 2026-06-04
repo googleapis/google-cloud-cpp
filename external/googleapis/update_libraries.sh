@@ -164,6 +164,7 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/functions/v1:functions_cc_grpc" \
       "@googleapis//google/cloud/functions/v2:functions_cc_grpc"
   )"
+  ["geminidataanalytics"]="@googleapis//google/cloud/geminidataanalytics/v1:geminidataanalytics_cc_grpc"
   ["gkebackup"]="$(
     printf ",%s" \
       "@googleapis//google/cloud/gkebackup/logging/v1:logging_cc_grpc" \

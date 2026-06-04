@@ -784,6 +784,10 @@
 ./include/google/cloud/functions/v2
 ./include/google/cloud/functions/v2/internal
 ./include/google/cloud/functions/v2/mocks
+./include/google/cloud/geminidataanalytics
+./include/google/cloud/geminidataanalytics/v1
+./include/google/cloud/geminidataanalytics/v1/internal
+./include/google/cloud/geminidataanalytics/v1/mocks
 ./include/google/cloud/gkebackup
 ./include/google/cloud/gkebackup/v1
 ./include/google/cloud/gkebackup/v1/internal
@@ -1429,6 +1433,8 @@
 ./lib64/cmake/google_cloud_cpp_financialservices_mocks
 ./lib64/cmake/google_cloud_cpp_functions
 ./lib64/cmake/google_cloud_cpp_functions_mocks
+./lib64/cmake/google_cloud_cpp_geminidataanalytics
+./lib64/cmake/google_cloud_cpp_geminidataanalytics_mocks
 ./lib64/cmake/google_cloud_cpp_gkebackup
 ./lib64/cmake/google_cloud_cpp_gkebackup_mocks
 ./lib64/cmake/google_cloud_cpp_gkeconnect
