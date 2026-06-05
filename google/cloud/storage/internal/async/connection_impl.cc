@@ -137,7 +137,16 @@ StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
         current, request, std::move(rpc->stream), hash, resource, false);
   } else {
     persisted_size = rpc->first_response.persisted_size();
-    hash = CreateHashFunction(*current);
+    if (current->get<storage::EnableCrc32cValidationOption>() &&
+        rpc->first_response.has_persisted_data_checksums() &&
+        rpc->first_response.persisted_data_checksums().has_crc32c()) {
+      hash = std::make_shared<
+          ::google::cloud::storage::internal::Crc32cHashFunction>(
+          rpc->first_response.persisted_data_checksums().crc32c(),
+          persisted_size);
+    } else {
+      hash = CreateHashFunction(*current);
+    }
     auto checksums = rpc->first_response.has_persisted_data_checksums()
                          ? absl::make_optional(
                                rpc->first_response.persisted_data_checksums())
@@ -758,10 +767,22 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
   // In most cases computing a hash for a resumed upload is not feasible. We
   // lack the data to initialize the hash functions. The one exception is when
   // the upload resumes from the beginning of the file.
-  auto hash_function = storage::internal::CreateNullHashFunction();
+  std::shared_ptr<storage::internal::HashFunction> hash_function =
+      storage::internal::CreateNullHashFunction();
   if (response->persisted_size() == 0) {
     hash_function = CreateHashFunction(*current);
+  } else if (current->get<storage::EnableCrc32cValidationOption>() &&
+             response->has_persisted_data_checksums() &&
+             response->persisted_data_checksums().has_crc32c()) {
+    hash_function = std::make_shared<
+        ::google::cloud::storage::internal::Crc32cHashFunction>(
+        response->persisted_data_checksums().crc32c(),
+        response->persisted_size());
   }
+  auto checksums = response->has_persisted_data_checksums()
+                       ? absl::make_optional(
+                             response->persisted_data_checksums())
+                       : absl::nullopt;
   auto configure =
       [current, upload_id = query.upload_id()](grpc::ClientContext& context) {
         internal::ConfigureContext(context, *current);
@@ -773,7 +794,8 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
       std::move(*query.mutable_common_object_request_params());
   return UnbufferedUploadImpl(std::move(current), std::move(configure),
                               std::move(proto), std::move(hash_function),
-                              response->persisted_size());
+                              response->persisted_size(),
+                              std::move(checksums));
 }
 
 future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
@@ -782,7 +804,9 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     std::function<void(grpc::ClientContext&)> configure_context,
     google::storage::v2::BidiWriteObjectRequest request,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
-    std::int64_t persisted_size) {
+    std::int64_t persisted_size,
+    absl::optional<google::storage::v2::ObjectChecksums>
+        persisted_data_checksums) {
   using StreamingRpc = AsyncWriterConnectionImpl::StreamingRpc;
   using StreamingRpcTimeout =
       google::cloud::internal::AsyncStreamingReadWriteRpcTimeout<
@@ -819,14 +843,16 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
   };
 
   auto transform = [current, request = std::move(request), persisted_size,
-                    hash = std::move(hash_function)](auto f) mutable
+                    hash = std::move(hash_function),
+                    checksums = std::move(persisted_data_checksums)](
+                       auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
     auto rpc = f.get();
     if (!rpc) return std::move(rpc).status();
     return std::unique_ptr<storage::AsyncWriterConnection>(
         std::make_unique<AsyncWriterConnectionImpl>(
             current, std::move(request), *std::move(rpc), std::move(hash),
-            persisted_size, true));
+            persisted_size, true, std::move(checksums)));
   };
 
   auto retry = retry_policy(*current);

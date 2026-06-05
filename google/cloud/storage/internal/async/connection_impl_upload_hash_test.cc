@@ -776,6 +776,107 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
   next.first.set_value(true);
 }
 
+TEST_P(AsyncConnectionImplUploadHashTest,
+       ResumeUnbufferedWithPersistedDataChecksums) {
+  auto const& param = GetParam();
+
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncQueryWriteStatus)
+      .WillOnce(
+          [&](auto&, auto, auto,
+              google::storage::v2::QueryWriteStatusRequest const& request) {
+            EXPECT_EQ(request.upload_id(), "resume-upload-id");
+            return sequencer.PushBack("QueryWriteStatus(1)").then([](auto) {
+              auto response = google::storage::v2::QueryWriteStatusResponse{};
+              response.set_persisted_size(256 * 1024);
+              response.mutable_persisted_data_checksums()->set_crc32c(0x12345678);
+              return make_status_or(response);
+            });
+          });
+  EXPECT_CALL(*mock, AsyncBidiWriteObject).WillOnce([&]() {
+    auto stream = std::make_unique<MockAsyncBidiWriteObjectStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Write)
+        .WillOnce(
+            [&](google::storage::v2::BidiWriteObjectRequest const& request,
+                grpc::WriteOptions wopt) {
+              EXPECT_EQ(request.upload_id(), "resume-upload-id");
+              EXPECT_TRUE(request.finish_write());
+              if (param.options.get<storage::EnableCrc32cValidationOption>()) {
+                EXPECT_TRUE(request.object_checksums().has_crc32c());
+              }
+              EXPECT_TRUE(wopt.is_last_message());
+              return sequencer.PushBack("Write");
+            });
+    EXPECT_CALL(*stream, Read).WillOnce([&] {
+      return sequencer.PushBack("Read").then([](auto) {
+        auto response = google::storage::v2::BidiWriteObjectResponse{};
+        response.mutable_resource()->set_bucket(
+            "projects/_/buckets/test-bucket");
+        response.mutable_resource()->set_name("test-object");
+        response.mutable_resource()->set_generation(123456);
+        return absl::make_optional(std::move(response));
+      });
+    });
+    EXPECT_CALL(*stream, Cancel).Times(1);
+    EXPECT_CALL(*stream, Finish).WillOnce([&] {
+      return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+    });
+    return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).Times(0);
+
+  auto options =
+      DefaultOptionsAsync(param.options)
+          .set<GrpcNumChannelsOption>(1)
+          .set<storage::TransferStallTimeoutOption>(std::chrono::seconds(0));
+
+  auto connection = MakeAsyncConnection(CompletionQueue(mock_cq),
+                                        std::move(mock), std::move(options));
+  auto request = google::storage::v2::QueryWriteStatusRequest{};
+  request.set_upload_id("resume-upload-id");
+  auto pending = connection->ResumeUnbufferedUpload(
+      {std::move(request), connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "QueryWriteStatus(1)");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto writer = *std::move(r);
+  EXPECT_EQ(writer->UploadId(), "resume-upload-id");
+  EXPECT_EQ(absl::get<std::int64_t>(writer->PersistedState()), 256 * 1024);
+
+  auto w2 = writer->Finalize(storage::WritePayload(kQuickFox));
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+
+  auto response = w2.get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->bucket(), "projects/_/buckets/test-bucket");
+  EXPECT_EQ(response->name(), "test-object");
+  EXPECT_EQ(response->generation(), 123456);
+
+  writer.reset();
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

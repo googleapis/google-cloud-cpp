@@ -137,7 +137,9 @@ class AsyncConnectionImpl
       std::function<void(grpc::ClientContext&)> configure_context,
       google::storage::v2::BidiWriteObjectRequest request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
-      std::int64_t persisted_size);
+      std::int64_t persisted_size,
+      absl::optional<google::storage::v2::ObjectChecksums>
+          persisted_data_checksums = absl::nullopt);
 
   future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   AppendableObjectUploadImpl(AppendableUploadParams p);
