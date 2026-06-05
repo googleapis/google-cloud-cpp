@@ -192,6 +192,30 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
 }
 
 TEST_F(RegionalAccessBoundaryTokenManagerTest,
+       GetAllowedLocationsHeaderValidTokenUnbounded) {
+  fake_clock_->SetTime(std::chrono::system_clock::now());
+  MockFunction<std::unique_ptr<BackoffPolicy>()> backoff_fn;
+  EXPECT_CALL(backoff_fn, Call).Times(0);
+
+  EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
+      .WillRepeatedly(Return(WorkforceIdentityAllowedLocationsRequest{}));
+
+  AllowedLocationsResponse allowed_locations;
+  allowed_locations.locations = {""};
+  allowed_locations.encoded_locations = "0x0";
+
+  auto manager = RegionalAccessBoundaryTokenManager::Create(
+      mock_credentials_, mock_iam_stub_, {}, backoff_fn.AsStdFunction(),
+      fake_clock_, allowed_locations);
+
+  fake_clock_->AdvanceTime(std::chrono::seconds(1));
+
+  auto header =
+      manager->AllowedLocations(fake_clock_->Now(), "service.googleapis.com");
+  EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
+}
+
+TEST_F(RegionalAccessBoundaryTokenManagerTest,
        GetAllowedLocationsHeaderNoInitialValidTokenWithRetry) {
   EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
       .WillRepeatedly(Return(WorkloadIdentityAllowedLocationsRequest{}));
