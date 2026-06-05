@@ -137,15 +137,17 @@ StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
         current, request, std::move(rpc->stream), hash, resource, false);
   } else {
     persisted_size = rpc->first_response.persisted_size();
-    if (current->get<storage::EnableCrc32cValidationOption>() &&
-        rpc->first_response.has_persisted_data_checksums() &&
-        rpc->first_response.persisted_data_checksums().has_crc32c()) {
+    if (persisted_size == 0) {
+      hash = CreateHashFunction(*current);
+    } else if (current->get<storage::EnableCrc32cValidationOption>() &&
+               rpc->first_response.has_persisted_data_checksums() &&
+               rpc->first_response.persisted_data_checksums().has_crc32c()) {
       hash = std::make_shared<
           ::google::cloud::storage::internal::Crc32cHashFunction>(
           rpc->first_response.persisted_data_checksums().crc32c(),
           persisted_size);
     } else {
-      hash = CreateHashFunction(*current);
+      hash = storage::internal::CreateNullHashFunction();
     }
     auto checksums = rpc->first_response.has_persisted_data_checksums()
                          ? absl::make_optional(

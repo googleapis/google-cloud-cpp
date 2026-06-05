@@ -807,6 +807,8 @@ TEST_P(AsyncConnectionImplUploadHashTest,
               EXPECT_TRUE(request.finish_write());
               if (param.options.get<storage::EnableCrc32cValidationOption>()) {
                 EXPECT_TRUE(request.object_checksums().has_crc32c());
+              } else {
+                EXPECT_FALSE(request.object_checksums().has_crc32c());
               }
               EXPECT_TRUE(wopt.is_last_message());
               return sequencer.PushBack("Write");
