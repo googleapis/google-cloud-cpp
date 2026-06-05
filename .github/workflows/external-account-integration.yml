@@ -10,6 +10,8 @@ on:
   push:
     branches:
       - "ci-gha-*"
+  schedule:
+    - cron: '0 4 * * *'
 
 permissions:
   contents: read
