@@ -68,6 +68,10 @@ auto ExpectFlush(std::int64_t id, std::uint64_t size) {
   return AllOf(EventNamed("gl-cpp.flush"), ExpectSent(id, size));
 }
 
+auto ExpectClose(std::int64_t id, std::uint64_t size) {
+  return AllOf(EventNamed("gl-cpp.close"), ExpectSent(id, size));
+}
+
 auto ExpectQuery(std::int64_t id) {
   namespace sc = ::opentelemetry::semconv;
   return AllOf(EventNamed("gl-cpp.query"),
@@ -246,6 +250,48 @@ TEST(WriterConnectionTracing, Cancel) {
           SpanHasEvents(AllOf(EventNamed("gl-cpp.cancel"),
                               SpanEventAttributesAre(OTelAttribute<std::string>(
                                   sc::thread::kThreadId, _)))))));
+}
+
+TEST(WriterConnectionTracing, Close) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Close).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  auto actual = MakeTracingWriterConnection(
+      internal::MakeSpan("test-span-name"), std::move(mock));
+  auto status = actual->Close(WritePayload{std::string(1024, 'A')}).get();
+  EXPECT_STATUS_OK(status);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(AllOf(
+                         SpanNamed("test-span-name"),
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanHasInstrumentationScope(), SpanKindIsClient(),
+                         SpanHasEvents(ExpectClose(1, 1024)))));
+}
+
+TEST(WriterConnectionTracing, CloseError) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Close).WillOnce([] {
+    return make_ready_future(PermanentError());
+  });
+  auto actual = MakeTracingWriterConnection(
+      internal::MakeSpan("test-span-name"), std::move(mock));
+  auto status = actual->Close(WritePayload{std::string(1024, 'A')}).get();
+  EXPECT_THAT(status, StatusIs(PermanentError().code()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(SpanNamed("test-span-name"),
+                        SpanWithStatus(opentelemetry::trace::StatusCode::kError,
+                                       PermanentError().message()),
+                        SpanHasInstrumentationScope(), SpanKindIsClient(),
+                        SpanHasEvents(ExpectClose(1, 1024)))));
 }
 
 }  // namespace
