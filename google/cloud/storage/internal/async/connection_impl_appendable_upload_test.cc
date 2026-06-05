@@ -825,9 +825,8 @@ TEST_F(AsyncConnectionImplAppendableTest,
         EXPECT_TRUE(request.finish_write());
         EXPECT_TRUE(wopt.is_last_message());
         EXPECT_TRUE(request.has_object_checksums());
-        auto expected_crc =
-            google::cloud::storage_internal::ExtendCrc32c(kPersistedCrc,
-                                                          "some data");
+        auto expected_crc = google::cloud::storage_internal::ExtendCrc32c(
+            kPersistedCrc, "some data");
         EXPECT_EQ(request.object_checksums().crc32c(), expected_crc);
         return sequencer.PushBack("Write(Finalize)");
       });

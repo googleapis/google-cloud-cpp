@@ -781,10 +781,10 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
         response->persisted_data_checksums().crc32c(),
         response->persisted_size());
   }
-  auto checksums = response->has_persisted_data_checksums()
-                       ? absl::make_optional(
-                             response->persisted_data_checksums())
-                       : absl::nullopt;
+  auto checksums =
+      response->has_persisted_data_checksums()
+          ? absl::make_optional(response->persisted_data_checksums())
+          : absl::nullopt;
   auto configure =
       [current, upload_id = query.upload_id()](grpc::ClientContext& context) {
         internal::ConfigureContext(context, *current);
@@ -796,8 +796,7 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
       std::move(*query.mutable_common_object_request_params());
   return UnbufferedUploadImpl(std::move(current), std::move(configure),
                               std::move(proto), std::move(hash_function),
-                              response->persisted_size(),
-                              std::move(checksums));
+                              response->persisted_size(), std::move(checksums));
 }
 
 future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
@@ -846,8 +845,8 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
 
   auto transform = [current, request = std::move(request), persisted_size,
                     hash = std::move(hash_function),
-                    checksums = std::move(persisted_data_checksums)](
-                       auto f) mutable
+                    checksums =
+                        std::move(persisted_data_checksums)](auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
     auto rpc = f.get();
     if (!rpc) return std::move(rpc).status();

@@ -790,7 +790,8 @@ TEST_P(AsyncConnectionImplUploadHashTest,
             return sequencer.PushBack("QueryWriteStatus(1)").then([](auto) {
               auto response = google::storage::v2::QueryWriteStatusResponse{};
               response.set_persisted_size(256 * 1024);
-              response.mutable_persisted_data_checksums()->set_crc32c(0x12345678);
+              response.mutable_persisted_data_checksums()->set_crc32c(
+                  0x12345678);
               return make_status_or(response);
             });
           });
