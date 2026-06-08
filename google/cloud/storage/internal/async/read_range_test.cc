@@ -604,6 +604,42 @@ TEST(ReadRange, TranscodingIgnoresChecksumMismatch) {
   actual.OnFinish(Status{});
 }
 
+TEST(ReadRange, NoResumeIfRequestSatisfied) {
+  ReadRange actual(0, 10, "my-bucket", "my-object");
+
+  // Receive exactly 10 bytes (satisfied!)
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
+
+  // RangeForResume should return nullopt because it's already satisfied!
+  auto resume_range = actual.RangeForResume(7);
+  EXPECT_FALSE(resume_range.has_value());
+}
+
+TEST(ReadRange, NoResumeIfRequestExceeded) {
+  ReadRange actual(0, 10, "my-bucket", "my-object");
+
+  // Receive 12 bytes (overrun!)
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789ab" }
+    read_range { read_offset: 0 read_length: 12 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
+
+  // RangeForResume should return nullopt because it's already exceeded!
+  auto resume_range = actual.RangeForResume(7);
+  EXPECT_FALSE(resume_range.has_value());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

@@ -32,10 +32,14 @@ bool ReadRange::IsDone() const {
 
 absl::optional<google::storage::v2::ReadRange> ReadRange::RangeForResume(
     std::int64_t read_id) const {
-  auto range = google::storage::v2::ReadRange{};
-  range.set_read_id(read_id);
   std::lock_guard<std::mutex> lk(mu_);
   if (status_.has_value()) return absl::nullopt;
+  if (requested_length_.has_value() && *requested_length_ >= 0 &&
+      received_bytes_ >= *requested_length_) {
+    return absl::nullopt;
+  }
+  auto range = google::storage::v2::ReadRange{};
+  range.set_read_id(read_id);
   range.set_read_offset(offset_);
   range.set_read_length(length_);
   return range;
@@ -86,11 +90,11 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data, bool is_transc
   offset_ += content.size();
   received_bytes_ += content.size();
   if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
+  CheckOverrun();
   auto p = ReadPayloadImpl::Make(std::move(content));
 
   if (data.range_end()) {
     status_ = Status{};
-    CheckOverrun();
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
     if (result.is_mismatch && !is_transcoded_) {
       status_ = google::cloud::internal::DataLossError(

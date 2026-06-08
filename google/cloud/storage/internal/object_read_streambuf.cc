@@ -86,7 +86,6 @@ ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekpos(
 
 ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
     off_type off, std::ios_base::seekdir dir, std::ios_base::openmode which) {
-  std::lock_guard<std::mutex> lk(mu_);
   // TODO(#4013): Implement proper seeking.
   // Seeking is non-trivial because the hash validator and `source_` have to be
   // recreated in the general case, which doesn't fit the current code
@@ -256,22 +255,28 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
 
   {
     std::lock_guard<std::mutex> lk(mu_);
-    if (remain_.has_value()) {
-      *remain_ -= read->bytes_received;
-    }
     for (auto const& kv : read->response.headers) {
       headers_.emplace(kv.first, kv.second);
     }
     if (!generation_) generation_ = std::move(read->generation);
     if (!metageneration_) metageneration_ = std::move(read->metageneration);
     if (!storage_class_) storage_class_ = std::move(read->storage_class);
-    if (!size_) size_ = std::move(read->size);
+    if (!size_) {
+      size_ = std::move(read->size);
+      if (size_ && !remain_.has_value()) {
+        remain_ = *size_;
+      }
+    }
     if (!transformation_) transformation_ = std::move(read->transformation);
 
     if (source_pos_ >= 0) {
       source_pos_ += static_cast<std::streamoff>(read->bytes_received);
     } else if (size_) {
       source_pos_ += *size_ + static_cast<std::streamoff>(read->bytes_received);
+    }
+
+    if (remain_.has_value()) {
+      *remain_ -= read->bytes_received;
     }
   }
   return run_validator_if_closed(Status());

@@ -366,6 +366,43 @@ TEST(ObjectReadStreambufTest, TranscodingSuppressesWarning) {
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
+TEST(ObjectReadStreambufTest, FullObjectReadOverrunLogging) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+
+  // GCS returns 15 bytes, and tells us the object size is 10 bytes (in metadata)
+  ReadSourceResult result{15, {}};
+  result.size = 10;
+
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(result))
+      .WillRepeatedly(Return(ReadSourceResult{0, {}}));
+  EXPECT_CALL(*read_source, Close())
+      .WillRepeatedly(Return(HttpResponse{}));
+
+  // Full object read request (no range options)
+  ObjectReadStreambuf buf(
+      ReadObjectRangeRequest("my-bucket", "my-object"),
+      std::move(read_source));
+
+  std::istream stream(&buf);
+  std::vector<char> v(20);
+  stream.read(v.data(), 20);
+
+  // We should have remain_ = -5
+  EXPECT_EQ(buf.Remain().value(), -5);
+
+  buf.Close();
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
