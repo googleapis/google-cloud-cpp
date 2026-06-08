@@ -53,12 +53,12 @@ ObjectReadStreambuf::ObjectReadStreambuf(
     auto const range = request.GetOption<ReadRange>().value();
     auto const offset = request.GetOption<ReadFromOffset>().value();
     auto const begin = (std::max)(range.begin, offset);
-    if (range.end > begin) {
+    if (range.end >= begin) {
       remain_ = range.end - begin;
     }
   } else if (request.HasOption<ReadRange>()) {
     auto const range = request.GetOption<ReadRange>().value();
-    if (range.end > range.begin) {
+    if (range.end >= range.begin) {
       remain_ = range.end - range.begin;
     }
   } else if (request.HasOption<ReadLast>()) {
@@ -105,7 +105,7 @@ void ObjectReadStreambuf::Close() {
     std::lock_guard<std::mutex> lk(mu_);
     if (!logged_warning_) {
       logged_warning_ = true;
-      if (remain_.has_value() && *remain_ < 0) {
+      if (remain_.has_value() && *remain_ < 0 && !transformation().has_value()) {
         GCP_LOG(WARNING)
             << "storage: received " << -(*remain_)
             << " more bytes than requested from GCS for bucket \""
