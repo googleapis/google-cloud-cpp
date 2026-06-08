@@ -46,7 +46,8 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   // own tests.
   if (UsingGrpc()) GTEST_SKIP();
 
-  auto options = Options{}.set<OpenTelemetryTracingOption>(false);
+  auto options =
+      Options{}.set<google::cloud::OpenTelemetryTracingOption>(false);
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
