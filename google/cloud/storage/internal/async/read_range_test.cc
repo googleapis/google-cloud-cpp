@@ -487,6 +487,34 @@ TEST(ReadRange, TranscodingSuppressesWarning) {
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
+TEST(ReadRange, ZeroLengthOverrunLogging) {
+  ScopedLog log;
+
+  // Pass 0 as the limit (not nullopt, which would mean read to end).
+  ReadRange actual(0, absl::make_optional<std::int64_t>(0),
+                   "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "abcde" }
+    read_range { read_offset: 0 read_length: 5 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data));
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+
+  actual.OnFinish(Status{});
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

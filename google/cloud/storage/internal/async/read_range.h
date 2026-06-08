@@ -49,7 +49,7 @@ class ReadRange {
    using MetadataAccessor =
        std::function<absl::optional<google::storage::v2::Object>()>;
 
-  ReadRange(std::int64_t offset, std::int64_t length,
+  ReadRange(std::int64_t offset, absl::optional<std::int64_t> requested_length,
             std::string bucket_name, std::string object_name,
             std::shared_ptr<storage::internal::HashFunction> hash_function =
                 storage::internal::CreateNullHashFunction(),
@@ -57,8 +57,8 @@ class ReadRange {
                 storage::internal::CreateNullHashValidator(),
             MetadataAccessor metadata_accessor = [] { return absl::nullopt; })
       : offset_(offset),
-        length_(length),
-        requested_length_(length),
+        length_(requested_length.value_or(0)),
+        requested_length_(requested_length),
         bucket_name_(std::move(bucket_name)),
         object_name_(std::move(object_name)),
         metadata_accessor_(std::move(metadata_accessor)),
@@ -83,7 +83,7 @@ class ReadRange {
   mutable std::mutex mu_;
   std::int64_t offset_;
   std::int64_t length_;
-  std::int64_t requested_length_;
+  absl::optional<std::int64_t> requested_length_;
   std::int64_t received_bytes_ = 0;
   std::string bucket_name_;
   std::string object_name_;
