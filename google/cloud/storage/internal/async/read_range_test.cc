@@ -572,6 +572,38 @@ TEST(ReadRange, ReadLastOverrunLogging) {
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
+TEST(ReadRange, TranscodingIgnoresChecksumMismatch) {
+  ScopedLog log;
+
+  auto hash_function =
+      std::make_shared<storage::internal::Crc32cHashFunction>();
+  auto hash_validator =
+      std::make_unique<storage::internal::Crc32cHashValidator>();
+
+  // Seed with a mismatching expected hash (so it would normally fail)
+  storage::internal::HashValues expected_hashes;
+  expected_hashes.crc32c = "n3tPLw==";
+  hash_validator->ProcessHashValues(expected_hashes);
+
+  ReadRange actual(0, 10, "my-bucket", "my-object", hash_function, std::move(hash_validator));
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "1234567890" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/true);
+
+  auto pending = actual.Read();
+  EXPECT_TRUE(actual.IsDone());
+  auto response = pending.get();
+  EXPECT_THAT(response, VariantWith<ReadPayload>(_));
+
+  actual.OnFinish(Status{});
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

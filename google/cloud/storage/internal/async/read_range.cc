@@ -92,7 +92,7 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data, bool is_transc
     status_ = Status{};
     CheckOverrun();
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
-    if (result.is_mismatch) {
+    if (result.is_mismatch && !is_transcoded_) {
       status_ = google::cloud::internal::DataLossError(
           absl::StrCat("mismatched checksums detected at the end of the "
                        "download, received={",
