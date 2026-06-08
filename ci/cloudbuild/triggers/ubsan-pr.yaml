@@ -24,6 +24,7 @@ name: ubsan-pr
 substitutions:
   _BUILD_NAME: ubsan
   _DISTRO: fedora-latest-bazel
+  _INTEGRATION_LIBRARIES: all_bar_storage
   _TRIGGER_TYPE: pr
 tags:
 - pr

@@ -23,6 +23,7 @@ name: tsan-ci
 substitutions:
   _BUILD_NAME: tsan
   _DISTRO: fedora-latest-bazel
+  _INTEGRATION_LIBRARIES: all_bar_storage
   _TRIGGER_TYPE: ci
 tags:
 - ci

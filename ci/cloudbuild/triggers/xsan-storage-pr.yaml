@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,14 +16,15 @@ filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
-  push:
+  pullRequest:
     branch: main
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: xsan-ci
+name: xsan-storage-pr
 substitutions:
   _BUILD_NAME: xsan
   _DISTRO: fedora-latest-bazel
-  _INTEGRATION_LIBRARIES: all_bar_storage
-  _TRIGGER_TYPE: ci
+  _INTEGRATION_LIBRARIES: storage
+  _TRIGGER_TYPE: pr
 tags:
-- ci
+- pr
