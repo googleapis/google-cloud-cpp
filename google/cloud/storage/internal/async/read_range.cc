@@ -71,7 +71,7 @@ void ReadRange::OnFinish(Status status) {
 
 void ReadRange::OnRead(google::storage::v2::ObjectRangeData data, bool is_transcoded) {
   std::unique_lock<std::mutex> lk(mu_);
-  is_transcoded_ = is_transcoded;
+  is_transcoded_ = is_transcoded_ || is_transcoded;
   if (status_) return;
   auto* check_summed_data = data.mutable_checksummed_data();
   auto content = StealMutableContent(*data.mutable_checksummed_data());
