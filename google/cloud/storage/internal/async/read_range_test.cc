@@ -448,6 +448,45 @@ TEST(ReadRange, ReadLastOvershootLogging) {
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
+TEST(ReadRange, TranscodingSuppressesWarning) {
+  ScopedLog log;
+  
+  auto metadata_accessor = []() -> absl::optional<google::storage::v2::Object> {
+    google::storage::v2::Object metadata;
+    metadata.set_content_encoding("gzip");
+    return metadata;
+  };
+
+  ReadRange actual(0, 10, "my-bucket", "my-object",
+                   storage::internal::CreateNullHashFunction(),
+                   storage::internal::CreateNullHashValidator(),
+                   metadata_accessor);
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data));
+  EXPECT_TRUE(log.ExtractLines().empty());
+
+  auto constexpr kData1 = R"pb(
+    checksummed_data { content: "abcde" }
+    read_range { read_offset: 10 read_length: 5 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
+  actual.OnRead(std::move(data));
+
+  // Should NOT log because content_encoding is gzip
+  EXPECT_TRUE(log.ExtractLines().empty());
+
+  actual.OnFinish(Status{});
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

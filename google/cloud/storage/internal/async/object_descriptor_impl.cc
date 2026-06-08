@@ -167,7 +167,13 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
 
   auto range = std::make_shared<ReadRange>(
       p.start, p.length, read_object_spec_.bucket(), read_object_spec_.object(),
-      hash_function, std::move(hash_validator));
+      hash_function, std::move(hash_validator),
+      [impl = WeakFromThis()]() -> absl::optional<google::storage::v2::Object> {
+        if (auto shared = impl.lock()) {
+          return shared->metadata();
+        }
+        return absl::nullopt;
+      });
 
   std::unique_lock<std::mutex> lk(mu_);
   if (stream_manager_->Empty()) {

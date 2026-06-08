@@ -24,6 +24,7 @@
 #include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -44,19 +45,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class ReadRange {
  public:
-  using ReadResponse = storage::AsyncReaderConnection::ReadResponse;
+   using ReadResponse = storage::AsyncReaderConnection::ReadResponse;
+   using MetadataAccessor =
+       std::function<absl::optional<google::storage::v2::Object>()>;
 
   ReadRange(std::int64_t offset, std::int64_t length,
             std::string bucket_name = "", std::string object_name = "",
             std::shared_ptr<storage::internal::HashFunction> hash_function =
                 storage::internal::CreateNullHashFunction(),
             std::unique_ptr<storage::internal::HashValidator> hash_validator =
-                storage::internal::CreateNullHashValidator())
+                storage::internal::CreateNullHashValidator(),
+            MetadataAccessor metadata_accessor = [] { return absl::nullopt; })
       : offset_(offset),
         length_(length),
         requested_length_(length),
         bucket_name_(std::move(bucket_name)),
         object_name_(std::move(object_name)),
+        metadata_accessor_(std::move(metadata_accessor)),
         hash_function_(std::move(hash_function)),
         hash_validator_(std::move(hash_validator)) {}
 
@@ -65,7 +70,7 @@ class ReadRange {
             std::unique_ptr<storage::internal::HashValidator> hash_validator =
                 storage::internal::CreateNullHashValidator())
       : ReadRange(offset, length, "", "", std::move(hash_function),
-                  std::move(hash_validator)) {}
+                  std::move(hash_validator), [] { return absl::nullopt; }) {}
 
   bool IsDone() const;
 
@@ -89,6 +94,7 @@ class ReadRange {
   std::int64_t received_bytes_ = 0;
   std::string bucket_name_;
   std::string object_name_;
+  MetadataAccessor metadata_accessor_;
   bool logged_warning_ = false;
   absl::optional<storage::ReadPayload> payload_;
   absl::optional<Status> status_;

@@ -123,11 +123,19 @@ void ReadRange::CheckOverrun() {
   if (!logged_warning_) {
     logged_warning_ = true;
     if (requested_length_ > 0 && received_bytes_ > requested_length_) {
-      GCP_LOG(WARNING) << "storage: received "
-                       << (received_bytes_ - requested_length_)
-                       << " more bytes than requested from GCS for bucket \""
-                       << bucket_name_ << "\", object \"" << object_name_
-                       << "\"";
+      bool is_transcoded = false;
+      if (metadata_accessor_) {
+        if (auto metadata = metadata_accessor_()) {
+          is_transcoded = metadata->content_encoding() == "gzip";
+        }
+      }
+      if (!is_transcoded) {
+        GCP_LOG(WARNING) << "storage: received "
+                         << (received_bytes_ - requested_length_)
+                         << " more bytes than requested from GCS for bucket \""
+                         << bucket_name_ << "\", object \"" << object_name_
+                         << "\"";
+      }
     }
   }
 }
