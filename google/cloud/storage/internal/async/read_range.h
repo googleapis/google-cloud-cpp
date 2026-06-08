@@ -50,7 +50,7 @@ class ReadRange {
        std::function<absl::optional<google::storage::v2::Object>()>;
 
   ReadRange(std::int64_t offset, std::int64_t length,
-            std::string bucket_name = "", std::string object_name = "",
+            std::string bucket_name, std::string object_name,
             std::shared_ptr<storage::internal::HashFunction> hash_function =
                 storage::internal::CreateNullHashFunction(),
             std::unique_ptr<storage::internal::HashValidator> hash_validator =
@@ -64,13 +64,6 @@ class ReadRange {
         metadata_accessor_(std::move(metadata_accessor)),
         hash_function_(std::move(hash_function)),
         hash_validator_(std::move(hash_validator)) {}
-
-  ReadRange(std::int64_t offset, std::int64_t length,
-            std::shared_ptr<storage::internal::HashFunction> hash_function,
-            std::unique_ptr<storage::internal::HashValidator> hash_validator =
-                storage::internal::CreateNullHashValidator())
-      : ReadRange(offset, length, "", "", std::move(hash_function),
-                  std::move(hash_validator), [] { return absl::nullopt; }) {}
 
   bool IsDone() const;
 

@@ -60,7 +60,7 @@ using HashUpdateType =
                        absl::Cord const&, absl::string_view>;
 
 TEST(ReadRange, BasicLifecycle) {
-  ReadRange actual(10000, 40);
+  ReadRange actual(10000, 40, "my-bucket", "my-object");
   EXPECT_FALSE(actual.IsDone());
   auto range = google::storage::v2::ReadRange{};
   auto constexpr kRange0 = R"pb(
@@ -134,7 +134,7 @@ TEST(ReadRange, BasicLifecycle) {
 }
 
 TEST(ReadRange, Error) {
-  ReadRange actual(10000, 40);
+  ReadRange actual(10000, 40, "my-bucket", "my-object");
   auto pending = actual.Read();
   EXPECT_FALSE(pending.is_ready());
   actual.OnFinish(PermanentError());
@@ -144,7 +144,7 @@ TEST(ReadRange, Error) {
 }
 
 TEST(ReadRange, Queue) {
-  ReadRange actual(10000, 40);
+  ReadRange actual(10000, 40, "my-bucket", "my-object");
 
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
@@ -184,7 +184,7 @@ TEST(ReadRange, HashFunctionCalled) {
   EXPECT_CALL(*hash_function, Update(0, An<HashUpdateType>(), _))
       .Times(AtLeast(1));
 
-  ReadRange actual(0, 10, hash_function);
+  ReadRange actual(0, 10, "my-bucket", "my-object", hash_function);
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
     checksummed_data { content: "1234567890" }
@@ -206,7 +206,7 @@ TEST(ReadRange, FullObjectChecksumValidationMismatch) {
   expected_hashes.crc32c = "n3tPLw==";  // Some expected hash
   hash_validator->ProcessHashValues(expected_hashes);
 
-  ReadRange actual(0, 10, hash_function, std::move(hash_validator));
+  ReadRange actual(0, 10, "my-bucket", "my-object", hash_function, std::move(hash_validator));
 
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
@@ -242,7 +242,7 @@ TEST(ReadRange, FullObjectChecksumValidationMismatchMD5) {
   expected_hashes.md5 = "wrong-md5-hash";
   hash_validator->ProcessHashValues(expected_hashes);
 
-  ReadRange actual(0, 43, std::move(hash_function), std::move(hash_validator));
+  ReadRange actual(0, 43, "my-bucket", "my-object", std::move(hash_function), std::move(hash_validator));
 
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
@@ -285,7 +285,7 @@ TEST(ReadRange, FullObjectChecksumValidationMismatchComposite) {
   expected_hashes.md5 = "wrong-md5";
   hash_validator->ProcessHashValues(expected_hashes);
 
-  ReadRange actual(0, 43, hash_function, std::move(hash_validator));
+  ReadRange actual(0, 43, "my-bucket", "my-object", hash_function, std::move(hash_validator));
 
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
@@ -331,7 +331,7 @@ TEST(ReadRange, FullObjectChecksumValidationSuccessComposite) {
   expected_hashes.md5 = "nhB9nTcrtoJr2B01QqQZ1g==";
   hash_validator->ProcessHashValues(expected_hashes);
 
-  ReadRange actual(0, 43, hash_function, std::move(hash_validator));
+  ReadRange actual(0, 43, "my-bucket", "my-object", hash_function, std::move(hash_validator));
 
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
