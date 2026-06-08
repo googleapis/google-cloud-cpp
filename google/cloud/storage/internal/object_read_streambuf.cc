@@ -105,7 +105,7 @@ void ObjectReadStreambuf::Close() {
     std::lock_guard<std::mutex> lk(mu_);
     if (!logged_warning_) {
       logged_warning_ = true;
-      if (remain_.has_value() && *remain_ < 0 && !transformation().has_value()) {
+      if (remain_.has_value() && *remain_ < 0 && !transformation_.has_value()) {
         GCP_LOG(WARNING)
             << "storage: received " << -(*remain_)
             << " more bytes than requested from GCS for bucket \""
@@ -248,29 +248,29 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   // number of bytes.
   if (!read) return run_validator_if_closed(std::move(read).status());
 
+  hash_function_->Update(absl::string_view{s + offset, read->bytes_received});
+  hash_validator_->ProcessHashValues(read->hashes);
+  offset += static_cast<std::streamsize>(read->bytes_received);
+
   {
     std::lock_guard<std::mutex> lk(mu_);
     if (remain_.has_value()) {
       *remain_ -= read->bytes_received;
     }
-  }
+    for (auto const& kv : read->response.headers) {
+      headers_.emplace(kv.first, kv.second);
+    }
+    if (!generation_) generation_ = std::move(read->generation);
+    if (!metageneration_) metageneration_ = std::move(read->metageneration);
+    if (!storage_class_) storage_class_ = std::move(read->storage_class);
+    if (!size_) size_ = std::move(read->size);
+    if (!transformation_) transformation_ = std::move(read->transformation);
 
-  hash_function_->Update(absl::string_view{s + offset, read->bytes_received});
-  hash_validator_->ProcessHashValues(read->hashes);
-  offset += static_cast<std::streamsize>(read->bytes_received);
-  for (auto const& kv : read->response.headers) {
-    headers_.emplace(kv.first, kv.second);
-  }
-  if (!generation_) generation_ = std::move(read->generation);
-  if (!metageneration_) metageneration_ = std::move(read->metageneration);
-  if (!storage_class_) storage_class_ = std::move(read->storage_class);
-  if (!size_) size_ = std::move(read->size);
-  if (!transformation_) transformation_ = std::move(read->transformation);
-
-  if (source_pos_ >= 0) {
-    source_pos_ += static_cast<std::streamoff>(read->bytes_received);
-  } else if (size_) {
-    source_pos_ += *size_ + static_cast<std::streamoff>(read->bytes_received);
+    if (source_pos_ >= 0) {
+      source_pos_ += static_cast<std::streamoff>(read->bytes_received);
+    } else if (size_) {
+      source_pos_ += *size_ + static_cast<std::streamoff>(read->bytes_received);
+    }
   }
   return run_validator_if_closed(Status());
 }

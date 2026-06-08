@@ -67,7 +67,8 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   Status const& status() const { return status_; }
   std::string const& received_hash() const { return received_hash_; }
   std::string const& computed_hash() const { return computed_hash_; }
-  std::multimap<std::string, std::string> const& headers() const {
+  std::multimap<std::string, std::string> headers() const {
+    std::lock_guard<std::mutex> lk(mu_);
     return headers_;
   }
   absl::optional<std::int64_t> Remain() const {
@@ -76,15 +77,24 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   }
 
   // See ObjectReadStream for details about these attributes.
-  absl::optional<std::int64_t> const& generation() const { return generation_; }
-  absl::optional<std::int64_t> const& metageneration() const {
+  absl::optional<std::int64_t> generation() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return generation_;
+  }
+  absl::optional<std::int64_t> metageneration() const {
+    std::lock_guard<std::mutex> lk(mu_);
     return metageneration_;
   }
-  absl::optional<std::string> const& storage_class() const {
+  absl::optional<std::string> storage_class() const {
+    std::lock_guard<std::mutex> lk(mu_);
     return storage_class_;
   }
-  absl::optional<std::uint64_t> const& size() const { return size_; }
-  absl::optional<std::string> const& transformation() const {
+  absl::optional<std::uint64_t> size() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return size_;
+  }
+  absl::optional<std::string> transformation() const {
+    std::lock_guard<std::mutex> lk(mu_);
     return transformation_;
   }
 
