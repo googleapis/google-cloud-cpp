@@ -543,6 +543,35 @@ TEST(ReadRange, MultiChunkOverrunLogging) {
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
+TEST(ReadRange, ReadLastOverrunLogging) {
+  ScopedLog log;
+
+  // ReadLast(5) is represented by start = -5, limit = 5.
+  ReadRange actual(-5, absl::make_optional<std::int64_t>(5),
+                   "my-bucket", "my-object");
+
+  // GCS returns 10 bytes (overrun of 5 bytes)
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: -5 read_length: 10 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+
+  actual.OnFinish(Status{});
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

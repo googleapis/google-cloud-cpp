@@ -165,8 +165,14 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   auto hash_function = CreateHashFunction(is_full_read);
   auto hash_validator = CreateHashValidator(is_full_read);
 
+  absl::optional<std::int64_t> limit;
+  if (p.start < 0) {
+    limit = -p.start;
+  } else if (!p.read_to_end) {
+    limit = p.length;
+  }
   auto range = std::make_shared<ReadRange>(
-      p.start, p.read_to_end ? absl::nullopt : absl::make_optional(p.length),
+      p.start, limit,
       read_object_spec_.bucket(), read_object_spec_.object(),
       hash_function, std::move(hash_validator));
 
