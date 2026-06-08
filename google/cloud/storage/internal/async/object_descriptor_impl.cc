@@ -168,13 +168,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   auto range = std::make_shared<ReadRange>(
       p.start, p.read_to_end ? absl::nullopt : absl::make_optional(p.length),
       read_object_spec_.bucket(), read_object_spec_.object(),
-      hash_function, std::move(hash_validator),
-      [impl = WeakFromThis()]() -> absl::optional<google::storage::v2::Object> {
-        if (auto shared = impl.lock()) {
-          return shared->metadata();
-        }
-        return absl::nullopt;
-      });
+      hash_function, std::move(hash_validator));
 
   std::unique_lock<std::mutex> lk(mu_);
   if (stream_manager_->Empty()) {
@@ -337,6 +331,8 @@ void ObjectDescriptorImpl::OnRead(
         std::move(*response->mutable_read_handle());
   }
   auto copy = it->active_ranges;
+  bool is_transcoded =
+      metadata_.has_value() && (metadata_->content_encoding() == "gzip");
   // Release the lock while notifying the ranges. The notifications may trigger
   // application code, and that code may callback on this class.
   lk.unlock();
@@ -346,7 +342,7 @@ void ObjectDescriptorImpl::OnRead(
     if (l == copy.end()) continue;
     // TODO(#15104) - Consider returning if the range is done, and then
     // skipping CleanupDoneRanges().
-    l->second->OnRead(std::move(range_data));
+    l->second->OnRead(std::move(range_data), is_transcoded);
   }
   lk.lock();
   stream_manager_->CleanupDoneRanges(it);

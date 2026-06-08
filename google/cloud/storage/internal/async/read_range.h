@@ -46,22 +46,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ReadRange {
  public:
    using ReadResponse = storage::AsyncReaderConnection::ReadResponse;
-   using MetadataAccessor =
-       std::function<absl::optional<google::storage::v2::Object>()>;
 
   ReadRange(std::int64_t offset, absl::optional<std::int64_t> requested_length,
             std::string bucket_name, std::string object_name,
             std::shared_ptr<storage::internal::HashFunction> hash_function =
                 storage::internal::CreateNullHashFunction(),
             std::unique_ptr<storage::internal::HashValidator> hash_validator =
-                storage::internal::CreateNullHashValidator(),
-            MetadataAccessor metadata_accessor = [] { return absl::nullopt; })
+                storage::internal::CreateNullHashValidator())
       : offset_(offset),
         length_(requested_length.value_or(0)),
         requested_length_(requested_length),
         bucket_name_(std::move(bucket_name)),
         object_name_(std::move(object_name)),
-        metadata_accessor_(std::move(metadata_accessor)),
         hash_function_(std::move(hash_function)),
         hash_validator_(std::move(hash_validator)) {}
 
@@ -73,7 +69,7 @@ class ReadRange {
   future<ReadResponse> Read();
   void OnFinish(Status status);
 
-  void OnRead(google::storage::v2::ObjectRangeData data);
+  void OnRead(google::storage::v2::ObjectRangeData data, bool is_transcoded);
 
  private:
   void Notify(std::unique_lock<std::mutex> lk, storage::ReadPayload p);
@@ -87,7 +83,7 @@ class ReadRange {
   std::int64_t received_bytes_ = 0;
   std::string bucket_name_;
   std::string object_name_;
-  MetadataAccessor metadata_accessor_;
+  bool is_transcoded_ = false;
   bool logged_warning_ = false;
   absl::optional<storage::ReadPayload> payload_;
   absl::optional<Status> status_;

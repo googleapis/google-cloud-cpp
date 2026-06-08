@@ -69,8 +69,9 @@ void ReadRange::OnFinish(Status status) {
   p.set_value(*status_);
 }
 
-void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
+void ReadRange::OnRead(google::storage::v2::ObjectRangeData data, bool is_transcoded) {
   std::unique_lock<std::mutex> lk(mu_);
+  is_transcoded_ = is_transcoded;
   if (status_) return;
   auto* check_summed_data = data.mutable_checksummed_data();
   auto content = StealMutableContent(*data.mutable_checksummed_data());
@@ -124,13 +125,7 @@ void ReadRange::CheckOverrun() {
     logged_warning_ = true;
     if (requested_length_.has_value() && *requested_length_ >= 0 &&
         received_bytes_ > *requested_length_) {
-      bool is_transcoded = false;
-      if (metadata_accessor_) {
-        if (auto metadata = metadata_accessor_()) {
-          is_transcoded = metadata->content_encoding() == "gzip";
-        }
-      }
-      if (!is_transcoded) {
+      if (!is_transcoded_) {
         GCP_LOG(WARNING) << "storage: received "
                          << (received_bytes_ - *requested_length_)
                          << " more bytes than requested from GCS for bucket \""

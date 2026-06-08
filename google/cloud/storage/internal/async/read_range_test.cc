@@ -79,7 +79,7 @@ TEST(ReadRange, BasicLifecycle) {
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   EXPECT_TRUE(pending.is_ready());
   EXPECT_THAT(pending.get(),
@@ -99,7 +99,7 @@ TEST(ReadRange, BasicLifecycle) {
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   pending = actual.Read();
   EXPECT_TRUE(pending.is_ready());
@@ -115,7 +115,7 @@ TEST(ReadRange, BasicLifecycle) {
     range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData2, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   EXPECT_TRUE(actual.IsDone());
   EXPECT_FALSE(actual.RangeForResume(7).has_value());
@@ -153,7 +153,7 @@ TEST(ReadRange, Queue) {
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   auto constexpr kData1 = R"pb(
     checksummed_data { content: "1234567890" }
@@ -161,7 +161,7 @@ TEST(ReadRange, Queue) {
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   auto matcher = ResultOf(
       "contents",
@@ -193,7 +193,7 @@ TEST(ReadRange, HashFunctionCalled) {
   )pb";
 
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 }
 
 TEST(ReadRange, FullObjectChecksumValidationMismatch) {
@@ -218,7 +218,7 @@ TEST(ReadRange, FullObjectChecksumValidationMismatch) {
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
 
   auto pending = actual.Read();
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   EXPECT_TRUE(actual.IsDone());
 
@@ -257,7 +257,7 @@ TEST(ReadRange, FullObjectChecksumValidationMismatchMD5) {
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
 
   auto pending = actual.Read();
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   EXPECT_TRUE(actual.IsDone());
 
@@ -300,7 +300,7 @@ TEST(ReadRange, FullObjectChecksumValidationMismatchComposite) {
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
 
   auto pending = actual.Read();
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   EXPECT_TRUE(actual.IsDone());
 
@@ -346,7 +346,7 @@ TEST(ReadRange, FullObjectChecksumValidationSuccessComposite) {
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
 
   auto pending = actual.Read();
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   EXPECT_TRUE(actual.IsDone());
 
@@ -371,7 +371,7 @@ TEST(ReadRange, OverrunLogging) {
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
   EXPECT_TRUE(log.ExtractLines().empty());
 
   auto constexpr kData1 = R"pb(
@@ -380,7 +380,7 @@ TEST(ReadRange, OverrunLogging) {
     range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   auto lines = log.ExtractLines();
   EXPECT_EQ(lines.size(), 1);
@@ -406,7 +406,7 @@ TEST(ReadRange, ReadLastLessIndexNoLogging) {
     range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
   EXPECT_TRUE(log.ExtractLines().empty());
 
   actual.OnFinish(Status{});
@@ -425,7 +425,7 @@ TEST(ReadRange, ReadLastOvershootLogging) {
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
   EXPECT_TRUE(log.ExtractLines().empty());
 
   auto constexpr kData1 = R"pb(
@@ -434,7 +434,7 @@ TEST(ReadRange, ReadLastOvershootLogging) {
     range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   auto lines = log.ExtractLines();
   EXPECT_EQ(lines.size(), 1);
@@ -451,16 +451,7 @@ TEST(ReadRange, ReadLastOvershootLogging) {
 TEST(ReadRange, TranscodingSuppressesWarning) {
   ScopedLog log;
   
-  auto metadata_accessor = []() -> absl::optional<google::storage::v2::Object> {
-    google::storage::v2::Object metadata;
-    metadata.set_content_encoding("gzip");
-    return metadata;
-  };
-
-  ReadRange actual(0, 10, "my-bucket", "my-object",
-                   storage::internal::CreateNullHashFunction(),
-                   storage::internal::CreateNullHashValidator(),
-                   metadata_accessor);
+  ReadRange actual(0, 10, "my-bucket", "my-object");
 
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
@@ -469,7 +460,7 @@ TEST(ReadRange, TranscodingSuppressesWarning) {
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/true);
   EXPECT_TRUE(log.ExtractLines().empty());
 
   auto constexpr kData1 = R"pb(
@@ -478,7 +469,7 @@ TEST(ReadRange, TranscodingSuppressesWarning) {
     range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/true);
 
   // Should NOT log because content_encoding is gzip
   EXPECT_TRUE(log.ExtractLines().empty());
@@ -501,7 +492,7 @@ TEST(ReadRange, ZeroLengthOverrunLogging) {
     range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  actual.OnRead(std::move(data));
+  actual.OnRead(std::move(data), /*is_transcoded=*/false);
 
   auto lines = log.ExtractLines();
   EXPECT_EQ(lines.size(), 1);

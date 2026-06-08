@@ -63,7 +63,7 @@ ObjectReadStreambuf::ObjectReadStreambuf(
     }
   } else if (request.HasOption<ReadLast>()) {
     auto const last = request.GetOption<ReadLast>().value();
-    if (last > 0) {
+    if (last >= 0) {
       remain_ = last;
     }
   }
