@@ -42,15 +42,17 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   // own tests.
   if (UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient();
+  auto options = Options{}.set<OpenTelemetryTracingOption>(false);
   auto object_name = MakeRandomObjectName();
-
   std::string expected = LoremIpsum();
 
-  StatusOr<ObjectMetadata> meta = client.InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
+  {
+    auto client = MakeIntegrationTestClient(options);
+    StatusOr<ObjectMetadata> meta = client.InsertObject(
+        bucket_name_, object_name, expected, IfGenerationMatch(0));
+    ASSERT_STATUS_OK(meta);
+    ScheduleForDelete(*meta);
+  }
 
   // Track the number of open files to ensure every client creates the same
   // number of file descriptors and none are leaked.
@@ -64,7 +66,7 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   }
   std::size_t delta = 0;
   for (int i = 0; i != 100; ++i) {
-    auto read_client = MakeIntegrationTestClient();
+    auto read_client = MakeIntegrationTestClient(options);
     auto stream = read_client.ReadObject(bucket_name_, object_name);
     char c;
     stream.read(&c, 1);
