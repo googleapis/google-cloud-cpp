@@ -16,6 +16,7 @@
 #include "google/cloud/storage/testing/object_integration_test.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -42,7 +43,8 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   // own tests.
   if (UsingGrpc()) GTEST_SKIP();
 
-  auto options = Options{}.set<OpenTelemetryTracingOption>(false);
+  auto options =
+      Options{}.set<google::cloud::OpenTelemetryTracingOption>(false);
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
