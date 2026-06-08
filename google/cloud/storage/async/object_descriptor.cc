@@ -33,21 +33,21 @@ std::pair<AsyncReader, AsyncToken> ObjectDescriptor::Read(std::int64_t offset,
     impl_->MakeSubsequentStream();
   }
 
-  auto reader = impl_->Read({offset, limit});
+  auto reader = impl_->Read({offset, limit, /*read_to_end=*/false});
   auto token = storage_internal::MakeAsyncToken(reader.get());
   return {AsyncReader(std::move(reader)), std::move(token)};
 }
 
 std::pair<AsyncReader, AsyncToken> ObjectDescriptor::ReadFromOffset(
     std::int64_t offset) {
-  auto reader = impl_->Read({offset, 0});
+  auto reader = impl_->Read({offset, 0, /*read_to_end=*/true});
   auto token = storage_internal::MakeAsyncToken(reader.get());
   return {AsyncReader(std::move(reader)), std::move(token)};
 }
 
 std::pair<AsyncReader, AsyncToken> ObjectDescriptor::ReadLast(
     std::int64_t limit) {
-  auto reader = impl_->Read({-limit, 0});
+  auto reader = impl_->Read({-limit, 0, /*read_to_end=*/true});
   auto token = storage_internal::MakeAsyncToken(reader.get());
   return {AsyncReader(std::move(reader)), std::move(token)};
 }

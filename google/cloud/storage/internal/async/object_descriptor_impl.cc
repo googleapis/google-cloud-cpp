@@ -166,7 +166,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   auto hash_validator = CreateHashValidator(is_full_read);
 
   auto range = std::make_shared<ReadRange>(
-      p.start, p.length > 0 ? absl::make_optional(p.length) : absl::nullopt,
+      p.start, p.read_to_end ? absl::nullopt : absl::make_optional(p.length),
       read_object_spec_.bucket(), read_object_spec_.object(),
       hash_function, std::move(hash_validator),
       [impl = WeakFromThis()]() -> absl::optional<google::storage::v2::Object> {

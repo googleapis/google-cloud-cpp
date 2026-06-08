@@ -86,6 +86,7 @@ ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekpos(
 
 ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
     off_type off, std::ios_base::seekdir dir, std::ios_base::openmode which) {
+  std::lock_guard<std::mutex> lk(mu_);
   // TODO(#4013): Implement proper seeking.
   // Seeking is non-trivial because the hash validator and `source_` have to be
   // recreated in the general case, which doesn't fit the current code
