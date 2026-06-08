@@ -264,6 +264,9 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     if (!size_) {
       size_ = std::move(read->size);
       if (size_ && !remain_.has_value()) {
+        // For full object reads (where no range options are set), we don't
+        // know the expected size upfront. We initialize `remain_` dynamically
+        // the first time we learn the object's size from the GCS response metadata.
         remain_ = *size_;
       }
     }
