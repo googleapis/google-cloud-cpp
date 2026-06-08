@@ -64,9 +64,18 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
 
   bool IsOpen() const;
   void Close();
-  Status const& status() const { return status_; }
-  std::string const& received_hash() const { return received_hash_; }
-  std::string const& computed_hash() const { return computed_hash_; }
+  Status status() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return status_;
+  }
+  std::string received_hash() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return received_hash_;
+  }
+  std::string computed_hash() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return computed_hash_;
+  }
   std::multimap<std::string, std::string> headers() const {
     std::lock_guard<std::mutex> lk(mu_);
     return headers_;

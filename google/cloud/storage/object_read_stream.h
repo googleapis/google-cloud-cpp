@@ -93,7 +93,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    *
    * Note that errors may go undetected until the download completes.
    */
-  Status const& status() const& { return buf_->status(); }
+  Status status() const { return buf_ ? buf_->status() : Status{}; }
 
   /**
    * The received CRC32C checksum and the MD5 hash values as reported by GCS.
@@ -111,7 +111,9 @@ class ObjectReadStream : public std::basic_istream<char> {
    * @see https://cloud.google.com/storage/docs/hashes-etags for more
    *     information on checksums and hashes in GCS.
    */
-  std::string const& received_hash() const { return buf_->received_hash(); }
+  std::string received_hash() const {
+    return buf_ ? buf_->received_hash() : std::string{};
+  }
 
   /**
    * The locally computed checksum and hashes, as a string.
@@ -130,7 +132,9 @@ class ObjectReadStream : public std::basic_istream<char> {
    * @see https://cloud.google.com/storage/docs/hashes-etags for more
    *     information on checksums and hashes in GCS.
    */
-  std::string const& computed_hash() const { return buf_->computed_hash(); }
+  std::string computed_hash() const {
+    return buf_ ? buf_->computed_hash() : std::string{};
+  }
 
   /**
    * The headers (if any) returned by the service. For debugging only.
