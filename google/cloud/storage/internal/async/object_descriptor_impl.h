@@ -111,6 +111,11 @@ class ObjectDescriptorImpl
   bool IsResumable(StreamIterator it, Status const& status,
                    google::rpc::Status const& proto_status);
 
+  std::shared_ptr<storage::internal::HashFunction> CreateHashFunction(
+      bool is_full_read) const;
+  std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
+      bool is_full_read) const;
+
   std::unique_ptr<storage::ResumePolicy> resume_policy_prototype_;
   OpenStreamFactory make_stream_;
 

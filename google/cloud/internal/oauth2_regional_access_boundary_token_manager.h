@@ -112,8 +112,11 @@ class RegionalAccessBoundaryTokenManager
     if (IsTokenValid(lock, tp)) {
       // Check to see if we're near expiry and if so, start refresh process.
       if (tp > (expire_time_ - TtlGracePeriod())) RefreshToken(lock, request);
-      return rest_internal::HttpHeader{"x-allowed-locations",
-                                       allowed_locations_.encoded_locations};
+      if (!allowed_locations_.IsUnbounded()) {
+        return rest_internal::HttpHeader{"x-allowed-locations",
+                                         allowed_locations_.encoded_locations};
+      }
+      return rest_internal::HttpHeader{};
     }
     RefreshToken(lock, request);
     // Don't wait for a valid token, just return an empty header.

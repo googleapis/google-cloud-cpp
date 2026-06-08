@@ -74,6 +74,18 @@ std::shared_ptr<Credentials> MakeComputeEngineCredentials(Options opts) {
       std::move(opts));
 }
 
+std::shared_ptr<Credentials> MakeGDCHServiceAccountCredentials(
+    std::string json_object, std::string audience, Options opts) {
+  return std::make_shared<internal::GDCHServiceAccountConfig>(
+      std::move(json_object), std::move(audience), std::move(opts));
+}
+
+std::shared_ptr<Credentials> MakeGDCHServiceAccountCredentials(
+    std::string audience, Options opts) {
+  return std::make_shared<internal::GDCHServiceAccountConfig>(
+      std::move(audience), std::move(opts));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
