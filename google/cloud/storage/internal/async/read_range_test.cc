@@ -394,6 +394,60 @@ TEST(ReadRange, OverrunLogging) {
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
+TEST(ReadRange, ReadLastLessIndexNoLogging) {
+  ScopedLog log;
+  // Simulating ReadLast(100) where GCS returns 50 bytes (e.g. object size is 50)
+  ReadRange actual(-100, 100, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "01234567890123456789012345678901234567890123456789" }
+    read_range { read_offset: -100 read_length: 100 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data));
+  EXPECT_TRUE(log.ExtractLines().empty());
+
+  actual.OnFinish(Status{});
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(ReadRange, ReadLastOvershootLogging) {
+  ScopedLog log;
+  // Simulating ReadLast(50) where GCS returns 60 bytes
+  ReadRange actual(-50, 50, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "01234567890123456789012345678901234567890123456789" }
+    read_range { read_offset: -50 read_length: 50 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data));
+  EXPECT_TRUE(log.ExtractLines().empty());
+
+  auto constexpr kData1 = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
+  actual.OnRead(std::move(data));
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 10 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+
+  actual.OnFinish(Status{});
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
