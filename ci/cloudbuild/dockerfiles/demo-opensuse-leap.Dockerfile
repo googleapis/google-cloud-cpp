@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM opensuse/leap:15
+FROM opensuse/leap:16.0
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
@@ -27,7 +27,7 @@ ARG NCPU=4
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y automake cmake curl \
-        gcc9 gcc9-c++ git gzip libtool make patch tar wget
+        gcc gcc-c++ git gzip libtool make patch tar wget
 # ```
 
 # Install some of the dependencies for `google-cloud-cpp`.
@@ -51,8 +51,8 @@ ENV PATH=/usr/local/bin:${PATH}
 
 # Use the following environment variables to configure the compiler used by
 # CMake.
-ENV CC=gcc-9
-ENV CXX=g++-9
+ENV CC=gcc
+ENV CXX=g++
 
 # #### Abseil
 
