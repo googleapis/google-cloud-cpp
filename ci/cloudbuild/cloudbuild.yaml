@@ -50,6 +50,7 @@ substitutions:
   _TAG1: 'team-only'
   _LIBRARIES: 'all_bar_compute'
   _SHARD: '__default__'
+  _INTEGRATION_LIBRARIES: 'all'
 
 timeout: 36000s
 tags: [
@@ -126,6 +127,7 @@ steps:
   env: [
     'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
     'LIBRARIES=${_LIBRARIES}',
+    'INTEGRATION_LIBRARIES=${_INTEGRATION_LIBRARIES}',
     'SHARD=${_SHARD}',
     'SCCACHE_GCS_BUCKET=${_CACHE_BUCKET}',
     'SCCACHE_GCS_KEY_PREFIX=sccache/${_DISTRO}-${_BUILD_NAME}',
