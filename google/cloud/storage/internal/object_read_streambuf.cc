@@ -99,7 +99,10 @@ ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
   return -1;
 }
 
-bool ObjectReadStreambuf::IsOpen() const { return source_->IsOpen(); }
+bool ObjectReadStreambuf::IsOpen() const {
+  std::lock_guard<std::mutex> lk(mu_);
+  return source_ != nullptr && source_->IsOpen();
+}
 
 void ObjectReadStreambuf::Close() {
   {
@@ -132,6 +135,7 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::ReportError(Status status) {
   if (status.ok()) {
     return traits_type::eof();
   }
+  std::lock_guard<std::mutex> lk(mu_);
   status_ = std::move(status);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   google::cloud::internal::ThrowStatus(status_);
@@ -145,9 +149,9 @@ void ObjectReadStreambuf::ThrowHashMismatchDelegate(char const* function_name) {
   msg += function_name;
   msg += "(): mismatched hashes in download";
   msg += ", computed=";
-  msg += computed_hash();
+  msg += computed_hash_;
   msg += ", received=";
-  msg += received_hash();
+  msg += received_hash_;
   if (status_.ok()) {
     // If there is an existing error, we should report that instead because
     // it is more specific, for example, every permanent network error will
@@ -163,20 +167,16 @@ void ObjectReadStreambuf::ThrowHashMismatchDelegate(char const* function_name) {
   // case we set `status_`, and report the error as an 0-byte read. This is
   // obviously not ideal, but it is the best we can do when the application
   // disables the standard mechanism to signal errors.
-  throw HashMismatchError(msg, received_hash(), computed_hash());
+  throw HashMismatchError(msg, received_hash_, computed_hash_);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
 bool ObjectReadStreambuf::ValidateHashes(char const* function_name) {
-  // This function is called once the stream is "closed" (either an explicit
-  // `Close()` call or a permanent error). After this point the validator is
-  // not usable.
-
-  // If there are any data transformations, such as decompressive transcoding,
-  // then the computed hashes will not match the returned hashes.  GCS always
-  // returns the hashes of the **stored** data, which are different from the
-  // hashes of the **returned** data under transcoding.
-  if (transformation().has_value()) return true;
+  std::lock_guard<std::mutex> lk(mu_);
+  if (!hash_function_) {
+    return !hash_validator_result_.is_mismatch;
+  }
+  if (transformation_.has_value()) return true;
 
   auto function = std::move(hash_function_);
   auto validator = std::move(hash_validator_);
@@ -190,11 +190,12 @@ bool ObjectReadStreambuf::ValidateHashes(char const* function_name) {
 }
 
 bool ObjectReadStreambuf::CheckPreconditions(char const* function_name) {
+  std::lock_guard<std::mutex> lk(mu_);
   if (hash_validator_result_.is_mismatch) {
     ThrowHashMismatchDelegate(function_name);
   }
   if (in_avail() != 0) return true;
-  return status_.ok() && IsOpen();
+  return status_.ok() && (source_ != nullptr && source_->IsOpen());
 }
 
 ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {

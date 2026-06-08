@@ -122,9 +122,9 @@ void ReadRange::Notify(std::unique_lock<std::mutex> lk,
 // Must be called while holding mu_.
 void ReadRange::CheckOverrun() {
   if (!logged_warning_) {
-    logged_warning_ = true;
     if (requested_length_.has_value() && *requested_length_ >= 0 &&
         received_bytes_ > *requested_length_) {
+      logged_warning_ = true;
       if (!is_transcoded_) {
         GCP_LOG(WARNING) << "storage: received "
                          << (received_bytes_ - *requested_length_)
