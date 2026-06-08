@@ -168,7 +168,7 @@ function integration::bazel_args() {
 #
 # Runs Pub/Sub integration tests (including Pub/Sub Lite if BAZEL_TARGETS is default).
 function integration::bazel_pubsub_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: bazel verb required"
     return 1
@@ -197,7 +197,7 @@ function integration::bazel_pubsub_with_emulators() {
 
 # Runs Storage integration tests.
 function integration::bazel_storage_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: bazel verb required"
     return 1
@@ -212,7 +212,7 @@ function integration::bazel_storage_with_emulators() {
 
 # Runs Spanner integration tests.
 function integration::bazel_spanner_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: bazel verb required"
     return 1
@@ -227,7 +227,7 @@ function integration::bazel_spanner_with_emulators() {
 
 # Runs Bigtable integration tests.
 function integration::bazel_bigtable_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: bazel verb required"
     return 1
@@ -254,7 +254,7 @@ function integration::bazel_bigtable_with_emulators() {
 
 # Runs REST integration tests.
 function integration::bazel_rest_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: bazel verb required"
     return 1
