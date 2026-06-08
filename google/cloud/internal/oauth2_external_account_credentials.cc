@@ -24,6 +24,7 @@
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/rest_client.h"
 #include "absl/strings/str_cat.h"
+#include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <regex>
 
@@ -83,6 +84,60 @@ bool ExternalAccountInfo::IsWorkforceIdentityFederation() const {
 bool ExternalAccountInfo::IsWorkloadIdentityFederation() const {
   return std::holds_alternative<WorkloadIdentityFederationInfo>(
       identity_federation_info);
+}
+
+StatusOr<std::optional<ExternalAccountImpersonationConfig>>
+GetExternalAccountImpersonationConfiguration(
+    nlohmann::json const& configuration, internal::ErrorContext const& ec) {
+  auto constexpr kDefaultImpersonationTokenLifetime =
+      std::chrono::seconds(3600);
+  auto impersonation_config =
+      StatusOr<std::optional<ExternalAccountImpersonationConfig>>(std::nullopt);
+  auto it = configuration.find("service_account_impersonation_url");
+  if (it == configuration.end()) return impersonation_config;
+  if (!it->is_string()) {
+    return InvalidTypeError("service_account_impersonation_url",
+                            "credentials-file", ec);
+  }
+
+  // AIP-4117 https://google.aip.dev/auth/4117 specifies the
+  // service_account_impersonation_url ends with "<email>:generateAccessToken".
+  std::string url = it->get<std::string>();
+  std::vector<std::string_view> pieces = absl::StrSplit(url, '/');
+  std::string email;
+  for (auto const& p : pieces) {
+    if (absl::StrContains(p, ":")) {
+      std::vector<std::string_view> t = absl::StrSplit(p, ':');
+      email = t.front();
+    }
+  }
+
+  if (email.empty()) {
+    return InvalidArgumentError(
+        "invalid service_account_impersonation_url; must conform to AIP-4117",
+        GCP_ERROR_INFO()
+            .WithMetadata("service_account_impersonation_url", url)
+            .WithContext(ec));
+  }
+
+  impersonation_config = ExternalAccountImpersonationConfig{
+      std::move(url), std::move(email), kDefaultImpersonationTokenLifetime};
+
+  it = configuration.find("service_account_impersonation");
+  if (it == configuration.end()) return impersonation_config;
+  if (!it->is_object()) {
+    return InvalidTypeError("service_account_impersonation", "credentials-file",
+                            ec);
+  }
+  auto lifetime = ValidateIntField(
+      it.value(), "token_lifetime_seconds",
+      "credentials-file.service_account_impersonation",
+      static_cast<std::int32_t>(kDefaultImpersonationTokenLifetime.count()),
+      ec);
+  if (!lifetime) return std::move(lifetime).status();
+  (*impersonation_config)->token_lifetime = std::chrono::seconds(*lifetime);
+
+  return impersonation_config;
 }
 
 /// Parse a JSON string with an external account configuration.
@@ -147,31 +202,11 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
                                   std::move(workforce_pool_user_project),
                                   std::move(identity_federation)};
 
-  it = json.find("service_account_impersonation_url");
-  if (it == json.end()) return info;
+  auto impersonate_config =
+      GetExternalAccountImpersonationConfiguration(json, ec);
 
-  auto constexpr kDefaultImpersonationTokenLifetime =
-      std::chrono::seconds(3600);
-  if (!it->is_string()) {
-    return InvalidTypeError("service_account_impersonation_url",
-                            "credentials-file", ec);
-  }
-  info.impersonation_config = ExternalAccountImpersonationConfig{
-      it->get<std::string>(), kDefaultImpersonationTokenLifetime};
-  it = json.find("service_account_impersonation");
-  if (it == json.end()) return info;
-  if (!it->is_object()) {
-    return InvalidTypeError("service_account_impersonation", "credentials-file",
-                            ec);
-  }
-  auto lifetime = ValidateIntField(
-      it.value(), "token_lifetime_seconds",
-      "credentials-file.service_account_impersonation",
-      static_cast<std::int32_t>(kDefaultImpersonationTokenLifetime.count()),
-      ec);
-  if (!lifetime) return std::move(lifetime).status();
-  info.impersonation_config->token_lifetime = std::chrono::seconds(*lifetime);
-
+  if (!impersonate_config.ok()) return impersonate_config.status();
+  info.impersonation_config = *std::move(impersonate_config);
   return info;
 }
 
@@ -264,7 +299,10 @@ ExternalAccountCredentials::AllowedLocationsRequest() const {
   Credentials::AllowedLocationsRequestType request = std::monostate{};
   // TODO(#16079): Remove conditional and else clause when GA.
 #ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
-  if (info_.IsWorkforceIdentityFederation()) {
+  if (info_.impersonation_config.has_value()) {
+    request = ServiceAccountAllowedLocationsRequest{
+        info_.impersonation_config->email};
+  } else if (info_.IsWorkforceIdentityFederation()) {
     auto wif = std::get<WorkforceIdentityFederationInfo>(
         info_.identity_federation_info);
     request = WorkforceIdentityAllowedLocationsRequest{wif.pool_id};

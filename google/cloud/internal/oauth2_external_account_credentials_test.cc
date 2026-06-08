@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <algorithm>
@@ -640,6 +641,24 @@ TEST(ExternalAccount, ParseInvalidServiceAccountImpersonationUrl) {
               "invalid type for `service_account_impersonation_url` field")));
 }
 
+TEST(ExternalAccount, ParseInvalidServiceAccountImpersonationUrlFormat) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+      {"service_account_impersonation_url",
+       "impersonation-url-no-email"},  // should be string
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("must conform to AIP-4117")));
+}
+
 TEST(ExternalAccount, ParseInvalidServiceAccountLifetime) {
   auto const configuration = nlohmann::json{
       {"type", "external_account"},
@@ -647,7 +666,8 @@ TEST(ExternalAccount, ParseInvalidServiceAccountLifetime) {
       {"subject_token_type", "test-subject-token-type"},
       {"token_url", "test-token-url"},
       {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
-      {"service_account_impersonation_url", "test-impersonation-url"},
+      {"service_account_impersonation_url",
+       "test-impersonation-url/email@foo:verb"},
       {"service_account_impersonation",
        nlohmann::json{
            {"token_lifetime_seconds", true},  // should be numeric
@@ -812,6 +832,10 @@ TEST(ExternalAccount, WorkingWorkforceIdentity) {
 #endif
 }
 
+MATCHER_P(RequestServiceAccountEmailIs, email, "has service account email") {
+  return email == arg.service_account_email;
+}
+
 TEST(ExternalAccount, WorkingWithImpersonation) {
   auto const sts_test_url = std::string{"https://sts.example.com/"};
   auto const sts_access_token = std::string{"test-sts-access-token"};
@@ -822,8 +846,10 @@ TEST(ExternalAccount, WorkingWithImpersonation) {
       {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "Bearer"},
   };
-  auto const impersonate_test_url =
-      std::string{"https://iamcredentials.example.com/test-account"};
+  auto const impersonate_test_email = std::string{"test-account@foo"};
+  auto const impersonate_test_url = absl::StrCat(
+      "https://iamcredentials.example.com/", impersonate_test_email, ":verb");
+  ;
   auto const impersonate_test_lifetime = std::chrono::seconds(2345);
   auto const impersonate_access_token = std::string{"test-access-token"};
   auto const impersonate_request_payload = nlohmann::json{
@@ -849,7 +875,8 @@ TEST(ExternalAccount, WorkingWithImpersonation) {
                           sts_test_url,
                           mock_source,
                           ExternalAccountImpersonationConfig{
-                              impersonate_test_url, impersonate_test_lifetime},
+                              impersonate_test_url, impersonate_test_email,
+                              impersonate_test_lifetime},
                           {},
                           absl::nullopt,
                           std::monostate{}};
@@ -905,6 +932,15 @@ TEST(ExternalAccount, WorkingWithImpersonation) {
   ASSERT_STATUS_OK(access_token);
   EXPECT_EQ(access_token->expiration, impersonate_expire_time);
   EXPECT_EQ(access_token->token, impersonate_access_token);
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<ServiceAccountAllowedLocationsRequest>(
+                  RequestServiceAccountEmailIs(impersonate_test_email)));
+#else
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate{}));
+#endif
 }
 
 TEST(ExternalAccount, HandleHttpError) {
