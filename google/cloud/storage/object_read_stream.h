@@ -77,6 +77,18 @@ class ObjectReadStream : public std::basic_istream<char> {
   void Close();
 
   /**
+   * The number of bytes remaining in the requested range.
+   *
+   * If the requested range has been fully read, or if the request did not
+   * specify a range limit (e.g. read to end), this returns `absl::nullopt`.
+   * If GCS has served more bytes than requested, this will return a negative
+   * value.
+   */
+  absl::optional<std::int64_t> Remain() const {
+    return buf_ ? buf_->Remain() : absl::nullopt;
+  }
+
+  /**
    * Report any download errors.
    *
    * Note that errors may go undetected until the download completes.

@@ -79,6 +79,7 @@ class ReadRange {
 
  private:
   void Notify(std::unique_lock<std::mutex> lk, storage::ReadPayload p);
+  // Must be called while holding mu_.
   void CheckOverrun();
 
   mutable std::mutex mu_;

@@ -118,6 +118,7 @@ void ReadRange::Notify(std::unique_lock<std::mutex> lk,
   wait.set_value(std::move(p));
 }
 
+// Must be called while holding mu_.
 void ReadRange::CheckOverrun() {
   if (!logged_warning_) {
     logged_warning_ = true;
