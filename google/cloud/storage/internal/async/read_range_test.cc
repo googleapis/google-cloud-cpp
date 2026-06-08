@@ -21,6 +21,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
@@ -42,12 +43,14 @@ using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::An;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::VariantWith;
@@ -355,6 +358,40 @@ TEST(ReadRange, FullObjectChecksumValidationSuccessComposite) {
   auto next_read = actual.Read();
   EXPECT_TRUE(next_read.is_ready());
   EXPECT_THAT(next_read.get(), VariantWith<Status>(IsOk()));
+}
+
+TEST(ReadRange, OverrunLogging) {
+  ScopedLog log;
+  ReadRange actual(0, 10, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data));
+  EXPECT_TRUE(log.ExtractLines().empty());
+
+  auto constexpr kData1 = R"pb(
+    checksummed_data { content: "abcde" }
+    read_range { read_offset: 10 read_length: 5 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
+  actual.OnRead(std::move(data));
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+
+  actual.OnFinish(Status{});
+  EXPECT_TRUE(log.ExtractLines().empty());
 }
 
 }  // namespace

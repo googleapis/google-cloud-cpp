@@ -16,6 +16,7 @@
 #include "google/cloud/storage/hash_mismatch_error.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
 #include <algorithm>
 #include <cstring>
 #include <memory>
@@ -45,14 +46,37 @@ ObjectReadStreambuf::ObjectReadStreambuf(
     : source_(std::move(source)),
       source_pos_(InitialOffset(request)),
       hash_function_(CreateHashFunction(request)),
-      hash_validator_(CreateHashValidator(request)) {}
+      hash_validator_(CreateHashValidator(request)),
+      bucket_name_(request.bucket_name()),
+      object_name_(request.object_name()) {
+  if (request.HasOption<ReadRange>() && request.HasOption<ReadFromOffset>()) {
+    auto const range = request.GetOption<ReadRange>().value();
+    auto const offset = request.GetOption<ReadFromOffset>().value();
+    auto const begin = (std::max)(range.begin, offset);
+    if (range.end > begin) {
+      remain_ = range.end - begin;
+    }
+  } else if (request.HasOption<ReadRange>()) {
+    auto const range = request.GetOption<ReadRange>().value();
+    if (range.end > range.begin) {
+      remain_ = range.end - range.begin;
+    }
+  } else if (request.HasOption<ReadLast>()) {
+    auto const last = request.GetOption<ReadLast>().value();
+    if (last > 0) {
+      remain_ = last;
+    }
+  }
+}
 
-ObjectReadStreambuf::ObjectReadStreambuf(ReadObjectRangeRequest const&,
+ObjectReadStreambuf::ObjectReadStreambuf(ReadObjectRangeRequest const& request,
                                          Status status)
     : source_(new ObjectReadErrorSource(status)),
       source_pos_(-1),
       hash_validator_(CreateNullHashValidator()),
-      status_(std::move(status)) {}
+      status_(std::move(status)),
+      bucket_name_(request.bucket_name()),
+      object_name_(request.object_name()) {}
 
 ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekpos(
     pos_type /*pos*/, std::ios_base::openmode /*which*/) {
@@ -77,6 +101,18 @@ ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
 bool ObjectReadStreambuf::IsOpen() const { return source_->IsOpen(); }
 
 void ObjectReadStreambuf::Close() {
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    if (!logged_warning_) {
+      logged_warning_ = true;
+      if (remain_.has_value() && *remain_ < 0) {
+        GCP_LOG(WARNING)
+            << "storage: received " << -(*remain_)
+            << " more bytes than requested from GCS for bucket \""
+            << bucket_name_ << "\", object \"" << object_name_ << "\"";
+      }
+    }
+  }
   auto response = source_->Close();
   if (!response.ok()) {
     ReportError(std::move(response).status());
@@ -211,6 +247,13 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   // If there was an error set the internal state, but we still return the
   // number of bytes.
   if (!read) return run_validator_if_closed(std::move(read).status());
+
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    if (remain_.has_value()) {
+      *remain_ -= read->bytes_received;
+    }
+  }
 
   hash_function_->Update(absl::string_view{s + offset, read->bytes_received});
   hash_validator_->ProcessHashValues(read->hashes);

@@ -26,6 +26,7 @@
 #include <cstdint>
 #include <memory>
 #include <mutex>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -46,14 +47,25 @@ class ReadRange {
   using ReadResponse = storage::AsyncReaderConnection::ReadResponse;
 
   ReadRange(std::int64_t offset, std::int64_t length,
+            std::string bucket_name = "", std::string object_name = "",
             std::shared_ptr<storage::internal::HashFunction> hash_function =
                 storage::internal::CreateNullHashFunction(),
             std::unique_ptr<storage::internal::HashValidator> hash_validator =
                 storage::internal::CreateNullHashValidator())
       : offset_(offset),
         length_(length),
+        requested_length_(length),
+        bucket_name_(std::move(bucket_name)),
+        object_name_(std::move(object_name)),
         hash_function_(std::move(hash_function)),
         hash_validator_(std::move(hash_validator)) {}
+
+  ReadRange(std::int64_t offset, std::int64_t length,
+            std::shared_ptr<storage::internal::HashFunction> hash_function,
+            std::unique_ptr<storage::internal::HashValidator> hash_validator =
+                storage::internal::CreateNullHashValidator())
+      : ReadRange(offset, length, "", "", std::move(hash_function),
+                  std::move(hash_validator)) {}
 
   bool IsDone() const;
 
@@ -67,10 +79,16 @@ class ReadRange {
 
  private:
   void Notify(std::unique_lock<std::mutex> lk, storage::ReadPayload p);
+  void CheckOverrun();
 
   mutable std::mutex mu_;
   std::int64_t offset_;
   std::int64_t length_;
+  std::int64_t requested_length_;
+  std::int64_t received_bytes_ = 0;
+  std::string bucket_name_;
+  std::string object_name_;
+  bool logged_warning_ = false;
   absl::optional<storage::ReadPayload> payload_;
   absl::optional<Status> status_;
   absl::optional<promise<ReadResponse>> wait_;

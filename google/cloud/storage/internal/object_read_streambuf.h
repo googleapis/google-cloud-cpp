@@ -25,8 +25,10 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <vector>
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -68,6 +70,10 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   std::multimap<std::string, std::string> const& headers() const {
     return headers_;
   }
+  absl::optional<std::int64_t> Remain() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return remain_;
+  }
 
   // See ObjectReadStream for details about these attributes.
   absl::optional<std::int64_t> const& generation() const { return generation_; }
@@ -106,6 +112,11 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   absl::optional<std::string> storage_class_;
   absl::optional<std::uint64_t> size_;
   absl::optional<std::string> transformation_;
+  mutable std::mutex mu_;
+  std::string bucket_name_;
+  std::string object_name_;
+  absl::optional<std::int64_t> remain_;
+  bool logged_warning_ = false;
 };
 
 }  // namespace internal

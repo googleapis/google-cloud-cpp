@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <utility>
@@ -26,6 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::ScopedLog;
+using ::testing::HasSubstr;
 using ::testing::Return;
 
 TEST(ObjectReadStreambufTest, FailedTellg) {
@@ -171,6 +174,43 @@ TEST(ObjectReadStreambufTest, WrongSeek) {
   stream.clear();
   stream.seekg(0, std::ios_base::end);
   EXPECT_TRUE(stream.fail());
+}
+
+TEST(ObjectReadStreambufTest, OverrunLogging) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{10, {}}))
+      .WillOnce(Return(ReadSourceResult{15, {}}));
+  EXPECT_CALL(*read_source, Close())
+      .WillRepeatedly(Return(HttpResponse{}));
+
+  ObjectReadStreambuf buf(
+      ReadObjectRangeRequest("my-bucket", "my-object")
+          .set_option(ReadRange(0, 20)),
+      std::move(read_source));
+
+  std::istream stream(&buf);
+  std::vector<char> v(25);
+  stream.read(v.data(), 10);
+  EXPECT_TRUE(log.ExtractLines().empty());
+  stream.read(v.data() + 10, 15);
+  EXPECT_TRUE(log.ExtractLines().empty());
+
+  EXPECT_EQ(buf.Remain().value(), -5);
+
+  buf.Close();
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+
+  buf.Close();
+  EXPECT_TRUE(log.ExtractLines().empty());
 }
 
 }  // namespace

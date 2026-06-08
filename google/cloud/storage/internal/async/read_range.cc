@@ -61,6 +61,7 @@ void ReadRange::OnFinish(Status status) {
   std::unique_lock<std::mutex> lk(mu_);
   if (status_) return;
   status_ = std::move(status);
+  CheckOverrun();
   if (!wait_) return;
   auto p = std::move(*wait_);
   wait_.reset();
@@ -77,15 +78,18 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
       hash_function_->Update(offset_, content, check_summed_data->crc32c());
   if (!status.ok()) {
     status_ = std::move(status);
+    CheckOverrun();
     return Notify(std::move(lk), ReadPayloadImpl::Make(std::move(content)));
   }
 
   offset_ += content.size();
+  received_bytes_ += content.size();
   if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
   auto p = ReadPayloadImpl::Make(std::move(content));
 
   if (data.range_end()) {
     status_ = Status{};
+    CheckOverrun();
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
     if (result.is_mismatch) {
       status_ = google::cloud::internal::DataLossError(
@@ -112,6 +116,19 @@ void ReadRange::Notify(std::unique_lock<std::mutex> lk,
   payload_.reset();
   lk.unlock();
   wait.set_value(std::move(p));
+}
+
+void ReadRange::CheckOverrun() {
+  if (!logged_warning_) {
+    logged_warning_ = true;
+    if (requested_length_ > 0 && received_bytes_ > requested_length_) {
+      GCP_LOG(WARNING) << "storage: received "
+                       << (received_bytes_ - requested_length_)
+                       << " more bytes than requested from GCS for bucket \""
+                       << bucket_name_ << "\", object \"" << object_name_
+                       << "\"";
+    }
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
