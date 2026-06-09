@@ -109,7 +109,10 @@ try {
     # 10. Run the build script using Git Bash
     $GitBashPath = "C:\Program Files\Git\bin\bash.exe"
     Write-Host "Executing windows-cmake.sh..."
-    & $GitBashPath -c "ci/gha/builds/windows-cmake.sh $BuildType $Features"
+    & $GitBashPath -c "ci/gha/builds/windows-cmake.sh $BuildType $Features" 2>&1
+    if ($LastExitCode -ne 0) {
+        throw "windows-cmake.sh failed with exit code: $LastExitCode"
+    }
 
     # Report success status
     $Status = @{ status = "success" }
