@@ -1,0 +1,97 @@
+options:
+  dynamic_substitutions: true
+  substitutionOption: 'ALLOW_LOOSE'
+
+substitutions:
+  _ZONE: 'us-east1-b'
+  _MACHINE_TYPE: 'n2-standard-16' # 16 vCPUs, 64 GB RAM for fast compilation
+  _IMAGE_FAMILY: 'windows-server-2022-dc-core-cplusplus' # Public image family with VS and MSVC
+  _IMAGE_PROJECT: 'windows-cloud'
+  _SERVICE_ACCOUNT: 'windows-builder-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com'
+  _CACHE_BUCKET: 'cloud-cpp-testing-resources_cloudbuild'
+  _LOGS_BUCKET: 'cloud-cpp-testing-resources_cloudbuild'
+  _BUILD_TYPE: 'Release'
+  _FEATURES: 'storage'
+
+steps:
+  # Step 1: Compress and upload workspace source code to GCS
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'upload-source'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        tar --exclude='.git' -czf "source-${BUILD_ID}.tar.gz" .
+        gcloud storage cp "source-${BUILD_ID}.tar.gz" "gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz"
+        rm "source-${BUILD_ID}.tar.gz"
+
+  # Step 2: Create ephemeral GCE Windows Instance and run startup script
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'create-vm'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        vcpkg_version=$(cat ci/etc/vcpkg-version.txt)
+        gcloud compute instances create "wincmake-${BUILD_ID}" \
+          --project="${PROJECT_ID}" \
+          --zone="${_ZONE}" \
+          --machine-type="${_MACHINE_TYPE}" \
+          --image-family="${_IMAGE_FAMILY}" \
+          --image-project="${_IMAGE_PROJECT}" \
+          --service-account="${_SERVICE_ACCOUNT}" \
+          --scopes="https://www.googleapis.com/auth/cloud-platform" \
+          --metadata="source-archive=gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz,build-type=${_BUILD_TYPE},features=${_FEATURES},logs-bucket=gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID},vcpkg-version=${vcpkg_version}" \
+          --metadata-from-file="windows-startup-script-ps1=ci/cloudbuild/builds/windows-startup.ps1"
+
+  # Step 3: Poll GCS for status file and stream build logs
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'poll-build-status'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Waiting for build completion..."
+        # Wait a bit for the VM to start up and begin writing logs
+        sleep 60
+
+        # Read the logs continuously
+        gcloud storage cp "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/build.log" build.log 2>/dev/null || touch build.log
+        log_lines=$(wc -l < build.log)
+
+        until gcloud storage objects describe "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/status.json" >/dev/null 2>&1; do
+          sleep 20
+          if gcloud storage cp "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/build.log" build.log 2>/dev/null; then
+             new_lines=$(wc -l < build.log)
+             if [ "$new_lines" -gt "$log_lines" ]; then
+                tail -n +"$((log_lines + 1))" build.log
+                log_lines=$new_lines
+             fi
+          fi
+        done
+
+        # Output final logs and verify success status
+        gcloud storage cp "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/build.log" build.log 2>/dev/null
+        new_lines=$(wc -l < build.log)
+        if [ "$new_lines" -gt "$log_lines" ]; then
+           tail -n +"$((log_lines + 1))" build.log
+        fi
+
+        status=$(gcloud storage cat "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/status.json" | grep -o '"status": "[^"]*' | cut -d'"' -f4)
+        if [ "$status" != "success" ]; then
+          echo "Build failed!"
+          exit 1
+        fi
+
+# Step 4: Ensure VM cleanup (runs always, even if compilation or polling fails)
+teardown:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'cleanup-vm'
+    entrypoint: 'bash'
+    allowFailure: true
+    waitFor: ['-']
+    args:
+      - '-c'
+      - |
+        gcloud compute instances delete "wincmake-${BUILD_ID}" --zone="${_ZONE}" --quiet
+        gcloud storage rm "gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz" || true
