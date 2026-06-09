@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@ github:
   push:
     branch: main
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: asan-ci
+name: tsan-storage-ci
 substitutions:
-  _BUILD_NAME: asan
+  _BUILD_NAME: tsan
   _DISTRO: fedora-latest-bazel
-  _INTEGRATION_LIBRARIES: all_bar_storage
+  _INTEGRATION_LIBRARIES: storage
   _TRIGGER_TYPE: ci
 tags:
 - ci
