@@ -54,11 +54,13 @@ args+=("-DCMAKE_EXE_LINKER_FLAGS=/MANIFEST:NO")
 
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
-time {
-  # Always run //google/cloud:status_test in case the list of targets has
-  # no unit tests.
-  io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="kms"
-}
+  if ! io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="kms"; then
+    if [[ -f "${CMAKE_OUT}/vcpkg-manifest-install.log" ]]; then
+      io::log_red "vcpkg installation failed! Content of ${CMAKE_OUT}/vcpkg-manifest-install.log:"
+      cat "${CMAKE_OUT}/vcpkg-manifest-install.log"
+    fi
+    exit 1
+  fi
 
 if command -v sccache >/dev/null 2>&1; then
   io::log "Current sccache stats"
