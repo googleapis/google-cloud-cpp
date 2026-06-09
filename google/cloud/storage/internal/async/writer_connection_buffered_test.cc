@@ -798,6 +798,26 @@ TEST(WriteConnectionBuffered, CloseEmpty) {
   EXPECT_STATUS_OK(close.get());
 }
 
+TEST(WriteConnectionBuffered, DuplicateCloseFails) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Close).WillOnce([](auto) {
+    return make_ready_future(Status{});
+  });
+
+  MockFactory mock_factory;
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto close1 = connection->Close({});
+  auto close2 = connection->Close({});
+
+  EXPECT_STATUS_OK(close1.get());
+  EXPECT_THAT(close2.get(), StatusIs(StatusCode::kFailedPrecondition));
+}
+
 TEST(WriteConnectionBuffered, CloseWithPayload) {
   AsyncSequencer<bool> sequencer;
 

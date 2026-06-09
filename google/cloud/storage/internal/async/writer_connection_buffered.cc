@@ -124,6 +124,10 @@ class AsyncWriterConnectionBufferedState
 
   future<Status> Close(storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
+    if (close_ || closed_promise_completed_) {
+      return make_ready_future(internal::FailedPreconditionError(
+          "Close() already called", GCP_ERROR_INFO()));
+    }
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     close_ = true;
     // Force flush to drain the buffer first.
@@ -373,7 +377,7 @@ class AsyncWriterConnectionBufferedState
   }
 
   void Resume(Status const& s) {
-    // Capture the finalization and close state before starting the async
+    // Capture the finalization and close state *before* starting the async
     // resume.
     bool was_finalizing;
     bool was_closing;
@@ -399,7 +403,7 @@ class AsyncWriterConnectionBufferedState
       StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> impl) {
     std::unique_lock<std::mutex> lk(mu_);
 
-    // Resume was not triggered by finalization or close failure.
+    // Resume was *not* triggered by finalization or close failure.
     if (!impl) return SetError(std::move(lk), std::move(impl).status());
     // On successful resume, immediately update the active connection.
     impl_ = std::move(*impl);
@@ -423,7 +427,7 @@ class AsyncWriterConnectionBufferedState
     }
 
     if (was_closing) {
-      // If resuming due to a close error, we *must* complete the
+      // If resuming due to a close error, we must complete the
       // closed_ promise now, based on the resume attempt's outcome.
       if (absl::holds_alternative<google::storage::v2::Object>(state)) {
         // Resume found the object is finalized (which implies closed). Success.
@@ -492,7 +496,7 @@ class AsyncWriterConnectionBufferedState
     auto handlers = ClearHandlers(lk);
     // Also clear any pending flush promises on success.
     auto pending_flushes = std::move(pending_flush_promises_);
-    auto p = std::move(closed_);  // Move the member promise
+    auto p = std::move(closed_);  // Move the member promise.
     lk.unlock();
     // Notify handlers and pending flushes after releasing the lock.
     for (auto& h : handlers) h->Execute(status);
