@@ -43,7 +43,13 @@ try {
         $env:Path += ";C:\Program Files\CMake\bin"
     }
 
-    # 5. Download and Install sccache
+    # 5. Ensure Ninja is installed and in the PATH
+    if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing Ninja..."
+        choco install -y ninja --no-progress
+    }
+
+    # 6. Download and Install sccache
     Write-Host "Installing sccache..."
     $SccacheDir = "C:\sccache"
     New-Item -ItemType Directory -Force -Path $SccacheDir
@@ -52,7 +58,7 @@ try {
     tar -xzf "$SccacheDir\sccache.tar.gz" -C $SccacheDir --strip-components=1
     $env:Path += ";$SccacheDir"
 
-    # 6. Download and bootstrap vcpkg
+    # 7. Download and bootstrap vcpkg
     Write-Host "Setting up vcpkg..."
     $VcpkgDir = "C:\vcpkg"
     New-Item -ItemType Directory -Force -Path $VcpkgDir
@@ -61,7 +67,7 @@ try {
     tar -xzf "$VcpkgDir\vcpkg.tar.gz" -C $VcpkgDir --strip-components=1
     & "$VcpkgDir\bootstrap-vcpkg.sh" -disableMetrics
 
-    # 7. Extract workspace source codebase
+    # 8. Extract workspace source codebase
     Write-Host "Extracting source..."
     $Workspace = "C:\workspace"
     New-Item -ItemType Directory -Force -Path $Workspace
@@ -70,12 +76,12 @@ try {
     tar -xzf source.tar.gz
     Remove-Item source.tar.gz
 
-    # 8. Configure environment for build
+    # 9. Configure environment for build
     $env:VCPKG_ROOT = $VcpkgDir
     $env:CMAKE_OUT = "C:\b"       # Directory for build output (keep it short)
     $env:EXECUTE_INTEGRATION_TESTS = "false"
 
-    # 9. Run MSVC Developer Environment Config
+    # 10. Run MSVC Developer Environment Config
     # Ensure Visual Studio 2022 Build Tools with C++ workload is installed
     if (-not (Test-Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe")) {
         Write-Host "Installing Visual Studio 2022 Build Tools..."
@@ -106,7 +112,7 @@ try {
         }
     }
 
-    # 10. Run the build script using Git Bash
+    # 11. Run the build script using Git Bash
     $GitBashPath = "C:\Program Files\Git\bin\bash.exe"
     Write-Host "Executing windows-cmake.sh..."
     & $GitBashPath -c "ci/gha/builds/windows-cmake.sh $BuildType $Features" 2>&1
