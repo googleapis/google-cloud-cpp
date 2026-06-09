@@ -5,7 +5,7 @@ options:
 substitutions:
   _ZONE: 'us-east1-b'
   _MACHINE_TYPE: 'n2-standard-16' # 16 vCPUs, 64 GB RAM for fast compilation
-  _IMAGE_FAMILY: 'windows-server-2022-dc-core-cplusplus' # Public image family with VS and MSVC
+  _IMAGE_FAMILY: 'windows-2022' # Public image family
   _IMAGE_PROJECT: 'windows-cloud'
   _SERVICE_ACCOUNT: 'windows-builder-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com'
   _CACHE_BUCKET: 'cloud-cpp-testing-resources_cloudbuild'

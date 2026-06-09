@@ -65,6 +65,12 @@ try {
     $env:EXECUTE_INTEGRATION_TESTS = "false"
 
     # 8. Run MSVC Developer Environment Config
+    # Ensure Visual Studio 2022 Build Tools with C++ workload is installed
+    if (-not (Test-Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe")) {
+        Write-Host "Installing Visual Studio 2022 Build Tools..."
+        choco install -y visualstudio2022buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows11SDK.22000 --includeRecommended --quiet --noclose" --no-progress
+    }
+
     # Locates and runs vcvarsall.bat to configure compile paths
     Write-Host "Locating VS / MSVC compiler..."
     $VsInstallPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
