@@ -44,13 +44,20 @@ steps:
           --metadata="source-archive=gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz,build-type=${_BUILD_TYPE},features=${_FEATURES},logs-bucket=gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID},vcpkg-version=${vcpkg_version}" \
           --metadata-from-file="windows-startup-script-ps1=ci/cloudbuild/builds/windows-startup.ps1"
 
-  # Step 3: Poll GCS for status file and stream build logs
+  # Step 3: Poll GCS for status file and stream build logs, then clean up GCE VM
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: 'poll-build-status'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
+        cleanup() {
+          echo "Cleaning up VM and source archive..."
+          gcloud compute instances delete "wincmake-${BUILD_ID}" --zone="${_ZONE}" --quiet || true
+          gcloud storage rm "gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz" || true
+        }
+        trap cleanup EXIT
+
         echo "Waiting for build completion..."
         # Wait a bit for the VM to start up and begin writing logs
         sleep 60
@@ -82,16 +89,3 @@ steps:
           echo "Build failed!"
           exit 1
         fi
-
-# Step 4: Ensure VM cleanup (runs always, even if compilation or polling fails)
-teardown:
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    id: 'cleanup-vm'
-    entrypoint: 'bash'
-    allowFailure: true
-    waitFor: ['-']
-    args:
-      - '-c'
-      - |
-        gcloud compute instances delete "wincmake-${BUILD_ID}" --zone="${_ZONE}" --quiet
-        gcloud storage rm "gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz" || true
