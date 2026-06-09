@@ -18,21 +18,32 @@ try {
     Write-Host "Features: $Features"
     Write-Host "Vcpkg Version: $VcpkgVersion"
 
-    # 2. Ensure Git is installed and in the PATH
+    # 2. Ensure Chocolatey is installed
+    if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+        if (-not (Test-Path "C:\ProgramData\chocolatey\bin\choco.exe")) {
+            Write-Host "Installing Chocolatey..."
+            Set-ExecutionPolicy Bypass -Scope Process -Force
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+            Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        }
+        $env:Path += ";C:\ProgramData\chocolatey\bin"
+    }
+
+    # 3. Ensure Git is installed and in the PATH
     if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
         Write-Host "Installing Git..."
         choco install -y git --no-progress
         $env:Path += ";C:\Program Files\Git\cmd"
     }
 
-    # 3. Ensure CMake is installed and in the PATH
+    # 4. Ensure CMake is installed and in the PATH
     if (-not (Get-Command cmake -ErrorAction SilentlyContinue)) {
         Write-Host "Installing CMake..."
         choco install -y cmake --version 3.31.6 --no-progress
         $env:Path += ";C:\Program Files\CMake\bin"
     }
 
-    # 4. Download and Install sccache
+    # 5. Download and Install sccache
     Write-Host "Installing sccache..."
     $SccacheDir = "C:\sccache"
     New-Item -ItemType Directory -Force -Path $SccacheDir
@@ -41,7 +52,7 @@ try {
     tar -xzf "$SccacheDir\sccache.tar.gz" -C $SccacheDir --strip-components=1
     $env:Path += ";$SccacheDir"
 
-    # 5. Download and bootstrap vcpkg
+    # 6. Download and bootstrap vcpkg
     Write-Host "Setting up vcpkg..."
     $VcpkgDir = "C:\vcpkg"
     New-Item -ItemType Directory -Force -Path $VcpkgDir
@@ -50,7 +61,7 @@ try {
     tar -xzf "$VcpkgDir\vcpkg.tar.gz" -C $VcpkgDir --strip-components=1
     & "$VcpkgDir\bootstrap-vcpkg.sh" -disableMetrics
 
-    # 6. Extract workspace source codebase
+    # 7. Extract workspace source codebase
     Write-Host "Extracting source..."
     $Workspace = "C:\workspace"
     New-Item -ItemType Directory -Force -Path $Workspace
@@ -59,12 +70,12 @@ try {
     tar -xzf source.tar.gz
     Remove-Item source.tar.gz
 
-    # 7. Configure environment for build
+    # 8. Configure environment for build
     $env:VCPKG_ROOT = $VcpkgDir
     $env:CMAKE_OUT = "C:\b"       # Directory for build output (keep it short)
     $env:EXECUTE_INTEGRATION_TESTS = "false"
 
-    # 8. Run MSVC Developer Environment Config
+    # 9. Run MSVC Developer Environment Config
     # Ensure Visual Studio 2022 Build Tools with C++ workload is installed
     if (-not (Test-Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe")) {
         Write-Host "Installing Visual Studio 2022 Build Tools..."
@@ -85,7 +96,7 @@ try {
         }
     }
 
-    # 9. Run the build script using Git Bash
+    # 10. Run the build script using Git Bash
     $GitBashPath = "C:\Program Files\Git\bin\bash.exe"
     Write-Host "Executing windows-cmake.sh..."
     & $GitBashPath -c "ci/gha/builds/windows-cmake.sh $BuildType $Features"
