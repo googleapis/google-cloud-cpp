@@ -160,7 +160,7 @@ RegionalAccessBoundaryTokenManager::RegionalAccessBoundaryTokenManager(
 
 bool RegionalAccessBoundaryTokenManager::DoesEndpointRequireToken(
     std::string_view endpoint) {
-  static constexpr std::array<char const*, 4> kRegionalEndpointSuffixes = {
+  static constexpr std::array<std::string_view, 4> kRegionalEndpointSuffixes = {
       ".rep.googleapis.com",
       ".rep.sandbox.googleapis.com",
       ".rep.mtls.googleapis.com",
