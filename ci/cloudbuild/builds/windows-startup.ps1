@@ -46,7 +46,12 @@ try {
     # 5. Ensure Ninja is installed and in the PATH
     if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
         Write-Host "Installing Ninja..."
-        choco install -y ninja --no-progress
+        $NinjaDir = "C:\ninja"
+        New-Item -ItemType Directory -Force -Path $NinjaDir
+        Invoke-WebRequest -Uri "https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip" -OutFile "$NinjaDir\ninja.zip"
+        Expand-Archive -Path "$NinjaDir\ninja.zip" -DestinationPath $NinjaDir -Force
+        Remove-Item "$NinjaDir\ninja.zip"
+        $env:Path += ";$NinjaDir"
     }
 
     # 6. Download and Install sccache
