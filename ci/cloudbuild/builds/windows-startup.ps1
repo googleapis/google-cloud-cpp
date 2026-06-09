@@ -84,7 +84,7 @@ try {
 
     # Locates and runs vcvarsall.bat to configure compile paths
     Write-Host "Locating VS / MSVC compiler..."
-    $VsInstallPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
+    $VsInstallPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -property installationPath
     if (-not $VsInstallPath) {
         throw "Visual Studio installation not found!"
     }
