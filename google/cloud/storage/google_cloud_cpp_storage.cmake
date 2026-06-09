@@ -74,6 +74,8 @@ add_library(
     internal/bucket_access_control_parser.h
     internal/bucket_acl_requests.cc
     internal/bucket_acl_requests.h
+    internal/bucket_metadata_cache.cc
+    internal/bucket_metadata_cache.h
     internal/bucket_metadata_parser.cc
     internal/bucket_metadata_parser.h
     internal/bucket_requests.cc

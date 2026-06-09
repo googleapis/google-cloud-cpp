@@ -15,105 +15,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 
+#include "google/cloud/storage/internal/bucket_metadata_cache.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
-#include "absl/types/optional.h"
 #include <future>
-#include <list>
 #include <memory>
 #include <mutex>
 #include <string>
-#include <unordered_map>
-#include <unordered_set>
 #include <vector>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-struct BucketCacheEntry {
-  std::string id;
-  std::string location;
-};
-
-class BucketMetadataCache {
- public:
-  explicit BucketMetadataCache(std::size_t max_size = 10000)
-      : max_size_(max_size) {}
-
-  absl::optional<BucketCacheEntry> Get(std::string const& bucket_name) {
-    std::lock_guard<std::mutex> lock(mu_);
-    auto it = map_.find(bucket_name);
-    if (it == map_.end()) return absl::nullopt;
-
-    list_.erase(it->second.second);
-    list_.push_front(bucket_name);
-    it->second.second = list_.begin();
-    return it->second.first;
-  }
-
-  void Put(std::string const& bucket_name, BucketCacheEntry entry) {
-    std::lock_guard<std::mutex> lock(mu_);
-    auto it = map_.find(bucket_name);
-    if (it != map_.end()) {
-      it->second.first = entry;
-      list_.erase(it->second.second);
-      list_.push_front(bucket_name);
-      it->second.second = list_.begin();
-      return;
-    }
-
-    if (map_.size() >= max_size_) {
-      auto oldest = list_.back();
-      list_.pop_back();
-      map_.erase(oldest);
-    }
-
-    list_.push_front(bucket_name);
-    map_[bucket_name] = {std::move(entry), list_.begin()};
-  }
-
-  void Invalidate(std::string const& bucket_name) {
-    std::lock_guard<std::mutex> lock(mu_);
-    auto it = map_.find(bucket_name);
-    if (it != map_.end()) {
-      list_.erase(it->second.second);
-      map_.erase(it);
-    }
-  }
-
-  void Clear() {
-    std::lock_guard<std::mutex> lock(mu_);
-    map_.clear();
-    list_.clear();
-    in_flight_fetch_.clear();
-  }
-
-  bool StartFetch(std::string const& bucket_name) {
-    std::lock_guard<std::mutex> lock(mu_);
-    if (in_flight_fetch_.find(bucket_name) != in_flight_fetch_.end()) {
-      return false;
-    }
-    in_flight_fetch_.insert(bucket_name);
-    return true;
-  }
-
-  void EndFetch(std::string const& bucket_name) {
-    std::lock_guard<std::mutex> lock(mu_);
-    in_flight_fetch_.erase(bucket_name);
-  }
-
- private:
-  std::size_t max_size_;
-  std::mutex mu_;
-  std::list<std::string> list_;
-  std::unordered_map<std::string, std::pair<BucketCacheEntry,
-                                            std::list<std::string>::iterator>>
-      map_;
-  std::unordered_set<std::string> in_flight_fetch_;
-};
 
 class TracingConnection : public storage::internal::StorageConnection {
  public:
