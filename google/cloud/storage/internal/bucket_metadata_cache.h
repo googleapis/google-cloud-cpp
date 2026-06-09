@@ -48,6 +48,8 @@ class BucketMetadataCache {
   void EndFetch(std::string const& bucket_name);
 
  private:
+  void MoveToFront(std::list<std::string>::iterator it);
+
   std::size_t max_size_;
   std::mutex mu_;
   std::list<std::string> list_;

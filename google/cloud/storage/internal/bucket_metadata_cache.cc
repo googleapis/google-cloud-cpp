@@ -21,27 +21,27 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void BucketMetadataCache::MoveToFront(std::list<std::string>::iterator it) {
+  list_.splice(list_.begin(), list_, it);
+}
+
 absl::optional<BucketCacheEntry> BucketMetadataCache::Get(
     std::string const& bucket_name) {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   auto it = map_.find(bucket_name);
   if (it == map_.end()) return absl::nullopt;
 
-  list_.erase(it->second.second);
-  list_.push_front(bucket_name);
-  it->second.second = list_.begin();
+  MoveToFront(it->second.second);
   return it->second.first;
 }
 
 void BucketMetadataCache::Put(std::string const& bucket_name,
                               BucketCacheEntry entry) {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   auto it = map_.find(bucket_name);
   if (it != map_.end()) {
     it->second.first = std::move(entry);
-    list_.erase(it->second.second);
-    list_.push_front(bucket_name);
-    it->second.second = list_.begin();
+    MoveToFront(it->second.second);
     return;
   }
 
@@ -56,7 +56,7 @@ void BucketMetadataCache::Put(std::string const& bucket_name,
 }
 
 void BucketMetadataCache::Invalidate(std::string const& bucket_name) {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   auto it = map_.find(bucket_name);
   if (it != map_.end()) {
     list_.erase(it->second.second);
@@ -65,14 +65,14 @@ void BucketMetadataCache::Invalidate(std::string const& bucket_name) {
 }
 
 void BucketMetadataCache::Clear() {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   map_.clear();
   list_.clear();
   in_flight_fetch_.clear();
 }
 
 bool BucketMetadataCache::StartFetch(std::string const& bucket_name) {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   if (in_flight_fetch_.find(bucket_name) != in_flight_fetch_.end()) {
     return false;
   }
@@ -81,7 +81,7 @@ bool BucketMetadataCache::StartFetch(std::string const& bucket_name) {
 }
 
 void BucketMetadataCache::EndFetch(std::string const& bucket_name) {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   in_flight_fetch_.erase(bucket_name);
 }
 
