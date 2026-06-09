@@ -17,6 +17,7 @@
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
+#include <array>
 
 namespace google {
 namespace cloud {
@@ -159,9 +160,19 @@ RegionalAccessBoundaryTokenManager::RegionalAccessBoundaryTokenManager(
 
 bool RegionalAccessBoundaryTokenManager::DoesEndpointRequireToken(
     std::string_view endpoint) {
+  static constexpr std::array<char const*, 4> kRegionalEndpointSuffixes = {
+      ".rep.googleapis.com",
+      ".rep.sandbox.googleapis.com",
+      ".rep.mtls.googleapis.com",
+      ".rep.mtls.sandbox.googleapis.com",
+  };
+
   return absl::EndsWithIgnoreCase(endpoint, ".googleapis.com") &&
-         !absl::EndsWithIgnoreCase(endpoint, ".rep.googleapis.com") &&
-         !absl::EndsWithIgnoreCase(endpoint, (".rep.sandbox.googleapis.com"));
+         std::all_of(kRegionalEndpointSuffixes.begin(),
+                     kRegionalEndpointSuffixes.end(),
+                     [&](std::string_view suffix) {
+                       return !absl::EndsWithIgnoreCase(endpoint, suffix);
+                     });
 }
 
 bool RegionalAccessBoundaryTokenManager::IsTokenValid(

@@ -120,12 +120,18 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   auto header = manager->GetAllowedLocationsHeader(
       request, std::chrono::system_clock::now(), "service.rep.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
-
+  auto header_mtls = manager->GetAllowedLocationsHeader(
+      request, std::chrono::system_clock::now(),
+      "service.rep.mtls.googleapis.com");
+  EXPECT_THAT(header_mtls, IsOkAndHolds(IsEmpty()));
   auto header_sandbox = manager->GetAllowedLocationsHeader(
       request, std::chrono::system_clock::now(),
       "service.rep.sandbox.googleapis.com");
   EXPECT_THAT(header_sandbox, IsOkAndHolds(IsEmpty()));
-
+  auto header_mtls_sandbox = manager->GetAllowedLocationsHeader(
+      request, std::chrono::system_clock::now(),
+      "service.rep.mtls.sandbox.googleapis.com");
+  EXPECT_THAT(header_mtls_sandbox, IsOkAndHolds(IsEmpty()));
   auto header_non_gdu = manager->GetAllowedLocationsHeader(
       request, std::chrono::system_clock::now(), "service.bar.com");
   EXPECT_THAT(header_non_gdu, IsOkAndHolds(IsEmpty()));
