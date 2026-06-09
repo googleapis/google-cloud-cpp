@@ -43,6 +43,7 @@ storage_client_unit_tests = [
     "idempotency_policy_test.cc",
     "internal/base64_test.cc",
     "internal/bucket_acl_requests_test.cc",
+    "internal/bucket_metadata_cache_test.cc",
     "internal/bucket_requests_test.cc",
     "internal/complex_option_test.cc",
     "internal/compute_engine_util_test.cc",
