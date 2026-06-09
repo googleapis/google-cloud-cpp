@@ -79,7 +79,17 @@ try {
     # Ensure Visual Studio 2022 Build Tools with C++ workload is installed
     if (-not (Test-Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe")) {
         Write-Host "Installing Visual Studio 2022 Build Tools..."
-        choco install -y visualstudio2022buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows11SDK.22000 --includeRecommended --quiet --noclose" --no-progress
+        $VsBootstrapperPath = "C:\vs_buildtools.exe"
+        Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vs_buildtools.exe" -OutFile $VsBootstrapperPath
+        
+        Write-Host "Running Visual Studio Installer..."
+        $Process = Start-Process -FilePath $VsBootstrapperPath -ArgumentList "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --passive --norestart --wait" -Wait -NoNewWindow -PassThru
+        
+        if ($Process.ExitCode -ne 0 -and $Process.ExitCode -ne 3010) {
+            throw "Visual Studio Build Tools installation failed with exit code: $($Process.ExitCode)"
+        }
+        Write-Host "Visual Studio Build Tools installed successfully."
+        Remove-Item $VsBootstrapperPath
     }
 
     # Locates and runs vcvarsall.bat to configure compile paths
