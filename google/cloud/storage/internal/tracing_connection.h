@@ -187,22 +187,22 @@ class TracingConnection : public storage::internal::StorageConnection {
                   std::string const& bucket_name);
   static void EnrichSpan(opentelemetry::trace::Span& span,
                          storage::BucketMetadata const& metadata);
+  static void EnrichSpan(opentelemetry::trace::Span& span,
+                         BucketCacheEntry const& entry);
   void MaybeTriggerBackgroundFetch(std::string const& bucket_name);
   void CleanupCompletedTasks();
-
-  template <typename T>
-  static void MaybeInvalidate(StatusOr<T> const& result,
-                              std::string const& bucket_name) {
-    if (!result.ok() && result.status().code() == StatusCode::kNotFound) {
-      cache().Invalidate(bucket_name);
-    }
-  }
 
   static void MaybeInvalidate(Status const& status,
                               std::string const& bucket_name) {
     if (!status.ok() && status.code() == StatusCode::kNotFound) {
       cache().Invalidate(bucket_name);
     }
+  }
+
+  template <typename T>
+  static void MaybeInvalidate(StatusOr<T> const& result,
+                              std::string const& bucket_name) {
+    MaybeInvalidate(result.status(), bucket_name);
   }
 
   static BucketMetadataCache& cache();

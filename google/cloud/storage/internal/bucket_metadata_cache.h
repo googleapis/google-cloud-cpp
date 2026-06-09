@@ -27,12 +27,19 @@
 
 namespace google {
 namespace cloud {
+namespace storage {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class BucketMetadata;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct BucketCacheEntry {
   std::string id;
   std::string location;
+
+  static BucketCacheEntry FromMetadata(storage::BucketMetadata const& m);
 };
 
 class BucketMetadataCache {

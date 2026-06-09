@@ -56,6 +56,12 @@ void TracingConnection::CleanupCompletedTasks() {
                   bg_tasks_.end());
 }
 
+void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
+                                   BucketCacheEntry const& entry) {
+  span.SetAttribute("gcp.resource.destination.id", entry.id);
+  span.SetAttribute("gcp.resource.destination.location", entry.location);
+}
+
 void TracingConnection::MaybeTriggerBackgroundFetch(
     std::string const& bucket_name) {
   CleanupCompletedTasks();
@@ -65,30 +71,20 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
   }
 
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  auto f =
-      std::async(std::launch::async, [this, bucket_name, current_options]() {
-        google::cloud::internal::OptionsSpan span(current_options);
-        storage::internal::GetBucketMetadataRequest request(bucket_name);
-        auto result = impl_->GetBucketMetadata(request);
+  auto f = std::async(std::launch::async, [this, bucket_name,
+                                           current_options]() {
+    google::cloud::internal::OptionsSpan span(current_options);
+    storage::internal::GetBucketMetadataRequest request(bucket_name);
+    auto result = impl_->GetBucketMetadata(request);
 
-        BucketCacheEntry entry;
-        if (result.ok()) {
-          entry.id = "projects/" + std::to_string(result->project_number()) +
-                     "/buckets/" + result->name();
-          entry.location = result->location();
-          if (result->location_type() == "multi-region" ||
-              result->location_type() == "dual-region") {
-            entry.location = "global";
-          }
-          cache().Put(bucket_name, std::move(entry));
-        } else if (result.status().code() == StatusCode::kPermissionDenied) {
-          entry.id = "projects/_/buckets/" + bucket_name;
-          entry.location = "global";
-          cache().Put(bucket_name, std::move(entry));
-        }
+    if (result.ok()) {
+      cache().Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
+    } else if (result.status().code() == StatusCode::kPermissionDenied) {
+      cache().Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
+    }
 
-        cache().EndFetch(bucket_name);
-      });
+    cache().EndFetch(bucket_name);
+  });
 
   bg_tasks_.push_back(std::move(f));
 }
@@ -98,8 +94,7 @@ void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
   if (bucket_name.empty()) return;
   auto entry = cache().Get(bucket_name);
   if (entry.has_value()) {
-    span.SetAttribute("gcp.resource.destination.id", entry->id);
-    span.SetAttribute("gcp.resource.destination.location", entry->location);
+    EnrichSpan(span, *entry);
   } else {
     MaybeTriggerBackgroundFetch(bucket_name);
   }
@@ -107,18 +102,9 @@ void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    storage::BucketMetadata const& metadata) {
-  std::string id = "projects/" + std::to_string(metadata.project_number()) +
-                   "/buckets/" + metadata.name();
-  std::string location = metadata.location();
-  if (metadata.location_type() == "multi-region" ||
-      metadata.location_type() == "dual-region") {
-    location = "global";
-  }
-  span.SetAttribute("gcp.resource.destination.id", id);
-  span.SetAttribute("gcp.resource.destination.location", location);
-
-  // Populate cache since we have metadata!
-  cache().Put(metadata.name(), {id, location});
+  auto entry = BucketCacheEntry::FromMetadata(metadata);
+  EnrichSpan(span, entry);
+  cache().Put(metadata.name(), std::move(entry));
 }
 
 StatusOr<storage::internal::ListBucketsResponse> TracingConnection::ListBuckets(
@@ -143,7 +129,11 @@ StatusOr<storage::BucketMetadata> TracingConnection::GetBucketMetadata(
   auto span = internal::MakeSpan("storage::Client::GetBucketMetadata");
   auto scope = opentelemetry::trace::Scope(span);
   auto result = impl_->GetBucketMetadata(request);
-  if (result.ok()) EnrichSpan(*span, *result);
+  if (result.ok()) {
+    EnrichSpan(*span, *result);
+  } else {
+    MaybeInvalidate(result, request.bucket_name());
+  }
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -153,7 +143,9 @@ StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteBucket(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->DeleteBucket(request);
-  MaybeInvalidate(result, request.bucket_name());
+  if (result.ok() || result.status().code() == StatusCode::kNotFound) {
+    cache().Invalidate(request.bucket_name());
+  }
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -162,7 +154,11 @@ StatusOr<storage::BucketMetadata> TracingConnection::UpdateBucket(
   auto span = internal::MakeSpan("storage::Client::UpdateBucket");
   auto scope = opentelemetry::trace::Scope(span);
   auto result = impl_->UpdateBucket(request);
-  if (result.ok()) EnrichSpan(*span, *result);
+  if (result.ok()) {
+    EnrichSpan(*span, *result);
+  } else {
+    MaybeInvalidate(result, request.metadata().name());
+  }
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -171,7 +167,11 @@ StatusOr<storage::BucketMetadata> TracingConnection::PatchBucket(
   auto span = internal::MakeSpan("storage::Client::PatchBucket");
   auto scope = opentelemetry::trace::Scope(span);
   auto result = impl_->PatchBucket(request);
-  if (result.ok()) EnrichSpan(*span, *result);
+  if (result.ok()) {
+    EnrichSpan(*span, *result);
+  } else {
+    MaybeInvalidate(result, request.bucket());
+  }
   return internal::EndSpan(*span, std::move(result));
 }
 
