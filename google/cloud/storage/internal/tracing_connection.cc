@@ -18,7 +18,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
 #include <algorithm>
-#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -48,7 +47,7 @@ void TracingConnection::ResetCacheForTesting() { cache().Clear(); }
 Options TracingConnection::options() const { return impl_->options(); }
 
 void TracingConnection::CleanupCompletedTasks() {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   bg_tasks_.erase(std::remove_if(bg_tasks_.begin(), bg_tasks_.end(),
                                  [](std::future<void> const& f) {
                                    return f.wait_for(std::chrono::seconds(0)) ==
@@ -71,14 +70,6 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
         google::cloud::internal::OptionsSpan span(current_options);
         storage::internal::GetBucketMetadataRequest request(bucket_name);
         auto result = impl_->GetBucketMetadata(request);
-        std::cout << "BG Thread: GetBucketMetadata returned ok: " << result.ok()
-                  << "\n";
-        if (!result.ok()) {
-          std::cout << "BG Thread: GetBucketMetadata status: "
-                    << result.status().message()
-                    << " code: " << static_cast<int>(result.status().code())
-                    << "\n";
-        }
 
         BucketCacheEntry entry;
         if (result.ok()) {
