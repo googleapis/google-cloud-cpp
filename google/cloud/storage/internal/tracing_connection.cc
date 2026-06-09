@@ -78,6 +78,12 @@ void TracingConnection::CleanupCompletedTasks() {
                   bg_tasks_.end());
 }
 
+void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
+                                   BucketCacheEntry const& entry) {
+  span.SetAttribute("gcp.resource.destination.id", entry.id);
+  span.SetAttribute("gcp.resource.destination.location", entry.location);
+}
+
 void TracingConnection::MaybeTriggerBackgroundFetch(
     std::string const& bucket_name) {
   CleanupCompletedTasks();
@@ -87,30 +93,20 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
   }
 
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  auto f =
-      std::async(std::launch::async, [this, bucket_name, current_options]() {
-        google::cloud::internal::OptionsSpan span(current_options);
-        storage::internal::GetBucketMetadataRequest request(bucket_name);
-        auto result = impl_->GetBucketMetadata(request);
+  auto f = std::async(std::launch::async, [this, bucket_name,
+                                           current_options]() {
+    google::cloud::internal::OptionsSpan span(current_options);
+    storage::internal::GetBucketMetadataRequest request(bucket_name);
+    auto result = impl_->GetBucketMetadata(request);
 
-        BucketCacheEntry entry;
-        if (result.ok()) {
-          entry.id = "projects/" + std::to_string(result->project_number()) +
-                     "/buckets/" + result->name();
-          entry.location = result->location();
-          if (result->location_type() == "multi-region" ||
-              result->location_type() == "dual-region") {
-            entry.location = "global";
-          }
-          cache().Put(bucket_name, std::move(entry));
-        } else if (result.status().code() == StatusCode::kPermissionDenied) {
-          entry.id = "projects/_/buckets/" + bucket_name;
-          entry.location = "global";
-          cache().Put(bucket_name, std::move(entry));
-        }
+    if (result.ok()) {
+      cache().Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
+    } else if (result.status().code() == StatusCode::kPermissionDenied) {
+      cache().Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
+    }
 
-        cache().EndFetch(bucket_name);
-      });
+    cache().EndFetch(bucket_name);
+  });
 
   bg_tasks_.push_back(std::move(f));
 }
@@ -120,8 +116,7 @@ void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
   if (bucket_name.empty()) return;
   auto entry = cache().Get(bucket_name);
   if (entry.has_value()) {
-    span.SetAttribute("gcp.resource.destination.id", entry->id);
-    span.SetAttribute("gcp.resource.destination.location", entry->location);
+    EnrichSpan(span, *entry);
   } else {
     MaybeTriggerBackgroundFetch(bucket_name);
   }
