@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_metadata_cache.h"
+#include "google/cloud/storage/bucket_metadata.h"
 #include <mutex>
 #include <utility>
 
@@ -20,6 +21,18 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+BucketCacheEntry BucketCacheEntry::FromMetadata(
+    storage::BucketMetadata const& m) {
+  std::string loc = m.location();
+  if (m.location_type() == "multi-region" ||
+      m.location_type() == "dual-region") {
+    loc = "global";
+  }
+  return {
+      "projects/" + std::to_string(m.project_number()) + "/buckets/" + m.name(),
+      std::move(loc)};
+}
 
 void BucketMetadataCache::MoveToFront(std::list<std::string>::iterator it) {
   list_.splice(list_.begin(), list_, it);
