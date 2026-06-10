@@ -268,7 +268,7 @@ class AsyncWriterConnectionBufferedState
         });
   }
 
-  void OnClose(Status result) {
+  void OnClose(Status const& result) {
     if (!result.ok()) return Resume(std::move(result));
     SetClosed(std::unique_lock<std::mutex>(mu_), std::move(result));
   }
