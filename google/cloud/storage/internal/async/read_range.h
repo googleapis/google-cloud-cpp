@@ -80,7 +80,8 @@ class ReadRange {
   future<ReadResponse> Read();
   void OnFinish(Status status);
 
-  void OnRead(google::storage::v2::ObjectRangeData data, bool is_transcoded = false);
+  void OnRead(google::storage::v2::ObjectRangeData data, bool is_transcoded = false,
+              absl::optional<std::int64_t> object_size = absl::nullopt);
 
  private:
   void Notify(std::unique_lock<std::mutex> lk, storage::ReadPayload p);
@@ -95,6 +96,7 @@ class ReadRange {
   std::size_t received_bytes_ = 0;
   bool is_transcoded_ = false;
   bool logged_warning_ = false;
+  absl::optional<std::int64_t> object_size_;
   absl::optional<storage::ReadPayload> payload_;
   absl::optional<Status> status_;
   absl::optional<promise<ReadResponse>> wait_;

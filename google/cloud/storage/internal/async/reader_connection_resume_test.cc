@@ -796,6 +796,55 @@ TEST(AsyncReaderConnectionResume, NoResumeIfRequestExceeded) {
   EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
 }
 
+TEST(AsyncReaderConnectionResume, TranscodingFailsOnRealChecksumMismatch) {
+  auto hash_function = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash_function, Finish)
+      .WillOnce(Return(storage::internal::HashValues{"crc32c", "md5"}));
+
+  auto hash_validator = std::make_unique<MockHashValidator>();
+  EXPECT_CALL(*hash_validator, ProcessHashValues).Times(1);
+  EXPECT_CALL(std::move(*hash_validator), Finish)
+      .WillOnce([](storage::internal::HashValues const&) {
+        return storage::internal::HashValidator::Result{
+            /*.received=*/{"wrong-crc32c", "wrong-md5"},
+            /*.computed=*/{"crc32c", "md5"},
+            /*.is_mismatch=*/true};
+      });
+
+  MockAsyncReaderConnectionFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
+    auto mock = std::make_unique<MockReader>();
+    EXPECT_CALL(*mock, Read)
+        .WillOnce([] {
+          auto payload = ReadPayload(std::string(10, '1'));
+          auto metadata = google::storage::v2::Object{};
+          metadata.set_content_encoding("gzip");
+          metadata.set_size(10); // Set size equal to received bytes!
+          payload.set_metadata(std::move(metadata));
+          return make_ready_future(ReadResponse(std::move(payload)));
+        })
+        .WillOnce([] {
+          return make_ready_future(ReadResponse(Status{}));
+        });
+    EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
+    return make_ready_future(make_status_or(
+        std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
+  });
+
+  auto resume_policy = std::make_unique<MockResumePolicy>();
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+
+  AsyncReaderConnectionResume tested(
+      std::move(resume_policy), std::move(hash_function),
+      std::move(hash_validator), mock_factory.AsStdFunction(),
+      /*requested_length=*/10, "my-bucket", "my-object");
+
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<ReadPayload>(ContentsMatch(10, '1')));
+  // Should return InvalidArgumentError (mismatched checksums)!
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

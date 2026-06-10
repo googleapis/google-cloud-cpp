@@ -73,9 +73,11 @@ void ReadRange::OnFinish(Status status) {
 }
 
 void ReadRange::OnRead(google::storage::v2::ObjectRangeData data,
-                       bool is_transcoded) {
+                       bool is_transcoded,
+                       absl::optional<std::int64_t> object_size) {
   std::unique_lock<std::mutex> lk(mu_);
   is_transcoded_ = is_transcoded_ || is_transcoded;
+  if (object_size.has_value()) object_size_ = object_size;
   if (status_) return;
   auto* check_summed_data = data.mutable_checksummed_data();
   auto content = StealMutableContent(*data.mutable_checksummed_data());
@@ -96,7 +98,10 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data,
   if (data.range_end()) {
     status_ = Status{};
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
-    if (result.is_mismatch && !is_transcoded_) {
+    bool transcoded_download = is_transcoded_ &&
+                               (!object_size_.has_value() ||
+                                (received_bytes_ != static_cast<std::size_t>(*object_size_)));
+    if (result.is_mismatch && !transcoded_download) {
       status_ = google::cloud::internal::DataLossError(
           absl::StrCat("mismatched checksums detected at the end of the "
                        "download, received={",

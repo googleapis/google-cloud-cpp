@@ -67,6 +67,7 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
       if (!generation_.has_value()) {
         generation_ = storage::Generation(response.metadata()->generation());
       }
+      object_size_ = response.metadata()->size();
       if (response.metadata()->content_encoding() == "gzip") {
         is_transcoded_ = true;
       }
@@ -78,7 +79,10 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
   if (status.ok()) {
     // The download finished. Validate the hash results, if any.
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
-    if (!result.is_mismatch || is_transcoded_) return make_ready_future(std::move(r));
+    bool transcoded_download = is_transcoded_ &&
+                               (!object_size_.has_value() ||
+                                (total_received_bytes_ != *object_size_));
+    if (!result.is_mismatch || transcoded_download) return make_ready_future(std::move(r));
     return make_ready_future(ReadResponse(internal::InvalidArgumentError(
         absl::StrCat("mismatched checksums detected at the end of the "
                      "download, received={",

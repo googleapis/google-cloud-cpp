@@ -18,6 +18,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include <algorithm>
+#include <atomic>
 #include <cstring>
 #include <memory>
 #include <string>
@@ -100,7 +101,7 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
   std::string object_name_;
   std::size_t received_bytes_ = 0;
   bool is_transcoded_ = false;
-  bool logged_warning_ = false;
+  std::atomic<bool> logged_warning_{false};
 };
 
 absl::optional<std::int64_t> ExtractRequestedLength(ReadObjectRangeRequest const& request) {

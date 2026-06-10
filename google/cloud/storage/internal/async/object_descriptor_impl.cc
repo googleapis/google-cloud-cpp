@@ -343,8 +343,10 @@ void ObjectDescriptorImpl::OnRead(
   }
   auto copy = it->active_ranges;
   bool is_transcoded = false;
+  absl::optional<std::int64_t> object_size;
   if (metadata_.has_value()) {
     is_transcoded = metadata_->content_encoding() == "gzip";
+    object_size = metadata_->size();
   }
   lk.unlock();
   for (auto& range_data : *response->mutable_object_data_ranges()) {
@@ -353,7 +355,7 @@ void ObjectDescriptorImpl::OnRead(
     if (l == copy.end()) continue;
     // TODO(#15104) - Consider returning if the range is done, and then
     // skipping CleanupDoneRanges().
-    l->second->OnRead(std::move(range_data), is_transcoded);
+    l->second->OnRead(std::move(range_data), is_transcoded, object_size);
   }
   lk.lock();
   stream_manager_->CleanupDoneRanges(it);
