@@ -26,6 +26,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/rpc/status.pb.h"
+#include <limits>
 #include <memory>
 #include <utility>
 
@@ -167,7 +168,11 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
 
   absl::optional<std::int64_t> limit;
   if (p.start < 0) {
-    limit = -p.start;
+    if (p.start == (std::numeric_limits<std::int64_t>::min)()) {
+      limit = (std::numeric_limits<std::int64_t>::max)();
+    } else {
+      limit = -p.start;
+    }
   } else if (p.length > 0) {
     limit = p.length;
   }
@@ -337,13 +342,11 @@ void ObjectDescriptorImpl::OnRead(
         std::move(*response->mutable_read_handle());
   }
   auto copy = it->active_ranges;
-  // Release the lock while notifying the ranges. The notifications may trigger
-  // application code, and that code may callback on this class.
-  lk.unlock();
   bool is_transcoded = false;
   if (metadata_.has_value()) {
     is_transcoded = metadata_->content_encoding() == "gzip";
   }
+  lk.unlock();
   for (auto& range_data : *response->mutable_object_data_ranges()) {
     auto id = range_data.read_range().read_id();
     auto const l = copy.find(id);

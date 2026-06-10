@@ -99,7 +99,7 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
 future<ReadResponse> AsyncReaderConnectionResume::Reconnect() {
   // Capturing `this` is safe here. See the comments in the implementation of
   // `Read()` for details.
-  if (impl_ != nullptr && requested_length_.has_value() && *requested_length_ >= 0 &&
+  if (CurrentImpl() != nullptr && requested_length_.has_value() && *requested_length_ >= 0 &&
       total_received_bytes_ >= *requested_length_) {
     return make_ready_future(ReadResponse(Status()));
   }

@@ -77,20 +77,15 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
     }
 
     // Check overrun immediately
-    if (requested_length_.has_value() && received_bytes_ > static_cast<std::size_t>(*requested_length_) &&
-        !is_transcoded_ && !logged_warning_) {
-      logged_warning_ = true;
-      GCP_LOG(WARNING) << "storage: received " << (received_bytes_ - *requested_length_)
-                       << " more bytes than requested from GCS for bucket \""
-                       << bucket_name_ << "\", object \"" << object_name_ << "\"";
-    }
+    CheckOverrun();
 
     return res;
   }
 
  private:
   void CheckOverrun() {
-    if (requested_length_.has_value() && received_bytes_ > static_cast<std::size_t>(*requested_length_) &&
+    if (requested_length_.has_value() && *requested_length_ >= 0 &&
+        received_bytes_ > static_cast<std::size_t>(*requested_length_) &&
         !is_transcoded_ && !logged_warning_) {
       logged_warning_ = true;
       GCP_LOG(WARNING) << "storage: received " << (received_bytes_ - *requested_length_)
