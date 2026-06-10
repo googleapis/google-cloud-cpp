@@ -51,7 +51,16 @@ steps:
     args:
       - '-c'
       - |
+        log_lines=0
         cleanup() {
+          echo "Fetching final logs..."
+          gcloud storage cp "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/build.log" build.log 2>/dev/null || true
+          if [ -f build.log ]; then
+             new_lines=$(wc -l < build.log)
+             if [ "$new_lines" -gt "$log_lines" ]; then
+                tail -n +"$((log_lines + 1))" build.log
+             fi
+          fi
           echo "Cleaning up VM and source archive..."
           gcloud compute instances delete "wincmake-${BUILD_ID}" --zone="${_ZONE}" --quiet || true
           gcloud storage rm "gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz" || true
