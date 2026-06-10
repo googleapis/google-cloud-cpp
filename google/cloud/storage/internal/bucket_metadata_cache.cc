@@ -22,6 +22,11 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+BucketMetadataCache& BucketMetadataCache::Singleton() {
+  static BucketMetadataCache instance(10000);
+  return instance;
+}
+
 BucketCacheEntry BucketCacheEntry::FromMetadata(
     storage::BucketMetadata const& m) {
   std::string loc = m.location();
@@ -39,7 +44,8 @@ void BucketMetadataCache::MoveToFront(std::list<std::string>::iterator it) {
 }
 
 absl::optional<BucketCacheEntry> BucketMetadataCache::Get(
-    std::string const& bucket_name) {
+    std::string const& raw_bucket_name) {
+  auto const bucket_name = NormalizeBucketName(raw_bucket_name);
   std::unique_lock<std::mutex> lk(mu_);
   auto it = map_.find(bucket_name);
   if (it == map_.end()) return absl::nullopt;
@@ -48,8 +54,9 @@ absl::optional<BucketCacheEntry> BucketMetadataCache::Get(
   return it->second.first;
 }
 
-void BucketMetadataCache::Put(std::string const& bucket_name,
+void BucketMetadataCache::Put(std::string const& raw_bucket_name,
                               BucketCacheEntry entry) {
+  auto const bucket_name = NormalizeBucketName(raw_bucket_name);
   std::unique_lock<std::mutex> lk(mu_);
   auto it = map_.find(bucket_name);
   if (it != map_.end()) {
@@ -68,7 +75,8 @@ void BucketMetadataCache::Put(std::string const& bucket_name,
   map_[bucket_name] = {std::move(entry), list_.begin()};
 }
 
-void BucketMetadataCache::Invalidate(std::string const& bucket_name) {
+void BucketMetadataCache::Invalidate(std::string const& raw_bucket_name) {
+  auto const bucket_name = NormalizeBucketName(raw_bucket_name);
   std::unique_lock<std::mutex> lk(mu_);
   auto it = map_.find(bucket_name);
   if (it != map_.end()) {
@@ -84,7 +92,8 @@ void BucketMetadataCache::Clear() {
   in_flight_fetch_.clear();
 }
 
-bool BucketMetadataCache::StartFetch(std::string const& bucket_name) {
+bool BucketMetadataCache::StartFetch(std::string const& raw_bucket_name) {
+  auto const bucket_name = NormalizeBucketName(raw_bucket_name);
   std::unique_lock<std::mutex> lk(mu_);
   if (in_flight_fetch_.find(bucket_name) != in_flight_fetch_.end()) {
     return false;
@@ -93,7 +102,8 @@ bool BucketMetadataCache::StartFetch(std::string const& bucket_name) {
   return true;
 }
 
-void BucketMetadataCache::EndFetch(std::string const& bucket_name) {
+void BucketMetadataCache::EndFetch(std::string const& raw_bucket_name) {
+  auto const bucket_name = NormalizeBucketName(raw_bucket_name);
   std::unique_lock<std::mutex> lk(mu_);
   in_flight_fetch_.erase(bucket_name);
 }

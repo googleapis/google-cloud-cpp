@@ -38,8 +38,7 @@ TracingConnection::~TracingConnection() {
 }
 
 BucketMetadataCache& TracingConnection::cache() {
-  static BucketMetadataCache instance(10000);
-  return instance;
+  return BucketMetadataCache::Singleton();
 }
 
 void TracingConnection::ResetCacheForTesting() { cache().Clear(); }

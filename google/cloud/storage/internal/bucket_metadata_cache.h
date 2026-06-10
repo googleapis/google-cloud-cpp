@@ -47,6 +47,16 @@ class BucketMetadataCache {
   explicit BucketMetadataCache(std::size_t max_size = 10000)
       : max_size_(max_size) {}
 
+  static BucketMetadataCache& Singleton();
+
+  static std::string NormalizeBucketName(std::string const& bucket) {
+    auto const prefix = std::string("projects/_/buckets/");
+    if (bucket.rfind(prefix, 0) == 0) {
+      return bucket.substr(prefix.size());
+    }
+    return bucket;
+  }
+
   absl::optional<BucketCacheEntry> Get(std::string const& bucket_name);
   void Put(std::string const& bucket_name, BucketCacheEntry entry);
   void Invalidate(std::string const& bucket_name);
