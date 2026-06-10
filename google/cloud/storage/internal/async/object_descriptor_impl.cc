@@ -165,8 +165,16 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   auto hash_function = CreateHashFunction(is_full_read);
   auto hash_validator = CreateHashValidator(is_full_read);
 
-  auto range = std::make_shared<ReadRange>(p.start, p.length, hash_function,
-                                           std::move(hash_validator));
+  absl::optional<std::int64_t> limit;
+  if (p.start < 0) {
+    limit = -p.start;
+  } else if (p.length > 0) {
+    limit = p.length;
+  }
+
+  auto range = std::make_shared<ReadRange>(
+      p.start, limit, hash_function, std::move(hash_validator),
+      read_object_spec_.bucket(), read_object_spec_.object());
 
   std::unique_lock<std::mutex> lk(mu_);
   if (stream_manager_->Empty()) {
@@ -332,13 +340,17 @@ void ObjectDescriptorImpl::OnRead(
   // Release the lock while notifying the ranges. The notifications may trigger
   // application code, and that code may callback on this class.
   lk.unlock();
+  bool is_transcoded = false;
+  if (metadata_.has_value()) {
+    is_transcoded = metadata_->content_encoding() == "gzip";
+  }
   for (auto& range_data : *response->mutable_object_data_ranges()) {
     auto id = range_data.read_range().read_id();
     auto const l = copy.find(id);
     if (l == copy.end()) continue;
     // TODO(#15104) - Consider returning if the range is done, and then
     // skipping CleanupDoneRanges().
-    l->second->OnRead(std::move(range_data));
+    l->second->OnRead(std::move(range_data), is_transcoded);
   }
   lk.lock();
   stream_manager_->CleanupDoneRanges(it);

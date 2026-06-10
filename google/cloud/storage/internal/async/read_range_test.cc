@@ -22,6 +22,7 @@
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
 #include <google/protobuf/text_format.h>
@@ -43,6 +44,10 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ScopedLog;
+using ::testing::HasSubstr;
+using ::testing::VariantWith;
+using ::testing::_;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::An;
@@ -355,6 +360,224 @@ TEST(ReadRange, FullObjectChecksumValidationSuccessComposite) {
   auto next_read = actual.Read();
   EXPECT_TRUE(next_read.is_ready());
   EXPECT_THAT(next_read.get(), VariantWith<Status>(IsOk()));
+}
+
+TEST(ReadRange, OverrunLogging) {
+  ScopedLog log;
+  ReadRange actual(0, 10, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "012345678901234" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
+TEST(ReadRange, ReadLastLessIndexNoLogging) {
+  ScopedLog log;
+  // Simulating ReadLast(100) where GCS returns 50 bytes (e.g. object size is 50)
+  ReadRange actual(-100, 100, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data {
+      content: "01234567890123456789012345678901234567890123456789"
+    }
+    read_range { read_offset: -100 read_length: 100 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  auto lines = log.ExtractLines();
+  EXPECT_TRUE(lines.empty());
+}
+
+TEST(ReadRange, ReadLastOvershootLogging) {
+  ScopedLog log;
+  // Simulating ReadLast(50) where GCS returns 60 bytes (overshoot by 10)
+  ReadRange actual(-50, 50, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data {
+      content: "012345678901234567890123456789012345678901234567890123456789"
+    }
+    read_range { read_offset: -50 read_length: 50 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 10 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
+TEST(ReadRange, TranscodingSuppressesWarning) {
+  ScopedLog log;
+  ReadRange actual(0, 10, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "012345678901234" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data), /*is_transcoded=*/true);
+
+  auto lines = log.ExtractLines();
+  EXPECT_TRUE(lines.empty());
+}
+
+TEST(ReadRange, ZeroLengthOverrunLogging) {
+  ScopedLog log;
+  // Pass 0 as the limit (not nullopt, which would mean read to end).
+  ReadRange actual(0, absl::make_optional<std::int64_t>(0), "my-bucket",
+                   "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "1" }
+    read_range { read_offset: 0 read_length: 0 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 1 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
+TEST(ReadRange, ReadLastOverrunLogging) {
+  ScopedLog log;
+  // ReadLast(5) is represented by start = -5, limit = 5.
+  ReadRange actual(-5, absl::make_optional<std::int64_t>(5), "my-bucket",
+                   "my-object");
+
+  // GCS returns 10 bytes (overrun of 5 bytes)
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: -5 read_length: 5 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
+TEST(ReadRange, TranscodingIgnoresChecksumMismatch) {
+  auto hash_function = std::make_shared<storage::internal::Crc32cHashFunction>();
+  auto hash_validator = std::make_unique<storage::internal::Crc32cHashValidator>();
+
+  storage::internal::HashValues expected_hashes;
+  expected_hashes.crc32c = "wrong-crc32c";
+  hash_validator->ProcessHashValues(expected_hashes);
+
+  ReadRange actual(0, 10, hash_function, std::move(hash_validator), "my-bucket",
+                   "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789" crc32c: 576848900 }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: true
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  // Pass is_transcoded = true to suppress the checksum mismatch error!
+  actual.OnRead(std::move(data), /*is_transcoded=*/true);
+
+  EXPECT_TRUE(actual.IsDone());
+  EXPECT_TRUE(pending.is_ready());
+  EXPECT_THAT(pending.get(), VariantWith<ReadPayload>(_));
+
+  // The second read should return Status::OK instead of DataLossError!
+  auto next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(), VariantWith<Status>(IsOk()));
+}
+
+TEST(ReadRange, NoResumeIfRequestSatisfied) {
+  ReadRange actual(0, 10, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  // The range is fully satisfied (10 bytes received for 10-byte request)
+  // RangeForResume should return nullopt to prevent resuming!
+  auto resume = actual.RangeForResume(42);
+  EXPECT_FALSE(resume.has_value());
+}
+
+TEST(ReadRange, NoResumeIfRequestExceeded) {
+  ReadRange actual(0, 10, "my-bucket", "my-object");
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "012345678901234" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  // The range is exceeded (15 bytes received for 10-byte request)
+  // RangeForResume should return nullopt to prevent resuming!
+  auto resume = actual.RangeForResume(42);
+  EXPECT_FALSE(resume.has_value());
 }
 
 }  // namespace

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <utility>
@@ -26,6 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::ScopedLog;
+using ::testing::HasSubstr;
 using ::testing::Return;
 
 TEST(ObjectReadStreambufTest, FailedTellg) {
@@ -171,6 +174,194 @@ TEST(ObjectReadStreambufTest, WrongSeek) {
   stream.clear();
   stream.seekg(0, std::ios_base::end);
   EXPECT_TRUE(stream.fail());
+}
+
+TEST(ObjectReadStreambufTest, OverrunLogging) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{25, {}}));
+  EXPECT_CALL(*read_source, Close()).WillRepeatedly(Return(HttpResponse{}));
+
+  ObjectReadStreambuf buf(ReadObjectRangeRequest("my-bucket", "my-object")
+                              .set_option(ReadRange(0, 20)),
+                          std::move(read_source));
+
+  std::istream stream(&buf);
+  std::vector<char> v(25);
+  stream.read(v.data(), 25);
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
+TEST(ObjectReadStreambufTest, OverrunLoggingCharByChar) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{15, {}}))
+      .WillRepeatedly(Return(ReadSourceResult{0, {}}));
+  EXPECT_CALL(*read_source, Close()).WillRepeatedly(Return(HttpResponse{}));
+
+  ObjectReadStreambuf buf(ReadObjectRangeRequest("my-bucket", "my-object")
+                              .set_option(ReadRange(0, 10)),
+                          std::move(read_source));
+
+  std::istream stream(&buf);
+
+  // Read character by character
+  int count = 0;
+  while (stream.get() != EOF) {
+    count++;
+  }
+  EXPECT_EQ(count, 15);
+
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
+TEST(ObjectReadStreambufTest, ReadLastLessIndexNoLogging) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{50, {}}))
+      .WillRepeatedly(Return(ReadSourceResult{0, {}}));
+  EXPECT_CALL(*read_source, Close()).WillRepeatedly(Return(HttpResponse{}));
+
+  ObjectReadStreambuf buf(ReadObjectRangeRequest("my-bucket", "my-object")
+                              .set_option(ReadLast(100)),
+                          std::move(read_source));
+
+  std::istream stream(&buf);
+  std::vector<char> v(100);
+  stream.read(v.data(), 100);
+
+  buf.Close();
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(ObjectReadStreambufTest, ReadLastOvershootLogging) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{60, {}}))
+      .WillRepeatedly(Return(ReadSourceResult{0, {}}));
+  EXPECT_CALL(*read_source, Close()).WillRepeatedly(Return(HttpResponse{}));
+
+  ObjectReadStreambuf buf(
+      ReadObjectRangeRequest("my-bucket", "my-object").set_option(ReadLast(50)),
+      std::move(read_source));
+
+  std::istream stream(&buf);
+  std::vector<char> v(100);
+  stream.read(v.data(), 100);
+
+  buf.Close();
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 10 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
+TEST(ObjectReadStreambufTest, EmptyRangeOverrunLogging) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(ReadSourceResult{5, {}}))
+      .WillRepeatedly(Return(ReadSourceResult{0, {}}));
+  EXPECT_CALL(*read_source, Close()).WillRepeatedly(Return(HttpResponse{}));
+
+  ObjectReadStreambuf buf(ReadObjectRangeRequest("my-bucket", "my-object")
+                              .set_option(ReadRange(10, 10)),
+                          std::move(read_source));
+
+  std::istream stream(&buf);
+  std::vector<char> v(10);
+  stream.read(v.data(), 10);
+
+  buf.Close();
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
+}
+
+TEST(ObjectReadStreambufTest, TranscodingSuppressesWarning) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+
+  ReadSourceResult result{15, {}};
+  result.transformation = "gunzipped";
+
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(result))
+      .WillRepeatedly(Return(ReadSourceResult{0, {}}));
+  EXPECT_CALL(*read_source, Close()).WillRepeatedly(Return(HttpResponse{}));
+
+  ObjectReadStreambuf buf(ReadObjectRangeRequest("my-bucket", "my-object")
+                              .set_option(ReadRange(0, 10)),
+                          std::move(read_source));
+
+  std::istream stream(&buf);
+  std::vector<char> v(20);
+  stream.read(v.data(), 20);
+
+  buf.Close();
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(ObjectReadStreambufTest, FullObjectReadOverrunLogging) {
+  ScopedLog log;
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
+  EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
+
+  // GCS returns 15 bytes, and tells us the object size is 10 bytes (in metadata)
+  ReadSourceResult result{15, {}};
+  result.size = 10;
+
+  EXPECT_CALL(*read_source, Read)
+      .WillOnce(Return(result))
+      .WillRepeatedly(Return(ReadSourceResult{0, {}}));
+  EXPECT_CALL(*read_source, Close()).WillRepeatedly(Return(HttpResponse{}));
+
+  // Full object read request (no range options)
+  ObjectReadStreambuf buf(ReadObjectRangeRequest("my-bucket", "my-object"),
+                          std::move(read_source));
+
+  std::istream stream(&buf);
+  std::vector<char> v(20);
+  stream.read(v.data(), 20);
+
+  buf.Close();
+  auto lines = log.ExtractLines();
+  EXPECT_EQ(lines.size(), 1);
+  EXPECT_THAT(
+      lines[0],
+      HasSubstr(
+          "storage: received 5 more bytes than requested from GCS for bucket "
+          "\"my-bucket\", object \"my-object\""));
 }
 
 }  // namespace

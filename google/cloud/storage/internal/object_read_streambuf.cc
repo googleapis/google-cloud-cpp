@@ -16,6 +16,7 @@
 #include "google/cloud/storage/hash_mismatch_error.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
 #include <algorithm>
 #include <cstring>
 #include <memory>
@@ -37,12 +38,96 @@ std::streamoff InitialOffset(ReadObjectRangeRequest const& request) {
   return request.StartingByte();
 }
 
+class OverrunLoggingObjectReadSource : public ObjectReadSource {
+ public:
+  OverrunLoggingObjectReadSource(
+      std::unique_ptr<ObjectReadSource> child,
+      absl::optional<std::int64_t> requested_length,
+      std::string bucket_name,
+      std::string object_name)
+      : child_(std::move(child)),
+        requested_length_(requested_length),
+        bucket_name_(std::move(bucket_name)),
+        object_name_(std::move(object_name)) {}
+
+  ~OverrunLoggingObjectReadSource() override = default;
+
+  bool IsOpen() const override { return child_->IsOpen(); }
+
+  StatusOr<HttpResponse> Close() override {
+    auto res = child_->Close();
+    CheckOverrun();
+    return res;
+  }
+
+  StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override {
+    auto res = child_->Read(buf, n);
+    if (!res) return res;
+
+    received_bytes_ += res->bytes_received;
+
+    // Dynamically learn size for full-object reads
+    if (res->size.has_value() && !requested_length_.has_value()) {
+      requested_length_ = *res->size;
+    }
+
+    // Detect server-side transcoding
+    if (res->transformation.has_value() && *res->transformation == "gunzipped") {
+      is_transcoded_ = true;
+    }
+
+    // Check overrun immediately
+    if (requested_length_.has_value() && received_bytes_ > static_cast<std::size_t>(*requested_length_) &&
+        !is_transcoded_ && !logged_warning_) {
+      logged_warning_ = true;
+      GCP_LOG(WARNING) << "storage: received " << (received_bytes_ - *requested_length_)
+                       << " more bytes than requested from GCS for bucket \""
+                       << bucket_name_ << "\", object \"" << object_name_ << "\"";
+    }
+
+    return res;
+  }
+
+ private:
+  void CheckOverrun() {
+    if (requested_length_.has_value() && received_bytes_ > static_cast<std::size_t>(*requested_length_) &&
+        !is_transcoded_ && !logged_warning_) {
+      logged_warning_ = true;
+      GCP_LOG(WARNING) << "storage: received " << (received_bytes_ - *requested_length_)
+                       << " more bytes than requested from GCS for bucket \""
+                       << bucket_name_ << "\", object \"" << object_name_ << "\"";
+    }
+  }
+
+  std::unique_ptr<ObjectReadSource> child_;
+  absl::optional<std::int64_t> requested_length_;
+  std::string bucket_name_;
+  std::string object_name_;
+  std::size_t received_bytes_ = 0;
+  bool is_transcoded_ = false;
+  bool logged_warning_ = false;
+};
+
+absl::optional<std::int64_t> ExtractRequestedLength(ReadObjectRangeRequest const& request) {
+  if (request.HasOption<ReadRange>()) {
+    auto range = request.GetOption<ReadRange>().value();
+    return range.end - range.begin;
+  }
+  if (request.HasOption<ReadLast>()) {
+    auto last = request.GetOption<ReadLast>();
+    return last.value();
+  }
+  return absl::nullopt;
+}
+
 }  // namespace
 
 ObjectReadStreambuf::ObjectReadStreambuf(
     ReadObjectRangeRequest const& request,
     std::unique_ptr<ObjectReadSource> source)
-    : source_(std::move(source)),
+    : source_(std::make_unique<OverrunLoggingObjectReadSource>(
+          std::move(source), ExtractRequestedLength(request),
+          request.bucket_name(), request.object_name())),
       source_pos_(InitialOffset(request)),
       hash_function_(CreateHashFunction(request)),
       hash_validator_(CreateHashValidator(request)) {}
