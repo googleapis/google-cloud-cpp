@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,6 +73,27 @@ void DeleteFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
     std::cout << "Deleted folder: " << folder_id << "\n";
   }
   // [END storage_control_delete_folder]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+void DeleteFolderRecursive(
+    google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::vector<std::string> const& argv) {
+  // [START storage_control_delete_folder_recursive]
+  namespace storagecontrol = google::cloud::storagecontrol_v2;
+  [](storagecontrol::StorageControlClient client,
+     std::string const& bucket_name, std::string const& folder_id) {
+    auto const name = std::string{"projects/_/buckets/"} + bucket_name +
+                      "/folders/" + folder_id;
+    // Start a delete operation and block until it completes. Real applications
+    // may want to setup a callback, wait on a coroutine, or poll until it
+    // completes.
+    auto deleted = client.DeleteFolderRecursive(name).get();
+    if (!deleted) throw std::move(deleted).status();
+
+    std::cout << "Deleted folder: " << folder_id << "\n";
+  }
+  // [END storage_control_delete_folder_recursive]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -154,6 +175,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const dest_folder_id = prefix + "-" +
                               google::cloud::internal::Sample(
                                   generator, 32, "abcdefghijklmnopqrstuvwxyz");
+  auto const recursive_folder_id = prefix + "-" +
+                                   google::cloud::internal::Sample(
+                                       generator, 32, "abcdefghijklmnopqrstuvwxyz");
   auto const create_time_limit =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   // This is the only example that cleans up stale folders. The examples run in
@@ -176,6 +200,12 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteFolder() example" << std::endl;
   DeleteFolder(client, {bucket_name, dest_folder_id});
+
+  std::cout << "\nRunning CreateFolder() for recursive delete" << std::endl;
+  CreateFolder(client, {bucket_name, recursive_folder_id});
+
+  std::cout << "\nRunning DeleteFolderRecursive() example" << std::endl;
+  DeleteFolderRecursive(client, {bucket_name, recursive_folder_id});
 }
 
 }  // namespace
@@ -207,6 +237,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   Example example({
       make_entry("create-folder", {"bucket-name", "folder-id"}, CreateFolder),
       make_entry("delete-folder", {"bucket-name", "folder-id"}, DeleteFolder),
+      make_entry("delete-folder-recursive", {"bucket-name", "folder-id"},
+                 DeleteFolderRecursive),
       make_entry("get-folder", {"bucket-name", "folder-id"}, GetFolder),
       make_entry("list-folders", {"bucket-name"}, ListFolders),
       make_entry("rename-folder",
