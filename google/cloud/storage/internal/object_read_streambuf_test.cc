@@ -192,6 +192,7 @@ TEST(ObjectReadStreambufTest, OverrunLogging) {
   std::vector<char> v(25);
   stream.read(v.data(), 25);
 
+  buf.Close();
   auto lines = log.ExtractLines();
   EXPECT_EQ(lines.size(), 1);
   EXPECT_THAT(
@@ -223,6 +224,7 @@ TEST(ObjectReadStreambufTest, OverrunLoggingCharByChar) {
   }
   EXPECT_EQ(count, 15);
 
+  buf.Close();
   auto lines = log.ExtractLines();
   EXPECT_EQ(lines.size(), 1);
   EXPECT_THAT(

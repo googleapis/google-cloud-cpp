@@ -72,11 +72,11 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
         is_transcoded_ = true;
       }
     }
-    CheckOverrun();
     return make_ready_future(ReadResponse(std::move(response)));
   }
   auto const& status = absl::get<Status>(r);
   if (status.ok()) {
+    CheckOverrun();
     // The download finished. Validate the hash results, if any.
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
     bool transcoded_download = is_transcoded_ &&
@@ -92,9 +92,11 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
   }
   if (requested_length_.has_value() && *requested_length_ >= 0 &&
       total_received_bytes_ >= *requested_length_) {
+    CheckOverrun();
     return make_ready_future(ReadResponse(Status()));
   }
   if (resume_policy_->OnFinish(status) == ResumePolicy::kStop) {
+    CheckOverrun();
     return make_ready_future(std::move(r));
   }
   return Reconnect();

@@ -506,10 +506,13 @@ TEST(AsyncReaderConnectionResume, OverrunLogging) {
   MockAsyncReaderConnectionFactory mock_factory;
   EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
     auto mock = std::make_unique<MockReader>();
-    EXPECT_CALL(*mock, Read).WillOnce([] {
-      // Return 15 bytes in one payload
-      return make_ready_future(ReadResponse(ReadPayload(std::string(15, '1'))));
-    });
+    EXPECT_CALL(*mock, Read)
+        .WillOnce([] {
+          return make_ready_future(ReadResponse(ReadPayload(std::string(15, '1'))));
+        })
+        .WillOnce([] {
+          return make_ready_future(ReadResponse(Status{}));
+        });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -526,6 +529,7 @@ TEST(AsyncReaderConnectionResume, OverrunLogging) {
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(15, '1')));
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
 
   auto lines = log.ExtractLines();
   EXPECT_EQ(lines.size(), 1);
@@ -576,9 +580,13 @@ TEST(AsyncReaderConnectionResume, ReadLastOvershootLogging) {
   MockAsyncReaderConnectionFactory mock_factory;
   EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
     auto mock = std::make_unique<MockReader>();
-    EXPECT_CALL(*mock, Read).WillOnce([] {
-      return make_ready_future(ReadResponse(ReadPayload(std::string(60, '1'))));
-    });
+    EXPECT_CALL(*mock, Read)
+        .WillOnce([] {
+          return make_ready_future(ReadResponse(ReadPayload(std::string(60, '1'))));
+        })
+        .WillOnce([] {
+          return make_ready_future(ReadResponse(Status{}));
+        });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -596,6 +604,7 @@ TEST(AsyncReaderConnectionResume, ReadLastOvershootLogging) {
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(60, '1')));
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
 
   auto lines = log.ExtractLines();
   EXPECT_EQ(lines.size(), 1);
@@ -644,9 +653,13 @@ TEST(AsyncReaderConnectionResume, ZeroLengthOverrunLogging) {
   MockAsyncReaderConnectionFactory mock_factory;
   EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
     auto mock = std::make_unique<MockReader>();
-    EXPECT_CALL(*mock, Read).WillOnce([] {
-      return make_ready_future(ReadResponse(ReadPayload("1")));
-    });
+    EXPECT_CALL(*mock, Read)
+        .WillOnce([] {
+          return make_ready_future(ReadResponse(ReadPayload("1")));
+        })
+        .WillOnce([] {
+          return make_ready_future(ReadResponse(Status{}));
+        });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -663,6 +676,7 @@ TEST(AsyncReaderConnectionResume, ZeroLengthOverrunLogging) {
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(1, '1')));
+  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
 
   auto lines = log.ExtractLines();
   EXPECT_EQ(lines.size(), 1);

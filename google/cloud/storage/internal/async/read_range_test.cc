@@ -370,7 +370,7 @@ TEST(ReadRange, OverrunLogging) {
   auto constexpr kData0 = R"pb(
     checksummed_data { content: "012345678901234" }
     read_range { read_offset: 0 read_length: 10 read_id: 7 }
-    range_end: false
+    range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
 
@@ -419,7 +419,7 @@ TEST(ReadRange, ReadLastOvershootLogging) {
       content: "012345678901234567890123456789012345678901234567890123456789"
     }
     read_range { read_offset: -50 read_length: 50 read_id: 7 }
-    range_end: false
+    range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
 
@@ -464,7 +464,7 @@ TEST(ReadRange, ZeroLengthOverrunLogging) {
   auto constexpr kData0 = R"pb(
     checksummed_data { content: "1" }
     read_range { read_offset: 0 read_length: 0 read_id: 7 }
-    range_end: false
+    range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
 
@@ -491,7 +491,7 @@ TEST(ReadRange, ReadLastOverrunLogging) {
   auto constexpr kData0 = R"pb(
     checksummed_data { content: "0123456789" }
     read_range { read_offset: -5 read_length: 5 read_id: 7 }
-    range_end: false
+    range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
 

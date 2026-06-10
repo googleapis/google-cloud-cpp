@@ -51,7 +51,9 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
         bucket_name_(std::move(bucket_name)),
         object_name_(std::move(object_name)) {}
 
-  ~OverrunLoggingObjectReadSource() override = default;
+  ~OverrunLoggingObjectReadSource() override {
+    CheckOverrun();
+  }
 
   bool IsOpen() const override { return child_->IsOpen(); }
 
@@ -76,9 +78,6 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
     if (res->transformation.has_value() && *res->transformation == "gunzipped") {
       is_transcoded_ = true;
     }
-
-    // Check overrun immediately
-    CheckOverrun();
 
     return res;
   }

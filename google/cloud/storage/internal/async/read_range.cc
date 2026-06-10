@@ -65,6 +65,7 @@ void ReadRange::OnFinish(Status status) {
   std::unique_lock<std::mutex> lk(mu_);
   if (status_) return;
   status_ = std::move(status);
+  CheckOverrun();
   if (!wait_) return;
   auto p = std::move(*wait_);
   wait_.reset();
@@ -93,10 +94,9 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data,
   if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
   auto p = ReadPayloadImpl::Make(std::move(content));
 
-  CheckOverrun();
-
   if (data.range_end()) {
     status_ = Status{};
+    CheckOverrun();
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
     bool transcoded_download = is_transcoded_ &&
                                (!object_size_.has_value() ||
