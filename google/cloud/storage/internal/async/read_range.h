@@ -80,7 +80,8 @@ class ReadRange {
   future<ReadResponse> Read();
   void OnFinish(Status status);
 
-  void OnRead(google::storage::v2::ObjectRangeData data, bool is_transcoded = false,
+  void OnRead(google::storage::v2::ObjectRangeData data,
+              bool is_transcoded = false,
               absl::optional<std::int64_t> object_size = absl::nullopt);
 
  private:

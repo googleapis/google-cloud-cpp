@@ -41,19 +41,16 @@ std::streamoff InitialOffset(ReadObjectRangeRequest const& request) {
 
 class OverrunLoggingObjectReadSource : public ObjectReadSource {
  public:
-  OverrunLoggingObjectReadSource(
-      std::unique_ptr<ObjectReadSource> child,
-      absl::optional<std::int64_t> requested_length,
-      std::string bucket_name,
-      std::string object_name)
+  OverrunLoggingObjectReadSource(std::unique_ptr<ObjectReadSource> child,
+                                 absl::optional<std::int64_t> requested_length,
+                                 std::string bucket_name,
+                                 std::string object_name)
       : child_(std::move(child)),
         requested_length_(requested_length),
         bucket_name_(std::move(bucket_name)),
         object_name_(std::move(object_name)) {}
 
-  ~OverrunLoggingObjectReadSource() override {
-    CheckOverrun();
-  }
+  ~OverrunLoggingObjectReadSource() override { CheckOverrun(); }
 
   bool IsOpen() const override { return child_->IsOpen(); }
 
@@ -75,7 +72,8 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
     }
 
     // Detect server-side transcoding
-    if (res->transformation.has_value() && *res->transformation == "gunzipped") {
+    if (res->transformation.has_value() &&
+        *res->transformation == "gunzipped") {
       is_transcoded_ = true;
     }
 
@@ -88,9 +86,11 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
         received_bytes_ > static_cast<std::size_t>(*requested_length_) &&
         !is_transcoded_ && !logged_warning_) {
       logged_warning_ = true;
-      GCP_LOG(WARNING) << "storage: received " << (received_bytes_ - *requested_length_)
+      GCP_LOG(WARNING) << "storage: received "
+                       << (received_bytes_ - *requested_length_)
                        << " more bytes than requested from GCS for bucket \""
-                       << bucket_name_ << "\", object \"" << object_name_ << "\"";
+                       << bucket_name_ << "\", object \"" << object_name_
+                       << "\"";
     }
   }
 
@@ -103,7 +103,8 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
   std::atomic<bool> logged_warning_{false};
 };
 
-absl::optional<std::int64_t> ExtractRequestedLength(ReadObjectRangeRequest const& request) {
+absl::optional<std::int64_t> ExtractRequestedLength(
+    ReadObjectRangeRequest const& request) {
   if (request.HasOption<ReadRange>()) {
     auto range = request.GetOption<ReadRange>().value();
     return range.end - range.begin;

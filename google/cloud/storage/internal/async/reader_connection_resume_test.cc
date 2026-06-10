@@ -26,8 +26,8 @@
 #include "google/cloud/storage/testing/mock_resume_policy.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -45,14 +45,14 @@ using ::google::cloud::storage::testing::MockResumePolicy;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ScopedLog;
-using ::testing::HasSubstr;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AtMost;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Optional;
 using ::testing::Pair;
@@ -508,11 +508,10 @@ TEST(AsyncReaderConnectionResume, OverrunLogging) {
     auto mock = std::make_unique<MockReader>();
     EXPECT_CALL(*mock, Read)
         .WillOnce([] {
-          return make_ready_future(ReadResponse(ReadPayload(std::string(15, '1'))));
+          return make_ready_future(
+              ReadResponse(ReadPayload(std::string(15, '1'))));
         })
-        .WillOnce([] {
-          return make_ready_future(ReadResponse(Status{}));
-        });
+        .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -524,8 +523,8 @@ TEST(AsyncReaderConnectionResume, OverrunLogging) {
   AsyncReaderConnectionResume tested(
       std::move(resume_policy), storage::internal::CreateNullHashFunction(),
       storage::internal::CreateNullHashValidator(),
-      mock_factory.AsStdFunction(), /*requested_length=*/10,
-      "my-bucket", "my-object");
+      mock_factory.AsStdFunction(), /*requested_length=*/10, "my-bucket",
+      "my-object");
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(15, '1')));
@@ -547,11 +546,10 @@ TEST(AsyncReaderConnectionResume, ReadLastLessIndexNoLogging) {
     auto mock = std::make_unique<MockReader>();
     EXPECT_CALL(*mock, Read)
         .WillOnce([] {
-          return make_ready_future(ReadResponse(ReadPayload(std::string(50, '1'))));
+          return make_ready_future(
+              ReadResponse(ReadPayload(std::string(50, '1'))));
         })
-        .WillOnce([] {
-          return make_ready_future(ReadResponse(Status{}));
-        });
+        .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -564,8 +562,8 @@ TEST(AsyncReaderConnectionResume, ReadLastLessIndexNoLogging) {
   AsyncReaderConnectionResume tested(
       std::move(resume_policy), storage::internal::CreateNullHashFunction(),
       storage::internal::CreateNullHashValidator(),
-      mock_factory.AsStdFunction(), /*requested_length=*/100,
-      "my-bucket", "my-object");
+      mock_factory.AsStdFunction(), /*requested_length=*/100, "my-bucket",
+      "my-object");
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(50, '1')));
@@ -582,11 +580,10 @@ TEST(AsyncReaderConnectionResume, ReadLastOvershootLogging) {
     auto mock = std::make_unique<MockReader>();
     EXPECT_CALL(*mock, Read)
         .WillOnce([] {
-          return make_ready_future(ReadResponse(ReadPayload(std::string(60, '1'))));
+          return make_ready_future(
+              ReadResponse(ReadPayload(std::string(60, '1'))));
         })
-        .WillOnce([] {
-          return make_ready_future(ReadResponse(Status{}));
-        });
+        .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -599,8 +596,8 @@ TEST(AsyncReaderConnectionResume, ReadLastOvershootLogging) {
   AsyncReaderConnectionResume tested(
       std::move(resume_policy), storage::internal::CreateNullHashFunction(),
       storage::internal::CreateNullHashValidator(),
-      mock_factory.AsStdFunction(), /*requested_length=*/50,
-      "my-bucket", "my-object");
+      mock_factory.AsStdFunction(), /*requested_length=*/50, "my-bucket",
+      "my-object");
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(60, '1')));
@@ -638,8 +635,8 @@ TEST(AsyncReaderConnectionResume, TranscodingSuppressesWarning) {
   AsyncReaderConnectionResume tested(
       std::move(resume_policy), storage::internal::CreateNullHashFunction(),
       storage::internal::CreateNullHashValidator(),
-      mock_factory.AsStdFunction(), /*requested_length=*/10,
-      "my-bucket", "my-object");
+      mock_factory.AsStdFunction(), /*requested_length=*/10, "my-bucket",
+      "my-object");
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(15, '1')));
@@ -654,12 +651,9 @@ TEST(AsyncReaderConnectionResume, ZeroLengthOverrunLogging) {
   EXPECT_CALL(mock_factory, Call(WithGeneration(0), 0)).WillOnce([] {
     auto mock = std::make_unique<MockReader>();
     EXPECT_CALL(*mock, Read)
-        .WillOnce([] {
-          return make_ready_future(ReadResponse(ReadPayload("1")));
-        })
-        .WillOnce([] {
-          return make_ready_future(ReadResponse(Status{}));
-        });
+        .WillOnce(
+            [] { return make_ready_future(ReadResponse(ReadPayload("1"))); })
+        .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -671,8 +665,8 @@ TEST(AsyncReaderConnectionResume, ZeroLengthOverrunLogging) {
   AsyncReaderConnectionResume tested(
       std::move(resume_policy), storage::internal::CreateNullHashFunction(),
       storage::internal::CreateNullHashValidator(),
-      mock_factory.AsStdFunction(), /*requested_length=*/0,
-      "my-bucket", "my-object");
+      mock_factory.AsStdFunction(), /*requested_length=*/0, "my-bucket",
+      "my-object");
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(1, '1')));
@@ -713,9 +707,7 @@ TEST(AsyncReaderConnectionResume, TranscodingIgnoresChecksumMismatch) {
           payload.set_metadata(std::move(metadata));
           return make_ready_future(ReadResponse(std::move(payload)));
         })
-        .WillOnce([] {
-          return make_ready_future(ReadResponse(Status{}));
-        });
+        .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -741,7 +733,8 @@ TEST(AsyncReaderConnectionResume, NoResumeIfRequestSatisfied) {
     auto mock = std::make_unique<MockReader>();
     EXPECT_CALL(*mock, Read)
         .WillOnce([] {
-          return make_ready_future(ReadResponse(ReadPayload(std::string(10, '1'))));
+          return make_ready_future(
+              ReadResponse(ReadPayload(std::string(10, '1'))));
         })
         .WillOnce([] {
           // Simulate transient error to trigger reconnection
@@ -752,20 +745,21 @@ TEST(AsyncReaderConnectionResume, NoResumeIfRequestSatisfied) {
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
   });
 
-  // Since we received 10 bytes for a 10-byte request, we should NOT attempt to reconnect!
-  // The factory's Call should NOT be called a second time.
+  // Since we received 10 bytes for a 10-byte request, we should NOT attempt to
+  // reconnect! The factory's Call should NOT be called a second time.
   EXPECT_CALL(mock_factory, Call(WithGeneration(1234), 10)).Times(0);
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
   EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
-  // Reconnect is bypassed, so OnFinish should NOT be called because we return OK directly.
+  // Reconnect is bypassed, so OnFinish should NOT be called because we return
+  // OK directly.
   EXPECT_CALL(*resume_policy, OnFinish).Times(0);
 
   AsyncReaderConnectionResume tested(
       std::move(resume_policy), storage::internal::CreateNullHashFunction(),
       storage::internal::CreateNullHashValidator(),
-      mock_factory.AsStdFunction(), /*requested_length=*/10,
-      "my-bucket", "my-object");
+      mock_factory.AsStdFunction(), /*requested_length=*/10, "my-bucket",
+      "my-object");
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(10, '1')));
@@ -779,7 +773,8 @@ TEST(AsyncReaderConnectionResume, NoResumeIfRequestExceeded) {
     auto mock = std::make_unique<MockReader>();
     EXPECT_CALL(*mock, Read)
         .WillOnce([] {
-          return make_ready_future(ReadResponse(ReadPayload(std::string(15, '1'))));
+          return make_ready_future(
+              ReadResponse(ReadPayload(std::string(15, '1'))));
         })
         .WillOnce([] {
           // Simulate transient error to trigger reconnection
@@ -790,8 +785,8 @@ TEST(AsyncReaderConnectionResume, NoResumeIfRequestExceeded) {
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
   });
 
-  // Since we received 15 bytes for a 10-byte request, we should NOT attempt to reconnect!
-  // The factory's Call should NOT be called a second time.
+  // Since we received 15 bytes for a 10-byte request, we should NOT attempt to
+  // reconnect! The factory's Call should NOT be called a second time.
   EXPECT_CALL(mock_factory, Call(WithGeneration(1234), 15)).Times(0);
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
@@ -801,8 +796,8 @@ TEST(AsyncReaderConnectionResume, NoResumeIfRequestExceeded) {
   AsyncReaderConnectionResume tested(
       std::move(resume_policy), storage::internal::CreateNullHashFunction(),
       storage::internal::CreateNullHashValidator(),
-      mock_factory.AsStdFunction(), /*requested_length=*/10,
-      "my-bucket", "my-object");
+      mock_factory.AsStdFunction(), /*requested_length=*/10, "my-bucket",
+      "my-object");
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(15, '1')));
@@ -833,13 +828,11 @@ TEST(AsyncReaderConnectionResume, TranscodingFailsOnRealChecksumMismatch) {
           auto payload = ReadPayload(std::string(10, '1'));
           auto metadata = google::storage::v2::Object{};
           metadata.set_content_encoding("gzip");
-          metadata.set_size(10); // Set size equal to received bytes!
+          metadata.set_size(10);  // Set size equal to received bytes!
           payload.set_metadata(std::move(metadata));
           return make_ready_future(ReadResponse(std::move(payload)));
         })
-        .WillOnce([] {
-          return make_ready_future(ReadResponse(Status{}));
-        });
+        .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
     EXPECT_CALL(*mock, GetRequestMetadata).Times(AtMost(1));
     return make_ready_future(make_status_or(
         std::unique_ptr<storage::AsyncReaderConnection>(std::move(mock))));
@@ -856,7 +849,8 @@ TEST(AsyncReaderConnectionResume, TranscodingFailsOnRealChecksumMismatch) {
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ContentsMatch(10, '1')));
   // Should return InvalidArgumentError (mismatched checksums)!
-  EXPECT_THAT(tested.Read().get(), VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
+  EXPECT_THAT(tested.Read().get(),
+              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
 }
 
 }  // namespace

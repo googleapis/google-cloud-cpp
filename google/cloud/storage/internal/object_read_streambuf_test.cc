@@ -180,8 +180,7 @@ TEST(ObjectReadStreambufTest, OverrunLogging) {
   ScopedLog log;
   auto read_source = std::make_unique<testing::MockObjectReadSource>();
   EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
-  EXPECT_CALL(*read_source, Read)
-      .WillOnce(Return(ReadSourceResult{25, {}}));
+  EXPECT_CALL(*read_source, Read).WillOnce(Return(ReadSourceResult{25, {}}));
   EXPECT_CALL(*read_source, Close()).WillRepeatedly(Return(HttpResponse{}));
 
   ObjectReadStreambuf buf(ReadObjectRangeRequest("my-bucket", "my-object")
@@ -339,7 +338,8 @@ TEST(ObjectReadStreambufTest, FullObjectReadOverrunLogging) {
   auto read_source = std::make_unique<testing::MockObjectReadSource>();
   EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
 
-  // GCS returns 15 bytes, and tells us the object size is 10 bytes (in metadata)
+  // GCS returns 15 bytes, and tells us the object size is 10 bytes (in
+  // metadata)
   ReadSourceResult result{15, {}};
   result.size = 10;
 

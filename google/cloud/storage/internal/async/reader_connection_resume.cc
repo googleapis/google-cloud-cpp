@@ -79,10 +79,11 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
     CheckOverrun();
     // The download finished. Validate the hash results, if any.
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
-    bool transcoded_download = is_transcoded_ &&
-                               (!object_size_.has_value() ||
-                                (total_received_bytes_ != *object_size_));
-    if (!result.is_mismatch || transcoded_download) return make_ready_future(std::move(r));
+    bool transcoded_download =
+        is_transcoded_ &&
+        (!object_size_.has_value() || (total_received_bytes_ != *object_size_));
+    if (!result.is_mismatch || transcoded_download)
+      return make_ready_future(std::move(r));
     return make_ready_future(ReadResponse(internal::InvalidArgumentError(
         absl::StrCat("mismatched checksums detected at the end of the "
                      "download, received={",
@@ -105,8 +106,8 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
 future<ReadResponse> AsyncReaderConnectionResume::Reconnect() {
   // Capturing `this` is safe here. See the comments in the implementation of
   // `Read()` for details.
-  if (CurrentImpl() != nullptr && requested_length_.has_value() && *requested_length_ >= 0 &&
-      total_received_bytes_ >= *requested_length_) {
+  if (CurrentImpl() != nullptr && requested_length_.has_value() &&
+      *requested_length_ >= 0 && total_received_bytes_ >= *requested_length_) {
     return make_ready_future(ReadResponse(Status()));
   }
   return reader_factory_(generation_, received_bytes_).then([this](auto f) {
@@ -137,14 +138,13 @@ AsyncReaderConnectionResume::CurrentImpl() {
 
 void AsyncReaderConnectionResume::CheckOverrun() {
   if (requested_length_.has_value() && *requested_length_ >= 0 &&
-      total_received_bytes_ > *requested_length_ &&
-      !is_transcoded_ && !logged_warning_) {
+      total_received_bytes_ > *requested_length_ && !is_transcoded_ &&
+      !logged_warning_) {
     logged_warning_ = true;
     GCP_LOG(WARNING) << "storage: received "
                      << (total_received_bytes_ - *requested_length_)
                      << " more bytes than requested from GCS for bucket \""
-                     << bucket_name_ << "\", object \"" << object_name_
-                     << "\"";
+                     << bucket_name_ << "\", object \"" << object_name_ << "\"";
   }
 }
 

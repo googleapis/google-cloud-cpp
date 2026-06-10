@@ -98,9 +98,10 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data,
     status_ = Status{};
     CheckOverrun();
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
-    bool transcoded_download = is_transcoded_ &&
-                               (!object_size_.has_value() ||
-                                (received_bytes_ != static_cast<std::size_t>(*object_size_)));
+    bool transcoded_download =
+        is_transcoded_ &&
+        (!object_size_.has_value() ||
+         (received_bytes_ != static_cast<std::size_t>(*object_size_)));
     if (result.is_mismatch && !transcoded_download) {
       status_ = google::cloud::internal::DataLossError(
           absl::StrCat("mismatched checksums detected at the end of the "
@@ -127,8 +128,7 @@ void ReadRange::CheckOverrun() {
     GCP_LOG(WARNING) << "storage: received "
                      << (received_bytes_ - *requested_length_)
                      << " more bytes than requested from GCS for bucket \""
-                     << bucket_name_ << "\", object \"" << object_name_
-                     << "\"";
+                     << bucket_name_ << "\", object \"" << object_name_ << "\"";
   }
 }
 

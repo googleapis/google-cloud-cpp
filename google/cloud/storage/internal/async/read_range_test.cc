@@ -21,8 +21,8 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
 #include <google/protobuf/text_format.h>
@@ -43,16 +43,14 @@ using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ScopedLog;
-using ::testing::HasSubstr;
-using ::testing::VariantWith;
-using ::testing::_;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::An;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::VariantWith;
@@ -388,7 +386,8 @@ TEST(ReadRange, OverrunLogging) {
 
 TEST(ReadRange, ReadLastLessIndexNoLogging) {
   ScopedLog log;
-  // Simulating ReadLast(100) where GCS returns 50 bytes (e.g. object size is 50)
+  // Simulating ReadLast(100) where GCS returns 50 bytes (e.g. object size is
+  // 50)
   ReadRange actual(-100, 100, "my-bucket", "my-object");
 
   auto data = google::storage::v2::ObjectRangeData{};
@@ -508,8 +507,10 @@ TEST(ReadRange, ReadLastOverrunLogging) {
 }
 
 TEST(ReadRange, TranscodingIgnoresChecksumMismatch) {
-  auto hash_function = std::make_shared<storage::internal::Crc32cHashFunction>();
-  auto hash_validator = std::make_unique<storage::internal::Crc32cHashValidator>();
+  auto hash_function =
+      std::make_shared<storage::internal::Crc32cHashFunction>();
+  auto hash_validator =
+      std::make_unique<storage::internal::Crc32cHashValidator>();
 
   storage::internal::HashValues expected_hashes;
   expected_hashes.crc32c = "wrong-crc32c";
