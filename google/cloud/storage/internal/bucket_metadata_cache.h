@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_CACHE_H
 
 #include "google/cloud/storage/version.h"
+#include "absl/strings/match.h"
 #include "absl/types/optional.h"
 #include <cstddef>
 #include <list>
@@ -52,7 +53,7 @@ class BucketMetadataCache {
 
   static std::string NormalizeBucketName(std::string const& bucket) {
     auto const prefix = std::string("projects/_/buckets/");
-    if (bucket.rfind(prefix, 0) == 0) {
+    if (absl::StartsWith(bucket, prefix)) {
       return bucket.substr(prefix.size());
     }
     return bucket;
