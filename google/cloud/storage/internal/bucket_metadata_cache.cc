@@ -50,6 +50,7 @@ absl::optional<BucketCacheEntry> BucketMetadataCache::Get(
 
 void BucketMetadataCache::Put(std::string const& bucket_name,
                               BucketCacheEntry entry) {
+  if (max_size_ == 0) return;
   std::unique_lock<std::mutex> lk(mu_);
   auto it = map_.find(bucket_name);
   if (it != map_.end()) {
@@ -58,7 +59,7 @@ void BucketMetadataCache::Put(std::string const& bucket_name,
     return;
   }
 
-  if (map_.size() >= max_size_) {
+  if (map_.size() >= max_size_ && !list_.empty()) {
     auto oldest = list_.back();
     list_.pop_back();
     map_.erase(oldest);

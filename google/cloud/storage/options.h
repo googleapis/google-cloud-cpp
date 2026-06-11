@@ -52,6 +52,19 @@ struct HttpVersionOption {
   using Type = std::string;
 };
 
+/**
+ * Enable/disable OpenTelemetry trace span enrichment with GCS bucket resource
+ * metadata.
+ *
+ * When enabled, the GCS client decorates spans with gcp.resource.destination.id
+ * and location attributes by fetching metadata in the background.
+ *
+ * @ingroup storage-options
+ */
+struct OTelSpanEnrichmentOption {
+  using Type = bool;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 
@@ -325,7 +338,8 @@ using ClientOptionList = ::google::cloud::OptionList<
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
-    storage_experimental::HttpVersionOption>;
+    storage_experimental::HttpVersionOption,
+    storage_experimental::OTelSpanEnrichmentOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
