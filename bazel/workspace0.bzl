@@ -61,9 +61,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "platforms",
         urls = [
-            "https://github.com/bazelbuild/platforms/releases/download/1.0.0/platforms-1.0.0.tar.gz",
+            "https://github.com/bazelbuild/platforms/releases/download/1.1.0/platforms-1.1.0.tar.gz",
         ],
-        sha256 = "3384eb1c30762704fbe38e440204e114154086c8fc8a8c2e3e28441028c019a8",
+        sha256 = "dbad4a23abcca6171e47b79edc53bd6a41067a3b75f9e8b104656b459ff25046",
     )
 
     # Load rules_cc, used by googletest
