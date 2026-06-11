@@ -555,7 +555,8 @@ Options DefaultOptions(Options opts) {
                                    STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
                                    STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
               .clone())
-      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
+      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone())
+      .set<storage_experimental::OTelSpanEnrichmentOption>(true);
 
   o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));
   // If the application did not set `DownloadStallTimeoutOption` then use the

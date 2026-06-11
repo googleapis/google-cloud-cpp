@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/storage/internal/tracing_object_read_source.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
@@ -92,6 +93,9 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    std::string const& bucket_name) {
   if (bucket_name.empty()) return;
+  auto const enabled =
+      options().get<storage_experimental::OTelSpanEnrichmentOption>();
+  if (!enabled) return;
   auto entry = cache().Get(bucket_name);
   if (entry.has_value()) {
     EnrichSpan(span, *entry);
@@ -102,6 +106,9 @@ void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    storage::BucketMetadata const& metadata) {
+  auto const enabled =
+      options().get<storage_experimental::OTelSpanEnrichmentOption>();
+  if (!enabled) return;
   auto entry = BucketCacheEntry::FromMetadata(metadata);
   EnrichSpan(span, entry);
   cache().Put(metadata.name(), std::move(entry));
