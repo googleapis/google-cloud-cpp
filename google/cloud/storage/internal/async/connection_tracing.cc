@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/async/writer_connection.h"
-#include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/object_descriptor_connection_tracing.h"
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_tracing.h"
@@ -42,7 +41,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
  public:
   explicit AsyncConnectionTracing(
       std::shared_ptr<storage::AsyncConnection> impl)
-      : impl_(std::move(impl)) {}
+      : impl_(std::move(impl)), cache_(BucketMetadataCache::Singleton()) {}
 
   ~AsyncConnectionTracing() override {
     for (auto& f : bg_tasks_) {
@@ -256,26 +255,33 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
                                    std::string const& bucket_name) {
     CleanupCompletedTasks();
 
-    if (!BucketMetadataCache::Singleton().StartFetch(bucket_name)) {
+    if (!cache_.StartFetch(bucket_name)) {
       return;
     }
 
-    auto f = std::async(std::launch::async, [bucket_name, options]() {
-      google::cloud::internal::OptionsSpan span(options);
-      auto conn = MakeStorageConnection(options);
-      auto const normalized =
-          BucketMetadataCache::NormalizeBucketName(bucket_name);
-      storage::internal::GetBucketMetadataRequest request(normalized);
-      auto metadata = conn->GetBucketMetadata(request);
-      if (metadata.ok()) {
-        BucketMetadataCache::Singleton().Put(
-            bucket_name, BucketCacheEntry::FromMetadata(*metadata));
-      } else if (metadata.status().code() == StatusCode::kPermissionDenied) {
-        BucketMetadataCache::Singleton().Put(
-            bucket_name, {"projects/_/buckets/" + normalized, "global"});
+    std::shared_ptr<storage::internal::StorageConnection> conn;
+    {
+      std::lock_guard<std::mutex> lk(mu_);
+      if (!sync_conn_) {
+        sync_conn_ = MakeStorageConnection(impl_->options());
       }
-      BucketMetadataCache::Singleton().EndFetch(bucket_name);
-    });
+      conn = sync_conn_;
+    }
+
+    auto f =
+        std::async(std::launch::async, [bucket_name, options, conn, this]() {
+          google::cloud::internal::OptionsSpan span(options);
+          auto const normalized_bucket_name =
+              BucketMetadataCache::NormalizeBucketName(bucket_name);
+          storage::internal::GetBucketMetadataRequest request(
+              normalized_bucket_name);
+          auto metadata = conn->GetBucketMetadata(request);
+          auto entry = BucketCacheEntry::Create(bucket_name, metadata);
+          if (entry) {
+            cache_.Put(bucket_name, std::move(*entry));
+          }
+          cache_.EndFetch(bucket_name);
+        });
 
     std::unique_lock<std::mutex> lk(mu_);
     bg_tasks_.push_back(std::move(f));
@@ -284,7 +290,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
   void EnrichSpan(opentelemetry::trace::Span& span, Options const& options,
                   std::string const& bucket_name) {
     if (bucket_name.empty()) return;
-    auto entry = BucketMetadataCache::Singleton().Get(bucket_name);
+    auto entry = cache_.Get(bucket_name);
     if (entry.has_value()) {
       span.SetAttribute("gcp.resource.destination.id", entry->id);
       span.SetAttribute("gcp.resource.destination.location", entry->location);
@@ -294,6 +300,8 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
   }
 
   std::shared_ptr<storage::AsyncConnection> impl_;
+  BucketMetadataCache& cache_;
+  std::shared_ptr<storage::internal::StorageConnection> sync_conn_;
   std::vector<std::future<void>> bg_tasks_;
   std::mutex mu_;
 };

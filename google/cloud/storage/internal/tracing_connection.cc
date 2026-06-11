@@ -70,20 +70,19 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
   }
 
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  auto f = std::async(std::launch::async, [this, bucket_name,
-                                           current_options]() {
-    google::cloud::internal::OptionsSpan span(current_options);
-    storage::internal::GetBucketMetadataRequest request(bucket_name);
-    auto result = impl_->GetBucketMetadata(request);
+  auto f =
+      std::async(std::launch::async, [this, bucket_name, current_options]() {
+        google::cloud::internal::OptionsSpan span(current_options);
+        storage::internal::GetBucketMetadataRequest request(bucket_name);
+        auto result = impl_->GetBucketMetadata(request);
 
-    if (result.ok()) {
-      cache().Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
-    } else if (result.status().code() == StatusCode::kPermissionDenied) {
-      cache().Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
-    }
+        auto entry = BucketCacheEntry::Create(bucket_name, result);
+        if (entry) {
+          cache().Put(bucket_name, std::move(*entry));
+        }
 
-    cache().EndFetch(bucket_name);
-  });
+        cache().EndFetch(bucket_name);
+      });
 
   bg_tasks_.push_back(std::move(f));
 }
