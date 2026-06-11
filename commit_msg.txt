@@ -1,0 +1,5 @@
+feat(c++): add deleteFolderRecursive sample
+
+This adds a sample demonstrating how to recursively delete a folder in a hierarchical namespace bucket.
+
+Fixes: b/521168740

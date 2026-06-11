@@ -197,6 +197,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteFolderRecursive() example" << std::endl;
   CreateFolder(client, {bucket_name, folder_id});
+  CreateFolder(client, {bucket_name, folder_id + "/subfolder"});
   DeleteFolderRecursive(client, {bucket_name, folder_id});
 }
 
