@@ -13,6 +13,8 @@ substitutions:
   _BUILD_TYPE: 'Release'
   _FEATURES: 'storage'
 
+timeout: 600s
+
 steps:
   # Step 1: Compress and upload workspace source code to GCS
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
