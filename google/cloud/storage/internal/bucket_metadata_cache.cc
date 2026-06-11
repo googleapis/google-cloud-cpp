@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/bucket_metadata_cache.h"
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/status.h"
 #include <mutex>
 #include <utility>
 
@@ -37,6 +38,21 @@ BucketCacheEntry BucketCacheEntry::FromMetadata(
   return {
       "projects/" + std::to_string(m.project_number()) + "/buckets/" + m.name(),
       std::move(loc)};
+}
+
+absl::optional<BucketCacheEntry> BucketCacheEntry::Create(
+    std::string const& bucket_name,
+    StatusOr<storage::BucketMetadata> const& metadata) {
+  if (metadata.ok()) {
+    return FromMetadata(*metadata);
+  }
+  if (metadata.status().code() == StatusCode::kPermissionDenied) {
+    return BucketCacheEntry{
+        "projects/_/buckets/" +
+            BucketMetadataCache::NormalizeBucketName(bucket_name),
+        "global"};
+  }
+  return absl::nullopt;
 }
 
 void BucketMetadataCache::MoveToFront(std::list<std::string>::iterator it) {
