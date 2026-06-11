@@ -68,6 +68,21 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
     EXPECT_EQ(StatusCode::kUnimplemented, num_fds_before_test.status().code());
   }
   std::size_t delta = 0;
+  if (track_open_files) {
+    // Warmup to find the maximum delta, accounting for any asynchronous
+    // background requests (like IAM AllowedLocations) that might or might
+    // not have opened their sockets yet when we measure.
+    for (int i = 0; i != 5; ++i) {
+      auto read_client = MakeIntegrationTestClient(options);
+      auto stream = read_client.ReadObject(bucket_name_, object_name);
+      char c;
+      stream.read(&c, 1);
+      auto num_fds_during_test = GetNumOpenFiles();
+      ASSERT_STATUS_OK(num_fds_during_test);
+      delta = (std::max)(delta, *num_fds_during_test - *num_fds_before_test);
+    }
+  }
+
   for (int i = 0; i != 100; ++i) {
     auto read_client = MakeIntegrationTestClient(options);
     auto stream = read_client.ReadObject(bucket_name_, object_name);
@@ -76,9 +91,6 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
     if (track_open_files) {
       auto num_fds_during_test = GetNumOpenFiles();
       ASSERT_STATUS_OK(num_fds_during_test);
-      if (delta == 0) {
-        delta = *num_fds_during_test - *num_fds_before_test;
-      }
       EXPECT_GE(*num_fds_before_test + delta, *num_fds_during_test)
           << "Expect each client to create the same number of file descriptors"
           << ", num_fds_before_test=" << *num_fds_before_test

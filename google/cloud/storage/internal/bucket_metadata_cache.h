@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_CACHE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_CACHE_H
 
+#include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status_or.h"
 #include "absl/strings/match.h"
 #include "absl/types/optional.h"
 #include <cstddef>
@@ -29,11 +31,6 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-class BucketMetadata;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -42,12 +39,15 @@ struct BucketCacheEntry {
   std::string location;
 
   static BucketCacheEntry FromMetadata(storage::BucketMetadata const& m);
+  static absl::optional<BucketCacheEntry> Create(
+      std::string const& bucket_name,
+      StatusOr<storage::BucketMetadata> const& metadata);
 };
 
 class BucketMetadataCache {
  public:
   explicit BucketMetadataCache(std::size_t max_size = 10000)
-      : max_size_(max_size) {}
+      : max_size_(max_size == 0 ? 1 : max_size) {}
 
   static BucketMetadataCache& Singleton();
 
