@@ -16,6 +16,7 @@
 #include "google/cloud/storage/hash_mismatch_error.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
 #include <algorithm>
 #include <cstring>
 #include <memory>
@@ -37,6 +38,18 @@ std::streamoff InitialOffset(ReadObjectRangeRequest const& request) {
   return request.StartingByte();
 }
 
+absl::optional<std::int64_t> ExpectedBytes(
+    ReadObjectRangeRequest const& request) {
+  if (request.HasOption<ReadRange>()) {
+    auto const& range = request.GetOption<ReadRange>().value();
+    return range.end - range.begin;
+  }
+  if (request.HasOption<ReadLast>()) {
+    return request.GetOption<ReadLast>().value();
+  }
+  return absl::nullopt;
+}
+
 }  // namespace
 
 ObjectReadStreambuf::ObjectReadStreambuf(
@@ -45,14 +58,20 @@ ObjectReadStreambuf::ObjectReadStreambuf(
     : source_(std::move(source)),
       source_pos_(InitialOffset(request)),
       hash_function_(CreateHashFunction(request)),
-      hash_validator_(CreateHashValidator(request)) {}
+      hash_validator_(CreateHashValidator(request)),
+      bucket_name_(request.bucket_name()),
+      object_name_(request.object_name()),
+      expected_bytes_(ExpectedBytes(request)) {}
 
-ObjectReadStreambuf::ObjectReadStreambuf(ReadObjectRangeRequest const&,
+ObjectReadStreambuf::ObjectReadStreambuf(ReadObjectRangeRequest const& request,
                                          Status status)
     : source_(new ObjectReadErrorSource(status)),
       source_pos_(-1),
       hash_validator_(CreateNullHashValidator()),
-      status_(std::move(status)) {}
+      status_(std::move(status)),
+      bucket_name_(request.bucket_name()),
+      object_name_(request.object_name()),
+      expected_bytes_(ExpectedBytes(request)) {}
 
 ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekpos(
     pos_type /*pos*/, std::ios_base::openmode /*which*/) {
@@ -77,6 +96,16 @@ ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
 bool ObjectReadStreambuf::IsOpen() const { return source_->IsOpen(); }
 
 void ObjectReadStreambuf::Close() {
+  if (expected_bytes_.has_value() && total_bytes_received_ > *expected_bytes_) {
+    if (!transformation().has_value()) {
+      GCP_LOG(WARNING) << "storage: received "
+                       << (total_bytes_received_ - *expected_bytes_)
+                       << " more bytes than requested from GCS for bucket "
+                       << bucket_name_ << ", object " << object_name_;
+    }
+    expected_bytes_ = absl::nullopt;
+  }
+
   auto response = source_->Close();
   if (!response.ok()) {
     ReportError(std::move(response).status());
@@ -223,6 +252,8 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   if (!storage_class_) storage_class_ = std::move(read->storage_class);
   if (!size_) size_ = std::move(read->size);
   if (!transformation_) transformation_ = std::move(read->transformation);
+
+  total_bytes_received_ += read->bytes_received;
 
   if (source_pos_ >= 0) {
     source_pos_ += static_cast<std::streamoff>(read->bytes_received);
