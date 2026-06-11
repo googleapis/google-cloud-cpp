@@ -42,7 +42,10 @@ absl::optional<std::int64_t> ExpectedBytes(
     ReadObjectRangeRequest const& request) {
   if (request.HasOption<ReadRange>()) {
     auto const& range = request.GetOption<ReadRange>().value();
-    return range.end - range.begin;
+    if (range.end > range.begin) {
+      return range.end - range.begin;
+    }
+    return absl::nullopt;
   }
   if (request.HasOption<ReadLast>()) {
     return request.GetOption<ReadLast>().value();
@@ -96,14 +99,17 @@ ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
 bool ObjectReadStreambuf::IsOpen() const { return source_->IsOpen(); }
 
 void ObjectReadStreambuf::Close() {
-  if (expected_bytes_.has_value() && total_bytes_received_ > *expected_bytes_) {
-    if (!transformation().has_value()) {
-      GCP_LOG(WARNING) << "storage: received "
-                       << (total_bytes_received_ - *expected_bytes_)
-                       << " more bytes than requested from GCS for bucket "
-                       << bucket_name_ << ", object " << object_name_;
+  if (expected_bytes_.has_value() && *expected_bytes_ >= 0) {
+    auto expected = static_cast<std::size_t>(*expected_bytes_);
+    if (total_bytes_received_ > expected) {
+      if (!transformation_.has_value()) {
+        GCP_LOG(WARNING) << "storage: received "
+                         << (total_bytes_received_ - expected)
+                         << " more bytes than requested from GCS for bucket "
+                         << bucket_name_ << ", object " << object_name_;
+      }
+      expected_bytes_ = absl::nullopt;
     }
-    expected_bytes_ = absl::nullopt;
   }
 
   auto response = source_->Close();
