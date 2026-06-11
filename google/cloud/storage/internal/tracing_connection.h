@@ -187,8 +187,8 @@ class TracingConnection : public storage::internal::StorageConnection {
                   std::string const& bucket_name);
   void EnrichSpan(opentelemetry::trace::Span& span,
                   storage::BucketMetadata const& metadata);
-  void EnrichSpan(opentelemetry::trace::Span& span,
-                  BucketCacheEntry const& entry);
+  static void EnrichSpan(opentelemetry::trace::Span& span,
+                         BucketCacheEntry const& entry);
   void MaybeTriggerBackgroundFetch(std::string const& bucket_name);
   void CleanupCompletedTasks();
 

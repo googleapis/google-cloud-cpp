@@ -94,7 +94,6 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
   }
 }
 
-
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    std::string const& bucket_name) {
   if (bucket_name.empty()) return;
