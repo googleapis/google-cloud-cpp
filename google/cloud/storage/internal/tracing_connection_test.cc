@@ -1685,6 +1685,96 @@ TEST(TracingClientTest, DeleteNotification) {
                       "gl-cpp.status_code", code_str)))));
 }
 
+TEST(TracingClientTest, BucketMetadataMaybeInvalidateBucketLevelEvict) {
+  TracingConnection::ResetCacheForTesting();
+  auto mock = std::make_shared<MockClient>();
+
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+
+  // Seed cache
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+
+  auto under_test = TracingConnection(mock);
+  (void)under_test.GetBucketMetadata(
+      storage::internal::GetBucketMetadataRequest("test-bucket"));
+
+  // Fail a bucket-level operation with 404 (DeleteBucket)
+  EXPECT_CALL(*mock, DeleteBucket).WillOnce([](auto const&) {
+    return Status(StatusCode::kNotFound, "Bucket not found");
+  });
+  (void)under_test.DeleteBucket(
+      storage::internal::DeleteBucketRequest("test-bucket"));
+
+  // Verify that the cache entry was evicted.
+  testing::Mock::VerifyAndClearExpectations(mock.get());
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+
+  EXPECT_CALL(*mock, GetObjectMetadata).WillOnce([](auto const&) {
+    return storage::ObjectMetadata();
+  });
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    return Status(StatusCode::kNotFound, "Bucket not found");
+  });
+
+  (void)under_test.GetObjectMetadata(
+      storage::internal::GetObjectMetadataRequest("test-bucket", "test-object"));
+}
+
+TEST(TracingClientTest, BucketMetadataMaybeInvalidateObjectLevelNoEvict) {
+  TracingConnection::ResetCacheForTesting();
+  auto mock = std::make_shared<MockClient>();
+
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+
+  // Seed cache
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    metadata.set_project_number(123456);
+    metadata.set_location("us-east1");
+    metadata.set_location_type("regional");
+    return metadata;
+  });
+
+  auto under_test = TracingConnection(mock);
+  (void)under_test.GetBucketMetadata(
+      storage::internal::GetBucketMetadataRequest("test-bucket"));
+
+  // Fail an object-level operation with 404 (GetObjectMetadata)
+  EXPECT_CALL(*mock, GetObjectMetadata).WillOnce([](auto const&) {
+    return Status(StatusCode::kNotFound, "Object not found");
+  });
+  (void)under_test.GetObjectMetadata(
+      storage::internal::GetObjectMetadataRequest("test-bucket", "test-object"));
+
+  // Verify that the cache entry was NOT evicted.
+  testing::Mock::VerifyAndClearExpectations(mock.get());
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+
+  EXPECT_CALL(*mock, GetObjectMetadata).WillOnce([](auto const&) {
+    return storage::ObjectMetadata();
+  });
+  EXPECT_CALL(*mock, GetBucketMetadata).Times(0);
+
+  (void)under_test.GetObjectMetadata(
+      storage::internal::GetObjectMetadataRequest("test-bucket", "test-object"));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

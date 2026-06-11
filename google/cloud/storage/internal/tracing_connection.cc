@@ -33,6 +33,7 @@ TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
     : impl_(std::move(impl)) {}
 
 TracingConnection::~TracingConnection() {
+  std::lock_guard<std::mutex> lk(mu_);
   for (auto& f : bg_tasks_) {
     if (f.valid()) f.wait();
   }
@@ -87,8 +88,12 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
     cache().EndFetch(bucket_name);
   });
 
-  bg_tasks_.push_back(std::move(f));
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    bg_tasks_.push_back(std::move(f));
+  }
 }
+
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    std::string const& bucket_name) {
@@ -228,7 +233,6 @@ StatusOr<storage::ObjectMetadata> TracingConnection::InsertObjectMedia(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->InsertObjectMedia(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -238,7 +242,6 @@ StatusOr<storage::ObjectMetadata> TracingConnection::CopyObject(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.destination_bucket());
   auto result = impl_->CopyObject(request);
-  MaybeInvalidate(result, request.destination_bucket());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -248,7 +251,6 @@ StatusOr<storage::ObjectMetadata> TracingConnection::GetObjectMetadata(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->GetObjectMetadata(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -260,7 +262,6 @@ TracingConnection::ReadObject(
   EnrichSpan(*span, request.bucket_name());
   auto reader = impl_->ReadObject(request);
   if (!reader) {
-    MaybeInvalidate(reader, request.bucket_name());
     return internal::EndSpan(*span, std::move(reader));
   }
   return std::unique_ptr<storage::internal::ObjectReadSource>(
@@ -285,7 +286,6 @@ StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteObject(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->DeleteObject(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -295,7 +295,6 @@ StatusOr<storage::ObjectMetadata> TracingConnection::UpdateObject(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->UpdateObject(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -305,7 +304,6 @@ StatusOr<storage::ObjectMetadata> TracingConnection::MoveObject(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->MoveObject(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -315,7 +313,6 @@ StatusOr<storage::ObjectMetadata> TracingConnection::PatchObject(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->PatchObject(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -325,7 +322,6 @@ StatusOr<storage::ObjectMetadata> TracingConnection::ComposeObject(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->ComposeObject(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -336,7 +332,6 @@ TracingConnection::RewriteObject(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.destination_bucket());
   auto result = impl_->RewriteObject(request);
-  MaybeInvalidate(result, request.destination_bucket());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -346,7 +341,6 @@ StatusOr<storage::ObjectMetadata> TracingConnection::RestoreObject(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->RestoreObject(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -359,7 +353,6 @@ TracingConnection::CreateResumableUpload(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->CreateResumableUpload(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -398,7 +391,6 @@ StatusOr<std::unique_ptr<std::string>> TracingConnection::UploadFileSimple(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->UploadFileSimple(file_name, file_size, request);
-  if (!result) MaybeInvalidate(result.status(), request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -410,7 +402,6 @@ StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->UploadFileResumable(file_name, request);
-  if (!result) MaybeInvalidate(result.status(), request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -423,7 +414,6 @@ Status TracingConnection::DownloadStreamToFile(
   EnrichSpan(*span, request.bucket_name());
   auto result =
       impl_->DownloadStreamToFile(std::move(stream), file_name, request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, result);
 }
 
@@ -509,7 +499,6 @@ TracingConnection::ListObjectAcl(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->ListObjectAcl(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -519,7 +508,6 @@ StatusOr<storage::ObjectAccessControl> TracingConnection::CreateObjectAcl(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->CreateObjectAcl(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -529,7 +517,6 @@ StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteObjectAcl(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->DeleteObjectAcl(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -539,7 +526,6 @@ StatusOr<storage::ObjectAccessControl> TracingConnection::GetObjectAcl(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->GetObjectAcl(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -549,7 +535,6 @@ StatusOr<storage::ObjectAccessControl> TracingConnection::UpdateObjectAcl(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->UpdateObjectAcl(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
@@ -559,7 +544,6 @@ StatusOr<storage::ObjectAccessControl> TracingConnection::PatchObjectAcl(
   auto scope = opentelemetry::trace::Scope(span);
   EnrichSpan(*span, request.bucket_name());
   auto result = impl_->PatchObjectAcl(request);
-  MaybeInvalidate(result, request.bucket_name());
   return internal::EndSpan(*span, std::move(result));
 }
 
