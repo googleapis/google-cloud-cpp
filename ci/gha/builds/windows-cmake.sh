@@ -32,6 +32,10 @@ source module ci/gha/builds/lib/ctest.sh
 if [[ -z "${CMAKE_OUT:-}" ]]; then
   CMAKE_OUT=cmake-out
 fi
+CMAKE_OUT_UNIX="${CMAKE_OUT}"
+if command -v cygpath >/dev/null 2>&1; then
+  CMAKE_OUT_UNIX=$(cygpath -u "${CMAKE_OUT}")
+fi
 mapfile -t args < <(cmake::common_args "${CMAKE_OUT}")
 mapfile -t vcpkg_args < <(cmake::vcpkg_args)
 mapfile -t ctest_args < <(ctest::common_args)
@@ -55,9 +59,9 @@ args+=("-DCMAKE_EXE_LINKER_FLAGS=/MANIFEST:NO")
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
   if ! io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="kms"; then
-    if [[ -f "${CMAKE_OUT}/vcpkg-manifest-install.log" ]]; then
-      io::log_red "vcpkg installation failed! Content of ${CMAKE_OUT}/vcpkg-manifest-install.log:"
-      cat "${CMAKE_OUT}/vcpkg-manifest-install.log"
+    if [[ -f "${CMAKE_OUT_UNIX}/vcpkg-manifest-install.log" ]]; then
+      io::log_red "vcpkg installation failed! Content of ${CMAKE_OUT_UNIX}/vcpkg-manifest-install.log:"
+      cat "${CMAKE_OUT_UNIX}/vcpkg-manifest-install.log"
     fi
     exit 1
   fi
