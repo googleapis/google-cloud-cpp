@@ -76,8 +76,9 @@ void DeleteFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void DeleteFolderRecursive(google::cloud::storagecontrol_v2::StorageControlClient client,
-                           std::vector<std::string> const& argv) {
+void DeleteFolderRecursive(
+    google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::vector<std::string> const& argv) {
   // [START storage_control_delete_folder_recursive]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
   [](storagecontrol::StorageControlClient client,
