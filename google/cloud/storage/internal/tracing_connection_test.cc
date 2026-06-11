@@ -1728,7 +1728,8 @@ TEST(TracingClientTest, BucketMetadataMaybeInvalidateBucketLevelEvict) {
   });
 
   (void)under_test.GetObjectMetadata(
-      storage::internal::GetObjectMetadataRequest("test-bucket", "test-object"));
+      storage::internal::GetObjectMetadataRequest("test-bucket",
+                                                  "test-object"));
 }
 
 TEST(TracingClientTest, BucketMetadataMaybeInvalidateObjectLevelNoEvict) {
@@ -1758,7 +1759,8 @@ TEST(TracingClientTest, BucketMetadataMaybeInvalidateObjectLevelNoEvict) {
     return Status(StatusCode::kNotFound, "Object not found");
   });
   (void)under_test.GetObjectMetadata(
-      storage::internal::GetObjectMetadataRequest("test-bucket", "test-object"));
+      storage::internal::GetObjectMetadataRequest("test-bucket",
+                                                  "test-object"));
 
   // Verify that the cache entry was NOT evicted.
   testing::Mock::VerifyAndClearExpectations(mock.get());
@@ -1772,7 +1774,8 @@ TEST(TracingClientTest, BucketMetadataMaybeInvalidateObjectLevelNoEvict) {
   EXPECT_CALL(*mock, GetBucketMetadata).Times(0);
 
   (void)under_test.GetObjectMetadata(
-      storage::internal::GetObjectMetadataRequest("test-bucket", "test-object"));
+      storage::internal::GetObjectMetadataRequest("test-bucket",
+                                                  "test-object"));
 }
 
 }  // namespace
