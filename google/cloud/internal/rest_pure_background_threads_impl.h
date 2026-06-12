@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_PURE_BACKGROUND_THREADS_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_PURE_BACKGROUND_THREADS_IMPL_H
 
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/generic_background_threads_impl.h"
 #include "google/cloud/internal/rest_pure_completion_queue_impl.h"
 #include "google/cloud/version.h"
@@ -38,10 +39,24 @@ class RestPureBackgroundThreads {
   virtual RestPureCompletionQueue cq() const = 0;
 };
 
+struct RestPureQueueTraits {
+  static RestPureCompletionQueue Create() {
+    return RestPureCompletionQueue(
+        std::make_shared<RestPureCompletionQueueImpl>());
+  }
+  static void Run(RestPureCompletionQueue cq, promise<void>& started) {
+    internal::CallContext context;
+    internal::ScopedCallContext scope(std::move(context));
+    started.set_value();
+    cq.Run();
+  }
+};
+
 /// Background threads that run on a RestPureCompletionQueue.
 using AutomaticallyCreatedRestPureBackgroundThreads =
     google::cloud::internal::AutomaticallyCreatedBackgroundThreadsImpl<
-        RestPureCompletionQueue, RestPureBackgroundThreads>;
+        RestPureCompletionQueue, RestPureBackgroundThreads,
+        RestPureQueueTraits>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
