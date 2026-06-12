@@ -15,12 +15,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 
+#include "google/cloud/storage/internal/bucket_metadata_cache.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/generic_background_threads_impl.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+#include "google/cloud/background_threads.h"
+#include "google/cloud/completion_queue.h"
+#else
+#include "google/cloud/internal/rest_pure_background_threads_impl.h"
+#endif
 #include <memory>
 #include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -30,7 +37,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TracingConnection : public storage::internal::StorageConnection {
  public:
   explicit TracingConnection(std::shared_ptr<StorageConnection> impl);
-  ~TracingConnection() override = default;
+  ~TracingConnection() override;
+
+  static void ResetCacheForTesting();
 
   Options options() const override;
 
@@ -178,7 +187,46 @@ class TracingConnection : public storage::internal::StorageConnection {
   std::vector<std::string> InspectStackStructure() const override;
 
  private:
+  void EnrichSpan(opentelemetry::trace::Span& span,
+                  std::string const& bucket_name);
+  void EnrichSpan(opentelemetry::trace::Span& span,
+                  storage::BucketMetadata const& metadata) const;
+  static void EnrichSpan(opentelemetry::trace::Span& span,
+                         BucketCacheEntry const& entry);
+  void MaybeTriggerBackgroundFetch(std::string const& bucket_name);
+
+  static void MaybeInvalidate(Status const& status,
+                              std::string const& bucket_name) {
+    if (!status.ok() && status.code() == StatusCode::kNotFound) {
+      cache().Invalidate(bucket_name);
+    }
+  }
+
+  template <typename T>
+  static void MaybeInvalidate(StatusOr<T> const& result,
+                              std::string const& bucket_name) {
+    MaybeInvalidate(result.status(), bucket_name);
+  }
+
+  static BucketMetadataCache& cache();
+
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  using StorageBackgroundThreads = google::cloud::BackgroundThreads;
+  using AutomaticallyCreatedStorageBackgroundThreads =
+      google::cloud::internal::AutomaticallyCreatedBackgroundThreadsImpl<
+          google::cloud::CompletionQueue, google::cloud::BackgroundThreads>;
+#else
+  using StorageBackgroundThreads =
+      google::cloud::rest_internal::RestPureBackgroundThreads;
+  using AutomaticallyCreatedStorageBackgroundThreads =
+      google::cloud::internal::AutomaticallyCreatedBackgroundThreadsImpl<
+          rest_internal::RestPureCompletionQueue,
+          rest_internal::RestPureBackgroundThreads,
+          rest_internal::RestPureQueueTraits>;
+#endif
+
   std::shared_ptr<StorageConnection> impl_;
+  std::unique_ptr<StorageBackgroundThreads> background_threads_;
 };
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(

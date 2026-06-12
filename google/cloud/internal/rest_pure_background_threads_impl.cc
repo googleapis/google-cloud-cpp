@@ -25,48 +25,6 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AutomaticallyCreatedRestPureBackgroundThreads::
-    AutomaticallyCreatedRestPureBackgroundThreads(std::size_t thread_count)
-    : cq_(std::make_shared<RestPureCompletionQueueImpl>()),
-      pool_(thread_count == 0 ? 1 : thread_count) {
-  std::generate_n(pool_.begin(), pool_.size(), [this] {
-    promise<void> started;
-    auto thread = std::thread(
-        [](RestPureCompletionQueue cq, promise<void>& started,
-           internal::CallContext c) {
-          internal::ScopedCallContext scope(std::move(c));
-          started.set_value();
-          cq.Run();
-        },
-        cq_, std::ref(started), internal::CallContext{});
-    started.get_future().wait();
-    return thread;
-  });
-}
-
-AutomaticallyCreatedRestPureBackgroundThreads::
-    ~AutomaticallyCreatedRestPureBackgroundThreads() {
-  Shutdown();
-}
-
-void AutomaticallyCreatedRestPureBackgroundThreads::Shutdown() {
-  cq_.Shutdown();
-  for (auto& t : pool_) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    try {
-#endif
-      t.join();
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    } catch (std::system_error const& e) {
-      GCP_LOG(FATAL)
-          << "AutomaticallyCreatedRestPureBackgroundThreads::Shutdown: "
-          << e.what();
-    }
-#endif
-  }
-  pool_.clear();
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

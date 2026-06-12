@@ -14,8 +14,14 @@
 
 #include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/storage/internal/tracing_object_read_source.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/options.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+#include "google/cloud/grpc_options.h"
+#endif
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <utility>
@@ -26,10 +32,88 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace {
+std::size_t DefaultThreadPoolSize(Options const& options) {
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  auto pool_size = options.get<GrpcBackgroundThreadPoolSizeOption>();
+  if (pool_size == 0) return 1U;
+  return pool_size;
+#else
+  (void)options;
+  return 1U;
+#endif
+}
+}  // namespace
+
 TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
-    : impl_(std::move(impl)) {}
+    : impl_(std::move(impl)),
+      background_threads_(
+          std::make_unique<AutomaticallyCreatedStorageBackgroundThreads>(
+              DefaultThreadPoolSize(impl_->options()))) {}
+
+TracingConnection::~TracingConnection() = default;
+
+BucketMetadataCache& TracingConnection::cache() {
+  static BucketMetadataCache instance(10000);
+  return instance;
+}
+
+void TracingConnection::ResetCacheForTesting() { cache().Clear(); }
 
 Options TracingConnection::options() const { return impl_->options(); }
+
+void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
+                                   BucketCacheEntry const& entry) {
+  span.SetAttribute("gcp.resource.destination.id", entry.id);
+  span.SetAttribute("gcp.resource.destination.location", entry.location);
+}
+
+void TracingConnection::MaybeTriggerBackgroundFetch(
+    std::string const& bucket_name) {
+  if (!cache().StartFetch(bucket_name)) {
+    return;
+  }
+
+  auto current_options = google::cloud::internal::SaveCurrentOptions();
+  background_threads_->cq().RunAsync([this, bucket_name, current_options]() {
+    google::cloud::internal::OptionsSpan span(current_options);
+    storage::internal::GetBucketMetadataRequest request(bucket_name);
+    auto result = impl_->GetBucketMetadata(request);
+
+    if (result.ok()) {
+      cache().Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
+    } else if (result.status().code() == StatusCode::kPermissionDenied) {
+      cache().Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
+    }
+
+    cache().EndFetch(bucket_name);
+  });
+}
+
+void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
+                                   std::string const& bucket_name) {
+  if (bucket_name.empty()) return;
+  auto const enabled =
+      options().get<storage_experimental::OTelSpanEnrichmentOption>();
+  if (!enabled) return;
+  auto entry = cache().Get(bucket_name);
+  if (entry.has_value()) {
+    EnrichSpan(span, *entry);
+  } else {
+    MaybeTriggerBackgroundFetch(bucket_name);
+  }
+}
+
+void TracingConnection::EnrichSpan(
+    opentelemetry::trace::Span& span,
+    storage::BucketMetadata const& metadata) const {
+  auto const enabled =
+      options().get<storage_experimental::OTelSpanEnrichmentOption>();
+  if (!enabled) return;
+  auto entry = BucketCacheEntry::FromMetadata(metadata);
+  EnrichSpan(span, entry);
+  cache().Put(metadata.name(), std::move(entry));
+}
 
 StatusOr<storage::internal::ListBucketsResponse> TracingConnection::ListBuckets(
     storage::internal::ListBucketsRequest const& request) {
@@ -43,49 +127,80 @@ StatusOr<storage::BucketMetadata> TracingConnection::CreateBucket(
     storage::internal::CreateBucketRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CreateBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->CreateBucket(request));
+  auto result = impl_->CreateBucket(request);
+  if (result.ok()) EnrichSpan(*span, *result);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketMetadata> TracingConnection::GetBucketMetadata(
     storage::internal::GetBucketMetadataRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::GetBucketMetadata");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->GetBucketMetadata(request));
+  auto result = impl_->GetBucketMetadata(request);
+  if (result.ok()) {
+    EnrichSpan(*span, *result);
+  } else {
+    MaybeInvalidate(result, request.bucket_name());
+  }
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteBucket(
     storage::internal::DeleteBucketRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::DeleteBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->DeleteBucket(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->DeleteBucket(request);
+  if (result.ok() || result.status().code() == StatusCode::kNotFound) {
+    cache().Invalidate(request.bucket_name());
+  }
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketMetadata> TracingConnection::UpdateBucket(
     storage::internal::UpdateBucketRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::UpdateBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->UpdateBucket(request));
+  auto result = impl_->UpdateBucket(request);
+  if (result.ok()) {
+    EnrichSpan(*span, *result);
+  } else {
+    MaybeInvalidate(result, request.metadata().name());
+  }
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketMetadata> TracingConnection::PatchBucket(
     storage::internal::PatchBucketRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::PatchBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->PatchBucket(request));
+  auto result = impl_->PatchBucket(request);
+  if (result.ok()) {
+    EnrichSpan(*span, *result);
+  } else {
+    MaybeInvalidate(result, request.bucket());
+  }
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::NativeIamPolicy> TracingConnection::GetNativeBucketIamPolicy(
     storage::internal::GetBucketIamPolicyRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::GetNativeBucketIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->GetNativeBucketIamPolicy(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->GetNativeBucketIamPolicy(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::NativeIamPolicy> TracingConnection::SetNativeBucketIamPolicy(
     storage::internal::SetNativeBucketIamPolicyRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::SetNativeBucketIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->SetNativeBucketIamPolicy(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->SetNativeBucketIamPolicy(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::TestBucketIamPermissionsResponse>
@@ -93,35 +208,46 @@ TracingConnection::TestBucketIamPermissions(
     storage::internal::TestBucketIamPermissionsRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::TestBucketIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->TestBucketIamPermissions(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->TestBucketIamPermissions(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketMetadata> TracingConnection::LockBucketRetentionPolicy(
     storage::internal::LockBucketRetentionPolicyRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::LockBucketRetentionPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->LockBucketRetentionPolicy(request));
+  auto result = impl_->LockBucketRetentionPolicy(request);
+  if (result.ok()) EnrichSpan(*span, *result);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::InsertObjectMedia(
     storage::internal::InsertObjectMediaRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::InsertObjectMedia");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->InsertObjectMedia(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->InsertObjectMedia(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::CopyObject(
     storage::internal::CopyObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CopyObject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->CopyObject(request));
+  EnrichSpan(*span, request.destination_bucket());
+  auto result = impl_->CopyObject(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::GetObjectMetadata(
     storage::internal::GetObjectMetadataRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::GetObjectMetadata");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->GetObjectMetadata(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->GetObjectMetadata(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<std::unique_ptr<storage::internal::ObjectReadSource>>
@@ -129,8 +255,11 @@ TracingConnection::ReadObject(
     storage::internal::ReadObjectRangeRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::ReadObject");
   auto scope = opentelemetry::trace::Scope(span);
+  EnrichSpan(*span, request.bucket_name());
   auto reader = impl_->ReadObject(request);
-  if (!reader) return internal::EndSpan(*span, std::move(reader));
+  if (!reader) {
+    return internal::EndSpan(*span, std::move(reader));
+  }
   return std::unique_ptr<storage::internal::ObjectReadSource>(
       std::make_unique<TracingObjectReadSource>(std::move(span),
                                                 *std::move(reader)));
@@ -141,42 +270,55 @@ StatusOr<storage::internal::ListObjectsResponse> TracingConnection::ListObjects(
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListObjects");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->ListObjects(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->ListObjects(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteObject(
     storage::internal::DeleteObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::DeleteObject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->DeleteObject(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->DeleteObject(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::UpdateObject(
     storage::internal::UpdateObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::UpdateObject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->UpdateObject(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->UpdateObject(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::MoveObject(
     storage::internal::MoveObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::MoveObject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->MoveObject(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->MoveObject(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::PatchObject(
     storage::internal::PatchObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::PatchObject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->PatchObject(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->PatchObject(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::ComposeObject(
     storage::internal::ComposeObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::ComposeObject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->ComposeObject(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->ComposeObject(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::RewriteObjectResponse>
@@ -184,14 +326,18 @@ TracingConnection::RewriteObject(
     storage::internal::RewriteObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::RewriteObject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->RewriteObject(request));
+  EnrichSpan(*span, request.destination_bucket());
+  auto result = impl_->RewriteObject(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::RestoreObject(
     storage::internal::RestoreObjectRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::RestoreObject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->RestoreObject(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->RestoreObject(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::CreateResumableUploadResponse>
@@ -201,7 +347,9 @@ TracingConnection::CreateResumableUpload(
   auto span =
       internal::MakeSpan("storage::Client::WriteObject/CreateResumableUpload");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->CreateResumableUpload(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->CreateResumableUpload(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
@@ -237,8 +385,9 @@ StatusOr<std::unique_ptr<std::string>> TracingConnection::UploadFileSimple(
   auto span =
       internal::MakeSpan("storage::Client::UploadFile/UploadFileSimple");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, impl_->UploadFileSimple(file_name, file_size, request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->UploadFileSimple(file_name, file_size, request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
@@ -247,8 +396,9 @@ StatusOr<std::unique_ptr<std::istream>> TracingConnection::UploadFileResumable(
   auto span =
       internal::MakeSpan("storage::Client::UploadFile/UploadFileResumable");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           impl_->UploadFileResumable(file_name, request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->UploadFileResumable(file_name, request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 Status TracingConnection::DownloadStreamToFile(
@@ -257,8 +407,10 @@ Status TracingConnection::DownloadStreamToFile(
   auto span = internal::MakeSpan(
       "storage::Client::DownloadToFile/DownloadStreamToFile");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->DownloadStreamToFile(
-                                      std::move(stream), file_name, request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result =
+      impl_->DownloadStreamToFile(std::move(stream), file_name, request);
+  return internal::EndSpan(*span, result);
 }
 
 StatusOr<storage::ObjectMetadata> TracingConnection::ExecuteParallelUploadFile(
@@ -279,42 +431,60 @@ TracingConnection::ListBucketAcl(
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListBucketAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->ListBucketAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->ListBucketAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketAccessControl> TracingConnection::CreateBucketAcl(
     storage::internal::CreateBucketAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CreateBucketAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->CreateBucketAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->CreateBucketAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteBucketAcl(
     storage::internal::DeleteBucketAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::DeleteBucketAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->DeleteBucketAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->DeleteBucketAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketAccessControl> TracingConnection::GetBucketAcl(
     storage::internal::GetBucketAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::GetBucketAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->GetBucketAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->GetBucketAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketAccessControl> TracingConnection::UpdateBucketAcl(
     storage::internal::UpdateBucketAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::UpdateBucketAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->UpdateBucketAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->UpdateBucketAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::BucketAccessControl> TracingConnection::PatchBucketAcl(
     storage::internal::PatchBucketAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::PatchBucketAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->PatchBucketAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->PatchBucketAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::ListObjectAclResponse>
@@ -323,42 +493,54 @@ TracingConnection::ListObjectAcl(
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->ListObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->ListObjectAcl(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectAccessControl> TracingConnection::CreateObjectAcl(
     storage::internal::CreateObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CreateObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->CreateObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->CreateObjectAcl(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::EmptyResponse> TracingConnection::DeleteObjectAcl(
     storage::internal::DeleteObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::DeleteObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->DeleteObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->DeleteObjectAcl(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectAccessControl> TracingConnection::GetObjectAcl(
     storage::internal::GetObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::GetObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->GetObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->GetObjectAcl(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectAccessControl> TracingConnection::UpdateObjectAcl(
     storage::internal::UpdateObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::UpdateObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->UpdateObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->UpdateObjectAcl(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectAccessControl> TracingConnection::PatchObjectAcl(
     storage::internal::PatchObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::PatchObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->PatchObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->PatchObjectAcl(request);
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::ListDefaultObjectAclResponse>
@@ -367,7 +549,10 @@ TracingConnection::ListDefaultObjectAcl(
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->ListDefaultObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->ListDefaultObjectAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectAccessControl>
@@ -375,7 +560,10 @@ TracingConnection::CreateDefaultObjectAcl(
     storage::internal::CreateDefaultObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CreateDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->CreateDefaultObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->CreateDefaultObjectAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::EmptyResponse>
@@ -383,14 +571,20 @@ TracingConnection::DeleteDefaultObjectAcl(
     storage::internal::DeleteDefaultObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::DeleteDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->DeleteDefaultObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->DeleteDefaultObjectAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectAccessControl> TracingConnection::GetDefaultObjectAcl(
     storage::internal::GetDefaultObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::GetDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->GetDefaultObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->GetDefaultObjectAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectAccessControl>
@@ -398,14 +592,20 @@ TracingConnection::UpdateDefaultObjectAcl(
     storage::internal::UpdateDefaultObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::UpdateDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->UpdateDefaultObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->UpdateDefaultObjectAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ObjectAccessControl> TracingConnection::PatchDefaultObjectAcl(
     storage::internal::PatchDefaultObjectAclRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::PatchDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->PatchDefaultObjectAcl(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->PatchDefaultObjectAcl(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::ServiceAccount> TracingConnection::GetServiceAccount(
@@ -466,21 +666,30 @@ TracingConnection::ListNotifications(
   // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListNotifications");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->ListNotifications(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->ListNotifications(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::NotificationMetadata> TracingConnection::CreateNotification(
     storage::internal::CreateNotificationRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::CreateNotification");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->CreateNotification(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->CreateNotification(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::NotificationMetadata> TracingConnection::GetNotification(
     storage::internal::GetNotificationRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::GetNotification");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->GetNotification(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->GetNotification(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 StatusOr<storage::internal::EmptyResponse>
@@ -488,7 +697,10 @@ TracingConnection::DeleteNotification(
     storage::internal::DeleteNotificationRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::DeleteNotification");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, impl_->DeleteNotification(request));
+  EnrichSpan(*span, request.bucket_name());
+  auto result = impl_->DeleteNotification(request);
+  MaybeInvalidate(result, request.bucket_name());
+  return internal::EndSpan(*span, std::move(result));
 }
 
 std::vector<std::string> TracingConnection::InspectStackStructure() const {
