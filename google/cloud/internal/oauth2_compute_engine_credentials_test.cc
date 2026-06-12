@@ -224,6 +224,7 @@ TEST(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
       {R"js({"email": "foo@bar.baz"})js",
        ServiceAccountMetadata{{}, "foo@bar.baz", "googleapis.com"}},
       {R"js({})js", ServiceAccountMetadata{{}, "", "googleapis.com"}},
+      {R"js([])js", ServiceAccountMetadata{{}, "", "googleapis.com"}},
   };
 
   for (auto const& test : cases) {
