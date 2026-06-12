@@ -57,7 +57,8 @@ TEST(TracingClientTest, Options) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, options).WillOnce(Return(Options{}.set<TestOption>(42)));
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(Return(Options{}.set<TestOption>(42)));
   auto under_test = TracingConnection(mock);
   auto const options = under_test.options();
   EXPECT_EQ(42, options.get<TestOption>());
