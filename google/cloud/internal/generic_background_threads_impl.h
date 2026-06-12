@@ -28,18 +28,28 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-template <typename QueueType, typename BaseInterface>
+template <typename QueueType>
+struct DefaultQueueTraits {
+  static QueueType Create() { return QueueType(); }
+  static void Run(QueueType cq, promise<void>& started) {
+    started.set_value();
+    cq.Run();
+  }
+};
+
+template <typename QueueType, typename BaseInterface,
+          typename QueueTraits = DefaultQueueTraits<QueueType>>
 class AutomaticallyCreatedBackgroundThreadsImpl : public BaseInterface {
  public:
   explicit AutomaticallyCreatedBackgroundThreadsImpl(
       std::size_t thread_count = 1U)
-      : pool_(thread_count == 0 ? 1 : thread_count) {
+      : cq_(QueueTraits::Create()),
+        pool_(thread_count == 0 ? 1 : thread_count) {
     std::generate_n(pool_.begin(), pool_.size(), [this] {
       promise<void> started;
       auto thread = std::thread(
           [](QueueType cq, promise<void>& started) {
-            started.set_value();
-            cq.Run();
+            QueueTraits::Run(std::move(cq), started);
           },
           cq_, std::ref(started));
       started.get_future().wait();
