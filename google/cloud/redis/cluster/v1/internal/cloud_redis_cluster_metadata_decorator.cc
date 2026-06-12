@@ -141,6 +141,17 @@ CloudRedisClusterMetadata::GetClusterCertificateAuthority(
   return child_->GetClusterCertificateAuthority(context, options, request);
 }
 
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+CloudRedisClusterMetadata::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetSharedRegionalCertificateAuthority(context, options,
+                                                       request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterMetadata::AsyncRescheduleClusterMaintenance(
     google::cloud::CompletionQueue& cq,

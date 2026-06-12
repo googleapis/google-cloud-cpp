@@ -130,6 +130,13 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
       (std::shared_ptr<grpc::ClientContext>, Options const&,
        google::spanner::v1::BatchWriteRequest const&),
       (override));
+
+  MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+                  google::spanner::v1::CacheUpdate>>,
+              FetchCacheUpdate,
+              (std::shared_ptr<grpc::ClientContext>, Options const&,
+               google::spanner::v1::FetchCacheUpdateRequest const&),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

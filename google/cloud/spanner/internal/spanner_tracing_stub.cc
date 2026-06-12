@@ -188,6 +188,21 @@ SpannerTracingStub::BatchWrite(
       std::move(context), std::move(stream), std::move(span));
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+SpannerTracingStub::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.v1.Spanner", "FetchCacheUpdate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->FetchCacheUpdate(context, options, request);
+  return std::make_unique<
+      internal::StreamingReadRpcTracing<google::spanner::v1::CacheUpdate>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
 future<StatusOr<google::spanner::v1::Session>>
 SpannerTracingStub::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,

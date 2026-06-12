@@ -102,6 +102,18 @@ class VectorSearchServiceTracingConnection
   future<StatusOr<google::cloud::vectorsearch::v1::Index>> CreateIndex(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::vectorsearch::v1::Index>> UpdateIndex(
+      google::cloud::vectorsearch::v1::UpdateIndexRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateIndex(
+      NoAwaitTag,
+      google::cloud::vectorsearch::v1::UpdateIndexRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vectorsearch::v1::Index>> UpdateIndex(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::vectorsearch::v1::OperationMetadata>>
   DeleteIndex(google::cloud::vectorsearch::v1::DeleteIndexRequest const&
                   request) override;

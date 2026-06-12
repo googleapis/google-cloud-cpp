@@ -110,8 +110,8 @@ class EvaluationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.EvaluateInstancesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/evaluation_service.proto#L64}
-  /// [google.cloud.aiplatform.v1.EvaluateInstancesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/evaluation_service.proto#L162}
+  /// [google.cloud.aiplatform.v1.EvaluateInstancesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/evaluation_service.proto#L68}
+  /// [google.cloud.aiplatform.v1.EvaluateInstancesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/evaluation_service.proto#L269}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::EvaluateInstancesResponse>
@@ -511,7 +511,7 @@ class EvaluationServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -550,7 +550,7 @@ class EvaluationServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

@@ -33,8 +33,21 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::string IamCredentialsEndpoint(
+    StatusOr<std::string> const& universe_domain) {
+  return absl::StrCat("https://iamcredentials.",
+                      universe_domain ? *universe_domain : "googleapis.com");
+}
+
+}  // namespace
 
 using ::google::cloud::internal::InvalidArgumentError;
+
+bool AllowedLocationsResponse::IsUnbounded() const {
+  return !encoded_locations.empty() && encoded_locations == "0x0";
+}
 
 MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
     std::shared_ptr<oauth2_internal::Credentials> credentials, Options options,
@@ -46,12 +59,11 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
 StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
-  auto auth_header =
-      credentials_->AuthenticationHeader(std::chrono::system_clock::now());
-  if (!auth_header) return std::move(auth_header).status();
-
+  auto authorization_header =
+      credentials_->Authorization(std::chrono::system_clock::now());
+  if (!authorization_header) return std::move(authorization_header).status();
   rest_internal::RestRequest rest_request;
-  rest_request.AddHeader(rest_internal::HttpHeader(auth_header.value()));
+  rest_request.AddHeader(*std::move(authorization_header));
   rest_request.AddHeader("Content-Type", "application/json");
   rest_request.SetPath(MakeRequestPath(request));
   nlohmann::json payload{
@@ -74,10 +86,58 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
 
 std::string MinimalIamCredentialsRestStub::MakeRequestPath(
     GenerateAccessTokenRequest const& request) const {
-  auto ud = universe_domain(Options{});
-  return absl::StrCat("https://iamcredentials.", ud ? *ud : "googleapis.com",
+  return absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
                       "/v1/projects/-/serviceAccounts/",
                       request.service_account, ":generateAccessToken");
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestStub::AllowedLocationsHelper(std::string path) {
+  auto authorization_header =
+      credentials_->Authorization(std::chrono::system_clock::now());
+  if (!authorization_header) return std::move(authorization_header).status();
+  rest_internal::RestRequest rest_request;
+  rest_request.AddHeader(*std::move(authorization_header));
+  rest_request.SetPath(std::move(path));
+
+  auto client = client_factory_(options_);
+  rest_internal::RestContext context;
+  auto response = client->Get(context, rest_request);
+  if (!response) return std::move(response).status();
+  return ParseAllowedLocationsResponse(
+      **response,
+      internal::ErrorContext(
+          {{"gcloud-cpp.root.class", "MinimalIamCredentialsRestStub"},
+           {"gcloud-cpp.root.function", __func__},
+           {"path", rest_request.path()}}));
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestStub::AllowedLocations(
+    ServiceAccountAllowedLocationsRequest const& request) {
+  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
+                           "/v1/projects/-/serviceAccounts/",
+                           request.service_account_email, "/allowedLocations");
+  return AllowedLocationsHelper(std::move(path));
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestStub::AllowedLocations(
+    WorkloadIdentityAllowedLocationsRequest const& request) {
+  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
+                           "/v1/projects/", request.project_id,
+                           "/locations/global/workloadIdentityPools/",
+                           request.pool_id, "/allowedLocations");
+  return AllowedLocationsHelper(std::move(path));
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestStub::AllowedLocations(
+    WorkforceIdentityAllowedLocationsRequest const& request) {
+  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
+                           "/v1/locations/global/workforcePools/",
+                           request.pool_id, "/allowedLocations");
+  return AllowedLocationsHelper(std::move(path));
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
@@ -102,6 +162,53 @@ MinimalIamCredentialsRestLogging::GenerateAccessToken(
                 << "() >> response={access_token=[censored], expiration="
                 << google::cloud::internal::FormatRfc3339(response->expiration)
                 << "}";
+  return response;
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestLogging::AllowedLocations(
+    ServiceAccountAllowedLocationsRequest const& request) {
+  GCP_LOG(INFO) << __func__ << "() << {service_account_email="
+                << request.service_account_email << "}";
+  auto response = child_->AllowedLocations(request);
+  if (!response) {
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
+    return response;
+  }
+  GCP_LOG(INFO) << __func__ << "() >> response={locations="
+                << absl::StrJoin(response->locations, ",")
+                << ", encoded_locations=" << response->encoded_locations << "}";
+  return response;
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestLogging::AllowedLocations(
+    WorkloadIdentityAllowedLocationsRequest const& request) {
+  GCP_LOG(INFO) << __func__ << "() << {project_id=" << request.project_id
+                << ", pool_id=" << request.pool_id << "}";
+  auto response = child_->AllowedLocations(request);
+  if (!response) {
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
+    return response;
+  }
+  GCP_LOG(INFO) << __func__ << "() >> response={locations="
+                << absl::StrJoin(response->locations, ",")
+                << ", encoded_locations=" << response->encoded_locations << "}";
+  return response;
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestLogging::AllowedLocations(
+    WorkforceIdentityAllowedLocationsRequest const& request) {
+  GCP_LOG(INFO) << __func__ << "() << {pool_id=" << request.pool_id << "}";
+  auto response = child_->AllowedLocations(request);
+  if (!response) {
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
+    return response;
+  }
+  GCP_LOG(INFO) << __func__ << "() >> response={locations="
+                << absl::StrJoin(response->locations, ",")
+                << ", encoded_locations=" << response->encoded_locations << "}";
   return response;
 }
 
@@ -131,6 +238,29 @@ StatusOr<AccessToken> ParseGenerateAccessTokenResponse(
         GCP_ERROR_INFO().WithContext(ec));
   }
   return google::cloud::AccessToken{*std::move(token), *expire_time};
+}
+
+StatusOr<AllowedLocationsResponse> ParseAllowedLocationsResponse(
+    rest_internal::RestResponse& response,
+    google::cloud::internal::ErrorContext const& ec) {
+  if (IsHttpError(response)) return AsStatus(std::move(response));
+  auto response_payload =
+      rest_internal::ReadAll(std::move(response).ExtractPayload());
+  if (!response_payload) return std::move(response_payload).status();
+  auto parsed = nlohmann::json::parse(*response_payload, nullptr, false);
+  if (!parsed.is_object()) {
+    return InvalidArgumentError("cannot parse response as a JSON object",
+                                GCP_ERROR_INFO().WithContext(ec));
+  }
+  auto locations = ValidateStringArrayField(parsed, "locations",
+                                            "AllowedLocations() response", ec);
+  if (!locations) return std::move(locations).status();
+
+  auto encoded_locations = ValidateStringField(
+      parsed, "encodedLocations", "AllowedLocations() response", ec);
+  if (!encoded_locations) return std::move(encoded_locations).status();
+  return AllowedLocationsResponse{*std::move(locations),
+                                  *std::move(encoded_locations)};
 }
 
 std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(

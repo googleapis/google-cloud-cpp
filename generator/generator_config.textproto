@@ -1934,6 +1934,20 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/datacatalog/lineage/v1/lineage.proto"
+  product_path: "google/cloud/datacatalog/lineage/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/datacatalog/lineage/configmanagement/v1/configmanagement.proto"
+  product_path: "google/cloud/datacatalog/lineage/configmanagement/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Database Migration
 service {
   service_proto_path: "google/cloud/clouddms/v1/clouddms.proto"
@@ -1952,6 +1966,13 @@ service {
 
 # Dataplex
 service {
+  service_proto_path: "google/cloud/dataplex/v1/business_glossary.proto"
+  product_path: "google/cloud/dataplex/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/dataplex/v1/catalog.proto"
   product_path: "google/cloud/dataplex/v1"
   initial_copyright_year: "2024"
@@ -1959,9 +1980,23 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/dataplex/v1/cmek.proto"
+  product_path: "google/cloud/dataplex/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/cloud/dataplex/v1/content.proto"
   product_path: "google/cloud/dataplex/v1"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/dataplex/v1/data_products.proto"
+  product_path: "google/cloud/dataplex/v1"
+  initial_copyright_year: "2026"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -2606,6 +2641,21 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Gemini Data Analytics
+service {
+  service_proto_path: "google/cloud/geminidataanalytics/v1/data_agent_service.proto"
+  product_path: "google/cloud/geminidataanalytics/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/geminidataanalytics/v1/data_chat_service.proto"
+  product_path: "google/cloud/geminidataanalytics/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # GKE Backup
 service {
   service_proto_path: "google/cloud/gkebackup/v1/gkebackup.proto"
@@ -3060,6 +3110,62 @@ service {
   additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
   product_path: "google/cloud/networksecurity/v1"
   initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/dns_threat_detector.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/sse_realm.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/firewall_activation.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/intercept.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/address_group.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/security_profile_group_service.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/networksecurity/v1/mirroring.proto"
+  additional_proto_files: ["google/cloud/networksecurity/v1/common.proto"]
+  product_path: "google/cloud/networksecurity/v1"
+  initial_copyright_year: "2026"
   retryable_status_codes: ["kUnavailable"]
 }
 

@@ -33,6 +33,7 @@ class MockAsyncObjectDescriptorConnection
               (ReadParams), (override));
   MOCK_METHOD(void, MakeSubsequentStream, (), (override));
   MOCK_METHOD(Options, options, (), (const, override));
+  MOCK_METHOD(bool, IsOpen, (), (const, override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

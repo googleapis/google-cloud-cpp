@@ -20,6 +20,7 @@
 #include "google/cloud/dataform/v1/dataform.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -32,6 +33,237 @@ namespace dataform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataformStub::~DataformStub() = default;
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DefaultDataformStub::GetTeamFolder(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+  google::cloud::dataform::v1::TeamFolder response;
+  auto status = grpc_stub_->GetTeamFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DefaultDataformStub::CreateTeamFolder(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+  google::cloud::dataform::v1::TeamFolder response;
+  auto status = grpc_stub_->CreateTeamFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DefaultDataformStub::UpdateTeamFolder(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+  google::cloud::dataform::v1::TeamFolder response;
+  auto status = grpc_stub_->UpdateTeamFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultDataformStub::DeleteTeamFolder(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteTeamFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataformStub::AsyncDeleteTeamFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataform::v1::DeleteTeamFolderTreeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteTeamFolderTree(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataformStub::DeleteTeamFolderTree(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTeamFolderTree(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::QueryTeamFolderContentsResponse>
+DefaultDataformStub::QueryTeamFolderContents(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest const&
+        request) {
+  google::cloud::dataform::v1::QueryTeamFolderContentsResponse response;
+  auto status =
+      grpc_stub_->QueryTeamFolderContents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::SearchTeamFoldersResponse>
+DefaultDataformStub::SearchTeamFolders(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::SearchTeamFoldersRequest const& request) {
+  google::cloud::dataform::v1::SearchTeamFoldersResponse response;
+  auto status = grpc_stub_->SearchTeamFolders(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DefaultDataformStub::GetFolder(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::GetFolderRequest const& request) {
+  google::cloud::dataform::v1::Folder response;
+  auto status = grpc_stub_->GetFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DefaultDataformStub::CreateFolder(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::CreateFolderRequest const& request) {
+  google::cloud::dataform::v1::Folder response;
+  auto status = grpc_stub_->CreateFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DefaultDataformStub::UpdateFolder(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+  google::cloud::dataform::v1::Folder response;
+  auto status = grpc_stub_->UpdateFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultDataformStub::DeleteFolder(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataformStub::AsyncDeleteFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataform::v1::DeleteFolderTreeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataform::v1::DeleteFolderTreeRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteFolderTree(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataformStub::DeleteFolderTree(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFolderTree(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::QueryFolderContentsResponse>
+DefaultDataformStub::QueryFolderContents(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::QueryFolderContentsRequest const& request) {
+  google::cloud::dataform::v1::QueryFolderContentsResponse response;
+  auto status = grpc_stub_->QueryFolderContents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataform::v1::QueryUserRootContentsResponse>
+DefaultDataformStub::QueryUserRootContents(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataform::v1::QueryUserRootContentsRequest const& request) {
+  google::cloud::dataform::v1::QueryUserRootContentsResponse response;
+  auto status = grpc_stub_->QueryUserRootContents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataformStub::AsyncMoveFolder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataform::v1::MoveFolderRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::dataform::v1::MoveFolderRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncMoveFolder(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataformStub::MoveFolder(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MoveFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
 
 StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
 DefaultDataformStub::ListRepositories(
@@ -90,6 +322,35 @@ Status DefaultDataformStub::DeleteRepository(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return google::cloud::Status();
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataformStub::AsyncMoveRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataform::v1::MoveRepositoryRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::dataform::v1::MoveRepositoryRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncMoveRepository(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDataformStub::MoveRepository(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MoveRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -701,6 +962,40 @@ StatusOr<google::cloud::dataform::v1::Config> DefaultDataformStub::UpdateConfig(
   return response;
 }
 
+StatusOr<google::iam::v1::Policy> DefaultDataformStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::Policy> DefaultDataformStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DefaultDataformStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDataformStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -724,39 +1019,88 @@ StatusOr<google::cloud::location::Location> DefaultDataformStub::GetLocation(
   return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultDataformStub::SetIamPolicy(
+StatusOr<google::longrunning::ListOperationsResponse>
+DefaultDataformStub::ListOperations(
     grpc::ClientContext& context, Options const&,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
 }
 
-StatusOr<google::iam::v1::Policy> DefaultDataformStub::GetIamPolicy(
+StatusOr<google::longrunning::Operation> DefaultDataformStub::GetOperation(
     grpc::ClientContext& context, Options const&,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  google::iam::v1::Policy response;
-  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DefaultDataformStub::TestIamPermissions(
+Status DefaultDataformStub::DeleteOperation(
     grpc::ClientContext& context, Options const&,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
-  return response;
+  return google::cloud::Status();
+}
+
+Status DefaultDataformStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataformStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::longrunning::GetOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::GetOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_stub_->AsyncGetOperation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<Status> DefaultDataformStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::longrunning::CancelOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

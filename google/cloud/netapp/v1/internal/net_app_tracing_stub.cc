@@ -313,6 +313,34 @@ StatusOr<google::longrunning::Operation> NetAppTracingStub::RevertVolume(
                            child_->RevertVolume(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppTracingStub::AsyncEstablishVolumePeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "EstablishVolumePeering");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncEstablishVolumePeering(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingStub::EstablishVolumePeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "EstablishVolumePeering");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->EstablishVolumePeering(context, options, request));
+}
+
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 NetAppTracingStub::ListSnapshots(
     grpc::ClientContext& context, Options const& options,
@@ -1422,6 +1450,54 @@ StatusOr<google::longrunning::Operation> NetAppTracingStub::DeleteHostGroup(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteHostGroup(context, options, request));
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+NetAppTracingStub::ExecuteOntapPost(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapPostRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "ExecuteOntapPost");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExecuteOntapPost(context, options, request));
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+NetAppTracingStub::ExecuteOntapGet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapGetRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "ExecuteOntapGet");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExecuteOntapGet(context, options, request));
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+NetAppTracingStub::ExecuteOntapDelete(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "ExecuteOntapDelete");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ExecuteOntapDelete(context, options, request));
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+NetAppTracingStub::ExecuteOntapPatch(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "ExecuteOntapPatch");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ExecuteOntapPatch(context, options, request));
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

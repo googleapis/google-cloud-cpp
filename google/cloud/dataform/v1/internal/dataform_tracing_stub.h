@@ -39,6 +39,99 @@ class DataformTracingStub : public DataformStub {
 
   explicit DataformTracingStub(std::shared_ptr<DataformStub> child);
 
+  StatusOr<google::cloud::dataform::v1::TeamFolder> GetTeamFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::GetTeamFolderRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataform::v1::TeamFolder> CreateTeamFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::CreateTeamFolderRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataform::v1::TeamFolder> UpdateTeamFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::UpdateTeamFolderRequest const& request)
+      override;
+
+  Status DeleteTeamFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::DeleteTeamFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteTeamFolderTree(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTeamFolderTree(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataform::v1::QueryTeamFolderContentsResponse>
+  QueryTeamFolderContents(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::QueryTeamFolderContentsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::dataform::v1::SearchTeamFoldersResponse>
+  SearchTeamFolders(grpc::ClientContext& context, Options const& options,
+                    google::cloud::dataform::v1::SearchTeamFoldersRequest const&
+                        request) override;
+
+  StatusOr<google::cloud::dataform::v1::Folder> GetFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::GetFolderRequest const& request) override;
+
+  StatusOr<google::cloud::dataform::v1::Folder> CreateFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::CreateFolderRequest const& request) override;
+
+  StatusOr<google::cloud::dataform::v1::Folder> UpdateFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::UpdateFolderRequest const& request) override;
+
+  Status DeleteFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::DeleteFolderRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteFolderTree(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataform::v1::DeleteFolderTreeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFolderTree(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataform::v1::DeleteFolderTreeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataform::v1::QueryFolderContentsResponse>
+  QueryFolderContents(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::QueryFolderContentsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataform::v1::QueryUserRootContentsResponse>
+  QueryUserRootContents(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataform::v1::QueryUserRootContentsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncMoveFolder(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataform::v1::MoveFolderRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> MoveFolder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataform::v1::MoveFolderRequest const& request) override;
+
   StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
   ListRepositories(grpc::ClientContext& context, Options const& options,
                    google::cloud::dataform::v1::ListRepositoriesRequest const&
@@ -62,6 +155,18 @@ class DataformTracingStub : public DataformStub {
   Status DeleteRepository(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataform::v1::DeleteRepositoryRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncMoveRepository(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataform::v1::MoveRepositoryRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> MoveRepository(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataform::v1::MoveRepositoryRequest const& request)
       override;
 
   StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -325,6 +430,18 @@ class DataformTracingStub : public DataformStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataform::v1::UpdateConfigRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -333,17 +450,33 @@ class DataformTracingStub : public DataformStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
-      google::iam::v1::SetIamPolicyRequest const& request) override;
+      google::longrunning::ListOperationsRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+  StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context, Options const& options,
-      google::iam::v1::GetIamPolicyRequest const& request) override;
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+  Status DeleteOperation(
       grpc::ClientContext& context, Options const& options,
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<DataformStub> child_;

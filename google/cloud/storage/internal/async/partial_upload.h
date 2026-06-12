@@ -90,7 +90,13 @@ class PartialUpload : public std::enable_shared_from_this<PartialUpload> {
       google::storage::v2::BidiWriteObjectRequest,
       google::storage::v2::BidiWriteObjectResponse>;
 
-  enum LastMessageAction { kNone, kFlush, kFinalize, kFinalizeWithChecksum };
+  enum LastMessageAction {
+    kNone,
+    kFlush,
+    kFlushAndClose,
+    kFinalize,
+    kFinalizeWithChecksum
+  };
 
   static std::shared_ptr<PartialUpload> Call(
       std::shared_ptr<StreamingWriteRpc> rpc,

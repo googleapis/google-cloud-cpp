@@ -58,6 +58,10 @@ class CloudRedisClusterConnectionIdempotencyPolicy {
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request);
 
+  virtual google::cloud::Idempotency GetSharedRegionalCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request);
+
   virtual google::cloud::Idempotency RescheduleClusterMaintenance(
       google::cloud::redis::cluster::v1::
           RescheduleClusterMaintenanceRequest const& request);

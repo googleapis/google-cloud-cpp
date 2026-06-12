@@ -403,6 +403,45 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, RevertVolume,
               (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// EstablishVolumePeering(Matcher<google::cloud::netapp::v1::EstablishVolumePeeringRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::Volume>>,
+      EstablishVolumePeering,
+      (google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, EstablishVolumePeering(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, EstablishVolumePeering,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// EstablishVolumePeering(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>,
+              EstablishVolumePeering,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::cloud::netapp::v1::Snapshot>), ListSnapshots,
               (google::cloud::netapp::v1::ListSnapshotsRequest request),
               (override));
@@ -1793,6 +1832,30 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
               DeleteHostGroup,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>,
+      ExecuteOntapPost,
+      (google::cloud::netapp::v1::ExecuteOntapPostRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>,
+      ExecuteOntapGet,
+      (google::cloud::netapp::v1::ExecuteOntapGetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>,
+      ExecuteOntapDelete,
+      (google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>,
+      ExecuteOntapPatch,
+      (google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),

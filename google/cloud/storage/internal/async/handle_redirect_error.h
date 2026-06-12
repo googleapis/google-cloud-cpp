@@ -25,9 +25,10 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void EnsureFirstMessageAppendObjectSpec(
-    google::storage::v2::BidiWriteObjectRequest& request,
-    google::rpc::Status const& rpc_status);
+struct BidiWriteRedirectInfo {
+  // The routing token extracted from the redirect error, if available.
+  std::string routing_token;
+};
 
 google::rpc::Status ExtractGrpcStatus(Status const& status);
 
@@ -36,6 +37,12 @@ void ApplyRedirectErrors(google::storage::v2::BidiReadObjectSpec& spec,
 
 void ApplyWriteRedirectErrors(google::storage::v2::AppendObjectSpec& spec,
                               google::rpc::Status const& rpc_status);
+
+// Handles BidiWriteObjectRedirectedError and modifies the request accordingly.
+// Returns information needed for the next retry attempt.
+BidiWriteRedirectInfo HandleBidiWriteRedirect(
+    google::storage::v2::BidiWriteObjectRequest& request,
+    google::rpc::Status const& rpc_status);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

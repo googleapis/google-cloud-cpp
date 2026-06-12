@@ -42,6 +42,15 @@ CaseAttachmentServiceTracingConnection::ListAttachments(
       google::cloud::support::v2::Attachment>(std::move(span), std::move(sr));
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceTracingConnection::GetAttachment(
+    google::cloud::support::v2::GetAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "support_v2::CaseAttachmentServiceConnection::GetAttachment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAttachment(request));
+}
+
 std::shared_ptr<support_v2::CaseAttachmentServiceConnection>
 MakeCaseAttachmentServiceTracingConnection(
     std::shared_ptr<support_v2::CaseAttachmentServiceConnection> conn) {

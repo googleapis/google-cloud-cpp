@@ -245,6 +245,19 @@ LineageTracingConnection::BatchSearchLinkProcesses(
                                                              std::move(sr));
 }
 
+StreamRange<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+LineageTracingConnection::SearchLineageStreaming(
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_lineage_v1::LineageConnection::SearchLineageStreaming");
+  internal::OTelScope scope(span);
+  auto sr = child_->SearchLineageStreaming(request);
+  return internal::MakeTracedStreamRange<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>(
+      std::move(span), std::move(sr));
+}
 StreamRange<google::longrunning::Operation>
 LineageTracingConnection::ListOperations(
     google::longrunning::ListOperationsRequest request) {

@@ -107,8 +107,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L114}
-  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.CreateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L115}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L348}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
@@ -138,8 +138,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L114}
-  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.CreateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L115}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L348}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
@@ -169,8 +169,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.UpdateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L134}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L348}
+  /// [google.cloud.dataplex.v1.UpdateEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L135}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> UpdateEntity(
@@ -194,7 +194,7 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L144}
+  /// [google.cloud.dataplex.v1.DeleteEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L145}
   ///
   // clang-format on
   Status DeleteEntity(std::string const& name, Options opts = {});
@@ -220,7 +220,7 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L144}
+  /// [google.cloud.dataplex.v1.DeleteEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L145}
   ///
   // clang-format on
   Status DeleteEntity(
@@ -246,8 +246,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.GetEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L348}
+  /// [google.cloud.dataplex.v1.GetEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L217}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
@@ -276,8 +276,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.GetEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L348}
+  /// [google.cloud.dataplex.v1.GetEntityRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L217}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
@@ -312,8 +312,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.ListEntitiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L348}
+  /// [google.cloud.dataplex.v1.ListEntitiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L159}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
@@ -351,8 +351,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
-  /// [google.cloud.dataplex.v1.ListEntitiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
+  /// [google.cloud.dataplex.v1.Entity]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L348}
+  /// [google.cloud.dataplex.v1.ListEntitiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L159}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
@@ -379,8 +379,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreatePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L288}
-  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [google.cloud.dataplex.v1.CreatePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L289}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L481}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
@@ -411,8 +411,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreatePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L288}
-  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [google.cloud.dataplex.v1.CreatePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L289}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L481}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
@@ -439,7 +439,7 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeletePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L305}
+  /// [google.cloud.dataplex.v1.DeletePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L306}
   ///
   // clang-format on
   Status DeletePartition(std::string const& name, Options opts = {});
@@ -465,7 +465,7 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeletePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L305}
+  /// [google.cloud.dataplex.v1.DeletePartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L306}
   ///
   // clang-format on
   Status DeletePartition(
@@ -493,8 +493,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetPartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L333}
-  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [google.cloud.dataplex.v1.GetPartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L334}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L481}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
@@ -523,8 +523,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetPartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L333}
-  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [google.cloud.dataplex.v1.GetPartitionRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L334}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L481}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
@@ -559,8 +559,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListPartitionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L245}
-  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [google.cloud.dataplex.v1.ListPartitionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L246}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L481}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
@@ -598,8 +598,8 @@ class MetadataServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.ListPartitionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L245}
-  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
+  /// [google.cloud.dataplex.v1.ListPartitionsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L246}
+  /// [google.cloud.dataplex.v1.Partition]: @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L481}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
@@ -998,7 +998,7 @@ class MetadataServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -1037,7 +1037,7 @@ class MetadataServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

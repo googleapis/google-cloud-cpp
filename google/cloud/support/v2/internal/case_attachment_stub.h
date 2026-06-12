@@ -42,6 +42,10 @@ class CaseAttachmentServiceStub {
   ListAttachments(
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListAttachmentsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::support::v2::Attachment> GetAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetAttachmentRequest const& request) = 0;
 };
 
 class DefaultCaseAttachmentServiceStub : public CaseAttachmentServiceStub {
@@ -56,6 +60,10 @@ class DefaultCaseAttachmentServiceStub : public CaseAttachmentServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListAttachmentsRequest const& request)
       override;
+
+  StatusOr<google::cloud::support::v2::Attachment> GetAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetAttachmentRequest const& request) override;
 
  private:
   std::unique_ptr<

@@ -224,8 +224,7 @@ DataConnectionImpl::DataConnectionImpl(
     : background_(std::move(background)),
       stub_manager_(std::move(stub_manager)),
       limiter_(std::move(limiter)),
-      options_(internal::MergeOptions(std::move(options),
-                                      DataConnection::options())) {
+      options_(MergeOptions(std::move(options), DataConnection::options())) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   if (options_.get<bigtable::EnableMetricsOption>()) {
     // The client_uid is eventually used in conjunction with other data labels
@@ -264,8 +263,7 @@ DataConnectionImpl::DataConnectionImpl(
       stub_manager_(std::move(stub_manager)),
       operation_context_factory_(std::move(operation_context_factory)),
       limiter_(std::move(limiter)),
-      options_(internal::MergeOptions(std::move(options),
-                                      DataConnection::options())) {}
+      options_(MergeOptions(std::move(options), DataConnection::options())) {}
 
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,

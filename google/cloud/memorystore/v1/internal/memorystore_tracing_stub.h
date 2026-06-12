@@ -91,6 +91,12 @@ class MemorystoreTracingStub : public MemorystoreStub {
       google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
           request) override;
 
+  StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

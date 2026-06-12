@@ -229,6 +229,12 @@ class MemorystoreConnection {
       google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
           request);
 
+  virtual StatusOr<
+      google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      google::cloud::memorystore::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request);
+
   virtual future<StatusOr<google::cloud::memorystore::v1::Instance>>
   RescheduleMaintenance(
       google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&

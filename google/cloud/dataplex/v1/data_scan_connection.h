@@ -236,6 +236,10 @@ class DataScanServiceConnection {
   ListDataScanJobs(
       google::cloud::dataplex::v1::ListDataScanJobsRequest request);
 
+  virtual StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+  CancelDataScanJob(
+      google::cloud::dataplex::v1::CancelDataScanJobRequest const& request);
+
   virtual StatusOr<
       google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
   GenerateDataQualityRules(

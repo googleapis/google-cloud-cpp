@@ -7,6 +7,7 @@
 @googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer.proto
 @googleapis//google/cloud/bigquery/datatransfer/v1:transfer.proto
 @googleapis//google/cloud/bigquery/logging/v1:audit_data.proto
+@googleapis//google/cloud/bigquery/migration/v2:assessment_task.proto
 @googleapis//google/cloud/bigquery/migration/v2:migration_entities.proto
 @googleapis//google/cloud/bigquery/migration/v2:migration_error_details.proto
 @googleapis//google/cloud/bigquery/migration/v2:migration_metrics.proto

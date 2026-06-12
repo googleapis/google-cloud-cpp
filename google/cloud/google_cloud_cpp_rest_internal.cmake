@@ -79,6 +79,8 @@ add_library(
     internal/oauth2_external_account_credentials.cc
     internal/oauth2_external_account_credentials.h
     internal/oauth2_external_account_token_source.h
+    internal/oauth2_gdch_service_account_credentials.cc
+    internal/oauth2_gdch_service_account_credentials.h
     internal/oauth2_google_application_default_credentials_file.cc
     internal/oauth2_google_application_default_credentials_file.h
     internal/oauth2_google_credentials.cc
@@ -92,6 +94,8 @@ add_library(
     internal/oauth2_minimal_iam_credentials_rest.h
     internal/oauth2_refreshing_credentials_wrapper.cc
     internal/oauth2_refreshing_credentials_wrapper.h
+    internal/oauth2_regional_access_boundary_token_manager.cc
+    internal/oauth2_regional_access_boundary_token_manager.h
     internal/oauth2_service_account_credentials.cc
     internal/oauth2_service_account_credentials.h
     internal/oauth2_universe_domain.cc
@@ -113,6 +117,10 @@ add_library(
     internal/rest_options.h
     internal/rest_parse_json_error.cc
     internal/rest_parse_json_error.h
+    internal/rest_pure_background_threads_impl.cc
+    internal/rest_pure_background_threads_impl.h
+    internal/rest_pure_completion_queue_impl.cc
+    internal/rest_pure_completion_queue_impl.h
     internal/rest_request.cc
     internal/rest_request.h
     internal/rest_response.cc
@@ -274,12 +282,14 @@ if (BUILD_TESTING)
         internal/oauth2_compute_engine_credentials_test.cc
         internal/oauth2_credentials_test.cc
         internal/oauth2_external_account_credentials_test.cc
+        internal/oauth2_gdch_service_account_credentials_test.cc
         internal/oauth2_google_application_default_credentials_file_test.cc
         internal/oauth2_google_credentials_test.cc
         internal/oauth2_impersonate_service_account_credentials_test.cc
         internal/oauth2_logging_credentials_test.cc
         internal/oauth2_minimal_iam_credentials_rest_test.cc
         internal/oauth2_refreshing_credentials_wrapper_test.cc
+        internal/oauth2_regional_access_boundary_token_manager_test.cc
         internal/oauth2_service_account_credentials_test.cc
         internal/oauth2_universe_domain_test.cc
         internal/populate_rest_options_test.cc

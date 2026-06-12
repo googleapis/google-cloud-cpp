@@ -493,6 +493,197 @@ ConfigTracingStub::UpdateAutoMigrationConfig(
       child_->UpdateAutoMigrationConfig(context, options, request));
 }
 
+StatusOr<google::cloud::config::v1::DeploymentGroup>
+ConfigTracingStub::GetDeploymentGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "GetDeploymentGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetDeploymentGroup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigTracingStub::AsyncCreateDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "CreateDeploymentGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateDeploymentGroup(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingStub::CreateDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "CreateDeploymentGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateDeploymentGroup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigTracingStub::AsyncUpdateDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "UpdateDeploymentGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateDeploymentGroup(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingStub::UpdateDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "UpdateDeploymentGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateDeploymentGroup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigTracingStub::AsyncDeleteDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "DeleteDeploymentGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteDeploymentGroup(cq, context, std::move(options),
+                                              request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingStub::DeleteDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "DeleteDeploymentGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDeploymentGroup(context, options, request));
+}
+
+StatusOr<google::cloud::config::v1::ListDeploymentGroupsResponse>
+ConfigTracingStub::ListDeploymentGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListDeploymentGroupsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "ListDeploymentGroups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListDeploymentGroups(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigTracingStub::AsyncProvisionDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "ProvisionDeploymentGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncProvisionDeploymentGroup(cq, context,
+                                                 std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingStub::ProvisionDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "ProvisionDeploymentGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ProvisionDeploymentGroup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConfigTracingStub::AsyncDeprovisionDeploymentGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "DeprovisionDeploymentGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeprovisionDeploymentGroup(cq, context,
+                                                   std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingStub::DeprovisionDeploymentGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "DeprovisionDeploymentGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeprovisionDeploymentGroup(context, options, request));
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigTracingStub::GetDeploymentGroupRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "GetDeploymentGroupRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetDeploymentGroupRevision(context, options, request));
+}
+
+StatusOr<google::cloud::config::v1::ListDeploymentGroupRevisionsResponse>
+ConfigTracingStub::ListDeploymentGroupRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::config::v1::ListDeploymentGroupRevisionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.config.v1.Config",
+                                     "ListDeploymentGroupRevisions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListDeploymentGroupRevisions(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfigTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

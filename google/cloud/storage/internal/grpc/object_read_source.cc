@@ -26,9 +26,14 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GrpcObjectReadSource::GrpcObjectReadSource(TimerSource timer_source,
-                                           std::unique_ptr<StreamingRpc> stream)
-    : timer_source_(std::move(timer_source)), stream_(std::move(stream)) {}
+GrpcObjectReadSource::GrpcObjectReadSource(
+    TimerSource timer_source, std::unique_ptr<StreamingRpc> stream,
+    std::shared_ptr<storage::internal::HashFunction> hash_function)
+    : timer_source_(std::move(timer_source)),
+      stream_(std::move(stream)),
+      hash_function_(hash_function
+                         ? std::move(hash_function)
+                         : storage::internal::CreateNullHashFunction()) {}
 
 StatusOr<storage::internal::HttpResponse> GrpcObjectReadSource::Close() {
   if (stream_) stream_ = nullptr;
@@ -74,18 +79,33 @@ StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
       if (!status_.ok()) return status_;
       return result;
     }
-    HandleResponse(result, buf, n, std::move(response));
+    auto handle_status = HandleResponse(result, buf, n, std::move(response));
+    if (!handle_status.ok()) {
+      status_ = handle_status;
+      stream_.reset();
+      return status_;
+    }
   }
 
   return result;
 }
 
-void GrpcObjectReadSource::HandleResponse(
+Status GrpcObjectReadSource::HandleResponse(
     storage::internal::ReadSourceResult& result, char* buf, std::size_t n,
     google::storage::v2::ReadObjectResponse response) {
+  if (!offset_ && response.has_content_range()) {
+    offset_ = response.content_range().start();
+  }
   // The google.storage.v1.Storage documentation says this field can be
   // empty.
   if (response.has_checksummed_data()) {
+    auto const& data = response.checksummed_data();
+    auto status = hash_function_->Update(offset_.value_or(0), GetContent(data),
+                                         data.crc32c());
+    if (!status.ok()) return status;
+
+    offset_ = offset_.value_or(0) + GetContent(data).size();
+
     auto const offset = result.bytes_received;
     result.bytes_received += buffer_.HandleResponse(
         buf + offset, n - offset,
@@ -115,6 +135,7 @@ void GrpcObjectReadSource::HandleResponse(
         result.storage_class.value_or(metadata.storage_class());
     result.size = result.size.value_or(metadata.size());
   }
+  return {};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

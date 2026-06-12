@@ -38,6 +38,155 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataformConnection::~DataformConnection() = default;
 
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformConnection::GetTeamFolder(
+    google::cloud::dataform::v1::GetTeamFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformConnection::CreateTeamFolder(
+    google::cloud::dataform::v1::CreateTeamFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformConnection::UpdateTeamFolder(
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status DataformConnection::DeleteTeamFolder(
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformConnection::DeleteTeamFolderTree(
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataformConnection::DeleteTeamFolderTree(
+    NoAwaitTag,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformConnection::DeleteTeamFolderTree(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                TeamFolderContentsEntry>
+DataformConnection::QueryTeamFolderContents(
+    google::cloud::dataform::v1::
+        QueryTeamFolderContentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                      TeamFolderContentsEntry>>();
+}
+
+StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                TeamFolderSearchResult>
+DataformConnection::SearchTeamFolders(
+    google::cloud::dataform::v1::
+        SearchTeamFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                      TeamFolderSearchResult>>();
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformConnection::GetFolder(
+    google::cloud::dataform::v1::GetFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformConnection::CreateFolder(
+    google::cloud::dataform::v1::CreateFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformConnection::UpdateFolder(
+    google::cloud::dataform::v1::UpdateFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status DataformConnection::DeleteFolder(
+    google::cloud::dataform::v1::DeleteFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformConnection::DeleteFolderTree(
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DataformConnection::DeleteFolderTree(
+    NoAwaitTag, google::cloud::dataform::v1::DeleteFolderTreeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformConnection::DeleteFolderTree(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                FolderContentsEntry>
+DataformConnection::QueryFolderContents(
+    google::cloud::dataform::v1::
+        QueryFolderContentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                      FolderContentsEntry>>();
+}
+
+StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                RootContentsEntry>
+DataformConnection::QueryUserRootContents(
+    google::cloud::dataform::v1::
+        QueryUserRootContentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                      RootContentsEntry>>();
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformConnection::MoveFolder(
+    google::cloud::dataform::v1::MoveFolderRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DataformConnection::MoveFolder(
+    NoAwaitTag, google::cloud::dataform::v1::MoveFolderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformConnection::MoveFolder(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::dataform::v1::Repository>
 DataformConnection::ListRepositories(
     google::cloud::dataform::v1::
@@ -67,6 +216,27 @@ DataformConnection::UpdateRepository(
 Status DataformConnection::DeleteRepository(
     google::cloud::dataform::v1::DeleteRepositoryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformConnection::MoveRepository(
+    google::cloud::dataform::v1::MoveRepositoryRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DataformConnection::MoveRepository(
+    NoAwaitTag, google::cloud::dataform::v1::MoveRepositoryRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformConnection::MoveRepository(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -381,6 +551,22 @@ StatusOr<google::cloud::dataform::v1::Config> DataformConnection::UpdateConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::iam::v1::Policy> DataformConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> DataformConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 DataformConnection::ListLocations(
     google::cloud::location::
@@ -394,19 +580,25 @@ StatusOr<google::cloud::location::Location> DataformConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataformConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const&) {
+StreamRange<google::longrunning::Operation> DataformConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation> DataformConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy> DataformConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Status DataformConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Status DataformConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

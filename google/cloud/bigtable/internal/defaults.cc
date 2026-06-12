@@ -36,8 +36,9 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
 namespace {
+
+using ::google::cloud::bigtable_internal::MergeOptions;
 
 auto constexpr kBackoffScaling = 2.0;
 
@@ -125,6 +126,18 @@ int DefaultConnectionPoolSize() {
                     cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
 }
 
+bool IsDirectPath() {
+  auto const direct_path =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
+          .value_or("");
+  // Bigtable specific env var for Direct Path support used by all clients.
+  auto const cbt_direct_path =
+      google::cloud::internal::GetEnv("CBT_ENABLE_DIRECTPATH").value_or("");
+  return absl::c_any_of(absl::StrSplit(direct_path, ','),
+                        [](absl::string_view v) { return v == "bigtable"; }) ||
+         cbt_direct_path == "true";
+}
+
 Options HandleUniverseDomain(Options opts) {
   if (!opts.has<::google::cloud::bigtable_internal::DataEndpointOption>()) {
     auto ep = google::cloud::internal::UniverseDomainEndpoint(
@@ -170,18 +183,11 @@ Options DefaultOptions(Options opts) {
     }
   }
 
-  auto const direct_path =
-      GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH").value_or("");
-  if (absl::c_any_of(absl::StrSplit(direct_path, ','),
-                     [](absl::string_view v) { return v == "bigtable"; })) {
+  // Set the specific data endpoints if Direct Path is enabled.
+  if (IsDirectPath()) {
     opts.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-            "google-c2p:///directpath-bigtable.googleapis.com")
-        .set<AuthorityOption>("directpath-bigtable.googleapis.com");
-
-    // When using DirectPath the gRPC library already does load balancing across
-    // multiple sockets, it makes little sense to perform additional load
-    // balancing in the client library.
-    if (!opts.has<GrpcNumChannelsOption>()) opts.set<GrpcNumChannelsOption>(1);
+            "google-c2p:///bigtable.googleapis.com")
+        .set<AuthorityOption>("bigtable.googleapis.com");
   }
 
   auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
@@ -219,8 +225,7 @@ Options DefaultOptions(Options opts) {
                           ::google::cloud::internal::DefaultTracingOptions())
                       .set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
 
-  opts = google::cloud::internal::MergeOptions(std::move(opts),
-                                               std::move(defaults));
+  opts = MergeOptions(std::move(opts), std::move(defaults));
 
   if (!emulator) opts = DefaultConnectionRefreshOptions(std::move(opts));
   opts = DefaultChannelArgumentOptions(std::move(opts));

@@ -167,6 +167,15 @@ DataScanServiceTracingConnection::ListDataScanJobs(
       google::cloud::dataplex::v1::DataScanJob>(std::move(span), std::move(sr));
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceTracingConnection::CancelDataScanJob(
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataScanServiceConnection::CancelDataScanJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelDataScanJob(request));
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceTracingConnection::GenerateDataQualityRules(
     google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&

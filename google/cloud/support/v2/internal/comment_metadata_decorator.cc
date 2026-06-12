@@ -66,6 +66,15 @@ CommentServiceMetadata::CreateComment(
   return child_->CreateComment(context, options, request);
 }
 
+StatusOr<google::cloud::support::v2::Comment>
+CommentServiceMetadata::GetComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetComment(context, options, request);
+}
+
 void CommentServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                          Options const& options,
                                          std::string const& request_params) {

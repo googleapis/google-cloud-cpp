@@ -62,6 +62,17 @@ CommentServiceLogging::CreateComment(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::support::v2::Comment> CommentServiceLogging::GetComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::support::v2::GetCommentRequest const& request) {
+        return child_->GetComment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud

@@ -11,6 +11,7 @@
 @googleapis//google/cloud/bigquery/v2:external_data_config.proto
 @googleapis//google/cloud/bigquery/v2:external_dataset_reference.proto
 @googleapis//google/cloud/bigquery/v2:file_set_specification_type.proto
+@googleapis//google/cloud/bigquery/v2:gen_ai_stats.proto
 @googleapis//google/cloud/bigquery/v2:hive_partitioning.proto
 @googleapis//google/cloud/bigquery/v2:job.proto
 @googleapis//google/cloud/bigquery/v2:job_config.proto
@@ -27,6 +28,7 @@
 @googleapis//google/cloud/bigquery/v2:partitioning_definition.proto
 @googleapis//google/cloud/bigquery/v2:privacy_policy.proto
 @googleapis//google/cloud/bigquery/v2:project.proto
+@googleapis//google/cloud/bigquery/v2:property_graph_reference.proto
 @googleapis//google/cloud/bigquery/v2:query_parameter.proto
 @googleapis//google/cloud/bigquery/v2:range_partitioning.proto
 @googleapis//google/cloud/bigquery/v2:restriction_config.proto

@@ -165,6 +165,21 @@ DefaultCloudRedisClusterStub::GetClusterCertificateAuthority(
   return response;
 }
 
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+DefaultCloudRedisClusterStub::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority
+      response;
+  auto status = grpc_stub_->GetSharedRegionalCertificateAuthority(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisClusterStub::AsyncRescheduleClusterMaintenance(
     google::cloud::CompletionQueue& cq,

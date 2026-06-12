@@ -55,6 +55,9 @@ class CommentServiceConnectionImpl
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
+  StatusOr<google::cloud::support::v2::Comment> GetComment(
+      google::cloud::support::v2::GetCommentRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<support_v2_internal::CommentServiceStub> stub_;

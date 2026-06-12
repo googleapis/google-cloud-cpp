@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/internal/bigtable_round_robin_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -47,17 +48,30 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
   return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
+std::string CreateFeaturesMetadata(bool is_direct_path) {
+  google::bigtable::v2::FeatureFlags proto;
+  proto.set_reverse_scans(true);
+  proto.set_last_scanned_row_responses(true);
+  proto.set_mutate_rows_rate_limit(true);
+  proto.set_mutate_rows_rate_limit2(true);
+  proto.set_routing_cookie(true);
+  proto.set_retry_info(true);
+  proto.set_peer_info(true);
+  if (is_direct_path) {
+    proto.set_traffic_director_enabled(true);
+    proto.set_direct_access_requested(true);
+  }
+  return internal::UrlsafeBase64EncodeWithPadding(proto.SerializeAsString());
+}
+
 std::string FeaturesMetadata() {
-  static auto const* const kFeatures = new auto([] {
-    google::bigtable::v2::FeatureFlags proto;
-    proto.set_reverse_scans(true);
-    proto.set_last_scanned_row_responses(true);
-    proto.set_mutate_rows_rate_limit(true);
-    proto.set_mutate_rows_rate_limit2(true);
-    proto.set_routing_cookie(true);
-    proto.set_retry_info(true);
-    return internal::UrlsafeBase64Encode(proto.SerializeAsString());
-  }());
+  if (bigtable::internal::IsDirectPath()) {
+    static auto const* const kDirectPathFeatures =
+        new std::string(CreateFeaturesMetadata(true));
+    return *kDirectPathFeatures;
+  }
+  static auto const* const kFeatures =
+      new std::string(CreateFeaturesMetadata(false));
   return *kFeatures;
 }
 
@@ -117,7 +131,13 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
         self->set_last_refresh_status(s);
       }
       if (!s.ok()) {
-        GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << s;
+        if (ChannelUsage<BigtableStub>::IsSuccessfulRefreshStatus(s)) {
+          GCP_LOG(WARNING)
+              << "Connection refreshed; treating received Status as non-error: "
+              << s;
+        } else {
+          GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << s;
+        }
       }
     };
 
