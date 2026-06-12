@@ -17,7 +17,6 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/internal/rest_pure_background_threads_impl.h"
 #include "google/cloud/options.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/grpc_options.h"
@@ -49,8 +48,7 @@ std::size_t DefaultThreadPoolSize(Options const& options) {
 TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
     : impl_(std::move(impl)),
       background_threads_(
-          std::make_unique<
-              rest_internal::AutomaticallyCreatedRestPureBackgroundThreads>(
+          std::make_unique<AutomaticallyCreatedStorageBackgroundThreads>(
               DefaultThreadPoolSize(impl_->options()))) {}
 
 TracingConnection::~TracingConnection() = default;

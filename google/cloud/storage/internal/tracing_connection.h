@@ -19,7 +19,13 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/generic_background_threads_impl.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+#include "google/cloud/background_threads.h"
+#include "google/cloud/completion_queue.h"
+#else
 #include "google/cloud/internal/rest_pure_background_threads_impl.h"
+#endif
 #include <memory>
 #include <string>
 
@@ -204,9 +210,23 @@ class TracingConnection : public storage::internal::StorageConnection {
 
   static BucketMetadataCache& cache();
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  using StorageBackgroundThreads = google::cloud::BackgroundThreads;
+  using AutomaticallyCreatedStorageBackgroundThreads =
+      google::cloud::internal::AutomaticallyCreatedBackgroundThreadsImpl<
+          google::cloud::CompletionQueue, google::cloud::BackgroundThreads>;
+#else
+  using StorageBackgroundThreads =
+      google::cloud::rest_internal::RestPureBackgroundThreads;
+  using AutomaticallyCreatedStorageBackgroundThreads =
+      google::cloud::internal::AutomaticallyCreatedBackgroundThreadsImpl<
+          rest_internal::RestPureCompletionQueue,
+          rest_internal::RestPureBackgroundThreads,
+          rest_internal::RestPureQueueTraits>;
+#endif
+
   std::shared_ptr<StorageConnection> impl_;
-  std::unique_ptr<google::cloud::rest_internal::RestPureBackgroundThreads>
-      background_threads_;
+  std::unique_ptr<StorageBackgroundThreads> background_threads_;
 };
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
