@@ -17,7 +17,11 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/rest_pure_background_threads_impl.h"
 #include "google/cloud/options.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+#include "google/cloud/grpc_options.h"
+#endif
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -29,15 +33,27 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
-    : impl_(std::move(impl)) {}
-
-TracingConnection::~TracingConnection() {
-  std::lock_guard<std::mutex> lk(mu_);
-  for (auto& f : bg_tasks_) {
-    if (f.valid()) f.wait();
-  }
+namespace {
+std::size_t DefaultThreadPoolSize(Options const& options) {
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  auto pool_size = options.get<GrpcBackgroundThreadPoolSizeOption>();
+  if (pool_size == 0) return 1U;
+  return pool_size;
+#else
+  (void)options;
+  return 1U;
+#endif
 }
+}  // namespace
+
+TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
+    : impl_(std::move(impl)),
+      background_threads_(
+          std::make_unique<
+              rest_internal::AutomaticallyCreatedRestPureBackgroundThreads>(
+              DefaultThreadPoolSize(impl_->options()))) {}
+
+TracingConnection::~TracingConnection() = default;
 
 BucketMetadataCache& TracingConnection::cache() {
   static BucketMetadataCache instance(10000);
@@ -48,16 +64,6 @@ void TracingConnection::ResetCacheForTesting() { cache().Clear(); }
 
 Options TracingConnection::options() const { return impl_->options(); }
 
-void TracingConnection::CleanupCompletedTasks() {
-  std::unique_lock<std::mutex> lk(mu_);
-  bg_tasks_.erase(std::remove_if(bg_tasks_.begin(), bg_tasks_.end(),
-                                 [](std::future<void> const& f) {
-                                   return f.wait_for(std::chrono::seconds(0)) ==
-                                          std::future_status::ready;
-                                 }),
-                  bg_tasks_.end());
-}
-
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    BucketCacheEntry const& entry) {
   span.SetAttribute("gcp.resource.destination.id", entry.id);
@@ -66,15 +72,12 @@ void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
 
 void TracingConnection::MaybeTriggerBackgroundFetch(
     std::string const& bucket_name) {
-  CleanupCompletedTasks();
-
   if (!cache().StartFetch(bucket_name)) {
     return;
   }
 
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  auto f = std::async(std::launch::async, [this, bucket_name,
-                                           current_options]() {
+  background_threads_->cq().RunAsync([this, bucket_name, current_options]() {
     google::cloud::internal::OptionsSpan span(current_options);
     storage::internal::GetBucketMetadataRequest request(bucket_name);
     auto result = impl_->GetBucketMetadata(request);
@@ -87,11 +90,6 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
 
     cache().EndFetch(bucket_name);
   });
-
-  {
-    std::lock_guard<std::mutex> lk(mu_);
-    bg_tasks_.push_back(std::move(f));
-  }
 }
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
@@ -108,8 +106,9 @@ void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
   }
 }
 
-void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
-                                   storage::BucketMetadata const& metadata) const {
+void TracingConnection::EnrichSpan(
+    opentelemetry::trace::Span& span,
+    storage::BucketMetadata const& metadata) const {
   auto const enabled =
       options().get<storage_experimental::OTelSpanEnrichmentOption>();
   if (!enabled) return;

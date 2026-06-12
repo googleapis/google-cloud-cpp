@@ -19,11 +19,9 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
-#include <future>
+#include "google/cloud/internal/rest_pure_background_threads_impl.h"
 #include <memory>
-#include <mutex>
 #include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -190,7 +188,6 @@ class TracingConnection : public storage::internal::StorageConnection {
   static void EnrichSpan(opentelemetry::trace::Span& span,
                          BucketCacheEntry const& entry);
   void MaybeTriggerBackgroundFetch(std::string const& bucket_name);
-  void CleanupCompletedTasks();
 
   static void MaybeInvalidate(Status const& status,
                               std::string const& bucket_name) {
@@ -208,8 +205,8 @@ class TracingConnection : public storage::internal::StorageConnection {
   static BucketMetadataCache& cache();
 
   std::shared_ptr<StorageConnection> impl_;
-  std::mutex mu_;
-  std::vector<std::future<void>> bg_tasks_;
+  std::unique_ptr<google::cloud::rest_internal::RestPureBackgroundThreads>
+      background_threads_;
 };
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
