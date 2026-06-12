@@ -47,7 +47,7 @@ Options RegionTargetHttpProxiesDefaultOptions(Options options) {
                     RegionTargetHttpProxiesRetryPolicyOption>(
         compute_region_target_http_proxies_v1::
             RegionTargetHttpProxiesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_target_http_proxies_v1::

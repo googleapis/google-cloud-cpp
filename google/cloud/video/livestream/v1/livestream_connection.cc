@@ -172,6 +172,54 @@ LivestreamServiceConnection::StopChannel(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceConnection::StartDistribution(
+    google::cloud::video::livestream::v1::StartDistributionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceConnection::StartDistribution(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceConnection::StartDistribution(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceConnection::StopDistribution(
+    google::cloud::video::livestream::v1::StopDistributionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceConnection::StopDistribution(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceConnection::StopDistribution(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceConnection::CreateInput(
     google::cloud::video::livestream::v1::CreateInputRequest const&) {
@@ -256,6 +304,12 @@ LivestreamServiceConnection::UpdateInput(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::Input>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+LivestreamServiceConnection::PreviewInput(
+    google::cloud::video::livestream::v1::PreviewInputRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>

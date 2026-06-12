@@ -33,7 +33,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -76,6 +76,20 @@ class StorageControlConnectionImpl
       override;
 
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+  DeleteFolderRecursive(
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFolderRecursive(
+      NoAwaitTag,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+  DeleteFolderRecursive(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -171,6 +185,15 @@ class StorageControlConnectionImpl
   UpdateOrganizationIntelligenceConfig(
       google::storage::control::v2::
           UpdateOrganizationIntelligenceConfigRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

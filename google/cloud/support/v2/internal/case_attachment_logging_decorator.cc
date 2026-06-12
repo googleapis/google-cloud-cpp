@@ -17,13 +17,16 @@
 // source: google/cloud/support/v2/attachment_service.proto
 
 #include "google/cloud/support/v2/internal/case_attachment_logging_decorator.h"
+#include "google/cloud/support/v2/attachment_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/support/v2/attachment_service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -48,7 +51,21 @@ CaseAttachmentServiceLogging::ListAttachments(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceLogging::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetAttachmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::support::v2::GetAttachmentRequest const& request) {
+        return child_->GetAttachment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

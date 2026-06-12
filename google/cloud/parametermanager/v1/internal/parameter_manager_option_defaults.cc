@@ -42,7 +42,7 @@ Options ParameterManagerDefaultOptions(Options options) {
   if (!options.has<parametermanager_v1::ParameterManagerRetryPolicyOption>()) {
     options.set<parametermanager_v1::ParameterManagerRetryPolicyOption>(
         parametermanager_v1::ParameterManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

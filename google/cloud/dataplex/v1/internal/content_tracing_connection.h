@@ -28,8 +28,6 @@ namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ContentServiceTracingConnection
     : public dataplex_v1::ContentServiceConnection {
  public:
@@ -40,37 +38,20 @@ class ContentServiceTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      google::cloud::dataplex::v1::CreateContentRequest const& request)
-      override;
-
-  StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      google::cloud::dataplex::v1::UpdateContentRequest const& request)
-      override;
-
-  Status DeleteContent(google::cloud::dataplex::v1::DeleteContentRequest const&
-                           request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      google::cloud::dataplex::v1::GetContentRequest const& request) override;
-
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) override;
-
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) override;
-
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
-
-  StreamRange<google::cloud::dataplex::v1::Content> ListContent(
-      google::cloud::dataplex::v1::ListContentRequest request) override;
-
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
@@ -87,8 +68,6 @@ class ContentServiceTracingConnection
  private:
   std::shared_ptr<dataplex_v1::ContentServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

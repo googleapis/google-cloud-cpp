@@ -43,7 +43,7 @@ Options RegionOperationsDefaultOptions(Options options) {
     options.set<
         compute_region_operations_v1::RegionOperationsRetryPolicyOption>(
         compute_region_operations_v1::RegionOperationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_region_operations_v1::

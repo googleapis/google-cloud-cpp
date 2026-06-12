@@ -1,0 +1,63 @@
+/*!
+@page visionai-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `visionai_v1::AppPlatformClient`:
+
+@snippet app_platform_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c visionai_v1::AppPlatformClient](@ref visionai_v1::AppPlatformClient-universe-domain-snippet)
+- [\c visionai_v1::HealthCheckServiceClient](@ref visionai_v1::HealthCheckServiceClient-universe-domain-snippet)
+- [\c visionai_v1::LiveVideoAnalyticsClient](@ref visionai_v1::LiveVideoAnalyticsClient-universe-domain-snippet)
+- [\c visionai_v1::StreamingServiceClient](@ref visionai_v1::StreamingServiceClient-universe-domain-snippet)
+- [\c visionai_v1::StreamsServiceClient](@ref visionai_v1::StreamsServiceClient-universe-domain-snippet)
+- [\c visionai_v1::WarehouseClient](@ref visionai_v1::WarehouseClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page visionai_v1::AppPlatformClient-universe-domain-snippet Override visionai_v1::AppPlatformClient Universe Domain
+
+@snippet google/cloud/visionai/v1/samples/app_platform_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page visionai_v1::HealthCheckServiceClient-universe-domain-snippet Override visionai_v1::HealthCheckServiceClient Universe Domain
+
+@snippet google/cloud/visionai/v1/samples/health_check_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page visionai_v1::LiveVideoAnalyticsClient-universe-domain-snippet Override visionai_v1::LiveVideoAnalyticsClient Universe Domain
+
+@snippet google/cloud/visionai/v1/samples/live_video_analytics_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page visionai_v1::StreamingServiceClient-universe-domain-snippet Override visionai_v1::StreamingServiceClient Universe Domain
+
+@snippet google/cloud/visionai/v1/samples/streaming_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page visionai_v1::StreamsServiceClient-universe-domain-snippet Override visionai_v1::StreamsServiceClient Universe Domain
+
+@snippet google/cloud/visionai/v1/samples/streams_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page visionai_v1::WarehouseClient-universe-domain-snippet Override visionai_v1::WarehouseClient Universe Domain
+
+@snippet google/cloud/visionai/v1/samples/warehouse_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

@@ -40,7 +40,7 @@ Options AssetServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<asset_v1::AssetServiceRetryPolicyOption>()) {
     options.set<asset_v1::AssetServiceRetryPolicyOption>(
-        asset_v1::AssetServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        asset_v1::AssetServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<asset_v1::AssetServiceBackoffPolicyOption>()) {

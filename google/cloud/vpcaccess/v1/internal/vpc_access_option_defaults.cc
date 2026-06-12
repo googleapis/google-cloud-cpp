@@ -42,7 +42,7 @@ Options VpcAccessServiceDefaultOptions(Options options) {
   if (!options.has<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>()) {
     options.set<vpcaccess_v1::VpcAccessServiceRetryPolicyOption>(
         vpcaccess_v1::VpcAccessServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<vpcaccess_v1::VpcAccessServiceBackoffPolicyOption>()) {

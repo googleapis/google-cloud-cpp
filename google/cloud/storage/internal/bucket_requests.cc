@@ -16,8 +16,8 @@
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 #include <map>
 #include <set>
@@ -243,6 +243,12 @@ StatusOr<ListBucketsResponse> ListBucketsResponse::FromHttpResponse(
     result.items.emplace_back(std::move(*parsed));
   }
 
+  auto const& unreachable = json["unreachable"];
+  result.unreachable.reserve(unreachable.size());
+  for (auto const& bucket : unreachable) {
+    result.unreachable.push_back(bucket.get<std::string>());
+  }
+
   return result;
 }
 
@@ -256,6 +262,9 @@ std::ostream& operator<<(std::ostream& os, ListBucketsResponse const& r) {
      << ", items={";
   std::copy(r.items.begin(), r.items.end(),
             std::ostream_iterator<BucketMetadata>(os, "\n  "));
+  os << "}, unreachable={";
+  std::copy(r.unreachable.begin(), r.unreachable.end(),
+            std::ostream_iterator<std::string>(os, "\n "));
   return os << "}}";
 }
 

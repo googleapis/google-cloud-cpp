@@ -102,6 +102,11 @@ Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListGiVersions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListMinorVersions(
+    google::cloud::oracledatabase::v1::ListMinorVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListDbSystemShapes(
     google::cloud::oracledatabase::v1::ListDbSystemShapesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -120,6 +125,11 @@ Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetAutonomousDatabase(
 
 Idempotency OracleDatabaseConnectionIdempotencyPolicy::CreateAutonomousDatabase(
     google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::UpdateAutonomousDatabase(
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -177,6 +187,180 @@ OracleDatabaseConnectionIdempotencyPolicy::RestartAutonomousDatabase(
     google::cloud::oracledatabase::v1::
         RestartAutonomousDatabaseRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::SwitchoverAutonomousDatabase(
+    google::cloud::oracledatabase::v1::
+        SwitchoverAutonomousDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::FailoverAutonomousDatabase(
+    google::cloud::oracledatabase::v1::
+        FailoverAutonomousDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListOdbNetworks(
+    google::cloud::oracledatabase::v1::ListOdbNetworksRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetOdbNetwork(
+    google::cloud::oracledatabase::v1::GetOdbNetworkRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::CreateOdbNetwork(
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::DeleteOdbNetwork(
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListOdbSubnets(
+    google::cloud::oracledatabase::v1::ListOdbSubnetsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetOdbSubnet(
+    google::cloud::oracledatabase::v1::GetOdbSubnetRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::CreateOdbSubnet(
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::DeleteOdbSubnet(
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListExadbVmClusters(
+    google::cloud::oracledatabase::v1::ListExadbVmClustersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetExadbVmCluster(
+    google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::CreateExadbVmCluster(
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::DeleteExadbVmCluster(
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::UpdateExadbVmCluster(
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::RemoveVirtualMachineExadbVmCluster(
+    google::cloud::oracledatabase::v1::
+        RemoveVirtualMachineExadbVmClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListExascaleDbStorageVaults(
+    google::cloud::oracledatabase::v1::
+        ListExascaleDbStorageVaultsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::GetExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        GetExascaleDbStorageVaultRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::CreateExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        CreateExascaleDbStorageVaultRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::DeleteExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        DeleteExascaleDbStorageVaultRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListDbSystemInitialStorageSizes(
+    google::cloud::oracledatabase::v1::
+        ListDbSystemInitialStorageSizesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListDatabases(
+    google::cloud::oracledatabase::v1::ListDatabasesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetDatabase(
+    google::cloud::oracledatabase::v1::GetDatabaseRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListPluggableDatabases(
+    google::cloud::oracledatabase::v1::
+        ListPluggableDatabasesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetPluggableDatabase(
+    google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListDbSystems(
+    google::cloud::oracledatabase::v1::ListDbSystemsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetDbSystem(
+    google::cloud::oracledatabase::v1::GetDbSystemRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::CreateDbSystem(
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::DeleteDbSystem(
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListDbVersions(
+    google::cloud::oracledatabase::v1::ListDbVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListDatabaseCharacterSets(
+    google::cloud::oracledatabase::v1::
+        ListDatabaseCharacterSetsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListLocations(

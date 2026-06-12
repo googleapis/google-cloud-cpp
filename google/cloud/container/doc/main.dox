@@ -39,6 +39,7 @@ application.
 - @ref container-override-retry - describes how to change the default retry
   policies.
 - @ref container-env - describes environment variables that can configure the behavior of the library.
+- @ref container-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/kubernetes-engine/docs/
 

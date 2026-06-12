@@ -44,7 +44,7 @@ Options TargetGrpcProxiesDefaultOptions(Options options) {
     options.set<
         compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicyOption>(
         compute_target_grpc_proxies_v1::TargetGrpcProxiesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_target_grpc_proxies_v1::

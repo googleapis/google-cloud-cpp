@@ -40,7 +40,7 @@ Options DisksDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_disks_v1::DisksRetryPolicyOption>()) {
     options.set<compute_disks_v1::DisksRetryPolicyOption>(
-        compute_disks_v1::DisksLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        compute_disks_v1::DisksLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_disks_v1::DisksBackoffPolicyOption>()) {

@@ -42,7 +42,7 @@ Options InstanceServiceDefaultOptions(Options options) {
   if (!options.has<chronicle_v1::InstanceServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::InstanceServiceRetryPolicyOption>(
         chronicle_v1::InstanceServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<chronicle_v1::InstanceServiceBackoffPolicyOption>()) {

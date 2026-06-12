@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-cmake_minimum_required(VERSION 3.10...3.24)
+cmake_minimum_required(VERSION 3.22...3.31)
 project(google-cloud-cpp-universe-domain-demo CXX)
 
 find_package(google_cloud_cpp_bigquery REQUIRED)
@@ -29,7 +29,14 @@ else ()
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif ()
 
-set(universe_domain_demos bigquery compute kms pubsub storage)
+set(universe_domain_demos
+    bigquery
+    bigtable
+    compute
+    kms
+    pubsub
+    spanner
+    storage)
 foreach (library ${universe_domain_demos})
     add_executable(${library}_demo ${library}.cc)
     target_link_libraries(${library}_demo google-cloud-cpp::${library}

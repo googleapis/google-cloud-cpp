@@ -99,6 +99,11 @@ Idempotency NetAppConnectionIdempotencyPolicy::RevertVolume(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetAppConnectionIdempotencyPolicy::EstablishVolumePeering(
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetAppConnectionIdempotencyPolicy::ListSnapshots(
     google::cloud::netapp::v1::ListSnapshotsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -331,6 +336,56 @@ Idempotency NetAppConnectionIdempotencyPolicy::UpdateQuotaRule(
 
 Idempotency NetAppConnectionIdempotencyPolicy::DeleteQuotaRule(
     google::cloud::netapp::v1::DeleteQuotaRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::RestoreBackupFiles(
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ListHostGroups(
+    google::cloud::netapp::v1::ListHostGroupsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::GetHostGroup(
+    google::cloud::netapp::v1::GetHostGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::CreateHostGroup(
+    google::cloud::netapp::v1::CreateHostGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateHostGroup(
+    google::cloud::netapp::v1::UpdateHostGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteHostGroup(
+    google::cloud::netapp::v1::DeleteHostGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ExecuteOntapPost(
+    google::cloud::netapp::v1::ExecuteOntapPostRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ExecuteOntapGet(
+    google::cloud::netapp::v1::ExecuteOntapGetRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ExecuteOntapDelete(
+    google::cloud::netapp::v1::ExecuteOntapDeleteRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::ExecuteOntapPatch(
+    google::cloud::netapp::v1::ExecuteOntapPatchRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

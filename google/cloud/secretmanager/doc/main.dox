@@ -40,5 +40,6 @@ application.
 - @ref secretmanager-override-retry - describes how to change the default retry
   policies.
 - @ref secretmanager-env - describes environment variables that can configure the behavior of the library.
+- @ref secretmanager-override-universe-domain - describes how to override the default universe domain.
 
 */

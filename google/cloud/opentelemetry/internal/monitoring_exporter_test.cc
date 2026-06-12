@@ -20,6 +20,7 @@
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <variant>
 
 namespace google {
 namespace cloud {
@@ -134,15 +135,14 @@ TEST(MonitoringExporter, ExportSuccess) {
         auto& labels = *resource.mutable_labels();
         auto const& attributes = pda.attributes.GetAttributes();
         labels["project_id"] =
-            absl::get<std::string>(attributes.find("project_id")->second);
+            std::get<std::string>(attributes.find("project_id")->second);
         labels["instance"] =
-            absl::get<std::string>(attributes.find("instance")->second);
+            std::get<std::string>(attributes.find("instance")->second);
         labels["cluster"] =
-            absl::get<std::string>(attributes.find("cluster")->second);
+            std::get<std::string>(attributes.find("cluster")->second);
         labels["table"] =
-            absl::get<std::string>(attributes.find("table")->second);
-        labels["zone"] =
-            absl::get<std::string>(attributes.find("zone")->second);
+            std::get<std::string>(attributes.find("table")->second);
+        labels["zone"] = std::get<std::string>(attributes.find("zone")->second);
         return std::make_pair(labels["project_id"], resource);
       };
 
@@ -157,6 +157,40 @@ TEST(MonitoringExporter, ExportSuccess) {
   auto data = MakeResourceMetrics({resource_labels_1, resource_labels_2});
   auto result = exporter->Export(data);
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
+}
+
+TEST(MonitoringExporterTest, MakeFilterNoOption) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  Options options;
+
+  auto exporter = std::make_unique<MonitoringExporter>(Project("test-project"),
+                                                       mock, options);
+  EXPECT_NE(exporter, nullptr);
+}
+
+TEST(MonitoringExporterTest, MakeFilterEmptySet) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  Options options;
+  options.set<otel_internal::ResourceFilterDataFnOption>(
+      std::set<std::string>{});
+
+  auto exporter = std::make_unique<MonitoringExporter>(Project("test-project"),
+                                                       mock, options);
+  EXPECT_NE(exporter, nullptr);
+}
+
+TEST(MonitoringExporterTest, MakeFilterWithExcludedKeys) {
+  auto mock =
+      std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
+  Options options;
+  std::set<std::string> excluded{"service_name", "service_version"};
+  options.set<otel_internal::ResourceFilterDataFnOption>(excluded);
+
+  auto exporter = std::make_unique<MonitoringExporter>(Project("test-project"),
+                                                       mock, options);
+  EXPECT_NE(exporter, nullptr);
 }
 
 }  // namespace

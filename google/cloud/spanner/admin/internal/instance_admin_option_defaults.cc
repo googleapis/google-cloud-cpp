@@ -42,7 +42,7 @@ Options InstanceAdminDefaultOptions(Options options) {
   if (!options.has<spanner_admin::InstanceAdminRetryPolicyOption>()) {
     options.set<spanner_admin::InstanceAdminRetryPolicyOption>(
         spanner_admin::InstanceAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<spanner_admin::InstanceAdminBackoffPolicyOption>()) {

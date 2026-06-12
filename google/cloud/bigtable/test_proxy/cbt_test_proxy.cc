@@ -12,15 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/test_proxy/cbt_test_proxy.h"
 #include "google/cloud/bigtable/cell.h"
+#include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
+#include "absl/strings/str_cat.h"
 #include "absl/time/time.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
@@ -360,6 +362,72 @@ grpc::Status CbtTestProxy::ReadModifyWriteRow(
   return grpc::Status();
 }
 
+grpc::Status CbtTestProxy::ExecuteQuery(
+    grpc::ServerContext*,
+    google::bigtable::testproxy::ExecuteQueryRequest const* request,
+    google::bigtable::testproxy::ExecuteQueryResult* response) {
+  // Retrieve connection
+  auto const& conn = GetConnection(request->client_id());
+  if (!conn.ok()) return ToGrpcStatus(std::move(conn).status());
+  auto client = bigtable::Client(*conn);
+  auto const& request_proto = request->request();
+
+  // Call prepare query
+  auto instance = MakeInstanceResource(request_proto.instance_name());
+  bigtable::SqlStatement sql_statement{request_proto.query()};
+  auto prepared_query =
+      client.PrepareQuery(*std::move(instance), sql_statement);
+  if (!prepared_query.ok()) {
+    *response->mutable_status() = ToRpcStatus(prepared_query.status());
+    return ::grpc::Status();
+  }
+
+  // Bind parameters
+  std::unordered_map<std::string, Value> params;
+  for (auto const& param : request_proto.params()) {
+    auto value =
+        bigtable_internal::FromProto(param.second.type(), param.second);
+    params.insert(std::make_pair(param.first, std::move(value)));
+  }
+  auto bound_query = prepared_query->BindParameters(params);
+
+  RowStream result = client.ExecuteQuery(std::move(bound_query), {});
+
+  Status status;
+  std::vector<google::bigtable::testproxy::SqlRow> proxy_rows;
+  for (auto& row : result) {
+    if (!row.ok()) {
+      status = row.status();
+      break;
+    }
+    google::bigtable::testproxy::SqlRow proxy_row;
+    for (auto const& v : row->values()) {
+      *proxy_row.add_values() = bigtable_internal::ToProto(v).second;
+    }
+    proxy_rows.push_back(std::move(proxy_row));
+  }
+
+  if (status.ok()) {
+    for (auto& p : proxy_rows) {
+      *response->add_rows() = std::move(p);
+    }
+  }
+
+  // populate metadata
+  google::bigtable::testproxy::ResultSetMetadata metadata;
+  auto prepared_query_response = prepared_query->response();
+  if (prepared_query_response) {
+    auto prepared_query_metadata = prepared_query->response()->metadata();
+    for (auto const& column :
+         prepared_query_metadata.proto_schema().columns()) {
+      *metadata.add_columns() = column;
+    }
+  }
+  *response->mutable_metadata() = metadata;
+  *response->mutable_status() = ToRpcStatus(status);
+  return grpc::Status();
+}
+
 StatusOr<std::shared_ptr<DataConnection>> CbtTestProxy::GetConnection(
     std::string const& client_id) {
   std::lock_guard<std::mutex> lk(mu_);
@@ -388,3 +456,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

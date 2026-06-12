@@ -44,7 +44,7 @@ Options PolicyTagManagerSerializationDefaultOptions(Options options) {
           datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>()) {
     options.set<datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption>(
         datacatalog_v1::PolicyTagManagerSerializationLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

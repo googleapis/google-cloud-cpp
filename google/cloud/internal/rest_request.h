@@ -15,10 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_REQUEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_REQUEST_H
 
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/internal/rest_context.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <unordered_map>
 #include <vector>
 
 namespace google {
@@ -34,7 +33,6 @@ class RestClient;
 // payload if required.
 class RestRequest {
  public:
-  using HttpHeaders = std::unordered_map<std::string, std::vector<std::string>>;
   using HttpParameters = std::vector<std::pair<std::string, std::string>>;
 
   RestRequest();
@@ -60,13 +58,14 @@ class RestRequest {
 
   // Adding a header/value pair that already exists results in the new value
   // appended to the list of values for the existing header.
+  RestRequest& AddHeader(HttpHeader header) &;
+  RestRequest&& AddHeader(HttpHeader header) && {
+    return std::move(AddHeader(std::move(header)));
+  }
+
   RestRequest& AddHeader(std::string header, std::string value) &;
   RestRequest&& AddHeader(std::string header, std::string value) && {
     return std::move(AddHeader(std::move(header), std::move(value)));
-  }
-  RestRequest& AddHeader(std::pair<std::string, std::string> header) &;
-  RestRequest&& AddHeader(std::pair<std::string, std::string> header) && {
-    return std::move(AddHeader(std::move(header)));
   }
 
   // Adding a duplicate param and or value results in both the new and original
@@ -84,7 +83,7 @@ class RestRequest {
 
   // Vector is empty if header name is not found.
   // Header names are case-insensitive; header values are case-sensitive.
-  std::vector<std::string> GetHeader(std::string header) const;
+  HttpHeader GetHeader(HttpHeaderName const& header) const;
 
   // Returns all values associated with parameter name.
   // Parameter names and values are case-sensitive.

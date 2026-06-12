@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
+#include "absl/strings/str_join.h"
 #include <google/protobuf/util/time_util.h>
 #include <sstream>
 
@@ -127,6 +127,24 @@ Commands::value_type MakeCommandEntry(std::string const& name,
     command(std::move(table), cq, std::move(argv));
   };
   return Commands::value_type{name, std::move(adapter)};
+}
+
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      ClientCommandType const& function) {
+  auto command = [=](std::vector<std::string> argv) {
+    auto constexpr kFixedArguments = 0;
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != args.size() + kFixedArguments) {
+      std::ostringstream os;
+      os << name;
+      if (!args.empty()) os << " " << absl::StrJoin(args, " ");
+      throw Usage{std::move(os).str()};
+    }
+    auto client = bigtable::Client(bigtable::MakeDataConnection());
+    function(client, argv);
+  };
+  return {name, command};
 }
 
 }  // namespace examples

@@ -43,7 +43,7 @@ Options AcceleratorTypesDefaultOptions(Options options) {
     options.set<
         compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>(
         compute_accelerator_types_v1::AcceleratorTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_accelerator_types_v1::

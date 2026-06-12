@@ -17,10 +17,10 @@
 // source: google/cloud/sql/v1/cloud_sql_instances.proto
 
 #include "google/cloud/sql/v1/internal/sql_instances_rest_metadata_decorator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
@@ -45,6 +45,24 @@ SqlInstancesServiceRestMetadata::AddServerCa(
     google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AddServerCa(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::AddServerCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddServerCertificate(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::AddEntraIdCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddEntraIdCertificate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -143,6 +161,24 @@ SqlInstancesServiceRestMetadata::ListServerCas(
   return child_->ListServerCas(rest_context, options, request);
 }
 
+StatusOr<google::cloud::sql::v1::InstancesListServerCertificatesResponse>
+SqlInstancesServiceRestMetadata::ListServerCertificates(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->ListServerCertificates(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::InstancesListEntraIdCertificatesResponse>
+SqlInstancesServiceRestMetadata::ListEntraIdCertificates(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->ListEntraIdCertificates(rest_context, options, request);
+}
+
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Patch(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -197,6 +233,24 @@ SqlInstancesServiceRestMetadata::RotateServerCa(
     google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->RotateServerCa(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::RotateServerCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->RotateServerCertificate(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::RotateEntraIdCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesRotateEntraIdCertificateRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->RotateEntraIdCertificate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -303,6 +357,14 @@ SqlInstancesServiceRestMetadata::GetLatestRecoveryTime(
   return child_->GetLatestRecoveryTime(rest_context, options, request);
 }
 
+StatusOr<google::cloud::sql::v1::SqlInstancesExecuteSqlResponse>
+SqlInstancesServiceRestMetadata::ExecuteSql(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ExecuteSql(rest_context, options, request);
+}
+
 StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
 SqlInstancesServiceRestMetadata::AcquireSsrsLease(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -319,6 +381,24 @@ SqlInstancesServiceRestMetadata::ReleaseSsrsLease(
         request) {
   SetMetadata(rest_context, options);
   return child_->ReleaseSsrsLease(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::PreCheckMajorVersionUpgrade(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::
+        SqlInstancesPreCheckMajorVersionUpgradeRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PreCheckMajorVersionUpgrade(rest_context, options, request);
+}
+
+StatusOr<google::cloud::sql::v1::Operation>
+SqlInstancesServiceRestMetadata::PointInTimeRestore(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PointInTimeRestore(rest_context, options, request);
 }
 
 void SqlInstancesServiceRestMetadata::SetMetadata(

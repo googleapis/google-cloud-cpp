@@ -28,8 +28,6 @@ namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class GatewayControlTracingConnection
     : public gkeconnect_gateway_v1::GatewayControlConnection {
  public:
@@ -48,8 +46,6 @@ class GatewayControlTracingConnection
  private:
   std::shared_ptr<gkeconnect_gateway_v1::GatewayControlConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

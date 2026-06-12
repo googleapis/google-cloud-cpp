@@ -42,7 +42,7 @@ Options DatabaseAdminDefaultOptions(Options options) {
   if (!options.has<spanner_admin::DatabaseAdminRetryPolicyOption>()) {
     options.set<spanner_admin::DatabaseAdminRetryPolicyOption>(
         spanner_admin::DatabaseAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<spanner_admin::DatabaseAdminBackoffPolicyOption>()) {

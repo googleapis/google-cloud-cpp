@@ -28,7 +28,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/group_options.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
@@ -36,19 +36,11 @@
 
 namespace google {
 namespace cloud {
-/**
- * Contains experimental features for the GCS C++ Client Library.
- *
- * @warning The types, functions, aliases, and objects in this namespace are
- *   subject to change without notice.
- */
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A client for Google Cloud Storage offering asynchronous operations.
- *
- * @note This class is experimental, it is subject to change without notice.
  *
  * @par Example: create a client instance
  * @snippet storage_async_samples.cc async-client
@@ -371,7 +363,7 @@ class AsyncClient {
       std::int64_t limit, Options opts = {});
 
   /*
-  [start-appendable-object-upload]
+  [create-and-write-appendable-object]
   Initiates a [resumable upload][resumable-link] for an appendable object.
 
   Appendable objects allow you to create an object and upload data to it
@@ -385,21 +377,21 @@ class AsyncClient {
   closure of the streaming RPC used for the upload.
 
   @par Example
-  @snippet storage_async_samples.cc start-appendable-object-upload
+  @snippet storage_async_samples.cc create-and-write-appendable-object
 
   @par Idempotency
   This function is always treated as idempotent, and the library will
   automatically retry the function on transient errors.
 
   [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
-  [start-appendable-object-upload]
+  [create-and-write-appendable-object]
   */
 
   /**
    * Starts a new resumable upload session for appendable objects and
    * automatic recovery from transient failures.
    *
-   * @snippet{doc} async/client.h start-appendable-object-upload
+   * @snippet{doc} async/client.h create-and-write-appendable-object
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be uploaded.
@@ -414,7 +406,7 @@ class AsyncClient {
    * Starts a new resumable upload session for appendable objects and
    * automatic recovery from transient failures.
    *
-   * @snippet{doc} async/client.h start-appendable-object-upload
+   * @snippet{doc} async/client.h create-and-write-appendable-object
    *
    * @param request the request contents, it must include the bucket name and
    *     object name. Many other fields are optional.
@@ -903,7 +895,7 @@ class AsyncClient {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

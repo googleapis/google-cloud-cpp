@@ -312,7 +312,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingMatch) {
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
             EXPECT_THAT(
-                context.GetHeader("x-goog-request-params")[0],
+                context.GetHeader("x-goog-request-params").values().front(),
                 AllOf(
                     HasSubstr(std::string("project=projects%2Fmy_project")),
                     HasSubstr(std::string("instance=instances%2Fmy_instance")),

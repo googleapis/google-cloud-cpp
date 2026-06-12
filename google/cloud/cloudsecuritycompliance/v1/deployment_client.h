@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -37,7 +37,8 @@ namespace cloudsecuritycompliance_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Service describing handlers for resources
+/// Deployment service allows users to manage deployments of Frameworks and
+/// Cloud Controls on a target resource.
 ///
 /// @par Equality
 ///
@@ -88,15 +89,20 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Creates a new FrameworkDeployment in a given project and location.
+  /// Creates a framework deployment in a given parent resource. A
+  /// framework deployment lets you assign a particular framework version to an
+  /// organization, folder, or project so that you can control and monitor
+  /// those resources using the framework's cloud controls.
   ///
-  /// @param parent  Required. Value for parent. Supported formats:
-  ///  organizations/{organization}/locations/{location}
-  ///  Only global location is supported.
-  /// @param framework_deployment  Required. The resource being created.
-  /// @param framework_deployment_id  Optional. User provided identifier. It should be unique in scope of a
-  ///  parent Please note that this is optional and if not provided, a random UUID
-  ///  will be generated.
+  /// @param parent  Required. The parent resource of the framework deployment in the format
+  ///  `organizations/{organization}/locations/{location}`
+  ///  or
+  ///  `projects/{project}/locations/{location}`.
+  ///  Only the global location is supported.
+  /// @param framework_deployment  Required. The framework deployment that you're creating.
+  /// @param framework_deployment_id  Optional. An identifier for the framework deployment that's unique in scope
+  ///  of the parent. If you don't specify a value, then a random UUID is
+  ///  generated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -117,8 +123,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L384}
-  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L135}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L401}
+  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L169}
   ///
   // clang-format on
   future<
@@ -148,7 +154,10 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Creates a new FrameworkDeployment in a given project and location.
+  /// Creates a framework deployment in a given parent resource. A
+  /// framework deployment lets you assign a particular framework version to an
+  /// organization, folder, or project so that you can control and monitor
+  /// those resources using the framework's cloud controls.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -176,8 +185,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L384}
-  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L135}
+  /// [google.cloud.cloudsecuritycompliance.v1.CreateFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L401}
+  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L169}
   ///
   // clang-format on
   future<
@@ -219,11 +228,14 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Deletes a single FrameworkDeployment.
+  /// Deletes a framework deployment.
   ///
-  /// @param name  Required. Name of the framework deployment to be deleted
-  ///  FrameworkDeployment name in either of the following formats:
-  ///  organizations/{organization}/locations/{location}/frameworkDeployments/{framework_deployment_id}
+  /// @param name  Required. The name of the framework deployment that you want to delete,
+  ///  in the format
+  ///  `organizations/{organization}/locations/{location}/frameworkDeployments/{framework_deployment}`
+  ///  or
+  ///  `projects/{project}/locations/{location}/frameworkDeployments/{framework_deployment}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -244,8 +256,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L406}
-  /// [google.cloud.cloudsecuritycompliance.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L664}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L425}
+  /// [google.cloud.cloudsecuritycompliance.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L645}
   ///
   // clang-format on
   future<
@@ -268,7 +280,7 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Deletes a single FrameworkDeployment.
+  /// Deletes a framework deployment.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -296,8 +308,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L406}
-  /// [google.cloud.cloudsecuritycompliance.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L664}
+  /// [google.cloud.cloudsecuritycompliance.v1.DeleteFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L425}
+  /// [google.cloud.cloudsecuritycompliance.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/common.proto#L645}
   ///
   // clang-format on
   future<
@@ -339,10 +351,13 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Gets details of a single FrameworkDeployment.
+  /// Gets details about a framework deployment.
   ///
-  /// @param name  Required. FrameworkDeployment name in either of the following formats:
-  ///  organizations/{organization}/locations/{location}/frameworkDeployments/{framework_deployment_id}
+  /// @param name  Required. The name of the framework deployment, in the format
+  ///  `organizations/{organization}/locations/{location}/frameworkDeployments/{framework_deployment}`
+  ///  or
+  ///  `projects/{project}/locations/{location}/frameworkDeployments/{framework_deployment}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -356,8 +371,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L135}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L429}
+  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L169}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L451}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::FrameworkDeployment>
@@ -365,7 +380,7 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Gets details of a single FrameworkDeployment.
+  /// Gets details about a framework deployment.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -386,8 +401,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L135}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L429}
+  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L169}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetFrameworkDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L451}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::FrameworkDeployment>
@@ -397,9 +412,13 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Lists FrameworkDeployments in a given parent and location.
+  /// Lists the framework deployments in a given parent resource.
   ///
-  /// @param parent  Required. Parent value for ListFrameworkDeploymentsRequest.
+  /// @param parent  Required. The parent resource of the framework deployment, in the format
+  ///  `organizations/{organization}/locations/{location}`
+  ///  or
+  ///  `projects/{project}/locations/{location}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -422,8 +441,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L135}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworkDeploymentsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L441}
+  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L169}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworkDeploymentsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L466}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::FrameworkDeployment>
@@ -431,7 +450,7 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Lists FrameworkDeployments in a given parent and location.
+  /// Lists the framework deployments in a given parent resource.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -461,8 +480,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L135}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworkDeploymentsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L441}
+  /// [google.cloud.cloudsecuritycompliance.v1.FrameworkDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L169}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListFrameworkDeploymentsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L466}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudsecuritycompliance::v1::FrameworkDeployment>
@@ -472,10 +491,13 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Gets details of a single CloudControlDeployment.
+  /// Gets details about a cloud control deployment.
   ///
-  /// @param name  Required. CloudControlDeployment name in either of the following formats:
-  ///  organizations/{organization}/locations/{location}/cloudControlDeployments/{cloud_control_deployment_id}
+  /// @param name  Required. The name for the cloud control deployment, in the format
+  ///  `organizations/{organization}/locations/{location}/cloudControlDeployments/{cloud_control_deployment}`
+  ///  or
+  ///  `projects/{project}/locations/{location}/cloudControlDeployments/{cloud_control_deployment}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -489,8 +511,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControlDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L223}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L475}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControlDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L260}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L513}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControlDeployment>
@@ -498,7 +520,7 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Gets details of a single CloudControlDeployment.
+  /// Gets details about a cloud control deployment.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -519,8 +541,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControlDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L223}
-  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L475}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControlDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L260}
+  /// [google.cloud.cloudsecuritycompliance.v1.GetCloudControlDeploymentRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L513}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudsecuritycompliance::v1::CloudControlDeployment>
@@ -530,9 +552,12 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Lists CloudControlDeployments under a given parent.
+  /// Lists the cloud control deployments in a given parent resource.
   ///
-  /// @param parent  Required. Parent value for ListCloudControlDeploymentsRequest.
+  /// @param parent  Required. The parent resource for the cloud control deployment, in the
+  ///  format `organizations/{organization}/locations/{location}` or
+  ///  `projects/{project}/locations/{location}`.
+  ///  The only supported location is `global`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -555,8 +580,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControlDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L223}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlDeploymentsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L487}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControlDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L260}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlDeploymentsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L528}
   ///
   // clang-format on
   StreamRange<
@@ -565,7 +590,7 @@ class DeploymentClient {
 
   // clang-format off
   ///
-  /// Lists CloudControlDeployments under a given parent.
+  /// Lists the cloud control deployments in a given parent resource.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -595,8 +620,8 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudsecuritycompliance.v1.CloudControlDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L223}
-  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlDeploymentsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L487}
+  /// [google.cloud.cloudsecuritycompliance.v1.CloudControlDeployment]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L260}
+  /// [google.cloud.cloudsecuritycompliance.v1.ListCloudControlDeploymentsRequest]: @googleapis_reference_link{google/cloud/cloudsecuritycompliance/v1/deployment.proto#L528}
   ///
   // clang-format on
   StreamRange<
@@ -830,7 +855,7 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -859,7 +884,7 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -892,10 +917,10 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -931,10 +956,10 @@ class DeploymentClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

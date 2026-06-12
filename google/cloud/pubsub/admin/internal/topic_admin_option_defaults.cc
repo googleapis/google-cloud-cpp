@@ -19,9 +19,9 @@
 #include "google/cloud/pubsub/admin/internal/topic_admin_option_defaults.h"
 #include "google/cloud/pubsub/admin/topic_admin_connection.h"
 #include "google/cloud/pubsub/admin/topic_admin_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options TopicAdminDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<pubsub_admin::TopicAdminRetryPolicyOption>()) {
     options.set<pubsub_admin::TopicAdminRetryPolicyOption>(
-        pubsub_admin::TopicAdminLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        pubsub_admin::TopicAdminLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<pubsub_admin::TopicAdminBackoffPolicyOption>()) {

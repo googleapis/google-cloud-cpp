@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_SUB_BLOCKS_V1_RESERVATION_SUB_BLOCKS_CONNECTION_H
 
 #include "google/cloud/compute/reservation_sub_blocks/v1/internal/reservation_sub_blocks_retry_traits.h"
+#include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h"
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.pb.h>
 #include <memory>
 
 namespace google {

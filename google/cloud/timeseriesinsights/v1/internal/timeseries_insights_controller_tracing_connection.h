@@ -28,8 +28,6 @@ namespace cloud {
 namespace timeseriesinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TimeseriesInsightsControllerTracingConnection
     : public timeseriesinsights_v1::TimeseriesInsightsControllerConnection {
  public:
@@ -75,8 +73,6 @@ class TimeseriesInsightsControllerTracingConnection
   std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

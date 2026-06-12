@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_backend_buckets_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BackendBucketsTracingConnection::BackendBucketsTracingConnection(
     std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection> child)
     : child_(std::move(child)) {}
@@ -328,17 +326,13 @@ BackendBucketsTracingConnection::UpdateBackendBucket(
                            child_->UpdateBackendBucket(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection>
 MakeBackendBucketsTracingConnection(
     std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BackendBucketsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

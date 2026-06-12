@@ -26,8 +26,6 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RoutineServiceTracingConnection::RoutineServiceTracingConnection(
     std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection> child)
     : child_(std::move(child)) {}
@@ -59,15 +57,6 @@ RoutineServiceTracingConnection::UpdateRoutine(
   return internal::EndSpan(*span, child_->UpdateRoutine(request));
 }
 
-StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceTracingConnection::PatchRoutine(
-    google::cloud::bigquery::v2::PatchRoutineRequest const& request) {
-  auto span = internal::MakeSpan(
-      "bigquerycontrol_v2::RoutineServiceConnection::PatchRoutine");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->PatchRoutine(request));
-}
-
 Status RoutineServiceTracingConnection::DeleteRoutine(
     google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
   auto span = internal::MakeSpan(
@@ -85,16 +74,12 @@ RoutineServiceTracingConnection::ListRoutines(
   return internal::EndSpan(*span, child_->ListRoutines(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection>
 MakeRoutineServiceTracingConnection(
     std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RoutineServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

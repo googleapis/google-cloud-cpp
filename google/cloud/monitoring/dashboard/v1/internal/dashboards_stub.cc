@@ -19,9 +19,12 @@
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
+#include "google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -93,3 +96,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_dashboard_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -17,16 +17,20 @@
 // source: google/cloud/backupdr/v1/backupdr.proto
 
 #include "google/cloud/backupdr/v1/internal/backup_dr_metadata_decorator.h"
+#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/backupdr/v1/backupdr.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -241,6 +245,16 @@ BackupDRMetadata::ListBackups(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBackups(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+BackupDRMetadata::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->FetchBackupsForResourceType(context, options, request);
 }
 
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRMetadata::GetBackup(
@@ -546,6 +560,16 @@ BackupDRMetadata::GetDataSourceReference(
   return child_->GetDataSourceReference(context, options, request);
 }
 
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+BackupDRMetadata::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDataSourceReferences(context, options, request);
+}
+
 StatusOr<google::cloud::backupdr::v1::
              FetchDataSourceReferencesForResourceTypeResponse>
 BackupDRMetadata::FetchDataSourceReferencesForResourceType(
@@ -696,3 +720,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace backupdr_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

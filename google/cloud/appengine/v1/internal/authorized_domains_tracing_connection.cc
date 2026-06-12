@@ -27,8 +27,6 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AuthorizedDomainsTracingConnection::AuthorizedDomainsTracingConnection(
     std::shared_ptr<appengine_v1::AuthorizedDomainsConnection> child)
     : child_(std::move(child)) {}
@@ -44,17 +42,13 @@ AuthorizedDomainsTracingConnection::ListAuthorizedDomains(
       google::appengine::v1::AuthorizedDomain>(std::move(span), std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<appengine_v1::AuthorizedDomainsConnection>
 MakeAuthorizedDomainsTracingConnection(
     std::shared_ptr<appengine_v1::AuthorizedDomainsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<AuthorizedDomainsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -96,6 +96,12 @@ StatusOr<std::string> LoggingCredentials::project_id(
   return impl_->project_id(options);
 }
 
+Credentials::AllowedLocationsRequestType
+LoggingCredentials::AllowedLocationsRequest() const {
+  GCP_LOG(DEBUG) << __func__ << "(" << phase_ << ")";
+  return impl_->AllowedLocationsRequest();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

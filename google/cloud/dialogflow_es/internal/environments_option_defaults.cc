@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/environments_option_defaults.h"
 #include "google/cloud/dialogflow_es/environments_connection.h"
 #include "google/cloud/dialogflow_es/environments_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,7 +45,7 @@ Options EnvironmentsDefaultOptions(std::string const& location,
   if (!options.has<dialogflow_es::EnvironmentsRetryPolicyOption>()) {
     options.set<dialogflow_es::EnvironmentsRetryPolicyOption>(
         dialogflow_es::EnvironmentsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dialogflow_es::EnvironmentsBackoffPolicyOption>()) {

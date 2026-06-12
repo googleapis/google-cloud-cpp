@@ -42,7 +42,7 @@ Options NetworkProfilesDefaultOptions(Options options) {
           compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>()) {
     options.set<compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>(
         compute_network_profiles_v1::NetworkProfilesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

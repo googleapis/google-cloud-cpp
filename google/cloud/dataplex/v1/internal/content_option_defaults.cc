@@ -41,7 +41,7 @@ Options ContentServiceDefaultOptions(Options options) {
   if (!options.has<dataplex_v1::ContentServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::ContentServiceRetryPolicyOption>(
         dataplex_v1::ContentServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataplex_v1::ContentServiceBackoffPolicyOption>()) {

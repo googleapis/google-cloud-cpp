@@ -1,5 +1,5 @@
 /*!
-@defgroup google-cloud-gkemulticloud-options Anthos Multi-Cloud API Configuration Options
+@defgroup google-cloud-gkemulticloud-options GKE Multi-Cloud API Configuration Options
 
 This library uses the same mechanism (`google::cloud::Options`) and the common
 [options](@ref options) as all other C++ client libraries for its configuration.

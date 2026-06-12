@@ -66,6 +66,13 @@ CloudRedisClusterConnectionIdempotencyPolicy::GetClusterCertificateAuthority(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::
+    GetSharedRegionalCertificateAuthority(
+        google::cloud::redis::cluster::v1::
+            GetSharedRegionalCertificateAuthorityRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency
 CloudRedisClusterConnectionIdempotencyPolicy::RescheduleClusterMaintenance(
     google::cloud::redis::cluster::v1::

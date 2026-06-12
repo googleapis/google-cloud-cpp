@@ -36,13 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
 /// Provides interfaces for managing [Cloud KMS
-/// Autokey](https://cloud.google.com/kms/help/autokey) folder-level
-/// configurations. A configuration is inherited by all descendent projects. A
-/// configuration at one folder overrides any other configurations in its
-/// ancestry. Setting a configuration on a folder is a prerequisite for Cloud
-/// KMS Autokey, so that users working in a descendant project can request
-/// provisioned [CryptoKeys][google.cloud.kms.v1.CryptoKey], ready for Customer
-/// Managed Encryption Key (CMEK) use, on-demand.
+/// Autokey](https://cloud.google.com/kms/help/autokey) folder-level or
+/// project-level configurations. A configuration is inherited by all descendent
+/// folders and projects. A configuration at a folder or project overrides any
+/// other configurations in its ancestry. Setting a configuration on a folder is
+/// a prerequisite for Cloud KMS Autokey, so that users working in a descendant
+/// project can request provisioned [CryptoKeys][google.cloud.kms.v1.CryptoKey],
+/// ready for Customer Managed Encryption Key (CMEK) use, on-demand when using
+/// the dedicated key project mode. This is not required when using the
+/// delegated key management mode for same-project keys.
 ///
 /// @par Equality
 ///
@@ -95,8 +97,8 @@ class AutokeyAdminClient {
 
   // clang-format off
   ///
-  /// Updates the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig] for a
-  /// folder. The caller must have both `cloudkms.autokeyConfigs.update`
+  /// Updates the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig] for a folder
+  /// or a project. The caller must have both `cloudkms.autokeyConfigs.update`
   /// permission on the parent folder and `cloudkms.cryptoKeys.setIamPolicy`
   /// permission on the provided key project. A
   /// [KeyHandle][google.cloud.kms.v1.KeyHandle] creation in the folder's
@@ -121,8 +123,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.AutokeyConfig]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L106}
-  /// [google.cloud.kms.v1.UpdateAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L80}
+  /// [google.cloud.kms.v1.AutokeyConfig]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L114}
+  /// [google.cloud.kms.v1.UpdateAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L87}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::AutokeyConfig> UpdateAutokeyConfig(
@@ -131,8 +133,8 @@ class AutokeyAdminClient {
 
   // clang-format off
   ///
-  /// Updates the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig] for a
-  /// folder. The caller must have both `cloudkms.autokeyConfigs.update`
+  /// Updates the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig] for a folder
+  /// or a project. The caller must have both `cloudkms.autokeyConfigs.update`
   /// permission on the parent folder and `cloudkms.cryptoKeys.setIamPolicy`
   /// permission on the provided key project. A
   /// [KeyHandle][google.cloud.kms.v1.KeyHandle] creation in the folder's
@@ -158,8 +160,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.AutokeyConfig]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L106}
-  /// [google.cloud.kms.v1.UpdateAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L80}
+  /// [google.cloud.kms.v1.AutokeyConfig]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L114}
+  /// [google.cloud.kms.v1.UpdateAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L87}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::AutokeyConfig> UpdateAutokeyConfig(
@@ -168,11 +170,12 @@ class AutokeyAdminClient {
 
   // clang-format off
   ///
-  /// Returns the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig] for a
-  /// folder.
+  /// Returns the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig] for a folder
+  /// or project.
   ///
   /// @param name  Required. Name of the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig]
-  ///  resource, e.g. `folders/{FOLDER_NUMBER}/autokeyConfig`.
+  ///  resource, e.g. `folders/{FOLDER_NUMBER}/autokeyConfig` or
+  ///  `projects/{PROJECT_NUMBER}/autokeyConfig`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -186,8 +189,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.AutokeyConfig]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L106}
-  /// [google.cloud.kms.v1.GetAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L94}
+  /// [google.cloud.kms.v1.AutokeyConfig]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L114}
+  /// [google.cloud.kms.v1.GetAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L101}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::AutokeyConfig> GetAutokeyConfig(
@@ -195,8 +198,8 @@ class AutokeyAdminClient {
 
   // clang-format off
   ///
-  /// Returns the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig] for a
-  /// folder.
+  /// Returns the [AutokeyConfig][google.cloud.kms.v1.AutokeyConfig] for a folder
+  /// or project.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -217,8 +220,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.AutokeyConfig]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L106}
-  /// [google.cloud.kms.v1.GetAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L94}
+  /// [google.cloud.kms.v1.AutokeyConfig]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L114}
+  /// [google.cloud.kms.v1.GetAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L101}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::AutokeyConfig> GetAutokeyConfig(
@@ -245,8 +248,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L160}
-  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L174}
+  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L210}
+  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L224}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
@@ -275,8 +278,8 @@ class AutokeyAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L160}
-  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L174}
+  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L210}
+  /// [google.cloud.kms.v1.ShowEffectiveAutokeyConfigResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L224}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>

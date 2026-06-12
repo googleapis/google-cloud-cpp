@@ -1,0 +1,35 @@
+/*!
+@page geminidataanalytics-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `geminidataanalytics_v1::DataAgentServiceClient`:
+
+@snippet data_agent_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c geminidataanalytics_v1::DataAgentServiceClient](@ref geminidataanalytics_v1::DataAgentServiceClient-universe-domain-snippet)
+- [\c geminidataanalytics_v1::DataChatServiceClient](@ref geminidataanalytics_v1::DataChatServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page geminidataanalytics_v1::DataAgentServiceClient-universe-domain-snippet Override geminidataanalytics_v1::DataAgentServiceClient Universe Domain
+
+@snippet google/cloud/geminidataanalytics/v1/samples/data_agent_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page geminidataanalytics_v1::DataChatServiceClient-universe-domain-snippet Override geminidataanalytics_v1::DataChatServiceClient Universe Domain
+
+@snippet google/cloud/geminidataanalytics/v1/samples/data_chat_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

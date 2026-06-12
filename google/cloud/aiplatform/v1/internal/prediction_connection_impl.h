@@ -117,6 +117,10 @@ class PredictionServiceConnectionImpl
       google::cloud::aiplatform::v1::GenerateContentRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse> EmbedContent(
+      google::cloud::aiplatform::v1::EmbedContentRequest const& request)
+      override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

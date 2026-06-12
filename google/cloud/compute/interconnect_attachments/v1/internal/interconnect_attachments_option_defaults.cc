@@ -46,7 +46,7 @@ Options InterconnectAttachmentsDefaultOptions(Options options) {
                     InterconnectAttachmentsRetryPolicyOption>(
         compute_interconnect_attachments_v1::
             InterconnectAttachmentsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_interconnect_attachments_v1::

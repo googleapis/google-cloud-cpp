@@ -28,8 +28,6 @@ namespace cloud {
 namespace monitoring_dashboard_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DashboardsServiceTracingConnection
     : public monitoring_dashboard_v1::DashboardsServiceConnection {
  public:
@@ -64,8 +62,6 @@ class DashboardsServiceTracingConnection
  private:
   std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

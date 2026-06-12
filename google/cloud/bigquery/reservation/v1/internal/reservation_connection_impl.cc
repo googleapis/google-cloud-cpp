@@ -522,6 +522,133 @@ ReservationServiceConnectionImpl::UpdateBiReservation(
       *current, request, __func__);
 }
 
+StatusOr<google::iam::v1::Policy>
+ReservationServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return stub_->GetIamPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::Policy>
+ReservationServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return stub_->SetIamPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ReservationServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceConnectionImpl::CreateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        CreateReservationGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateReservationGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::reservation::v1::
+                 CreateReservationGroupRequest const& request) {
+        return stub_->CreateReservationGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceConnectionImpl::GetReservationGroup(
+    google::cloud::bigquery::reservation::v1::GetReservationGroupRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetReservationGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::reservation::v1::
+                 GetReservationGroupRequest const& request) {
+        return stub_->GetReservationGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status ReservationServiceConnectionImpl::DeleteReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        DeleteReservationGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteReservationGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::reservation::v1::
+                 DeleteReservationGroupRequest const& request) {
+        return stub_->DeleteReservationGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceConnectionImpl::ListReservationGroups(
+    google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListReservationGroups(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           bigquery_reservation_v1::ReservationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::bigquery::reservation::v1::
+                                      ListReservationGroupsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::bigquery::reservation::v1::
+                       ListReservationGroupsRequest const& request) {
+              return stub->ListReservationGroups(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::bigquery::reservation::v1::ListReservationGroupsResponse
+             r) {
+        std::vector<google::cloud::bigquery::reservation::v1::ReservationGroup>
+            result(r.reservation_groups().size());
+        auto& messages = *r.mutable_reservation_groups();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal
 }  // namespace cloud

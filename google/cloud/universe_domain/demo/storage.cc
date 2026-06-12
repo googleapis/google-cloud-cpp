@@ -27,8 +27,7 @@ int main(int argc, char* argv[]) try {
   // Create aliases to make the code easier to read.
   namespace gcs = ::google::cloud::storage;
 
-  auto options =
-      google::cloud::AddUniverseDomainOption(google::cloud::ExperimentalTag{});
+  auto options = google::cloud::AddUniverseDomainOption();
   if (!options.ok()) throw std::move(options).status();
 
   // Override retry policy to quickly exit if there's a failure.

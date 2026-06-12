@@ -42,7 +42,7 @@ Options DeprecatedServiceDefaultOptions(Options options) {
   if (!options.has<golden_v1::DeprecatedServiceRetryPolicyOption>()) {
     options.set<golden_v1::DeprecatedServiceRetryPolicyOption>(
         golden_v1::DeprecatedServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(10)).clone());
   }
   if (!options.has<golden_v1::DeprecatedServiceBackoffPolicyOption>()) {
     options.set<golden_v1::DeprecatedServiceBackoffPolicyOption>(

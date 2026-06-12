@@ -42,7 +42,7 @@ Options GatewayControlDefaultOptions(Options options) {
   if (!options.has<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>()) {
     options.set<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>(
         gkeconnect_gateway_v1::GatewayControlLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

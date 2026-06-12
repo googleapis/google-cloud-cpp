@@ -1,5 +1,5 @@
 /*!
-@defgroup google-cloud-dlp-options Cloud Data Loss Prevention (DLP) API Configuration Options
+@defgroup google-cloud-dlp-options Sensitive Data Protection (DLP) Configuration Options
 
 This library uses the same mechanism (`google::cloud::Options`) and the common
 [options](@ref options) as all other C++ client libraries for its configuration.

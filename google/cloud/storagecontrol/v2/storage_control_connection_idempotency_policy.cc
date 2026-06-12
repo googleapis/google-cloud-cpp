@@ -63,6 +63,12 @@ Idempotency StorageControlConnectionIdempotencyPolicy::RenameFolder(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::DeleteFolderRecursive(
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency StorageControlConnectionIdempotencyPolicy::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
@@ -175,6 +181,22 @@ StorageControlConnectionIdempotencyPolicy::UpdateOrganizationIntelligenceConfig(
     google::storage::control::v2::
         UpdateOrganizationIntelligenceConfigRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>

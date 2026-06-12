@@ -164,6 +164,16 @@ Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteSelf(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::StartOAuth(
+    google::cloud::developerconnect::v1::StartOAuthRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::FinishOAuth(
+    google::cloud::developerconnect::v1::FinishOAuthRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

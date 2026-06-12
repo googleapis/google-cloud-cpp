@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_ROUTINE_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_ROUTINE_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/bigquery/v2/routine.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/v2/routine.pb.h>
 #include <memory>
 
 namespace google {
@@ -45,9 +45,6 @@ class RoutineServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateRoutine(
       google::cloud::bigquery::v2::UpdateRoutineRequest const& request);
-
-  virtual google::cloud::Idempotency PatchRoutine(
-      google::cloud::bigquery::v2::PatchRoutineRequest const& request);
 
   virtual google::cloud::Idempotency DeleteRoutine(
       google::cloud::bigquery::v2::DeleteRoutineRequest const& request);

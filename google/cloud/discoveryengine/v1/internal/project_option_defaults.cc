@@ -42,7 +42,7 @@ Options ProjectServiceDefaultOptions(Options options) {
   if (!options.has<discoveryengine_v1::ProjectServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::ProjectServiceRetryPolicyOption>(
         discoveryengine_v1::ProjectServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<discoveryengine_v1::ProjectServiceBackoffPolicyOption>()) {

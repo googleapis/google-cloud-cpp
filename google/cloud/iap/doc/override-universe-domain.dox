@@ -1,0 +1,35 @@
+/*!
+@page iap-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `iap_v1::IdentityAwareProxyAdminServiceClient`:
+
+@snippet identity_aware_proxy_admin_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c iap_v1::IdentityAwareProxyAdminServiceClient](@ref iap_v1::IdentityAwareProxyAdminServiceClient-universe-domain-snippet)
+- [\c iap_v1::IdentityAwareProxyOAuthServiceClient](@ref iap_v1::IdentityAwareProxyOAuthServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page iap_v1::IdentityAwareProxyAdminServiceClient-universe-domain-snippet Override iap_v1::IdentityAwareProxyAdminServiceClient Universe Domain
+
+@snippet google/cloud/iap/v1/samples/identity_aware_proxy_admin_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page iap_v1::IdentityAwareProxyOAuthServiceClient-universe-domain-snippet Override iap_v1::IdentityAwareProxyOAuthServiceClient Universe Domain
+
+@snippet google/cloud/iap/v1/samples/identity_aware_proxy_o_auth_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

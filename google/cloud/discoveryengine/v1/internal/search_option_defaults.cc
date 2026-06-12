@@ -42,7 +42,7 @@ Options SearchServiceDefaultOptions(Options options) {
   if (!options.has<discoveryengine_v1::SearchServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::SearchServiceRetryPolicyOption>(
         discoveryengine_v1::SearchServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<discoveryengine_v1::SearchServiceBackoffPolicyOption>()) {

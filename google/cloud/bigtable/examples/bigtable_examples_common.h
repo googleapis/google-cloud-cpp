@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -84,6 +85,13 @@ using TableAsyncCommandType = std::function<void(google::cloud::bigtable::Table,
 Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,
                                       TableAsyncCommandType const& command);
+
+using ClientCommandType = std::function<void(google::cloud::bigtable::Client,
+                                             std::vector<std::string>)>;
+
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      ClientCommandType const& function);
 
 }  // namespace examples
 }  // namespace bigtable

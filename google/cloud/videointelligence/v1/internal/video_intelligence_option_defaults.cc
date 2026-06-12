@@ -45,7 +45,7 @@ Options VideoIntelligenceServiceDefaultOptions(Options options) {
     options.set<
         videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>(
         videointelligence_v1::VideoIntelligenceServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<videointelligence_v1::

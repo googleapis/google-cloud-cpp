@@ -36,6 +36,7 @@ set(storage_examples
     storage_bucket_autoclass_samples.cc
     storage_bucket_cors_samples.cc
     storage_bucket_default_kms_key_samples.cc
+    storage_bucket_encryption_enforcement_samples.cc
     storage_bucket_iam_samples.cc
     storage_bucket_object_retention_samples.cc
     storage_bucket_requester_pays_samples.cc
@@ -95,8 +96,10 @@ endforeach ()
 foreach (fname ${storage_examples})
     google_cloud_cpp_add_executable(target "storage_examples" "${fname}")
     target_link_libraries(
-        ${target} PRIVATE storage_examples_common google_cloud_cpp_testing
-                          google-cloud-cpp::storage google-cloud-cpp::common)
+        ${target}
+        PRIVATE storage_examples_common google_cloud_cpp_testing
+                google-cloud-cpp::storage google-cloud-cpp::common
+                google-cloud-cpp::universe_domain)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS

@@ -27,8 +27,6 @@ namespace cloud {
 namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ArtifactRegistryTracingConnection::ArtifactRegistryTracingConnection(
     std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection> child)
     : child_(std::move(child)) {}
@@ -749,6 +747,37 @@ ArtifactRegistryTracingConnection::DeleteAttachment(
                            child_->DeleteAttachment(operation));
 }
 
+future<StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+ArtifactRegistryTracingConnection::ExportArtifact(
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ExportArtifact");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportArtifact(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::ExportArtifact(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ExportArtifact");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ExportArtifact(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+ArtifactRegistryTracingConnection::ExportArtifact(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ExportArtifact");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportArtifact(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 ArtifactRegistryTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -778,16 +807,12 @@ ArtifactRegistryTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection>
 MakeArtifactRegistryTracingConnection(
     std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ArtifactRegistryTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

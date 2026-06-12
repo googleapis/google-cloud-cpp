@@ -44,6 +44,7 @@ function cmake::common_args() {
   fi
   local args
   args=(
+    -DCMAKE_CXX_STANDARD=17
     -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
     -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
     -GNinja

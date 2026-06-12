@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -63,6 +63,14 @@ class LivestreamServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency StopChannel(
       google::cloud::video::livestream::v1::StopChannelRequest const& request);
 
+  virtual google::cloud::Idempotency StartDistribution(
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency StopDistribution(
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request);
+
   virtual google::cloud::Idempotency CreateInput(
       google::cloud::video::livestream::v1::CreateInputRequest const& request);
 
@@ -77,6 +85,9 @@ class LivestreamServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateInput(
       google::cloud::video::livestream::v1::UpdateInputRequest const& request);
+
+  virtual google::cloud::Idempotency PreviewInput(
+      google::cloud::video::livestream::v1::PreviewInputRequest const& request);
 
   virtual google::cloud::Idempotency CreateEvent(
       google::cloud::video::livestream::v1::CreateEventRequest const& request);

@@ -22,7 +22,6 @@ guide for more details.
 
 [Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
 [Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
-[Troubleshoot your ADC setup]: https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds
 
 */
 

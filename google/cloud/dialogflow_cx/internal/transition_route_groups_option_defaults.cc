@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_option_defaults.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,7 +45,7 @@ Options TransitionRouteGroupsDefaultOptions(std::string const& location,
   if (!options.has<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()) {
     options.set<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>(
         dialogflow_cx::TransitionRouteGroupsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()) {

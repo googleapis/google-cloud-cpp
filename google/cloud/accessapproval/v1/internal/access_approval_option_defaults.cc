@@ -42,7 +42,7 @@ Options AccessApprovalDefaultOptions(Options options) {
   if (!options.has<accessapproval_v1::AccessApprovalRetryPolicyOption>()) {
     options.set<accessapproval_v1::AccessApprovalRetryPolicyOption>(
         accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<accessapproval_v1::AccessApprovalBackoffPolicyOption>()) {

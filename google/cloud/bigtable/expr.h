@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H
 
 #include "google/cloud/bigtable/version.h"
-#include <google/type/expr.pb.h>
+#include "google/type/expr.pb.h"
 #include <string>
 
 namespace google {

@@ -28,8 +28,6 @@ namespace cloud {
 namespace managedkafka_schemaregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ManagedSchemaRegistryTracingConnection
     : public managedkafka_schemaregistry_v1::ManagedSchemaRegistryConnection {
  public:
@@ -177,8 +175,6 @@ class ManagedSchemaRegistryTracingConnection
       managedkafka_schemaregistry_v1::ManagedSchemaRegistryConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

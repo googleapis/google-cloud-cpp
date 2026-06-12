@@ -16,8 +16,12 @@
 #include "google/cloud/internal/sign_using_sha256.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include <openssl/bio.h>
+#include <openssl/bn.h>
 #include <openssl/buffer.h>
+#include <openssl/ecdsa.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/md5.h>
@@ -45,6 +49,7 @@ struct OpenSslDeleter {
 
   void operator()(EVP_PKEY* ptr) { EVP_PKEY_free(ptr); }
   void operator()(BIO* ptr) { BIO_free(ptr); }
+  void operator()(ECDSA_SIG* ptr) { ECDSA_SIG_free(ptr); }
 };
 
 std::unique_ptr<EVP_MD_CTX, OpenSslDeleter> GetDigestCtx() {
@@ -74,10 +79,66 @@ std::string CaptureSslErrors() {
   return msg;
 }
 
+Status DERToRawSignature(unsigned char const* der_sig, size_t der_len,
+                         int coord_size, std::vector<uint8_t>& raw_sig) {
+  if (!der_sig || der_len == 0) {
+    return InvalidArgumentError("Input DER signature is empty.",
+                                GCP_ERROR_INFO());
+  }
+
+  auto ecdsa_sig = std::unique_ptr<ECDSA_SIG, OpenSslDeleter>(
+      d2i_ECDSA_SIG(nullptr, &der_sig, der_len));
+
+  if (!ecdsa_sig) {
+    char err_buf[256];
+    ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
+    return InvalidArgumentError(
+        absl::StrCat("Error parsing DER signature: ", err_buf),
+        GCP_ERROR_INFO());
+  }
+
+  const BIGNUM* r;
+  const BIGNUM* s;
+  ECDSA_SIG_get0(ecdsa_sig.get(), &r, &s);
+
+  if (!r || !s) {
+    auto const* err_msg = "Error: Could not get r or s from ECDSA_SIG.";
+    return InvalidArgumentError(err_msg, GCP_ERROR_INFO());
+  }
+
+  raw_sig.resize(2 * coord_size);
+  unsigned char* raw_sig_ptr = raw_sig.data();
+
+  auto constexpr kErrorMessage =
+      R"""(Error converting %s to binary (expected %d bytes, got %d): %s)""";
+  // Convert r to binary, padded to coord_size.
+  int r_len = BN_bn2binpad(r, &raw_sig_ptr[0], coord_size);
+  if (r_len != coord_size) {
+    char err_buf[256];
+    ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
+    auto err_msg =
+        absl::StrFormat(kErrorMessage, "r", coord_size, r_len, err_buf);
+    return InvalidArgumentError(err_msg, GCP_ERROR_INFO());
+  }
+
+  // Convert s to binary, padded to coord_size.
+  int s_len = BN_bn2binpad(s, &raw_sig_ptr[coord_size], coord_size);
+  if (s_len != coord_size) {
+    char err_buf[256];
+    ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
+    auto err_msg =
+        absl::StrFormat(kErrorMessage, "s", coord_size, s_len, err_buf);
+    return InvalidArgumentError(err_msg, GCP_ERROR_INFO());
+  }
+
+  return {};
+}
+
 }  // namespace
 
 StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
-    std::string const& str, std::string const& pem_contents) {
+    std::string const& str, std::string const& pem_contents,
+    SignatureFormat format) {
   ERR_clear_error();
   auto pem_buffer = std::unique_ptr<BIO, OpenSslDeleter>(BIO_new_mem_buf(
       pem_contents.data(), static_cast<int>(pem_contents.length())));
@@ -155,8 +216,16 @@ StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
         GCP_ERROR_INFO());
   }
 
-  return StatusOr<std::vector<std::uint8_t>>(
-      {buffer.begin(), std::next(buffer.begin(), actual_len)});
+  std::vector<std::uint8_t> der_sig{buffer.begin(),
+                                    std::next(buffer.begin(), actual_len)};
+  if (format == SignatureFormat::kDER) {
+    return der_sig;
+  }
+
+  std::vector<std::uint8_t> raw_sig;
+  auto status = DERToRawSignature(der_sig.data(), der_sig.size(), 32, raw_sig);
+  if (!status.ok()) return status;
+  return raw_sig;
 }
 
 }  // namespace internal

@@ -17,16 +17,20 @@
 // source: google/cloud/dataplex/v1/service.proto
 
 #include "google/cloud/dataplex/v1/internal/dataplex_metadata_decorator.h"
+#include "google/cloud/dataplex/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/service.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -421,98 +425,6 @@ Status DataplexServiceMetadata::CancelJob(
   return child_->CancelJob(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-DataplexServiceMetadata::AsyncCreateEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEnvironment(cq, std::move(context),
-                                        std::move(options), request);
-}
-
-StatusOr<google::longrunning::Operation>
-DataplexServiceMetadata::CreateEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateEnvironment(context, options, request);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-DataplexServiceMetadata::AsyncUpdateEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("environment.name=",
-                           internal::UrlEncode(request.environment().name())));
-  return child_->AsyncUpdateEnvironment(cq, std::move(context),
-                                        std::move(options), request);
-}
-
-StatusOr<google::longrunning::Operation>
-DataplexServiceMetadata::UpdateEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("environment.name=",
-                           internal::UrlEncode(request.environment().name())));
-  return child_->UpdateEnvironment(context, options, request);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-DataplexServiceMetadata::AsyncDeleteEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteEnvironment(cq, std::move(context),
-                                        std::move(options), request);
-}
-
-StatusOr<google::longrunning::Operation>
-DataplexServiceMetadata::DeleteEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteEnvironment(context, options, request);
-}
-
-StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
-DataplexServiceMetadata::ListEnvironments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEnvironments(context, options, request);
-}
-
-StatusOr<google::cloud::dataplex::v1::Environment>
-DataplexServiceMetadata::GetEnvironment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEnvironment(context, options, request);
-}
-
-StatusOr<google::cloud::dataplex::v1::ListSessionsResponse>
-DataplexServiceMetadata::ListSessions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::ListSessionsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSessions(context, options, request);
-}
-
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataplexServiceMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -632,3 +544,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

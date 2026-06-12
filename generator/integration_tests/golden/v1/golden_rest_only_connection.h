@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <generator/integration_tests/test2.pb.h>
+#include "generator/integration_tests/test2.pb.h"
 #include <memory>
 
 namespace google {
@@ -176,6 +176,8 @@ class GoldenRestOnlyConnection {
 
   virtual Status
   Noop(google::protobuf::Empty const& request);
+
+  virtual StatusOr<google::protobuf::Empty> WaitForConsistency(google::protobuf::Empty const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

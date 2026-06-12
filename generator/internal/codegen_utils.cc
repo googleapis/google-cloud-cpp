@@ -14,12 +14,12 @@
 
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/scaffold_generator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -111,6 +111,11 @@ void ProcessArgOmitRpc(
   ProcessRepeated("omit_rpc", "omitted_rpcs", command_line_args);
 }
 
+void ProcessArgBespokeMethod(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("bespoke_method", "bespoke_methods", command_line_args);
+}
+
 void ProcessArgServiceEndpointEnvVar(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   auto service_endpoint_env_var =
@@ -163,16 +168,6 @@ void ProcessArgAdditionalProtoFiles(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   ProcessRepeated("additional_proto_file", "additional_proto_files",
                   command_line_args);
-}
-
-void ProcessArgForwardingProductPath(
-    std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  auto path = std::find_if(command_line_args.begin(), command_line_args.end(),
-                           [](std::pair<std::string, std::string> const& p) {
-                             return p.first == "forwarding_product_path";
-                           });
-  if (path == command_line_args.end() || path->second.empty()) return;
-  FormatProductPath(path->second);
 }
 
 void ProcessArgIdempotencyOverride(
@@ -279,13 +274,13 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgCopyrightYear(command_line_args);
   ProcessArgOmitService(command_line_args);
   ProcessArgOmitRpc(command_line_args);
+  ProcessArgBespokeMethod(command_line_args);
   ProcessArgServiceEndpointEnvVar(command_line_args);
   ProcessArgEmulatorEndpointEnvVar(command_line_args);
   ProcessArgEndpointLocationStyle(command_line_args);
   ProcessArgGenerateAsyncRpc(command_line_args);
   ProcessArgRetryGrpcStatusCode(command_line_args);
   ProcessArgAdditionalProtoFiles(command_line_args);
-  ProcessArgForwardingProductPath(command_line_args);
   ProcessArgIdempotencyOverride(command_line_args);
   ProcessArgServiceNameMapping(command_line_args);
   ProcessArgServiceNameToComment(command_line_args);

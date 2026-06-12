@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_FLOW_CONTROLLED_PUBLISHER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_FLOW_CONTROLLED_PUBLISHER_CONNECTION_H
 
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include <condition_variable>

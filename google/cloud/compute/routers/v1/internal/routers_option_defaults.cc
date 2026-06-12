@@ -41,7 +41,7 @@ Options RoutersDefaultOptions(Options options) {
   if (!options.has<compute_routers_v1::RoutersRetryPolicyOption>()) {
     options.set<compute_routers_v1::RoutersRetryPolicyOption>(
         compute_routers_v1::RoutersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_routers_v1::RoutersBackoffPolicyOption>()) {

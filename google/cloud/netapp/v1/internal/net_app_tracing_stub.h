@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace netapp_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class NetAppTracingStub : public NetAppStub {
  public:
@@ -155,6 +156,18 @@ class NetAppTracingStub : public NetAppStub {
   StatusOr<google::longrunning::Operation> RevertVolume(
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncEstablishVolumePeering(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> EstablishVolumePeering(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
+      override;
 
   StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse> ListSnapshots(
       grpc::ClientContext& context, Options const& options,
@@ -579,6 +592,82 @@ class NetAppTracingStub : public NetAppStub {
       google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreBackupFiles(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RestoreBackupFiles(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ListHostGroupsResponse> ListHostGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::ListHostGroupsRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::HostGroup> GetHostGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::GetHostGroupRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateHostGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateHostGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateHostGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateHostGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteHostGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteHostGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+  ExecuteOntapPost(grpc::ClientContext& context, Options const& options,
+                   google::cloud::netapp::v1::ExecuteOntapPostRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse> ExecuteOntapGet(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::ExecuteOntapGetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+  ExecuteOntapDelete(grpc::ClientContext& context, Options const& options,
+                     google::cloud::netapp::v1::ExecuteOntapDeleteRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+  ExecuteOntapPatch(grpc::ClientContext& context, Options const& options,
+                    google::cloud::netapp::v1::ExecuteOntapPatchRequest const&
+                        request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -621,8 +710,6 @@ class NetAppTracingStub : public NetAppStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -636,5 +723,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace netapp_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_INTERNAL_NET_APP_TRACING_STUB_H

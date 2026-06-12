@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/mock_batch_sink.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/random.h"

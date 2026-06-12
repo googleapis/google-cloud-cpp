@@ -197,6 +197,14 @@ OracleDatabaseConnection::ListGiVersions(
       StreamRange<google::cloud::oracledatabase::v1::GiVersion>>();
 }
 
+StreamRange<google::cloud::oracledatabase::v1::MinorVersion>
+OracleDatabaseConnection::ListMinorVersions(
+    google::cloud::oracledatabase::v1::
+        ListMinorVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::MinorVersion>>();
+}
+
 StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
 OracleDatabaseConnection::ListDbSystemShapes(
     google::cloud::oracledatabase::v1::
@@ -237,6 +245,30 @@ OracleDatabaseConnection::CreateAutonomousDatabase(
 
 future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
 OracleDatabaseConnection::CreateAutonomousDatabase(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnection::UpdateAutonomousDatabase(
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::UpdateAutonomousDatabase(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnection::UpdateAutonomousDatabase(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
@@ -395,6 +427,470 @@ OracleDatabaseConnection::RestartAutonomousDatabase(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnection::SwitchoverAutonomousDatabase(
+    google::cloud::oracledatabase::v1::
+        SwitchoverAutonomousDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::SwitchoverAutonomousDatabase(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    SwitchoverAutonomousDatabaseRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnection::SwitchoverAutonomousDatabase(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnection::FailoverAutonomousDatabase(
+    google::cloud::oracledatabase::v1::
+        FailoverAutonomousDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::FailoverAutonomousDatabase(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    FailoverAutonomousDatabaseRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnection::FailoverAutonomousDatabase(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>
+OracleDatabaseConnection::ListOdbNetworks(
+    google::cloud::oracledatabase::v1::
+        ListOdbNetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>
+OracleDatabaseConnection::GetOdbNetwork(
+    google::cloud::oracledatabase::v1::GetOdbNetworkRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+OracleDatabaseConnection::CreateOdbNetwork(
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateOdbNetwork(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+OracleDatabaseConnection::CreateOdbNetwork(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteOdbNetwork(
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteOdbNetwork(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteOdbNetwork(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::OdbSubnet>
+OracleDatabaseConnection::ListOdbSubnets(
+    google::cloud::oracledatabase::v1::
+        ListOdbSubnetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::OdbSubnet>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>
+OracleDatabaseConnection::GetOdbSubnet(
+    google::cloud::oracledatabase::v1::GetOdbSubnetRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+OracleDatabaseConnection::CreateOdbSubnet(
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateOdbSubnet(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+OracleDatabaseConnection::CreateOdbSubnet(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteOdbSubnet(
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteOdbSubnet(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteOdbSubnet(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
+OracleDatabaseConnection::ListExadbVmClusters(
+    google::cloud::oracledatabase::v1::
+        ListExadbVmClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>
+OracleDatabaseConnection::GetExadbVmCluster(
+    google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnection::CreateExadbVmCluster(
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnection::CreateExadbVmCluster(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteExadbVmCluster(
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteExadbVmCluster(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnection::UpdateExadbVmCluster(
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::UpdateExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnection::UpdateExadbVmCluster(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnection::RemoveVirtualMachineExadbVmCluster(
+    google::cloud::oracledatabase::v1::
+        RemoveVirtualMachineExadbVmClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::RemoveVirtualMachineExadbVmCluster(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    RemoveVirtualMachineExadbVmClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnection::RemoveVirtualMachineExadbVmCluster(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+OracleDatabaseConnection::ListExascaleDbStorageVaults(
+    google::cloud::oracledatabase::v1::
+        ListExascaleDbStorageVaultsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+OracleDatabaseConnection::GetExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        GetExascaleDbStorageVaultRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+OracleDatabaseConnection::CreateExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        CreateExascaleDbStorageVaultRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateExascaleDbStorageVault(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    CreateExascaleDbStorageVaultRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+OracleDatabaseConnection::CreateExascaleDbStorageVault(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        DeleteExascaleDbStorageVaultRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteExascaleDbStorageVault(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    DeleteExascaleDbStorageVaultRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteExascaleDbStorageVault(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>
+OracleDatabaseConnection::ListDbSystemInitialStorageSizes(
+    google::cloud::oracledatabase::v1::
+        ListDbSystemInitialStorageSizesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>>();
+}
+
+StreamRange<google::cloud::oracledatabase::v1::Database>
+OracleDatabaseConnection::ListDatabases(
+    google::cloud::oracledatabase::v1::
+        ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::Database>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::Database>
+OracleDatabaseConnection::GetDatabase(
+    google::cloud::oracledatabase::v1::GetDatabaseRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::oracledatabase::v1::PluggableDatabase>
+OracleDatabaseConnection::ListPluggableDatabases(
+    google::cloud::oracledatabase::v1::
+        ListPluggableDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::PluggableDatabase>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::PluggableDatabase>
+OracleDatabaseConnection::GetPluggableDatabase(
+    google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbSystem>
+OracleDatabaseConnection::ListDbSystems(
+    google::cloud::oracledatabase::v1::
+        ListDbSystemsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::DbSystem>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::DbSystem>
+OracleDatabaseConnection::GetDbSystem(
+    google::cloud::oracledatabase::v1::GetDbSystemRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>>
+OracleDatabaseConnection::CreateDbSystem(
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::DbSystem>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateDbSystem(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>>
+OracleDatabaseConnection::CreateDbSystem(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::DbSystem>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteDbSystem(
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteDbSystem(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteDbSystem(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbVersion>
+OracleDatabaseConnection::ListDbVersions(
+    google::cloud::oracledatabase::v1::
+        ListDbVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::DbVersion>>();
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>
+OracleDatabaseConnection::ListDatabaseCharacterSets(
+    google::cloud::oracledatabase::v1::
+        ListDatabaseCharacterSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>>();
 }
 
 StreamRange<google::cloud::location::Location>

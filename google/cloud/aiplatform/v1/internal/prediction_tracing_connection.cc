@@ -27,8 +27,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 PredictionServiceTracingConnection::PredictionServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::PredictionServiceConnection> child)
     : child_(std::move(child)) {}
@@ -146,6 +144,15 @@ PredictionServiceTracingConnection::StreamGenerateContent(
       google::cloud::aiplatform::v1::GenerateContentResponse>(std::move(span),
                                                               std::move(sr));
 }
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceTracingConnection::EmbedContent(
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::EmbedContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->EmbedContent(request));
+}
+
 StreamRange<google::cloud::location::Location>
 PredictionServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -238,17 +245,13 @@ PredictionServiceTracingConnection::WaitOperation(
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<aiplatform_v1::PredictionServiceConnection>
 MakePredictionServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::PredictionServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<PredictionServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

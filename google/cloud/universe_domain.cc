@@ -22,21 +22,20 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<Options> AddUniverseDomainOption(ExperimentalTag, Options options) {
+StatusOr<Options> AddUniverseDomainOption(Options options) {
   if (!options.has<UnifiedCredentialsOption>()) {
     options.set<UnifiedCredentialsOption>(
         MakeGoogleDefaultCredentials(internal::MakeAuthOptions(options)));
   }
 
-  auto universe_domain = GetUniverseDomain(
-      ExperimentalTag{}, *options.get<UnifiedCredentialsOption>(), options);
+  auto universe_domain =
+      GetUniverseDomain(*options.get<UnifiedCredentialsOption>(), options);
   if (!universe_domain) return std::move(universe_domain).status();
   return options.set<internal::UniverseDomainOption>(
       *std::move(universe_domain));
 }
 
-StatusOr<std::string> GetUniverseDomain(ExperimentalTag,
-                                        Credentials const& credentials,
+StatusOr<std::string> GetUniverseDomain(Credentials const& credentials,
                                         Options const& options) {
   return rest_internal::MapCredentials(credentials)->universe_domain(options);
 }

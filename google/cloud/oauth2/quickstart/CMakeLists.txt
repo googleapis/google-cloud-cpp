@@ -15,7 +15,7 @@
 # This file shows how to use the OAuth2 Access Token Generation library from a
 # larger CMake project.
 
-cmake_minimum_required(VERSION 3.10...3.24)
+cmake_minimum_required(VERSION 3.22...3.31)
 project(google-cloud-cpp-oauth2-quickstart CXX)
 
 find_package(google_cloud_cpp_oauth2 REQUIRED)

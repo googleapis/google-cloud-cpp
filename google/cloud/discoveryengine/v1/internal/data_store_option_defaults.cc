@@ -42,7 +42,7 @@ Options DataStoreServiceDefaultOptions(Options options) {
   if (!options.has<discoveryengine_v1::DataStoreServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::DataStoreServiceRetryPolicyOption>(
         discoveryengine_v1::DataStoreServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<discoveryengine_v1::DataStoreServiceBackoffPolicyOption>()) {

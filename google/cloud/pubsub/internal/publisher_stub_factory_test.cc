@@ -205,7 +205,6 @@ TEST_F(PublisherStubFactory, Logging) {
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("CreateTopic")));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::SpanNamed;
@@ -284,7 +283,6 @@ TEST_F(PublisherStubFactory, TracingDisabled) {
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 // The following tests are for all the rpcs on the stub.
 TEST_F(PublisherStubFactory, CreateTopic) {

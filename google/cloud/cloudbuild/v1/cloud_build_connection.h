@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/devtools/cloudbuild/v1/cloudbuild.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -305,6 +305,11 @@ class CloudBuildConnection {
   virtual StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
   ListWorkerPools(
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request);
+
+  virtual StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+  GetDefaultServiceAccount(
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+          request);
 };
 
 /**

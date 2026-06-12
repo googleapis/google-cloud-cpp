@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
@@ -20,7 +20,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
+#include "protos/google/cloud/spanner/testing/singer.pb.h"
 #include <gmock/gmock.h>
 #include <cstdint>
 #include <string>
@@ -388,6 +388,24 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadUuid) {
+  auto uuid1 = MakeUuid("{DECAFBAD-DEAD-FADE-CAFE-FEEDFACEBEEF}");
+  ASSERT_STATUS_OK(uuid1);
+  auto uuid2 = MakeUuid("0b6ed04ca16dfc4652817f9978c13738");
+  ASSERT_STATUS_OK(uuid2);
+
+  std::vector<Uuid> const data = {
+      Uuid(0), Uuid(1), *uuid1, *uuid2, Uuid(37, 42),
+  };
+  auto result = WriteReadData(*client_, data, "UuidValue");
+
+  if (UsingEmulator()) {
+    EXPECT_THAT(result, StatusIs(StatusCode::kNotFound));
+  } else {
+    EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
+  }
+}
+
 TEST_F(DataTypeIntegrationTest, WriteReadProtoEnum) {
   std::vector<ProtoEnum<testing::Genre>> const data = {
       testing::Genre::POP,
@@ -530,16 +548,15 @@ SELECT ARRAY<INTERVAL>[INTERVAL '1-2 3 4:5:6.789123456' YEAR TO SECOND];)sql",
 
 TEST_F(DataTypeIntegrationTest, SelectIntervalFromTimestampDiff) {
   if (UsingEmulator()) GTEST_SKIP();
-  Interval expected_interval{
-      std::chrono::duration_cast<std::chrono::nanoseconds>(
-          std::chrono::hours(1))};
-  std::time_t now_seconds =
-      std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-  std::time_t one_hour_later_seconds = now_seconds + 3600;
 
-  std::vector<std::vector<Timestamp>> const data = {std::vector<Timestamp>{
-      MakeTimestamp(MakeTime(now_seconds, 0)).value(),
-      MakeTimestamp(MakeTime(one_hour_later_seconds, 0)).value()}};
+  auto const t0 = std::chrono::system_clock::from_time_t(1234567890);
+  auto const t1 = t0 + std::chrono::hours(1);
+
+  Interval expected_interval{t1 - t0};
+
+  std::vector<std::vector<Timestamp>> const data = {
+      {MakeTimestamp(t0).value(), MakeTimestamp(t1).value()}};
+
   auto result = WriteReadData(*client_, data, "ArrayTimestampValue");
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 
@@ -1004,3 +1021,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

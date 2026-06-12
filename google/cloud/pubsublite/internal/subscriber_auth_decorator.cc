@@ -17,10 +17,13 @@
 // source: google/cloud/pubsublite/v1/subscriber.proto
 
 #include "google/cloud/pubsublite/internal/subscriber_auth_decorator.h"
+#include "google/cloud/pubsublite/v1/subscriber.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
-#include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -88,3 +91,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

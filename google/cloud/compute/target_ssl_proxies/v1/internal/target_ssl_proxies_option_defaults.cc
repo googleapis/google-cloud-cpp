@@ -44,7 +44,7 @@ Options TargetSslProxiesDefaultOptions(Options options) {
     options.set<
         compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicyOption>(
         compute_target_ssl_proxies_v1::TargetSslProxiesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_target_ssl_proxies_v1::

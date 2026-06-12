@@ -17,9 +17,12 @@
 // source: google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto
 
 #include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_auth_decorator.h"
-#include <google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h>
+#include "google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -340,3 +343,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privilegedaccessmanager_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

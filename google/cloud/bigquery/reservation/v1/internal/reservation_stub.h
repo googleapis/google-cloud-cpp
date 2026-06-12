@@ -19,12 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_INTERNAL_RESERVATION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_INTERNAL_RESERVATION_STUB_H
 
+#include "google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -165,6 +168,40 @@ class ReservationServiceStub {
   UpdateBiReservation(grpc::ClientContext& context, Options const& options,
                       google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  CreateReservationGroup(grpc::ClientContext& context, Options const& options,
+                         google::cloud::bigquery::reservation::v1::
+                             CreateReservationGroupRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  GetReservationGroup(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::reservation::v1::
+                          GetReservationGroupRequest const& request) = 0;
+
+  virtual Status DeleteReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsResponse>
+  ListReservationGroups(grpc::ClientContext& context, Options const& options,
+                        google::cloud::bigquery::reservation::v1::
+                            ListReservationGroupsRequest const& request) = 0;
 };
 
 class DefaultReservationServiceStub : public ReservationServiceStub {
@@ -303,6 +340,41 @@ class DefaultReservationServiceStub : public ReservationServiceStub {
                       google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  CreateReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          CreateReservationGroupRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  GetReservationGroup(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::reservation::v1::
+                          GetReservationGroupRequest const& request) override;
+
+  Status DeleteReservationGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request) override;
+
+  StatusOr<
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsResponse>
+  ListReservationGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::reservation::v1::
+          ListReservationGroupsRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::bigquery::reservation::v1::ReservationService::
                       StubInterface>
@@ -313,5 +385,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_INTERNAL_RESERVATION_STUB_H

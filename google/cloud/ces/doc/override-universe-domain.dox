@@ -1,0 +1,49 @@
+/*!
+@page ces-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `ces_v1::AgentServiceClient`:
+
+@snippet agent_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c ces_v1::AgentServiceClient](@ref ces_v1::AgentServiceClient-universe-domain-snippet)
+- [\c ces_v1::SessionServiceClient](@ref ces_v1::SessionServiceClient-universe-domain-snippet)
+- [\c ces_v1::ToolServiceClient](@ref ces_v1::ToolServiceClient-universe-domain-snippet)
+- [\c ces_v1::WidgetServiceClient](@ref ces_v1::WidgetServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page ces_v1::AgentServiceClient-universe-domain-snippet Override ces_v1::AgentServiceClient Universe Domain
+
+@snippet google/cloud/ces/v1/samples/agent_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page ces_v1::SessionServiceClient-universe-domain-snippet Override ces_v1::SessionServiceClient Universe Domain
+
+@snippet google/cloud/ces/v1/samples/session_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page ces_v1::ToolServiceClient-universe-domain-snippet Override ces_v1::ToolServiceClient Universe Domain
+
+@snippet google/cloud/ces/v1/samples/tool_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page ces_v1::WidgetServiceClient-universe-domain-snippet Override ces_v1::WidgetServiceClient Universe Domain
+
+@snippet google/cloud/ces/v1/samples/widget_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

@@ -44,7 +44,7 @@ Options RegionCommitmentsDefaultOptions(Options options) {
     options.set<
         compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>(
         compute_region_commitments_v1::RegionCommitmentsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_region_commitments_v1::

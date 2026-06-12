@@ -104,6 +104,22 @@ StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
 
 /**
  * Returns a Base64-encoded version of @p bytes. Using the URL- and
+ * filesystem-safe alphabet, retaining trailing '=' padding characters.
+ * -  Replace '+' with '-'
+ * -  Replace '/' with '_'
+ */
+template <typename Collection>
+inline std::string UrlsafeBase64EncodeWithPadding(Collection const& bytes) {
+  Base64Encoder encoder;
+  for (auto c : bytes) encoder.PushBack(c);
+  std::string b64str = std::move(encoder).FlushAndPad();
+  std::replace(b64str.begin(), b64str.end(), '+', '-');
+  std::replace(b64str.begin(), b64str.end(), '/', '_');
+  return b64str;
+}
+
+/**
+ * Returns a Base64-encoded version of @p bytes. Using the URL- and
  * filesystem-safe alphabet, making these adjustments:
  * -  Replace '+' with '-'
  * -  Replace '/' with '_'
@@ -111,11 +127,7 @@ StatusOr<std::vector<std::uint8_t>> Base64DecodeToBytes(
  */
 template <typename Collection>
 inline std::string UrlsafeBase64Encode(Collection const& bytes) {
-  Base64Encoder encoder;
-  for (auto c : bytes) encoder.PushBack(c);
-  std::string b64str = std::move(encoder).FlushAndPad();
-  std::replace(b64str.begin(), b64str.end(), '+', '-');
-  std::replace(b64str.begin(), b64str.end(), '/', '_');
+  std::string b64str = UrlsafeBase64EncodeWithPadding(bytes);
   auto end_pos = b64str.find_last_not_of('=');
   if (end_pos != std::string::npos) {
     b64str.resize(end_pos + 1);

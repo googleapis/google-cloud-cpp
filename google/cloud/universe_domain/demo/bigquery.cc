@@ -35,8 +35,7 @@ int main(int argc, char* argv[]) try {
   namespace bigquery_storage = ::google::cloud::bigquery_storage_v1;
   constexpr int kMaxReadStreams = 1;
 
-  auto options =
-      google::cloud::AddUniverseDomainOption(google::cloud::ExperimentalTag{});
+  auto options = google::cloud::AddUniverseDomainOption();
   if (!options.ok()) throw std::move(options).status();
 
   // Override retry policy to quickly exit if there's a failure.

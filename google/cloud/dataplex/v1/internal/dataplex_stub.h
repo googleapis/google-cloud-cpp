@@ -19,17 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATAPLEX_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATAPLEX_STUB_H
 
+#include "google/cloud/dataplex/v1/service.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataplex/v1/service.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -222,53 +225,6 @@ class DataplexServiceStub {
   virtual Status CancelJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CancelJobRequest const& request) = 0;
-
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) = 0;
-
-  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) = 0;
-
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) = 0;
-
-  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) = 0;
-
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) = 0;
-
-  virtual StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) = 0;
-
-  virtual StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
-  ListEnvironments(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) = 0;
-
-  virtual StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request) = 0;
-
-  virtual StatusOr<google::cloud::dataplex::v1::ListSessionsResponse>
-  ListSessions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::ListSessionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
@@ -520,56 +476,6 @@ class DefaultDataplexServiceStub : public DataplexServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CancelJobRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
-      override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
-      override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
-  ListEnvironments(grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListEnvironmentsRequest const&
-                       request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::cloud::dataplex::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::ListSessionsRequest const& request) override;
-
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -632,5 +538,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATAPLEX_STUB_H

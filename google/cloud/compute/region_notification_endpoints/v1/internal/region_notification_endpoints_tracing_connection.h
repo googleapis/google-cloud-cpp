@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_region_notification_endpoints_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RegionNotificationEndpointsTracingConnection
     : public compute_region_notification_endpoints_v1::
           RegionNotificationEndpointsConnection {
@@ -89,8 +87,6 @@ class RegionNotificationEndpointsTracingConnection
                       RegionNotificationEndpointsConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

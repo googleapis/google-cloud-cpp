@@ -28,8 +28,6 @@ namespace cloud {
 namespace datacatalog_lineage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class LineageTracingConnection
     : public datacatalog_lineage_v1::LineageConnection {
  public:
@@ -131,6 +129,12 @@ class LineageTracingConnection
       google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
           request) override;
 
+  StreamRange<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+  SearchLineageStreaming(
+      google::cloud::datacatalog::lineage::v1::
+          SearchLineageStreamingRequest const& request) override;
+
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
 
@@ -146,8 +150,6 @@ class LineageTracingConnection
  private:
   std::shared_ptr<datacatalog_lineage_v1::LineageConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

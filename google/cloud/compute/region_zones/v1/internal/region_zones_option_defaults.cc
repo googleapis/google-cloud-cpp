@@ -41,7 +41,7 @@ Options RegionZonesDefaultOptions(Options options) {
   if (!options.has<compute_region_zones_v1::RegionZonesRetryPolicyOption>()) {
     options.set<compute_region_zones_v1::RegionZonesRetryPolicyOption>(
         compute_region_zones_v1::RegionZonesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_region_zones_v1::RegionZonesBackoffPolicyOption>()) {

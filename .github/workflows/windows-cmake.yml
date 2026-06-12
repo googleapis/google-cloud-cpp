@@ -41,7 +41,7 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Release ]
         arch: [ x64 ]
-        shard: [ Core3, Core4 ]
+        shard: [ Core1, Core2, Core3, Core4, Core5, Shard1 ]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -65,7 +65,7 @@ jobs:
         - shard: Core4
           build_type: Debug
     steps:
-    - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+    - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
@@ -76,7 +76,7 @@ jobs:
     - uses: actions/setup-python@v5
       id: py311
       with:
-        python-version: '3.11'
+        python-version: '3.14'
     - uses: google-github-actions/setup-gcloud@v2
       env:
         CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
@@ -85,11 +85,11 @@ jobs:
       shell: bash
       run: |
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
-        core1_features=(bigtable)
-        core2_features=(spanner)
-        core3_features=(storage)
-        core4_features=(storage_grpc)
-        core5_features=(pubsub pubsublite)
+        core1_features=(bigtable universe_domain)
+        core2_features=(spanner universe_domain)
+        core3_features=(storage universe_domain)
+        core4_features=(storage_grpc universe_domain)
+        core5_features=(pubsub pubsublite universe_domain)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
@@ -103,10 +103,12 @@ jobs:
           dataproc
           discoveryengine
           monitoring
+          opentelemetry
           retail
           sql
           dialogflow_cx
           dialogflow_es
+          universe_domain
         )
         shard2_features=(
           beyondcorp
@@ -119,6 +121,7 @@ jobs:
           servicecontrol
           speech
           support
+          universe_domain
         )
         shard3_features=(
           securesourcemanager
@@ -164,6 +167,7 @@ jobs:
           trace
           vision
           workflows
+          universe_domain
         )
         shard4_features=(
           accessapproval
@@ -203,8 +207,11 @@ jobs:
           gkebackup
           gkeconnect
           gkehub
+          universe_domain
         )
         shard5_features=(
+          asset
+          channel
           video
           datacatalog
           iam
@@ -216,6 +223,7 @@ jobs:
           bigquery
           bigquerycontrol
           resourcemanager
+          universe_domain
         )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
@@ -264,10 +272,6 @@ jobs:
           skipped_features+=("${shard3_features[@]}")
           skipped_features+=("${shard4_features[@]}")
           skipped_features+=("${shard5_features[@]}")
-          # We use vcpkg in this build, which ships with Protobuf v21.x.
-          # Both `asset` and `channel` require Protobuf >= 23.x to compile on
-          # Windows.
-          skipped_features+=(asset channel)
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
           echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi
@@ -295,9 +299,11 @@ jobs:
       run: |
         cd "${TEMP}"
         mkdir -p .build/vcpkg
-        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${STEPS_DYNAMIC_OUTPUTS_VCPKG_VERSION}.tar.gz" |
             tar -C .build/vcpkg --strip-components=1 -zxf -
         .build/vcpkg/bootstrap-vcpkg.sh -disableMetrics
+      env:
+        STEPS_DYNAMIC_OUTPUTS_VCPKG_VERSION: ${{ steps.dynamic.outputs.vcpkg-version }}
     # go/github-actions#gha-bestpractices explains why we use a SHA instead of
     # a named version for this runner. We could avoid using this runner with the
     # ideas from:
@@ -311,12 +317,15 @@ jobs:
       shell: bash
       run: |
         export VCPKG_ROOT="${TEMP}/.build/vcpkg"
-        export CLOUDSDK_PYTHON="${{ steps.py311.outputs.python-path }}"
+        export CLOUDSDK_PYTHON="${STEPS_PY311_OUTPUTS_PYTHON_PATH}"
         # Put the CMake output in a directory with more space and keep it short
         # to avoid running into the MSVC limits.
         export CMAKE_OUT='c:\b'
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
-        ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
+        ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${STEPS_DYNAMIC_OUTPUTS_FEATURES}
+      env:
+        STEPS_PY311_OUTPUTS_PYTHON_PATH: ${{ steps.py311.outputs.python-path }}
+        STEPS_DYNAMIC_OUTPUTS_FEATURES: ${{ steps.dynamic.outputs.features }}
     - name: Post Build Disk Space
       shell: bash
       run: df -m

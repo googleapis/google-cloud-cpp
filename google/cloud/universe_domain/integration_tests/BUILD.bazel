@@ -28,10 +28,10 @@ cc_test(
     ],
     deps = [
         "//:common",
-        "//:experimental-universe_domain",
+        "//:universe_domain",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
         "@google_cloud_cpp//:compute",
         "@google_cloud_cpp//:kms",
+        "@googletest//:gtest_main",
     ],
 )

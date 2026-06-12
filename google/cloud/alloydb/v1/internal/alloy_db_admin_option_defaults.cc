@@ -40,7 +40,7 @@ Options AlloyDBAdminDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<alloydb_v1::AlloyDBAdminRetryPolicyOption>()) {
     options.set<alloydb_v1::AlloyDBAdminRetryPolicyOption>(
-        alloydb_v1::AlloyDBAdminLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        alloydb_v1::AlloyDBAdminLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<alloydb_v1::AlloyDBAdminBackoffPolicyOption>()) {

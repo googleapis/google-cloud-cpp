@@ -17,9 +17,12 @@
 // source: google/cloud/policysimulator/v1/simulator.proto
 
 #include "google/cloud/policysimulator/v1/internal/simulator_auth_decorator.h"
-#include <google/cloud/policysimulator/v1/simulator.grpc.pb.h>
+#include "google/cloud/policysimulator/v1/simulator.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -134,3 +137,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policysimulator_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

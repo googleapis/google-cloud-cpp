@@ -27,8 +27,6 @@ namespace cloud {
 namespace workflows_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 WorkflowsTracingConnection::WorkflowsTracingConnection(
     std::shared_ptr<workflows_v1::WorkflowsConnection> child)
     : child_(std::move(child)) {}
@@ -199,16 +197,12 @@ Status WorkflowsTracingConnection::DeleteOperation(
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<workflows_v1::WorkflowsConnection>
 MakeWorkflowsTracingConnection(
     std::shared_ptr<workflows_v1::WorkflowsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<WorkflowsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

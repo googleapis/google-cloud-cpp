@@ -46,7 +46,7 @@ Options AppConnectionsServiceDefaultOptions(Options options) {
         beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicyOption>(
         beyondcorp_appconnections_v1::
             AppConnectionsServiceLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<beyondcorp_appconnections_v1::

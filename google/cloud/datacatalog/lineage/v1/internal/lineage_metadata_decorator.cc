@@ -17,16 +17,20 @@
 // source: google/cloud/datacatalog/lineage/v1/lineage.proto
 
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_metadata_decorator.h"
+#include "google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -233,6 +237,17 @@ LineageMetadata::BatchSearchLinkProcesses(
   return child_->BatchSearchLinkProcesses(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>>
+LineageMetadata::SearchLineageStreaming(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SearchLineageStreaming(std::move(context), options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 LineageMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,
@@ -306,3 +321,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_lineage_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

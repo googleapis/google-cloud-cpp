@@ -149,6 +149,12 @@ PredictionServiceConnection::StreamGenerateContent(
       });
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceConnection::EmbedContent(
+    google::cloud::aiplatform::v1::EmbedContentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 PredictionServiceConnection::ListLocations(
     google::cloud::location::

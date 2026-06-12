@@ -39,5 +39,6 @@ application.
 - @ref accessapproval-override-retry - describes how to change the default retry
   policies.
 - @ref accessapproval-env - describes environment variables that can configure the behavior of the library.
+- @ref accessapproval-override-universe-domain - describes how to override the default universe domain.
 
 */

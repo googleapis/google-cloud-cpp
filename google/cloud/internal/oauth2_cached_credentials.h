@@ -54,6 +54,8 @@ class CachedCredentials : public Credentials {
   StatusOr<std::string> universe_domain(Options const& options) const override;
   StatusOr<std::string> project_id() const override;
   StatusOr<std::string> project_id(Options const& options) const override;
+  Credentials::AllowedLocationsRequestType AllowedLocationsRequest()
+      const override;
 
  private:
   std::shared_ptr<Credentials> impl_;

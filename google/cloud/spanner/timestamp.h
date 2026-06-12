@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/time/time.h"
-#include <google/protobuf/timestamp.pb.h>
+#include "google/protobuf/timestamp.pb.h"
 #include <chrono>
 #include <cstdint>
 #include <limits>

@@ -30,17 +30,17 @@ using ::testing::Pair;
 class RestContextTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    headers_["header1"] = {"value1"};
-    headers_["header2"] = {"value2a", "value2b"};
+    headers_["header1"] = HttpHeader{"header1", "value1"};
+    headers_["header2"] = HttpHeader{"header2", {"value2a", "value2b"}};
   }
 
-  RestContext::HttpHeaders headers_;
+  HttpHeaders headers_;
 };
 
 TEST_F(RestContextTest, RvalueBuilder) {
   auto context = RestContext()
                      .AddHeader("header1", "value1")
-                     .AddHeader(std::make_pair("header2", "value2a"))
+                     .AddHeader(HttpHeader("header2", "value2a"))
                      .AddHeader("header2", "value2b");
   EXPECT_THAT(context.headers(),
               Contains(Pair("header1", ElementsAre("value1"))));

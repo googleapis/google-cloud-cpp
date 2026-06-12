@@ -23,12 +23,11 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::storage_experimental::WritePayload;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
@@ -189,7 +188,7 @@ TEST(AsyncWriterTest, MultipleFlushesAreQueuedAndSequential) {
 TEST(AsyncWriterTest, Close) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+  EXPECT_CALL(*mock, Close(WritePayloadContents(IsEmpty()))).WillOnce([] {
     return make_ready_future(Status{});
   });
 
@@ -206,7 +205,7 @@ TEST(AsyncWriterTest, CloseOnDefaultConstructed) {
 
 TEST(AsyncWriterTest, CloseOnMovedWriter) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
-  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+  EXPECT_CALL(*mock, Close(WritePayloadContents(IsEmpty()))).WillOnce([] {
     return make_ready_future(Status{});
   });
   AsyncWriter writer(std::move(mock));
@@ -218,7 +217,7 @@ TEST(AsyncWriterTest, CloseOnMovedWriter) {
 TEST(AsyncWriterTest, ErrorOnWriteAfterClose) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   auto* mock_ptr = mock.get();
-  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+  EXPECT_CALL(*mock, Close(WritePayloadContents(IsEmpty()))).WillOnce([] {
     return make_ready_future(Status{});
   });
 
@@ -233,7 +232,7 @@ TEST(AsyncWriterTest, ErrorOnWriteAfterClose) {
 
 TEST(AsyncWriterTest, ErrorOnClose) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
-  EXPECT_CALL(*mock, Flush(WritePayloadContents(IsEmpty()))).WillOnce([] {
+  EXPECT_CALL(*mock, Close(WritePayloadContents(IsEmpty()))).WillOnce([] {
     return make_ready_future(PermanentError());
   });
 
@@ -281,8 +280,7 @@ TEST(AsyncWriterTest, ErrorWithInvalidToken) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
 
   AsyncWriter writer(std::move(mock));
-  auto const actual =
-      writer.Write(storage_experimental::AsyncToken(), WritePayload{}).get();
+  auto const actual = writer.Write(AsyncToken(), WritePayload{}).get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
 }
 
@@ -300,6 +298,6 @@ TEST(AsyncWriterTest, ErrorWithMismatchedToken) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -21,19 +21,20 @@
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/internal/tuple_filter.h"
+#include "google/cloud/storage/list_buckets_extended_reader.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_hmac_keys_reader.h"
 #include "google/cloud/storage/list_objects_and_prefixes_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/group_options.h"
+#include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
@@ -53,6 +54,25 @@ namespace internal {
 class NonResumableParallelUploadState;
 class ResumableParallelUploadState;
 struct ClientImplDetails;
+
+Options ApplyPolicy(Options opts, RetryPolicy const& p);
+Options ApplyPolicy(Options opts, BackoffPolicy const& p);
+Options ApplyPolicy(Options opts, IdempotencyPolicy const& p);
+
+inline Options ApplyPolicies(Options opts) { return opts; }
+
+template <typename P, typename... Policies>
+Options ApplyPolicies(Options opts, P&& head, Policies&&... tail) {
+  opts = ApplyPolicy(std::move(opts), std::forward<P>(head));
+  return ApplyPolicies(std::move(opts), std::forward<Policies>(tail)...);
+}
+
+Options DefaultOptions(
+    std::shared_ptr<oauth2_internal::Credentials> const& credentials,
+    Options opts);
+Options DefaultOptions(Options opts = {});
+Options DefaultOptionsWithCredentials(Options opts);
+
 }  // namespace internal
 /**
  * The Google Cloud Storage (GCS) Client.
@@ -364,6 +384,56 @@ class Client {
     google::cloud::internal::OptionsSpan const span(std::move(opts));
     return ListBucketsForProject(*std::move(project_id),
                                  std::forward<Options>(options)...);
+  }
+
+  /**
+   * Fetches the list of buckets and unreachable resources for the default
+   * project.
+   *
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
+   *
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `MaxResults`, `Prefix`,
+   *     `Projection`, `UserProject`, `OverrideDefaultProject`, and
+   *     `ReturnPartialSuccess`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc list buckets partial success
+   */
+  template <typename... Options>
+  ListBucketsExtendedReader ListBucketsExtended(Options&&... options) {
+    auto opts = SpanOptions(std::forward<Options>(options)...);
+    auto project_id = storage_internal::RequestProjectId(
+        GCP_ERROR_INFO(), opts, std::forward<Options>(options)...);
+    if (!project_id) {
+      return google::cloud::internal::MakeErrorPaginationRange<
+          ListBucketsExtendedReader>(std::move(project_id).status());
+    }
+    google::cloud::internal::OptionsSpan const span(std::move(opts));
+
+    internal::ListBucketsRequest request(*std::move(project_id));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    auto& client = connection_;
+    return google::cloud::internal::MakePaginationRange<
+        ListBucketsExtendedReader>(
+        request,
+        [client](internal::ListBucketsRequest const& r) {
+          return client->ListBuckets(r);
+        },
+        [](internal::ListBucketsResponse res) {
+          return std::vector<BucketsExtended>{BucketsExtended{
+              std::move(res.items), std::move(res.unreachable)}};
+        });
   }
 
   /**
@@ -3370,102 +3440,8 @@ class Client {
   }
   ///@}
 
-  /**
-   * Creates the default client type given the options.
-   *
-   * @param options the client options, these are used to control credentials,
-   *   buffer sizes, etc.
-   * @param policies the client policies, these control the behavior of the
-   *   client, for example, how to backoff when an operation needs to be
-   *   retried, or what operations cannot be retried because they are not
-   *   idempotent.
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  template <typename... Policies>
-  explicit Client(ClientOptions options, Policies&&... policies)
-      : Client(InternalOnly{}, internal::ApplyPolicies(
-                                   internal::MakeOptions(std::move(options)),
-                                   std::forward<Policies>(policies)...)) {}
-
-  /**
-   * Creates the default client type given the credentials and policies.
-   *
-   * @param credentials a set of credentials to initialize the `ClientOptions`.
-   * @param policies the client policies, these control the behavior of the
-   *   client, for example, how to backoff when an operation needs to be
-   *   retried, or what operations cannot be retried because they are not
-   *   idempotent.
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  template <typename... Policies>
-  explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
-                  Policies&&... policies)
-      : Client(InternalOnly{},
-               internal::ApplyPolicies(
-                   internal::DefaultOptions(std::move(credentials), {}),
-                   std::forward<Policies>(policies)...)) {}
-
-  /**
-   * Create a Client using ClientOptions::CreateDefaultClientOptions().
-   *
-   * @deprecated use the constructor from `google::cloud::Options` instead.
-   */
-  static StatusOr<Client> CreateDefaultClient();
-
-  /// Builds a client and maybe override the retry, idempotency, and/or backoff
-  /// policies.
-  /// @deprecated This was intended only for test code, applications should not
-  /// use it.
-  template <typename... Policies>
-#if !defined(_MSC_VER) || _MSC_VER >= 1920
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please use the constructors from ClientOptions instead."
-      " For mocking, please use testing::ClientFromMock() instead."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you have a use-case not covered by these.")
-#endif  // _MSC_VER
-  // We cannot `std::move(connection)` because it is used twice in the delegated
-  // constructor parameters. And we cannot just use `StorageConnection const&`
-  // because we do hold on to the `std::shared_ptr<>`.
-  explicit Client(
-      std::shared_ptr<internal::StorageConnection> const& connection,
-      Policies&&... policies)
-      : Client(InternalOnly{},
-               internal::ApplyPolicies(
-                   internal::DefaultOptions(
-                       connection->client_options().credentials(), {}),
-                   std::forward<Policies>(policies)...),
-               // We cannot std::move() because it is also used in the previous
-               // parameter.
-               connection) {
-  }
-
   /// Define a tag to disable automatic decorations of the StorageConnection.
   struct NoDecorations {};
-
-  /// Builds a client with a specific StorageConnection, without decorations.
-  /// @deprecated This was intended only for test code, applications should not
-  /// use it.
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you do.")
-  explicit Client(std::shared_ptr<internal::StorageConnection> connection,
-                  NoDecorations)
-      : Client(InternalOnlyNoDecorations{}, std::move(connection)) {}
-
-  /// Access the underlying `StorageConnection`.
-  /// @deprecated Only intended for implementors, do not use.
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "applications should not need this."
-      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
-      " if you do.")
-  std::shared_ptr<internal::StorageConnection> raw_client() const {
-    return connection_;
-  }
 
  private:
   friend class internal::NonResumableParallelUploadState;

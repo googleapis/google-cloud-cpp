@@ -18,8 +18,8 @@
 #include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
@@ -86,7 +86,7 @@ Status StubGenerator::GenerateHeader() {
       {vars("proto_grpc_header_path"),
        include_lro_header ? "google/longrunning/operations.grpc.pb.h" : ""});
   HeaderSystemIncludes({"memory", "utility"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -288,8 +288,8 @@ Status StubGenerator::GenerateHeader() {
     // clang-format on
   }
   HeaderPrint("};\n");
-
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -326,7 +326,7 @@ Status StubGenerator::GenerateCc() {
                                  ? "google/longrunning/operations.grpc.pb.h"
                                  : ""});
   CcSystemIncludes({"memory", "utility"});
-
+  CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -596,6 +596,7 @@ future<Status> Default$stub_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

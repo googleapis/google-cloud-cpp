@@ -27,8 +27,6 @@ namespace cloud {
 namespace beyondcorp_appconnectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AppConnectorsServiceTracingConnection::AppConnectorsServiceTracingConnection(
     std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
         child)
@@ -291,18 +289,14 @@ Status AppConnectorsServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
 MakeAppConnectorsServiceTracingConnection(
     std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AppConnectorsServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

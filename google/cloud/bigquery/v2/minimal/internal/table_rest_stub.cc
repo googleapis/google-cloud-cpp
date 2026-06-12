@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_rest_stub.h"
 #include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {

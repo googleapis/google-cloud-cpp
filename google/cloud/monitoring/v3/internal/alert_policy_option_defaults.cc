@@ -42,7 +42,7 @@ Options AlertPolicyServiceDefaultOptions(Options options) {
   if (!options.has<monitoring_v3::AlertPolicyServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::AlertPolicyServiceRetryPolicyOption>(
         monitoring_v3::AlertPolicyServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<monitoring_v3::AlertPolicyServiceBackoffPolicyOption>()) {

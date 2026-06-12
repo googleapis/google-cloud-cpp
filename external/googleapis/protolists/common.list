@@ -1,1 +1,1 @@
-@com_google_googleapis//google/cloud/common:operation_metadata.proto
+@googleapis//google/cloud/common:operation_metadata.proto

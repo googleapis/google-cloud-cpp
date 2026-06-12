@@ -190,8 +190,6 @@ TEST(ExtendLeasesWithRetry, FailureTooManyTransients) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("ack_id=test-003")));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TEST(ExtendLeasesWithRetry, SuccessWithOtelEnabled) {
   auto mock = std::make_shared<MockSubscriberStub>();
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
@@ -230,8 +228,6 @@ TEST(ExtendLeasesWithRetry, SuccessWithOtelEnabled) {
 
   EXPECT_STATUS_OK(result.get());
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

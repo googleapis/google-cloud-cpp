@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CONNECTION_H
 
+#include "google/cloud/networkservices/v1/dep.pb.h"
 #include "google/cloud/networkservices/v1/dep_connection_idempotency_policy.h"
 #include "google/cloud/networkservices/v1/internal/dep_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/networkservices/v1/dep.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -289,6 +289,56 @@ class DepServiceConnection {
   virtual future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>
+  ListLbEdgeExtensions(
+      google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest request);
+
+  virtual StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+  GetLbEdgeExtension(
+      google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+  CreateLbEdgeExtension(
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateLbEdgeExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+  CreateLbEdgeExtension(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+  UpdateLbEdgeExtension(
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateLbEdgeExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+  UpdateLbEdgeExtension(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbEdgeExtension(
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteLbEdgeExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbEdgeExtension(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networkservices::v1::AuthzExtension>
   ListAuthzExtensions(

@@ -405,6 +405,277 @@ class MockConfigConnection : public config_v1::ConfigConnection {
       (google::cloud::config::v1::GetResourceDriftRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::config::v1::AutoMigrationConfig>,
+      GetAutoMigrationConfig,
+      (google::cloud::config::v1::GetAutoMigrationConfigRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAutoMigrationConfig(Matcher<google::cloud::config::v1::UpdateAutoMigrationConfigRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>,
+      UpdateAutoMigrationConfig,
+      (google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAutoMigrationConfig(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAutoMigrationConfig,
+      (NoAwaitTag,
+       google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAutoMigrationConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>,
+              UpdateAutoMigrationConfig,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::config::v1::DeploymentGroup>, GetDeploymentGroup,
+      (google::cloud::config::v1::GetDeploymentGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDeploymentGroup(Matcher<google::cloud::config::v1::CreateDeploymentGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+      CreateDeploymentGroup,
+      (google::cloud::config::v1::CreateDeploymentGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDeploymentGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDeploymentGroup,
+      (NoAwaitTag,
+       google::cloud::config::v1::CreateDeploymentGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDeploymentGroup(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+              CreateDeploymentGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeploymentGroup(Matcher<google::cloud::config::v1::UpdateDeploymentGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+      UpdateDeploymentGroup,
+      (google::cloud::config::v1::UpdateDeploymentGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDeploymentGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDeploymentGroup,
+      (NoAwaitTag,
+       google::cloud::config::v1::UpdateDeploymentGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeploymentGroup(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+              UpdateDeploymentGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeploymentGroup(Matcher<google::cloud::config::v1::DeleteDeploymentGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+      DeleteDeploymentGroup,
+      (google::cloud::config::v1::DeleteDeploymentGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDeploymentGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDeploymentGroup,
+      (NoAwaitTag,
+       google::cloud::config::v1::DeleteDeploymentGroupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeploymentGroup(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+              DeleteDeploymentGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::config::v1::DeploymentGroup>),
+              ListDeploymentGroups,
+              (google::cloud::config::v1::ListDeploymentGroupsRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ProvisionDeploymentGroup(Matcher<google::cloud::config::v1::ProvisionDeploymentGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+              ProvisionDeploymentGroup,
+              (google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ProvisionDeploymentGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              ProvisionDeploymentGroup,
+              (NoAwaitTag,
+               google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ProvisionDeploymentGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+              ProvisionDeploymentGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeprovisionDeploymentGroup(Matcher<google::cloud::config::v1::DeprovisionDeploymentGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+      DeprovisionDeploymentGroup,
+      (google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeprovisionDeploymentGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeprovisionDeploymentGroup,
+      (NoAwaitTag,
+       google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeprovisionDeploymentGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::config::v1::DeploymentGroup>>,
+              DeprovisionDeploymentGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::config::v1::DeploymentGroupRevision>,
+      GetDeploymentGroupRevision,
+      (google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::config::v1::DeploymentGroupRevision>),
+      ListDeploymentGroupRevisions,
+      (google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

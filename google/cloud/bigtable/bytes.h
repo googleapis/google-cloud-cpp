@@ -44,6 +44,9 @@ class Bytes {
   /// An empty sequence.
   Bytes() = default;
 
+  /// Stops copying at the null-terminator character from input bytes.
+  explicit Bytes(char const* bytes) : bytes_(bytes) {}
+
   /// @name Construction from a sequence of octets.
   ///@{
   template <typename InputIt>
@@ -67,6 +70,12 @@ class Bytes {
     return a.bytes_ == b.bytes_;
   }
   friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
+  friend bool operator<(Bytes const& a, Bytes const& b) {
+    return a.bytes_ < b.bytes_;
+  }
+  friend bool operator>=(Bytes const& a, Bytes const& b) { return !(a < b); }
+  friend bool operator>(Bytes const& a, Bytes const& b) { return b < a; }
+  friend bool operator<=(Bytes const& a, Bytes const& b) { return !(b < a); }
   ///@}
 
   /**
@@ -88,5 +97,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 }  // namespace cloud
 }  // namespace google
+
+template <>
+struct std::hash<google::cloud::bigtable::Bytes> {
+  std::size_t operator()(
+      google::cloud::bigtable::Bytes const& b) const noexcept {
+    return std::hash<std::string>()(b.get<std::string>());
+  }
+};
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BYTES_H

@@ -104,6 +104,17 @@ struct GrpcChannelArgumentsOption {
  * use the first value set for some channel arguments, and the last value set
  * for others.
  *
+ * @par Example
+ * To configure gRPC's maximum metadata size to 32MiB (which can be useful
+ * to avoid `RESOURCE_EXHAUSTED` errors when exporting gRPC metrics),
+ * you can use:
+ * @code
+ *   google::cloud::Options options;
+ *   grpc::ChannelArguments args;
+ *   args.SetInt(GRPC_ARG_MAX_METADATA_SIZE, 32 * 1024 * 1024);
+ *   options.set<google::cloud::GrpcChannelArgumentsNativeOption>(args);
+ * @endcode
+ *
  * @see https://grpc.github.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
  * @see https://grpc.github.io/grpc/core/group__grpc__arg__keys.html
  *

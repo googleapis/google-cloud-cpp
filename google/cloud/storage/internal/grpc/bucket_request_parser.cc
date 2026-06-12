@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/time_utils.h"
 #include <algorithm>
 
@@ -165,10 +166,31 @@ Status PatchLogging(Bucket& b, nlohmann::json const& l) {
 Status PatchEncryption(Bucket& b, nlohmann::json const& e) {
   if (e.is_null()) {
     b.clear_encryption();
-  } else {
-    b.mutable_encryption()->set_default_kms_key(
-        e.value("defaultKmsKeyName", ""));
+    return Status{};
   }
+  auto& encryption = *b.mutable_encryption();
+  if (e.contains("defaultKmsKeyName")) {
+    encryption.set_default_kms_key(e.value("defaultKmsKeyName", ""));
+  }
+  auto patch_config = [&](char const* json_key, auto* mutable_config) {
+    if (e.contains(json_key)) {
+      auto const& c = e[json_key];
+      if (c.contains("restrictionMode")) {
+        mutable_config->set_restriction_mode(c.value("restrictionMode", ""));
+      }
+    }
+  };
+
+  patch_config(
+      "googleManagedEncryptionEnforcementConfig",
+      encryption.mutable_google_managed_encryption_enforcement_config());
+  patch_config(
+      "customerManagedEncryptionEnforcementConfig",
+      encryption.mutable_customer_managed_encryption_enforcement_config());
+  patch_config(
+      "customerSuppliedEncryptionEnforcementConfig",
+      encryption.mutable_customer_supplied_encryption_enforcement_config());
+
   return Status{};
 }
 
@@ -289,8 +311,23 @@ void UpdateLogging(Bucket& bucket, storage::BucketMetadata const& metadata) {
 
 void UpdateEncryption(Bucket& bucket, storage::BucketMetadata const& metadata) {
   if (!metadata.has_encryption()) return;
-  bucket.mutable_encryption()->set_default_kms_key(
-      metadata.encryption().default_kms_key_name);
+  auto& encryption = *bucket.mutable_encryption();
+  encryption.set_default_kms_key(metadata.encryption().default_kms_key_name);
+
+  auto update_config = [&](auto const& source, auto* dest) {
+    if (source.restriction_mode.empty()) return;
+    dest->set_restriction_mode(source.restriction_mode);
+  };
+
+  update_config(
+      metadata.encryption().google_managed_encryption_enforcement_config,
+      encryption.mutable_google_managed_encryption_enforcement_config());
+  update_config(
+      metadata.encryption().customer_managed_encryption_enforcement_config,
+      encryption.mutable_customer_managed_encryption_enforcement_config());
+  update_config(
+      metadata.encryption().customer_supplied_encryption_enforcement_config,
+      encryption.mutable_customer_supplied_encryption_enforcement_config());
 }
 
 void UpdateBilling(Bucket& bucket, storage::BucketMetadata const& metadata) {
@@ -407,6 +444,9 @@ google::storage::v2::ListBucketsRequest ToProto(
   }
   result.set_page_token(request.page_token());
   result.set_prefix(request.GetOption<storage::Prefix>().value_or(""));
+  if (request.return_partial_success()) {
+    result.set_return_partial_success(true);
+  }
   if (request.GetOption<storage::Projection>().value_or("") == "full") {
     result.mutable_read_mask()->add_paths("*");
   }
@@ -424,6 +464,9 @@ storage::internal::ListBucketsResponse FromProto(
                  [&](google::storage::v2::Bucket const& b) {
                    return storage_internal::FromProto(b, current_options);
                  });
+  result.unreachable.reserve(response.unreachable_size());
+  std::copy(response.unreachable().begin(), response.unreachable().end(),
+            std::back_inserter(result.unreachable));
   return result;
 }
 

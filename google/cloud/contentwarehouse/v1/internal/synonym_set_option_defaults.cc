@@ -42,7 +42,7 @@ Options SynonymSetServiceDefaultOptions(Options options) {
   if (!options.has<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::SynonymSetServiceRetryPolicyOption>(
         contentwarehouse_v1::SynonymSetServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

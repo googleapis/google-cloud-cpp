@@ -17,10 +17,13 @@
 // source: google/cloud/dialogflow/v2/participant.proto
 
 #include "google/cloud/dialogflow_es/internal/participants_auth_decorator.h"
+#include "google/cloud/dialogflow/v2/participant.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
-#include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -179,3 +182,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

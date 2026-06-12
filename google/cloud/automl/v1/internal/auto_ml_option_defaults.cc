@@ -40,7 +40,7 @@ Options AutoMlDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<automl_v1::AutoMlRetryPolicyOption>()) {
     options.set<automl_v1::AutoMlRetryPolicyOption>(
-        automl_v1::AutoMlLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        automl_v1::AutoMlLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<automl_v1::AutoMlBackoffPolicyOption>()) {

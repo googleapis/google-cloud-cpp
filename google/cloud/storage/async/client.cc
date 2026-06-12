@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
@@ -46,7 +46,8 @@ future<StatusOr<google::storage::v2::Object>> AsyncClient::InsertObject(
     Options opts) {
   return connection_->InsertObject(
       {std::move(request), std::move(contents),
-       internal::MergeOptions(std::move(opts), connection_->options())});
+       google::cloud::internal::MergeOptions(std::move(opts),
+                                             connection_->options())});
 }
 
 future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
@@ -60,8 +61,8 @@ future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
 future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
     google::storage::v2::BidiReadObjectSpec spec, Options opts) {
   return connection_
-      ->Open({std::move(spec),
-              internal::MergeOptions(std::move(opts), connection_->options())})
+      ->Open({std::move(spec), google::cloud::internal::MergeOptions(
+                                   std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<ObjectDescriptor> {
         auto connection = f.get();
         if (!connection) return std::move(connection).status();
@@ -81,8 +82,8 @@ future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(
     google::storage::v2::ReadObjectRequest request, Options opts) {
   return connection_
       ->ReadObject(
-          {std::move(request),
-           internal::MergeOptions(std::move(opts), connection_->options())})
+          {std::move(request), google::cloud::internal::MergeOptions(
+                                   std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<std::pair<AsyncReader, AsyncToken>> {
         auto impl = f.get();
         if (!impl) return std::move(impl).status();
@@ -108,8 +109,8 @@ future<StatusOr<ReadPayload>> AsyncClient::ReadObjectRange(
   request.set_read_limit(limit);
 
   return connection_->ReadObjectRange(
-      {std::move(request),
-       internal::MergeOptions(std::move(opts), connection_->options())});
+      {std::move(request), google::cloud::internal::MergeOptions(
+                               std::move(opts), connection_->options())});
 }
 
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
@@ -131,8 +132,8 @@ AsyncClient::StartAppendableObjectUpload(
     google::storage::v2::BidiWriteObjectRequest request, Options opts) {
   return connection_
       ->StartAppendableObjectUpload(
-          {std::move(request),
-           internal::MergeOptions(std::move(opts), connection_->options())})
+          {std::move(request), google::cloud::internal::MergeOptions(
+                                   std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
@@ -155,8 +156,8 @@ AsyncClient::ResumeAppendableObjectUpload(BucketName const& bucket_name,
 
   return connection_
       ->ResumeAppendableObjectUpload(
-          {std::move(request),
-           internal::MergeOptions(std::move(opts), connection_->options())})
+          {std::move(request), google::cloud::internal::MergeOptions(
+                                   std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
@@ -180,8 +181,8 @@ AsyncClient::StartBufferedUpload(
     google::storage::v2::StartResumableWriteRequest request, Options opts) {
   return connection_
       ->StartBufferedUpload(
-          {std::move(request),
-           internal::MergeOptions(std::move(opts), connection_->options())})
+          {std::move(request), google::cloud::internal::MergeOptions(
+                                   std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
@@ -205,8 +206,8 @@ AsyncClient::ResumeBufferedUpload(
     google::storage::v2::QueryWriteStatusRequest request, Options opts) {
   return connection_
       ->ResumeBufferedUpload(
-          {std::move(request),
-           internal::MergeOptions(std::move(opts), connection_->options())})
+          {std::move(request), google::cloud::internal::MergeOptions(
+                                   std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
@@ -233,8 +234,8 @@ AsyncClient::StartUnbufferedUpload(
     google::storage::v2::StartResumableWriteRequest request, Options opts) {
   return connection_
       ->StartUnbufferedUpload(
-          {std::move(request),
-           internal::MergeOptions(std::move(opts), connection_->options())})
+          {std::move(request), google::cloud::internal::MergeOptions(
+                                   std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
@@ -258,8 +259,8 @@ AsyncClient::ResumeUnbufferedUpload(
     google::storage::v2::QueryWriteStatusRequest request, Options opts) {
   return connection_
       ->ResumeUnbufferedUpload(
-          {std::move(request),
-           internal::MergeOptions(std::move(opts), connection_->options())})
+          {std::move(request), google::cloud::internal::MergeOptions(
+                                   std::move(opts), connection_->options())})
       .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
@@ -288,8 +289,8 @@ future<StatusOr<google::storage::v2::Object>> AsyncClient::ComposeObject(
 future<StatusOr<google::storage::v2::Object>> AsyncClient::ComposeObject(
     google::storage::v2::ComposeObjectRequest request, Options opts) {
   return connection_->ComposeObject(
-      {std::move(request),
-       internal::MergeOptions(std::move(opts), connection_->options())});
+      {std::move(request), google::cloud::internal::MergeOptions(
+                               std::move(opts), connection_->options())});
 }
 
 future<Status> AsyncClient::DeleteObject(BucketName const& bucket_name,
@@ -315,8 +316,8 @@ future<Status> AsyncClient::DeleteObject(BucketName const& bucket_name,
 future<Status> AsyncClient::DeleteObject(
     google::storage::v2::DeleteObjectRequest request, Options opts) {
   return connection_->DeleteObject(
-      {std::move(request),
-       internal::MergeOptions(std::move(opts), connection_->options())});
+      {std::move(request), google::cloud::internal::MergeOptions(
+                               std::move(opts), connection_->options())});
 }
 
 std::pair<AsyncRewriter, AsyncToken> AsyncClient::StartRewrite(
@@ -353,13 +354,13 @@ std::pair<AsyncRewriter, AsyncToken> AsyncClient::ResumeRewrite(
 std::pair<AsyncRewriter, AsyncToken> AsyncClient::ResumeRewrite(
     google::storage::v2::RewriteObjectRequest request, Options opts) {
   auto c = connection_->RewriteObject(
-      {std::move(request),
-       internal::MergeOptions(std::move(opts), connection_->options())});
+      {std::move(request), google::cloud::internal::MergeOptions(
+                               std::move(opts), connection_->options())});
   auto token = storage_internal::MakeAsyncToken(c.get());
   return std::make_pair(AsyncRewriter(std::move(c)), std::move(token));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

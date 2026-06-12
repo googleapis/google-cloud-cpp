@@ -42,7 +42,7 @@ Options AuthorizedCertificatesDefaultOptions(Options options) {
   if (!options.has<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()) {
     options.set<appengine_v1::AuthorizedCertificatesRetryPolicyOption>(
         appengine_v1::AuthorizedCertificatesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<appengine_v1::AuthorizedCertificatesBackoffPolicyOption>()) {

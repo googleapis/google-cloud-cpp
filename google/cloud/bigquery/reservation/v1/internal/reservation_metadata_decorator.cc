@@ -17,16 +17,20 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_metadata_decorator.h"
+#include "google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -269,6 +273,74 @@ ReservationServiceMetadata::UpdateBiReservation(
   return child_->UpdateBiReservation(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> ReservationServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> ReservationServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ReservationServiceMetadata::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->TestIamPermissions(context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceMetadata::CreateReservationGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::
+        CreateReservationGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateReservationGroup(context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+ReservationServiceMetadata::GetReservationGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::GetReservationGroupRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetReservationGroup(context, options, request);
+}
+
+Status ReservationServiceMetadata::DeleteReservationGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::
+        DeleteReservationGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteReservationGroup(context, options, request);
+}
+
+StatusOr<
+    google::cloud::bigquery::reservation::v1::ListReservationGroupsResponse>
+ReservationServiceMetadata::ListReservationGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::
+        ListReservationGroupsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListReservationGroups(context, options, request);
+}
+
 void ReservationServiceMetadata::SetMetadata(
     grpc::ClientContext& context, Options const& options,
     std::string const& request_params) {
@@ -286,3 +358,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

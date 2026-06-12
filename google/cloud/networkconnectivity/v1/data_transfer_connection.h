@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_DATA_TRANSFER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_DATA_TRANSFER_CONNECTION_H
 
+#include "google/cloud/networkconnectivity/v1/data_transfer.pb.h"
 #include "google/cloud/networkconnectivity/v1/data_transfer_connection_idempotency_policy.h"
 #include "google/cloud/networkconnectivity/v1/internal/data_transfer_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/networkconnectivity/v1/data_transfer.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

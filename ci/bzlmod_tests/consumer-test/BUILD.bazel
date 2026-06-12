@@ -1,0 +1,9 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "main_test",
+    srcs = ["main.cc"],
+    deps = [
+        "@google_cloud_cpp//google/cloud/storage:storage_client_testing",
+    ],
+)

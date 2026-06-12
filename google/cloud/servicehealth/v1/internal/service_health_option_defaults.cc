@@ -42,7 +42,7 @@ Options ServiceHealthDefaultOptions(Options options) {
   if (!options.has<servicehealth_v1::ServiceHealthRetryPolicyOption>()) {
     options.set<servicehealth_v1::ServiceHealthRetryPolicyOption>(
         servicehealth_v1::ServiceHealthLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<servicehealth_v1::ServiceHealthBackoffPolicyOption>()) {

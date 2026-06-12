@@ -27,8 +27,6 @@ namespace cloud {
 namespace devicestreaming_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DirectAccessServiceTracingConnection::DirectAccessServiceTracingConnection(
     std::shared_ptr<devicestreaming_v1::DirectAccessServiceConnection> child)
     : child_(std::move(child)) {}
@@ -91,17 +89,13 @@ DirectAccessServiceTracingConnection::AsyncAdbConnect() {
   return child_->AsyncAdbConnect();
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<devicestreaming_v1::DirectAccessServiceConnection>
 MakeDirectAccessServiceTracingConnection(
     std::shared_ptr<devicestreaming_v1::DirectAccessServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<DirectAccessServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

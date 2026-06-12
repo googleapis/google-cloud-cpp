@@ -28,8 +28,6 @@ namespace cloud {
 namespace netapp_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class NetAppTracingConnection : public netapp_v1::NetAppConnection {
  public:
   ~NetAppTracingConnection() override = default;
@@ -153,6 +151,18 @@ class NetAppTracingConnection : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Volume>> EstablishVolumePeering(
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> EstablishVolumePeering(
+      NoAwaitTag,
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::Volume>> EstablishVolumePeering(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::netapp::v1::Snapshot> ListSnapshots(
@@ -563,6 +573,76 @@ class NetAppTracingConnection : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteQuotaRule(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>
+  RestoreBackupFiles(google::cloud::netapp::v1::RestoreBackupFilesRequest const&
+                         request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreBackupFiles(
+      NoAwaitTag,
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>
+  RestoreBackupFiles(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::netapp::v1::HostGroup> ListHostGroups(
+      google::cloud::netapp::v1::ListHostGroupsRequest request) override;
+
+  StatusOr<google::cloud::netapp::v1::HostGroup> GetHostGroup(
+      google::cloud::netapp::v1::GetHostGroupRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::HostGroup>> CreateHostGroup(
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateHostGroup(
+      NoAwaitTag,
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::HostGroup>> CreateHostGroup(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::netapp::v1::HostGroup>> UpdateHostGroup(
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateHostGroup(
+      NoAwaitTag,
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::HostGroup>> UpdateHostGroup(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteHostGroup(google::cloud::netapp::v1::DeleteHostGroupRequest const&
+                      request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteHostGroup(
+      NoAwaitTag,
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteHostGroup(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+  ExecuteOntapPost(google::cloud::netapp::v1::ExecuteOntapPostRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse> ExecuteOntapGet(
+      google::cloud::netapp::v1::ExecuteOntapGetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+  ExecuteOntapDelete(google::cloud::netapp::v1::ExecuteOntapDeleteRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+  ExecuteOntapPatch(google::cloud::netapp::v1::ExecuteOntapPatchRequest const&
+                        request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
@@ -584,8 +664,6 @@ class NetAppTracingConnection : public netapp_v1::NetAppConnection {
  private:
   std::shared_ptr<netapp_v1::NetAppConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

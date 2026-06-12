@@ -46,6 +46,9 @@ class SampleGenerator : public ServiceCodeGenerator {
   SampleGenerator& operator=(SampleGenerator&&) = default;
 
  private:
+  void GenerateSetClientEndpointSample();
+  void GenerateSetClientUniverseDomainSample();
+
   Status GenerateHeader() override;
   Status GenerateCc() override;
 };

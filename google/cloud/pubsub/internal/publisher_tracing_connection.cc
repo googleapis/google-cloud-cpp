@@ -13,49 +13,49 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
+#include "google/cloud/pubsub/internal/message_propagator.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
+#include <opentelemetry/trace/propagation/http_trace_context.h>
+#include <opentelemetry/trace/scope.h>
+#include <opentelemetry/trace/span_metadata.h>
+#include <opentelemetry/trace/span_startoptions.h>
 #include <memory>
 #include <string>
 #include <utility>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/pubsub/internal/message_propagator.h"
-#include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/status_or.h"
-#include <opentelemetry/context/propagation/text_map_propagator.h>
-#include <opentelemetry/nostd/shared_ptr.h>
-#include <opentelemetry/trace/propagation/http_trace_context.h>
-#include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
-#include <opentelemetry/trace/span_metadata.h>
-#include <opentelemetry/trace/span_startoptions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
     pubsub::Topic const& topic, pubsub::Message const& m) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto span = internal::MakeSpan(
       topic.topic_id() + " create",
-      {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingDestinationName, topic.topic_id()},
+      {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+       {sc::messaging::kMessagingDestinationName, topic.topic_id()},
        {"gcp.project_id", topic.project_id()},
-       {/*sc::kMessagingOperationType=*/"messaging.operation.type", "create"},
-       {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
+       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+        "create"},
+       {/*sc::messaging::kMessagingMessageEnvelopeSize=*/"messaging.message."
+                                                         "envelope.size",
         static_cast<std::int64_t>(MessageSize(m))},
-       {sc::kCodeFunction, "pubsub::PublisherConnection::Publish"}},
+       {sc::code::kCodeFunctionName, "pubsub::PublisherConnection::Publish"}},
       options);
   if (!m.ordering_key().empty()) {
     span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
@@ -67,10 +67,11 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
 future<StatusOr<std::string>> EndPublishSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
     future<StatusOr<std::string>> f) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   return f.then([span = std::move(span)](auto fut) {
     auto message_id = fut.get();
-    if (message_id) span->SetAttribute(sc::kMessagingMessageId, *message_id);
+    if (message_id)
+      span->SetAttribute(sc::messaging::kMessagingMessageId, *message_id);
     return internal::EndSpan(*span, std::move(message_id));
   });
 }
@@ -127,16 +128,6 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
   return std::make_shared<PublisherTracingConnection>(std::move(topic),
                                                       std::move(connection));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
-    pubsub::Topic,  // NOLINT(performance-unnecessary-value-param)
-    std::shared_ptr<pubsub::PublisherConnection> connection) {
-  return connection;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

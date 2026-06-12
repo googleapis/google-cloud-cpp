@@ -36,7 +36,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -85,8 +85,8 @@ auto TestOptions() {
 }
 
 auto AlwaysRetry() {
-  return TestOptions().set<IdempotencyPolicyOption>(
-      MakeAlwaysRetryIdempotencyPolicy);
+  return TestOptions().set<AsyncIdempotencyPolicyOption>(
+      MakeAlwaysRetryAsyncIdempotencyPolicy);
 }
 
 TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
@@ -451,9 +451,9 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
 TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
   auto client = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
-  // Create a block to send over and over.
-  auto constexpr kBlockSize = 16 * 1024 * 1024;
-  auto constexpr kBlockCount = 3;
+  // Create a small block to send over and over.
+  auto constexpr kBlockSize = 256 * 1024;
+  auto constexpr kBlockCount = 16;
   auto const block = MakeRandomData(kBlockSize);
 
   auto w =
@@ -1005,9 +1005,12 @@ TEST_F(AsyncClientIntegrationTest, Open) {
 }
 
 TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
-  GTEST_SKIP();
-  auto async = AsyncClient(
-      TestOptions().set<storage_experimental::MaximumRangeSizeOption>(1024));
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async =
+      AsyncClient(TestOptions()
+                      .set<storage::MaximumRangeSizeOption>(1024)
+                      .set<storage::EnableCrc32cValidationOption>(false)
+                      .set<storage::EnableMD5ValidationOption>(false));
   auto client = MakeIntegrationTestClient(true, TestOptions());
   auto object_name = MakeRandomObjectName();
 
@@ -1059,9 +1062,56 @@ TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
                       storage::Generation(metadata->generation()));
 }
 
+TEST_F(AsyncClientIntegrationTest, OpenWithChecksumValidation) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async = AsyncClient(TestOptions()
+                               .set<storage::EnableCrc32cValidationOption>(true)
+                               .set<storage::EnableMD5ValidationOption>(true));
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+
+  auto create = client.CreateBucket(
+      bucket_name(), storage::BucketMetadata{}.set_location("us-west4"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+
+  auto constexpr kSize = 8 * 1024;
+  auto const block = MakeRandomData(kSize);
+
+  auto metadata =
+      async.InsertObject(BucketName(bucket_name()), object_name, block).get();
+  ASSERT_STATUS_OK(metadata);
+
+  auto spec = google::storage::v2::BidiReadObjectSpec{};
+  spec.set_bucket(BucketName(bucket_name()).FullName());
+  spec.set_object(object_name);
+  auto descriptor = async.Open(spec).get();
+  ASSERT_STATUS_OK(descriptor);
+
+  AsyncReader r0;
+  AsyncToken t0;
+  auto actual0 = std::string{};
+  std::tie(r0, t0) = descriptor->Read(0, kSize);
+  while (t0.valid()) {
+    auto read = r0.Read(std::move(t0)).get();
+    ASSERT_STATUS_OK(read);
+    ReadPayload p;
+    AsyncToken t;
+    std::tie(p, t) = *std::move(read);
+    for (auto sv : p.contents()) actual0 += std::string(sv);
+    t0 = std::move(t);
+  }
+
+  EXPECT_EQ(actual0.size(), kSize);
+  EXPECT_EQ(actual0, block);
+  client.DeleteObject(bucket_name(), object_name,
+                      storage::Generation(metadata->generation()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

@@ -154,12 +154,7 @@ std::shared_ptr<StorageConnectionImpl> StorageConnectionImpl::Create(
 StorageConnectionImpl::StorageConnectionImpl(
     std::unique_ptr<storage_internal::GenericStub> stub, Options options)
     : stub_(std::move(stub)),
-      options_(MergeOptions(std::move(options), stub_->options())),
-      client_options_(MakeBackwardsCompatibleClientOptions(options_)) {}
-
-ClientOptions const& StorageConnectionImpl::client_options() const {
-  return client_options_;
-}
+      options_(MergeOptions(std::move(options), stub_->options())) {}
 
 Options StorageConnectionImpl::options() const { return options_; }
 

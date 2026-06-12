@@ -42,7 +42,7 @@ Options DatastoreAdminDefaultOptions(Options options) {
   if (!options.has<datastore_admin_v1::DatastoreAdminRetryPolicyOption>()) {
     options.set<datastore_admin_v1::DatastoreAdminRetryPolicyOption>(
         datastore_admin_v1::DatastoreAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<datastore_admin_v1::DatastoreAdminBackoffPolicyOption>()) {

@@ -15,7 +15,7 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "google/cloud/log.h"
-#include <google/longrunning/operations.pb.h>
+#include "google/longrunning/operations.pb.h"
 #include <string>
 
 namespace google {

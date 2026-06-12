@@ -44,7 +44,7 @@ Options SiteSearchEngineServiceDefaultOptions(Options options) {
           discoveryengine_v1::SiteSearchEngineServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::SiteSearchEngineServiceRetryPolicyOption>(
         discoveryengine_v1::SiteSearchEngineServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

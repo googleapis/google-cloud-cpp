@@ -41,7 +41,7 @@ Options SqlUsersServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<sql_v1::SqlUsersServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlUsersServiceRetryPolicyOption>(
-        sql_v1::SqlUsersServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        sql_v1::SqlUsersServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<sql_v1::SqlUsersServiceBackoffPolicyOption>()) {

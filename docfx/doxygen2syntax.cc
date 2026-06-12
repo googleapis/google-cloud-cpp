@@ -17,7 +17,6 @@
 #include "docfx/doxygen_errors.h"
 #include "docfx/function_classifiers.h"
 #include "docfx/linked_text_type.h"
-#include "docfx/yaml_emit.h"
 #include <iostream>
 
 namespace docfx {

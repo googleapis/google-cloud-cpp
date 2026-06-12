@@ -36,6 +36,7 @@ readonly ENABLED_FEATURES
 io::log_h2 "Configuring"
 vcpkg_root="$(vcpkg::root_dir)"
 cmake -GNinja -S . -B cmake-out/build \
+  "-DCMAKE_CXX_STANDARD=17" \
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_root}/scripts/buildsystems/vcpkg.cmake" \
   "-DVCPKG_MANIFEST_DIR=ci/etc/oldest-deps" \
   "-DVCPKG_FEATURE_FLAGS=versions,manifest" \
@@ -49,4 +50,5 @@ io::log_h2 "Testing"
 mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out/build ctest "${ctest_args[@]}" -LE "integration-test"
 
-integration::ctest_with_emulators "cmake-out/build"
+# TODO(#15947): Passing spanner here skips its test execution.
+integration::ctest_with_emulators "cmake-out/build" "spanner"

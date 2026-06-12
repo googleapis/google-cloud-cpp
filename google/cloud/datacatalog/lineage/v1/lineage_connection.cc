@@ -183,6 +183,19 @@ LineageConnection::BatchSearchLinkProcesses(
       StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>>();
 }
 
+StreamRange<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+LineageConnection::SearchLineageStreaming(
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>(
+      []() -> absl::variant<Status, google::cloud::datacatalog::lineage::v1::
+                                        SearchLineageStreamingResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
+}
+
 StreamRange<google::longrunning::Operation> LineageConnection::ListOperations(
     google::longrunning::
         ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)

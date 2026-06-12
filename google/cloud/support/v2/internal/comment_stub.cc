@@ -17,11 +17,14 @@
 // source: google/cloud/support/v2/comment_service.proto
 
 #include "google/cloud/support/v2/internal/comment_stub.h"
+#include "google/cloud/support/v2/comment_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/support/v2/comment_service.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -54,7 +57,21 @@ DefaultCommentServiceStub::CreateComment(
   return response;
 }
 
+StatusOr<google::cloud::support::v2::Comment>
+DefaultCommentServiceStub::GetComment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  google::cloud::support::v2::Comment response;
+  auto status = grpc_stub_->GetComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

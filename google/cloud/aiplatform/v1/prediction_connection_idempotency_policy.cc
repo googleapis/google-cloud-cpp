@@ -64,6 +64,11 @@ Idempotency PredictionServiceConnectionIdempotencyPolicy::GenerateContent(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PredictionServiceConnectionIdempotencyPolicy::EmbedContent(
+    google::cloud::aiplatform::v1::EmbedContentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency PredictionServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

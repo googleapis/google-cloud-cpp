@@ -42,7 +42,7 @@ Options CloudSchedulerDefaultOptions(Options options) {
   if (!options.has<scheduler_v1::CloudSchedulerRetryPolicyOption>()) {
     options.set<scheduler_v1::CloudSchedulerRetryPolicyOption>(
         scheduler_v1::CloudSchedulerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<scheduler_v1::CloudSchedulerBackoffPolicyOption>()) {

@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/storage/internal/async/writer_connection_tracing.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <cstdint>
 #include <string>
 #include <utility>
@@ -26,21 +25,20 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = ::opentelemetry::trace::SemanticConventions;
+namespace sc = ::opentelemetry::semconv;
 
-class AsyncWriterConnectionTracing
-    : public storage_experimental::AsyncWriterConnection {
+class AsyncWriterConnectionTracing : public storage::AsyncWriterConnection {
  public:
   explicit AsyncWriterConnectionTracing(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      std::unique_ptr<storage_experimental::AsyncWriterConnection> impl)
+      std::unique_ptr<storage::AsyncWriterConnection> impl)
       : span_(std::move(span)), impl_(std::move(impl)) {}
 
   void Cancel() override {
     auto scope = opentelemetry::trace::Scope(span_);
     span_->AddEvent("gl-cpp.cancel",
                     {
-                        {sc::kThreadId, internal::CurrentThreadId()},
+                        {sc::thread::kThreadId, internal::CurrentThreadId()},
                     });
     return impl_->Cancel();
   }
@@ -50,13 +48,19 @@ class AsyncWriterConnectionTracing
     return impl_->UploadId();
   }
 
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const override {
+    // No tracing, this is a local call without any significant work.
+    return impl_->WriteHandle();
+  }
+
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
     // No tracing, this is a local call without any significant work.
     return impl_->PersistedState();
   }
 
-  future<Status> Write(storage_experimental::WritePayload p) override {
+  future<Status> Write(storage::WritePayload p) override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Write(std::move(p))
@@ -66,7 +70,7 @@ class AsyncWriterConnectionTracing
               {
                   {/*sc::kRpcMessageType=*/"rpc.message.type", "SENT"},
                   {/*sc::kRpcMessageId=*/"rpc.message.id", count},
-                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {sc::thread::kThreadId, internal::CurrentThreadId()},
                   {"gl-cpp.size", size},
               });
           auto status = f.get();
@@ -76,7 +80,7 @@ class AsyncWriterConnectionTracing
   }
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage_experimental::WritePayload p) override {
+      storage::WritePayload p) override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Finalize(std::move(p))
@@ -86,14 +90,14 @@ class AsyncWriterConnectionTracing
               {
                   {/*sc::kRpcMessageType=*/"rpc.message.type", "SENT"},
                   {/*sc::kRpcMessageId=*/"rpc.message.id", count},
-                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {sc::thread::kThreadId, internal::CurrentThreadId()},
                   {"gl-cpp.size", size},
               });
           return internal::EndSpan(*span, f.get());
         });
   }
 
-  future<Status> Flush(storage_experimental::WritePayload p) override {
+  future<Status> Flush(storage::WritePayload p) override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Flush(std::move(p))
@@ -103,12 +107,29 @@ class AsyncWriterConnectionTracing
               {
                   {/*sc::kRpcMessageType=*/"rpc.message.type", "SENT"},
                   {/*sc::kRpcMessageId=*/"rpc.message.id", count},
-                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {sc::thread::kThreadId, internal::CurrentThreadId()},
                   {"gl-cpp.size", size},
               });
           auto status = f.get();
           if (!status.ok()) return internal::EndSpan(*span, std::move(status));
           return status;
+        });
+  }
+
+  future<Status> Close(storage::WritePayload p) override {
+    internal::OTelScope scope(span_);
+    auto size = static_cast<std::uint64_t>(p.size());
+    return impl_->Close(std::move(p))
+        .then([count = ++sent_count_, span = span_, size](auto f) {
+          span->AddEvent(
+              "gl-cpp.close",
+              {
+                  {/*sc::kRpcMessageType=*/"rpc.message.type", "SENT"},
+                  {/*sc::kRpcMessageId=*/"rpc.message.id", count},
+                  {sc::thread::kThreadId, internal::CurrentThreadId()},
+                  {"gl-cpp.size", size},
+              });
+          return internal::EndSpan(*span, f.get());
         });
   }
 
@@ -120,7 +141,7 @@ class AsyncWriterConnectionTracing
           {
               {/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVE"},
               {/*sc::kRpcMessageId=*/"rpc.message.id", count},
-              {sc::kThreadId, internal::CurrentThreadId()},
+              {sc::thread::kThreadId, internal::CurrentThreadId()},
           });
       auto response = f.get();
       if (!response) return internal::EndSpan(*span, std::move(response));
@@ -134,17 +155,16 @@ class AsyncWriterConnectionTracing
 
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
-  std::unique_ptr<storage_experimental::AsyncWriterConnection> impl_;
+  std::unique_ptr<storage::AsyncWriterConnection> impl_;
   std::int64_t sent_count_ = 0;
   std::int64_t recv_count_ = 0;
 };
 
 }  // namespace
 
-std::unique_ptr<storage_experimental::AsyncWriterConnection>
-MakeTracingWriterConnection(
+std::unique_ptr<storage::AsyncWriterConnection> MakeTracingWriterConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::unique_ptr<storage_experimental::AsyncWriterConnection> impl) {
+    std::unique_ptr<storage::AsyncWriterConnection> impl) {
   return std::make_unique<AsyncWriterConnectionTracing>(std::move(span),
                                                         std::move(impl));
 }
@@ -153,5 +173,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -42,7 +42,7 @@ Options AuthorizedDomainsDefaultOptions(Options options) {
   if (!options.has<appengine_v1::AuthorizedDomainsRetryPolicyOption>()) {
     options.set<appengine_v1::AuthorizedDomainsRetryPolicyOption>(
         appengine_v1::AuthorizedDomainsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<appengine_v1::AuthorizedDomainsBackoffPolicyOption>()) {

@@ -28,8 +28,6 @@ namespace cloud {
 namespace video_livestream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class LivestreamServiceTracingConnection
     : public video_livestream_v1::LivestreamServiceConnection {
  public:
@@ -113,6 +111,36 @@ class LivestreamServiceTracingConnection
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(google::longrunning::Operation const& operation) override;
 
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartDistribution(
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StartDistribution(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartDistribution(google::longrunning::Operation const& operation) override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopDistribution(
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StopDistribution(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopDistribution(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
       google::cloud::video::livestream::v1::CreateInputRequest const& request)
       override;
@@ -155,6 +183,10 @@ class LivestreamServiceTracingConnection
 
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+  PreviewInput(google::cloud::video::livestream::v1::PreviewInputRequest const&
+                   request) override;
 
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       google::cloud::video::livestream::v1::CreateEventRequest const& request)
@@ -317,8 +349,6 @@ class LivestreamServiceTracingConnection
  private:
   std::shared_ptr<video_livestream_v1::LivestreamServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

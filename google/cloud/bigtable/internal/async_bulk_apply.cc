@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 

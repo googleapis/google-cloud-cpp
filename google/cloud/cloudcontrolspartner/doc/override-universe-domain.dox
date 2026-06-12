@@ -1,0 +1,35 @@
+/*!
+@page cloudcontrolspartner-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `cloudcontrolspartner_v1::CloudControlsPartnerCoreClient`:
+
+@snippet cloud_controls_partner_core_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudcontrolspartner_v1::CloudControlsPartnerCoreClient](@ref cloudcontrolspartner_v1::CloudControlsPartnerCoreClient-universe-domain-snippet)
+- [\c cloudcontrolspartner_v1::CloudControlsPartnerMonitoringClient](@ref cloudcontrolspartner_v1::CloudControlsPartnerMonitoringClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page cloudcontrolspartner_v1::CloudControlsPartnerCoreClient-universe-domain-snippet Override cloudcontrolspartner_v1::CloudControlsPartnerCoreClient Universe Domain
+
+@snippet google/cloud/cloudcontrolspartner/v1/samples/cloud_controls_partner_core_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page cloudcontrolspartner_v1::CloudControlsPartnerMonitoringClient-universe-domain-snippet Override cloudcontrolspartner_v1::CloudControlsPartnerMonitoringClient Universe Domain
+
+@snippet google/cloud/cloudcontrolspartner/v1/samples/cloud_controls_partner_monitoring_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

@@ -1,4 +1,4 @@
-@com_google_googleapis//google/cloud/workflows/executions/v1:executions.proto
-@com_google_googleapis//google/cloud/workflows/type:engine_call.proto
-@com_google_googleapis//google/cloud/workflows/type:executions_system.proto
-@com_google_googleapis//google/cloud/workflows/v1:workflows.proto
+@googleapis//google/cloud/workflows/executions/v1:executions.proto
+@googleapis//google/cloud/workflows/type:engine_call.proto
+@googleapis//google/cloud/workflows/type:executions_system.proto
+@googleapis//google/cloud/workflows/v1:workflows.proto

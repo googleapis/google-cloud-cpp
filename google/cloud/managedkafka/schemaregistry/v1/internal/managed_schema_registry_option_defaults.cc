@@ -45,7 +45,7 @@ Options ManagedSchemaRegistryDefaultOptions(Options options) {
         managedkafka_schemaregistry_v1::ManagedSchemaRegistryRetryPolicyOption>(
         managedkafka_schemaregistry_v1::
             ManagedSchemaRegistryLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<managedkafka_schemaregistry_v1::

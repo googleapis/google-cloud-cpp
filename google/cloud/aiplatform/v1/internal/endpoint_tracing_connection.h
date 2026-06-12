@@ -28,8 +28,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class EndpointServiceTracingConnection
     : public aiplatform_v1::EndpointServiceConnection {
  public:
@@ -159,8 +157,6 @@ class EndpointServiceTracingConnection
  private:
   std::shared_ptr<aiplatform_v1::EndpointServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

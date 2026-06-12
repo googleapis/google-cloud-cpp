@@ -41,7 +41,7 @@ Options InstancesDefaultOptions(Options options) {
   if (!options.has<compute_instances_v1::InstancesRetryPolicyOption>()) {
     options.set<compute_instances_v1::InstancesRetryPolicyOption>(
         compute_instances_v1::InstancesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_instances_v1::InstancesBackoffPolicyOption>()) {

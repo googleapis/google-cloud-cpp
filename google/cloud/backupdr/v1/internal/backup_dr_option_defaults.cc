@@ -40,7 +40,7 @@ Options BackupDRDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<backupdr_v1::BackupDRRetryPolicyOption>()) {
     options.set<backupdr_v1::BackupDRRetryPolicyOption>(
-        backupdr_v1::BackupDRLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        backupdr_v1::BackupDRLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<backupdr_v1::BackupDRBackoffPolicyOption>()) {

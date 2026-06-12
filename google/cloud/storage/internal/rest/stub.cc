@@ -26,13 +26,14 @@
 #include "google/cloud/storage/internal/rest/request_builder.h"
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/auth_header_error.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/strip.h"
 #include <sstream>
 
@@ -43,7 +44,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace rest = google::cloud::rest_internal;
-using ::google::cloud::internal::AuthHeaderError;
+using ::google::cloud::internal::GetEnv;
 using ::google::cloud::internal::UrlEncode;
 
 namespace {
@@ -106,18 +107,6 @@ StatusOr<ReturnType> CreateFromJson(
   return ReturnType::CreateFromJson(*payload);
 }
 
-Status AddAuthorizationHeader(Options const& options,
-                              RestRequestBuilder& builder) {
-  // In tests this option may not be set. And over time we want to retire it.
-  if (!options.has<Oauth2CredentialsOption>()) return {};
-  auto auth_header =
-      options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
-  if (!auth_header) return AuthHeaderError(std::move(auth_header).status());
-  builder.AddHeader("Authorization", std::string(absl::StripPrefix(
-                                         *auth_header, "Authorization: ")));
-  return {};
-}
-
 void AddCustomHeaders(Options const& options, RestRequestBuilder& builder) {
   if (!options.has<CustomHeadersOption>()) return;
   for (auto const& h : options.get<CustomHeadersOption>()) {
@@ -126,10 +115,24 @@ void AddCustomHeaders(Options const& options, RestRequestBuilder& builder) {
 }
 
 Status AddHeaders(Options const& options, RestRequestBuilder& builder) {
-  auto ah = AddAuthorizationHeader(options, builder);
-  if (!ah.ok()) return ah;
   AddCustomHeaders(options, builder);
   return {};
+}
+
+absl::optional<std::string> GetEmulator() {
+  auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  if (emulator) return emulator;
+  return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+}
+
+std::string RestEndpoint(Options const& options) {
+  return GetEmulator().value_or(options.get<RestEndpointOption>());
+}
+
+std::string IamEndpoint(Options const& options) {
+  auto emulator = GetEmulator();
+  if (emulator) return *emulator + "/iamapi";
+  return options.get<IamEndpointOption>();
 }
 
 }  // namespace
@@ -186,6 +189,9 @@ StatusOr<ListBucketsResponse> RestStub::ListBuckets(
   if (!request.page_token().empty()) {
     builder.AddQueryParameter("pageToken", request.page_token());
   }
+  builder.AddQueryParameter(
+      "returnPartialSuccess",
+      (request.return_partial_success() ? "true" : "false"));
   return ParseFromRestResponse<ListBucketsResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -767,11 +773,22 @@ StatusOr<QueryResumableUploadResponse> RestStub::UploadChunk(
   // default (at least in this case), and that wastes bandwidth as the content
   // length is known.
   builder.AddHeader("Transfer-Encoding", {});
-  auto offset = request.offset();
-  for (auto const& b : request.payload()) {
-    request.hash_function().Update(offset,
-                                   absl::string_view{b.data(), b.size()});
-    offset += b.size();
+  auto hash_function = request.hash_function_ptr();
+  if (hash_function) {
+    auto offset = request.offset();
+    for (auto const& b : request.payload()) {
+      hash_function->Update(offset, absl::string_view{b.data(), b.size()});
+      offset += b.size();
+    }
+  }
+  if (request.last_chunk()) {
+    auto const& hashes = request.known_object_hashes();
+    if (!hashes.crc32c.empty()) {
+      builder.AddHeader("x-goog-hash", "crc32c=" + hashes.crc32c);
+    }
+    if (!hashes.md5.empty()) {
+      builder.AddHeader("x-goog-hash", "md5=" + hashes.md5);
+    }
   }
 
   auto failure_predicate = [](rest::HttpStatusCode code) {

@@ -42,7 +42,7 @@ Options EdgeContainerDefaultOptions(Options options) {
   if (!options.has<edgecontainer_v1::EdgeContainerRetryPolicyOption>()) {
     options.set<edgecontainer_v1::EdgeContainerRetryPolicyOption>(
         edgecontainer_v1::EdgeContainerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()) {

@@ -47,7 +47,7 @@ Options PublicAdvertisedPrefixesDefaultOptions(Options options) {
                     PublicAdvertisedPrefixesRetryPolicyOption>(
         compute_public_advertised_prefixes_v1::
             PublicAdvertisedPrefixesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_public_advertised_prefixes_v1::

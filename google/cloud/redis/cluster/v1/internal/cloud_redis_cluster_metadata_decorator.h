@@ -22,10 +22,13 @@
 #include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -91,6 +94,13 @@ class CloudRedisClusterMetadata : public CloudRedisClusterStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request) override;
+
+  StatusOr<
+      google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncRescheduleClusterMaintenance(
@@ -213,5 +223,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_cluster_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_INTERNAL_CLOUD_REDIS_CLUSTER_METADATA_DECORATOR_H

@@ -213,6 +213,92 @@ DepServiceConnection::DeleteLbRouteExtension(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceConnection::ListLbEdgeExtensions(
+    google::cloud::networkservices::v1::
+        ListLbEdgeExtensionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>>();
+}
+
+StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceConnection::GetLbEdgeExtension(
+    google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceConnection::CreateLbEdgeExtension(
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceConnection::CreateLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceConnection::CreateLbEdgeExtension(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceConnection::UpdateLbEdgeExtension(
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceConnection::UpdateLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceConnection::UpdateLbEdgeExtension(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceConnection::DeleteLbEdgeExtension(
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceConnection::DeleteLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceConnection::DeleteLbEdgeExtension(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::networkservices::v1::AuthzExtension>
 DepServiceConnection::ListAuthzExtensions(
     google::cloud::networkservices::v1::

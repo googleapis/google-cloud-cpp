@@ -17,9 +17,12 @@
 // source: google/cloud/memorystore/v1/memorystore.proto
 
 #include "google/cloud/memorystore/v1/internal/memorystore_auth_decorator.h"
-#include <google/cloud/memorystore/v1/memorystore.grpc.pb.h>
+#include "google/cloud/memorystore/v1/memorystore.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -140,6 +143,17 @@ MemorystoreAuth::GetCertificateAuthority(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCertificateAuthority(context, options, request);
+}
+
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreAuth::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSharedRegionalCertificateAuthority(context, options,
+                                                       request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -382,3 +396,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memorystore_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -20,12 +20,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_REMOTE_LOCATIONS_V1_INTERNAL_INTERCONNECT_REMOTE_LOCATIONS_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_REMOTE_LOCATIONS_V1_INTERNAL_INTERCONNECT_REMOTE_LOCATIONS_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.pb.h"
 #include "google/cloud/compute/interconnect_remote_locations/v1/internal/interconnect_remote_locations_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.pb.h>
 #include <memory>
 #include <set>
 #include <string>

@@ -18,17 +18,20 @@
 
 #include "google/cloud/storagecontrol/v2/internal/storage_control_metadata_decorator.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -197,6 +200,67 @@ StatusOr<google::longrunning::Operation> StorageControlMetadata::RenameFolder(
     SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
   return child_->RenameFolder(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageControlMetadata::AsyncDeleteFolderRecursive(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::DeleteFolderRecursiveRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::
+                    DeleteFolderRecursiveRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(*context, *options);
+  } else {
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncDeleteFolderRecursive(cq, std::move(context),
+                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlMetadata::DeleteFolderRecursive(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::DeleteFolderRecursiveRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::
+                    DeleteFolderRecursiveRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->DeleteFolderRecursive(context, options, request);
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>
@@ -627,6 +691,101 @@ StorageControlMetadata::UpdateOrganizationIntelligenceConfig(
                                                       request);
 }
 
+StatusOr<google::iam::v1::Policy> StorageControlMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::iam::v1::GetIamPolicyRequest>{
+        "bucket=",
+        {
+            {[](google::iam::v1::GetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::GetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             absl::nullopt},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> StorageControlMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::iam::v1::SetIamPolicyRequest>{
+        "bucket=",
+        {
+            {[](google::iam::v1::SetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::SetIamPolicyRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             absl::nullopt},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageControlMetadata::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::iam::v1::TestIamPermissionsRequest>{
+        "bucket=",
+        {
+            {[](google::iam::v1::TestIamPermissionsRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/managedFolders/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::TestIamPermissionsRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/objects/.*",
+                        std::regex::optimize}},
+            {[](google::iam::v1::TestIamPermissionsRequest const& request)
+                 -> std::string const& { return request.resource(); },
+             absl::nullopt},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->TestIamPermissions(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -667,3 +826,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -46,7 +46,7 @@ Options GlobalForwardingRulesDefaultOptions(Options options) {
                     GlobalForwardingRulesRetryPolicyOption>(
         compute_global_forwarding_rules_v1::
             GlobalForwardingRulesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_global_forwarding_rules_v1::

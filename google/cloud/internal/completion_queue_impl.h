@@ -18,6 +18,7 @@
 #include "google/cloud/async_operation.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/run_async_base.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -29,12 +30,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-// Type erase the callables in RunAsync()
-struct RunAsyncBase {
-  virtual ~RunAsyncBase() = default;
-  virtual void exec() = 0;
-};
 
 /**
  * The implementation details for `CompletionQueue`.

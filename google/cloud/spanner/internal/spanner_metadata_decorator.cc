@@ -18,15 +18,19 @@
 
 #include "google/cloud/spanner/internal/spanner_metadata_decorator.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -159,6 +163,17 @@ SpannerMetadata::BatchWrite(
   return child_->BatchWrite(std::move(context), options, request);
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+SpannerMetadata::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  SetMetadata(
+      *context, options,
+      absl::StrCat("database=", internal::UrlEncode(request.database())));
+  return child_->FetchCacheUpdate(std::move(context), options, request);
+}
+
 future<StatusOr<google::spanner::v1::Session>>
 SpannerMetadata::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,
@@ -225,3 +240,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

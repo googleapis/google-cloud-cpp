@@ -32,7 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -98,6 +98,11 @@ class MemorystoreConnectionImpl : public memorystore_v1::MemorystoreConnection {
   GetCertificateAuthority(
       google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
           request) override;
+
+  StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      google::cloud::memorystore::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
   RescheduleMaintenance(

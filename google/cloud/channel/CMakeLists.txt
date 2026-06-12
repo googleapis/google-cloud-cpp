@@ -30,7 +30,7 @@ endif ()
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(channel "Cloud Channel API"
-                                   SERVICE_DIRS "__EMPTY__" "v1/")
+                                   SERVICE_DIRS "v1/")
 
 # The quickstart is too difficult to run successfully, hence, there is no
 # quickstart runner.

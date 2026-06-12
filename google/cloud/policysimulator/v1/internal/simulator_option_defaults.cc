@@ -41,7 +41,7 @@ Options SimulatorDefaultOptions(Options options) {
   if (!options.has<policysimulator_v1::SimulatorRetryPolicyOption>()) {
     options.set<policysimulator_v1::SimulatorRetryPolicyOption>(
         policysimulator_v1::SimulatorLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<policysimulator_v1::SimulatorBackoffPolicyOption>()) {

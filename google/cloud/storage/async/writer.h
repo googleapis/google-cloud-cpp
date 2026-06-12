@@ -22,14 +22,14 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/variant.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -101,6 +101,9 @@ class AsyncWriter {
    * application should send the remaining data to upload, starting from this
    * point.
    *
+   * In the case of an appendable object, this variant will be populated
+   * with a `google::storage::v2::Object` on the first response.
+   *
    * @note
    * Calling this function on a default-constructed or moved-from `AsyncWriter`
    * results in undefined behavior.
@@ -158,7 +161,7 @@ class AsyncWriter {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

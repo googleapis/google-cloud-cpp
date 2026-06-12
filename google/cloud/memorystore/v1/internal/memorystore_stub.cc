@@ -17,12 +17,15 @@
 // source: google/cloud/memorystore/v1/memorystore.proto
 
 #include "google/cloud/memorystore/v1/internal/memorystore_stub.h"
+#include "google/cloud/memorystore/v1/memorystore.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/memorystore/v1/memorystore.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -153,6 +156,20 @@ DefaultMemorystoreStub::GetCertificateAuthority(
   google::cloud::memorystore::v1::CertificateAuthority response;
   auto status =
       grpc_stub_->GetCertificateAuthority(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+DefaultMemorystoreStub::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  google::cloud::memorystore::v1::SharedRegionalCertificateAuthority response;
+  auto status = grpc_stub_->GetSharedRegionalCertificateAuthority(
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -440,3 +457,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memorystore_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

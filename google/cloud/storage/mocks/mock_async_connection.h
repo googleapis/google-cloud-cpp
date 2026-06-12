@@ -29,50 +29,37 @@ namespace cloud {
 namespace storage_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockAsyncConnection : public storage_experimental::AsyncConnection {
+class MockAsyncConnection : public storage::AsyncConnection {
  public:
   MOCK_METHOD(Options, options, (), (const, override));
   MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, InsertObject,
               (InsertObjectParams), (override));
   MOCK_METHOD(
-      future<StatusOr<
-          std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>,
+      future<StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>>,
       Open, (OpenParams), (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          std::unique_ptr<storage_experimental::AsyncReaderConnection>>>,
-      ReadObject, (ReadObjectParams), (override));
-  MOCK_METHOD(future<StatusOr<storage_experimental::ReadPayload>>,
-              ReadObjectRange, (ReadObjectParams), (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
-      StartAppendableObjectUpload, (AppendableUploadParams), (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
-      ResumeAppendableObjectUpload, (AppendableUploadParams), (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
-      StartUnbufferedUpload, (UploadParams), (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
-      StartBufferedUpload, (UploadParams), (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
-      ResumeUnbufferedUpload, (ResumeUploadParams), (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
-      ResumeBufferedUpload, (ResumeUploadParams), (override));
+  MOCK_METHOD(future<StatusOr<std::unique_ptr<storage::AsyncReaderConnection>>>,
+              ReadObject, (ReadObjectParams), (override));
+  MOCK_METHOD(future<StatusOr<storage::ReadPayload>>, ReadObjectRange,
+              (ReadObjectParams), (override));
+  MOCK_METHOD(future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>,
+              StartAppendableObjectUpload, (AppendableUploadParams),
+              (override));
+  MOCK_METHOD(future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>,
+              ResumeAppendableObjectUpload, (AppendableUploadParams),
+              (override));
+  MOCK_METHOD(future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>,
+              StartUnbufferedUpload, (UploadParams), (override));
+  MOCK_METHOD(future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>,
+              StartBufferedUpload, (UploadParams), (override));
+  MOCK_METHOD(future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>,
+              ResumeUnbufferedUpload, (ResumeUploadParams), (override));
+  MOCK_METHOD(future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>,
+              ResumeBufferedUpload, (ResumeUploadParams), (override));
   MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, ComposeObject,
               (ComposeObjectParams), (override));
   MOCK_METHOD(future<Status>, DeleteObject, (DeleteObjectParams), (override));
-  MOCK_METHOD(std::shared_ptr<storage_experimental::AsyncRewriterConnection>,
-              RewriteObject, (RewriteObjectParams), (override));
+  MOCK_METHOD(std::shared_ptr<storage::AsyncRewriterConnection>, RewriteObject,
+              (RewriteObjectParams), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

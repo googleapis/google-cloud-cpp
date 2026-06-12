@@ -28,8 +28,6 @@ namespace cloud {
 namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ArtifactRegistryTracingConnection
     : public artifactregistry_v1::ArtifactRegistryConnection {
  public:
@@ -336,6 +334,21 @@ class ArtifactRegistryTracingConnection
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteAttachment(google::longrunning::Operation const& operation) override;
 
+  future<
+      StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+  ExportArtifact(
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportArtifact(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+  ExportArtifact(google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
@@ -348,8 +361,6 @@ class ArtifactRegistryTracingConnection
  private:
   std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

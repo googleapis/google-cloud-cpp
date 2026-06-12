@@ -14,7 +14,6 @@
 
 #include "docfx/doxygen2children.h"
 #include "docfx/public_docs.h"
-#include "docfx/yaml_emit.h"
 #include <iterator>
 #include <string_view>
 

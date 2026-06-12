@@ -48,7 +48,13 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object, Options opts) {
   return std::make_shared<internal::ServiceAccountConfig>(
-      std::move(json_object), std::move(opts));
+      std::move(json_object), absl::nullopt, std::move(opts));
+}
+
+std::shared_ptr<Credentials> MakeServiceAccountCredentialsFromFile(
+    std::string const& file_path, Options opts) {
+  return std::make_shared<internal::ServiceAccountConfig>(
+      absl::nullopt, file_path, std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeExternalAccountCredentials(
@@ -61,6 +67,23 @@ std::shared_ptr<Credentials> MakeApiKeyCredentials(std::string api_key,
                                                    Options opts) {
   return std::make_shared<internal::ApiKeyConfig>(std::move(api_key),
                                                   std::move(opts));
+}
+
+std::shared_ptr<Credentials> MakeComputeEngineCredentials(Options opts) {
+  return std::make_shared<internal::ComputeEngineCredentialsConfig>(
+      std::move(opts));
+}
+
+std::shared_ptr<Credentials> MakeGDCHServiceAccountCredentials(
+    std::string json_object, std::string audience, Options opts) {
+  return std::make_shared<internal::GDCHServiceAccountConfig>(
+      std::move(json_object), std::move(audience), std::move(opts));
+}
+
+std::shared_ptr<Credentials> MakeGDCHServiceAccountCredentials(
+    std::string audience, Options opts) {
+  return std::make_shared<internal::GDCHServiceAccountConfig>(
+      std::move(audience), std::move(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

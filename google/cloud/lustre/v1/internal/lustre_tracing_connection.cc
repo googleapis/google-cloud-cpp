@@ -27,8 +27,6 @@ namespace cloud {
 namespace lustre_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 LustreTracingConnection::LustreTracingConnection(
     std::shared_ptr<lustre_v1::LustreConnection> child)
     : child_(std::move(child)) {}
@@ -226,15 +224,11 @@ Status LustreTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<lustre_v1::LustreConnection> MakeLustreTracingConnection(
     std::shared_ptr<lustre_v1::LustreConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<LustreTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

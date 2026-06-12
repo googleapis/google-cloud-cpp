@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_logging_credentials.h"
+#include "google/cloud/internal/oauth2_regional_access_boundary_token_manager.h"
 
 namespace google {
 namespace cloud {
@@ -23,10 +24,18 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<oauth2_internal::Credentials> Decorate(
-    std::shared_ptr<oauth2_internal::Credentials> impl, Options const& opts) {
+    std::shared_ptr<oauth2_internal::Credentials> impl,
+    HttpClientFactory client_factory, Options const& opts) {
   impl = WithLogging(std::move(impl), opts, "refresh");
   impl = WithCaching(std::move(impl));
-  return WithLogging(std::move(impl), opts, "cached");
+  impl = WithLogging(std::move(impl), opts, "cached");
+  if (!std::holds_alternative<std::monostate>(
+          impl->AllowedLocationsRequest())) {
+    impl = WithRegionalAccessBoundary(std::move(impl),
+                                      std::move(client_factory), opts);
+    impl = WithLogging(std::move(impl), opts, "rab");
+  }
+  return impl;
 }
 
 std::shared_ptr<oauth2_internal::Credentials> WithLogging(
@@ -40,6 +49,13 @@ std::shared_ptr<oauth2_internal::Credentials> WithLogging(
 std::shared_ptr<oauth2_internal::Credentials> WithCaching(
     std::shared_ptr<oauth2_internal::Credentials> impl) {
   return std::make_shared<oauth2_internal::CachedCredentials>(std::move(impl));
+}
+
+std::shared_ptr<oauth2_internal::Credentials> WithRegionalAccessBoundary(
+    std::shared_ptr<oauth2_internal::Credentials> impl,
+    HttpClientFactory client_factory, Options options) {
+  return RegionalAccessBoundaryTokenManager::Create(
+      std::move(impl), std::move(client_factory), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

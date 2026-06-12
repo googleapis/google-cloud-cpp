@@ -22,10 +22,13 @@
 #include "google/cloud/developerconnect/v1/internal/developer_connect_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -241,6 +244,16 @@ class DeveloperConnectAuth : public DeveloperConnectStub {
       google::cloud::developerconnect::v1::DeleteSelfRequest const& request)
       override;
 
+  StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse> StartOAuth(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::developerconnect::v1::StartOAuthRequest const& request)
+      override;
+
+  StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+  FinishOAuth(grpc::ClientContext& context, Options const& options,
+              google::cloud::developerconnect::v1::FinishOAuthRequest const&
+                  request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -286,5 +299,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace developerconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_INTERNAL_DEVELOPER_CONNECT_AUTH_DECORATOR_H

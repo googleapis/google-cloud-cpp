@@ -27,8 +27,6 @@ namespace cloud {
 namespace memorystore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MemorystoreTracingConnection::MemorystoreTracingConnection(
     std::shared_ptr<memorystore_v1::MemorystoreConnection> child)
     : child_(std::move(child)) {}
@@ -148,6 +146,18 @@ MemorystoreTracingConnection::GetCertificateAuthority(
       "memorystore_v1::MemorystoreConnection::GetCertificateAuthority");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCertificateAuthority(request));
+}
+
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreTracingConnection::GetSharedRegionalCertificateAuthority(
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::"
+      "GetSharedRegionalCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->GetSharedRegionalCertificateAuthority(request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -365,16 +375,12 @@ Status MemorystoreTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<memorystore_v1::MemorystoreConnection>
 MakeMemorystoreTracingConnection(
     std::shared_ptr<memorystore_v1::MemorystoreConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<MemorystoreTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

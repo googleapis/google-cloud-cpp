@@ -169,36 +169,6 @@ Idempotency DataplexServiceConnectionIdempotencyPolicy::CancelJob(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateEnvironment(
-    google::cloud::dataplex::v1::CreateEnvironmentRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
-Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateEnvironment(
-    google::cloud::dataplex::v1::UpdateEnvironmentRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
-Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteEnvironment(
-    google::cloud::dataplex::v1::DeleteEnvironmentRequest const&) {
-  return Idempotency::kNonIdempotent;
-}
-
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListEnvironments(
-    google::cloud::dataplex::v1::ListEnvironmentsRequest) {  // NOLINT
-  return Idempotency::kIdempotent;
-}
-
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetEnvironment(
-    google::cloud::dataplex::v1::GetEnvironmentRequest const&) {
-  return Idempotency::kIdempotent;
-}
-
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListSessions(
-    google::cloud::dataplex::v1::ListSessionsRequest) {  // NOLINT
-  return Idempotency::kIdempotent;
-}
-
 Idempotency DataplexServiceConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

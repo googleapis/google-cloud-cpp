@@ -41,7 +41,7 @@ Options ClusterManagerDefaultOptions(Options options) {
   if (!options.has<container_v1::ClusterManagerRetryPolicyOption>()) {
     options.set<container_v1::ClusterManagerRetryPolicyOption>(
         container_v1::ClusterManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<container_v1::ClusterManagerBackoffPolicyOption>()) {

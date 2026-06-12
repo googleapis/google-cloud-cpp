@@ -43,7 +43,7 @@ Options DocumentSchemaServiceDefaultOptions(Options options) {
           contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>(
         contentwarehouse_v1::DocumentSchemaServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

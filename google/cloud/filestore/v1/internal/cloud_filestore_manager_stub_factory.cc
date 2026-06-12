@@ -17,22 +17,25 @@
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub_factory.h"
+#include "google/cloud/filestore/v1/cloud_filestore_service.grpc.pb.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_auth_decorator.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_logging_decorator.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_metadata_decorator.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/filestore/v1/cloud_filestore_service.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -76,3 +79,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

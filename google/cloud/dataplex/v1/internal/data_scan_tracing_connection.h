@@ -28,8 +28,6 @@ namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DataScanServiceTracingConnection
     : public dataplex_v1::DataScanServiceConnection {
  public:
@@ -92,6 +90,10 @@ class DataScanServiceTracingConnection
   StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
       google::cloud::dataplex::v1::ListDataScanJobsRequest request) override;
 
+  StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+  CancelDataScanJob(google::cloud::dataplex::v1::CancelDataScanJobRequest const&
+                        request) override;
+
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
   GenerateDataQualityRules(
       google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
@@ -127,8 +129,6 @@ class DataScanServiceTracingConnection
  private:
   std::shared_ptr<dataplex_v1::DataScanServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -81,10 +81,13 @@ printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
 printf "%10s %s\n" "branch:" "${BRANCH}"
 
 io::log_h2 "Brew packages"
+export HOMEBREW_CURL_RETRIES=3
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
-brew list --versions --formula
-brew list --versions --cask
+brew list --versions --formula || io::log_yellow \
+  "brew list --formula failed. Trusting Homebrew's fallback and continuing."
+brew list --versions --cask || io::log_yellow \
+  "brew list --cask failed. Trusting Homebrew's fallback and continuing."
 brew list --versions coreutils || brew install coreutils
 if [[ "${RUNNING_CI:-}" = "yes" ]]; then
   # We use `gcloud alpha storage` as it significantly improves the

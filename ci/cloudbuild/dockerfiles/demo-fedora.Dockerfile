@@ -22,7 +22,8 @@ ARG NCPU=4
 # ```bash
 RUN dnf makecache && \
     dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
-        patch unzip tar wget zip
+        patch unzip tar wget zip dnf-utils zlib-devel
+RUN dnf makecache && dnf debuginfo-install -y glibc
 # ```
 
 # Fedora:40 includes packages, with recent enough versions, for most of the
@@ -30,8 +31,7 @@ RUN dnf makecache && \
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y protobuf-compiler protobuf-devel grpc-cpp grpc-devel \
-        json-devel libcurl-devel google-crc32c-devel openssl-devel
+    dnf install -y json-devel libcurl-devel openssl-devel
 # ```
 
 # #### Patching pkg-config
@@ -54,14 +54,6 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 # ```
 
-# Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting
-# with Fedora:38. If you using Fedora >= 38 or you are not planning to use
-# `pkg-config(1)` you can ignore this step.  Alternatively, you can install RE2
-# and gRPC from source.
-# ```
-# sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
-# ```
-
 # The following steps will install libraries and tools in `/usr/local`. By
 # default, pkgconf does not search in these directories. We need to explicitly
 # set the search path.
@@ -70,23 +62,35 @@ RUN curl -fsSL https://distfiles.ariadne.space/pkgconf/pkgconf-2.2.0.tar.gz | \
 ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
 # ```
 
-# #### opentelemetry-cpp
-
-# The project has an **optional** dependency on the OpenTelemetry library.
-# We recommend installing this library because:
-# - the dependency will become required in the google-cloud-cpp v3.x series.
-# - it is needed to produce distributed traces of the library.
+# #### Protobuf
 
 # ```bash
-WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.tar.gz | \
+WORKDIR /var/tmp/build/protobuf
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+# ```
+
+# #### opentelemetry-cpp
+
+# ```bash
+WORKDIR /var/tmp/build/opentelemetry-cpp
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
-        -DWITH_STL=CXX14 \
-        -DWITH_ABSEIL=ON \
+        -DWITH_STL=CXX17 \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
@@ -95,14 +99,44 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20
     ldconfig
 # ```
 
+# #### gRPC
+
+# ```bash
+WORKDIR /var/tmp/build/grpc
+RUN dnf makecache && dnf install -y c-ares-devel re2-devel
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DBUILD_SHARED_LIBS=ON \
+      -DgRPC_INSTALL=ON \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DgRPC_ABSL_PROVIDER=package \
+      -DgRPC_CARES_PROVIDER=package \
+      -DgRPC_PROTOBUF_PROVIDER=package \
+      -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
+      -DgRPC_RE2_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_ZLIB_PROVIDER=package \
+      -DgRPC_OPENTELEMETRY_PROVIDER=package \
+      -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
+      -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
+# ```
+
 ## [DONE packaging.md]
 
+RUN dnf makecache && dnf install -y gdb
+
 WORKDIR /var/tmp/sccache
-RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-x86_64-unknown-linux-musl.tar.gz | \
+RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.15.0/sccache-v0.15.0-x86_64-unknown-linux-musl.tar.gz | \
     tar -zxf - --strip-components=1 && \
     mkdir -p /usr/local/bin && \
     mv sccache /usr/local/bin/sccache && \
     chmod +x /usr/local/bin/sccache
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
+RUN (echo /usr/local/lib; echo /usr/local/lib64) | tee /etc/ld.so.conf.d/local.conf
 RUN ldconfig /usr/local/lib*

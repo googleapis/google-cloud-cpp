@@ -44,7 +44,7 @@ Options ServiceAttachmentsDefaultOptions(Options options) {
     options.set<
         compute_service_attachments_v1::ServiceAttachmentsRetryPolicyOption>(
         compute_service_attachments_v1::
-            ServiceAttachmentsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            ServiceAttachmentsLimitedTimeRetryPolicy(std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_service_attachments_v1::

@@ -42,7 +42,7 @@ Options InstanceGroupsDefaultOptions(Options options) {
           compute_instance_groups_v1::InstanceGroupsRetryPolicyOption>()) {
     options.set<compute_instance_groups_v1::InstanceGroupsRetryPolicyOption>(
         compute_instance_groups_v1::InstanceGroupsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

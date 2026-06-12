@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -442,7 +442,7 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineService.GetTrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L58}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L127}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L123}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelTrainingPipeline(std::string const& name, Options opts = {});
@@ -485,7 +485,7 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineService.GetTrainingPipeline]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L58}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L127}
   /// [google.cloud.aiplatform.v1.TrainingPipeline.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/training_pipeline.proto#L123}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelTrainingPipeline(
@@ -973,7 +973,7 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L142}
   /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L135}
   /// [google.cloud.aiplatform.v1.PipelineService.GetPipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L122}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelPipelineJob(std::string const& name, Options opts = {});
@@ -1015,7 +1015,7 @@ class PipelineServiceClient {
   /// [google.cloud.aiplatform.v1.PipelineJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L142}
   /// [google.cloud.aiplatform.v1.PipelineJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_job.proto#L135}
   /// [google.cloud.aiplatform.v1.PipelineService.GetPipelineJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/pipeline_service.proto#L122}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelPipelineJob(
@@ -1488,7 +1488,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -1517,7 +1517,7 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -1550,10 +1550,10 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -1589,10 +1589,10 @@ class PipelineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(
@@ -1631,7 +1631,7 @@ class PipelineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
+  /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L226}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> WaitOperation(

@@ -87,6 +87,11 @@ readonly BAZEL_EXCLUDES=(
   "-//google/cloud:options_benchmark"
   # See #15546
   "-//google/cloud/storage/tests:unified_credentials_integration_test-grpc-metadata"
+  # See #15662
+  "-//google/cloud/speech:v1_samples_adaptation_client_samples"
+  "-//google/cloud/speech:v1_samples_speech_client_samples"
+  "-//google/cloud/speech:v2_samples_speech_client_samples"
+  "-//google/cloud/speech/quickstart:quickstart"
 )
 readonly BAZEL_TEST_COMMAND=(
   "test"

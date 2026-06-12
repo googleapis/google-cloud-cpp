@@ -105,8 +105,8 @@ TEST(Bytes, OutputStream) {
       {Bytes(std::string("a\377B")), R"(B"a\377B")"},
       {Bytes(std::string("!@#$%^&*()-.")), R"(B"!@#$%^&*()-.")"},
       {Bytes(std::string(3, '\0')), R"(B"\000\000\000")"},
-      {Bytes(""), R"(B"\000")"},
-      {Bytes("foo"), R"(B"foo\000")"},
+      {Bytes(""), R"(B"")"},
+      {Bytes("foo"), R"(B"foo")"},
   };
 
   for (auto const& tc : test_cases) {

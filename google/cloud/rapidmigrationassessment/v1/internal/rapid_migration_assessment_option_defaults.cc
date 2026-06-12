@@ -47,7 +47,7 @@ Options RapidMigrationAssessmentDefaultOptions(Options options) {
         rapidmigrationassessment_v1::RapidMigrationAssessmentRetryPolicyOption>(
         rapidmigrationassessment_v1::
             RapidMigrationAssessmentLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<rapidmigrationassessment_v1::

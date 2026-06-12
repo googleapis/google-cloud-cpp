@@ -42,7 +42,7 @@ Options CloudShellServiceDefaultOptions(Options options) {
   if (!options.has<shell_v1::CloudShellServiceRetryPolicyOption>()) {
     options.set<shell_v1::CloudShellServiceRetryPolicyOption>(
         shell_v1::CloudShellServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<shell_v1::CloudShellServiceBackoffPolicyOption>()) {

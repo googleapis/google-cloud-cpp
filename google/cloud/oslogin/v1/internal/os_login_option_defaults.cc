@@ -41,7 +41,7 @@ Options OsLoginServiceDefaultOptions(Options options) {
   if (!options.has<oslogin_v1::OsLoginServiceRetryPolicyOption>()) {
     options.set<oslogin_v1::OsLoginServiceRetryPolicyOption>(
         oslogin_v1::OsLoginServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<oslogin_v1::OsLoginServiceBackoffPolicyOption>()) {

@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_addresses_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AddressesTracingConnection::AddressesTracingConnection(
     std::shared_ptr<compute_addresses_v1::AddressesConnection> child)
     : child_(std::move(child)) {}
@@ -186,16 +184,12 @@ AddressesTracingConnection::SetLabels(
   return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_addresses_v1::AddressesConnection>
 MakeAddressesTracingConnection(
     std::shared_ptr<compute_addresses_v1::AddressesConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AddressesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

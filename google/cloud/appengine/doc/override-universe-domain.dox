@@ -1,0 +1,77 @@
+/*!
+@page appengine-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `appengine_v1::ApplicationsClient`:
+
+@snippet applications_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c appengine_v1::ApplicationsClient](@ref appengine_v1::ApplicationsClient-universe-domain-snippet)
+- [\c appengine_v1::AuthorizedCertificatesClient](@ref appengine_v1::AuthorizedCertificatesClient-universe-domain-snippet)
+- [\c appengine_v1::AuthorizedDomainsClient](@ref appengine_v1::AuthorizedDomainsClient-universe-domain-snippet)
+- [\c appengine_v1::DomainMappingsClient](@ref appengine_v1::DomainMappingsClient-universe-domain-snippet)
+- [\c appengine_v1::FirewallClient](@ref appengine_v1::FirewallClient-universe-domain-snippet)
+- [\c appengine_v1::InstancesClient](@ref appengine_v1::InstancesClient-universe-domain-snippet)
+- [\c appengine_v1::ServicesClient](@ref appengine_v1::ServicesClient-universe-domain-snippet)
+- [\c appengine_v1::VersionsClient](@ref appengine_v1::VersionsClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page appengine_v1::ApplicationsClient-universe-domain-snippet Override appengine_v1::ApplicationsClient Universe Domain
+
+@snippet google/cloud/appengine/v1/samples/applications_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page appengine_v1::AuthorizedCertificatesClient-universe-domain-snippet Override appengine_v1::AuthorizedCertificatesClient Universe Domain
+
+@snippet google/cloud/appengine/v1/samples/authorized_certificates_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page appengine_v1::AuthorizedDomainsClient-universe-domain-snippet Override appengine_v1::AuthorizedDomainsClient Universe Domain
+
+@snippet google/cloud/appengine/v1/samples/authorized_domains_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page appengine_v1::DomainMappingsClient-universe-domain-snippet Override appengine_v1::DomainMappingsClient Universe Domain
+
+@snippet google/cloud/appengine/v1/samples/domain_mappings_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page appengine_v1::FirewallClient-universe-domain-snippet Override appengine_v1::FirewallClient Universe Domain
+
+@snippet google/cloud/appengine/v1/samples/firewall_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page appengine_v1::InstancesClient-universe-domain-snippet Override appengine_v1::InstancesClient Universe Domain
+
+@snippet google/cloud/appengine/v1/samples/instances_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page appengine_v1::ServicesClient-universe-domain-snippet Override appengine_v1::ServicesClient Universe Domain
+
+@snippet google/cloud/appengine/v1/samples/services_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page appengine_v1::VersionsClient-universe-domain-snippet Override appengine_v1::VersionsClient Universe Domain
+
+@snippet google/cloud/appengine/v1/samples/versions_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

@@ -47,7 +47,7 @@ Options InstanceGroupManagerResizeRequestsDefaultOptions(Options options) {
                     InstanceGroupManagerResizeRequestsRetryPolicyOption>(
         compute_instance_group_manager_resize_requests_v1::
             InstanceGroupManagerResizeRequestsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options

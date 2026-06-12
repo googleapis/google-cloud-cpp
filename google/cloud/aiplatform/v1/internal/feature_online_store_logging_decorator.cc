@@ -17,14 +17,17 @@
 // source: google/cloud/aiplatform/v1/feature_online_store_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_logging_decorator.h"
+#include "google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -86,6 +89,21 @@ FeatureOnlineStoreServiceLogging::AsyncFeatureViewDirectWrite(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceLogging::GenerateFetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+              request) {
+        return child_->GenerateFetchAccessToken(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -210,3 +228,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

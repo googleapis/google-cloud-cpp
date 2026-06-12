@@ -26,8 +26,6 @@ namespace cloud {
 namespace language_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 LanguageServiceTracingConnection::LanguageServiceTracingConnection(
     std::shared_ptr<language_v2::LanguageServiceConnection> child)
     : child_(std::move(child)) {}
@@ -77,16 +75,12 @@ LanguageServiceTracingConnection::AnnotateText(
   return internal::EndSpan(*span, child_->AnnotateText(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<language_v2::LanguageServiceConnection>
 MakeLanguageServiceTracingConnection(
     std::shared_ptr<language_v2::LanguageServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<LanguageServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

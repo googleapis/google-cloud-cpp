@@ -23,6 +23,9 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace storage_internal {
@@ -275,6 +278,32 @@ TEST_F(GrpcClientTest, ListBuckets) {
       storage::internal::ListBucketsRequest("test-project")
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
+TEST_F(GrpcClientTest, ListBucketsWithPartialSuccess) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, ListBuckets)
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       google::storage::v2::ListBucketsRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.parent(), "projects/test-project");
+        EXPECT_TRUE(request.return_partial_success());
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto response = client->ListBuckets(
+      context, TestOptions(),
+      storage::internal::ListBucketsRequest("test-project")
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user"),
+                                storage::ReturnPartialSuccess(true)));
   EXPECT_EQ(response.status(), PermanentError());
 }
 

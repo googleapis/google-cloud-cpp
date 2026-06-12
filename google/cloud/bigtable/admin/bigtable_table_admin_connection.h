@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -358,6 +358,11 @@ class BigtableTableAdminConnection {
   virtual future<
       StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request);
+
+  virtual future<
+      StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+  WaitForConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request);
 };
 

@@ -17,9 +17,12 @@
 // source: google/cloud/domains/v1/domains.proto
 
 #include "google/cloud/domains/v1/internal/domains_auth_decorator.h"
-#include <google/cloud/domains/v1/domains.grpc.pb.h>
+#include "google/cloud/domains/v1/domains.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -364,3 +367,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace domains_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

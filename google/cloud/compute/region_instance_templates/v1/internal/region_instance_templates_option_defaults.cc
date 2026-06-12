@@ -46,7 +46,7 @@ Options RegionInstanceTemplatesDefaultOptions(Options options) {
                     RegionInstanceTemplatesRetryPolicyOption>(
         compute_region_instance_templates_v1::
             RegionInstanceTemplatesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_instance_templates_v1::

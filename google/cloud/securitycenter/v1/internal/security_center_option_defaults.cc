@@ -42,7 +42,7 @@ Options SecurityCenterDefaultOptions(Options options) {
   if (!options.has<securitycenter_v1::SecurityCenterRetryPolicyOption>()) {
     options.set<securitycenter_v1::SecurityCenterRetryPolicyOption>(
         securitycenter_v1::SecurityCenterLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<securitycenter_v1::SecurityCenterBackoffPolicyOption>()) {

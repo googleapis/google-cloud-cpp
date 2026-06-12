@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/pubsub/internal/tracing_batch_callback.h"
 #include "google/cloud/pubsub/internal/message_propagator.h"
 #include "google/cloud/pubsub/message.h"
@@ -28,9 +26,9 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 
 namespace google {
 namespace cloud {
@@ -135,7 +133,7 @@ TEST(TracingBatchCallback, VerifySpanIsSetInUserCallback) {
 }
 
 TEST(TracingBatchCallback, StartAndEndModackSpanForOneMessage) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
@@ -157,21 +155,23 @@ TEST(TracingBatchCallback, StartAndEndModackSpanForOneMessage) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("test-sub modack"),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
-                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                  "extend"),
-              OTelAttribute<int64_t>(sc::kMessagingBatchMessageCount, 1),
+                  /*sc::messaging::kMessagingOperationType=*/
+                  "messaging.operation.type", "extend"),
+              OTelAttribute<int64_t>(sc::messaging::kMessagingBatchMessageCount,
+                                     1),
               OTelAttribute<int64_t>(
                   "messaging.gcp_pubsub.message.ack_deadline_seconds", 10),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-sub")),
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName, "test-sub")),
           SpanLinksSizeIs(1))));
 }
 
 TEST(TracingBatchCallback, StartAndEndModackSpanForMultipleMessages) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
@@ -195,16 +195,18 @@ TEST(TracingBatchCallback, StartAndEndModackSpanForMultipleMessages) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("test-sub modack"),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
-                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                  "extend"),
-              OTelAttribute<int64_t>(sc::kMessagingBatchMessageCount, 2),
+                  /*sc::messaging::kMessagingOperationType=*/
+                  "messaging.operation.type", "extend"),
+              OTelAttribute<int64_t>(sc::messaging::kMessagingBatchMessageCount,
+                                     2),
               OTelAttribute<int64_t>(
                   "messaging.gcp_pubsub.message.ack_deadline_seconds", 10),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-sub")),
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName, "test-sub")),
           SpanLinksSizeIs(2))));
 }
 
@@ -233,7 +235,7 @@ TEST(TracingBatchCallback, VerifyModackSpansAreEndedInDestructor) {
 }
 
 TEST(TracingBatchCallback, SubscribeAttributes) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
@@ -248,17 +250,19 @@ TEST(TracingBatchCallback, SubscribeAttributes) {
       Contains(AllOf(
           SpanNamed("test-sub subscribe"),
           SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingSystem,
+                                         "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
               OTelAttribute<std::string>(
-                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                  "subscribe"),
-              OTelAttribute<std::string>(sc::kMessagingMessageId, "id-0"),
+                  /*sc::messaging::kMessagingOperationType=*/
+                  "messaging.operation.type", "subscribe"),
+              OTelAttribute<std::string>(sc::messaging::kMessagingMessageId,
+                                         "id-0"),
               OTelAttribute<std::string>("messaging.gcp_pubsub.message.ack_id",
                                          "ack-id-0"),
               OTelAttribute<int64_t>("messaging.message.envelope.size", 101),
-              OTelAttribute<std::string>(sc::kMessagingDestinationName,
-                                         "test-sub")))));
+              OTelAttribute<std::string>(
+                  sc::messaging::kMessagingDestinationName, "test-sub")))));
 }
 
 TEST(TracingBatchCallback, SubscribeAttributesForOrderingKey) {
@@ -331,7 +335,7 @@ TEST(TracingBatchCallback, SubscribeAttributesForExactlyOnce) {
 }
 
 TEST(TracingBatchCallback, StartAndEndConcurrencyControlSpan) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
@@ -343,15 +347,15 @@ TEST(TracingBatchCallback, StartAndEndConcurrencyControlSpan) {
   batch_callback->AckEnd("ack-id-0");
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
-                            SpanNamed("subscriber concurrency control"),
-                            SpanHasAttributes(OTelAttribute<std::string>(
-                                sc::kMessagingSystem, "gcp_pubsub")))));
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                         SpanNamed("subscriber concurrency control"),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             sc::messaging::kMessagingSystem, "gcp_pubsub")))));
 }
 
 TEST(TracingBatchCallback, StartAndEndSchedulerSpan) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<pubsub_testing::MockBatchCallback>();
   EXPECT_CALL(*mock, callback).Times(1);
@@ -363,11 +367,11 @@ TEST(TracingBatchCallback, StartAndEndSchedulerSpan) {
   batch_callback->AckEnd("ack-id-0");
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans, Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsInternal(),
-                            SpanNamed("subscriber scheduler"),
-                            SpanHasAttributes(OTelAttribute<std::string>(
-                                sc::kMessagingSystem, "gcp_pubsub")))));
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanHasInstrumentationScope(), SpanKindIsInternal(),
+                         SpanNamed("subscriber scheduler"),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             sc::messaging::kMessagingSystem, "gcp_pubsub")))));
 }
 
 TEST(TracingBatchCallback, VerifyDestructorEndsAllSpans) {
@@ -518,5 +522,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

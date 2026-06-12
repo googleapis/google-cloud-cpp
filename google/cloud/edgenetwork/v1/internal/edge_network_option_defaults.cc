@@ -41,7 +41,7 @@ Options EdgeNetworkDefaultOptions(Options options) {
   if (!options.has<edgenetwork_v1::EdgeNetworkRetryPolicyOption>()) {
     options.set<edgenetwork_v1::EdgeNetworkRetryPolicyOption>(
         edgenetwork_v1::EdgeNetworkLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<edgenetwork_v1::EdgeNetworkBackoffPolicyOption>()) {

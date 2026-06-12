@@ -17,11 +17,14 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_stub.h"
+#include "google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -324,7 +327,98 @@ DefaultReservationServiceStub::UpdateBiReservation(
   return response;
 }
 
+StatusOr<google::iam::v1::Policy> DefaultReservationServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::Policy> DefaultReservationServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DefaultReservationServiceStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+DefaultReservationServiceStub::CreateReservationGroup(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::reservation::v1::
+        CreateReservationGroupRequest const& request) {
+  google::cloud::bigquery::reservation::v1::ReservationGroup response;
+  auto status =
+      grpc_stub_->CreateReservationGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+DefaultReservationServiceStub::GetReservationGroup(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::reservation::v1::GetReservationGroupRequest const&
+        request) {
+  google::cloud::bigquery::reservation::v1::ReservationGroup response;
+  auto status = grpc_stub_->GetReservationGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultReservationServiceStub::DeleteReservationGroup(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::reservation::v1::
+        DeleteReservationGroupRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteReservationGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<
+    google::cloud::bigquery::reservation::v1::ListReservationGroupsResponse>
+DefaultReservationServiceStub::ListReservationGroups(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::reservation::v1::
+        ListReservationGroupsRequest const& request) {
+  google::cloud::bigquery::reservation::v1::ListReservationGroupsResponse
+      response;
+  auto status = grpc_stub_->ListReservationGroups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -40,7 +40,7 @@ Options DataformDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataform_v1::DataformRetryPolicyOption>()) {
     options.set<dataform_v1::DataformRetryPolicyOption>(
-        dataform_v1::DataformLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        dataform_v1::DataformLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataform_v1::DataformBackoffPolicyOption>()) {
@@ -48,6 +48,16 @@ Options DataformDefaultOptions(Options options) {
         ExponentialBackoffPolicy(
             std::chrono::seconds(0), std::chrono::seconds(1),
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
+  }
+  if (!options.has<dataform_v1::DataformPollingPolicyOption>()) {
+    options.set<dataform_v1::DataformPollingPolicyOption>(
+        GenericPollingPolicy<dataform_v1::DataformRetryPolicyOption::Type,
+                             dataform_v1::DataformBackoffPolicyOption::Type>(
+            options.get<dataform_v1::DataformRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<dataform_v1::DataformConnectionIdempotencyPolicyOption>()) {

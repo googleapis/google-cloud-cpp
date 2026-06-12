@@ -17,35 +17,34 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/opentelemetry.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_startoptions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPullSpan() {
   auto const& current = internal::CurrentOptions();
   auto const& subscription = current.get<pubsub::SubscriptionOption>();
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kConsumer;
   auto span = internal::MakeSpan(
       subscription.subscription_id() + " receive",
-      {{sc::kMessagingSystem, "gcp_pubsub"},
-       {/*sc::kMessagingOperationType=*/"messaging.operation.type", "receive"},
-       {sc::kCodeFunction, "pubsub::SubscriberConnection::Pull"},
+      {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+        "receive"},
+       {sc::code::kCodeFunctionName, "pubsub::SubscriberConnection::Pull"},
        {"gcp.project_id", subscription.project_id()},
-       {sc::kMessagingDestinationName, subscription.subscription_id()}},
+       {sc::messaging::kMessagingDestinationName,
+        subscription.subscription_id()}},
       options);
   return span;
 }
@@ -56,16 +55,18 @@ StatusOr<pubsub::PullResponse> EndPullSpan(
         opentelemetry::context::propagation::TextMapPropagator> const&
         propagator,
     StatusOr<pubsub::PullResponse> response) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   if (response.ok()) {
     auto message = response.value().message;
-    span->SetAttribute(sc::kMessagingMessageId, message.message_id());
+    span->SetAttribute(sc::messaging::kMessagingMessageId,
+                       message.message_id());
     if (!message.ordering_key().empty()) {
       span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
                          message.ordering_key());
     }
     span->SetAttribute(
-        /*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
+        /*sc::messaging::kMessagingMessageEnvelopeSize=*/
+        "messaging.message.envelope.size",
         static_cast<std::int64_t>(MessageSize(message)));
 
     auto current = opentelemetry::context::RuntimeContext::GetCurrent();
@@ -127,15 +128,6 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberTracingConnection(
     std::shared_ptr<pubsub::SubscriberConnection> connection) {
   return std::make_shared<SubscriberTracingConnection>(std::move(connection));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberTracingConnection(
-    std::shared_ptr<pubsub::SubscriberConnection> connection) {
-  return connection;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

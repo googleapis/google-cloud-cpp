@@ -22,15 +22,18 @@
 #include "google/cloud/devicestreaming/v1/internal/direct_access_metadata_decorator.h"
 #include "google/cloud/devicestreaming/v1/internal/direct_access_stub.h"
 #include "google/cloud/devicestreaming/v1/internal/direct_access_tracing_stub.h"
+#include "google/cloud/devicestreaming/v1/service.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/devicestreaming/v1/service.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -70,3 +73,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace devicestreaming_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

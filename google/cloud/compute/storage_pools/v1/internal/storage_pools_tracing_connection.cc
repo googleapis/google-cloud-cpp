@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_storage_pools_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 StoragePoolsTracingConnection::StoragePoolsTracingConnection(
     std::shared_ptr<compute_storage_pools_v1::StoragePoolsConnection> child)
     : child_(std::move(child)) {}
@@ -206,16 +204,12 @@ StoragePoolsTracingConnection::UpdateStoragePool(
                            child_->UpdateStoragePool(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_storage_pools_v1::StoragePoolsConnection>
 MakeStoragePoolsTracingConnection(
     std::shared_ptr<compute_storage_pools_v1::StoragePoolsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<StoragePoolsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

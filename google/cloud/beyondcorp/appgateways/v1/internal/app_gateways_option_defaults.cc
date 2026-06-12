@@ -43,7 +43,7 @@ Options AppGatewaysServiceDefaultOptions(Options options) {
           beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>()) {
     options.set<beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicyOption>(
         beyondcorp_appgateways_v1::AppGatewaysServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

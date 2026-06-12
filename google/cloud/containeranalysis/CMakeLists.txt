@@ -18,7 +18,7 @@ include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
     containeranalysis "Container Analysis API"
-    SERVICE_DIRS "__EMPTY__" "v1/"
+    SERVICE_DIRS "v1/"
     SHARED_PROTO_DEPS "grafeas")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)

@@ -1114,6 +1114,686 @@ ConfigConnectionImpl::GetResourceDrift(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigConnectionImpl::GetAutoMigrationConfig(
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAutoMigrationConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::GetAutoMigrationConfigRequest const&
+                 request) {
+        return stub_->GetAutoMigrationConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigConnectionImpl::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAutoMigrationConfig(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::config::v1::AutoMigrationConfig>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+              request) {
+        return stub->AsyncUpdateAutoMigrationConfig(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::AutoMigrationConfig>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnectionImpl::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAutoMigrationConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+                 request) {
+        return stub_->UpdateAutoMigrationConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigConnectionImpl::UpdateAutoMigrationConfig(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::config::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::config::v1::AutoMigrationConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAutoMigrationConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::config::v1::AutoMigrationConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::AutoMigrationConfig>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroup>
+ConfigConnectionImpl::GetDeploymentGroup(
+    google::cloud::config::v1::GetDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDeploymentGroup(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::config::v1::GetDeploymentGroupRequest const& request) {
+        return stub_->GetDeploymentGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::CreateDeploymentGroup(
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDeploymentGroup(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::config::v1::CreateDeploymentGroupRequest const&
+              request) {
+        return stub->AsyncCreateDeploymentGroup(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnectionImpl::CreateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDeploymentGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::CreateDeploymentGroupRequest const&
+                 request) {
+        return stub_->CreateDeploymentGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::CreateDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::config::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDeploymentGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::UpdateDeploymentGroup(
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDeploymentGroup(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::config::v1::UpdateDeploymentGroupRequest const&
+              request) {
+        return stub->AsyncUpdateDeploymentGroup(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnectionImpl::UpdateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDeploymentGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::UpdateDeploymentGroupRequest const&
+                 request) {
+        return stub_->UpdateDeploymentGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::UpdateDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::config::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateDeploymentGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::DeleteDeploymentGroup(
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDeploymentGroup(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::config::v1::DeleteDeploymentGroupRequest const&
+              request) {
+        return stub->AsyncDeleteDeploymentGroup(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnectionImpl::DeleteDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDeploymentGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::DeleteDeploymentGroupRequest const&
+                 request) {
+        return stub_->DeleteDeploymentGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::DeleteDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::config::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDeploymentGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroup>
+ConfigConnectionImpl::ListDeploymentGroups(
+    google::cloud::config::v1::ListDeploymentGroupsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDeploymentGroups(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::config::v1::DeploymentGroup>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<config_v1::ConfigRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::config::v1::ListDeploymentGroupsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::config::v1::ListDeploymentGroupsRequest const&
+                       request) {
+              return stub->ListDeploymentGroups(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::config::v1::ListDeploymentGroupsResponse r) {
+        std::vector<google::cloud::config::v1::DeploymentGroup> result(
+            r.deployment_groups().size());
+        auto& messages = *r.mutable_deployment_groups();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::ProvisionDeploymentGroup(
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ProvisionDeploymentGroup(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+              request) {
+        return stub->AsyncProvisionDeploymentGroup(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnectionImpl::ProvisionDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ProvisionDeploymentGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+                 request) {
+        return stub_->ProvisionDeploymentGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::ProvisionDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::config::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ProvisionDeploymentGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::DeprovisionDeploymentGroup(
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeprovisionDeploymentGroup(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+              request) {
+        return stub->AsyncDeprovisionDeploymentGroup(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnectionImpl::DeprovisionDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeprovisionDeploymentGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+                 request) {
+        return stub_->DeprovisionDeploymentGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnectionImpl::DeprovisionDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::config::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeprovisionDeploymentGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::config::v1::DeploymentGroup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::config::v1::DeploymentGroup>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigConnectionImpl::GetDeploymentGroupRevision(
+    google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDeploymentGroupRevision(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+                 request) {
+        return stub_->GetDeploymentGroupRevision(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigConnectionImpl::ListDeploymentGroupRevisions(
+    google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDeploymentGroupRevisions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::config::v1::DeploymentGroupRevision>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<config_v1::ConfigRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::config::v1::ListDeploymentGroupRevisionsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::config::v1::
+                       ListDeploymentGroupRevisionsRequest const& request) {
+              return stub->ListDeploymentGroupRevisions(context, options,
+                                                        request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::config::v1::ListDeploymentGroupRevisionsResponse r) {
+        std::vector<google::cloud::config::v1::DeploymentGroupRevision> result(
+            r.deployment_group_revisions().size());
+        auto& messages = *r.mutable_deployment_group_revisions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StreamRange<google::cloud::location::Location>
 ConfigConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
