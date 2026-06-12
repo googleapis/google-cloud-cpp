@@ -41,7 +41,7 @@ Options ReservationsDefaultOptions(Options options) {
   if (!options.has<compute_reservations_v1::ReservationsRetryPolicyOption>()) {
     options.set<compute_reservations_v1::ReservationsRetryPolicyOption>(
         compute_reservations_v1::ReservationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

@@ -27,8 +27,6 @@ namespace cloud {
 namespace servicemanagement_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ServiceManagerTracingConnection::ServiceManagerTracingConnection(
     std::shared_ptr<servicemanagement_v1::ServiceManagerConnection> child)
     : child_(std::move(child)) {}
@@ -304,16 +302,12 @@ ServiceManagerTracingConnection::ListOperations(
       std::move(span), std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<servicemanagement_v1::ServiceManagerConnection>
 MakeServiceManagerTracingConnection(
     std::shared_ptr<servicemanagement_v1::ServiceManagerConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ServiceManagerTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

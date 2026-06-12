@@ -15,13 +15,16 @@
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_api_key_credentials.h"
+#include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
+#include "google/cloud/internal/oauth2_gdch_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
@@ -34,10 +37,12 @@ namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
 using ::google::cloud::internal::ApiKeyConfig;
+using ::google::cloud::internal::AuthorizedUserConfig;
 using ::google::cloud::internal::ComputeEngineCredentialsConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
+using ::google::cloud::internal::GDCHServiceAccountConfig;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
@@ -47,25 +52,6 @@ using ::google::cloud::oauth2_internal::Decorate;
 std::shared_ptr<oauth2_internal::Credentials> MakeErrorCredentials(
     Status status) {
   return std::make_shared<oauth2_internal::ErrorCredentials>(std::move(status));
-}
-
-std::shared_ptr<oauth2_internal::Credentials>
-CreateServiceAccountCredentialsFromJsonContents(
-    std::string const& contents, Options const& options,
-    oauth2_internal::HttpClientFactory client_factory) {
-  auto info =
-      oauth2_internal::ParseServiceAccountCredentials(contents, "memory");
-  if (!info) return MakeErrorCredentials(std::move(info).status());
-
-  // Verify this is usable before returning it.
-  auto const tp = std::chrono::system_clock::time_point{};
-  auto const components = AssertionComponentsFromInfo(*info, tp);
-  auto jwt = internal::MakeJWTAssertionNoThrow(
-      components.first, components.second, info->private_key);
-  if (!jwt) return MakeErrorCredentials(std::move(jwt).status());
-
-  return std::make_shared<oauth2_internal::ServiceAccountCredentials>(
-      *info, options, std::move(client_factory));
 }
 
 }  // namespace
@@ -99,9 +85,10 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(GoogleDefaultCredentialsConfig const& cfg) override {
       auto credentials =
           google::cloud::oauth2_internal::GoogleDefaultCredentials(
-              cfg.options(), std::move(client_factory_));
+              cfg.options(), client_factory_);
       if (credentials) {
-        result = Decorate(*std::move(credentials), cfg.options());
+        result = Decorate(*std::move(credentials), std::move(client_factory_),
+                          cfg.options());
         return;
       }
       result = MakeErrorCredentials(std::move(credentials).status());
@@ -115,15 +102,31 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(ImpersonateServiceAccountConfig const& cfg) override {
       result = std::make_shared<
           oauth2_internal::ImpersonateServiceAccountCredentials>(
-          cfg, std::move(client_factory_));
-      result = Decorate(std::move(result), cfg.options());
+          cfg, client_factory_);
+      result = Decorate(std::move(result), std::move(client_factory_),
+                        cfg.options());
     }
 
     void visit(ServiceAccountConfig const& cfg) override {
-      result = Decorate(
-          CreateServiceAccountCredentialsFromJsonContents(
-              cfg.json_object(), cfg.options(), std::move(client_factory_)),
-          cfg.options());
+      StatusOr<std::shared_ptr<oauth2_internal::Credentials>> creds;
+      if (cfg.file_path().has_value()) {
+        creds = oauth2_internal::CreateServiceAccountCredentialsFromFilePath(
+            *cfg.file_path(), cfg.options(), client_factory_);
+      } else if (cfg.json_object().has_value()) {
+        creds =
+            oauth2_internal::CreateServiceAccountCredentialsFromJsonContents(
+                *cfg.json_object(), cfg.options(), client_factory_);
+      } else {
+        creds = MakeErrorCredentials(internal::InternalError(
+            "ServiceAccountConfig has neither json_object nor file_path",
+            GCP_ERROR_INFO()));
+      }
+
+      if (creds.ok()) {
+        result = Decorate(*creds, std::move(client_factory_), cfg.options());
+      } else {
+        result = MakeErrorCredentials(std::move(creds).status());
+      }
     }
 
     void visit(ExternalAccountConfig const& cfg) override {
@@ -134,10 +137,11 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
         result = MakeErrorCredentials(std::move(info).status());
         return;
       }
-      result = Decorate(
+      auto creds =
           std::make_shared<oauth2_internal::ExternalAccountCredentials>(
-              *std::move(info), std::move(client_factory_), cfg.options()),
-          cfg.options());
+              *std::move(info), client_factory_, cfg.options());
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }
 
     void visit(ApiKeyConfig const& cfg) override {
@@ -146,11 +150,48 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ComputeEngineCredentialsConfig const& cfg) override {
-      result = Decorate(
-          std::make_shared<
-              google::cloud::oauth2_internal::ComputeEngineCredentials>(
-              cfg.options(), std::move(client_factory_)),
-          cfg.options());
+      auto creds = std::make_shared<
+          google::cloud::oauth2_internal::ComputeEngineCredentials>(
+          cfg.options(), client_factory_);
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
+    }
+    void visit(GDCHServiceAccountConfig const& cfg) override {
+      auto options = cfg.options();
+      StatusOr<std::unique_ptr<oauth2_internal::Credentials>> creds;
+      if (cfg.file_path().has_value()) {
+        creds =
+            oauth2_internal::GDCHServiceAccountCredentials::CreateFromFilePath(
+                *cfg.file_path(), cfg.audience(), options, client_factory_);
+      } else if (!cfg.json_object().empty()) {
+        creds = oauth2_internal::GDCHServiceAccountCredentials::
+            CreateFromJsonContents(cfg.json_object(), cfg.audience(), options,
+                                   client_factory_);
+      } else {
+        creds = internal::InvalidArgumentError(
+            "GDCH ServiceAccount Credentials require either a JSON object or "
+            "the "
+            "GOOGLE_APPLICATION_CREDENTIALS environment variable to be set");
+      }
+      if (!creds.ok()) {
+        result = MakeErrorCredentials(std::move(creds).status());
+      } else {
+        result = Decorate(*std::move(creds), std::move(client_factory_),
+                          std::move(options));
+      }
+    }
+
+    void visit(AuthorizedUserConfig const& cfg) override {
+      auto info = oauth2_internal::ParseAuthorizedUserCredentials(
+          cfg.json_object(), "MakeUserAccountCredentials");
+      if (!info) {
+        result = MakeErrorCredentials(std::move(info).status());
+        return;
+      }
+      auto creds = std::make_shared<oauth2_internal::AuthorizedUserCredentials>(
+          *info, cfg.options(), client_factory_);
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }
 
    private:

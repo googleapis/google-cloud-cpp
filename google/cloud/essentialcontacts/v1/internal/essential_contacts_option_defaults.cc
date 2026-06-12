@@ -45,7 +45,7 @@ Options EssentialContactsServiceDefaultOptions(Options options) {
     options.set<
         essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>(
         essentialcontacts_v1::EssentialContactsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<essentialcontacts_v1::

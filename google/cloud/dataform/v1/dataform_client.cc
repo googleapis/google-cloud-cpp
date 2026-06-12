@@ -32,6 +32,328 @@ DataformClient::DataformClient(std::shared_ptr<DataformConnection> connection,
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataformClient::~DataformClient() = default;
 
+StatusOr<google::cloud::dataform::v1::TeamFolder> DataformClient::GetTeamFolder(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::GetTeamFolderRequest request;
+  request.set_name(name);
+  return connection_->GetTeamFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder> DataformClient::GetTeamFolder(
+    google::cloud::dataform::v1::GetTeamFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetTeamFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformClient::CreateTeamFolder(
+    std::string const& parent,
+    google::cloud::dataform::v1::TeamFolder const& team_folder, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::CreateTeamFolderRequest request;
+  request.set_parent(parent);
+  *request.mutable_team_folder() = team_folder;
+  return connection_->CreateTeamFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformClient::CreateTeamFolder(
+    google::cloud::dataform::v1::CreateTeamFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTeamFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformClient::UpdateTeamFolder(
+    google::cloud::dataform::v1::TeamFolder const& team_folder,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::UpdateTeamFolderRequest request;
+  *request.mutable_team_folder() = team_folder;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateTeamFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformClient::UpdateTeamFolder(
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTeamFolder(request);
+}
+
+Status DataformClient::DeleteTeamFolder(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::DeleteTeamFolderRequest request;
+  request.set_name(name);
+  return connection_->DeleteTeamFolder(request);
+}
+
+Status DataformClient::DeleteTeamFolder(
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTeamFolder(request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformClient::DeleteTeamFolderTree(std::string const& name, bool force,
+                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::DeleteTeamFolderTreeRequest request;
+  request.set_name(name);
+  request.set_force(force);
+  return connection_->DeleteTeamFolderTree(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::DeleteTeamFolderTree(
+    NoAwaitTag, std::string const& name, bool force, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::DeleteTeamFolderTreeRequest request;
+  request.set_name(name);
+  request.set_force(force);
+  return connection_->DeleteTeamFolderTree(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformClient::DeleteTeamFolderTree(
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTeamFolderTree(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::DeleteTeamFolderTree(
+    NoAwaitTag,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTeamFolderTree(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformClient::DeleteTeamFolderTree(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTeamFolderTree(operation);
+}
+
+StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                TeamFolderContentsEntry>
+DataformClient::QueryTeamFolderContents(std::string const& team_folder,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::QueryTeamFolderContentsRequest request;
+  request.set_team_folder(team_folder);
+  return connection_->QueryTeamFolderContents(request);
+}
+
+StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                TeamFolderContentsEntry>
+DataformClient::QueryTeamFolderContents(
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryTeamFolderContents(std::move(request));
+}
+
+StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                TeamFolderSearchResult>
+DataformClient::SearchTeamFolders(
+    google::cloud::dataform::v1::SearchTeamFoldersRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SearchTeamFolders(std::move(request));
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformClient::GetFolder(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::GetFolderRequest request;
+  request.set_name(name);
+  return connection_->GetFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformClient::GetFolder(
+    google::cloud::dataform::v1::GetFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformClient::CreateFolder(
+    std::string const& parent,
+    google::cloud::dataform::v1::Folder const& folder, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::CreateFolderRequest request;
+  request.set_parent(parent);
+  *request.mutable_folder() = folder;
+  return connection_->CreateFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformClient::CreateFolder(
+    google::cloud::dataform::v1::CreateFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformClient::UpdateFolder(
+    google::cloud::dataform::v1::Folder const& folder,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::UpdateFolderRequest request;
+  *request.mutable_folder() = folder;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateFolder(request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformClient::UpdateFolder(
+    google::cloud::dataform::v1::UpdateFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFolder(request);
+}
+
+Status DataformClient::DeleteFolder(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::DeleteFolderRequest request;
+  request.set_name(name);
+  return connection_->DeleteFolder(request);
+}
+
+Status DataformClient::DeleteFolder(
+    google::cloud::dataform::v1::DeleteFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFolder(request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformClient::DeleteFolderTree(std::string const& name, bool force,
+                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::DeleteFolderTreeRequest request;
+  request.set_name(name);
+  request.set_force(force);
+  return connection_->DeleteFolderTree(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::DeleteFolderTree(
+    NoAwaitTag, std::string const& name, bool force, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::DeleteFolderTreeRequest request;
+  request.set_name(name);
+  request.set_force(force);
+  return connection_->DeleteFolderTree(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformClient::DeleteFolderTree(
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFolderTree(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::DeleteFolderTree(
+    NoAwaitTag,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFolderTree(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformClient::DeleteFolderTree(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFolderTree(operation);
+}
+
+StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                FolderContentsEntry>
+DataformClient::QueryFolderContents(std::string const& folder, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::QueryFolderContentsRequest request;
+  request.set_folder(folder);
+  return connection_->QueryFolderContents(request);
+}
+
+StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                FolderContentsEntry>
+DataformClient::QueryFolderContents(
+    google::cloud::dataform::v1::QueryFolderContentsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryFolderContents(std::move(request));
+}
+
+StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                RootContentsEntry>
+DataformClient::QueryUserRootContents(std::string const& location,
+                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::QueryUserRootContentsRequest request;
+  request.set_location(location);
+  return connection_->QueryUserRootContents(request);
+}
+
+StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                RootContentsEntry>
+DataformClient::QueryUserRootContents(
+    google::cloud::dataform::v1::QueryUserRootContentsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryUserRootContents(std::move(request));
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformClient::MoveFolder(std::string const& name,
+                           std::string const& destination_containing_folder,
+                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::MoveFolderRequest request;
+  request.set_name(name);
+  request.set_destination_containing_folder(destination_containing_folder);
+  return connection_->MoveFolder(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::MoveFolder(
+    NoAwaitTag, std::string const& name,
+    std::string const& destination_containing_folder, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::MoveFolderRequest request;
+  request.set_name(name);
+  request.set_destination_containing_folder(destination_containing_folder);
+  return connection_->MoveFolder(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformClient::MoveFolder(
+    google::cloud::dataform::v1::MoveFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveFolder(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::MoveFolder(
+    NoAwaitTag, google::cloud::dataform::v1::MoveFolderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveFolder(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformClient::MoveFolder(google::longrunning::Operation const& operation,
+                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveFolder(operation);
+}
+
 StreamRange<google::cloud::dataform::v1::Repository>
 DataformClient::ListRepositories(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -115,6 +437,50 @@ Status DataformClient::DeleteRepository(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformClient::MoveRepository(std::string const& name,
+                               std::string const& destination_containing_folder,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::MoveRepositoryRequest request;
+  request.set_name(name);
+  request.set_destination_containing_folder(destination_containing_folder);
+  return connection_->MoveRepository(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::MoveRepository(
+    NoAwaitTag, std::string const& name,
+    std::string const& destination_containing_folder, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataform::v1::MoveRepositoryRequest request;
+  request.set_name(name);
+  request.set_destination_containing_folder(destination_containing_folder);
+  return connection_->MoveRepository(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformClient::MoveRepository(
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveRepository(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::MoveRepository(
+    NoAwaitTag,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveRepository(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformClient::MoveRepository(google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveRepository(operation);
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -717,6 +1083,33 @@ StatusOr<google::cloud::dataform::v1::Config> DataformClient::UpdateConfig(
   return connection_->UpdateConfig(request);
 }
 
+StatusOr<google::iam::v1::Policy> DataformClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> DataformClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::Policy> DataformClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
+}
+
 StreamRange<google::cloud::location::Location> DataformClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -729,23 +1122,59 @@ StatusOr<google::cloud::location::Location> DataformClient::GetLocation(
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy> DataformClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StreamRange<google::longrunning::Operation> DataformClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetIamPolicy(request);
+  google::longrunning::ListOperationsRequest request;
+  request.set_name(name);
+  request.set_filter(filter);
+  return connection_->ListOperations(request);
 }
 
-StatusOr<google::iam::v1::Policy> DataformClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StreamRange<google::longrunning::Operation> DataformClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetIamPolicy(request);
+  return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataformClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TestIamPermissions(request);
+  google::longrunning::GetOperationRequest request;
+  request.set_name(name);
+  return connection_->GetOperation(request);
+}
+
+StatusOr<google::longrunning::Operation> DataformClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetOperation(request);
+}
+
+Status DataformClient::DeleteOperation(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::longrunning::DeleteOperationRequest request;
+  request.set_name(name);
+  return connection_->DeleteOperation(request);
+}
+
+Status DataformClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteOperation(request);
+}
+
+Status DataformClient::CancelOperation(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::longrunning::CancelOperationRequest request;
+  request.set_name(name);
+  return connection_->CancelOperation(request);
+}
+
+Status DataformClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelOperation(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

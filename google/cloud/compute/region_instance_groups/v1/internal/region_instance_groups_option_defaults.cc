@@ -45,7 +45,7 @@ Options RegionInstanceGroupsDefaultOptions(Options options) {
     options.set<compute_region_instance_groups_v1::
                     RegionInstanceGroupsRetryPolicyOption>(
         compute_region_instance_groups_v1::
-            RegionInstanceGroupsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            RegionInstanceGroupsLimitedTimeRetryPolicy(std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_instance_groups_v1::

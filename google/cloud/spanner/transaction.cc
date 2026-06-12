@@ -11,12 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/options.h"
-#include <google/protobuf/duration.pb.h>
+#include "google/protobuf/duration.pb.h"
 
 namespace google {
 namespace cloud {
@@ -54,6 +54,22 @@ ProtoReadLockMode(
   }
 }
 
+google::spanner::v1::TransactionOptions_IsolationLevel ProtoIsolationLevel(
+    absl::optional<Transaction::IsolationLevel> const& isolation_level) {
+  if (!isolation_level) {
+    return google::spanner::v1::TransactionOptions::ISOLATION_LEVEL_UNSPECIFIED;
+  }
+  switch (*isolation_level) {
+    case Transaction::IsolationLevel::kSerializable:
+      return google::spanner::v1::TransactionOptions::SERIALIZABLE;
+    case Transaction::IsolationLevel::kRepeatableRead:
+      return google::spanner::v1::TransactionOptions::REPEATABLE_READ;
+    default:
+      return google::spanner::v1::TransactionOptions::
+          ISOLATION_LEVEL_UNSPECIFIED;
+  }
+}
+
 google::spanner::v1::TransactionOptions MakeOpts(
     google::spanner::v1::TransactionOptions_ReadOnly ro_opts) {
   google::spanner::v1::TransactionOptions opts;
@@ -62,13 +78,29 @@ google::spanner::v1::TransactionOptions MakeOpts(
 }
 
 google::spanner::v1::TransactionOptions MakeOpts(
-    google::spanner::v1::TransactionOptions_ReadWrite rw_opts) {
+    google::spanner::v1::TransactionOptions_ReadWrite rw_opts,
+    absl::optional<Transaction::IsolationLevel> isolation_level) {
   google::spanner::v1::TransactionOptions opts;
   *opts.mutable_read_write() = std::move(rw_opts);
   auto const& current = internal::CurrentOptions();
   if (current.get<ExcludeTransactionFromChangeStreamsOption>()) {
     opts.set_exclude_txn_from_change_streams(true);
   }
+  if (isolation_level) {
+    opts.set_isolation_level(ProtoIsolationLevel(isolation_level));
+  } else if (current.has<TransactionIsolationLevelOption>()) {
+    opts.set_isolation_level(
+        ProtoIsolationLevel(current.get<TransactionIsolationLevelOption>()));
+  }
+
+  if (opts.read_write().read_lock_mode() ==
+          google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+              TransactionOptions_ReadWrite_ReadLockMode_READ_LOCK_MODE_UNSPECIFIED &&
+      current.has<TransactionReadLockModeOption>()) {
+    opts.mutable_read_write()->set_read_lock_mode(
+        ProtoReadLockMode(current.get<TransactionReadLockModeOption>()));
+  }
+
   return opts;
 }
 
@@ -103,6 +135,13 @@ Transaction::ReadWriteOptions& Transaction::ReadWriteOptions::WithTag(
   return *this;
 }
 
+Transaction::ReadWriteOptions&
+Transaction::ReadWriteOptions::WithIsolationLevel(
+    IsolationLevel isolation_level) {
+  isolation_level_ = isolation_level;
+  return *this;
+}
+
 Transaction::SingleUseOptions::SingleUseOptions(ReadOnlyOptions opts) {
   ro_opts_ = std::move(opts.ro_opts_);
 }
@@ -129,7 +168,8 @@ Transaction::Transaction(ReadOnlyOptions opts) {
 
 Transaction::Transaction(ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
-  *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
+  *selector.mutable_begin() =
+      MakeOpts(std::move(opts.rw_opts_), opts.isolation_level_);
   auto const route_to_leader = true;  // read-write
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       std::move(selector), route_to_leader,
@@ -138,7 +178,8 @@ Transaction::Transaction(ReadWriteOptions opts) {
 
 Transaction::Transaction(Transaction const& txn, ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
-  *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
+  *selector.mutable_begin() =
+      MakeOpts(std::move(opts.rw_opts_), opts.isolation_level_);
   auto const route_to_leader = true;  // read-write
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       *txn.impl_, std::move(selector), route_to_leader,
@@ -155,7 +196,8 @@ Transaction::Transaction(SingleUseOptions opts) {
 
 Transaction::Transaction(ReadWriteOptions opts, SingleUseCommitTag) {
   google::spanner::v1::TransactionSelector selector;
-  *selector.mutable_single_use() = MakeOpts(std::move(opts.rw_opts_));
+  *selector.mutable_single_use() =
+      MakeOpts(std::move(opts.rw_opts_), opts.isolation_level_);
   auto const route_to_leader = true;  // write
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       std::move(selector), route_to_leader,
@@ -191,3 +233,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

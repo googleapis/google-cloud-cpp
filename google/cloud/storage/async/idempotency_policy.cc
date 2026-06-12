@@ -17,18 +17,18 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-class StrictIdempotencyPolicy : public IdempotencyPolicy {
+class StrictAsyncIdempotencyPolicy : public AsyncIdempotencyPolicy {
  public:
-  ~StrictIdempotencyPolicy() override = default;
+  ~StrictAsyncIdempotencyPolicy() override = default;
 };
 
-class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
+class AlwaysRetryAsyncIdempotencyPolicy : public AsyncIdempotencyPolicy {
  public:
-  ~AlwaysRetryIdempotencyPolicy() override = default;
+  ~AlwaysRetryAsyncIdempotencyPolicy() override = default;
 
   google::cloud::Idempotency ReadObject(
       google::storage::v2::ReadObjectRequest const&) override {
@@ -63,15 +63,15 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
 
 }  // namespace
 
-IdempotencyPolicy::~IdempotencyPolicy() = default;
+AsyncIdempotencyPolicy::~AsyncIdempotencyPolicy() = default;
 
-google::cloud::Idempotency IdempotencyPolicy::ReadObject(
+google::cloud::Idempotency AsyncIdempotencyPolicy::ReadObject(
     google::storage::v2::ReadObjectRequest const&) {
   // Read operations are always idempotent.
   return Idempotency::kIdempotent;
 }
 
-google::cloud::Idempotency IdempotencyPolicy::InsertObject(
+google::cloud::Idempotency AsyncIdempotencyPolicy::InsertObject(
     google::storage::v2::WriteObjectRequest const& request) {
   auto const& spec = request.write_object_spec();
   if (spec.has_if_generation_match() || spec.has_if_metageneration_match()) {
@@ -80,7 +80,7 @@ google::cloud::Idempotency IdempotencyPolicy::InsertObject(
   return Idempotency::kNonIdempotent;
 }
 
-google::cloud::Idempotency IdempotencyPolicy::WriteObject(
+google::cloud::Idempotency AsyncIdempotencyPolicy::WriteObject(
     google::storage::v2::WriteObjectRequest const&) {
   // Write requests for resumable uploads are (each part) always idempotent.
   // The initial StartResumableWrite() request has no visible side-effects. It
@@ -91,7 +91,7 @@ google::cloud::Idempotency IdempotencyPolicy::WriteObject(
   return Idempotency::kIdempotent;
 }
 
-google::cloud::Idempotency IdempotencyPolicy::ComposeObject(
+google::cloud::Idempotency AsyncIdempotencyPolicy::ComposeObject(
     google::storage::v2::ComposeObjectRequest const& request) {
   // Either of these pre-conditions will fail once the operation succeeds. Their
   // presence makes the operation idempotent.
@@ -102,7 +102,7 @@ google::cloud::Idempotency IdempotencyPolicy::ComposeObject(
   return Idempotency::kNonIdempotent;
 }
 
-google::cloud::Idempotency IdempotencyPolicy::DeleteObject(
+google::cloud::Idempotency AsyncIdempotencyPolicy::DeleteObject(
     google::storage::v2::DeleteObjectRequest const& request) {
   if (request.generation() != 0 || request.has_if_generation_match() ||
       request.has_if_metageneration_match()) {
@@ -111,23 +111,24 @@ google::cloud::Idempotency IdempotencyPolicy::DeleteObject(
   return Idempotency::kNonIdempotent;
 }
 
-google::cloud::Idempotency IdempotencyPolicy::RewriteObject(
+google::cloud::Idempotency AsyncIdempotencyPolicy::RewriteObject(
     google::storage::v2::RewriteObjectRequest const&) {
   // Rewrite requests are idempotent because they can only succeed once.
   return Idempotency::kIdempotent;
 }
 
 /// Creates an idempotency policy where only safe operations are retried.
-std::unique_ptr<IdempotencyPolicy> MakeStrictIdempotencyPolicy() {
-  return std::make_unique<StrictIdempotencyPolicy>();
+std::unique_ptr<AsyncIdempotencyPolicy> MakeStrictAsyncIdempotencyPolicy() {
+  return std::make_unique<StrictAsyncIdempotencyPolicy>();
 }
 
 /// Creates an idempotency policy that retries all operations.
-std::unique_ptr<IdempotencyPolicy> MakeAlwaysRetryIdempotencyPolicy() {
-  return std::make_unique<AlwaysRetryIdempotencyPolicy>();
+std::unique_ptr<AsyncIdempotencyPolicy>
+MakeAlwaysRetryAsyncIdempotencyPolicy() {
+  return std::make_unique<AlwaysRetryAsyncIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

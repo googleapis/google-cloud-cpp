@@ -25,13 +25,13 @@
 #include "google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes_connection.h"
 #include "google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes_connection_idempotency_policy.h"
 #include "google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes_options.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
 
 namespace google {

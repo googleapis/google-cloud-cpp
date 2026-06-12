@@ -17,13 +17,13 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigtable_client_integration_tests = [
-    "admin_backup_integration_test.cc",
-    "admin_iam_policy_integration_test.cc",
-    "admin_integration_test.cc",
     "data_async_future_integration_test.cc",
     "data_integration_test.cc",
     "filters_integration_test.cc",
     "instance_admin_integration_test.cc",
     "mutations_integration_test.cc",
+    "table_admin_backup_integration_test.cc",
+    "table_admin_iam_policy_integration_test.cc",
+    "table_admin_integration_test.cc",
     "table_sample_rows_integration_test.cc",
 ]

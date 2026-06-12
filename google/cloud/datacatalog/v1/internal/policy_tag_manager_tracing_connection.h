@@ -28,8 +28,6 @@ namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class PolicyTagManagerTracingConnection
     : public datacatalog_v1::PolicyTagManagerConnection {
  public:
@@ -102,8 +100,6 @@ class PolicyTagManagerTracingConnection
  private:
   std::shared_ptr<datacatalog_v1::PolicyTagManagerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

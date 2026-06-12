@@ -42,7 +42,7 @@ Options ConfigDefaultOptions(Options options) {
   if (!options.has<cloudsecuritycompliance_v1::ConfigRetryPolicyOption>()) {
     options.set<cloudsecuritycompliance_v1::ConfigRetryPolicyOption>(
         cloudsecuritycompliance_v1::ConfigLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<cloudsecuritycompliance_v1::ConfigBackoffPolicyOption>()) {

@@ -30,6 +30,12 @@ namespace {
  */
 auto constexpr kConnectionReadyTimeout = std::chrono::seconds(10);
 
+void LogFailedConnectionRefresh(Status const& conn_status) {
+  if (!conn_status.ok()) {
+    GCP_LOG(WARNING) << "Failed to refresh connection. Error: " << conn_status;
+  }
+}
+
 }  // namespace
 
 ConnectionRefreshState::ConnectionRefreshState(
@@ -81,16 +87,72 @@ void ScheduleChannelRefresh(
                   std::chrono::system_clock::now() + kConnectionReadyTimeout)
                 .then([weak_channel, weak_cq_impl, state](future<Status> fut) {
                   auto conn_status = fut.get();
-                  if (!conn_status.ok()) {
-                    GCP_LOG(WARNING) << "Failed to refresh connection. Error: "
-                                     << conn_status;
-                  }
+                  LogFailedConnectionRefresh(conn_status);
                   auto channel = weak_channel.lock();
                   if (!channel) return;
                   auto cq_impl = weak_cq_impl.lock();
                   if (!cq_impl) return;
                   ScheduleChannelRefresh(cq_impl, state, channel);
                 });
+          });
+  state->timers().RegisterTimer(std::move(timer_future));
+}
+
+void ScheduleStubRefresh(
+    std::shared_ptr<internal::CompletionQueueImpl> const& cq_impl,
+    std::shared_ptr<ConnectionRefreshState> const& state,
+    std::shared_ptr<BigtableStub> const& stub, std::string const& instance_name,
+    std::function<void(Status const&)> connection_status_fn) {
+  if (!connection_status_fn) {
+    connection_status_fn = LogFailedConnectionRefresh;
+  }
+  // The timers will only hold weak pointers to the channel or to the
+  // completion queue, so if either of them are destroyed, the timer chain
+  // will simply not continue.
+  std::weak_ptr<BigtableStub> weak_stub(stub);
+  std::weak_ptr<internal::CompletionQueueImpl> weak_cq_impl(cq_impl);
+  auto cq = CompletionQueue(cq_impl);
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+  auto timer_future =
+      cq.MakeRelativeTimer(state->RandomizedRefreshDelay())
+          .then([weak_stub, weak_cq_impl, state, instance_name,
+                 connection_status_fn =
+                     std::move(connection_status_fn)](TimerFuture fut) mutable {
+            if (!fut.get()) {
+              // Timer cancelled.
+              return;
+            }
+            auto stub = weak_stub.lock();
+            if (!stub) return;
+            auto cq_impl = weak_cq_impl.lock();
+            if (!cq_impl) return;
+            auto cq = CompletionQueue(cq_impl);
+
+            auto client_context = std::make_shared<grpc::ClientContext>();
+            google::cloud::internal::ImmutableOptions options;
+            google::bigtable::v2::PingAndWarmRequest request;
+            request.set_name(instance_name);
+            // Use the client_context to set a deadline similar to
+            // AsyncWaitConnectionReady.
+            client_context->set_deadline(std::chrono::system_clock::now() +
+                                         kConnectionReadyTimeout);
+            stub->AsyncPingAndWarm(cq, client_context, std::move(options),
+                                   request)
+                .then(
+                    [weak_stub, weak_cq_impl, state, instance_name,
+                     connection_status_fn = std::move(connection_status_fn)](
+                        future<
+                            StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+                            fut) mutable {
+                      auto response = fut.get();
+                      connection_status_fn(response.status());
+                      auto stub = weak_stub.lock();
+                      if (!stub) return;
+                      auto cq_impl = weak_cq_impl.lock();
+                      if (!cq_impl) return;
+                      ScheduleStubRefresh(cq_impl, state, stub, instance_name,
+                                          std::move(connection_status_fn));
+                    });
           });
   state->timers().RegisterTimer(std::move(timer_future));
 }

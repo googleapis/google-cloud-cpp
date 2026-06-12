@@ -27,8 +27,6 @@ namespace cloud {
 namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AccessContextManagerTracingConnection::AccessContextManagerTracingConnection(
     std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
         child)
@@ -715,18 +713,14 @@ AccessContextManagerTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
 MakeAccessContextManagerTracingConnection(
     std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AccessContextManagerTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

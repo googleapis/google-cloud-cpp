@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_URL_MAPS_CONNECTION_H
 
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_retry_traits.h"
+#include "google/cloud/compute/url_maps/v1/url_maps.pb.h"
 #include "google/cloud/compute/url_maps/v1/url_maps_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/url_maps/v1/url_maps.pb.h>
 #include <memory>
 
 namespace google {

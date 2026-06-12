@@ -16,7 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/example_driver.h"
-#include <google/storage/control/v2/storage_control.pb.h>
+#include "google/storage/control/v2/storage_control.pb.h"
 #include <chrono>
 #include <iostream>
 #include <regex>

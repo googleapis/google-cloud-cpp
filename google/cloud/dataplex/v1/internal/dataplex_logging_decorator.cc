@@ -17,13 +17,16 @@
 // source: google/cloud/dataplex/v1/service.proto
 
 #include "google/cloud/dataplex/v1/internal/dataplex_logging_decorator.h"
+#include "google/cloud/dataplex/v1/service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -560,140 +563,6 @@ Status DataplexServiceLogging::CancelJob(
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-DataplexServiceLogging::AsyncCreateEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::dataplex::v1::CreateEnvironmentRequest const&
-                 request) {
-        return child_->AsyncCreateEnvironment(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      cq, std::move(context), std::move(options), request, __func__,
-      tracing_options_);
-}
-
-StatusOr<google::longrunning::Operation>
-DataplexServiceLogging::CreateEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreateEnvironmentRequest const&
-                 request) {
-        return child_->CreateEnvironment(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-DataplexServiceLogging::AsyncUpdateEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::dataplex::v1::UpdateEnvironmentRequest const&
-                 request) {
-        return child_->AsyncUpdateEnvironment(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      cq, std::move(context), std::move(options), request, __func__,
-      tracing_options_);
-}
-
-StatusOr<google::longrunning::Operation>
-DataplexServiceLogging::UpdateEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::UpdateEnvironmentRequest const&
-                 request) {
-        return child_->UpdateEnvironment(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-DataplexServiceLogging::AsyncDeleteEnvironment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::dataplex::v1::DeleteEnvironmentRequest const&
-                 request) {
-        return child_->AsyncDeleteEnvironment(cq, std::move(context),
-                                              std::move(options), request);
-      },
-      cq, std::move(context), std::move(options), request, __func__,
-      tracing_options_);
-}
-
-StatusOr<google::longrunning::Operation>
-DataplexServiceLogging::DeleteEnvironment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeleteEnvironmentRequest const&
-                 request) {
-        return child_->DeleteEnvironment(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
-DataplexServiceLogging::ListEnvironments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
-        return child_->ListEnvironments(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::cloud::dataplex::v1::Environment>
-DataplexServiceLogging::GetEnvironment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-        return child_->GetEnvironment(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::cloud::dataplex::v1::ListSessionsResponse>
-DataplexServiceLogging::ListSessions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::ListSessionsRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::ListSessionsRequest const& request) {
-        return child_->ListSessions(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataplexServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -835,3 +704,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

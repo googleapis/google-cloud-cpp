@@ -69,12 +69,12 @@ for key_base in "${active_key_bases[@]}"; do
   for filetype in "json" "p12"; do
     bucket_path="${bucket}/${key_base}.${filetype}"
     io::log "Checking for active key at ${bucket_path}"
-    if ! gsutil -q stat "${bucket_path}"; then
+    if ! gcloud storage objects list --stat --fetch-encrypted-object-hashes "${bucket_path}"; then
       io::log "Not found. Creating ${bucket_path}"
       gcloud iam service-accounts keys create - \
         --iam-account="${account}" \
         --key-file-type="${filetype}" |
-        gsutil cp - "${bucket_path}"
+        gcloud storage cp - "${bucket_path}"
     fi
   done
 done
@@ -84,9 +84,9 @@ stale_key_base="key-$(date +"%Y-%m" --date="now - 45 days")"
 for filetype in "json" "p12"; do
   bucket_path="${bucket}/${stale_key_base}.${filetype}"
   io::log "Checking for stale key at ${bucket_path}"
-  if gsutil -q stat "${bucket_path}"; then
+  if gcloud storage objects list --stat --fetch-encrypted-object-hashes "${bucket_path}"; then
     io::log "Removing ${bucket_path}"
-    gsutil rm "${bucket_path}"
+    gcloud storage rm "${bucket_path}"
   fi
 done
 

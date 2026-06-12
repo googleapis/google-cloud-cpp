@@ -32,7 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -99,6 +99,12 @@ class CloudRedisClusterConnectionImpl
   GetClusterCertificateAuthority(
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request) override;
+
+  StatusOr<
+      google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   RescheduleClusterMaintenance(

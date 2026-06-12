@@ -45,7 +45,7 @@ Options PublicCertificateAuthorityServiceDefaultOptions(Options options) {
     options.set<
         publicca_v1::PublicCertificateAuthorityServiceRetryPolicyOption>(
         publicca_v1::PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

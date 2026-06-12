@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_users.proto
 
 #include "google/cloud/sql/v1/internal/sql_users_rest_stub.h"
+#include "google/cloud/sql/v1/cloud_sql_users.pb.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/sql/v1/cloud_sql_users.pb.h>
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -109,6 +109,8 @@ DefaultSqlUsersServiceRestStub::Update(
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"host", request.host()});
   query_params.push_back({"name", request.name()});
+  query_params.push_back(
+      {"revoke_existing_roles", (request.revoke_existing_roles() ? "1" : "0")});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::sql::v1::Operation>(

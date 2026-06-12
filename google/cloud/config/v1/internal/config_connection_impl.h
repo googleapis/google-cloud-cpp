@@ -32,7 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -196,6 +196,112 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
 
   StatusOr<google::cloud::config::v1::ResourceDrift> GetResourceDrift(
       google::cloud::config::v1::GetResourceDriftRequest const& request)
+      override;
+
+  StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+  GetAutoMigrationConfig(
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+  UpdateAutoMigrationConfig(
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAutoMigrationConfig(
+      NoAwaitTag,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+  UpdateAutoMigrationConfig(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::config::v1::DeploymentGroup> GetDeploymentGroup(
+      google::cloud::config::v1::GetDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  CreateDeploymentGroup(
+      google::cloud::config::v1::CreateDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::CreateDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  CreateDeploymentGroup(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  UpdateDeploymentGroup(
+      google::cloud::config::v1::UpdateDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::UpdateDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  UpdateDeploymentGroup(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  DeleteDeploymentGroup(
+      google::cloud::config::v1::DeleteDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::DeleteDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  DeleteDeploymentGroup(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::config::v1::DeploymentGroup> ListDeploymentGroups(
+      google::cloud::config::v1::ListDeploymentGroupsRequest request) override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  ProvisionDeploymentGroup(
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ProvisionDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  ProvisionDeploymentGroup(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  DeprovisionDeploymentGroup(
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeprovisionDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  DeprovisionDeploymentGroup(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+  GetDeploymentGroupRevision(
+      google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+          request) override;
+
+  StreamRange<google::cloud::config::v1::DeploymentGroupRevision>
+  ListDeploymentGroupRevisions(
+      google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request)
       override;
 
   StreamRange<google::cloud::location::Location> ListLocations(

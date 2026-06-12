@@ -43,7 +43,7 @@ Options DirectAccessServiceDefaultOptions(Options options) {
            .has<devicestreaming_v1::DirectAccessServiceRetryPolicyOption>()) {
     options.set<devicestreaming_v1::DirectAccessServiceRetryPolicyOption>(
         devicestreaming_v1::DirectAccessServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

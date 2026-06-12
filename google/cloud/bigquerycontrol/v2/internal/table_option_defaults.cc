@@ -41,7 +41,7 @@ Options TableServiceDefaultOptions(Options options) {
   if (!options.has<bigquerycontrol_v2::TableServiceRetryPolicyOption>()) {
     options.set<bigquerycontrol_v2::TableServiceRetryPolicyOption>(
         bigquerycontrol_v2::TableServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<bigquerycontrol_v2::TableServiceBackoffPolicyOption>()) {

@@ -97,6 +97,22 @@ KeyManagementServiceClient::ListImportJobs(
   return connection_->ListImportJobs(std::move(request));
 }
 
+StreamRange<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceClient::ListRetiredResources(std::string const& parent,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::ListRetiredResourcesRequest request;
+  request.set_parent(parent);
+  return connection_->ListRetiredResources(request);
+}
+
+StreamRange<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceClient::ListRetiredResources(
+    google::cloud::kms::v1::ListRetiredResourcesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListRetiredResources(std::move(request));
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceClient::GetKeyRing(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -177,6 +193,23 @@ KeyManagementServiceClient::GetImportJob(
   return connection_->GetImportJob(request);
 }
 
+StatusOr<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceClient::GetRetiredResource(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::GetRetiredResourceRequest request;
+  request.set_name(name);
+  return connection_->GetRetiredResource(request);
+}
+
+StatusOr<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceClient::GetRetiredResource(
+    google::cloud::kms::v1::GetRetiredResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetRetiredResource(request);
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceClient::CreateKeyRing(
     std::string const& parent, std::string const& key_ring_id,
@@ -234,6 +267,90 @@ KeyManagementServiceClient::CreateCryptoKeyVersion(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCryptoKeyVersion(request);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceClient::DeleteCryptoKey(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::DeleteCryptoKeyRequest request;
+  request.set_name(name);
+  return connection_->DeleteCryptoKey(request);
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceClient::DeleteCryptoKey(NoAwaitTag, std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::DeleteCryptoKeyRequest request;
+  request.set_name(name);
+  return connection_->DeleteCryptoKey(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceClient::DeleteCryptoKey(
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCryptoKey(request);
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceClient::DeleteCryptoKey(
+    NoAwaitTag, google::cloud::kms::v1::DeleteCryptoKeyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCryptoKey(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceClient::DeleteCryptoKey(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCryptoKey(operation);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceClient::DeleteCryptoKeyVersion(std::string const& name,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::DeleteCryptoKeyVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteCryptoKeyVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceClient::DeleteCryptoKeyVersion(NoAwaitTag,
+                                                   std::string const& name,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::DeleteCryptoKeyVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteCryptoKeyVersion(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceClient::DeleteCryptoKeyVersion(
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCryptoKeyVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceClient::DeleteCryptoKeyVersion(
+    NoAwaitTag,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCryptoKeyVersion(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceClient::DeleteCryptoKeyVersion(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCryptoKeyVersion(operation);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>

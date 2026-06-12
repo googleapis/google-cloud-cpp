@@ -18,10 +18,10 @@
 // google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto
 
 #include "google/cloud/compute/global_network_endpoint_groups/v1/internal/global_network_endpoint_groups_rest_metadata_decorator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>

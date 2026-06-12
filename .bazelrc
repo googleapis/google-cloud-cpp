@@ -18,14 +18,16 @@
 # Use host-OS-specific config lines from bazelrc files.
 build --enable_platform_specific_config=true
 
-# The project requires C++ >= 14. By default Bazel adds `-std=c++0x` which
-# disables C++14 features, even if the compilers defaults to C++ >= 14
-build:linux --cxxopt=-std=c++14
-build:macos --cxxopt=-std=c++14
-# Protobuf and gRPC require (or soon will require) C++14 to compile the "host"
+build --features=external_include_paths
+build --cxxopt=-Wno-private-header
+
+# The project requires C++ >= 17.
+build:linux --cxxopt=-std=c++17
+build:macos --cxxopt=-std=c++17
+# Protobuf and gRPC require C++17 to compile the "host"
 # targets, such as protoc and the grpc plugin.
-build:linux --host_cxxopt=-std=c++14
-build:macos --host_cxxopt=-std=c++14
+build:linux --host_cxxopt=-std=c++17
+build:macos --host_cxxopt=-std=c++17
 
 # Do not create the convenience links. They are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds
@@ -47,9 +49,6 @@ build --experimental_ui_max_stdouterr_bytes=-1
 # in a random order to help expose undesirable interdependencies.
 test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
 
-# By default, build the library with OpenTelemetry
-build --//:enable_opentelemetry
-
 # Don't show warnings when building external dependencies. This still shows
 # warnings when using these dependencies (say in headers).
 build --output_filter='^//((?!(external):).)*$'
@@ -70,6 +69,8 @@ build:sanitizer --strip=never
 build:sanitizer --copt=-Og
 build:sanitizer --copt=-g
 build:sanitizer --copt=-fno-omit-frame-pointer
+#build:sanitizer --features=external_include_paths
+
 
 # --config asan: Address Sanitizer
 build:asan --config=sanitizer
@@ -102,6 +103,8 @@ build:ubsan --copt=-DCURL_STRICTER
 build:ubsan --linkopt=-fsanitize=undefined
 build:ubsan --linkopt=-fsanitize-link-c++-runtime
 build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
+#build:ubsan --features=external_include_paths
+
 
 # --config xsan: Runs misc. sanitizers that aren't covered elsewhere.
 build:xsan --config=sanitizer
@@ -128,3 +131,4 @@ build:msan --linkopt=-L/usr/lib/x86_64-unknown-linux-gnu
 
 # --config otel2: Open Telemetery ABI version 2
 build:otel2 --cxxopt=-DOPENTELEMETRY_ABI_VERSION_NO=2
+build:otel2 --@opentelemetry-cpp//api:abi_version_no=2

@@ -19,8 +19,8 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "generator/internal/routing.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/url_encode.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/string_view.h"
 #include <google/protobuf/descriptor.h>
@@ -133,7 +133,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
                                      ? "google/longrunning/operations.grpc.pb.h"
                                      : ""});
   HeaderSystemIncludes({"map", "memory", "string"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -164,6 +164,7 @@ class $metadata_class_name$ : public $stub_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -181,19 +182,15 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   // includes
   CcPrint("\n");
   CcLocalIncludes(
-      {vars("metadata_header_path"),
-       "google/cloud/internal/absl_str_cat_quiet.h",
-       HasExplicitRoutingMethod()
-           ? "google/cloud/internal/absl_str_join_quiet.h"
-           : "",
-       "google/cloud/internal/api_client_header.h",
+      {vars("metadata_header_path"), "absl/strings/str_cat.h",
+       "absl/strings/str_join.h", "google/cloud/internal/api_client_header.h",
        "google/cloud/grpc_options.h",
        HasExplicitRoutingMethod() ? "google/cloud/internal/routing_matcher.h"
                                   : "",
        "google/cloud/status_or.h", "google/cloud/internal/url_encode.h"});
   CcProtobufGenCodeIncludes({vars("proto_grpc_header_path")});
   CcSystemIncludes({"memory", "string", "utility", "vector"});
-
+  CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -421,6 +418,7 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
 )""");
 
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

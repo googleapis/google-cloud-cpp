@@ -42,7 +42,7 @@ Options CompletionServiceDefaultOptions(Options options) {
   if (!options.has<discoveryengine_v1::CompletionServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::CompletionServiceRetryPolicyOption>(
         discoveryengine_v1::CompletionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

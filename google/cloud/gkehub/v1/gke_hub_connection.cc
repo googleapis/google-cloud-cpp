@@ -46,6 +46,14 @@ GkeHubConnection::ListMemberships(
       StreamRange<google::cloud::gkehub::v1::Membership>>();
 }
 
+StreamRange<google::cloud::gkehub::v1::Membership>
+GkeHubConnection::ListBoundMemberships(
+    google::cloud::gkehub::v1::
+        ListBoundMembershipsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Membership>>();
+}
+
 StreamRange<google::cloud::gkehub::v1::Feature> GkeHubConnection::ListFeatures(
     google::cloud::gkehub::v1::
         ListFeaturesRequest) {  // NOLINT(performance-unnecessary-value-param)
@@ -192,6 +200,507 @@ GkeHubConnection::UpdateFeature(google::longrunning::Operation const&) {
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubConnection::GenerateConnectManifest(
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>>
+GkeHubConnection::CreateFleet(
+    google::cloud::gkehub::v1::CreateFleetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Fleet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::CreateFleet(
+    NoAwaitTag, google::cloud::gkehub::v1::CreateFleetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>>
+GkeHubConnection::CreateFleet(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Fleet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::gkehub::v1::Fleet> GkeHubConnection::GetFleet(
+    google::cloud::gkehub::v1::GetFleetRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>>
+GkeHubConnection::UpdateFleet(
+    google::cloud::gkehub::v1::UpdateFleetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Fleet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::UpdateFleet(
+    NoAwaitTag, google::cloud::gkehub::v1::UpdateFleetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>>
+GkeHubConnection::UpdateFleet(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Fleet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteFleet(
+    google::cloud::gkehub::v1::DeleteFleetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::DeleteFleet(
+    NoAwaitTag, google::cloud::gkehub::v1::DeleteFleetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteFleet(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::gkehub::v1::Fleet> GkeHubConnection::ListFleets(
+    google::cloud::gkehub::v1::
+        ListFleetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Fleet>>();
+}
+
+StatusOr<google::cloud::gkehub::v1::Namespace>
+GkeHubConnection::GetScopeNamespace(
+    google::cloud::gkehub::v1::GetScopeNamespaceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubConnection::CreateScopeNamespace(
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Namespace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::CreateScopeNamespace(
+    NoAwaitTag, google::cloud::gkehub::v1::CreateScopeNamespaceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubConnection::CreateScopeNamespace(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Namespace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubConnection::UpdateScopeNamespace(
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Namespace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::UpdateScopeNamespace(
+    NoAwaitTag, google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubConnection::UpdateScopeNamespace(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Namespace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteScopeNamespace(
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::DeleteScopeNamespace(
+    NoAwaitTag, google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteScopeNamespace(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::gkehub::v1::Namespace>
+GkeHubConnection::ListScopeNamespaces(
+    google::cloud::gkehub::v1::
+        ListScopeNamespacesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Namespace>>();
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubConnection::GetScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubConnection::CreateScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::CreateScopeRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubConnection::CreateScopeRBACRoleBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubConnection::UpdateScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::UpdateScopeRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubConnection::UpdateScopeRBACRoleBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::DeleteScopeRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteScopeRBACRoleBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubConnection::ListScopeRBACRoleBindings(
+    google::cloud::gkehub::v1::
+        ListScopeRBACRoleBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>>();
+}
+
+StatusOr<google::cloud::gkehub::v1::Scope> GkeHubConnection::GetScope(
+    google::cloud::gkehub::v1::GetScopeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>>
+GkeHubConnection::CreateScope(
+    google::cloud::gkehub::v1::CreateScopeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Scope>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::CreateScope(
+    NoAwaitTag, google::cloud::gkehub::v1::CreateScopeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>>
+GkeHubConnection::CreateScope(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Scope>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>>
+GkeHubConnection::UpdateScope(
+    google::cloud::gkehub::v1::UpdateScopeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Scope>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::UpdateScope(
+    NoAwaitTag, google::cloud::gkehub::v1::UpdateScopeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>>
+GkeHubConnection::UpdateScope(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Scope>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteScope(
+    google::cloud::gkehub::v1::DeleteScopeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::DeleteScope(
+    NoAwaitTag, google::cloud::gkehub::v1::DeleteScopeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteScope(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::gkehub::v1::Scope> GkeHubConnection::ListScopes(
+    google::cloud::gkehub::v1::
+        ListScopesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Scope>>();
+}
+
+StreamRange<google::cloud::gkehub::v1::Scope>
+GkeHubConnection::ListPermittedScopes(
+    google::cloud::gkehub::v1::
+        ListPermittedScopesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::Scope>>();
+}
+
+StatusOr<google::cloud::gkehub::v1::MembershipBinding>
+GkeHubConnection::GetMembershipBinding(
+    google::cloud::gkehub::v1::GetMembershipBindingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubConnection::CreateMembershipBinding(
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::MembershipBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::CreateMembershipBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubConnection::CreateMembershipBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::MembershipBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubConnection::UpdateMembershipBinding(
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::MembershipBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::UpdateMembershipBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubConnection::UpdateMembershipBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::MembershipBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteMembershipBinding(
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::DeleteMembershipBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteMembershipBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::gkehub::v1::MembershipBinding>
+GkeHubConnection::ListMembershipBindings(
+    google::cloud::gkehub::v1::
+        ListMembershipBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::MembershipBinding>>();
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubConnection::GetMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubConnection::CreateMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::CreateMembershipRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubConnection::CreateMembershipRBACRoleBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubConnection::UpdateMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::UpdateMembershipRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubConnection::UpdateMembershipRBACRoleBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubConnection::DeleteMembershipRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteMembershipRBACRoleBinding(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubConnection::ListMembershipRBACRoleBindings(
+    google::cloud::gkehub::v1::
+        ListMembershipRBACRoleBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>>();
+}
+
+StatusOr<
+    google::cloud::gkehub::v1::GenerateMembershipRBACRoleBindingYAMLResponse>
+GkeHubConnection::GenerateMembershipRBACRoleBindingYAML(
+    google::cloud::gkehub::v1::
+        GenerateMembershipRBACRoleBindingYAMLRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

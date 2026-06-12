@@ -17,12 +17,15 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_stub.h"
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -545,6 +548,30 @@ DefaultDeveloperConnectStub::DeleteSelf(
   return response;
 }
 
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DefaultDeveloperConnectStub::StartOAuth(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::StartOAuthRequest const& request) {
+  google::cloud::developerconnect::v1::StartOAuthResponse response;
+  auto status = grpc_stub_->StartOAuth(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DefaultDeveloperConnectStub::FinishOAuth(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::developerconnect::v1::FinishOAuthRequest const& request) {
+  google::cloud::developerconnect::v1::FinishOAuthResponse response;
+  auto status = grpc_stub_->FinishOAuth(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDeveloperConnectStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -658,3 +685,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace developerconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -50,15 +50,13 @@ Status TracingStubGenerator::GenerateHeader() {
                        "google/cloud/internal/trace_propagator.h",
                        "google/cloud/options.h", "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
   // Tracing stub class definition
   HeaderPrint(
       R"""(
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class $tracing_stub_class_name$ : public $stub_class_name$ {
  public:
   ~$tracing_stub_class_name$() override = default;
@@ -74,8 +72,6 @@ class $tracing_stub_class_name$ : public $stub_class_name$ {
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -87,6 +83,7 @@ std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
 )""");
 
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -122,15 +119,13 @@ Status TracingStubGenerator::GenerateCc() {
            : "",
        "google/cloud/internal/grpc_opentelemetry.h"});
   CcSystemIncludes({"memory", "utility"});
-
+  CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
   // constructor
   CcPrint(
       R"""(
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 $tracing_stub_class_name$::$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -346,18 +341,13 @@ future<Status> $tracing_stub_class_name$::AsyncCancelOperation(
   }
 
   CcPrint(R"""(
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<$tracing_stub_class_name$>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 )""");
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

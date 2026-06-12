@@ -40,7 +40,7 @@ Options EventServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<talent_v4::EventServiceRetryPolicyOption>()) {
     options.set<talent_v4::EventServiceRetryPolicyOption>(
-        talent_v4::EventServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        talent_v4::EventServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<talent_v4::EventServiceBackoffPolicyOption>()) {

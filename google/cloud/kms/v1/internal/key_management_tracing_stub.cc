@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 KeyManagementServiceTracingStub::KeyManagementServiceTracingStub(
     std::shared_ptr<KeyManagementServiceStub> child)
@@ -78,6 +79,18 @@ KeyManagementServiceTracingStub::ListImportJobs(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListImportJobs(context, options, request));
+}
+
+StatusOr<google::cloud::kms::v1::ListRetiredResourcesResponse>
+KeyManagementServiceTracingStub::ListRetiredResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::ListRetiredResourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "ListRetiredResources");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListRetiredResources(context, options, request));
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
@@ -140,6 +153,18 @@ KeyManagementServiceTracingStub::GetImportJob(
                            child_->GetImportJob(context, options, request));
 }
 
+StatusOr<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceTracingStub::GetRetiredResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::GetRetiredResourceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "GetRetiredResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetRetiredResource(context, options, request));
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceTracingStub::CreateKeyRing(
     grpc::ClientContext& context, Options const& options,
@@ -175,6 +200,61 @@ KeyManagementServiceTracingStub::CreateCryptoKeyVersion(
   return internal::EndSpan(
       context, *span,
       child_->CreateCryptoKeyVersion(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceTracingStub::AsyncDeleteCryptoKey(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "DeleteCryptoKey");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteCryptoKey(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceTracingStub::DeleteCryptoKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "DeleteCryptoKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCryptoKey(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceTracingStub::AsyncDeleteCryptoKeyVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "DeleteCryptoKeyVersion");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteCryptoKeyVersion(cq, context, std::move(options),
+                                               request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceTracingStub::DeleteCryptoKeyVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
+                                     "DeleteCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteCryptoKeyVersion(context, options, request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
@@ -457,18 +537,42 @@ KeyManagementServiceTracingStub::GetOperation(
                            child_->GetOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceTracingStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<Status> KeyManagementServiceTracingStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
 
 std::shared_ptr<KeyManagementServiceStub> MakeKeyManagementServiceTracingStub(
     std::shared_ptr<KeyManagementServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<KeyManagementServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -41,7 +41,7 @@ Options GrafeasDefaultOptions(Options options) {
   if (!options.has<containeranalysis_v1::GrafeasRetryPolicyOption>()) {
     options.set<containeranalysis_v1::GrafeasRetryPolicyOption>(
         containeranalysis_v1::GrafeasLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<containeranalysis_v1::GrafeasBackoffPolicyOption>()) {

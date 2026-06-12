@@ -17,13 +17,17 @@
 // source: google/cloud/datacatalog/lineage/v1/lineage.proto
 
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_logging_decorator.h"
+#include "google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -32,8 +36,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LineageLogging::LineageLogging(std::shared_ptr<LineageStub> child,
                                TracingOptions tracing_options,
-                               std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+                               std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<
     google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
@@ -307,6 +313,35 @@ LineageLogging::BatchSearchLinkProcesses(
       context, options, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>>
+LineageLogging::SearchLineageStreaming(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::datacatalog::lineage::v1::
+                 SearchLineageStreamingRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::cloud::datacatalog::lineage::v1::
+                  SearchLineageStreamingResponse>> {
+        auto stream = child_->SearchLineageStreaming(std::move(context),
+                                                     options, request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::cloud::datacatalog::lineage::v1::
+                      SearchLineageStreamingResponse>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 LineageLogging::ListOperations(
     grpc::ClientContext& context, Options const& options,
@@ -391,3 +426,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_lineage_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

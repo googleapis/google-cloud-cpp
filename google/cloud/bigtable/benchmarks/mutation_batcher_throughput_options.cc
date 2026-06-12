@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/benchmarks/mutation_batcher_throughput_options.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
+#include "absl/strings/str_join.h"
 #include <sstream>
 
 namespace google {

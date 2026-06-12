@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/make_status.h"
@@ -24,6 +23,7 @@
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <array>
@@ -237,6 +237,21 @@ StatusOr<std::string> ComputeEngineCredentials::project_id(
     google::cloud::Options const& options) const {
   std::lock_guard<std::mutex> lk(project_id_mu_);
   return RetrieveProjectId(lk, options);
+}
+
+Credentials::AllowedLocationsRequestType
+ComputeEngineCredentials::AllowedLocationsRequest() const {
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  auto email = AccountEmail();
+  // RAB only supports values that contain the '@' character.
+  if (absl::StrContains(email, "@")) {
+    return ServiceAccountAllowedLocationsRequest{std::move(email)};
+  }
+  return std::monostate{};
+#else
+  return std::monostate{};
+#endif
 }
 
 StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(

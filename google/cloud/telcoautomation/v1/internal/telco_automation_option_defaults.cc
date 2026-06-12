@@ -42,7 +42,7 @@ Options TelcoAutomationDefaultOptions(Options options) {
   if (!options.has<telcoautomation_v1::TelcoAutomationRetryPolicyOption>()) {
     options.set<telcoautomation_v1::TelcoAutomationRetryPolicyOption>(
         telcoautomation_v1::TelcoAutomationLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<telcoautomation_v1::TelcoAutomationBackoffPolicyOption>()) {

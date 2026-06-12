@@ -19,9 +19,9 @@
 #include "google/cloud/resourcemanager/v3/internal/folders_option_defaults.h"
 #include "google/cloud/resourcemanager/v3/folders_connection.h"
 #include "google/cloud/resourcemanager/v3/folders_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,7 +45,7 @@ Options FoldersDefaultOptions(std::string const& location, Options options) {
   if (!options.has<resourcemanager_v3::FoldersRetryPolicyOption>()) {
     options.set<resourcemanager_v3::FoldersRetryPolicyOption>(
         resourcemanager_v3::FoldersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<resourcemanager_v3::FoldersBackoffPolicyOption>()) {

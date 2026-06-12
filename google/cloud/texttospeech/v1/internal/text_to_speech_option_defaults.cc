@@ -42,7 +42,7 @@ Options TextToSpeechDefaultOptions(Options options) {
   if (!options.has<texttospeech_v1::TextToSpeechRetryPolicyOption>()) {
     options.set<texttospeech_v1::TextToSpeechRetryPolicyOption>(
         texttospeech_v1::TextToSpeechLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<texttospeech_v1::TextToSpeechBackoffPolicyOption>()) {

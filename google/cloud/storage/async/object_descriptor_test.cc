@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -29,10 +29,8 @@ using ::google::cloud::storage_mocks::MockAsyncObjectDescriptorConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::testing::ElementsAre;
 using ::testing::Return;
-using ReadParams = ::google::cloud::storage_experimental::
-    ObjectDescriptorConnection::ReadParams;
-using ReadResponse =
-    ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
+using ReadParams = ObjectDescriptorConnection::ReadParams;
+using ReadResponse = AsyncReaderConnection::ReadResponse;
 
 TEST(ObjectDescriptor, Basic) {
   auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
@@ -149,13 +147,10 @@ TEST(ObjectDescriptor, ReadLast) {
 }
 
 TEST(ObjectDescriptor, ReadExceedsMaxRange) {
-  GTEST_SKIP();
   auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
   auto constexpr kMaxRange = 1024;
   EXPECT_CALL(*mock, options)
-      .WillRepeatedly(
-          Return(Options{}.set<storage_experimental::MaximumRangeSizeOption>(
-              kMaxRange)));
+      .WillRepeatedly(Return(Options{}.set<MaximumRangeSizeOption>(kMaxRange)));
 
   EXPECT_CALL(*mock, MakeSubsequentStream).Times(1);
 
@@ -191,8 +186,17 @@ TEST(ObjectDescriptor, ReadExceedsMaxRange) {
   EXPECT_FALSE(token.valid());
 }
 
+TEST(ObjectDescriptor, IsOpen) {
+  auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
+  EXPECT_CALL(*mock, IsOpen).WillOnce(Return(true)).WillOnce(Return(false));
+
+  auto tested = ObjectDescriptor(mock);
+  EXPECT_TRUE(tested.IsOpen());
+  EXPECT_FALSE(tested.IsOpen());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFORM_V1_DATAFORM_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFORM_V1_DATAFORM_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/dataform/v1/dataform.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataform/v1/dataform.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -37,6 +37,51 @@ class DataformConnectionIdempotencyPolicy {
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<DataformConnectionIdempotencyPolicy> clone() const;
+
+  virtual google::cloud::Idempotency GetTeamFolder(
+      google::cloud::dataform::v1::GetTeamFolderRequest const& request);
+
+  virtual google::cloud::Idempotency CreateTeamFolder(
+      google::cloud::dataform::v1::CreateTeamFolderRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateTeamFolder(
+      google::cloud::dataform::v1::UpdateTeamFolderRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteTeamFolder(
+      google::cloud::dataform::v1::DeleteTeamFolderRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteTeamFolderTree(
+      google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request);
+
+  virtual google::cloud::Idempotency QueryTeamFolderContents(
+      google::cloud::dataform::v1::QueryTeamFolderContentsRequest request);
+
+  virtual google::cloud::Idempotency SearchTeamFolders(
+      google::cloud::dataform::v1::SearchTeamFoldersRequest request);
+
+  virtual google::cloud::Idempotency GetFolder(
+      google::cloud::dataform::v1::GetFolderRequest const& request);
+
+  virtual google::cloud::Idempotency CreateFolder(
+      google::cloud::dataform::v1::CreateFolderRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateFolder(
+      google::cloud::dataform::v1::UpdateFolderRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteFolder(
+      google::cloud::dataform::v1::DeleteFolderRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteFolderTree(
+      google::cloud::dataform::v1::DeleteFolderTreeRequest const& request);
+
+  virtual google::cloud::Idempotency QueryFolderContents(
+      google::cloud::dataform::v1::QueryFolderContentsRequest request);
+
+  virtual google::cloud::Idempotency QueryUserRootContents(
+      google::cloud::dataform::v1::QueryUserRootContentsRequest request);
+
+  virtual google::cloud::Idempotency MoveFolder(
+      google::cloud::dataform::v1::MoveFolderRequest const& request);
 
   virtual google::cloud::Idempotency ListRepositories(
       google::cloud::dataform::v1::ListRepositoriesRequest request);
@@ -52,6 +97,9 @@ class DataformConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteRepository(
       google::cloud::dataform::v1::DeleteRepositoryRequest const& request);
+
+  virtual google::cloud::Idempotency MoveRepository(
+      google::cloud::dataform::v1::MoveRepositoryRequest const& request);
 
   virtual google::cloud::Idempotency CommitRepositoryChanges(
       google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
@@ -210,20 +258,32 @@ class DataformConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateConfig(
       google::cloud::dataform::v1::UpdateConfigRequest const& request);
 
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
   virtual google::cloud::Idempotency GetLocation(
       google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DataformConnectionIdempotencyPolicy>

@@ -44,7 +44,7 @@ Options InstanceTemplatesDefaultOptions(Options options) {
     options.set<
         compute_instance_templates_v1::InstanceTemplatesRetryPolicyOption>(
         compute_instance_templates_v1::InstanceTemplatesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_instance_templates_v1::

@@ -28,7 +28,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/group_options.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
@@ -36,19 +36,11 @@
 
 namespace google {
 namespace cloud {
-/**
- * Contains experimental features for the GCS C++ Client Library.
- *
- * @warning The types, functions, aliases, and objects in this namespace are
- *   subject to change without notice.
- */
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * A client for Google Cloud Storage offering asynchronous operations.
- *
- * @note This class is experimental, it is subject to change without notice.
  *
  * @par Example: create a client instance
  * @snippet storage_async_samples.cc async-client
@@ -916,7 +908,7 @@ class AsyncClient {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

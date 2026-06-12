@@ -160,6 +160,32 @@ TEST(AsyncRetryLoopTest, TransientThenSuccess) {
   EXPECT_EQ(84, *actual);
 }
 
+TEST(AsyncRetryLoopTest, TransientPredicateThenSuccess) {
+  AutomaticallyCreatedBackgroundThreads background;
+  ::testing::MockFunction<bool(StatusOr<int>)> mock_predicate;
+  EXPECT_CALL(mock_predicate, Call)
+      .WillOnce([](StatusOr<int> const&) { return false; })
+      .WillOnce([](StatusOr<int> const&) { return false; })
+      .WillOnce([](StatusOr<int> const&) { return true; });
+
+  auto pending = AsyncRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(),
+      [&](google::cloud::CompletionQueue&, auto,
+          ImmutableOptions const& options, int request) {
+        EXPECT_EQ(options->get<TestOption>(), "TransientPredicateThenSuccess");
+        return make_ready_future(StatusOr<int>(2 * request));
+      },
+      MakeImmutableOptions(
+          Options{}.set<TestOption>("TransientPredicateThenSuccess")),
+      42, "error message", mock_predicate.AsStdFunction());
+
+  OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
+  StatusOr<int> actual = pending.get();
+  ASSERT_THAT(actual.status(), IsOk());
+  EXPECT_EQ(84, *actual);
+}
+
 TEST(AsyncRetryLoopTest, ReturnJustStatus) {
   int counter = 0;
   AutomaticallyCreatedBackgroundThreads background;
@@ -604,7 +630,6 @@ TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
               Contains(Pair("gcloud-cpp.retry.function", "test-location")));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::SpanNamed;
@@ -657,8 +682,6 @@ TEST(AsyncRetryLoopTest, CallSpanActiveDuringCancel) {
   p.set_value(0);
   (void)actual.get();
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

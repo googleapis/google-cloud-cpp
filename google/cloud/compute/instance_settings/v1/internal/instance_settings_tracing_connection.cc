@@ -26,8 +26,6 @@ namespace cloud {
 namespace compute_instance_settings_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 InstanceSettingsTracingConnection::InstanceSettingsTracingConnection(
     std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
         child)
@@ -79,17 +77,13 @@ InstanceSettingsTracingConnection::PatchInstanceSettings(
                            child_->PatchInstanceSettings(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
 MakeInstanceSettingsTracingConnection(
     std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<InstanceSettingsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

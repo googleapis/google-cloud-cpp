@@ -41,7 +41,7 @@ Options CatalogServiceDefaultOptions(Options options) {
   if (!options.has<dataplex_v1::CatalogServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::CatalogServiceRetryPolicyOption>(
         dataplex_v1::CatalogServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataplex_v1::CatalogServiceBackoffPolicyOption>()) {

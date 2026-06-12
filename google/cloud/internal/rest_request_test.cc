@@ -27,12 +27,12 @@ using ::testing::Eq;
 class RestRequestTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    headers_["Header1"] = {"value1"};
-    headers_["header2"] = {"value2a", "value2b"};
+    headers_["header1"] = {"Header1", "value1"};
+    headers_["header2"] = {"header2", {"value2a", "value2b"}};
     parameters_.emplace_back("param1", "value1");
   }
 
-  RestRequest::HttpHeaders headers_;
+  HttpHeaders headers_;
   RestRequest::HttpParameters parameters_;
 };
 
@@ -49,10 +49,10 @@ TEST_F(RestRequestTest, ConstructorPathHeaders) {
   EXPECT_TRUE(request.parameters().empty());
   EXPECT_THAT(
       request.headers(),
-      Contains(std::make_pair("header1", std::vector<std::string>{"value1"})));
+      Contains(std::make_pair("header1", HttpHeader("header1", "value1"))));
   EXPECT_THAT(request.headers(),
               Contains(std::make_pair(
-                  "header2", std::vector<std::string>{"value2a", "value2b"})));
+                  "header2", HttpHeader("header2", {"value2a", "value2b"}))));
 }
 
 TEST_F(RestRequestTest, ConstructorPathParameters) {
@@ -68,10 +68,10 @@ TEST_F(RestRequestTest, ConstructorPathHeadersParameters) {
   EXPECT_THAT(request.path(), Eq("foo/bar"));
   EXPECT_THAT(
       request.headers(),
-      Contains(std::make_pair("header1", std::vector<std::string>{"value1"})));
+      Contains(std::make_pair("header1", HttpHeader{"header1", "value1"})));
   EXPECT_THAT(request.headers(),
               Contains(std::make_pair(
-                  "header2", std::vector<std::string>{"value2a", "value2b"})));
+                  "header2", HttpHeader{"header2", {"value2a", "value2b"}})));
   EXPECT_THAT(request.parameters(),
               Contains(std::make_pair("param1", "value1")));
 }
@@ -80,17 +80,17 @@ TEST_F(RestRequestTest, RvalueBuilder) {
   auto request = RestRequest()
                      .SetPath("foo/bar")
                      .AddHeader("header1", "value1")
-                     .AddHeader(std::make_pair("header2", "value2a"))
+                     .AddHeader(HttpHeader("header2", "value2a"))
                      .AddHeader("header2", "value2b")
                      .AddQueryParameter("param1", "value1")
                      .AddQueryParameter(std::make_pair("param2", "value2"));
   EXPECT_THAT(request.path(), Eq("foo/bar"));
   EXPECT_THAT(
       request.headers(),
-      Contains(std::make_pair("header1", std::vector<std::string>{"value1"})));
+      Contains(std::make_pair("header1", HttpHeader{"header1", "value1"})));
   EXPECT_THAT(request.headers(),
               Contains(std::make_pair(
-                  "header2", std::vector<std::string>{"value2a", "value2b"})));
+                  "header2", HttpHeader{"header2", {"value2a", "value2b"}})));
   ASSERT_THAT(request.parameters().size(), Eq(2));
   EXPECT_THAT(request.parameters()[0],
               Eq(std::make_pair(std::string("param1"), std::string("value1"))));
@@ -120,11 +120,11 @@ TEST_F(RestRequestTest, GetHeaderNotFound) {
 TEST_F(RestRequestTest, GetHeaderFound) {
   RestRequest request("foo/bar", headers_);
   auto result = request.GetHeader("Header1");
-  EXPECT_THAT(result.size(), Eq(1));
-  EXPECT_THAT(result, Contains("value1"));
+  EXPECT_THAT(result.values().size(), Eq(1));
+  EXPECT_THAT(result.values(), Contains("value1"));
   result = request.GetHeader("header1");
-  EXPECT_THAT(result.size(), Eq(1));
-  EXPECT_THAT(result, Contains("value1"));
+  EXPECT_THAT(result.values().size(), Eq(1));
+  EXPECT_THAT(result.values(), Contains("value1"));
 }
 
 TEST_F(RestRequestTest, GetQueryParameterNotFound) {

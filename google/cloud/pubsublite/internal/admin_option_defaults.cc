@@ -40,7 +40,7 @@ Options AdminServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<pubsublite::AdminServiceRetryPolicyOption>()) {
     options.set<pubsublite::AdminServiceRetryPolicyOption>(
-        pubsublite::AdminServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        pubsublite::AdminServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<pubsublite::AdminServiceBackoffPolicyOption>()) {

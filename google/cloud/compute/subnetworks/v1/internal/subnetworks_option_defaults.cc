@@ -41,7 +41,7 @@ Options SubnetworksDefaultOptions(Options options) {
   if (!options.has<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()) {
     options.set<compute_subnetworks_v1::SubnetworksRetryPolicyOption>(
         compute_subnetworks_v1::SubnetworksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>()) {

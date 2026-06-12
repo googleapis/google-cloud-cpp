@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -122,7 +122,7 @@ class StorageBatchOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
-  /// [google.cloud.storagebatchoperations.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L93}
+  /// [google.cloud.storagebatchoperations.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L111}
   ///
   // clang-format on
   StreamRange<google::cloud::storagebatchoperations::v1::Job> ListJobs(
@@ -161,7 +161,7 @@ class StorageBatchOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
-  /// [google.cloud.storagebatchoperations.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L93}
+  /// [google.cloud.storagebatchoperations.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L111}
   ///
   // clang-format on
   StreamRange<google::cloud::storagebatchoperations::v1::Job> ListJobs(
@@ -187,7 +187,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L128}
+  /// [google.cloud.storagebatchoperations.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L146}
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
   ///
   // clang-format on
@@ -217,7 +217,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L128}
+  /// [google.cloud.storagebatchoperations.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L146}
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
   ///
   // clang-format on
@@ -255,7 +255,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L140}
+  /// [google.cloud.storagebatchoperations.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L158}
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
   ///
   // clang-format on
@@ -310,7 +310,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L140}
+  /// [google.cloud.storagebatchoperations.v1.CreateJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L158}
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
   ///
   // clang-format on
@@ -365,7 +365,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L186}
+  /// [google.cloud.storagebatchoperations.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L210}
   ///
   // clang-format on
   Status DeleteJob(std::string const& name, Options opts = {});
@@ -391,7 +391,7 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L186}
+  /// [google.cloud.storagebatchoperations.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L210}
   ///
   // clang-format on
   Status DeleteJob(
@@ -418,8 +418,8 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L167}
-  /// [google.cloud.storagebatchoperations.v1.CancelJobResponse]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L205}
+  /// [google.cloud.storagebatchoperations.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L188}
+  /// [google.cloud.storagebatchoperations.v1.CancelJobResponse]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L238}
   ///
   // clang-format on
   StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
@@ -448,14 +448,149 @@ class StorageBatchOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.storagebatchoperations.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L167}
-  /// [google.cloud.storagebatchoperations.v1.CancelJobResponse]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L205}
+  /// [google.cloud.storagebatchoperations.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L188}
+  /// [google.cloud.storagebatchoperations.v1.CancelJobResponse]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L238}
   ///
   // clang-format on
   StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
   CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const&
                 request,
             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BucketOperations in a given project and job.
+  ///
+  /// @param parent  Required. Format: projects/{project_id}/locations/global/jobs/{job_id}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.storagebatchoperations.v1.BucketOperation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L139}
+  /// [google.cloud.storagebatchoperations.v1.ListBucketOperationsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L241}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::storagebatchoperations::v1::BucketOperation>
+  ListBucketOperations(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BucketOperations in a given project and job.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storagebatchoperations.v1.ListBucketOperationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.storagebatchoperations.v1.BucketOperation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L139}
+  /// [google.cloud.storagebatchoperations.v1.ListBucketOperationsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L241}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::storagebatchoperations::v1::BucketOperation>
+  ListBucketOperations(
+      google::cloud::storagebatchoperations::v1::ListBucketOperationsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a BucketOperation.
+  ///
+  /// @param name  Required. `name` of the bucket operation to retrieve.
+  ///  Format:
+  ///  projects/{project_id}/locations/global/jobs/{job_id}/bucketOperations/{bucket_operation_id}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.storagebatchoperations.v1.BucketOperation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L139}
+  /// [google.cloud.storagebatchoperations.v1.GetBucketOperationRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L276}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+  GetBucketOperation(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a BucketOperation.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.storagebatchoperations.v1.GetBucketOperationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.storagebatchoperations.v1.BucketOperation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.storagebatchoperations.v1.BucketOperation]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L139}
+  /// [google.cloud.storagebatchoperations.v1.GetBucketOperationRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L276}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+  GetBucketOperation(google::cloud::storagebatchoperations::v1::
+                         GetBucketOperationRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -747,7 +882,7 @@ class StorageBatchOperationsClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -786,7 +921,7 @@ class StorageBatchOperationsClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

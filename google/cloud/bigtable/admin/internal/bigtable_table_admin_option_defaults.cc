@@ -43,7 +43,7 @@ Options BigtableTableAdminDefaultOptions(Options options) {
   if (!options.has<bigtable_admin::BigtableTableAdminRetryPolicyOption>()) {
     options.set<bigtable_admin::BigtableTableAdminRetryPolicyOption>(
         bigtable_admin::BigtableTableAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()) {

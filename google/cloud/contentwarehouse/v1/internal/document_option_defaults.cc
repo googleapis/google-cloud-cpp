@@ -42,7 +42,7 @@ Options DocumentServiceDefaultOptions(Options options) {
   if (!options.has<contentwarehouse_v1::DocumentServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::DocumentServiceRetryPolicyOption>(
         contentwarehouse_v1::DocumentServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<contentwarehouse_v1::DocumentServiceBackoffPolicyOption>()) {

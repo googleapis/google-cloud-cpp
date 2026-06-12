@@ -16,14 +16,18 @@
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/faas_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
+#include <opentelemetry/semconv/incubating/k8s_attributes.h>
+#include <opentelemetry/semconv/incubating/service_attributes.h>
 
 namespace google {
 namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+namespace sc = opentelemetry::semconv;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
@@ -69,9 +73,9 @@ TEST(AsString, VectorsAreJoined) {
 
 TEST(MonitoredResource, GceInstance) {
   auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-      {sc::kCloudPlatform, "gcp_compute_engine"},
-      {sc::kHostId, "1020304050607080900"},
-      {sc::kCloudAvailabilityZone, "us-central1-a"},
+      {sc::cloud::kCloudPlatform, "gcp_compute_engine"},
+      {sc::host::kHostId, "1020304050607080900"},
+      {sc::cloud::kCloudAvailabilityZone, "us-central1-a"},
   };
 
   auto mr = ToMonitoredResource(attributes);
@@ -94,14 +98,14 @@ TEST(MonitoredResource, K8sContainer) {
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kCloudPlatform, "gcp_kubernetes_engine"},
-        {sc::kK8sClusterName, "test-cluster"},
-        {sc::kK8sNamespaceName, "test-namespace"},
-        {sc::kK8sPodName, "test-pod"},
-        {sc::kK8sContainerName, "test-container"},
+        {sc::cloud::kCloudPlatform, "gcp_kubernetes_engine"},
+        {sc::k8s::kK8sClusterName, "test-cluster"},
+        {sc::k8s::kK8sNamespaceName, "test-namespace"},
+        {sc::k8s::kK8sPodName, "test-pod"},
+        {sc::k8s::kK8sContainerName, "test-container"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "k8s_container");
@@ -127,13 +131,13 @@ TEST(MonitoredResource, K8sPod) {
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kCloudPlatform, "gcp_kubernetes_engine"},
-        {sc::kK8sClusterName, "test-cluster"},
-        {sc::kK8sNamespaceName, "test-namespace"},
-        {sc::kK8sPodName, "test-pod"},
+        {sc::cloud::kCloudPlatform, "gcp_kubernetes_engine"},
+        {sc::k8s::kK8sClusterName, "test-cluster"},
+        {sc::k8s::kK8sNamespaceName, "test-namespace"},
+        {sc::k8s::kK8sPodName, "test-pod"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "k8s_pod");
@@ -158,12 +162,12 @@ TEST(MonitoredResource, K8sNode) {
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kCloudPlatform, "gcp_kubernetes_engine"},
-        {sc::kK8sClusterName, "test-cluster"},
-        {sc::kK8sNodeName, "test-node"},
+        {sc::cloud::kCloudPlatform, "gcp_kubernetes_engine"},
+        {sc::k8s::kK8sClusterName, "test-cluster"},
+        {sc::k8s::kK8sNodeName, "test-node"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "k8s_node");
@@ -187,11 +191,11 @@ TEST(MonitoredResource, K8sCluster) {
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kCloudPlatform, "gcp_kubernetes_engine"},
-        {sc::kK8sClusterName, "test-cluster"},
+        {sc::cloud::kCloudPlatform, "gcp_kubernetes_engine"},
+        {sc::k8s::kK8sClusterName, "test-cluster"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "k8s_cluster");
@@ -214,13 +218,13 @@ TEST(MonitoredResource, GaeInstance) {
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kCloudPlatform, "gcp_app_engine"},
-        {sc::kFaasName, "test-module"},
-        {sc::kFaasVersion, "test-version"},
-        {sc::kFaasInstance, "test-instance"},
+        {sc::cloud::kCloudPlatform, "gcp_app_engine"},
+        {sc::faas::kFaasName, "test-module"},
+        {sc::faas::kFaasVersion, "test-version"},
+        {sc::faas::kFaasInstance, "test-instance"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "gae_instance");
@@ -245,12 +249,12 @@ TEST(MonitoredResource, AwsEc2Instance) {
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kCloudPlatform, "aws_ec2"},
-        {sc::kHostId, "test-instance"},
-        {sc::kCloudAccountId, "test-account"},
+        {sc::cloud::kCloudPlatform, "aws_ec2"},
+        {sc::host::kHostId, "test-instance"},
+        {sc::cloud::kCloudAccountId, "test-account"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "aws_ec2_instance");
@@ -275,11 +279,11 @@ TEST(MonitoredResource, GenericTaskFaas) {
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kFaasName, "faas-name"},
-        {sc::kFaasInstance, "faas-instance"},
+        {sc::faas::kFaasName, "faas-name"},
+        {sc::faas::kFaasInstance, "faas-instance"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "generic_task");
@@ -305,12 +309,12 @@ TEST(MonitoredResource, GenericTaskService) {
   };
   for (auto const& test : tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kServiceNamespace, "test-namespace"},
-        {sc::kServiceName, "test-name"},
-        {sc::kServiceInstanceId, "test-instance"},
+        {sc::service::kServiceNamespace, "test-namespace"},
+        {sc::service::kServiceName, "test-name"},
+        {sc::service::kServiceInstanceId, "test-instance"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "generic_task");
@@ -336,11 +340,11 @@ TEST(MonitoredResource, GenericNode) {
   };
   for (auto const& test : location_tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kServiceNamespace, "test-namespace"},
-        {sc::kHostId, "test-instance"},
+        {sc::service::kServiceNamespace, "test-namespace"},
+        {sc::host::kHostId, "test-instance"},
     };
-    if (test.zone) attributes[sc::kCloudAvailabilityZone] = *test.zone;
-    if (test.region) attributes[sc::kCloudRegion] = *test.region;
+    if (test.zone) attributes[sc::cloud::kCloudAvailabilityZone] = *test.zone;
+    if (test.region) attributes[sc::cloud::kCloudRegion] = *test.region;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "generic_node");
@@ -360,12 +364,12 @@ TEST(MonitoredResource, GenericNode) {
   };
   for (auto const& test : node_id_tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
-        {sc::kCloudAvailabilityZone, "us-central1-a"},
-        {sc::kCloudRegion, "us-central1"},
-        {sc::kServiceNamespace, "test-namespace"},
-        {sc::kHostName, "test-name"},
+        {sc::cloud::kCloudAvailabilityZone, "us-central1-a"},
+        {sc::cloud::kCloudRegion, "us-central1"},
+        {sc::service::kServiceNamespace, "test-namespace"},
+        {sc::host::kHostName, "test-name"},
     };
-    if (test.host_id) attributes[sc::kHostId] = *test.host_id;
+    if (test.host_id) attributes[sc::host::kHostId] = *test.host_id;
 
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "generic_node");

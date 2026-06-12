@@ -24,8 +24,8 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <generator/integration_tests/test.pb.h>
-#include <google/longrunning/operations.pb.h>
+#include "generator/integration_tests/test.pb.h"
+#include "google/longrunning/operations.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -46,6 +47,11 @@ std::unique_ptr<kms_v1::KeyManagementServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
   return options
       .get<kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
+}
+
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<kms_v1::KeyManagementServicePollingPolicyOption>()
       ->clone();
 }
 
@@ -196,6 +202,41 @@ KeyManagementServiceConnectionImpl::ListImportJobs(
       });
 }
 
+StreamRange<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceConnectionImpl::ListRetiredResources(
+    google::cloud::kms::v1::ListRetiredResourcesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListRetiredResources(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::kms::v1::RetiredResource>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<kms_v1::KeyManagementServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::kms::v1::ListRetiredResourcesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::kms::v1::ListRetiredResourcesRequest const&
+                       request) {
+              return stub->ListRetiredResources(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::kms::v1::ListRetiredResourcesResponse r) {
+        std::vector<google::cloud::kms::v1::RetiredResource> result(
+            r.retired_resources().size());
+        auto& messages = *r.mutable_retired_resources();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceConnectionImpl::GetKeyRing(
     google::cloud::kms::v1::GetKeyRingRequest const& request) {
@@ -267,6 +308,20 @@ KeyManagementServiceConnectionImpl::GetImportJob(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceConnectionImpl::GetRetiredResource(
+    google::cloud::kms::v1::GetRetiredResourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRetiredResource(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::GetRetiredResourceRequest const& request) {
+        return stub_->GetRetiredResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceConnectionImpl::CreateKeyRing(
     google::cloud::kms::v1::CreateKeyRingRequest const& request) {
@@ -308,6 +363,190 @@ KeyManagementServiceConnectionImpl::CreateCryptoKeyVersion(
         return stub_->CreateCryptoKeyVersion(context, options, request);
       },
       *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceConnectionImpl::DeleteCryptoKey(
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCryptoKey(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::kms::v1::DeleteCryptoKeyMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+        return stub->AsyncDeleteCryptoKey(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::kms::v1::DeleteCryptoKeyMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceConnectionImpl::DeleteCryptoKey(
+    NoAwaitTag, google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCryptoKey(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+        return stub_->DeleteCryptoKey(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceConnectionImpl::DeleteCryptoKey(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::kms::v1::DeleteCryptoKeyMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCryptoKey",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::kms::v1::DeleteCryptoKeyMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::kms::v1::DeleteCryptoKeyMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceConnectionImpl::DeleteCryptoKeyVersion(
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCryptoKeyVersion(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const&
+              request) {
+        return stub->AsyncDeleteCryptoKeyVersion(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceConnectionImpl::DeleteCryptoKeyVersion(
+    NoAwaitTag,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCryptoKeyVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const&
+                 request) {
+        return stub_->DeleteCryptoKeyVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceConnectionImpl::DeleteCryptoKeyVersion(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::kms::v1::
+                   DeleteCryptoKeyVersionMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCryptoKeyVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>

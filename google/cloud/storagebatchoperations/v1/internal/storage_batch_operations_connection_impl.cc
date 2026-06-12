@@ -250,6 +250,60 @@ StorageBatchOperationsConnectionImpl::CancelJob(
       *current, request, __func__);
 }
 
+StreamRange<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsConnectionImpl::ListBucketOperations(
+    google::cloud::storagebatchoperations::v1::ListBucketOperationsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListBucketOperations(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::storagebatchoperations::v1::BucketOperation>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           storagebatchoperations_v1::StorageBatchOperationsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::storagebatchoperations::v1::
+                                      ListBucketOperationsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::storagebatchoperations::v1::
+                       ListBucketOperationsRequest const& request) {
+              return stub->ListBucketOperations(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::storagebatchoperations::v1::ListBucketOperationsResponse
+             r) {
+        std::vector<google::cloud::storagebatchoperations::v1::BucketOperation>
+            result(r.bucket_operations().size());
+        auto& messages = *r.mutable_bucket_operations();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsConnectionImpl::GetBucketOperation(
+    google::cloud::storagebatchoperations::v1::GetBucketOperationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBucketOperation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storagebatchoperations::v1::
+                 GetBucketOperationRequest const& request) {
+        return stub_->GetBucketOperation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 StorageBatchOperationsConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

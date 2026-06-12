@@ -44,7 +44,7 @@ Options TargetVpnGatewaysDefaultOptions(Options options) {
     options.set<
         compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicyOption>(
         compute_target_vpn_gateways_v1::TargetVpnGatewaysLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_target_vpn_gateways_v1::

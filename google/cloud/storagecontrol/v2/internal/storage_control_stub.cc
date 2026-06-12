@@ -19,10 +19,13 @@
 #include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -102,6 +105,37 @@ DefaultStorageControlStub::RenameFolder(
     google::storage::control::v2::RenameFolderRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->RenameFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultStorageControlStub::AsyncDeleteFolderRecursive(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::storage::control::v2::DeleteFolderRecursiveRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::storage::control::v2::DeleteFolderRecursiveRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteFolderRecursive(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultStorageControlStub::DeleteFolderRecursive(
+    grpc::ClientContext& context, Options,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFolderRecursive(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -450,3 +484,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

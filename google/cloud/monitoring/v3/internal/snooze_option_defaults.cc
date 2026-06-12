@@ -41,7 +41,7 @@ Options SnoozeServiceDefaultOptions(Options options) {
   if (!options.has<monitoring_v3::SnoozeServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::SnoozeServiceRetryPolicyOption>(
         monitoring_v3::SnoozeServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<monitoring_v3::SnoozeServiceBackoffPolicyOption>()) {

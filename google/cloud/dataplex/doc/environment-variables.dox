@@ -9,9 +9,17 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_BUSINESS_GLOSSARY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataplex.googleapis.com")
+  used by `MakeBusinessGlossaryServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_CATALOG_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "dataplex.googleapis.com")
   used by `MakeCatalogServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_CMEK_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataplex.googleapis.com")
+  used by `MakeCmekServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_CONTENT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "dataplex.googleapis.com")
@@ -20,6 +28,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_DATAPLEX_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "dataplex.googleapis.com")
   used by `MakeDataplexServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DATA_PRODUCT_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "dataplex.googleapis.com")
+  used by `MakeDataProductServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_DATA_SCAN_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "dataplex.googleapis.com")

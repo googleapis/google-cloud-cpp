@@ -45,7 +45,7 @@ Options ExternalVpnGatewaysDefaultOptions(Options options) {
     options.set<
         compute_external_vpn_gateways_v1::ExternalVpnGatewaysRetryPolicyOption>(
         compute_external_vpn_gateways_v1::
-            ExternalVpnGatewaysLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            ExternalVpnGatewaysLimitedTimeRetryPolicy(std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_external_vpn_gateways_v1::

@@ -17,13 +17,16 @@
 // source: google/cloud/dataform/v1/dataform.proto
 
 #include "google/cloud/dataform/v1/internal/dataform_logging_decorator.h"
+#include "google/cloud/dataform/v1/dataform.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataform/v1/dataform.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -34,6 +37,244 @@ DataformLogging::DataformLogging(std::shared_ptr<DataformStub> child,
                                  TracingOptions tracing_options,
                                  std::set<std::string> const&)
     : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformLogging::GetTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+        return child_->GetTeamFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformLogging::CreateTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+        return child_->CreateTeamFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformLogging::UpdateTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+        return child_->UpdateTeamFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status DataformLogging::DeleteTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+        return child_->DeleteTeamFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformLogging::AsyncDeleteTeamFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const&
+                 request) {
+        return child_->AsyncDeleteTeamFolderTree(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataformLogging::DeleteTeamFolderTree(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const&
+                 request) {
+        return child_->DeleteTeamFolderTree(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryTeamFolderContentsResponse>
+DataformLogging::QueryTeamFolderContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::QueryTeamFolderContentsRequest const&
+                 request) {
+        return child_->QueryTeamFolderContents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::SearchTeamFoldersResponse>
+DataformLogging::SearchTeamFolders(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::SearchTeamFoldersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::SearchTeamFoldersRequest const&
+                 request) {
+        return child_->SearchTeamFolders(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformLogging::GetFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::GetFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::GetFolderRequest const& request) {
+        return child_->GetFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformLogging::CreateFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CreateFolderRequest const& request) {
+        return child_->CreateFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformLogging::UpdateFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+        return child_->UpdateFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status DataformLogging::DeleteFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+        return child_->DeleteFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformLogging::AsyncDeleteFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+        return child_->AsyncDeleteFolderTree(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataformLogging::DeleteFolderTree(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+        return child_->DeleteFolderTree(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryFolderContentsResponse>
+DataformLogging::QueryFolderContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryFolderContentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::QueryFolderContentsRequest const&
+                 request) {
+        return child_->QueryFolderContents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryUserRootContentsResponse>
+DataformLogging::QueryUserRootContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryUserRootContentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::QueryUserRootContentsRequest const&
+                 request) {
+        return child_->QueryUserRootContents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformLogging::AsyncMoveFolder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataform::v1::MoveFolderRequest const& request) {
+        return child_->AsyncMoveFolder(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataformLogging::MoveFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::MoveFolderRequest const& request) {
+        return child_->MoveFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
 
 StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
 DataformLogging::ListRepositories(
@@ -94,6 +335,37 @@ Status DataformLogging::DeleteRepository(
           grpc::ClientContext& context, Options const& options,
           google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
         return child_->DeleteRepository(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformLogging::AsyncMoveRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+        return child_->AsyncMoveRepository(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataformLogging::MoveRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+        return child_->MoveRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -731,6 +1003,40 @@ StatusOr<google::cloud::dataform::v1::Config> DataformLogging::UpdateConfig(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::iam::v1::Policy> DataformLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::Policy> DataformLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformLogging::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataformLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -754,41 +1060,89 @@ StatusOr<google::cloud::location::Location> DataformLogging::GetLocation(
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> DataformLogging::SetIamPolicy(
+StatusOr<google::longrunning::ListOperationsResponse>
+DataformLogging::ListOperations(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::SetIamPolicyRequest const& request) {
+    google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(context, options, request);
+             google::longrunning::ListOperationsRequest const& request) {
+        return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy> DataformLogging::GetIamPolicy(
+StatusOr<google::longrunning::Operation> DataformLogging::GetOperation(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::GetIamPolicyRequest const& request) {
+    google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(context, options, request);
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformLogging::TestIamPermissions(
+Status DataformLogging::DeleteOperation(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(context, options, request);
+             google::longrunning::DeleteOperationRequest const& request) {
+        return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
+}
+
+Status DataformLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->CancelOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformLogging::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+future<Status> DataformLogging::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataform_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

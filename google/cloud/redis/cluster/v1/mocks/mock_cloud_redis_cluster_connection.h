@@ -178,6 +178,13 @@ class MockCloudRedisClusterConnection
                    GetClusterCertificateAuthorityRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::redis::cluster::v1::
+                           SharedRegionalCertificateAuthority>,
+              GetSharedRegionalCertificateAuthority,
+              (google::cloud::redis::cluster::v1::
+                   GetSharedRegionalCertificateAuthorityRequest const& request),
+              (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

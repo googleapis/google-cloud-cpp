@@ -25,9 +25,12 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -97,6 +100,12 @@ class SpannerStub {
   BatchWrite(std::shared_ptr<grpc::ClientContext> context,
              Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) = 0;
+
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::CacheUpdate>>
+  FetchCacheUpdate(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::spanner::v1::FetchCacheUpdateRequest const& request) = 0;
 
   virtual future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
       google::cloud::CompletionQueue& cq,
@@ -188,6 +197,12 @@ class DefaultSpannerStub : public SpannerStub {
              Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) override;
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::CacheUpdate>>
+  FetchCacheUpdate(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::spanner::v1::FetchCacheUpdateRequest const& request) override;
+
   future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -221,5 +236,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H

@@ -27,8 +27,6 @@ namespace cloud {
 namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RuleServiceTracingConnection::RuleServiceTracingConnection(
     std::shared_ptr<chronicle_v1::RuleServiceConnection> child)
     : child_(std::move(child)) {}
@@ -205,16 +203,12 @@ Status RuleServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<chronicle_v1::RuleServiceConnection>
 MakeRuleServiceTracingConnection(
     std::shared_ptr<chronicle_v1::RuleServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RuleServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

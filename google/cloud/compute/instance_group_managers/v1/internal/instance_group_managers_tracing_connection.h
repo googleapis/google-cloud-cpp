@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_instance_group_managers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class InstanceGroupManagersTracingConnection
     : public compute_instance_group_managers_v1::
           InstanceGroupManagersConnection {
@@ -299,8 +297,6 @@ class InstanceGroupManagersTracingConnection
       compute_instance_group_managers_v1::InstanceGroupManagersConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

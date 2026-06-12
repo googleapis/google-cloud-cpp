@@ -41,7 +41,7 @@ Options StoragePoolsDefaultOptions(Options options) {
   if (!options.has<compute_storage_pools_v1::StoragePoolsRetryPolicyOption>()) {
     options.set<compute_storage_pools_v1::StoragePoolsRetryPolicyOption>(
         compute_storage_pools_v1::StoragePoolsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

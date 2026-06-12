@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/options.h"
+#include "google/cloud/options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -169,6 +172,103 @@ TEST(Transaction, MultiplexedPreviousTransactionId) {
       });
 }
 
+TEST(Transaction, IsolationLevelPrecedence) {
+  internal::OptionsSpan span(Options{}.set<TransactionIsolationLevelOption>(
+      Transaction::IsolationLevel::kSerializable));
+
+  // Case 1: Per-call overrides default options
+  auto opts = Transaction::ReadWriteOptions().WithIsolationLevel(
+      Transaction::IsolationLevel::kRepeatableRead);
+  Transaction txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(
+      txn, [](spanner_internal::SessionHolder&,
+              StatusOr<google::spanner::v1::TransactionSelector>& s,
+              spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(s->begin().isolation_level(),
+                  google::spanner::v1::TransactionOptions::REPEATABLE_READ);
+        return 0;
+      });
+
+  // Case 2: Fallback to default options
+  auto opts_default = Transaction::ReadWriteOptions();
+  Transaction txn_default = MakeReadWriteTransaction(opts_default);
+  spanner_internal::Visit(
+      txn_default, [](spanner_internal::SessionHolder&,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
+                      spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(s->begin().isolation_level(),
+                  google::spanner::v1::TransactionOptions::SERIALIZABLE);
+        return 0;
+      });
+}
+
+TEST(Transaction, IsolationLevelNotSpecified) {
+  // Case: Isolation not specified in transaction options or default options
+  auto opts = Transaction::ReadWriteOptions();
+  Transaction txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(
+      txn, [](spanner_internal::SessionHolder&,
+              StatusOr<google::spanner::v1::TransactionSelector>& s,
+              spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(s->begin().isolation_level(),
+                  google::spanner::v1::TransactionOptions::
+                      ISOLATION_LEVEL_UNSPECIFIED);
+        return 0;
+      });
+}
+
+TEST(Transaction, ReadLockModePrecedence) {
+  internal::OptionsSpan span(Options{}.set<TransactionReadLockModeOption>(
+      Transaction::ReadLockMode::kOptimistic));
+
+  // Case 1: Per-call overrides default options
+  auto opts =
+      Transaction::ReadWriteOptions(Transaction::ReadLockMode::kPessimistic);
+  Transaction txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(
+      txn, [](spanner_internal::SessionHolder&,
+              StatusOr<google::spanner::v1::TransactionSelector>& s,
+              spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(
+            s->begin().read_write().read_lock_mode(),
+            google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+                TransactionOptions_ReadWrite_ReadLockMode_PESSIMISTIC);
+        return 0;
+      });
+
+  // Case 2: Fallback to default options
+  auto opts_default = Transaction::ReadWriteOptions();
+  Transaction txn_default = MakeReadWriteTransaction(opts_default);
+  spanner_internal::Visit(
+      txn_default, [](spanner_internal::SessionHolder&,
+                      StatusOr<google::spanner::v1::TransactionSelector>& s,
+                      spanner_internal::TransactionContext const&) {
+        EXPECT_EQ(
+            s->begin().read_write().read_lock_mode(),
+            google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+                TransactionOptions_ReadWrite_ReadLockMode_OPTIMISTIC);
+        return 0;
+      });
+}
+
+TEST(Transaction, ReadLockModeNotSpecified) {
+  // Case: Read lock mode not specified in transaction options or default
+  // options
+  auto opts = Transaction::ReadWriteOptions();
+  Transaction txn = MakeReadWriteTransaction(opts);
+  spanner_internal::Visit(txn, [](spanner_internal::SessionHolder&,
+                                  StatusOr<
+                                      google::spanner::v1::TransactionSelector>&
+                                      s,
+                                  spanner_internal::TransactionContext const&) {
+    EXPECT_EQ(
+        s->begin().read_write().read_lock_mode(),
+        google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
+            TransactionOptions_ReadWrite_ReadLockMode_READ_LOCK_MODE_UNSPECIFIED);
+    return 0;
+  });
+}
+
 TEST(Transaction, ReadWriteOptionsWithTag) {
   auto opts = Transaction::ReadWriteOptions().WithTag("test-tag");
   Transaction txn = MakeReadWriteTransaction(opts);
@@ -215,3 +315,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

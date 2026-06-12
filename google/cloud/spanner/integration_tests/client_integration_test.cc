@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
@@ -805,7 +805,10 @@ TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
   auto tx_a_read_result = client_->Read(
       tx_a, "Singers", KeySet().AddKey(MakeKey(singer_id)), {"SingerId"});
   for (auto const& row : StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
-    EXPECT_STATUS_OK(row);
+    EXPECT_THAT(
+        row,
+        AnyOf(IsOk(), StatusIs(StatusCode::kUnimplemented,
+                               HasSubstr("Optimistic lock is not enabled"))));
   }
   tx_a = MakeReadWriteTransaction(
       tx_a, Transaction::ReadWriteOptions(read_lock_mode));
@@ -813,7 +816,10 @@ TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
   auto optimistic_result =
       client_->Commit(tx_a, mutation_helper("SecondModifiedName"));
 
-  EXPECT_STATUS_OK(optimistic_result);
+  EXPECT_THAT(
+      optimistic_result,
+      AnyOf(IsOk(), StatusIs(StatusCode::kUnimplemented,
+                             HasSubstr("Optimistic lock is not enabled"))));
 }
 
 /// @test Test ExecuteQuery() with bounded staleness set by a timestamp.
@@ -1758,15 +1764,9 @@ TEST_F(ClientIntegrationTest, MakeConnectionOverloads) {
                      .clone());
 }
 
-/// @test Verify the backwards compatibility `v1` namespace still exists.
-TEST_F(ClientIntegrationTest, BackwardsCompatibility) {
-  auto connection = ::google::cloud::spanner::v1::MakeConnection(GetDatabase());
-  EXPECT_THAT(connection, NotNull());
-  ASSERT_NO_FATAL_FAILURE(Client(std::move(connection)));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

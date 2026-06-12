@@ -40,7 +40,7 @@ Options LustreDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<lustre_v1::LustreRetryPolicyOption>()) {
     options.set<lustre_v1::LustreRetryPolicyOption>(
-        lustre_v1::LustreLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        lustre_v1::LustreLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<lustre_v1::LustreBackoffPolicyOption>()) {

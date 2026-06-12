@@ -18,9 +18,9 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_join.h"
 #include <sstream>
 
 namespace {

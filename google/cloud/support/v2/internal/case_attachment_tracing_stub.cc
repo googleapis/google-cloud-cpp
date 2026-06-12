@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CaseAttachmentServiceTracingStub::CaseAttachmentServiceTracingStub(
     std::shared_ptr<CaseAttachmentServiceStub> child)
@@ -44,18 +45,26 @@ CaseAttachmentServiceTracingStub::ListAttachments(
                            child_->ListAttachments(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+StatusOr<google::cloud::support::v2::Attachment>
+CaseAttachmentServiceTracingStub::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetAttachmentRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.support.v2.CaseAttachmentService", "GetAttachment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAttachment(context, options, request));
+}
 
 std::shared_ptr<CaseAttachmentServiceStub> MakeCaseAttachmentServiceTracingStub(
     std::shared_ptr<CaseAttachmentServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CaseAttachmentServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -26,8 +26,6 @@ namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ValidationHelperV1TracingConnection::ValidationHelperV1TracingConnection(
     std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection> child)
     : child_(std::move(child)) {}
@@ -45,18 +43,14 @@ ValidationHelperV1TracingConnection::ValidateAttestationOccurrence(
                            child_->ValidateAttestationOccurrence(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection>
 MakeValidationHelperV1TracingConnection(
     std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<ValidationHelperV1TracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

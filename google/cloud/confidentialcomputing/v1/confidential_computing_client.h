@@ -176,7 +176,7 @@ class ConfidentialComputingClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.confidentialcomputing.v1.VerifyAttestationRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L183}
-  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L263}
+  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L363}
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
@@ -209,8 +209,8 @@ class ConfidentialComputingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialSpaceRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L411}
-  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialSpaceResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L493}
+  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialSpaceRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L511}
+  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialSpaceResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L598}
   ///
   // clang-format on
   StatusOr<
@@ -243,8 +243,8 @@ class ConfidentialComputingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialGkeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L511}
-  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialGkeResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L533}
+  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialGkeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L616}
+  /// [google.cloud.confidentialcomputing.v1.VerifyConfidentialGkeResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L657}
   ///
   // clang-format on
   StatusOr<

@@ -21,7 +21,6 @@
 #include "docfx/function_classifiers.h"
 #include "docfx/node_name.h"
 #include "docfx/public_docs.h"
-#include "docfx/yaml_emit.h"
 #include <algorithm>
 #include <iostream>
 #include <sstream>

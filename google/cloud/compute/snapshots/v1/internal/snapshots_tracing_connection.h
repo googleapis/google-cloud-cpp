@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_snapshots_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SnapshotsTracingConnection
     : public compute_snapshots_v1::SnapshotsConnection {
  public:
@@ -99,8 +97,6 @@ class SnapshotsTracingConnection
  private:
   std::shared_ptr<compute_snapshots_v1::SnapshotsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

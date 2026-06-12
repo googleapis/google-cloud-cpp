@@ -16,9 +16,9 @@
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {

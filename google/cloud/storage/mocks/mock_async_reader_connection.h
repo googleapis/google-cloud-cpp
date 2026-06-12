@@ -24,8 +24,7 @@ namespace cloud {
 namespace storage_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockAsyncReaderConnection
-    : public storage_experimental::AsyncReaderConnection {
+class MockAsyncReaderConnection : public storage::AsyncReaderConnection {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(future<ReadResponse>, Read, (), (override));

@@ -20,11 +20,11 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/resolve_comment_references.h"
 #include "generator/internal/resolve_method_return.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/string_view.h"
-#include <google/longrunning/operations.pb.h>
+#include "google/longrunning/operations.pb.h"
 #include <google/protobuf/descriptor.h>
 #include <cstddef>
 #include <iterator>
@@ -191,6 +191,16 @@ MethodCommentSubstitution substitutions[] = {
     // From google/dialogflow/v2/conversation.proto
     {kDialogflowEsConversationsProto, kDialogflowEsConversationsCpp},
 
+    // From google/cloud/visionai/v1/warehouse.proto
+    // From google/cloud/ces/v1/session_service.proto
+    // The "---" are transformed into a <mdash/> element which breaks our docs
+    // process.
+    {R"""(---)""", R"""(-)"""},
+
+    // Some google/cloud/support/v2/* protos have example bash commands with
+    // continuation characters.
+    {"\\\n", "\n"},
+
     // Add Doxygen-style comments
     {"\n", "\n  ///"},
 
@@ -210,6 +220,8 @@ std::string FormatMethodComments(
   }
   std::string doxygen_formatted_function_comments =
       method_source_location.leading_comments;
+  absl::StrReplaceAll({{"$", "$$"}}, &doxygen_formatted_function_comments);
+
   for (auto& sub : substitutions) {
     sub.uses += absl::StrReplaceAll({{sub.before, sub.after}},
                                     &doxygen_formatted_function_comments);

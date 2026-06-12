@@ -15,7 +15,7 @@
 # This file shows how to use the Cloud Workstations API C++ client library from
 # a larger CMake project.
 
-cmake_minimum_required(VERSION 3.10...3.24)
+cmake_minimum_required(VERSION 3.22...3.31)
 project(google-cloud-cpp-workstations-quickstart CXX)
 
 find_package(google_cloud_cpp_workstations REQUIRED)

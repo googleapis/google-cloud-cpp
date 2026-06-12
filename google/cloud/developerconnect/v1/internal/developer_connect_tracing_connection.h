@@ -28,8 +28,6 @@ namespace cloud {
 namespace developerconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DeveloperConnectTracingConnection
     : public developerconnect_v1::DeveloperConnectConnection {
  public:
@@ -238,6 +236,14 @@ class DeveloperConnectTracingConnection
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteSelf(google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse> StartOAuth(
+      google::cloud::developerconnect::v1::StartOAuthRequest const& request)
+      override;
+
+  StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+  FinishOAuth(google::cloud::developerconnect::v1::FinishOAuthRequest const&
+                  request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
@@ -259,8 +265,6 @@ class DeveloperConnectTracingConnection
  private:
   std::shared_ptr<developerconnect_v1::DeveloperConnectConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

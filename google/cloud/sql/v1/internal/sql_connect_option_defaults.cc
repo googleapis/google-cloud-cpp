@@ -42,7 +42,7 @@ Options SqlConnectServiceDefaultOptions(Options options) {
   if (!options.has<sql_v1::SqlConnectServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlConnectServiceRetryPolicyOption>(
         sql_v1::SqlConnectServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<sql_v1::SqlConnectServiceBackoffPolicyOption>()) {

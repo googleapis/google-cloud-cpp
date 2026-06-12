@@ -27,8 +27,6 @@ namespace cloud {
 namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudBuildTracingConnection::CloudBuildTracingConnection(
     std::shared_ptr<cloudbuild_v1::CloudBuildConnection> child)
     : child_(std::move(child)) {}
@@ -358,16 +356,12 @@ CloudBuildTracingConnection::GetDefaultServiceAccount(
   return internal::EndSpan(*span, child_->GetDefaultServiceAccount(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<cloudbuild_v1::CloudBuildConnection>
 MakeCloudBuildTracingConnection(
     std::shared_ptr<cloudbuild_v1::CloudBuildConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CloudBuildTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

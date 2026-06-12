@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_CATALOG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_CATALOG_CONNECTION_H
 
+#include "google/cloud/dataplex/v1/catalog.pb.h"
 #include "google/cloud/dataplex/v1/catalog_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/catalog_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataplex/v1/catalog.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -321,6 +321,9 @@ class CatalogServiceConnection {
   virtual StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
       google::cloud::dataplex::v1::LookupEntryRequest const& request);
 
+  virtual StatusOr<google::cloud::dataplex::v1::Entry> ModifyEntry(
+      google::cloud::dataplex::v1::ModifyEntryRequest const& request);
+
   virtual StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
   SearchEntries(google::cloud::dataplex::v1::SearchEntriesRequest request);
 
@@ -348,11 +351,61 @@ class CatalogServiceConnection {
   virtual StatusOr<google::cloud::dataplex::v1::EntryLink> CreateEntryLink(
       google::cloud::dataplex::v1::CreateEntryLinkRequest const& request);
 
+  virtual StatusOr<google::cloud::dataplex::v1::EntryLink> UpdateEntryLink(
+      google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request);
+
   virtual StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
       google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request);
 
+  virtual StreamRange<google::cloud::dataplex::v1::EntryLink> LookupEntryLinks(
+      google::cloud::dataplex::v1::LookupEntryLinksRequest request);
+
+  virtual StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+  LookupContext(
+      google::cloud::dataplex::v1::LookupContextRequest const& request);
+
   virtual StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
       google::cloud::dataplex::v1::GetEntryLinkRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+  CreateMetadataFeed(
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateMetadataFeed(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+  CreateMetadataFeed(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::dataplex::v1::MetadataFeed> GetMetadataFeed(
+      google::cloud::dataplex::v1::GetMetadataFeedRequest const& request);
+
+  virtual StreamRange<google::cloud::dataplex::v1::MetadataFeed>
+  ListMetadataFeeds(
+      google::cloud::dataplex::v1::ListMetadataFeedsRequest request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteMetadataFeed(
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteMetadataFeed(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteMetadataFeed(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+  UpdateMetadataFeed(
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateMetadataFeed(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+  UpdateMetadataFeed(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

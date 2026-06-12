@@ -44,7 +44,7 @@ Options CertificateAuthorityServiceDefaultOptions(Options options) {
            .has<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()) {
     options.set<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>(
         privateca_v1::CertificateAuthorityServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

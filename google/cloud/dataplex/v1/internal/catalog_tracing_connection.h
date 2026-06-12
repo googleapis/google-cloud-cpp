@@ -28,8 +28,6 @@ namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CatalogServiceTracingConnection
     : public dataplex_v1::CatalogServiceConnection {
  public:
@@ -186,6 +184,9 @@ class CatalogServiceTracingConnection
   StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
       google::cloud::dataplex::v1::LookupEntryRequest const& request) override;
 
+  StatusOr<google::cloud::dataplex::v1::Entry> ModifyEntry(
+      google::cloud::dataplex::v1::ModifyEntryRequest const& request) override;
+
   StreamRange<google::cloud::dataplex::v1::SearchEntriesResult> SearchEntries(
       google::cloud::dataplex::v1::SearchEntriesRequest request) override;
 
@@ -216,12 +217,69 @@ class CatalogServiceTracingConnection
       google::cloud::dataplex::v1::CreateEntryLinkRequest const& request)
       override;
 
+  StatusOr<google::cloud::dataplex::v1::EntryLink> UpdateEntryLink(
+      google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request)
+      override;
+
   StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
       google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request)
       override;
 
+  StreamRange<google::cloud::dataplex::v1::EntryLink> LookupEntryLinks(
+      google::cloud::dataplex::v1::LookupEntryLinksRequest request) override;
+
+  StatusOr<google::cloud::dataplex::v1::LookupContextResponse> LookupContext(
+      google::cloud::dataplex::v1::LookupContextRequest const& request)
+      override;
+
   StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
       google::cloud::dataplex::v1::GetEntryLinkRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+  CreateMetadataFeed(
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMetadataFeed(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+  CreateMetadataFeed(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::dataplex::v1::MetadataFeed> GetMetadataFeed(
+      google::cloud::dataplex::v1::GetMetadataFeedRequest const& request)
+      override;
+
+  StreamRange<google::cloud::dataplex::v1::MetadataFeed> ListMetadataFeeds(
+      google::cloud::dataplex::v1::ListMetadataFeedsRequest request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteMetadataFeed(
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteMetadataFeed(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteMetadataFeed(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+  UpdateMetadataFeed(
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMetadataFeed(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+  UpdateMetadataFeed(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
@@ -253,8 +311,6 @@ class CatalogServiceTracingConnection
  private:
   std::shared_ptr<dataplex_v1::CatalogServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

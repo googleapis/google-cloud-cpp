@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_region_instant_snapshots_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RegionInstantSnapshotsTracingConnection
     : public compute_region_instant_snapshots_v1::
           RegionInstantSnapshotsConnection {
@@ -107,8 +105,6 @@ class RegionInstantSnapshotsTracingConnection
       compute_region_instant_snapshots_v1::RegionInstantSnapshotsConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

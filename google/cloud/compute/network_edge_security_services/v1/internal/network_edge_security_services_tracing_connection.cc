@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_network_edge_security_services_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 NetworkEdgeSecurityServicesTracingConnection::
     NetworkEdgeSecurityServicesTracingConnection(
         std::shared_ptr<compute_network_edge_security_services_v1::
@@ -181,20 +179,16 @@ NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
                            child_->PatchNetworkEdgeSecurityService(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_network_edge_security_services_v1::
                     NetworkEdgeSecurityServicesConnection>
 MakeNetworkEdgeSecurityServicesTracingConnection(
     std::shared_ptr<compute_network_edge_security_services_v1::
                         NetworkEdgeSecurityServicesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<NetworkEdgeSecurityServicesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

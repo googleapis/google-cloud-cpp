@@ -22,9 +22,13 @@
 #include "google/cloud/kms/v1/internal/key_management_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -57,6 +61,12 @@ class KeyManagementServiceMetadata : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::ListImportJobsRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::ListRetiredResourcesResponse>
+  ListRetiredResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::ListRetiredResourcesRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetKeyRingRequest const& request) override;
@@ -78,6 +88,11 @@ class KeyManagementServiceMetadata : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetImportJobRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::GetRetiredResourceRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateKeyRingRequest const& request) override;
@@ -89,6 +104,28 @@ class KeyManagementServiceMetadata : public KeyManagementServiceStub {
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCryptoKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKey(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCryptoKeyVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKeyVersion(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
@@ -189,6 +226,18 @@ class KeyManagementServiceMetadata : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
@@ -203,5 +252,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_KEY_MANAGEMENT_METADATA_DECORATOR_H

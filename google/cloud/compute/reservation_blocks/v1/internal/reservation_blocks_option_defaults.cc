@@ -44,7 +44,7 @@ Options ReservationBlocksDefaultOptions(Options options) {
     options.set<
         compute_reservation_blocks_v1::ReservationBlocksRetryPolicyOption>(
         compute_reservation_blocks_v1::ReservationBlocksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_reservation_blocks_v1::

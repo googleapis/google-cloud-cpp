@@ -19,17 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATA_SCAN_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATA_SCAN_STUB_H
 
+#include "google/cloud/dataplex/v1/datascans.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataplex/v1/datascans.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -92,6 +95,11 @@ class DataScanServiceStub {
   ListDataScanJobs(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListDataScanJobsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+  CancelDataScanJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
@@ -226,6 +234,11 @@ class DefaultDataScanServiceStub : public DataScanServiceStub {
                    google::cloud::dataplex::v1::ListDataScanJobsRequest const&
                        request) override;
 
+  StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+  CancelDataScanJob(grpc::ClientContext& context, Options const& options,
+                    google::cloud::dataplex::v1::CancelDataScanJobRequest const&
+                        request) override;
+
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
   GenerateDataQualityRules(
       grpc::ClientContext& context, Options const& options,
@@ -294,5 +307,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATA_SCAN_STUB_H

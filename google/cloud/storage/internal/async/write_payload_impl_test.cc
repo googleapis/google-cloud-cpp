@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/random.h"
+#include "absl/strings/str_join.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,7 +27,7 @@ using ::testing::IsEmpty;
 using ::testing::Not;
 
 TEST(WritePayloadImpl, Default) {
-  auto const actual = storage_experimental::WritePayload();
+  auto const actual = storage::WritePayload();
   EXPECT_TRUE(actual.empty());
   EXPECT_EQ(actual.size(), 0);
   EXPECT_THAT(actual.payload(), IsEmpty());

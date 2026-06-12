@@ -1,3 +1,3 @@
-@com_google_googleapis//google/cloud/asset/v1:asset_enrichment_resourceowners.proto
-@com_google_googleapis//google/cloud/asset/v1:asset_service.proto
-@com_google_googleapis//google/cloud/asset/v1:assets.proto
+@googleapis//google/cloud/asset/v1:asset_enrichment_resourceowners.proto
+@googleapis//google/cloud/asset/v1:asset_service.proto
+@googleapis//google/cloud/asset/v1:assets.proto

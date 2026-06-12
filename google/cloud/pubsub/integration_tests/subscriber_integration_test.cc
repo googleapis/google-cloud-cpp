@@ -21,6 +21,7 @@
 #include "google/cloud/pubsub/internal/noop_message_callback.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -56,7 +57,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::ElementsAreArray;
 using ::testing::IsEmpty;
-using ::testing::NotNull;
 
 class SubscriberIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -351,6 +351,22 @@ TEST_F(SubscriberIntegrationTest, PublishPullAck) {
   ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
 }
 
+TEST_F(SubscriberIntegrationTest, PublishPullAckWithImpersonatedCredentials) {
+  std::string iam_service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_PUBSUB_TEST_IMPERSONATED_SERVICE_ACCOUNT")
+          .value_or("");
+  ASSERT_FALSE(iam_service_account.empty());
+  auto google_default_credentials = MakeGoogleDefaultCredentials();
+  auto options = Options{}.set<UnifiedCredentialsOption>(
+      MakeImpersonateServiceAccountCredentials(google_default_credentials,
+                                               iam_service_account));
+  auto publisher = Publisher(MakePublisherConnection(topic_, options));
+  auto subscriber =
+      Subscriber(MakeSubscriberConnection(subscription_, options));
+  ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
+}
+
 TEST_F(SubscriberIntegrationTest, FireAndForget) {
   std::mutex mu;
   std::condition_variable cv;
@@ -615,14 +631,6 @@ TEST_F(SubscriberIntegrationTest, TracingDisabledBlockingPull) {
     ids.erase(response->message.message_id());
   }
   EXPECT_THAT(ids, IsEmpty());
-}
-
-/// @test Verify the backwards compatibility `v1` namespace still exists.
-TEST_F(SubscriberIntegrationTest, BackwardsCompatibility) {
-  auto connection = ::google::cloud::pubsub::v1::MakeSubscriberConnection(
-      subscription_, Options{});
-  EXPECT_THAT(connection, NotNull());
-  ASSERT_NO_FATAL_FAILURE(Subscriber(std::move(connection)));
 }
 
 }  // namespace

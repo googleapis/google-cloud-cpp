@@ -27,8 +27,6 @@ namespace cloud {
 namespace storagecontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 StorageControlTracingConnection::StorageControlTracingConnection(
     std::shared_ptr<storagecontrol_v2::StorageControlConnection> child)
     : child_(std::move(child)) {}
@@ -96,6 +94,37 @@ StorageControlTracingConnection::RenameFolder(
       "storagecontrol_v2::StorageControlConnection::RenameFolder");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RenameFolder(operation));
+}
+
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlTracingConnection::DeleteFolderRecursive(
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DeleteFolderRecursive");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFolderRecursive(request));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlTracingConnection::DeleteFolderRecursive(
+    NoAwaitTag,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DeleteFolderRecursive");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteFolderRecursive(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlTracingConnection::DeleteFolderRecursive(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DeleteFolderRecursive");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFolderRecursive(operation));
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>
@@ -351,16 +380,12 @@ StorageControlTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<storagecontrol_v2::StorageControlConnection>
 MakeStorageControlTracingConnection(
     std::shared_ptr<storagecontrol_v2::StorageControlConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<StorageControlTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

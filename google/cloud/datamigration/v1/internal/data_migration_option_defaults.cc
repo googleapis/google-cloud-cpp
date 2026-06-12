@@ -42,7 +42,7 @@ Options DataMigrationServiceDefaultOptions(Options options) {
   if (!options.has<datamigration_v1::DataMigrationServiceRetryPolicyOption>()) {
     options.set<datamigration_v1::DataMigrationServiceRetryPolicyOption>(
         datamigration_v1::DataMigrationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

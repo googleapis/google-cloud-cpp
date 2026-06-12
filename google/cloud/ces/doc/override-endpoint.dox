@@ -1,0 +1,50 @@
+/*!
+@page ces-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `ces_v1::AgentServiceClient`:
+
+@snippet agent_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c ces_v1::AgentServiceClient](@ref ces_v1::AgentServiceClient-endpoint-snippet)
+- [\c ces_v1::SessionServiceClient](@ref ces_v1::SessionServiceClient-endpoint-snippet)
+- [\c ces_v1::ToolServiceClient](@ref ces_v1::ToolServiceClient-endpoint-snippet)
+- [\c ces_v1::WidgetServiceClient](@ref ces_v1::WidgetServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page ces_v1::AgentServiceClient-endpoint-snippet Override ces_v1::AgentServiceClient Endpoint Configuration
+
+@snippet google/cloud/ces/v1/samples/agent_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ces_v1::SessionServiceClient-endpoint-snippet Override ces_v1::SessionServiceClient Endpoint Configuration
+
+@snippet google/cloud/ces/v1/samples/session_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ces_v1::ToolServiceClient-endpoint-snippet Override ces_v1::ToolServiceClient Endpoint Configuration
+
+@snippet google/cloud/ces/v1/samples/tool_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ces_v1::WidgetServiceClient-endpoint-snippet Override ces_v1::WidgetServiceClient Endpoint Configuration
+
+@snippet google/cloud/ces/v1/samples/widget_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

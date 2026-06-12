@@ -19,16 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_INTERNAL_STORAGE_BATCH_OPERATIONS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_INTERNAL_STORAGE_BATCH_OPERATIONS_STUB_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -70,6 +73,17 @@ class StorageBatchOperationsStub {
   CancelJob(grpc::ClientContext& context, Options const& options,
             google::cloud::storagebatchoperations::v1::CancelJobRequest const&
                 request) = 0;
+
+  virtual StatusOr<
+      google::cloud::storagebatchoperations::v1::ListBucketOperationsResponse>
+  ListBucketOperations(grpc::ClientContext& context, Options const& options,
+                       google::cloud::storagebatchoperations::v1::
+                           ListBucketOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+  GetBucketOperation(grpc::ClientContext& context, Options const& options,
+                     google::cloud::storagebatchoperations::v1::
+                         GetBucketOperationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
@@ -155,6 +169,17 @@ class DefaultStorageBatchOperationsStub : public StorageBatchOperationsStub {
             google::cloud::storagebatchoperations::v1::CancelJobRequest const&
                 request) override;
 
+  StatusOr<
+      google::cloud::storagebatchoperations::v1::ListBucketOperationsResponse>
+  ListBucketOperations(grpc::ClientContext& context, Options const& options,
+                       google::cloud::storagebatchoperations::v1::
+                           ListBucketOperationsRequest const& request) override;
+
+  StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+  GetBucketOperation(grpc::ClientContext& context, Options const& options,
+                     google::cloud::storagebatchoperations::v1::
+                         GetBucketOperationRequest const& request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -205,5 +230,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagebatchoperations_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_INTERNAL_STORAGE_BATCH_OPERATIONS_STUB_H

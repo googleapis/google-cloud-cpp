@@ -15,7 +15,7 @@
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
-#include <google/storage/control/v2/storage_control.pb.h>
+#include "google/storage/control/v2/storage_control.pb.h"
 #include <string>
 #include <utility>
 #include <vector>
@@ -86,13 +86,13 @@ void UpdateAnywhereCache(
     std::vector<std::string> const& argv) {
   // [START storage_control_update_anywhere_cache]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
-  [](storagecontrol::StorageControlClient client, std::string const& cache_name,
-     std::string const& admission_policy) {
+  [](storagecontrol::StorageControlClient client,
+     std::string const& cache_name) {
     google::storage::control::v2::AnywhereCache cache;
     google::protobuf::FieldMask field_mask;
-    field_mask.add_paths("admission_policy");
+    field_mask.add_paths("ttl");
     cache.set_name(cache_name);
-    cache.set_admission_policy(admission_policy);
+    cache.mutable_ttl()->set_seconds(86400);
     // Start an update operation and block until it completes. Real applications
     // may want to setup a callback, wait on a coroutine, or poll until it
     // completes.
@@ -101,7 +101,7 @@ void UpdateAnywhereCache(
     std::cout << "Updated anywhere cache: " << anywhere_cache->name() << "\n";
   }
   // [END storage_control_update_anywhere_cache]
-  (std::move(client), argv.at(0), argv.at(1));
+  (std::move(client), argv.at(0));
 }
 
 void PauseAnywhereCache(
@@ -221,8 +221,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                  CreateAnywhereCache),
       make_entry("get-anywhere-cache", {"cache-name"}, GetAnywhereCache),
       make_entry("list-anywhere-caches", {"bucket-name"}, ListAnywhereCaches),
-      make_entry("update-anywhere-cache", {"cache-name", "admission-policy"},
-                 UpdateAnywhereCache),
+      make_entry("update-anywhere-cache", {"cache-name"}, UpdateAnywhereCache),
       make_entry("pause-anywhere-cache", {"cache-name"}, PauseAnywhereCache),
       make_entry("resume-anywhere-cache", {"cache-name"}, ResumeAnywhereCache),
       make_entry("disable-anywhere-cache", {"cache-name"},

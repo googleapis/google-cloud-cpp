@@ -27,8 +27,6 @@ namespace cloud {
 namespace privateca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CertificateAuthorityServiceTracingConnection::
     CertificateAuthorityServiceTracingConnection(
         std::shared_ptr<privateca_v1::CertificateAuthorityServiceConnection>
@@ -768,17 +766,13 @@ Status CertificateAuthorityServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<privateca_v1::CertificateAuthorityServiceConnection>
 MakeCertificateAuthorityServiceTracingConnection(
     std::shared_ptr<privateca_v1::CertificateAuthorityServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CertificateAuthorityServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

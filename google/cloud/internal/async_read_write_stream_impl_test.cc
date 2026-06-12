@@ -215,8 +215,6 @@ TEST(AsyncReadWriteStreamingRpcTest, Error) {
   EXPECT_THAT(metadata.trailers, IsEmpty());
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 using ::google::cloud::testing_util::IsActive;
 
 TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
@@ -329,8 +327,6 @@ TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
   notify_next_op();
   (void)finish.get();
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

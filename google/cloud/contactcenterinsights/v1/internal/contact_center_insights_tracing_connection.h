@@ -28,8 +28,6 @@ namespace cloud {
 namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ContactCenterInsightsTracingConnection
     : public contactcenterinsights_v1::ContactCenterInsightsConnection {
  public:
@@ -561,8 +559,6 @@ class ContactCenterInsightsTracingConnection
   std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

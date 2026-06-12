@@ -42,7 +42,7 @@ Options SqlOperationsServiceDefaultOptions(Options options) {
   if (!options.has<sql_v1::SqlOperationsServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlOperationsServiceRetryPolicyOption>(
         sql_v1::SqlOperationsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<sql_v1::SqlOperationsServiceBackoffPolicyOption>()) {

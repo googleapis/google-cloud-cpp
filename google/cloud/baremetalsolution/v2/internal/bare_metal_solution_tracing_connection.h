@@ -28,8 +28,6 @@ namespace cloud {
 namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class BareMetalSolutionTracingConnection
     : public baremetalsolution_v2::BareMetalSolutionConnection {
  public:
@@ -378,8 +376,6 @@ class BareMetalSolutionTracingConnection
  private:
   std::shared_ptr<baremetalsolution_v2::BareMetalSolutionConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -42,7 +42,7 @@ Options ManagedNotebookServiceDefaultOptions(Options options) {
   if (!options.has<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>()) {
     options.set<notebooks_v1::ManagedNotebookServiceRetryPolicyOption>(
         notebooks_v1::ManagedNotebookServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<notebooks_v1::ManagedNotebookServiceBackoffPolicyOption>()) {

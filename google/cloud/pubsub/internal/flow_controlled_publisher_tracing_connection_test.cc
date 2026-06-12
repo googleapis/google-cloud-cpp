@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
@@ -22,7 +20,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -47,7 +45,7 @@ using ::testing::ElementsAre;
 using ::testing::SizeIs;
 
 TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -75,7 +73,7 @@ TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
                 SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                 SpanHasAttributes(
                     OTelAttribute<std::string>(
-                        sc::kCodeFunction,
+                        sc::code::kCodeFunctionName,
                         "pubsub::FlowControlledPublisherConnection::Publish"),
                     OTelAttribute<std::string>("gl-cpp.status_code", "OK")))));
 }
@@ -139,5 +137,3 @@ TEST(MakeFlowControlledPublisherTracingConnectionTest,
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

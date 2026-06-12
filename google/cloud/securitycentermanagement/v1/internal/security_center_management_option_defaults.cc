@@ -47,7 +47,7 @@ Options SecurityCenterManagementDefaultOptions(Options options) {
         securitycentermanagement_v1::SecurityCenterManagementRetryPolicyOption>(
         securitycentermanagement_v1::
             SecurityCenterManagementLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<securitycentermanagement_v1::

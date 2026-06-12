@@ -23,10 +23,11 @@ namespace internal {
 
 StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
                                               std::string const& payload,
-                                              std::string const& pem_contents) {
+                                              std::string const& pem_contents,
+                                              SignatureFormat format) {
   auto const body =
       UrlsafeBase64Encode(header) + '.' + UrlsafeBase64Encode(payload);
-  auto pem_signature = internal::SignUsingSha256(body, pem_contents);
+  auto pem_signature = internal::SignUsingSha256(body, pem_contents, format);
   if (!pem_signature) return std::move(pem_signature).status();
   return body + '.' + UrlsafeBase64Encode(*pem_signature);
 }

@@ -42,7 +42,7 @@ Options ProfilerServiceDefaultOptions(Options options) {
   if (!options.has<profiler_v2::ProfilerServiceRetryPolicyOption>()) {
     options.set<profiler_v2::ProfilerServiceRetryPolicyOption>(
         profiler_v2::ProfilerServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<profiler_v2::ProfilerServiceBackoffPolicyOption>()) {

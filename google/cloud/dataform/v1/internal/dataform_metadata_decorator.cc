@@ -17,16 +17,20 @@
 // source: google/cloud/dataform/v1/dataform.proto
 
 #include "google/cloud/dataform/v1/internal/dataform_metadata_decorator.h"
+#include "google/cloud/dataform/v1/dataform.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataform/v1/dataform.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -43,6 +47,175 @@ DataformMetadata::DataformMetadata(
           api_client_header.empty()
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformMetadata::GetTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetTeamFolder(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformMetadata::CreateTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTeamFolder(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformMetadata::UpdateTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("team_folder.name=",
+                           internal::UrlEncode(request.team_folder().name())));
+  return child_->UpdateTeamFolder(context, options, request);
+}
+
+Status DataformMetadata::DeleteTeamFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTeamFolder(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformMetadata::AsyncDeleteTeamFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteTeamFolderTree(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> DataformMetadata::DeleteTeamFolderTree(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTeamFolderTree(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryTeamFolderContentsResponse>
+DataformMetadata::QueryTeamFolderContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("team_folder=", internal::UrlEncode(request.team_folder())));
+  return child_->QueryTeamFolderContents(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::SearchTeamFoldersResponse>
+DataformMetadata::SearchTeamFolders(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::SearchTeamFoldersRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
+  return child_->SearchTeamFolders(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformMetadata::GetFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::GetFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetFolder(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformMetadata::CreateFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFolder(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformMetadata::UpdateFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("folder.name=",
+                           internal::UrlEncode(request.folder().name())));
+  return child_->UpdateFolder(context, options, request);
+}
+
+Status DataformMetadata::DeleteFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFolder(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformMetadata::AsyncDeleteFolderTree(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteFolderTree(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> DataformMetadata::DeleteFolderTree(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFolderTree(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryFolderContentsResponse>
+DataformMetadata::QueryFolderContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryFolderContentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("folder=", internal::UrlEncode(request.folder())));
+  return child_->QueryFolderContents(context, options, request);
+}
+
+StatusOr<google::cloud::dataform::v1::QueryUserRootContentsResponse>
+DataformMetadata::QueryUserRootContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryUserRootContentsRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
+  return child_->QueryUserRootContents(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformMetadata::AsyncMoveFolder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncMoveFolder(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> DataformMetadata::MoveFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->MoveFolder(context, options, request);
+}
 
 StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
 DataformMetadata::ListRepositories(
@@ -87,6 +260,26 @@ Status DataformMetadata::DeleteRepository(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRepository(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformMetadata::AsyncMoveRepository(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncMoveRepository(cq, std::move(context), std::move(options),
+                                     request);
+}
+
+StatusOr<google::longrunning::Operation> DataformMetadata::MoveRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->MoveRepository(context, options, request);
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -550,6 +743,34 @@ StatusOr<google::cloud::dataform::v1::Config> DataformMetadata::UpdateConfig(
   return child_->UpdateConfig(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> DataformMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> DataformMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformMetadata::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->TestIamPermissions(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataformMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -567,32 +788,60 @@ StatusOr<google::cloud::location::Location> DataformMetadata::GetLocation(
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DataformMetadata::SetIamPolicy(
+StatusOr<google::longrunning::ListOperationsResponse>
+DataformMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, options, request);
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy> DataformMetadata::GetIamPolicy(
+StatusOr<google::longrunning::Operation> DataformMetadata::GetOperation(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, options, request);
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformMetadata::TestIamPermissions(
+Status DataformMetadata::DeleteOperation(
     grpc::ClientContext& context, Options const& options,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, options, request);
+    google::longrunning::DeleteOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteOperation(context, options, request);
+}
+
+Status DataformMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelOperation(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataformMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+future<Status> DataformMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void DataformMetadata::SetMetadata(grpc::ClientContext& context,
@@ -612,3 +861,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataform_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

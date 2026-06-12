@@ -40,7 +40,7 @@ Options CloudRedisDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<redis_v1::CloudRedisRetryPolicyOption>()) {
     options.set<redis_v1::CloudRedisRetryPolicyOption>(
-        redis_v1::CloudRedisLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        redis_v1::CloudRedisLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<redis_v1::CloudRedisBackoffPolicyOption>()) {

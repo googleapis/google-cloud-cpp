@@ -43,7 +43,7 @@ Options SecureSourceManagerDefaultOptions(Options options) {
           securesourcemanager_v1::SecureSourceManagerRetryPolicyOption>()) {
     options.set<securesourcemanager_v1::SecureSourceManagerRetryPolicyOption>(
         securesourcemanager_v1::SecureSourceManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

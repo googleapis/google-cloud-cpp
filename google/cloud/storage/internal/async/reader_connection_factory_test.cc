@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/async/reader_connection_factory.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/storage/v2/storage.pb.h"
 #include <google/protobuf/text_format.h>
-#include <google/storage/v2/storage.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {

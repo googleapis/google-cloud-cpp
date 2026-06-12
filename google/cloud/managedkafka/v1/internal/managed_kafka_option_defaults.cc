@@ -42,7 +42,7 @@ Options ManagedKafkaDefaultOptions(Options options) {
   if (!options.has<managedkafka_v1::ManagedKafkaRetryPolicyOption>()) {
     options.set<managedkafka_v1::ManagedKafkaRetryPolicyOption>(
         managedkafka_v1::ManagedKafkaLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<managedkafka_v1::ManagedKafkaBackoffPolicyOption>()) {

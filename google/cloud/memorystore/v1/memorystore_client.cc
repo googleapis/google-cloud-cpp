@@ -213,6 +213,25 @@ MemorystoreClient::GetCertificateAuthority(
   return connection_->GetCertificateAuthority(request);
 }
 
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreClient::GetSharedRegionalCertificateAuthority(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memorystore::v1::GetSharedRegionalCertificateAuthorityRequest
+      request;
+  request.set_name(name);
+  return connection_->GetSharedRegionalCertificateAuthority(request);
+}
+
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreClient::GetSharedRegionalCertificateAuthority(
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSharedRegionalCertificateAuthority(request);
+}
+
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreClient::RescheduleMaintenance(
     std::string const& name,

@@ -40,6 +40,7 @@ fi
 
 doc_args=(
   "-DCMAKE_BUILD_TYPE=Debug"
+  "-DCMAKE_CXX_STANDARD=17"
   "-DGOOGLE_CLOUD_CPP_GENERATE_DOXYGEN=ON"
   "-DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}"
@@ -93,6 +94,8 @@ function stage_docfx() {
   local path="${binary_dir}/google/cloud/${feature}/docfx"
   if [[ "${feature}" == "common" ]]; then
     path="${binary_dir}/google/cloud/docfx"
+  elif [[ "${feature}" == "guides" ]]; then
+    path="${binary_dir}/product-neutral-guides/docfx"
   fi
 
   echo "path=${path}" >"${log}"
@@ -119,6 +122,7 @@ io::log "bucket:  gs://${docfx_bucket}"
 # have documentation, such as `experimental-storage_grpc`. These are harmless,
 # as the `stage_docfx()` function skips missing directories without an error.
 uploaded=(common)
+uploaded+=(guides)
 uploaded+=("${FEATURE_LIST[@]}")
 echo "${uploaded[@]}" | xargs -P "$(nproc)" -n 1 \
   bash -c "stage_docfx \"\${0}\" \"${docfx_bucket}\" cmake-out \"cmake-out/\${0}.docfx.log\""

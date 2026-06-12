@@ -23,8 +23,8 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.pb.h>
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
+#include "google/longrunning/operations.pb.h"
+#include "google/spanner/admin/instance/v1/spanner_instance_admin.pb.h"
 #include <memory>
 #include <string>
 

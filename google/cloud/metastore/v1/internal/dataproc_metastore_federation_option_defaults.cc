@@ -44,7 +44,7 @@ Options DataprocMetastoreFederationDefaultOptions(Options options) {
            .has<metastore_v1::DataprocMetastoreFederationRetryPolicyOption>()) {
     options.set<metastore_v1::DataprocMetastoreFederationRetryPolicyOption>(
         metastore_v1::DataprocMetastoreFederationLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

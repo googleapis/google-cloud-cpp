@@ -17,16 +17,20 @@
 // source: google/cloud/kms/v1/service.proto
 
 #include "google/cloud/kms/v1/internal/key_management_metadata_decorator.h"
+#include "google/cloud/kms/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/kms/v1/service.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -80,6 +84,15 @@ KeyManagementServiceMetadata::ListImportJobs(
   return child_->ListImportJobs(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::ListRetiredResourcesResponse>
+KeyManagementServiceMetadata::ListRetiredResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::ListRetiredResourcesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListRetiredResources(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceMetadata::GetKeyRing(
     grpc::ClientContext& context, Options const& options,
@@ -125,6 +138,15 @@ KeyManagementServiceMetadata::GetImportJob(
   return child_->GetImportJob(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceMetadata::GetRetiredResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::GetRetiredResourceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetRetiredResource(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceMetadata::CreateKeyRing(
     grpc::ClientContext& context, Options const& options,
@@ -150,6 +172,48 @@ KeyManagementServiceMetadata::CreateCryptoKeyVersion(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCryptoKeyVersion(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceMetadata::AsyncDeleteCryptoKey(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteCryptoKey(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceMetadata::DeleteCryptoKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCryptoKey(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceMetadata::AsyncDeleteCryptoKeyVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteCryptoKeyVersion(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceMetadata::DeleteCryptoKeyVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
@@ -365,6 +429,29 @@ KeyManagementServiceMetadata::GetOperation(
   return child_->GetOperation(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+future<Status> KeyManagementServiceMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
+}
+
 void KeyManagementServiceMetadata::SetMetadata(
     grpc::ClientContext& context, Options const& options,
     std::string const& request_params) {
@@ -382,3 +469,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

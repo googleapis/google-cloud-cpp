@@ -17,22 +17,26 @@
 // source: google/cloud/dataplex/v1/content.proto
 
 #include "google/cloud/dataplex/v1/internal/content_stub_factory.h"
+#include "google/cloud/dataplex/v1/content.grpc.pb.h"
 #include "google/cloud/dataplex/v1/internal/content_auth_decorator.h"
 #include "google/cloud/dataplex/v1/internal/content_logging_decorator.h"
 #include "google/cloud/dataplex/v1/internal/content_metadata_decorator.h"
 #include "google/cloud/dataplex/v1/internal/content_stub.h"
 #include "google/cloud/dataplex/v1/internal/content_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/dataplex/v1/content.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -48,12 +52,13 @@ std::shared_ptr<ContentServiceStub> CreateDefaultContentServiceStub(
       google::cloud::dataplex::v1::ContentService::NewStub(channel);
   auto service_operations_stub =
       google::longrunning::Operations::NewStub(channel);
+  auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ContentServiceStub> stub =
       std::make_shared<DefaultContentServiceStub>(
           std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_locations_stub));
+          std::move(service_iampolicy_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub =
@@ -77,3 +82,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

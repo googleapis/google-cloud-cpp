@@ -27,8 +27,6 @@ namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CompletionServiceTracingConnection::CompletionServiceTracingConnection(
     std::shared_ptr<retail_v2::CompletionServiceConnection> child)
     : child_(std::move(child)) {}
@@ -93,17 +91,13 @@ CompletionServiceTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<retail_v2::CompletionServiceConnection>
 MakeCompletionServiceTracingConnection(
     std::shared_ptr<retail_v2::CompletionServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<CompletionServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

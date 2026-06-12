@@ -17,9 +17,12 @@
 // source: google/cloud/timeseriesinsights/v1/timeseries_insights.proto
 
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_auth_decorator.h"
-#include <google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h>
+#include "google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -101,3 +104,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace timeseriesinsights_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

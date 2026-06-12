@@ -43,7 +43,7 @@ Options BareMetalSolutionDefaultOptions(Options options) {
            .has<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()) {
     options.set<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>(
         baremetalsolution_v2::BareMetalSolutionLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

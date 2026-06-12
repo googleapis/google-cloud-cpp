@@ -46,7 +46,7 @@ Options TimeseriesInsightsControllerDefaultOptions(Options options) {
         timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicyOption>(
         timeseriesinsights_v1::
             TimeseriesInsightsControllerLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<timeseriesinsights_v1::

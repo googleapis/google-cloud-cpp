@@ -19,11 +19,14 @@
 #include "google/cloud/storagecontrol/v2/internal/storage_control_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -106,6 +109,38 @@ StatusOr<google::longrunning::Operation> StorageControlLogging::RenameFolder(
       [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::RenameFolderRequest const& request) {
         return child_->RenameFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageControlLogging::AsyncDeleteFolderRecursive(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::storage::control::v2::DeleteFolderRecursiveRequest const&
+                 request) {
+        return child_->AsyncDeleteFolderRecursive(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlLogging::DeleteFolderRecursive(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DeleteFolderRecursiveRequest const&
+                 request) {
+        return child_->DeleteFolderRecursive(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -464,3 +499,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

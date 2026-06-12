@@ -27,8 +27,6 @@ namespace cloud {
 namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudBillingTracingConnection::CloudBillingTracingConnection(
     std::shared_ptr<billing_v1::CloudBillingConnection> child)
     : child_(std::move(child)) {}
@@ -137,16 +135,12 @@ CloudBillingTracingConnection::MoveBillingAccount(
   return internal::EndSpan(*span, child_->MoveBillingAccount(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<billing_v1::CloudBillingConnection>
 MakeCloudBillingTracingConnection(
     std::shared_ptr<billing_v1::CloudBillingConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CloudBillingTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_network_endpoint_groups_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 NetworkEndpointGroupsTracingConnection::NetworkEndpointGroupsTracingConnection(
     std::shared_ptr<
         compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection>
@@ -243,20 +241,16 @@ NetworkEndpointGroupsTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection>
 MakeNetworkEndpointGroupsTracingConnection(
     std::shared_ptr<
         compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<NetworkEndpointGroupsTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

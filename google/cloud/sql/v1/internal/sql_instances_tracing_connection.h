@@ -28,8 +28,6 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SqlInstancesServiceTracingConnection
     : public sql_v1::SqlInstancesServiceConnection {
  public:
@@ -43,6 +41,14 @@ class SqlInstancesServiceTracingConnection
   StatusOr<google::cloud::sql::v1::Operation> AddServerCa(
       google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request)
       override;
+
+  StatusOr<google::cloud::sql::v1::Operation> AddServerCertificate(
+      google::cloud::sql::v1::SqlInstancesAddServerCertificateRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::Operation> AddEntraIdCertificate(
+      google::cloud::sql::v1::SqlInstancesAddEntraIdCertificateRequest const&
+          request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Clone(
       google::cloud::sql::v1::SqlInstancesCloneRequest const& request) override;
@@ -89,6 +95,16 @@ class SqlInstancesServiceTracingConnection
   ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const&
                     request) override;
 
+  StatusOr<google::cloud::sql::v1::InstancesListServerCertificatesResponse>
+  ListServerCertificates(
+      google::cloud::sql::v1::SqlInstancesListServerCertificatesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::InstancesListEntraIdCertificatesResponse>
+  ListEntraIdCertificates(
+      google::cloud::sql::v1::SqlInstancesListEntraIdCertificatesRequest const&
+          request) override;
+
   StatusOr<google::cloud::sql::v1::Operation> Patch(
       google::cloud::sql::v1::SqlInstancesPatchRequest const& request) override;
 
@@ -115,6 +131,14 @@ class SqlInstancesServiceTracingConnection
   StatusOr<google::cloud::sql::v1::Operation> RotateServerCa(
       google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request)
       override;
+
+  StatusOr<google::cloud::sql::v1::Operation> RotateServerCertificate(
+      google::cloud::sql::v1::SqlInstancesRotateServerCertificateRequest const&
+          request) override;
+
+  StatusOr<google::cloud::sql::v1::Operation> RotateEntraIdCertificate(
+      google::cloud::sql::v1::SqlInstancesRotateEntraIdCertificateRequest const&
+          request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> StartReplica(
       google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request)
@@ -169,6 +193,10 @@ class SqlInstancesServiceTracingConnection
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
           request) override;
 
+  StatusOr<google::cloud::sql::v1::SqlInstancesExecuteSqlResponse> ExecuteSql(
+      google::cloud::sql::v1::SqlInstancesExecuteSqlRequest const& request)
+      override;
+
   StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
   AcquireSsrsLease(
       google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
@@ -179,11 +207,18 @@ class SqlInstancesServiceTracingConnection
       google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
           request) override;
 
+  StatusOr<google::cloud::sql::v1::Operation> PreCheckMajorVersionUpgrade(
+      google::cloud::sql::v1::
+          SqlInstancesPreCheckMajorVersionUpgradeRequest const& request)
+      override;
+
+  StatusOr<google::cloud::sql::v1::Operation> PointInTimeRestore(
+      google::cloud::sql::v1::SqlInstancesPointInTimeRestoreRequest const&
+          request) override;
+
  private:
   std::shared_ptr<sql_v1::SqlInstancesServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

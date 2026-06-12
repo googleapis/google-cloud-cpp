@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_forwarding_rules_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ForwardingRulesTracingConnection
     : public compute_forwarding_rules_v1::ForwardingRulesConnection {
  public:
@@ -119,8 +117,6 @@ class ForwardingRulesTracingConnection
   std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

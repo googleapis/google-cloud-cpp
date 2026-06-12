@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace developerconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DeveloperConnectTracingStub::DeveloperConnectTracingStub(
     std::shared_ptr<DeveloperConnectStub> child)
@@ -519,6 +520,30 @@ DeveloperConnectTracingStub::DeleteSelf(
                            child_->DeleteSelf(context, options, request));
 }
 
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DeveloperConnectTracingStub::StartOAuth(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::StartOAuthRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "StartOAuth");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->StartOAuth(context, options, request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DeveloperConnectTracingStub::FinishOAuth(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FinishOAuthRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.developerconnect.v1.DeveloperConnect", "FinishOAuth");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FinishOAuth(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DeveloperConnectTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -617,18 +642,14 @@ future<Status> DeveloperConnectTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<DeveloperConnectStub> MakeDeveloperConnectTracingStub(
     std::shared_ptr<DeveloperConnectStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DeveloperConnectTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace developerconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

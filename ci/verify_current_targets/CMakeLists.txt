@@ -79,23 +79,13 @@ endforeach ()
 
 # Verify backwards compatible proto libraries are installed. See #8022 for more
 # details.
-foreach (library "dialogflow_es" "iam" "monitoring" "speech" "texttospeech"
-                 "trace")
+foreach (library "iam")
     find_package(google_cloud_cpp_${library})
 endforeach ()
 
 set(backwards_compat_proto_libraries
     # cmake-format: sortable
-    "cloud_dialogflow_v2_protos"
-    "cloud_speech_protos"
-    "cloud_texttospeech_protos"
-    "devtools_cloudtrace_v2_trace_protos"
-    "devtools_cloudtrace_v2_tracing_protos"
-    "iam_v1_iam_policy_protos"
-    "iam_v1_options_protos"
-    "iam_v1_policy_protos"
-    "logging_type_protos"
-    "logging_type_type_protos")
+    "iam_v1_iam_policy_protos" "iam_v1_options_protos" "iam_v1_policy_protos")
 
 foreach (library ${backwards_compat_proto_libraries})
     add_test_case(test_cmake_${library} google-cloud-cpp::common

@@ -42,7 +42,7 @@ Options SqlIamPoliciesServiceDefaultOptions(Options options) {
   if (!options.has<sql_v1::SqlIamPoliciesServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlIamPoliciesServiceRetryPolicyOption>(
         sql_v1::SqlIamPoliciesServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<sql_v1::SqlIamPoliciesServiceBackoffPolicyOption>()) {

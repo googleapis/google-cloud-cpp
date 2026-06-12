@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/model_option_defaults.h"
 #include "google/cloud/aiplatform/v1/model_connection.h"
 #include "google/cloud/aiplatform/v1/model_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options ModelServiceDefaultOptions(std::string const& location,
   if (!options.has<aiplatform_v1::ModelServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::ModelServiceRetryPolicyOption>(
         aiplatform_v1::ModelServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<aiplatform_v1::ModelServiceBackoffPolicyOption>()) {

@@ -40,7 +40,6 @@ service {
   ]
   generate_round_robin_decorator: true
   generate_rest_transport: true
-  forwarding_product_path: "generator/integration_tests/golden"
   idempotency_overrides: [
     {rpc_name: "GoldenThingAdmin.DropDatabase", idempotency: IDEMPOTENT},
     {rpc_name: "GoldenKitchenSink.ListLogs", idempotency: NON_IDEMPOTENT}
@@ -60,6 +59,13 @@ service {
   ]
   override_service_config_yaml_name: "generator/integration_tests/test2.yaml"
   endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
+  bespoke_methods : [
+    {
+    name: "WaitForConsistency",
+    return_type: "StatusOr<google::protobuf::Empty>",
+    parameters: "(google::protobuf::Empty const& request, Options opts = {})"
+    }
+  ]
 }
 
 service {

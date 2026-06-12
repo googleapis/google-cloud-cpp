@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/bucket_request_parser.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -458,7 +457,18 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
             log_bucket: "projects/_/buckets/test-log-bucket"
             log_object_prefix: "test-log-prefix"
           }
-          encryption { default_kms_key: "test-only-kms-key" }
+          encryption {
+            default_kms_key: "test-only-kms-key"
+            google_managed_encryption_enforcement_config {
+              restriction_mode: "FullyRestricted"
+            }
+            customer_managed_encryption_enforcement_config {
+              restriction_mode: "NotRestricted"
+            }
+            customer_supplied_encryption_enforcement_config {
+              restriction_mode: "FullyRestricted"
+            }
+          }
           autoclass { enabled: true }
           billing { requester_pays: true }
           retention_policy { retention_duration { seconds: 123000 } }
@@ -534,7 +544,22 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
           .SetLogging(
               storage::BucketLogging{"test-log-bucket", "test-log-prefix"})
           .SetEncryption(storage::BucketEncryption{
-              /*.default_kms_key=*/"test-only-kms-key"})
+              /*.default_kms_key=*/"test-only-kms-key",
+              /*.google_managed_encryption_enforcement_config=*/
+              storage::GoogleManagedEncryptionEnforcementConfig{
+                  "FullyRestricted",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:19:32Z")
+                      .value()},
+              /*.customer_managed_encryption_enforcement_config=*/
+              storage::CustomerManagedEncryptionEnforcementConfig{
+                  "NotRestricted",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:21:35Z")
+                      .value()},
+              /*.customer_supplied_encryption_enforcement_config=*/
+              storage::CustomerSuppliedEncryptionEnforcementConfig{
+                  "FullyRestricted",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:22:19Z")
+                      .value()}})
           .SetAutoclass(storage::BucketAutoclass{true})
           .SetBilling(storage::BucketBilling{/*.requester_pays=*/true})
           .SetRetentionPolicy(std::chrono::seconds(123000))
@@ -713,7 +738,18 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
             log_bucket: "test-log-bucket"
             log_object_prefix: "test-log-prefix"
           }
-          encryption { default_kms_key: "test-only-kms-key" }
+          encryption {
+            default_kms_key: "test-only-kms-key"
+            google_managed_encryption_enforcement_config {
+              restriction_mode: "FullyRestricted"
+            }
+            customer_managed_encryption_enforcement_config {
+              restriction_mode: "NotRestricted"
+            }
+            customer_supplied_encryption_enforcement_config {
+              restriction_mode: "FullyRestricted"
+            }
+          }
           autoclass { enabled: true }
           billing { requester_pays: true }
           retention_policy { retention_duration { seconds: 123000 } }
@@ -787,7 +823,22 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
           .set_logging(
               storage::BucketLogging{"test-log-bucket", "test-log-prefix"})
           .set_encryption(storage::BucketEncryption{
-              /*.default_kms_key=*/"test-only-kms-key"})
+              /*.default_kms_key=*/"test-only-kms-key",
+              /*.google_managed_encryption_enforcement_config=*/
+              storage::GoogleManagedEncryptionEnforcementConfig{
+                  "FullyRestricted",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:27:45Z")
+                      .value()},
+              /*.customer_managed_encryption_enforcement_config=*/
+              storage::CustomerManagedEncryptionEnforcementConfig{
+                  "NotRestricted",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:28:25Z")
+                      .value()},
+              /*.customer_supplied_encryption_enforcement_config=*/
+              storage::CustomerSuppliedEncryptionEnforcementConfig{
+                  "FullyRestricted",
+                  google::cloud::internal::ParseRfc3339("2025-12-19T20:29:11Z")
+                      .value()}})
           .set_autoclass(storage::BucketAutoclass{true})
           .set_billing(storage::BucketBilling{/*.requester_pays=*/true})
           .set_retention_policy(std::chrono::seconds(123000))

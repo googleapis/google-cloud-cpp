@@ -22,12 +22,26 @@ which should give you a taste of the Network Security API C++ client library API
 ## Main classes
 
 <!-- inject-client-list-start -->
-The main class in this library is
-[`networksecurity_v1::NetworkSecurityClient`](@ref google::cloud::networksecurity_v1::NetworkSecurityClient). All RPCs are exposed
-as member functions of this class. Other classes provide helpers, configuration
-parameters, and infrastructure to mock
-[`networksecurity_v1::NetworkSecurityClient`](@ref google::cloud::networksecurity_v1::NetworkSecurityClient) when testing your
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
+
+- [\c networksecurity_v1::AddressGroupServiceClient](@ref google::cloud::networksecurity_v1::AddressGroupServiceClient)
+- [\c networksecurity_v1::DnsThreatDetectorServiceClient](@ref google::cloud::networksecurity_v1::DnsThreatDetectorServiceClient)
+- [\c networksecurity_v1::FirewallActivationClient](@ref google::cloud::networksecurity_v1::FirewallActivationClient)
+- [\c networksecurity_v1::InterceptClient](@ref google::cloud::networksecurity_v1::InterceptClient)
+- [\c networksecurity_v1::MirroringClient](@ref google::cloud::networksecurity_v1::MirroringClient)
+- [\c networksecurity_v1::NetworkSecurityClient](@ref google::cloud::networksecurity_v1::NetworkSecurityClient)
+- [\c networksecurity_v1::OrganizationAddressGroupServiceClient](@ref google::cloud::networksecurity_v1::OrganizationAddressGroupServiceClient)
+- [\c networksecurity_v1::OrganizationSecurityProfileGroupServiceClient](@ref google::cloud::networksecurity_v1::OrganizationSecurityProfileGroupServiceClient)
+- [\c networksecurity_v1::SecurityProfileGroupServiceClient](@ref google::cloud::networksecurity_v1::SecurityProfileGroupServiceClient)
+- [\c networksecurity_v1::SSERealmServiceClient](@ref google::cloud::networksecurity_v1::SSERealmServiceClient)
 <!-- inject-client-list-end -->
 
 ## More Information

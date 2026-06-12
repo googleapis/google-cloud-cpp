@@ -42,7 +42,7 @@ Options ReferenceListServiceDefaultOptions(Options options) {
   if (!options.has<chronicle_v1::ReferenceListServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::ReferenceListServiceRetryPolicyOption>(
         chronicle_v1::ReferenceListServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<chronicle_v1::ReferenceListServiceBackoffPolicyOption>()) {

@@ -1,3 +1,3 @@
-@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild.proto
-@com_google_googleapis//google/devtools/cloudbuild/v2:cloudbuild.proto
-@com_google_googleapis//google/devtools/cloudbuild/v2:repositories.proto
+@googleapis//google/devtools/cloudbuild/v1:cloudbuild.proto
+@googleapis//google/devtools/cloudbuild/v2:cloudbuild.proto
+@googleapis//google/devtools/cloudbuild/v2:repositories.proto

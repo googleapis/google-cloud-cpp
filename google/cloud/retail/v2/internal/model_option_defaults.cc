@@ -40,7 +40,7 @@ Options ModelServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<retail_v2::ModelServiceRetryPolicyOption>()) {
     options.set<retail_v2::ModelServiceRetryPolicyOption>(
-        retail_v2::ModelServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        retail_v2::ModelServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<retail_v2::ModelServiceBackoffPolicyOption>()) {

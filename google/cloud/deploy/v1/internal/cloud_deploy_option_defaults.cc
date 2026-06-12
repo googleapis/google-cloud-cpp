@@ -40,7 +40,7 @@ Options CloudDeployDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<deploy_v1::CloudDeployRetryPolicyOption>()) {
     options.set<deploy_v1::CloudDeployRetryPolicyOption>(
-        deploy_v1::CloudDeployLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        deploy_v1::CloudDeployLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<deploy_v1::CloudDeployBackoffPolicyOption>()) {

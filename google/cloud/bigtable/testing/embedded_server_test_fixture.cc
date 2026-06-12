@@ -13,7 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
+#include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
+#include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
+#include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include <thread>
@@ -53,9 +60,34 @@ void EmbeddedServerTestFixture::SetUp() {
 
   std::shared_ptr<grpc::Channel> data_channel =
       server_->InProcessChannel(channel_arguments);
-  data_client_ = std::make_shared<InProcessDataClient>(kProjectId, kInstanceId,
-                                                       std::move(data_channel));
-  table_ = std::make_shared<bigtable::Table>(data_client_, kTableId);
+  std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> grpc_stub =
+      google::bigtable::v2::Bigtable::NewStub(data_channel);
+  std::shared_ptr<bigtable_internal::BigtableStub> stub =
+      std::make_shared<bigtable_internal::BigtableMetadata>(
+          std::make_shared<bigtable_internal::DefaultBigtableStub>(
+              std::move(grpc_stub)),
+          std::multimap<std::string, std::string>{},
+          google::cloud::internal::UserAgentPrefix());
+  auto opts =
+      Options{}
+          .set<google::cloud::bigtable::DataRetryPolicyOption>(
+              google::cloud::bigtable::DataLimitedErrorCountRetryPolicy(7)
+                  .clone())
+          .set<google::cloud::bigtable::DataBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  data_connection_ = std::make_shared<bigtable_internal::DataConnectionImpl>(
+      std::make_unique<
+          google::cloud::internal::AutomaticallyCreatedBackgroundThreads>(),
+      stub, std::make_shared<bigtable_internal::NoopMutateRowsLimiter>(),
+      std::move(opts));
+
+  table_ = std::make_shared<bigtable::Table>(
+      data_connection_,
+      bigtable::TableResource(kProjectId, kInstanceId, kTableId));
 }
 
 void EmbeddedServerTestFixture::TearDown() {

@@ -27,8 +27,6 @@ namespace cloud {
 namespace datacatalog_lineage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 LineageTracingConnection::LineageTracingConnection(
     std::shared_ptr<datacatalog_lineage_v1::LineageConnection> child)
     : child_(std::move(child)) {}
@@ -247,6 +245,19 @@ LineageTracingConnection::BatchSearchLinkProcesses(
                                                              std::move(sr));
 }
 
+StreamRange<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+LineageTracingConnection::SearchLineageStreaming(
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_lineage_v1::LineageConnection::SearchLineageStreaming");
+  internal::OTelScope scope(span);
+  auto sr = child_->SearchLineageStreaming(request);
+  return internal::MakeTracedStreamRange<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>(
+      std::move(span), std::move(sr));
+}
 StreamRange<google::longrunning::Operation>
 LineageTracingConnection::ListOperations(
     google::longrunning::ListOperationsRequest request) {
@@ -282,16 +293,12 @@ Status LineageTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<datacatalog_lineage_v1::LineageConnection>
 MakeLineageTracingConnection(
     std::shared_ptr<datacatalog_lineage_v1::LineageConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<LineageTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

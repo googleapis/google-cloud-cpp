@@ -43,7 +43,7 @@ Options ReachabilityServiceDefaultOptions(Options options) {
            .has<networkmanagement_v1::ReachabilityServiceRetryPolicyOption>()) {
     options.set<networkmanagement_v1::ReachabilityServiceRetryPolicyOption>(
         networkmanagement_v1::ReachabilityServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

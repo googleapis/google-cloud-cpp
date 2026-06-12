@@ -21,6 +21,7 @@
 
 #include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.h"
 #include "google/cloud/gkehub/v1/internal/gke_hub_retry_traits.h"
+#include "google/cloud/gkehub/v1/service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/gkehub/v1/service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -185,6 +185,10 @@ class GkeHubConnection {
   virtual StreamRange<google::cloud::gkehub::v1::Membership> ListMemberships(
       google::cloud::gkehub::v1::ListMembershipsRequest request);
 
+  virtual StreamRange<google::cloud::gkehub::v1::Membership>
+  ListBoundMemberships(
+      google::cloud::gkehub::v1::ListBoundMembershipsRequest request);
+
   virtual StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
       google::cloud::gkehub::v1::ListFeaturesRequest request);
 
@@ -260,6 +264,262 @@ class GkeHubConnection {
   virtual StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Fleet>> CreateFleet(
+      google::cloud::gkehub::v1::CreateFleetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateFleet(
+      NoAwaitTag, google::cloud::gkehub::v1::CreateFleetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Fleet>> CreateFleet(
+      google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::gkehub::v1::Fleet> GetFleet(
+      google::cloud::gkehub::v1::GetFleetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Fleet>> UpdateFleet(
+      google::cloud::gkehub::v1::UpdateFleetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateFleet(
+      NoAwaitTag, google::cloud::gkehub::v1::UpdateFleetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Fleet>> UpdateFleet(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteFleet(google::cloud::gkehub::v1::DeleteFleetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteFleet(
+      NoAwaitTag, google::cloud::gkehub::v1::DeleteFleetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteFleet(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkehub::v1::Fleet> ListFleets(
+      google::cloud::gkehub::v1::ListFleetsRequest request);
+
+  virtual StatusOr<google::cloud::gkehub::v1::Namespace> GetScopeNamespace(
+      google::cloud::gkehub::v1::GetScopeNamespaceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+  CreateScopeNamespace(
+      google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateScopeNamespace(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+  CreateScopeNamespace(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+  UpdateScopeNamespace(
+      google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateScopeNamespace(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+  UpdateScopeNamespace(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteScopeNamespace(
+      google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteScopeNamespace(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteScopeNamespace(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkehub::v1::Namespace> ListScopeNamespaces(
+      google::cloud::gkehub::v1::ListScopeNamespacesRequest request);
+
+  virtual StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+  GetScopeRBACRoleBinding(
+      google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+  CreateScopeRBACRoleBinding(
+      google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateScopeRBACRoleBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+  CreateScopeRBACRoleBinding(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+  UpdateScopeRBACRoleBinding(
+      google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateScopeRBACRoleBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+  UpdateScopeRBACRoleBinding(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteScopeRBACRoleBinding(
+      google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteScopeRBACRoleBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteScopeRBACRoleBinding(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>
+  ListScopeRBACRoleBindings(
+      google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest request);
+
+  virtual StatusOr<google::cloud::gkehub::v1::Scope> GetScope(
+      google::cloud::gkehub::v1::GetScopeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Scope>> CreateScope(
+      google::cloud::gkehub::v1::CreateScopeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateScope(
+      NoAwaitTag, google::cloud::gkehub::v1::CreateScopeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Scope>> CreateScope(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Scope>> UpdateScope(
+      google::cloud::gkehub::v1::UpdateScopeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateScope(
+      NoAwaitTag, google::cloud::gkehub::v1::UpdateScopeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::Scope>> UpdateScope(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteScope(google::cloud::gkehub::v1::DeleteScopeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteScope(
+      NoAwaitTag, google::cloud::gkehub::v1::DeleteScopeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteScope(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkehub::v1::Scope> ListScopes(
+      google::cloud::gkehub::v1::ListScopesRequest request);
+
+  virtual StreamRange<google::cloud::gkehub::v1::Scope> ListPermittedScopes(
+      google::cloud::gkehub::v1::ListPermittedScopesRequest request);
+
+  virtual StatusOr<google::cloud::gkehub::v1::MembershipBinding>
+  GetMembershipBinding(
+      google::cloud::gkehub::v1::GetMembershipBindingRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+  CreateMembershipBinding(
+      google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateMembershipBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+  CreateMembershipBinding(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+  UpdateMembershipBinding(
+      google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateMembershipBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+  UpdateMembershipBinding(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteMembershipBinding(
+      google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteMembershipBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteMembershipBinding(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkehub::v1::MembershipBinding>
+  ListMembershipBindings(
+      google::cloud::gkehub::v1::ListMembershipBindingsRequest request);
+
+  virtual StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+  GetMembershipRBACRoleBinding(
+      google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+  CreateMembershipRBACRoleBinding(
+      google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateMembershipRBACRoleBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+  CreateMembershipRBACRoleBinding(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+  UpdateMembershipRBACRoleBinding(
+      google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateMembershipRBACRoleBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+  UpdateMembershipRBACRoleBinding(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteMembershipRBACRoleBinding(
+      google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteMembershipRBACRoleBinding(
+      NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteMembershipRBACRoleBinding(
+      google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>
+  ListMembershipRBACRoleBindings(
+      google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest request);
+
+  virtual StatusOr<
+      google::cloud::gkehub::v1::GenerateMembershipRBACRoleBindingYAMLResponse>
+  GenerateMembershipRBACRoleBindingYAML(
+      google::cloud::gkehub::v1::
+          GenerateMembershipRBACRoleBindingYAMLRequest const& request);
 };
 
 /**

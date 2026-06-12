@@ -41,7 +41,7 @@ Options MetadataServiceDefaultOptions(Options options) {
   if (!options.has<dataplex_v1::MetadataServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::MetadataServiceRetryPolicyOption>(
         dataplex_v1::MetadataServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataplex_v1::MetadataServiceBackoffPolicyOption>()) {

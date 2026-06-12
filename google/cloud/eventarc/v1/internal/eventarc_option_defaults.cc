@@ -40,7 +40,7 @@ Options EventarcDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<eventarc_v1::EventarcRetryPolicyOption>()) {
     options.set<eventarc_v1::EventarcRetryPolicyOption>(
-        eventarc_v1::EventarcLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        eventarc_v1::EventarcLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<eventarc_v1::EventarcBackoffPolicyOption>()) {

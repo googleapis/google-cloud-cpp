@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job.h"
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {

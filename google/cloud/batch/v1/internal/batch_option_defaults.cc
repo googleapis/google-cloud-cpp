@@ -40,7 +40,7 @@ Options BatchServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<batch_v1::BatchServiceRetryPolicyOption>()) {
     options.set<batch_v1::BatchServiceRetryPolicyOption>(
-        batch_v1::BatchServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        batch_v1::BatchServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<batch_v1::BatchServiceBackoffPolicyOption>()) {

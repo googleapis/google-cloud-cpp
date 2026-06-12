@@ -42,7 +42,7 @@ Options LoggingServiceV2DefaultOptions(Options options) {
   if (!options.has<logging_v2::LoggingServiceV2RetryPolicyOption>()) {
     options.set<logging_v2::LoggingServiceV2RetryPolicyOption>(
         logging_v2::LoggingServiceV2LimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<logging_v2::LoggingServiceV2BackoffPolicyOption>()) {

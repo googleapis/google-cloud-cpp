@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CONNECTION_H
 
+#include "google/cloud/config/v1/config.pb.h"
 #include "google/cloud/config/v1/config_connection_idempotency_policy.h"
 #include "google/cloud/config/v1/internal/config_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/config/v1/config.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -324,6 +324,99 @@ class ConfigConnection {
 
   virtual StatusOr<google::cloud::config::v1::ResourceDrift> GetResourceDrift(
       google::cloud::config::v1::GetResourceDriftRequest const& request);
+
+  virtual StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+  GetAutoMigrationConfig(
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const& request);
+
+  virtual future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+  UpdateAutoMigrationConfig(
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAutoMigrationConfig(
+      NoAwaitTag,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+  UpdateAutoMigrationConfig(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::config::v1::DeploymentGroup>
+  GetDeploymentGroup(
+      google::cloud::config::v1::GetDeploymentGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  CreateDeploymentGroup(
+      google::cloud::config::v1::CreateDeploymentGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::CreateDeploymentGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  CreateDeploymentGroup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  UpdateDeploymentGroup(
+      google::cloud::config::v1::UpdateDeploymentGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::UpdateDeploymentGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  UpdateDeploymentGroup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  DeleteDeploymentGroup(
+      google::cloud::config::v1::DeleteDeploymentGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::DeleteDeploymentGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  DeleteDeploymentGroup(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::config::v1::DeploymentGroup>
+  ListDeploymentGroups(
+      google::cloud::config::v1::ListDeploymentGroupsRequest request);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  ProvisionDeploymentGroup(
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> ProvisionDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  ProvisionDeploymentGroup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  DeprovisionDeploymentGroup(
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeprovisionDeploymentGroup(
+      NoAwaitTag,
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+  DeprovisionDeploymentGroup(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+  GetDeploymentGroupRevision(
+      google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::config::v1::DeploymentGroupRevision>
+  ListDeploymentGroupRevisions(
+      google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

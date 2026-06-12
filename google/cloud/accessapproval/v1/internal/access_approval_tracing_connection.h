@@ -28,8 +28,6 @@ namespace cloud {
 namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AccessApprovalTracingConnection
     : public accessapproval_v1::AccessApprovalConnection {
  public:
@@ -87,8 +85,6 @@ class AccessApprovalTracingConnection
  private:
   std::shared_ptr<accessapproval_v1::AccessApprovalConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

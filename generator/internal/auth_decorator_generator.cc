@@ -55,7 +55,7 @@ Status AuthDecoratorGenerator::GenerateHeader() {
                                      ? "google/longrunning/operations.grpc.pb.h"
                                      : ""});
   HeaderSystemIncludes({"memory", "set", "string"});
-
+  HeaderGrpcPortsDefInclude();
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -80,6 +80,7 @@ class $auth_class_name$ : public $stub_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderGrpcPortsUndefInclude();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -113,7 +114,7 @@ Status AuthDecoratorGenerator::GenerateCc() {
   });
   CcProtobufGenCodeIncludes({vars("proto_grpc_header_path")});
   CcSystemIncludes({"memory", "utility"});
-
+  CcGrpcPortsDefInclude();
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
@@ -362,6 +363,7 @@ future<Status> $auth_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  CcGrpcPortsUndefInclude();
   return {};
 }
 

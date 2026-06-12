@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/vmwareengine/v1:vmwareengine.proto
-@com_google_googleapis//google/cloud/vmwareengine/v1:vmwareengine_resources.proto
+@googleapis//google/cloud/vmwareengine/v1:vmwareengine.proto
+@googleapis//google/cloud/vmwareengine/v1:vmwareengine_resources.proto

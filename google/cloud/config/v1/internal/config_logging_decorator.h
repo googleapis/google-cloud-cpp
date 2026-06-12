@@ -22,10 +22,13 @@
 #include "google/cloud/config/v1/internal/config_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -212,6 +215,110 @@ class ConfigLogging : public ConfigStub {
       google::cloud::config::v1::GetResourceDriftRequest const& request)
       override;
 
+  StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+  GetAutoMigrationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateAutoMigrationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAutoMigrationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::config::v1::DeploymentGroup> GetDeploymentGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::GetDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDeploymentGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::CreateDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDeploymentGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::config::v1::CreateDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDeploymentGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::UpdateDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateDeploymentGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::config::v1::UpdateDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeploymentGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::DeleteDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDeploymentGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::config::v1::DeleteDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::cloud::config::v1::ListDeploymentGroupsResponse>
+  ListDeploymentGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::ListDeploymentGroupsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncProvisionDeploymentGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ProvisionDeploymentGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeprovisionDeploymentGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeprovisionDeploymentGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+          request) override;
+
+  StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+  GetDeploymentGroupRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::config::v1::ListDeploymentGroupRevisionsResponse>
+  ListDeploymentGroupRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::config::v1::ListDeploymentGroupRevisionsRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -269,5 +376,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace config_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_INTERNAL_CONFIG_LOGGING_DECORATOR_H

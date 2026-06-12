@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -404,7 +404,7 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L662}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L671}
   /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L516}
   ///
   // clang-format on
@@ -465,7 +465,7 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L662}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L671}
   /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L516}
   ///
   // clang-format on
@@ -549,7 +549,7 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L636}
+  /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L639}
   /// [google.cloud.dialogflow.v2.DeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L524}
   ///
   // clang-format on
@@ -633,7 +633,7 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L649}
+  /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L655}
   /// [google.cloud.dialogflow.v2.UndeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L532}
   ///
   // clang-format on
@@ -1172,7 +1172,7 @@ class ConversationModelsClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -1211,7 +1211,7 @@ class ConversationModelsClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

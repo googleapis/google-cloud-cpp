@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -56,6 +56,14 @@ class StorageBatchOperationsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CancelJob(
       google::cloud::storagebatchoperations::v1::CancelJobRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListBucketOperations(
+      google::cloud::storagebatchoperations::v1::ListBucketOperationsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetBucketOperation(
+      google::cloud::storagebatchoperations::v1::
+          GetBucketOperationRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

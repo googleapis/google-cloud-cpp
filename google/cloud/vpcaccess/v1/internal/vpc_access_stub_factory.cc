@@ -17,22 +17,25 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_auth_decorator.h"
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_logging_decorator.h"
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_metadata_decorator.h"
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_stub.h"
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_tracing_stub.h"
+#include "google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -75,3 +78,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

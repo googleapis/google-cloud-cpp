@@ -222,6 +222,13 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
            request),
       (override));
 
+  MOCK_METHOD(StreamRange<google::cloud::datacatalog::lineage::v1::
+                              SearchLineageStreamingResponse>,
+              SearchLineageStreaming,
+              (google::cloud::datacatalog::lineage::v1::
+                   SearchLineageStreamingRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
               (google::longrunning::ListOperationsRequest request), (override));
 

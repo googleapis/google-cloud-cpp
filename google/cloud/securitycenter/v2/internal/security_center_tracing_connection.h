@@ -28,8 +28,6 @@ namespace cloud {
 namespace securitycenter_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SecurityCenterTracingConnection
     : public securitycenter_v2::SecurityCenterConnection {
  public:
@@ -235,8 +233,6 @@ class SecurityCenterTracingConnection
  private:
   std::shared_ptr<securitycenter_v2::SecurityCenterConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

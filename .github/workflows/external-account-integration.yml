@@ -7,6 +7,11 @@ on:
         required: true
         description: "The ref we want to compile"
         type: string
+  push:
+    branches:
+      - "ci-gha-*"
+  schedule:
+    - cron: '0 4 * * *'
 
 permissions:
   contents: read
@@ -26,56 +31,27 @@ jobs:
       id-token: write
 
     steps:
-    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+    - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
       with:
-        ref: ${{ inputs.checkout-ref }}
-    - id: auth
-      uses: google-github-actions/auth@v2
-      with:
-        create_credentials_file: true
-        credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-    - name: vcpkg-version
-      id: vcpkg-version
-      run: |
-        echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
-      shell: bash
-    - name: install ninja and CMake
-      run: |
-        rm /usr/local/bin/cmake
-        sudo apt install ninja-build cmake
-    - name: download-sccache
-      working-directory: "${{runner.temp}}"
-      run: |
-        curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.7.1/sccache-v0.7.1-x86_64-unknown-linux-musl.tar.gz | \
-          tar -zxf - --strip-components=1 && \
-        sudo mv sccache /usr/bin/sccache && \
-        sudo chmod +x /usr/bin/sccache
-    - name: download-vcpkg
-      working-directory: "${{runner.temp}}"
-      run: |
-        mkdir -p vcpkg
-        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
-            tar -C vcpkg --strip-components=1 -zxf -
-        vcpkg/bootstrap-vcpkg.sh -disableMetrics
-    # First compile the code using the identity with access to the build cache
-    - run: |
-        env VCPKG_ROOT="${{ runner.temp }}/vcpkg" ci/gha/builds/external-account.sh
-    # Then switch to the BYOID identity and run the integration test
+        ref: ${{ inputs.checkout-ref || github.sha }}
+    # Use BYOID identity and run the integration test
     - id: byoid-auth
       if: '!github.event.pull_request.head.repo.fork'
       name: 'Authenticate to GCP'
-      uses: 'google-github-actions/auth@v2'
+      uses: 'google-github-actions/auth@v3'
       with:
         create_credentials_file: true
         workload_identity_provider: 'projects/49427430084/locations/global/workloadIdentityPools/github-wif-pool/providers/github-wif-provider'
         service_account: 'github-actions@cloud-cpp-identity-federation.iam.gserviceaccount.com'
-    - run: |
-        ctest --test-dir cmake-out --output-on-failure -R common_internal_external_account_integration_test
-    env:
-      SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
-      SCCACHE_GCS_KEY_PREFIX: sccache/ubuntu-22.04/${{ github.job }}
-      SCCACHE_GCS_RW_MODE: READ_WRITE
-      SCCACHE_IGNORE_SERVER_IO_ERROR: 1
-      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/ubuntu-22.04/${{ github.job }},readwrite
+    - name: Run integration tests
+      if: '!github.event.pull_request.head.repo.fork'
+      run: |
+        bazelisk test \
+          --test_output=all \
+          --verbose_failures=true \
+          --keep_going \
+          --experimental_convenience_symlinks=ignore \
+          --remote_upload_local_results=false \
+          --test_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
+          --test_env=GOOGLE_CLOUD_CPP_TEST_WIF_BUCKET="cloud-cpp-wif-test-bucket" \
+          //google/cloud:internal_external_account_integration_test

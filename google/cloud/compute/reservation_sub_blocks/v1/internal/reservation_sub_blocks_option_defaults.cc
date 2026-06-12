@@ -45,7 +45,7 @@ Options ReservationSubBlocksDefaultOptions(Options options) {
     options.set<compute_reservation_sub_blocks_v1::
                     ReservationSubBlocksRetryPolicyOption>(
         compute_reservation_sub_blocks_v1::
-            ReservationSubBlocksLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            ReservationSubBlocksLimitedTimeRetryPolicy(std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_reservation_sub_blocks_v1::

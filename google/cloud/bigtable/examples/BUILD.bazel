@@ -31,8 +31,8 @@ cc_library(
         "//:grpc_utils",
         "//google/cloud/bigtable:bigtable_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
-        "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
+        "@googleapis//google/bigtable/admin/v2:admin_cc_grpc",
+        "@googleapis//google/bigtable/v2:bigtable_cc_grpc",
     ],
 )
 
@@ -50,7 +50,7 @@ filtered_unit_tests = [test for test in bigtable_examples_unit_tests if not test
         "//:grpc_utils",
         "//google/cloud/bigtable:bigtable_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in filtered_unit_tests]
 
@@ -60,7 +60,7 @@ cc_test(
     deps = [
         "//google/cloud/bigtable:google_cloud_cpp_bigtable",
         "//google/cloud/bigtable:google_cloud_cpp_bigtable_mocks",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 

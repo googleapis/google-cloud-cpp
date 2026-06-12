@@ -41,6 +41,11 @@ GoldenRestOnlyConnection::Noop(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::protobuf::Empty> GoldenRestOnlyConnection::WaitForConsistency(google::protobuf::Empty const&) {
+  return StatusOr<google::protobuf::Empty>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud

@@ -27,8 +27,6 @@ namespace cloud {
 namespace recaptchaenterprise_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RecaptchaEnterpriseServiceTracingConnection::
     RecaptchaEnterpriseServiceTracingConnection(
         std::shared_ptr<
@@ -289,19 +287,15 @@ RecaptchaEnterpriseServiceTracingConnection::
       std::move(span), std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection>
 MakeRecaptchaEnterpriseServiceTracingConnection(
     std::shared_ptr<
         recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RecaptchaEnterpriseServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

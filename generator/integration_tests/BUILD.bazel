@@ -12,12 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load(
-    "@com_google_googleapis_imports//:imports.bzl",
-    "cc_grpc_library",
-    "cc_proto_library",
-)
-load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
+load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
+load("@grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 
 package(default_visibility = ["//visibility:private"])
 
@@ -34,22 +31,22 @@ proto_library(
         "test_request_id.proto",
     ],
     deps = [
-        "@com_google_googleapis//google/api:annotations_proto",
-        "@com_google_googleapis//google/api:client_proto",
-        "@com_google_googleapis//google/api:field_behavior_proto",
-        "@com_google_googleapis//google/api:field_info_proto",
-        "@com_google_googleapis//google/api:resource_proto",
-        "@com_google_googleapis//google/api:routing_proto",
-        "@com_google_googleapis//google/iam/v1:iam_policy_proto",
-        "@com_google_googleapis//google/iam/v1:policy_proto",
-        "@com_google_googleapis//google/longrunning:operations_proto",
-        "@com_google_googleapis//google/rpc:status_proto",
         "@com_google_protobuf//:any_proto",
         "@com_google_protobuf//:duration_proto",
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:field_mask_proto",
         "@com_google_protobuf//:struct_proto",
         "@com_google_protobuf//:timestamp_proto",
+        "@googleapis//google/api:annotations_proto",
+        "@googleapis//google/api:client_proto",
+        "@googleapis//google/api:field_behavior_proto",
+        "@googleapis//google/api:field_info_proto",
+        "@googleapis//google/api:resource_proto",
+        "@googleapis//google/api:routing_proto",
+        "@googleapis//google/iam/v1:iam_policy_proto",
+        "@googleapis//google/iam/v1:policy_proto",
+        "@googleapis//google/longrunning:operations_proto",
+        "@googleapis//google/rpc:status_proto",
     ],
 )
 
@@ -67,18 +64,19 @@ cc_grpc_library(
 
 filegroup(
     name = "golden_srcs",
-    srcs = glob([
-        "golden/v1/internal/*_sources.cc",
-        "golden/v1/internal/streaming.cc",
-    ]),
+    srcs = glob(
+        [
+            "golden/v1/internal/*_sources.cc",
+            "golden/v1/internal/streaming.cc",
+        ],
+        allow_empty = True,
+    ),
 )
 
 filegroup(
     name = "golden_hdrs",
     srcs = glob(
         include = [
-            "golden/*.h",
-            "golden/mocks/*.h",
             "golden/v1/*.cc",
             "golden/v1/*.h",
             "golden/v1/internal/*.cc",
@@ -106,8 +104,8 @@ cc_library(
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
-        "@com_google_absl//absl/strings",
-        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
+        "@abseil-cpp//absl/strings",
+        "@googleapis//google/longrunning:longrunning_cc_grpc",
     ],
 )
 
@@ -132,7 +130,7 @@ filegroup(
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 ) for test in glob(["tests/*.cc"])]
 

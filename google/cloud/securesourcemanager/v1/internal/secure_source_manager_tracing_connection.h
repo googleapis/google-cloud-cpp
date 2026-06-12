@@ -28,8 +28,6 @@ namespace cloud {
 namespace securesourcemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SecureSourceManagerTracingConnection
     : public securesourcemanager_v1::SecureSourceManagerConnection {
  public:
@@ -554,8 +552,6 @@ class SecureSourceManagerTracingConnection
  private:
   std::shared_ptr<securesourcemanager_v1::SecureSourceManagerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

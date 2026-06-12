@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class CatalogServiceTracingStub : public CatalogServiceStub {
  public:
@@ -199,6 +200,10 @@ class CatalogServiceTracingStub : public CatalogServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::LookupEntryRequest const& request) override;
 
+  StatusOr<google::cloud::dataplex::v1::Entry> ModifyEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::ModifyEntryRequest const& request) override;
+
   StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse> SearchEntries(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::SearchEntriesRequest const& request)
@@ -236,14 +241,75 @@ class CatalogServiceTracingStub : public CatalogServiceStub {
       google::cloud::dataplex::v1::CreateEntryLinkRequest const& request)
       override;
 
+  StatusOr<google::cloud::dataplex::v1::EntryLink> UpdateEntryLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request)
+      override;
+
   StatusOr<google::cloud::dataplex::v1::EntryLink> DeleteEntryLink(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request)
       override;
 
+  StatusOr<google::cloud::dataplex::v1::LookupEntryLinksResponse>
+  LookupEntryLinks(grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::LookupEntryLinksRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::dataplex::v1::LookupContextResponse> LookupContext(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::LookupContextRequest const& request)
+      override;
+
   StatusOr<google::cloud::dataplex::v1::EntryLink> GetEntryLink(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetEntryLinkRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::MetadataFeed> GetMetadataFeed(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::ListMetadataFeedsResponse>
+  ListMetadataFeeds(grpc::ClientContext& context, Options const& options,
+                    google::cloud::dataplex::v1::ListMetadataFeedsRequest const&
+                        request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateMetadataFeed(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMetadataFeed(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -299,8 +365,6 @@ class CatalogServiceTracingStub : public CatalogServiceStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -314,5 +378,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_CATALOG_TRACING_STUB_H

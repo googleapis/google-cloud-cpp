@@ -43,7 +43,7 @@ Options DataTransferServiceDefaultOptions(Options options) {
           bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()) {
     options.set<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>(
         bigquery_datatransfer_v1::DataTransferServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

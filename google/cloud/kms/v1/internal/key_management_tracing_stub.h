@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
  public:
@@ -57,6 +58,12 @@ class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::ListImportJobsRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::ListRetiredResourcesResponse>
+  ListRetiredResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::ListRetiredResourcesRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetKeyRingRequest const& request) override;
@@ -78,6 +85,11 @@ class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetImportJobRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::GetRetiredResourceRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateKeyRingRequest const& request) override;
@@ -89,6 +101,28 @@ class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCryptoKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKey(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCryptoKeyVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKeyVersion(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
@@ -189,13 +223,23 @@ class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<KeyManagementServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
       propagator_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Applies the tracing decorator to the given stub.
@@ -210,5 +254,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_KEY_MANAGEMENT_TRACING_STUB_H

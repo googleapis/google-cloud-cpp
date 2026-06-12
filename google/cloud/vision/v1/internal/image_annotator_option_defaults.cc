@@ -41,7 +41,7 @@ Options ImageAnnotatorDefaultOptions(Options options) {
   if (!options.has<vision_v1::ImageAnnotatorRetryPolicyOption>()) {
     options.set<vision_v1::ImageAnnotatorRetryPolicyOption>(
         vision_v1::ImageAnnotatorLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<vision_v1::ImageAnnotatorBackoffPolicyOption>()) {

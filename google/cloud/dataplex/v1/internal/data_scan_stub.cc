@@ -17,12 +17,15 @@
 // source: google/cloud/dataplex/v1/datascans.proto
 
 #include "google/cloud/dataplex/v1/internal/data_scan_stub.h"
+#include "google/cloud/dataplex/v1/datascans.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/datascans.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -175,6 +178,18 @@ DefaultDataScanServiceStub::ListDataScanJobs(
     google::cloud::dataplex::v1::ListDataScanJobsRequest const& request) {
   google::cloud::dataplex::v1::ListDataScanJobsResponse response;
   auto status = grpc_stub_->ListDataScanJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DefaultDataScanServiceStub::CancelDataScanJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  google::cloud::dataplex::v1::CancelDataScanJobResponse response;
+  auto status = grpc_stub_->CancelDataScanJob(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -343,3 +358,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

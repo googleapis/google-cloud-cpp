@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace redis_cluster_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class CloudRedisClusterTracingStub : public CloudRedisClusterStub {
  public:
@@ -90,6 +91,13 @@ class CloudRedisClusterTracingStub : public CloudRedisClusterStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request) override;
+
+  StatusOr<
+      google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+  GetSharedRegionalCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncRescheduleClusterMaintenance(
@@ -204,8 +212,6 @@ class CloudRedisClusterTracingStub : public CloudRedisClusterStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -219,5 +225,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_cluster_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_INTERNAL_CLOUD_REDIS_CLUSTER_TRACING_STUB_H

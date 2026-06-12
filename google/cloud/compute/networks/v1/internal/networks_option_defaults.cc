@@ -41,7 +41,7 @@ Options NetworksDefaultOptions(Options options) {
   if (!options.has<compute_networks_v1::NetworksRetryPolicyOption>()) {
     options.set<compute_networks_v1::NetworksRetryPolicyOption>(
         compute_networks_v1::NetworksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_networks_v1::NetworksBackoffPolicyOption>()) {

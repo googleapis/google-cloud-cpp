@@ -226,6 +226,8 @@ TEST_F(BucketIntegrationTest, PatchLifecycleConditions) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
+  // TODO(#15854): Enable this test when the issue is resolved.
+  if (!UsingEmulator()) GTEST_SKIP();
   std::string bucket_name = MakeRandomBucketName();
   auto client = MakeBucketIntegrationTestClient();
 
@@ -561,6 +563,8 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
 }
 
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
+  // TODO(#15854): Enable this test when the issue is resolved.
+  if (!UsingEmulator()) GTEST_SKIP();
   std::string bucket_name = MakeRandomBucketName();
   auto client = MakeBucketIntegrationTestClient();
 

@@ -43,7 +43,7 @@ Options RegistrationServiceDefaultOptions(Options options) {
            .has<servicedirectory_v1::RegistrationServiceRetryPolicyOption>()) {
     options.set<servicedirectory_v1::RegistrationServiceRetryPolicyOption>(
         servicedirectory_v1::RegistrationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

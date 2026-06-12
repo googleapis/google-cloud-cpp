@@ -40,7 +40,7 @@ Options ConfigDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<config_v1::ConfigRetryPolicyOption>()) {
     options.set<config_v1::ConfigRetryPolicyOption>(
-        config_v1::ConfigLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        config_v1::ConfigLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<config_v1::ConfigBackoffPolicyOption>()) {

@@ -247,6 +247,103 @@ StorageControlConnectionImpl::RenameFolder(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlConnectionImpl::DeleteFolderRecursive(
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFolderRecursive(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::storage::control::v2::DeleteFolderRecursiveMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::storage::control::v2::DeleteFolderRecursiveRequest const&
+              request) {
+        return stub->AsyncDeleteFolderRecursive(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::storage::control::v2::DeleteFolderRecursiveMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnectionImpl::DeleteFolderRecursive(
+    NoAwaitTag,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteFolderRecursive(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DeleteFolderRecursiveRequest const&
+                 request) {
+        return stub_->DeleteFolderRecursive(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlConnectionImpl::DeleteFolderRecursive(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::storage::control::v2::
+                   DeleteFolderRecursiveMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteFolderRecursive",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::storage::control::v2::DeleteFolderRecursiveMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::storage::control::v2::DeleteFolderRecursiveMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlConnectionImpl::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const& request) {

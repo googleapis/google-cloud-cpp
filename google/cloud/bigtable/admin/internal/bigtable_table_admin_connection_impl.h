@@ -32,7 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -233,6 +233,10 @@ class BigtableTableAdminConnectionImpl
   AsyncCheckConsistency(
       google::bigtable::admin::v2::CheckConsistencyRequest const& request)
       override;
+
+  future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+  WaitForConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const&
+                         request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

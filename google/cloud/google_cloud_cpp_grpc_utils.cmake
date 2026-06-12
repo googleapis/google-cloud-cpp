@@ -28,10 +28,6 @@ add_library(
     grpc_error_delegate.h
     grpc_options.cc
     grpc_options.h
-    grpc_utils/async_operation.h
-    grpc_utils/completion_queue.h
-    grpc_utils/grpc_error_delegate.h
-    grpc_utils/version.h
     iam_updater.h
     internal/async_connection_ready.cc
     internal/async_connection_ready.h
@@ -190,9 +186,8 @@ google_cloud_cpp_add_pkgconfig(
     "absl_time_zone"
     "absl_variant"
     "openssl")
-
 # Create and install the CMake configuration files.
-configure_file("grpc_utils/config.cmake.in"
+configure_file("config-grpc-utils.cmake.in"
                "google_cloud_cpp_grpc_utils-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_grpc_utils-config-version.cmake"

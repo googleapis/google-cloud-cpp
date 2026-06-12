@@ -42,7 +42,7 @@ Options DataprocMetastoreDefaultOptions(Options options) {
   if (!options.has<metastore_v1::DataprocMetastoreRetryPolicyOption>()) {
     options.set<metastore_v1::DataprocMetastoreRetryPolicyOption>(
         metastore_v1::DataprocMetastoreLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<metastore_v1::DataprocMetastoreBackoffPolicyOption>()) {

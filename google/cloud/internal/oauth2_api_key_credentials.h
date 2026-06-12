@@ -37,8 +37,8 @@ class ApiKeyCredentials : public oauth2_internal::Credentials {
   StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
-  StatusOr<std::pair<std::string, std::string>> AuthenticationHeader(
-      std::chrono::system_clock::time_point) override;
+  StatusOr<rest_internal::HttpHeader> Authorization(
+      std::chrono::system_clock::time_point tp) override;
 
  private:
   std::string api_key_;

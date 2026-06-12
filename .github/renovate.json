@@ -7,7 +7,7 @@
   "python": {
     "enabled": false
   },
-  "baseBranches": ["main", "/^prepare.*v3/"],
+  "baseBranches": ["main"],
   "regexManagers": [
     {
       "fileMatch": [
@@ -90,6 +90,7 @@
   ],
   "ignoreDeps": [
     "boringssl",
-    "com_google_googleapis"
+    "com_google_googleapis",
+    "googleapis"
   ]
 }

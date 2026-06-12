@@ -41,7 +41,7 @@ Options ApplicationsDefaultOptions(Options options) {
   if (!options.has<appengine_v1::ApplicationsRetryPolicyOption>()) {
     options.set<appengine_v1::ApplicationsRetryPolicyOption>(
         appengine_v1::ApplicationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<appengine_v1::ApplicationsBackoffPolicyOption>()) {

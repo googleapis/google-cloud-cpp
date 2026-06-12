@@ -28,8 +28,6 @@ namespace cloud {
 namespace video_stitcher_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VideoStitcherServiceTracingConnection
     : public video_stitcher_v1::VideoStitcherServiceConnection {
  public:
@@ -281,8 +279,6 @@ class VideoStitcherServiceTracingConnection
  private:
   std::shared_ptr<video_stitcher_v1::VideoStitcherServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

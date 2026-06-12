@@ -39,6 +39,11 @@ Idempotency GkeHubConnectionIdempotencyPolicy::ListMemberships(
   return Idempotency::kIdempotent;
 }
 
+Idempotency GkeHubConnectionIdempotencyPolicy::ListBoundMemberships(
+    google::cloud::gkehub::v1::ListBoundMembershipsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency GkeHubConnectionIdempotencyPolicy::ListFeatures(
     google::cloud::gkehub::v1::ListFeaturesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -87,6 +92,169 @@ Idempotency GkeHubConnectionIdempotencyPolicy::UpdateFeature(
 Idempotency GkeHubConnectionIdempotencyPolicy::GenerateConnectManifest(
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::CreateFleet(
+    google::cloud::gkehub::v1::CreateFleetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::GetFleet(
+    google::cloud::gkehub::v1::GetFleetRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::UpdateFleet(
+    google::cloud::gkehub::v1::UpdateFleetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::DeleteFleet(
+    google::cloud::gkehub::v1::DeleteFleetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::ListFleets(
+    google::cloud::gkehub::v1::ListFleetsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::GetScopeNamespace(
+    google::cloud::gkehub::v1::GetScopeNamespaceRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::CreateScopeNamespace(
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::UpdateScopeNamespace(
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::DeleteScopeNamespace(
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::ListScopeNamespaces(
+    google::cloud::gkehub::v1::ListScopeNamespacesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::GetScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::CreateScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::UpdateScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::DeleteScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::ListScopeRBACRoleBindings(
+    google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::GetScope(
+    google::cloud::gkehub::v1::GetScopeRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::CreateScope(
+    google::cloud::gkehub::v1::CreateScopeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::UpdateScope(
+    google::cloud::gkehub::v1::UpdateScopeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::DeleteScope(
+    google::cloud::gkehub::v1::DeleteScopeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::ListScopes(
+    google::cloud::gkehub::v1::ListScopesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::ListPermittedScopes(
+    google::cloud::gkehub::v1::ListPermittedScopesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::GetMembershipBinding(
+    google::cloud::gkehub::v1::GetMembershipBindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::CreateMembershipBinding(
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::UpdateMembershipBinding(
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::DeleteMembershipBinding(
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::ListMembershipBindings(
+    google::cloud::gkehub::v1::ListMembershipBindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::GetMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::CreateMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::UpdateMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::DeleteMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GkeHubConnectionIdempotencyPolicy::ListMembershipRBACRoleBindings(
+    google::cloud::gkehub::v1::
+        ListMembershipRBACRoleBindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+GkeHubConnectionIdempotencyPolicy::GenerateMembershipRBACRoleBindingYAML(
+    google::cloud::gkehub::v1::
+        GenerateMembershipRBACRoleBindingYAMLRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>

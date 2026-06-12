@@ -27,8 +27,6 @@ namespace cloud {
 namespace developerconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DeveloperConnectTracingConnection::DeveloperConnectTracingConnection(
     std::shared_ptr<developerconnect_v1::DeveloperConnectConnection> child)
     : child_(std::move(child)) {}
@@ -517,6 +515,24 @@ DeveloperConnectTracingConnection::DeleteSelf(
   return internal::EndSpan(std::move(span), child_->DeleteSelf(operation));
 }
 
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DeveloperConnectTracingConnection::StartOAuth(
+    google::cloud::developerconnect::v1::StartOAuthRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::StartOAuth");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StartOAuth(request));
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DeveloperConnectTracingConnection::FinishOAuth(
+    google::cloud::developerconnect::v1::FinishOAuthRequest const& request) {
+  auto span = internal::MakeSpan(
+      "developerconnect_v1::DeveloperConnectConnection::FinishOAuth");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FinishOAuth(request));
+}
+
 StreamRange<google::cloud::location::Location>
 DeveloperConnectTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -573,16 +589,12 @@ Status DeveloperConnectTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<developerconnect_v1::DeveloperConnectConnection>
 MakeDeveloperConnectTracingConnection(
     std::shared_ptr<developerconnect_v1::DeveloperConnectConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DeveloperConnectTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

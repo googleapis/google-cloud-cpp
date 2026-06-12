@@ -15,7 +15,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/status_payload_keys.h"
 #include "google/cloud/internal/time_utils.h"
-#include <google/rpc/error_details.pb.h>
+#include "google/rpc/error_details.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

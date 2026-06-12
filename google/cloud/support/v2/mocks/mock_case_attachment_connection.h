@@ -51,6 +51,10 @@ class MockCaseAttachmentServiceConnection
               ListAttachments,
               (google::cloud::support::v2::ListAttachmentsRequest request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::support::v2::Attachment>, GetAttachment,
+              (google::cloud::support::v2::GetAttachmentRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
