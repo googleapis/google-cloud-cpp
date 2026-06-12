@@ -109,7 +109,7 @@ void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
 }
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
-                                   storage::BucketMetadata const& metadata) {
+                                   storage::BucketMetadata const& metadata) const {
   auto const enabled =
       options().get<storage_experimental::OTelSpanEnrichmentOption>();
   if (!enabled) return;
