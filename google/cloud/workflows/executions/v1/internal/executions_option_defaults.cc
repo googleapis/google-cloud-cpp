@@ -42,7 +42,7 @@ Options ExecutionsDefaultOptions(Options options) {
   if (!options.has<workflows_executions_v1::ExecutionsRetryPolicyOption>()) {
     options.set<workflows_executions_v1::ExecutionsRetryPolicyOption>(
         workflows_executions_v1::ExecutionsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<workflows_executions_v1::ExecutionsBackoffPolicyOption>()) {

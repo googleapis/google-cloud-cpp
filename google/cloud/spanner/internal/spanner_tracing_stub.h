@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class SpannerTracingStub : public SpannerStub {
  public:
@@ -96,6 +97,12 @@ class SpannerTracingStub : public SpannerStub {
              Options const& options,
              google::spanner::v1::BatchWriteRequest const& request) override;
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::CacheUpdate>>
+  FetchCacheUpdate(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::spanner::v1::FetchCacheUpdateRequest const& request) override;
+
   future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -127,8 +134,6 @@ class SpannerTracingStub : public SpannerStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -142,5 +147,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_TRACING_STUB_H

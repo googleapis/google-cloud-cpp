@@ -18,6 +18,7 @@
 #include "google/cloud/internal/grpc_access_token_authentication.h"
 #include "google/cloud/internal/grpc_api_key_authentication.h"
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
+#include "google/cloud/internal/grpc_compute_engine_authentication.h"
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/grpc_service_account_authentication.h"
 #include <grpcpp/security/credentials.h>
@@ -114,8 +115,28 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
                                                      std::move(options));
     }
     void visit(ServiceAccountConfig const& cfg) override {
-      result = std::make_unique<GrpcServiceAccountAuthentication>(
-          cfg.json_object(), std::move(options));
+      if (cfg.file_path().has_value()) {
+        std::ifstream is(*cfg.file_path());
+        if (!is.is_open()) {
+          // We use kUnknown here because we don't know if the file does not
+          // exist, or if we were unable to open it for some other reason.
+          result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+              ErrorCredentialsConfig{UnknownError(
+                  "Cannot open credentials file " + *cfg.file_path(),
+                  GCP_ERROR_INFO())});
+        }
+        std::string contents(std::istreambuf_iterator<char>{is}, {});
+        result = std::make_unique<GrpcServiceAccountAuthentication>(
+            std::move(contents), std::move(options));
+      } else if (cfg.json_object().has_value()) {
+        result = std::make_unique<GrpcServiceAccountAuthentication>(
+            *cfg.json_object(), std::move(options));
+      } else {
+        result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+            ErrorCredentialsConfig{InternalError(
+                "ServiceAccountConfig has neither json_object nor file_path",
+                GCP_ERROR_INFO())});
+      }
     }
     void visit(ExternalAccountConfig const& cfg) override {
       grpc::SslCredentialsOptions ssl_options;
@@ -129,6 +150,25 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     void visit(ApiKeyConfig const& cfg) override {
       result = std::make_unique<GrpcApiKeyAuthentication>(cfg.api_key());
     }
+    void visit(ComputeEngineCredentialsConfig const&) override {
+      result = std::make_unique<GrpcComputeEngineAuthentication>(options);
+    }
+    void visit(AuthorizedUserConfig const&) override {
+      result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+          ErrorCredentialsConfig{UnimplementedError(
+              "User account credentials (MakeUserAccountCredentials) are not "
+              "supported with gRPC transport. Use Google Default Credentials "
+              "or Access Token Credentials instead.",
+              GCP_ERROR_INFO())});
+    }
+    void visit(GDCHServiceAccountConfig const&) override {
+      result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+          ErrorCredentialsConfig{
+              UnimplementedError("GDCHServiceAccountCredentials are not yet "
+                                 "supported for gRPC endpoints",
+                                 GCP_ERROR_INFO())});
+    }
+
   } visitor(std::move(cq), std::move(options));
 
   CredentialsVisitor::dispatch(credentials, visitor);

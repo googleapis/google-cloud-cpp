@@ -34,6 +34,7 @@ https://github.com/bazelbuild/rules_cc/blob/0d68932a68bcd6f332b14ccc561990586de2
 
 load("@rules_cc//cc:action_names.bzl", "CPP_COMPILE_ACTION_NAME")
 load("@rules_cc//cc:toolchain_utils.bzl", "find_cpp_toolchain")
+load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
 
 def _capture_build_info_impl(ctx):
     toolchain = find_cpp_toolchain(ctx)

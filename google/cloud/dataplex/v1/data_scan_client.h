@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -97,9 +97,10 @@ class DataScanServiceClient {
   /// @param parent  Required. The resource name of the parent location:
   ///  `projects/{project}/locations/{location_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param data_scan  Required. DataScan resource.
-  /// @param data_scan_id  Required. DataScan identifier.
+  /// @param data_scan_id  Optional. DataScan identifier. If not provided, a unique ID will be
+  ///  generated with the prefix "data-scan-".
   ///  @n
   ///  * Must contain only lowercase letters, numbers and hyphens.
   ///  * Must start with a letter.
@@ -126,8 +127,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L150}
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
+  /// [google.cloud.dataplex.v1.CreateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L164}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
@@ -181,8 +182,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L150}
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
+  /// [google.cloud.dataplex.v1.CreateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L164}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
@@ -245,8 +246,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
-  /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L180}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L465}
+  /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
@@ -298,8 +299,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
-  /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L180}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L465}
+  /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
@@ -341,7 +342,7 @@ class DataScanServiceClient {
   /// @param name  Required. The resource name of the dataScan:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -362,8 +363,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L196}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L211}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -413,8 +414,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L196}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
+  /// [google.cloud.dataplex.v1.DeleteDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L211}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -458,7 +459,7 @@ class DataScanServiceClient {
   /// @param name  Required. The resource name of the dataScan:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -472,8 +473,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
-  /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L215}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L465}
+  /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L230}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
@@ -502,8 +503,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
-  /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L215}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L465}
+  /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L230}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
@@ -517,7 +518,7 @@ class DataScanServiceClient {
   /// @param parent  Required. The resource name of the parent location:
   ///  `projects/{project}/locations/{location_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -540,8 +541,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
-  /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L244}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L465}
+  /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L259}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataScan> ListDataScans(
@@ -579,8 +580,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
-  /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L244}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L465}
+  /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L259}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataScan> ListDataScans(
@@ -594,7 +595,7 @@ class DataScanServiceClient {
   /// @param name  Required. The resource name of the DataScan:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}`.
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   ///  @n
   ///  Only **OnDemand** data scans are allowed.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -610,8 +611,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.RunDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L289}
-  /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L305}
+  /// [google.cloud.dataplex.v1.RunDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L304}
+  /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L320}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> RunDataScan(
@@ -640,8 +641,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.RunDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L289}
-  /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L305}
+  /// [google.cloud.dataplex.v1.RunDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L304}
+  /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L320}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> RunDataScan(
@@ -655,7 +656,7 @@ class DataScanServiceClient {
   /// @param name  Required. The resource name of the DataScanJob:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/jobs/{data_scan_job_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -669,8 +670,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L558}
-  /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L311}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L642}
+  /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L326}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
@@ -699,8 +700,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L558}
-  /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L311}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L642}
+  /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L326}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
@@ -714,7 +715,7 @@ class DataScanServiceClient {
   /// @param parent  Required. The resource name of the parent environment:
   ///  `projects/{project}/locations/{location_id}/dataScans/{data_scan_id}`
   ///  where `project` refers to a *project_id* or *project_number* and
-  ///  `location_id` refers to a GCP region.
+  ///  `location_id` refers to a Google Cloud region.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -737,8 +738,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L558}
-  /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L340}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L642}
+  /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L355}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
@@ -776,12 +777,72 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L558}
-  /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L340}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L642}
+  /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L355}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
       google::cloud::dataplex::v1::ListDataScanJobsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancels a running/pending DataScan job.
+  ///
+  /// @param name  Required. The resource name of the DataScanJob:
+  ///  `projects/{project_id_or_number}/locations/{location_id}/dataScans/{data_scan_id}/jobs/{data_scan_job_id}`
+  ///  where `project_id_or_number` refers to a *project_id* or *project_number*
+  ///  and `location_id` refers to a Google Cloud region.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.CancelDataScanJobResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CancelDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L410}
+  /// [google.cloud.dataplex.v1.CancelDataScanJobResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L424}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+  CancelDataScanJob(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancels a running/pending DataScan job.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataplex.v1.CancelDataScanJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataplex.v1.CancelDataScanJobResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataplex.v1.CancelDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L410}
+  /// [google.cloud.dataplex.v1.CancelDataScanJobResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L424}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+  CancelDataScanJob(
+      google::cloud::dataplex::v1::CancelDataScanJobRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -810,8 +871,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L395}
-  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L406}
+  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L427}
+  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L438}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
@@ -843,8 +904,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L395}
-  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L406}
+  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L427}
+  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L438}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
@@ -1180,7 +1241,7 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -1209,7 +1270,7 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L219}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -1242,10 +1303,10 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -1281,10 +1342,10 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

@@ -42,7 +42,7 @@ Options CloudFunctionsServiceDefaultOptions(Options options) {
   if (!options.has<functions_v1::CloudFunctionsServiceRetryPolicyOption>()) {
     options.set<functions_v1::CloudFunctionsServiceRetryPolicyOption>(
         functions_v1::CloudFunctionsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()) {

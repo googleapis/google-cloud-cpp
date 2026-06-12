@@ -19,9 +19,9 @@
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_option_defaults.h"
 #include "google/cloud/gkemulticloud/v1/azure_clusters_connection.h"
 #include "google/cloud/gkemulticloud/v1/azure_clusters_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options AzureClustersDefaultOptions(std::string const& location,
   if (!options.has<gkemulticloud_v1::AzureClustersRetryPolicyOption>()) {
     options.set<gkemulticloud_v1::AzureClustersRetryPolicyOption>(
         gkemulticloud_v1::AzureClustersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<gkemulticloud_v1::AzureClustersBackoffPolicyOption>()) {

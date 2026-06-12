@@ -27,14 +27,11 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TracingConnection : public storage::internal::StorageConnection {
  public:
   explicit TracingConnection(std::shared_ptr<StorageConnection> impl);
   ~TracingConnection() override = default;
 
-  storage::ClientOptions const& client_options() const override;
   Options options() const override;
 
   StatusOr<storage::internal::ListBucketsResponse> ListBuckets(
@@ -183,8 +180,6 @@ class TracingConnection : public storage::internal::StorageConnection {
  private:
   std::shared_ptr<StorageConnection> impl_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
     std::shared_ptr<storage::internal::StorageConnection> impl);

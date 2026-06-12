@@ -17,9 +17,12 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream/v1/internal/livestream_auth_decorator.h"
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -190,6 +193,68 @@ StatusOr<google::longrunning::Operation> LivestreamServiceAuth::StopChannel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncStartDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncStartDistribution(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceAuth::StartDistribution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartDistribution(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncStopDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncStopDistribution(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceAuth::StopDistribution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopDistribution(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -289,6 +354,15 @@ StatusOr<google::longrunning::Operation> LivestreamServiceAuth::UpdateInput(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInput(context, options, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+LivestreamServiceAuth::PreviewInput(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::PreviewInputRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PreviewInput(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
@@ -713,3 +787,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

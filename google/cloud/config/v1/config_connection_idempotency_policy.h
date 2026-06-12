@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/config/v1/config.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/config/v1/config.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -120,6 +120,43 @@ class ConfigConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetResourceDrift(
       google::cloud::config::v1::GetResourceDriftRequest const& request);
+
+  virtual google::cloud::Idempotency GetAutoMigrationConfig(
+      google::cloud::config::v1::GetAutoMigrationConfigRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateAutoMigrationConfig(
+      google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetDeploymentGroup(
+      google::cloud::config::v1::GetDeploymentGroupRequest const& request);
+
+  virtual google::cloud::Idempotency CreateDeploymentGroup(
+      google::cloud::config::v1::CreateDeploymentGroupRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateDeploymentGroup(
+      google::cloud::config::v1::UpdateDeploymentGroupRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteDeploymentGroup(
+      google::cloud::config::v1::DeleteDeploymentGroupRequest const& request);
+
+  virtual google::cloud::Idempotency ListDeploymentGroups(
+      google::cloud::config::v1::ListDeploymentGroupsRequest request);
+
+  virtual google::cloud::Idempotency ProvisionDeploymentGroup(
+      google::cloud::config::v1::ProvisionDeploymentGroupRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeprovisionDeploymentGroup(
+      google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetDeploymentGroupRevision(
+      google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListDeploymentGroupRevisions(
+      google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

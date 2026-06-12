@@ -47,7 +47,7 @@ Options RegionInstanceGroupManagersDefaultOptions(Options options) {
                     RegionInstanceGroupManagersRetryPolicyOption>(
         compute_region_instance_group_managers_v1::
             RegionInstanceGroupManagersLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_instance_group_managers_v1::

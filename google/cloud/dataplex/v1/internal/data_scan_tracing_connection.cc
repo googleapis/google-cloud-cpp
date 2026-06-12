@@ -27,8 +27,6 @@ namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DataScanServiceTracingConnection::DataScanServiceTracingConnection(
     std::shared_ptr<dataplex_v1::DataScanServiceConnection> child)
     : child_(std::move(child)) {}
@@ -169,6 +167,15 @@ DataScanServiceTracingConnection::ListDataScanJobs(
       google::cloud::dataplex::v1::DataScanJob>(std::move(span), std::move(sr));
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceTracingConnection::CancelDataScanJob(
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataScanServiceConnection::CancelDataScanJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelDataScanJob(request));
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceTracingConnection::GenerateDataQualityRules(
     google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
@@ -262,16 +269,12 @@ Status DataScanServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<dataplex_v1::DataScanServiceConnection>
 MakeDataScanServiceTracingConnection(
     std::shared_ptr<dataplex_v1::DataScanServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DataScanServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

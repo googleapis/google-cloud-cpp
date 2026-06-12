@@ -28,8 +28,6 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class KeyManagementServiceTracingConnection
     : public kms_v1::KeyManagementServiceConnection {
  public:
@@ -52,6 +50,9 @@ class KeyManagementServiceTracingConnection
   StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
       google::cloud::kms::v1::ListImportJobsRequest request) override;
 
+  StreamRange<google::cloud::kms::v1::RetiredResource> ListRetiredResources(
+      google::cloud::kms::v1::ListRetiredResourcesRequest request) override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
       google::cloud::kms::v1::GetKeyRingRequest const& request) override;
 
@@ -68,6 +69,10 @@ class KeyManagementServiceTracingConnection
   StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
       google::cloud::kms::v1::GetImportJobRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
+      google::cloud::kms::v1::GetRetiredResourceRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       google::cloud::kms::v1::CreateKeyRingRequest const& request) override;
 
@@ -77,6 +82,31 @@ class KeyManagementServiceTracingConnection
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+  DeleteCryptoKey(
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKey(
+      NoAwaitTag,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+  DeleteCryptoKey(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+  DeleteCryptoKeyVersion(
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKeyVersion(
+      NoAwaitTag,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+  DeleteCryptoKeyVersion(
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
       google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request)
@@ -128,6 +158,9 @@ class KeyManagementServiceTracingConnection
   StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
       google::cloud::kms::v1::MacVerifyRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::DecapsulateResponse> Decapsulate(
+      google::cloud::kms::v1::DecapsulateRequest const& request) override;
+
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const&
                           request) override;
@@ -153,8 +186,6 @@ class KeyManagementServiceTracingConnection
  private:
   std::shared_ptr<kms_v1::KeyManagementServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

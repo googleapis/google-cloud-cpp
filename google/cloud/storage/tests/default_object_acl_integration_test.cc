@@ -53,6 +53,8 @@ class DefaultObjectAclIntegrationTest
 };
 
 TEST_F(DefaultObjectAclIntegrationTest, AclCRUD) {
+  // TODO(#15854): Enable this test when the issue is resolved.
+  if (!UsingEmulator()) GTEST_SKIP();
   std::string bucket_name = MakeRandomBucketName();
   auto client = MakeIntegrationTestClient(MakeBucketTestOptions());
 
@@ -157,6 +159,8 @@ TEST_F(DefaultObjectAclIntegrationTest, AclCRUD) {
 }
 
 TEST_F(DefaultObjectAclIntegrationTest, CreatePredefinedDefaultObjectAcl) {
+  // TODO(#15854): Enable this test when the issue is resolved.
+  if (!UsingEmulator()) GTEST_SKIP();
   std::vector<PredefinedDefaultObjectAcl> test_values{
       PredefinedDefaultObjectAcl::AuthenticatedRead(),
       PredefinedDefaultObjectAcl::BucketOwnerFullControl(),

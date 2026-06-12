@@ -41,7 +41,7 @@ Options CloudMemcacheDefaultOptions(Options options) {
   if (!options.has<memcache_v1::CloudMemcacheRetryPolicyOption>()) {
     options.set<memcache_v1::CloudMemcacheRetryPolicyOption>(
         memcache_v1::CloudMemcacheLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<memcache_v1::CloudMemcacheBackoffPolicyOption>()) {

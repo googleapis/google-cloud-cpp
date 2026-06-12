@@ -1,0 +1,6 @@
+@googleapis//google/cloud/cloudsecuritycompliance/v1:audit.proto
+@googleapis//google/cloud/cloudsecuritycompliance/v1:cm_enrollment_service.proto
+@googleapis//google/cloud/cloudsecuritycompliance/v1:common.proto
+@googleapis//google/cloud/cloudsecuritycompliance/v1:config.proto
+@googleapis//google/cloud/cloudsecuritycompliance/v1:deployment.proto
+@googleapis//google/cloud/cloudsecuritycompliance/v1:monitoring.proto

@@ -28,8 +28,6 @@ namespace cloud {
 namespace vmmigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VmMigrationTracingConnection
     : public vmmigration_v1::VmMigrationConnection {
  public:
@@ -85,6 +83,11 @@ class VmMigrationTracingConnection
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
   FetchInventory(google::cloud::vmmigration::v1::FetchInventoryRequest const&
                      request) override;
+
+  StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>
+  FetchStorageInventory(
+      google::cloud::vmmigration::v1::FetchStorageInventoryRequest request)
+      override;
 
   StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
   ListUtilizationReports(
@@ -269,6 +272,18 @@ class VmMigrationTracingConnection
 
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
   FinalizeMigration(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+  ExtendMigration(google::cloud::vmmigration::v1::ExtendMigrationRequest const&
+                      request) override;
+
+  StatusOr<google::longrunning::Operation> ExtendMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::ExtendMigrationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+  ExtendMigration(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request)
@@ -459,6 +474,142 @@ class VmMigrationTracingConnection
       google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request)
       override;
 
+  StreamRange<google::cloud::vmmigration::v1::ImageImport> ListImageImports(
+      google::cloud::vmmigration::v1::ListImageImportsRequest request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::ImageImport> GetImageImport(
+      google::cloud::vmmigration::v1::GetImageImportRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+  CreateImageImport(
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateImageImport(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+  CreateImageImport(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteImageImport(
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteImageImport(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteImageImport(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::vmmigration::v1::ImageImportJob>
+  ListImageImportJobs(google::cloud::vmmigration::v1::ListImageImportJobsRequest
+                          request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::ImageImportJob> GetImageImportJob(
+      google::cloud::vmmigration::v1::GetImageImportJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+  CancelImageImportJob(
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CancelImageImportJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+  CancelImageImportJob(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  CreateDiskMigrationJob(
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  CreateDiskMigrationJob(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>
+  ListDiskMigrationJobs(
+      google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest request)
+      override;
+
+  StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+  GetDiskMigrationJob(
+      google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  UpdateDiskMigrationJob(
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+  UpdateDiskMigrationJob(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteDiskMigrationJob(
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteDiskMigrationJob(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+  RunDiskMigrationJob(
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RunDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+  RunDiskMigrationJob(google::longrunning::Operation const& operation) override;
+
+  future<
+      StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+  CancelDiskMigrationJob(
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CancelDiskMigrationJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+  CancelDiskMigrationJob(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
@@ -480,8 +631,6 @@ class VmMigrationTracingConnection
  private:
   std::shared_ptr<vmmigration_v1::VmMigrationConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

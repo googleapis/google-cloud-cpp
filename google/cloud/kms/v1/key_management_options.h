@@ -59,6 +59,16 @@ struct KeyManagementServiceConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-kms-options
+ */
+struct KeyManagementServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to KeyManagementService.
  *
  * @ingroup google-cloud-kms-options
@@ -66,6 +76,7 @@ struct KeyManagementServiceConnectionIdempotencyPolicyOption {
 using KeyManagementServicePolicyOptionList =
     OptionList<KeyManagementServiceRetryPolicyOption,
                KeyManagementServiceBackoffPolicyOption,
+               KeyManagementServicePollingPolicyOption,
                KeyManagementServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

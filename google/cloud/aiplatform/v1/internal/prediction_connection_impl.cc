@@ -118,9 +118,14 @@ PredictionServiceConnectionImpl::StreamRawPredict(
       google::cloud::aiplatform::v1::StreamRawPredictRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       PredictionServiceStreamRawPredictStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<google::api::HttpBody>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<google::api::HttpBody>(
+      [resumable = std::move(
+           resumable)]() -> absl::variant<Status, google::api::HttpBody> {
+        google::api::HttpBody response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
@@ -196,10 +201,16 @@ PredictionServiceConnectionImpl::ServerStreamingPredict(
       google::cloud::aiplatform::v1::StreamingPredictRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       PredictionServiceServerStreamingPredictStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::aiplatform::v1::StreamingPredictResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<
+              Status, google::cloud::aiplatform::v1::StreamingPredictResponse> {
+        google::cloud::aiplatform::v1::StreamingPredictResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -256,10 +267,31 @@ PredictionServiceConnectionImpl::StreamGenerateContent(
       google::cloud::aiplatform::v1::GenerateContentRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       PredictionServiceStreamGenerateContentStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<
-          google::cloud::aiplatform::v1::GenerateContentResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<
+      google::cloud::aiplatform::v1::GenerateContentResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<
+              Status, google::cloud::aiplatform::v1::GenerateContentResponse> {
+        google::cloud::aiplatform::v1::GenerateContentResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
+}
+
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceConnectionImpl::EmbedContent(
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EmbedContent(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+        return stub_->EmbedContent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>

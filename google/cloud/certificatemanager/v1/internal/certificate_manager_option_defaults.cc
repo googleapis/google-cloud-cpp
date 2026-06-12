@@ -43,7 +43,7 @@ Options CertificateManagerDefaultOptions(Options options) {
            .has<certificatemanager_v1::CertificateManagerRetryPolicyOption>()) {
     options.set<certificatemanager_v1::CertificateManagerRetryPolicyOption>(
         certificatemanager_v1::CertificateManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

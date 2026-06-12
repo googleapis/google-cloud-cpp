@@ -19,9 +19,12 @@
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -177,6 +180,16 @@ DefaultSpannerStub::BatchWrite(
                                                 std::move(stream));
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+DefaultSpannerStub::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  auto stream = grpc_stub_->FetchCacheUpdate(context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::spanner::v1::CacheUpdate>>(std::move(context), std::move(stream));
+}
+
 future<StatusOr<google::spanner::v1::Session>>
 DefaultSpannerStub::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,
@@ -256,3 +269,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

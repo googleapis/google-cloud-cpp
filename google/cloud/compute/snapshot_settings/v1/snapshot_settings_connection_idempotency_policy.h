@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_SNAPSHOT_SETTINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_SNAPSHOT_SETTINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/snapshot_settings/v1/snapshot_settings.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/snapshot_settings/v1/snapshot_settings.pb.h>
 #include <memory>
 
 namespace google {

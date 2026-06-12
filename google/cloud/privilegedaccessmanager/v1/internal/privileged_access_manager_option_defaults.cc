@@ -45,7 +45,7 @@ Options PrivilegedAccessManagerDefaultOptions(Options options) {
         privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicyOption>(
         privilegedaccessmanager_v1::
             PrivilegedAccessManagerLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<privilegedaccessmanager_v1::

@@ -37,6 +37,7 @@ application.
 - @ref servicemanagement-override-retry - describes how to change the default retry
   policies.
 - @ref servicemanagement-env - describes environment variables that can configure the behavior of the library.
+- @ref servicemanagement-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/service-management
 

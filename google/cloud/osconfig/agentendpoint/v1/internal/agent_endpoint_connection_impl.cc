@@ -93,10 +93,17 @@ AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
           ReceiveTaskNotificationRequest>(
       retry_policy(*current), backoff_policy(*current), factory,
       AgentEndpointServiceReceiveTaskNotificationStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<google::cloud::osconfig::agentendpoint::v1::
-                                 ReceiveTaskNotificationResponse>(
-          [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<google::cloud::osconfig::agentendpoint::v1::
+                                       ReceiveTaskNotificationResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<Status, google::cloud::osconfig::agentendpoint::v1::
+                                       ReceiveTaskNotificationResponse> {
+        google::cloud::osconfig::agentendpoint::v1::
+            ReceiveTaskNotificationResponse response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
@@ -175,6 +182,22 @@ AgentEndpointServiceConnectionImpl::ReportInventory(
              google::cloud::osconfig::agentendpoint::v1::
                  ReportInventoryRequest const& request) {
         return stub_->ReportInventory(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+AgentEndpointServiceConnectionImpl::ReportVmInventory(
+    google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReportVmInventory(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::agentendpoint::v1::
+                 ReportVmInventoryRequest const& request) {
+        return stub_->ReportVmInventory(context, options, request);
       },
       *current, request, __func__);
 }

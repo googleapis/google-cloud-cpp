@@ -40,7 +40,7 @@ Options TasksDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<run_v2::TasksRetryPolicyOption>()) {
     options.set<run_v2::TasksRetryPolicyOption>(
-        run_v2::TasksLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+        run_v2::TasksLimitedTimeRetryPolicy(std::chrono::minutes(10)).clone());
   }
   if (!options.has<run_v2::TasksBackoffPolicyOption>()) {
     options.set<run_v2::TasksBackoffPolicyOption>(

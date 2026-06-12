@@ -42,7 +42,7 @@ Options CloudFilestoreManagerDefaultOptions(Options options) {
   if (!options.has<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()) {
     options.set<filestore_v1::CloudFilestoreManagerRetryPolicyOption>(
         filestore_v1::CloudFilestoreManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()) {

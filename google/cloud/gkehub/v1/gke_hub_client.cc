@@ -47,6 +47,23 @@ GkeHubClient::ListMemberships(
   return connection_->ListMemberships(std::move(request));
 }
 
+StreamRange<google::cloud::gkehub::v1::Membership>
+GkeHubClient::ListBoundMemberships(std::string const& scope_name,
+                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::ListBoundMembershipsRequest request;
+  request.set_scope_name(scope_name);
+  return connection_->ListBoundMemberships(request);
+}
+
+StreamRange<google::cloud::gkehub::v1::Membership>
+GkeHubClient::ListBoundMemberships(
+    google::cloud::gkehub::v1::ListBoundMembershipsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBoundMemberships(std::move(request));
+}
+
 StreamRange<google::cloud::gkehub::v1::Feature> GkeHubClient::ListFeatures(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -362,6 +379,1005 @@ GkeHubClient::GenerateConnectManifest(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateConnectManifest(request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>> GkeHubClient::CreateFleet(
+    std::string const& parent, google::cloud::gkehub::v1::Fleet const& fleet,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateFleetRequest request;
+  request.set_parent(parent);
+  *request.mutable_fleet() = fleet;
+  return connection_->CreateFleet(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::CreateFleet(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkehub::v1::Fleet const& fleet, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateFleetRequest request;
+  request.set_parent(parent);
+  *request.mutable_fleet() = fleet;
+  return connection_->CreateFleet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>> GkeHubClient::CreateFleet(
+    google::cloud::gkehub::v1::CreateFleetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFleet(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::CreateFleet(
+    NoAwaitTag, google::cloud::gkehub::v1::CreateFleetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFleet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>> GkeHubClient::CreateFleet(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFleet(operation);
+}
+
+StatusOr<google::cloud::gkehub::v1::Fleet> GkeHubClient::GetFleet(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::GetFleetRequest request;
+  request.set_name(name);
+  return connection_->GetFleet(request);
+}
+
+StatusOr<google::cloud::gkehub::v1::Fleet> GkeHubClient::GetFleet(
+    google::cloud::gkehub::v1::GetFleetRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetFleet(request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>> GkeHubClient::UpdateFleet(
+    google::cloud::gkehub::v1::Fleet const& fleet,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateFleetRequest request;
+  *request.mutable_fleet() = fleet;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateFleet(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::UpdateFleet(
+    NoAwaitTag, google::cloud::gkehub::v1::Fleet const& fleet,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateFleetRequest request;
+  *request.mutable_fleet() = fleet;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateFleet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>> GkeHubClient::UpdateFleet(
+    google::cloud::gkehub::v1::UpdateFleetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFleet(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::UpdateFleet(
+    NoAwaitTag, google::cloud::gkehub::v1::UpdateFleetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFleet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Fleet>> GkeHubClient::UpdateFleet(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFleet(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteFleet(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteFleetRequest request;
+  request.set_name(name);
+  return connection_->DeleteFleet(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::DeleteFleet(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteFleetRequest request;
+  request.set_name(name);
+  return connection_->DeleteFleet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteFleet(
+    google::cloud::gkehub::v1::DeleteFleetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFleet(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::DeleteFleet(
+    NoAwaitTag, google::cloud::gkehub::v1::DeleteFleetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFleet(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteFleet(google::longrunning::Operation const& operation,
+                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFleet(operation);
+}
+
+StreamRange<google::cloud::gkehub::v1::Fleet> GkeHubClient::ListFleets(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::ListFleetsRequest request;
+  request.set_parent(parent);
+  return connection_->ListFleets(request);
+}
+
+StreamRange<google::cloud::gkehub::v1::Fleet> GkeHubClient::ListFleets(
+    google::cloud::gkehub::v1::ListFleetsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListFleets(std::move(request));
+}
+
+StatusOr<google::cloud::gkehub::v1::Namespace> GkeHubClient::GetScopeNamespace(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::GetScopeNamespaceRequest request;
+  request.set_name(name);
+  return connection_->GetScopeNamespace(request);
+}
+
+StatusOr<google::cloud::gkehub::v1::Namespace> GkeHubClient::GetScopeNamespace(
+    google::cloud::gkehub::v1::GetScopeNamespaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetScopeNamespace(request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubClient::CreateScopeNamespace(
+    std::string const& parent,
+    google::cloud::gkehub::v1::Namespace const& scope_namespace,
+    std::string const& scope_namespace_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateScopeNamespaceRequest request;
+  request.set_parent(parent);
+  *request.mutable_scope_namespace() = scope_namespace;
+  request.set_scope_namespace_id(scope_namespace_id);
+  return connection_->CreateScopeNamespace(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::CreateScopeNamespace(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkehub::v1::Namespace const& scope_namespace,
+    std::string const& scope_namespace_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateScopeNamespaceRequest request;
+  request.set_parent(parent);
+  *request.mutable_scope_namespace() = scope_namespace;
+  request.set_scope_namespace_id(scope_namespace_id);
+  return connection_->CreateScopeNamespace(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubClient::CreateScopeNamespace(
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScopeNamespace(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::CreateScopeNamespace(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScopeNamespace(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubClient::CreateScopeNamespace(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScopeNamespace(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubClient::UpdateScopeNamespace(
+    google::cloud::gkehub::v1::Namespace const& scope_namespace,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateScopeNamespaceRequest request;
+  *request.mutable_scope_namespace() = scope_namespace;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateScopeNamespace(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::UpdateScopeNamespace(
+    NoAwaitTag, google::cloud::gkehub::v1::Namespace const& scope_namespace,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateScopeNamespaceRequest request;
+  *request.mutable_scope_namespace() = scope_namespace;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateScopeNamespace(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubClient::UpdateScopeNamespace(
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScopeNamespace(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::UpdateScopeNamespace(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScopeNamespace(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Namespace>>
+GkeHubClient::UpdateScopeNamespace(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScopeNamespace(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScopeNamespace(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteScopeNamespaceRequest request;
+  request.set_name(name);
+  return connection_->DeleteScopeNamespace(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::DeleteScopeNamespace(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteScopeNamespaceRequest request;
+  request.set_name(name);
+  return connection_->DeleteScopeNamespace(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScopeNamespace(
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScopeNamespace(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::DeleteScopeNamespace(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScopeNamespace(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScopeNamespace(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScopeNamespace(operation);
+}
+
+StreamRange<google::cloud::gkehub::v1::Namespace>
+GkeHubClient::ListScopeNamespaces(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::ListScopeNamespacesRequest request;
+  request.set_parent(parent);
+  return connection_->ListScopeNamespaces(request);
+}
+
+StreamRange<google::cloud::gkehub::v1::Namespace>
+GkeHubClient::ListScopeNamespaces(
+    google::cloud::gkehub::v1::ListScopeNamespacesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListScopeNamespaces(std::move(request));
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubClient::GetScopeRBACRoleBinding(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest request;
+  request.set_name(name);
+  return connection_->GetScopeRBACRoleBinding(request);
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubClient::GetScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetScopeRBACRoleBinding(request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::CreateScopeRBACRoleBinding(
+    std::string const& parent,
+    google::cloud::gkehub::v1::RBACRoleBinding const& rbacrolebinding,
+    std::string const& rbacrolebinding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest request;
+  request.set_parent(parent);
+  *request.mutable_rbacrolebinding() = rbacrolebinding;
+  request.set_rbacrolebinding_id(rbacrolebinding_id);
+  return connection_->CreateScopeRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::CreateScopeRBACRoleBinding(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkehub::v1::RBACRoleBinding const& rbacrolebinding,
+    std::string const& rbacrolebinding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest request;
+  request.set_parent(parent);
+  *request.mutable_rbacrolebinding() = rbacrolebinding;
+  request.set_rbacrolebinding_id(rbacrolebinding_id);
+  return connection_->CreateScopeRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::CreateScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScopeRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::CreateScopeRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScopeRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::CreateScopeRBACRoleBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScopeRBACRoleBinding(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::UpdateScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::RBACRoleBinding const& rbacrolebinding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest request;
+  *request.mutable_rbacrolebinding() = rbacrolebinding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateScopeRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::UpdateScopeRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::RBACRoleBinding const& rbacrolebinding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest request;
+  *request.mutable_rbacrolebinding() = rbacrolebinding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateScopeRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::UpdateScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScopeRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::UpdateScopeRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScopeRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::UpdateScopeRBACRoleBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScopeRBACRoleBinding(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScopeRBACRoleBinding(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest request;
+  request.set_name(name);
+  return connection_->DeleteScopeRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::DeleteScopeRBACRoleBinding(NoAwaitTag, std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest request;
+  request.set_name(name);
+  return connection_->DeleteScopeRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScopeRBACRoleBinding(
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScopeRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::DeleteScopeRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScopeRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScopeRBACRoleBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScopeRBACRoleBinding(operation);
+}
+
+StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubClient::ListScopeRBACRoleBindings(std::string const& parent,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest request;
+  request.set_parent(parent);
+  return connection_->ListScopeRBACRoleBindings(request);
+}
+
+StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubClient::ListScopeRBACRoleBindings(
+    google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListScopeRBACRoleBindings(std::move(request));
+}
+
+StatusOr<google::cloud::gkehub::v1::Scope> GkeHubClient::GetScope(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::GetScopeRequest request;
+  request.set_name(name);
+  return connection_->GetScope(request);
+}
+
+StatusOr<google::cloud::gkehub::v1::Scope> GkeHubClient::GetScope(
+    google::cloud::gkehub::v1::GetScopeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetScope(request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>> GkeHubClient::CreateScope(
+    std::string const& parent, google::cloud::gkehub::v1::Scope const& scope,
+    std::string const& scope_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateScopeRequest request;
+  request.set_parent(parent);
+  *request.mutable_scope() = scope;
+  request.set_scope_id(scope_id);
+  return connection_->CreateScope(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::CreateScope(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkehub::v1::Scope const& scope, std::string const& scope_id,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateScopeRequest request;
+  request.set_parent(parent);
+  *request.mutable_scope() = scope;
+  request.set_scope_id(scope_id);
+  return connection_->CreateScope(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>> GkeHubClient::CreateScope(
+    google::cloud::gkehub::v1::CreateScopeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScope(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::CreateScope(
+    NoAwaitTag, google::cloud::gkehub::v1::CreateScopeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScope(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>> GkeHubClient::CreateScope(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateScope(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>> GkeHubClient::UpdateScope(
+    google::cloud::gkehub::v1::Scope const& scope,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateScopeRequest request;
+  *request.mutable_scope() = scope;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateScope(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::UpdateScope(
+    NoAwaitTag, google::cloud::gkehub::v1::Scope const& scope,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateScopeRequest request;
+  *request.mutable_scope() = scope;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateScope(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>> GkeHubClient::UpdateScope(
+    google::cloud::gkehub::v1::UpdateScopeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScope(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::UpdateScope(
+    NoAwaitTag, google::cloud::gkehub::v1::UpdateScopeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScope(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Scope>> GkeHubClient::UpdateScope(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateScope(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScope(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteScopeRequest request;
+  request.set_name(name);
+  return connection_->DeleteScope(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::DeleteScope(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteScopeRequest request;
+  request.set_name(name);
+  return connection_->DeleteScope(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScope(
+    google::cloud::gkehub::v1::DeleteScopeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScope(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::DeleteScope(
+    NoAwaitTag, google::cloud::gkehub::v1::DeleteScopeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScope(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteScope(google::longrunning::Operation const& operation,
+                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteScope(operation);
+}
+
+StreamRange<google::cloud::gkehub::v1::Scope> GkeHubClient::ListScopes(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::ListScopesRequest request;
+  request.set_parent(parent);
+  return connection_->ListScopes(request);
+}
+
+StreamRange<google::cloud::gkehub::v1::Scope> GkeHubClient::ListScopes(
+    google::cloud::gkehub::v1::ListScopesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListScopes(std::move(request));
+}
+
+StreamRange<google::cloud::gkehub::v1::Scope> GkeHubClient::ListPermittedScopes(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::ListPermittedScopesRequest request;
+  request.set_parent(parent);
+  return connection_->ListPermittedScopes(request);
+}
+
+StreamRange<google::cloud::gkehub::v1::Scope> GkeHubClient::ListPermittedScopes(
+    google::cloud::gkehub::v1::ListPermittedScopesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPermittedScopes(std::move(request));
+}
+
+StatusOr<google::cloud::gkehub::v1::MembershipBinding>
+GkeHubClient::GetMembershipBinding(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::GetMembershipBindingRequest request;
+  request.set_name(name);
+  return connection_->GetMembershipBinding(request);
+}
+
+StatusOr<google::cloud::gkehub::v1::MembershipBinding>
+GkeHubClient::GetMembershipBinding(
+    google::cloud::gkehub::v1::GetMembershipBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMembershipBinding(request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubClient::CreateMembershipBinding(
+    std::string const& parent,
+    google::cloud::gkehub::v1::MembershipBinding const& membership_binding,
+    std::string const& membership_binding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateMembershipBindingRequest request;
+  request.set_parent(parent);
+  *request.mutable_membership_binding() = membership_binding;
+  request.set_membership_binding_id(membership_binding_id);
+  return connection_->CreateMembershipBinding(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::CreateMembershipBinding(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkehub::v1::MembershipBinding const& membership_binding,
+    std::string const& membership_binding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateMembershipBindingRequest request;
+  request.set_parent(parent);
+  *request.mutable_membership_binding() = membership_binding;
+  request.set_membership_binding_id(membership_binding_id);
+  return connection_->CreateMembershipBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubClient::CreateMembershipBinding(
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMembershipBinding(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::CreateMembershipBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMembershipBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubClient::CreateMembershipBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMembershipBinding(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubClient::UpdateMembershipBinding(
+    google::cloud::gkehub::v1::MembershipBinding const& membership_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateMembershipBindingRequest request;
+  *request.mutable_membership_binding() = membership_binding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMembershipBinding(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::UpdateMembershipBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::MembershipBinding const& membership_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateMembershipBindingRequest request;
+  *request.mutable_membership_binding() = membership_binding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMembershipBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubClient::UpdateMembershipBinding(
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMembershipBinding(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::UpdateMembershipBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMembershipBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::MembershipBinding>>
+GkeHubClient::UpdateMembershipBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMembershipBinding(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteMembershipBinding(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteMembershipBindingRequest request;
+  request.set_name(name);
+  return connection_->DeleteMembershipBinding(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::DeleteMembershipBinding(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteMembershipBindingRequest request;
+  request.set_name(name);
+  return connection_->DeleteMembershipBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteMembershipBinding(
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMembershipBinding(request);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubClient::DeleteMembershipBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMembershipBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteMembershipBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMembershipBinding(operation);
+}
+
+StreamRange<google::cloud::gkehub::v1::MembershipBinding>
+GkeHubClient::ListMembershipBindings(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::ListMembershipBindingsRequest request;
+  request.set_parent(parent);
+  return connection_->ListMembershipBindings(request);
+}
+
+StreamRange<google::cloud::gkehub::v1::MembershipBinding>
+GkeHubClient::ListMembershipBindings(
+    google::cloud::gkehub::v1::ListMembershipBindingsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMembershipBindings(std::move(request));
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubClient::GetMembershipRBACRoleBinding(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest request;
+  request.set_name(name);
+  return connection_->GetMembershipRBACRoleBinding(request);
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubClient::GetMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMembershipRBACRoleBinding(request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::CreateMembershipRBACRoleBinding(
+    std::string const& parent,
+    google::cloud::gkehub::v1::RBACRoleBinding const& rbacrolebinding,
+    std::string const& rbacrolebinding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest request;
+  request.set_parent(parent);
+  *request.mutable_rbacrolebinding() = rbacrolebinding;
+  request.set_rbacrolebinding_id(rbacrolebinding_id);
+  return connection_->CreateMembershipRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::CreateMembershipRBACRoleBinding(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkehub::v1::RBACRoleBinding const& rbacrolebinding,
+    std::string const& rbacrolebinding_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest request;
+  request.set_parent(parent);
+  *request.mutable_rbacrolebinding() = rbacrolebinding;
+  request.set_rbacrolebinding_id(rbacrolebinding_id);
+  return connection_->CreateMembershipRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::CreateMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMembershipRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::CreateMembershipRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMembershipRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::CreateMembershipRBACRoleBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMembershipRBACRoleBinding(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::UpdateMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::RBACRoleBinding const& rbacrolebinding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest request;
+  *request.mutable_rbacrolebinding() = rbacrolebinding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMembershipRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::UpdateMembershipRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::RBACRoleBinding const& rbacrolebinding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest request;
+  *request.mutable_rbacrolebinding() = rbacrolebinding;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMembershipRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::UpdateMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMembershipRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::UpdateMembershipRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMembershipRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>>
+GkeHubClient::UpdateMembershipRBACRoleBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMembershipRBACRoleBinding(operation);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteMembershipRBACRoleBinding(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest request;
+  request.set_name(name);
+  return connection_->DeleteMembershipRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::DeleteMembershipRBACRoleBinding(NoAwaitTag,
+                                              std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest request;
+  request.set_name(name);
+  return connection_->DeleteMembershipRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteMembershipRBACRoleBinding(
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMembershipRBACRoleBinding(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubClient::DeleteMembershipRBACRoleBinding(
+    NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMembershipRBACRoleBinding(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubClient::DeleteMembershipRBACRoleBinding(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMembershipRBACRoleBinding(operation);
+}
+
+StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubClient::ListMembershipRBACRoleBindings(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest request;
+  request.set_parent(parent);
+  return connection_->ListMembershipRBACRoleBindings(request);
+}
+
+StreamRange<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubClient::ListMembershipRBACRoleBindings(
+    google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMembershipRBACRoleBindings(std::move(request));
+}
+
+StatusOr<
+    google::cloud::gkehub::v1::GenerateMembershipRBACRoleBindingYAMLResponse>
+GkeHubClient::GenerateMembershipRBACRoleBindingYAML(
+    google::cloud::gkehub::v1::
+        GenerateMembershipRBACRoleBindingYAMLRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateMembershipRBACRoleBindingYAML(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

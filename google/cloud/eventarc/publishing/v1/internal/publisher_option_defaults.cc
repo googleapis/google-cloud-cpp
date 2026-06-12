@@ -42,7 +42,7 @@ Options PublisherDefaultOptions(Options options) {
   if (!options.has<eventarc_publishing_v1::PublisherRetryPolicyOption>()) {
     options.set<eventarc_publishing_v1::PublisherRetryPolicyOption>(
         eventarc_publishing_v1::PublisherLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<eventarc_publishing_v1::PublisherBackoffPolicyOption>()) {

@@ -29,6 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct ImpersonatedServiceAccountCredentialsInfo {
   std::string service_account;
   std::vector<std::string> delegates;
+  std::vector<std::string> scopes;
   absl::optional<std::string> quota_project_id;
   std::string source_credentials;
 };
@@ -65,9 +66,12 @@ class ImpersonateServiceAccountCredentials
     return stub_->universe_domain(options);
   }
 
+  AllowedLocationsRequestType AllowedLocationsRequest() const override;
+
  private:
   std::shared_ptr<MinimalIamCredentialsRest> stub_;
-  GenerateAccessTokenRequest request_;
+  GenerateAccessTokenRequest access_token_request_;
+  ServiceAccountAllowedLocationsRequest allowed_locations_request_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

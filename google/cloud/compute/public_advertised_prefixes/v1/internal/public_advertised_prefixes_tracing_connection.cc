@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_public_advertised_prefixes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 PublicAdvertisedPrefixesTracingConnection::
     PublicAdvertisedPrefixesTracingConnection(
         std::shared_ptr<compute_public_advertised_prefixes_v1::
@@ -231,20 +229,16 @@ PublicAdvertisedPrefixesTracingConnection::Withdraw(
   return internal::EndSpan(std::move(span), child_->Withdraw(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesConnection>
 MakePublicAdvertisedPrefixesTracingConnection(
     std::shared_ptr<compute_public_advertised_prefixes_v1::
                         PublicAdvertisedPrefixesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<PublicAdvertisedPrefixesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -84,6 +84,30 @@ StorageControlConnection::RenameFolder(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlConnection::DeleteFolderRecursive(
+    google::storage::control::v2::DeleteFolderRecursiveRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnection::DeleteFolderRecursive(
+    NoAwaitTag,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+StorageControlConnection::DeleteFolderRecursive(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlConnection::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const&) {
@@ -232,6 +256,22 @@ StatusOr<google::storage::control::v2::IntelligenceConfig>
 StorageControlConnection::UpdateOrganizationIntelligenceConfig(
     google::storage::control::v2::
         UpdateOrganizationIntelligenceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> StorageControlConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> StorageControlConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageControlConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

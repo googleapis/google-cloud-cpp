@@ -17,12 +17,15 @@
 // source: google/cloud/bigquery/analyticshub/v1/analyticshub.proto
 
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_stub.h"
+#include "google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -376,6 +379,97 @@ DefaultAnalyticsHubServiceStub::TestIamPermissions(
   return response;
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::CreateQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->CreateQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::GetQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->GetQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse>
+DefaultAnalyticsHubServiceStub::ListQueryTemplates(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse
+      response;
+  auto status = grpc_stub_->ListQueryTemplates(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::UpdateQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->UpdateQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultAnalyticsHubServiceStub::DeleteQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::SubmitQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->SubmitQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+DefaultAnalyticsHubServiceStub::ApproveQueryTemplate(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const& request) {
+  google::cloud::bigquery::analyticshub::v1::QueryTemplate response;
+  auto status = grpc_stub_->ApproveQueryTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsHubServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -419,3 +513,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

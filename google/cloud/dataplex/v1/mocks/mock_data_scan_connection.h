@@ -187,6 +187,12 @@ class MockDataScanServiceConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>,
+      CancelDataScanJob,
+      (google::cloud::dataplex::v1::CancelDataScanJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>,
       GenerateDataQualityRules,
       (google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&

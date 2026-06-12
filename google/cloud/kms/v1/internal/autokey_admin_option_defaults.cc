@@ -40,7 +40,7 @@ Options AutokeyAdminDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_v1::AutokeyAdminRetryPolicyOption>()) {
     options.set<kms_v1::AutokeyAdminRetryPolicyOption>(
-        kms_v1::AutokeyAdminLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        kms_v1::AutokeyAdminLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<kms_v1::AutokeyAdminBackoffPolicyOption>()) {

@@ -32,6 +32,8 @@ extend-exclude = [
     "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_client.h",
     "google/cloud/resourcemanager/v3/projects_client.h",
     "google/cloud/securesourcemanager/v1/secure_source_manager_client.h",
+    "google/cloud/visionai/v1/warehouse_client.h",
+    "google/cloud/datacatalog/lineage/v1/lineage_client.h",
     # The tool complains about `FIELDs` :shrug:
     "/google/cloud/aiplatform/v1/featurestore_client.h",
     # Files with binary blobs in base64 format. These are usually invalidated
@@ -60,6 +62,11 @@ extend-exclude = [
     "docfx/doxygen2toc_test.cc",
     # If we're using a post-download patch file for googleapis.
     "external/googleapis.patch",
+    # Mispelled test names in Bigtable conformance tests
+    "google/cloud/bigtable/ci/run_conformance_tests_proxy_bazel.sh",
+    # ports files don't need to be checked
+    "google/cloud/ports_def.inc",
+    "google/cloud/ports_undef.inc"
 ]
 
 [default]
@@ -70,5 +77,7 @@ extend-ignore-identifiers-re = [
   "NAM4",
   # Metadata is mispelled in this proto message name found in
   # google/cloud/aiplatform/v1/vizier_service.proto
-  "CheckTrialEarlyStoppingStateMetatdata"
+  "CheckTrialEarlyStoppingStateMetatdata",
+  # google/cloud/cloudsecuritycompliance/v1/deployment.proto
+  "conrol"
 ]

@@ -110,8 +110,8 @@ class SqlTiersServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlTiersListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L47}
-  /// [google.cloud.sql.v1.TiersListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L53}
+  /// [google.cloud.sql.v1.SqlTiersListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L45}
+  /// [google.cloud.sql.v1.TiersListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_tiers.proto#L51}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::TiersListResponse> List(

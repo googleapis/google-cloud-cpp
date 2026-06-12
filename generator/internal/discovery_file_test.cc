@@ -15,8 +15,8 @@
 #include "generator/internal/discovery_file.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/testing/descriptor_pool_fixture.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 
 namespace google {

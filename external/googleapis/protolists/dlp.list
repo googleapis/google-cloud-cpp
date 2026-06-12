@@ -1,2 +1,2 @@
-@com_google_googleapis//google/privacy/dlp/v2:dlp.proto
-@com_google_googleapis//google/privacy/dlp/v2:storage.proto
+@googleapis//google/privacy/dlp/v2:dlp.proto
+@googleapis//google/privacy/dlp/v2:storage.proto

@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/networkservices/v1/dep.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/networkservices/v1/dep.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -76,6 +76,25 @@ class DepServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteLbRouteExtension(
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListLbEdgeExtensions(
+      google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest request);
+
+  virtual google::cloud::Idempotency GetLbEdgeExtension(
+      google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateLbEdgeExtension(
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateLbEdgeExtension(
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteLbEdgeExtension(
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
           request);
 
   virtual google::cloud::Idempotency ListAuthzExtensions(

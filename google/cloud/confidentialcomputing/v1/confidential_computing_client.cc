@@ -62,6 +62,26 @@ ConfidentialComputingClient::VerifyAttestation(
   return connection_->VerifyAttestation(request);
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingClient::VerifyConfidentialSpace(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->VerifyConfidentialSpace(request);
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingClient::VerifyConfidentialGke(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->VerifyConfidentialGke(request);
+}
+
 StreamRange<google::cloud::location::Location>
 ConfidentialComputingClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

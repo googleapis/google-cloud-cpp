@@ -18,17 +18,20 @@
 
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_metadata_decorator.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -755,6 +758,37 @@ CloudBuildMetadata::ListWorkerPools(
   return child_->ListWorkerPools(context, options, request);
 }
 
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildMetadata::GetDefaultServiceAccount(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+        request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest>{
+        "location=",
+        {
+            {[](google::devtools::cloudbuild::v1::
+                    GetDefaultServiceAccountRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{
+                 "projects/[^/]+/locations/([^/]+)/defaultServiceAccount",
+                 std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->GetDefaultServiceAccount(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -795,3 +829,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

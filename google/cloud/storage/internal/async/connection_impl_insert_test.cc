@@ -73,14 +73,14 @@ auto TestOptions(Options options = {}) {
       std::move(options),
       Options{}
           .set<GrpcNumChannelsOption>(1)
-          .set<storage_experimental::AsyncRetryPolicyOption>(
-              storage_experimental::LimitedErrorCountRetryPolicy(2).clone())
+          .set<storage::AsyncRetryPolicyOption>(
+              storage::LimitedErrorCountAsyncRetryPolicy(2).clone())
           .set<storage::BackoffPolicyOption>(
               storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));
   return DefaultOptionsAsync(std::move(options));
 }
 
-std::shared_ptr<storage_experimental::AsyncConnection> MakeTestConnection(
+std::shared_ptr<storage::AsyncConnection> MakeTestConnection(
     CompletionQueue cq, std::shared_ptr<storage::testing::MockStorageStub> mock,
     Options options = {}) {
   return MakeAsyncConnection(std::move(cq), std::move(mock),
@@ -177,9 +177,9 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
                              std::chrono::seconds(0)));
   auto request = google::storage::v2::WriteObjectRequest{};
   ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
-  auto pending = connection->InsertObject({std::move(request),
-                                           storage_experimental::WritePayload(),
-                                           /*.options=*/connection->options()});
+  auto pending =
+      connection->InsertObject({std::move(request), storage::WritePayload(),
+                                /*.options=*/connection->options()});
 
   // Simulate a transient failure.
   auto next = sequencer.PopFrontWithName();
@@ -253,10 +253,9 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectWithTimeout) {
       Options{}
           .set<storage::TransferStallTimeoutOption>(std::chrono::seconds(1))
           .set<storage::TransferStallMinimumRateOption>(2 * 1024 * 1024L));
-  auto pending =
-      connection->InsertObject({google::storage::v2::WriteObjectRequest{},
-                                storage_experimental::WritePayload(),
-                                /*.options=*/connection->options()});
+  auto pending = connection->InsertObject(
+      {google::storage::v2::WriteObjectRequest{}, storage::WritePayload(),
+       /*.options=*/connection->options()});
 
   // Because the timeout parameters are configured, the first thing to happen is
   // that a timer is set.
@@ -293,10 +292,9 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectPermanentError) {
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
   auto connection = MakeTestConnection(pool.cq(), mock);
-  auto pending =
-      connection->InsertObject({google::storage::v2::WriteObjectRequest{},
-                                storage_experimental::WritePayload(),
-                                /*.options=*/connection->options()});
+  auto pending = connection->InsertObject(
+      {google::storage::v2::WriteObjectRequest{}, storage::WritePayload(),
+       /*.options=*/connection->options()});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
@@ -318,14 +316,13 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectTooManyTransients) {
   });
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  auto connection = MakeTestConnection(
-      pool.cq(), mock,
-      Options{}.set<storage_experimental::IdempotencyPolicyOption>(
-          storage_experimental::MakeAlwaysRetryIdempotencyPolicy));
-  auto pending =
-      connection->InsertObject({google::storage::v2::WriteObjectRequest{},
-                                storage_experimental::WritePayload(),
-                                /*.options=*/connection->options()});
+  auto connection =
+      MakeTestConnection(pool.cq(), mock,
+                         Options{}.set<storage::AsyncIdempotencyPolicyOption>(
+                             storage::MakeAlwaysRetryAsyncIdempotencyPolicy));
+  auto pending = connection->InsertObject(
+      {google::storage::v2::WriteObjectRequest{}, storage::WritePayload(),
+       /*.options=*/connection->options()});
 
   for (int i = 0; i != 3; ++i) {
     auto next = sequencer.PopFrontWithName();

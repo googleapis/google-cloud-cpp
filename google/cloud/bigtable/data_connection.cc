@@ -18,8 +18,10 @@
 #include "google/cloud/bigtable/internal/data_tracing_connection.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
+#include "google/cloud/bigtable/internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -156,6 +158,22 @@ future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<bigtable::PreparedQuery> DataConnection::PrepareQuery(
+    bigtable::PrepareQueryParams const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+future<StatusOr<bigtable::PreparedQuery>> DataConnection::AsyncPrepareQuery(
+    bigtable::PrepareQueryParams const&) {
+  return make_ready_future<StatusOr<PreparedQuery>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+bigtable::RowStream DataConnection::ExecuteQuery(bigtable::ExecuteQueryParams) {
+  return RowStream(
+      std::make_unique<bigtable_internal::StatusOnlyResultSetSource>(
+          Status(StatusCode::kUnimplemented, "not implemented")));
+}
+
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   google::cloud::internal::CheckExpectedOptions<
       AppProfileIdOption, CommonOptionList, GrpcOptionList,
@@ -166,14 +184,35 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
       google::cloud::internal::MakeBackgroundThreadsFactory(options)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       background->cq(), options);
-  auto stub = bigtable_internal::CreateBigtableStub(std::move(auth),
-                                                    background->cq(), options);
   auto limiter =
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
-  std::shared_ptr<DataConnection> conn =
-      std::make_shared<bigtable_internal::DataConnectionImpl>(
-          std::move(background), std::move(stub), std::move(limiter),
-          std::move(options));
+  std::shared_ptr<DataConnection> conn;
+
+  if (options.has<experimental::InstanceChannelAffinityOption>()) {
+    auto stub_creation_fn =
+        [auth, cq = background->cq(), options](
+            std::string_view instance_name,
+            bigtable_internal::StubManager::Priming priming) {
+          return bigtable_internal::CreateBigtableStub(auth, cq, instance_name,
+                                                       priming, options);
+        };
+
+    auto affinity_stubs = bigtable_internal::CreateBigtableAffinityStubs(
+        options.get<experimental::InstanceChannelAffinityOption>(),
+        stub_creation_fn);
+    conn = std::make_shared<bigtable_internal::DataConnectionImpl>(
+        std::move(background),
+        std::make_unique<bigtable_internal::StubManager>(
+            std::move(affinity_stubs), stub_creation_fn),
+        std::move(limiter), std::move(options));
+  } else {
+    auto stub = bigtable_internal::CreateBigtableStub(
+        std::move(auth), background->cq(), options);
+    conn = std::make_shared<bigtable_internal::DataConnectionImpl>(
+        std::move(background),
+        std::make_unique<bigtable_internal::StubManager>(std::move(stub)),
+        std::move(limiter), std::move(options));
+  }
   if (google::cloud::internal::TracingEnabled(conn->options())) {
     conn = bigtable_internal::MakeDataTracingConnection(std::move(conn));
   }

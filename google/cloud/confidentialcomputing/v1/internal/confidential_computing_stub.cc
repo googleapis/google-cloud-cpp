@@ -17,11 +17,14 @@
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub.h"
+#include "google/cloud/confidentialcomputing/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -56,6 +59,37 @@ DefaultConfidentialComputingStub::VerifyAttestation(
   return response;
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+DefaultConfidentialComputingStub::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse
+      response;
+  auto status =
+      grpc_stub_->VerifyConfidentialSpace(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+DefaultConfidentialComputingStub::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse
+      response;
+  auto status = grpc_stub_->VerifyConfidentialGke(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConfidentialComputingStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -84,3 +118,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

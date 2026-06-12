@@ -22,10 +22,13 @@
 #include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -109,6 +112,30 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
       google::cloud::video::livestream::v1::StopChannelRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncStartDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StartDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncStopDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StopDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInput(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -154,6 +181,11 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::video::livestream::v1::UpdateInputRequest const& request)
       override;
+
+  StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+  PreviewInput(grpc::ClientContext& context, Options const& options,
+               google::cloud::video::livestream::v1::PreviewInputRequest const&
+                   request) override;
 
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       grpc::ClientContext& context, Options const& options,
@@ -352,5 +384,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_LOGGING_DECORATOR_H

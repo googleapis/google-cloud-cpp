@@ -41,7 +41,7 @@ Options MetricServiceDefaultOptions(Options options) {
   if (!options.has<monitoring_v3::MetricServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::MetricServiceRetryPolicyOption>(
         monitoring_v3::MetricServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<monitoring_v3::MetricServiceBackoffPolicyOption>()) {

@@ -1,0 +1,14 @@
+{
+    "api_id": "configdelivery.googleapis.com",
+    "api_shortname": "configdelivery",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/configdelivery/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1400250%20status=open",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Config Delivery API",
+    "product_documentation": "https://cloud.google.com/kubernetes-engine/enterprise/config-sync/docs/concepts/fleet-packages",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

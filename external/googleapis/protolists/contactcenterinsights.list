@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/contactcenterinsights/v1:contact_center_insights.proto
-@com_google_googleapis//google/cloud/contactcenterinsights/v1:resources.proto
+@googleapis//google/cloud/contactcenterinsights/v1:contact_center_insights.proto
+@googleapis//google/cloud/contactcenterinsights/v1:resources.proto

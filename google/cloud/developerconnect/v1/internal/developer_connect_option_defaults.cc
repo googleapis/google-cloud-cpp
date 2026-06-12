@@ -42,7 +42,7 @@ Options DeveloperConnectDefaultOptions(Options options) {
   if (!options.has<developerconnect_v1::DeveloperConnectRetryPolicyOption>()) {
     options.set<developerconnect_v1::DeveloperConnectRetryPolicyOption>(
         developerconnect_v1::DeveloperConnectLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

@@ -41,7 +41,7 @@ Options CloudBuildDefaultOptions(Options options) {
   if (!options.has<cloudbuild_v1::CloudBuildRetryPolicyOption>()) {
     options.set<cloudbuild_v1::CloudBuildRetryPolicyOption>(
         cloudbuild_v1::CloudBuildLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<cloudbuild_v1::CloudBuildBackoffPolicyOption>()) {

@@ -42,7 +42,7 @@ Options SqlSslCertsServiceDefaultOptions(Options options) {
   if (!options.has<sql_v1::SqlSslCertsServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlSslCertsServiceRetryPolicyOption>(
         sql_v1::SqlSslCertsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<sql_v1::SqlSslCertsServiceBackoffPolicyOption>()) {

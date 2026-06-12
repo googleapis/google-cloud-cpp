@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_TRACING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_TRACING_H
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -47,10 +46,10 @@ class StreamingReadRpcTracing : public StreamingReadRpc<ResponseType> {
     impl_->Cancel();
   }
 
-  absl::variant<Status, ResponseType> Read() override {
-    auto result = impl_->Read();
-    if (absl::holds_alternative<Status>(result)) {
-      return End(absl::get<Status>(result));
+  absl::optional<Status> Read(ResponseType* response) override {
+    auto result = impl_->Read(response);
+    if (result.has_value()) {
+      return End(*result);
     }
     span_->AddEvent("message", {{"message.type", "RECEIVED"},
                                 {"message.id", ++read_count_}});
@@ -77,6 +76,5 @@ class StreamingReadRpcTracing : public StreamingReadRpc<ResponseType> {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAMING_READ_RPC_TRACING_H

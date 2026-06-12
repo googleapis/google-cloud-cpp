@@ -27,8 +27,6 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 IntentsTracingConnection::IntentsTracingConnection(
     std::shared_ptr<dialogflow_es::IntentsConnection> child)
     : child_(std::move(child)) {}
@@ -187,15 +185,11 @@ Status IntentsTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<dialogflow_es::IntentsConnection> MakeIntentsTracingConnection(
     std::shared_ptr<dialogflow_es::IntentsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<IntentsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

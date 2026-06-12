@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/storage/internal/async/writer_connection_tracing.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -22,7 +20,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <cstdint>
 
 namespace google {
@@ -31,8 +29,8 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::WritePayload;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::storage_experimental::WritePayload;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -53,12 +51,12 @@ using ::testing::UnorderedElementsAre;
 using ::testing::VariantWith;
 
 auto ExpectSent(std::int64_t id, std::uint64_t size) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   return SpanEventAttributesAre(
       OTelAttribute<std::string>(/*sc::kRpcMessageType=*/"rpc.message.type",
                                  "SENT"),
       OTelAttribute<std::int64_t>(/*sc::kRpcMessageId=*/"rpc.message.id", id),
-      OTelAttribute<std::string>(sc::kThreadId, _),
+      OTelAttribute<std::string>(sc::thread::kThreadId, _),
       OTelAttribute<std::uint64_t>("gl-cpp.size", size));
 }
 
@@ -70,15 +68,19 @@ auto ExpectFlush(std::int64_t id, std::uint64_t size) {
   return AllOf(EventNamed("gl-cpp.flush"), ExpectSent(id, size));
 }
 
+auto ExpectClose(std::int64_t id, std::uint64_t size) {
+  return AllOf(EventNamed("gl-cpp.close"), ExpectSent(id, size));
+}
+
 auto ExpectQuery(std::int64_t id) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   return AllOf(EventNamed("gl-cpp.query"),
                SpanEventAttributesAre(
                    OTelAttribute<std::string>(
                        /*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVE"),
                    OTelAttribute<std::int64_t>(
                        /*sc::kRpcMessageId=*/"rpc.message.id", id),
-                   OTelAttribute<std::string>(sc::kThreadId, _)));
+                   OTelAttribute<std::string>(sc::thread::kThreadId, _)));
 }
 
 TEST(WriterConnectionTracing, FullCycle) {
@@ -224,7 +226,7 @@ TEST(WriterConnectionTracing, QueryError) {
 }
 
 TEST(WriterConnectionTracing, Cancel) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
@@ -247,7 +249,49 @@ TEST(WriterConnectionTracing, Cancel) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasEvents(AllOf(EventNamed("gl-cpp.cancel"),
                               SpanEventAttributesAre(OTelAttribute<std::string>(
-                                  sc::kThreadId, _)))))));
+                                  sc::thread::kThreadId, _)))))));
+}
+
+TEST(WriterConnectionTracing, Close) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Close).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  auto actual = MakeTracingWriterConnection(
+      internal::MakeSpan("test-span-name"), std::move(mock));
+  auto status = actual->Close(WritePayload{std::string(1024, 'A')}).get();
+  EXPECT_STATUS_OK(status);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(AllOf(
+                         SpanNamed("test-span-name"),
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanHasInstrumentationScope(), SpanKindIsClient(),
+                         SpanHasEvents(ExpectClose(1, 1024)))));
+}
+
+TEST(WriterConnectionTracing, CloseError) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, Close).WillOnce([] {
+    return make_ready_future(PermanentError());
+  });
+  auto actual = MakeTracingWriterConnection(
+      internal::MakeSpan("test-span-name"), std::move(mock));
+  auto status = actual->Close(WritePayload{std::string(1024, 'A')}).get();
+  EXPECT_THAT(status, StatusIs(PermanentError().code()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(SpanNamed("test-span-name"),
+                        SpanWithStatus(opentelemetry::trace::StatusCode::kError,
+                                       PermanentError().message()),
+                        SpanHasInstrumentationScope(), SpanKindIsClient(),
+                        SpanHasEvents(ExpectClose(1, 1024)))));
 }
 
 }  // namespace
@@ -255,5 +299,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

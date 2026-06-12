@@ -56,6 +56,12 @@ Idempotency KeyManagementServiceConnectionIdempotencyPolicy::ListImportJobs(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::ListRetiredResources(
+    google::cloud::kms::v1::ListRetiredResourcesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetKeyRing(
     google::cloud::kms::v1::GetKeyRingRequest const&) {
   return Idempotency::kIdempotent;
@@ -82,6 +88,11 @@ Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetImportJob(
   return Idempotency::kIdempotent;
 }
 
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::GetRetiredResource(
+    google::cloud::kms::v1::GetRetiredResourceRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateKeyRing(
     google::cloud::kms::v1::CreateKeyRingRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -95,6 +106,17 @@ Idempotency KeyManagementServiceConnectionIdempotencyPolicy::CreateCryptoKey(
 Idempotency
 KeyManagementServiceConnectionIdempotencyPolicy::CreateCryptoKeyVersion(
     google::cloud::kms::v1::CreateCryptoKeyVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::DeleteCryptoKey(
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+KeyManagementServiceConnectionIdempotencyPolicy::DeleteCryptoKeyVersion(
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -175,6 +197,11 @@ Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacSign(
 
 Idempotency KeyManagementServiceConnectionIdempotencyPolicy::MacVerify(
     google::cloud::kms::v1::MacVerifyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency KeyManagementServiceConnectionIdempotencyPolicy::Decapsulate(
+    google::cloud::kms::v1::DecapsulateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -18,8 +18,7 @@ include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
     beyondcorp "BeyondCorp API"
-    SERVICE_DIRS "__EMPTY__" "appconnections/v1/" "appconnectors/v1/"
-                 "appgateways/v1/")
+    SERVICE_DIRS "appconnections/v1/" "appconnectors/v1/" "appgateways/v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(beyondcorp_quickstart "quickstart/quickstart.cc")

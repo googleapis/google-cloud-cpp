@@ -27,8 +27,6 @@ namespace cloud {
 namespace confidentialcomputing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ConfidentialComputingTracingConnection::ConfidentialComputingTracingConnection(
     std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
         child)
@@ -56,6 +54,30 @@ ConfidentialComputingTracingConnection::VerifyAttestation(
   return internal::EndSpan(*span, child_->VerifyAttestation(request));
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingTracingConnection::VerifyConfidentialSpace(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "confidentialcomputing_v1::ConfidentialComputingConnection::"
+      "VerifyConfidentialSpace");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->VerifyConfidentialSpace(request));
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingTracingConnection::VerifyConfidentialGke(
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "confidentialcomputing_v1::ConfidentialComputingConnection::"
+      "VerifyConfidentialGke");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->VerifyConfidentialGke(request));
+}
+
 StreamRange<google::cloud::location::Location>
 ConfidentialComputingTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -77,18 +99,14 @@ ConfidentialComputingTracingConnection::GetLocation(
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
 MakeConfidentialComputingTracingConnection(
     std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ConfidentialComputingTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

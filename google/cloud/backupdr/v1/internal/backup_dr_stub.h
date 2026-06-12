@@ -19,17 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_INTERNAL_BACKUP_DR_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_INTERNAL_BACKUP_DR_STUB_H
 
+#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/backupdr/v1/backupdr.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -150,6 +153,13 @@ class BackupDRStub {
   ListBackups(
       grpc::ClientContext& context, Options const& options,
       google::cloud::backupdr::v1::ListBackupsRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+  FetchBackupsForResourceType(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
       grpc::ClientContext& context, Options const& options,
@@ -312,6 +322,13 @@ class BackupDRStub {
   GetDataSourceReference(
       grpc::ClientContext& context, Options const& options,
       google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+  ListDataSourceReferences(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::backupdr::v1::
@@ -511,6 +528,12 @@ class DefaultBackupDRStub : public BackupDRStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::backupdr::v1::ListBackupsRequest const& request) override;
 
+  StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+  FetchBackupsForResourceType(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+          request) override;
+
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
       grpc::ClientContext& context, Options const& options,
       google::cloud::backupdr::v1::GetBackupRequest const& request) override;
@@ -682,6 +705,12 @@ class DefaultBackupDRStub : public BackupDRStub {
       google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request)
       override;
 
+  StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+  ListDataSourceReferences(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+          request) override;
+
   StatusOr<google::cloud::backupdr::v1::
                FetchDataSourceReferencesForResourceTypeResponse>
   FetchDataSourceReferencesForResourceType(
@@ -764,5 +793,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace backupdr_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_INTERNAL_BACKUP_DR_STUB_H

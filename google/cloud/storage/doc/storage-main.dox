@@ -33,6 +33,7 @@ project.
 - @ref storage-endpoint-example
 - @ref storage-auth-example
 - @ref storage-retry-examples
+- @ref storage-universe-domain-example
 - @ref storage-mocking shows how to write tests mocking the [Client] class
 - The [Setting up your development environment] guide describes how to set up
   a C++ development environment in various platforms, including the Google Cloud
@@ -128,4 +129,14 @@ more conservative approach:
    and [StrictIdempotencyPolicy](@ref google::cloud::storage::StrictIdempotencyPolicy)
    for alternative idempotency policies.
 
+*/
+
+/**
+@page storage-universe-domain-example Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+@snippet storage_client_initialization_samples.cc set-client-universe-domain
 */

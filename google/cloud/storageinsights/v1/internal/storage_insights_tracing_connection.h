@@ -28,8 +28,6 @@ namespace cloud {
 namespace storageinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class StorageInsightsTracingConnection
     : public storageinsights_v1::StorageInsightsConnection {
  public:
@@ -161,8 +159,6 @@ class StorageInsightsTracingConnection
  private:
   std::shared_ptr<storageinsights_v1::StorageInsightsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

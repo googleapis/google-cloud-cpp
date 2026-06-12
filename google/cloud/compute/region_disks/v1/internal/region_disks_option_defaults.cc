@@ -41,7 +41,7 @@ Options RegionDisksDefaultOptions(Options options) {
   if (!options.has<compute_region_disks_v1::RegionDisksRetryPolicyOption>()) {
     options.set<compute_region_disks_v1::RegionDisksRetryPolicyOption>(
         compute_region_disks_v1::RegionDisksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_region_disks_v1::RegionDisksBackoffPolicyOption>()) {

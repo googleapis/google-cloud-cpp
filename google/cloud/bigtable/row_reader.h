@@ -15,11 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_READER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_READER_H
 
-#include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
-#include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -64,22 +62,6 @@ class RowReader {
 
   /// Default constructs an empty RowReader.
   RowReader();
-
-  GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()
-  RowReader(std::shared_ptr<DataClient> client, std::string table_name,
-            RowSet row_set, std::int64_t rows_limit, Filter filter,
-            std::unique_ptr<RPCRetryPolicy> retry_policy,
-            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-            MetadataUpdatePolicy metadata_update_policy,
-            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
-
-  GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()
-  RowReader(std::shared_ptr<DataClient> client, std::string app_profile_id,
-            std::string table_name, RowSet row_set, std::int64_t rows_limit,
-            Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
-            std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-            MetadataUpdatePolicy metadata_update_policy,
-            std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)
   RowReader(RowReader&&) = default;

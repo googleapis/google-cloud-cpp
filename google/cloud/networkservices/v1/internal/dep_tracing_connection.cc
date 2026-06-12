@@ -27,8 +27,6 @@ namespace cloud {
 namespace networkservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DepServiceTracingConnection::DepServiceTracingConnection(
     std::shared_ptr<networkservices_v1::DepServiceConnection> child)
     : child_(std::move(child)) {}
@@ -276,6 +274,127 @@ DepServiceTracingConnection::DeleteLbRouteExtension(
                            child_->DeleteLbRouteExtension(operation));
 }
 
+StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceTracingConnection::ListLbEdgeExtensions(
+    google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::ListLbEdgeExtensions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListLbEdgeExtensions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkservices::v1::LbEdgeExtension>(std::move(span),
+                                                           std::move(sr));
+}
+
+StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceTracingConnection::GetLbEdgeExtension(
+    google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::GetLbEdgeExtension");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLbEdgeExtension(request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceTracingConnection::CreateLbEdgeExtension(
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::CreateLbEdgeExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateLbEdgeExtension(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingConnection::CreateLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::CreateLbEdgeExtension");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateLbEdgeExtension(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceTracingConnection::CreateLbEdgeExtension(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::CreateLbEdgeExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateLbEdgeExtension(operation));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceTracingConnection::UpdateLbEdgeExtension(
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::UpdateLbEdgeExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateLbEdgeExtension(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingConnection::UpdateLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::UpdateLbEdgeExtension");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateLbEdgeExtension(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+DepServiceTracingConnection::UpdateLbEdgeExtension(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::UpdateLbEdgeExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateLbEdgeExtension(operation));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceTracingConnection::DeleteLbEdgeExtension(
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::DeleteLbEdgeExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteLbEdgeExtension(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceTracingConnection::DeleteLbEdgeExtension(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::DeleteLbEdgeExtension");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteLbEdgeExtension(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+DepServiceTracingConnection::DeleteLbEdgeExtension(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::DepServiceConnection::DeleteLbEdgeExtension");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteLbEdgeExtension(operation));
+}
+
 StreamRange<google::cloud::networkservices::v1::AuthzExtension>
 DepServiceTracingConnection::ListAuthzExtensions(
     google::cloud::networkservices::v1::ListAuthzExtensionsRequest request) {
@@ -478,16 +597,12 @@ Status DepServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<networkservices_v1::DepServiceConnection>
 MakeDepServiceTracingConnection(
     std::shared_ptr<networkservices_v1::DepServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DepServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -19,9 +19,9 @@
 #include "google/cloud/dataproc/v1/internal/session_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/session_controller_connection.h"
 #include "google/cloud/dataproc/v1/session_controller_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options SessionControllerDefaultOptions(std::string const& location,
   if (!options.has<dataproc_v1::SessionControllerRetryPolicyOption>()) {
     options.set<dataproc_v1::SessionControllerRetryPolicyOption>(
         dataproc_v1::SessionControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataproc_v1::SessionControllerBackoffPolicyOption>()) {

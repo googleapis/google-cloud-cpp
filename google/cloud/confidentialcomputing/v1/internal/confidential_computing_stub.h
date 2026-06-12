@@ -19,13 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_STUB_H
 
+#include "google/cloud/confidentialcomputing/v1/service.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -48,6 +51,19 @@ class ConfidentialComputingStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) = 0;
+
+  virtual StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+  VerifyConfidentialSpace(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialSpaceRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+  VerifyConfidentialGke(grpc::ClientContext& context, Options const& options,
+                        google::cloud::confidentialcomputing::v1::
+                            VerifyConfidentialGkeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
@@ -81,6 +97,20 @@ class DefaultConfidentialComputingStub : public ConfidentialComputingStub {
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+  VerifyConfidentialSpace(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialSpaceRequest const& request) override;
+
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+  VerifyConfidentialGke(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialGkeRequest const& request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -101,5 +131,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_STUB_H

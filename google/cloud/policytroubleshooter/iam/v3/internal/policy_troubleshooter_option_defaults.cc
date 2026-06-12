@@ -44,7 +44,7 @@ Options PolicyTroubleshooterDefaultOptions(Options options) {
     options.set<
         policytroubleshooter_iam_v3::PolicyTroubleshooterRetryPolicyOption>(
         policytroubleshooter_iam_v3::PolicyTroubleshooterLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<policytroubleshooter_iam_v3::

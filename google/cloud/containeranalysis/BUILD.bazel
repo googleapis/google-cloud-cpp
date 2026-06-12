@@ -19,13 +19,12 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "v1/",
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc",
-    "@com_google_googleapis//grafeas/v1:grafeas_cc_grpc",
+    "@googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc",
+    "@googleapis//grafeas/v1:grafeas_cc_grpc",
 ]
 
 cc_gapic_library(

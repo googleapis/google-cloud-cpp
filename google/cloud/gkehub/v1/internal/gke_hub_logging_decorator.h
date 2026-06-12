@@ -22,10 +22,13 @@
 #include "google/cloud/gkehub/v1/internal/gke_hub_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -42,6 +45,12 @@ class GkeHubLogging : public GkeHubStub {
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
       grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListMembershipsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkehub::v1::ListBoundMembershipsResponse>
+  ListBoundMemberships(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::ListBoundMembershipsRequest const& request)
       override;
 
   StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse> ListFeatures(
@@ -128,6 +137,290 @@ class GkeHubLogging : public GkeHubStub {
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateFleet(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::CreateFleetRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateFleet(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::CreateFleetRequest const& request) override;
+
+  StatusOr<google::cloud::gkehub::v1::Fleet> GetFleet(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::GetFleetRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateFleet(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::UpdateFleetRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateFleet(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::UpdateFleetRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteFleet(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::DeleteFleetRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteFleet(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::DeleteFleetRequest const& request) override;
+
+  StatusOr<google::cloud::gkehub::v1::ListFleetsResponse> ListFleets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::ListFleetsRequest const& request) override;
+
+  StatusOr<google::cloud::gkehub::v1::Namespace> GetScopeNamespace(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::GetScopeNamespaceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateScopeNamespace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateScopeNamespace(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateScopeNamespace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateScopeNamespace(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteScopeNamespace(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteScopeNamespace(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkehub::v1::ListScopeNamespacesResponse>
+  ListScopeNamespaces(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::ListScopeNamespacesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkehub::v1::RBACRoleBinding> GetScopeRBACRoleBinding(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateScopeRBACRoleBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateScopeRBACRoleBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateScopeRBACRoleBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateScopeRBACRoleBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteScopeRBACRoleBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteScopeRBACRoleBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkehub::v1::ListScopeRBACRoleBindingsResponse>
+  ListScopeRBACRoleBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkehub::v1::Scope> GetScope(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::GetScopeRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateScope(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::CreateScopeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateScope(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::CreateScopeRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateScope(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::UpdateScopeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateScope(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::UpdateScopeRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteScope(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::DeleteScopeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteScope(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::DeleteScopeRequest const& request) override;
+
+  StatusOr<google::cloud::gkehub::v1::ListScopesResponse> ListScopes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::ListScopesRequest const& request) override;
+
+  StatusOr<google::cloud::gkehub::v1::ListPermittedScopesResponse>
+  ListPermittedScopes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::ListPermittedScopesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkehub::v1::MembershipBinding> GetMembershipBinding(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::GetMembershipBindingRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateMembershipBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMembershipBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateMembershipBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMembershipBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteMembershipBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteMembershipBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkehub::v1::ListMembershipBindingsResponse>
+  ListMembershipBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::ListMembershipBindingsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+  GetMembershipRBACRoleBinding(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateMembershipRBACRoleBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateMembershipRBACRoleBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateMembershipRBACRoleBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateMembershipRBACRoleBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteMembershipRBACRoleBinding(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteMembershipRBACRoleBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+          request) override;
+
+  StatusOr<google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsResponse>
+  ListMembershipRBACRoleBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest const&
+          request) override;
+
+  StatusOr<
+      google::cloud::gkehub::v1::GenerateMembershipRBACRoleBindingYAMLResponse>
+  GenerateMembershipRBACRoleBindingYAML(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkehub::v1::
+          GenerateMembershipRBACRoleBindingYAMLRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -149,5 +442,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_LOGGING_DECORATOR_H

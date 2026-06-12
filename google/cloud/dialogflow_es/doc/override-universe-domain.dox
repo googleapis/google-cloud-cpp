@@ -1,0 +1,154 @@
+/*!
+@page dialogflow_es-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `dialogflow_es::AgentsClient`:
+
+@snippet agents_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dialogflow_es::AgentsClient](@ref dialogflow_es::AgentsClient-universe-domain-snippet)
+- [\c dialogflow_es::AnswerRecordsClient](@ref dialogflow_es::AnswerRecordsClient-universe-domain-snippet)
+- [\c dialogflow_es::ContextsClient](@ref dialogflow_es::ContextsClient-universe-domain-snippet)
+- [\c dialogflow_es::ConversationDatasetsClient](@ref dialogflow_es::ConversationDatasetsClient-universe-domain-snippet)
+- [\c dialogflow_es::ConversationModelsClient](@ref dialogflow_es::ConversationModelsClient-universe-domain-snippet)
+- [\c dialogflow_es::ConversationProfilesClient](@ref dialogflow_es::ConversationProfilesClient-universe-domain-snippet)
+- [\c dialogflow_es::ConversationsClient](@ref dialogflow_es::ConversationsClient-universe-domain-snippet)
+- [\c dialogflow_es::DocumentsClient](@ref dialogflow_es::DocumentsClient-universe-domain-snippet)
+- [\c dialogflow_es::EncryptionSpecServiceClient](@ref dialogflow_es::EncryptionSpecServiceClient-universe-domain-snippet)
+- [\c dialogflow_es::EntityTypesClient](@ref dialogflow_es::EntityTypesClient-universe-domain-snippet)
+- [\c dialogflow_es::EnvironmentsClient](@ref dialogflow_es::EnvironmentsClient-universe-domain-snippet)
+- [\c dialogflow_es::FulfillmentsClient](@ref dialogflow_es::FulfillmentsClient-universe-domain-snippet)
+- [\c dialogflow_es::GeneratorsClient](@ref dialogflow_es::GeneratorsClient-universe-domain-snippet)
+- [\c dialogflow_es::IntentsClient](@ref dialogflow_es::IntentsClient-universe-domain-snippet)
+- [\c dialogflow_es::KnowledgeBasesClient](@ref dialogflow_es::KnowledgeBasesClient-universe-domain-snippet)
+- [\c dialogflow_es::ParticipantsClient](@ref dialogflow_es::ParticipantsClient-universe-domain-snippet)
+- [\c dialogflow_es::SessionEntityTypesClient](@ref dialogflow_es::SessionEntityTypesClient-universe-domain-snippet)
+- [\c dialogflow_es::SessionsClient](@ref dialogflow_es::SessionsClient-universe-domain-snippet)
+- [\c dialogflow_es::VersionsClient](@ref dialogflow_es::VersionsClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page dialogflow_es::AgentsClient-universe-domain-snippet Override dialogflow_es::AgentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/agents_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::AnswerRecordsClient-universe-domain-snippet Override dialogflow_es::AnswerRecordsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/answer_records_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::ContextsClient-universe-domain-snippet Override dialogflow_es::ContextsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/contexts_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::ConversationDatasetsClient-universe-domain-snippet Override dialogflow_es::ConversationDatasetsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/conversation_datasets_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::ConversationModelsClient-universe-domain-snippet Override dialogflow_es::ConversationModelsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/conversation_models_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::ConversationProfilesClient-universe-domain-snippet Override dialogflow_es::ConversationProfilesClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/conversation_profiles_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::ConversationsClient-universe-domain-snippet Override dialogflow_es::ConversationsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/conversations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::DocumentsClient-universe-domain-snippet Override dialogflow_es::DocumentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/documents_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::EncryptionSpecServiceClient-universe-domain-snippet Override dialogflow_es::EncryptionSpecServiceClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/encryption_spec_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::EntityTypesClient-universe-domain-snippet Override dialogflow_es::EntityTypesClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/entity_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::EnvironmentsClient-universe-domain-snippet Override dialogflow_es::EnvironmentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/environments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::FulfillmentsClient-universe-domain-snippet Override dialogflow_es::FulfillmentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/fulfillments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::GeneratorsClient-universe-domain-snippet Override dialogflow_es::GeneratorsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/generators_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::IntentsClient-universe-domain-snippet Override dialogflow_es::IntentsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/intents_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::KnowledgeBasesClient-universe-domain-snippet Override dialogflow_es::KnowledgeBasesClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/knowledge_bases_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::ParticipantsClient-universe-domain-snippet Override dialogflow_es::ParticipantsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/participants_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::SessionEntityTypesClient-universe-domain-snippet Override dialogflow_es::SessionEntityTypesClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/session_entity_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::SessionsClient-universe-domain-snippet Override dialogflow_es::SessionsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/sessions_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page dialogflow_es::VersionsClient-universe-domain-snippet Override dialogflow_es::VersionsClient Universe Domain
+
+@snippet google/cloud/dialogflow_es/samples/versions_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

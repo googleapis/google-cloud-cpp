@@ -25,22 +25,23 @@ using ::google::cloud::internal::DebugString;
 
 void LoggingResultSetReader::TryCancel() { impl_->TryCancel(); }
 
-absl::optional<PartialResultSet> LoggingResultSetReader::Read(
-    absl::optional<std::string> const& resume_token) {
+bool LoggingResultSetReader::Read(
+    absl::optional<std::string> const& resume_token,
+    UnownedPartialResultSet& result) {
   if (resume_token) {
     GCP_LOG(DEBUG) << __func__ << "() << resume_token=\""
                    << DebugString(*resume_token, tracing_options_) << "\"";
   } else {
     GCP_LOG(DEBUG) << __func__ << "() << (unresumable)";
   }
-  auto result = impl_->Read(resume_token);
-  if (!result) {
-    GCP_LOG(DEBUG) << __func__ << "() >> (optional-with-no-value)";
+  bool success = impl_->Read(resume_token, result);
+  if (!success) {
+    GCP_LOG(DEBUG) << __func__ << "() >> (failed)";
   } else {
     GCP_LOG(DEBUG) << __func__ << "() >> resumption="
-                   << (result->resumption ? "true" : "false");
+                   << (result.resumption ? "true" : "false");
   }
-  return result;
+  return success;
 }
 
 Status LoggingResultSetReader::Finish() { return impl_->Finish(); }

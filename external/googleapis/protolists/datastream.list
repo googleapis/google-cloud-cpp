@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/datastream/v1:datastream.proto
-@com_google_googleapis//google/cloud/datastream/v1:datastream_resources.proto
+@googleapis//google/cloud/datastream/v1:datastream.proto
+@googleapis//google/cloud/datastream/v1:datastream_resources.proto

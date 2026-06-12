@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_instance_templates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionInstanceTemplatesTracingConnection::
     RegionInstanceTemplatesTracingConnection(
         std::shared_ptr<compute_region_instance_templates_v1::
@@ -132,20 +130,16 @@ RegionInstanceTemplatesTracingConnection::ListRegionInstanceTemplates(
                                                          std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_region_instance_templates_v1::RegionInstanceTemplatesConnection>
 MakeRegionInstanceTemplatesTracingConnection(
     std::shared_ptr<
         compute_region_instance_templates_v1::RegionInstanceTemplatesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionInstanceTemplatesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

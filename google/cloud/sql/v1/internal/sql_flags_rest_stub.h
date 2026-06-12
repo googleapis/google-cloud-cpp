@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_FLAGS_REST_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_FLAGS_REST_STUB_H
 
+#include "google/cloud/sql/v1/cloud_sql_flags.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/sql/v1/cloud_sql_flags.pb.h>
 #include <memory>
 
 namespace google {

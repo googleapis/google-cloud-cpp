@@ -17,9 +17,12 @@
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_auth_decorator.h"
-#include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
+#include "google/cloud/confidentialcomputing/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -51,6 +54,28 @@ ConfidentialComputingAuth::VerifyAttestation(
   return child_->VerifyAttestation(context, options, request);
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingAuth::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->VerifyConfidentialSpace(context, options, request);
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingAuth::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->VerifyConfidentialGke(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -73,3 +98,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

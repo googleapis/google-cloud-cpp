@@ -35,7 +35,6 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 
 namespace google {
@@ -84,8 +83,7 @@ class CurlImpl {
   CurlImpl& operator=(CurlImpl&&) = default;
 
   void SetHeader(HttpHeader header);
-  void SetHeaders(
-      std::unordered_map<std::string, std::vector<std::string>> const& headers);
+  void SetHeaders(HttpHeaders const& headers);
 
   std::string MakeEscapedString(std::string const& s);
 

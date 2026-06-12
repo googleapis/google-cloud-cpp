@@ -17,13 +17,16 @@
 // source: google/cloud/networkservices/v1/dep.proto
 
 #include "google/cloud/networkservices/v1/internal/dep_logging_decorator.h"
+#include "google/cloud/networkservices/v1/dep.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/networkservices/v1/dep.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -292,6 +295,138 @@ DepServiceLogging::DeleteLbRouteExtension(
              google::cloud::networkservices::v1::
                  DeleteLbRouteExtensionRequest const& request) {
         return child_->DeleteLbRouteExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::ListLbEdgeExtensionsResponse>
+DepServiceLogging::ListLbEdgeExtensions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest const&
+              request) {
+        return child_->ListLbEdgeExtensions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+DepServiceLogging::GetLbEdgeExtension(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+              request) {
+        return child_->GetLbEdgeExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceLogging::AsyncCreateLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::
+                 CreateLbEdgeExtensionRequest const& request) {
+        return child_->AsyncCreateLbEdgeExtension(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::CreateLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 CreateLbEdgeExtensionRequest const& request) {
+        return child_->CreateLbEdgeExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceLogging::AsyncUpdateLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::
+                 UpdateLbEdgeExtensionRequest const& request) {
+        return child_->AsyncUpdateLbEdgeExtension(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::UpdateLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 UpdateLbEdgeExtensionRequest const& request) {
+        return child_->UpdateLbEdgeExtension(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DepServiceLogging::AsyncDeleteLbEdgeExtension(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkservices::v1::
+                 DeleteLbEdgeExtensionRequest const& request) {
+        return child_->AsyncDeleteLbEdgeExtension(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceLogging::DeleteLbEdgeExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::
+                 DeleteLbEdgeExtensionRequest const& request) {
+        return child_->DeleteLbEdgeExtension(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -574,3 +709,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkservices_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

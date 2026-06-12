@@ -60,6 +60,10 @@ void PartialUpload::Write() {
     } else if (action_ == LastMessageAction::kFlush) {
       request_.set_flush(true);
       request_.set_state_lookup(true);
+    } else if (action_ == LastMessageAction::kFlushAndClose) {
+      request_.set_flush(true);
+      request_.set_state_lookup(true);
+      wopt.set_last_message();
     }
   }
   (void)rpc_->Write(request_, std::move(wopt))
@@ -74,6 +78,12 @@ void PartialUpload::OnWrite(std::size_t n, bool ok) {
   request_.clear_first_message();
   request_.clear_flush();
   request_.clear_finish_write();
+  // The `write_object_spec`, `append_object_spec` and `upload_id` fields must
+  // only be set on the first message of a Write() request. They are cleared by
+  // `PartialUpload` after the first message is sent.
+  request_.clear_write_object_spec();
+  request_.clear_append_object_spec();
+  request_.clear_upload_id();
   request_.set_write_offset(request_.write_offset() + n);
   if (!data_.empty()) return Write();
   result_.set_value(true);

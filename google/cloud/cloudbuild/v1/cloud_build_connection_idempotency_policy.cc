@@ -124,6 +124,11 @@ Idempotency CloudBuildConnectionIdempotencyPolicy::ListWorkerPools(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CloudBuildConnectionIdempotencyPolicy::GetDefaultServiceAccount(
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
 MakeDefaultCloudBuildConnectionIdempotencyPolicy() {
   return std::make_unique<CloudBuildConnectionIdempotencyPolicy>();

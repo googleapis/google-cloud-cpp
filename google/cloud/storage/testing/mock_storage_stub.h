@@ -21,6 +21,9 @@
 #include <gmock/gmock.h>
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace storage {
@@ -214,8 +217,8 @@ class MockObjectMediaStream : public google::cloud::internal::StreamingReadRpc<
                                   google::storage::v2::ReadObjectResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::variant<Status, google::storage::v2::ReadObjectResponse>),
-              Read, (), (override));
+  MOCK_METHOD(absl::optional<Status>, Read,
+              (google::storage::v2::ReadObjectResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
 };
@@ -256,5 +259,7 @@ using MockAsyncBidiWriteObjectStream =
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_STORAGE_STUB_H

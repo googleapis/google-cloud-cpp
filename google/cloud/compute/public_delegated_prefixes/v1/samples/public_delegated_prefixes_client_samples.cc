@@ -25,6 +25,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include "google/cloud/universe_domain.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -50,6 +51,27 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
           google::cloud::compute_public_delegated_prefixes_v1::
               MakePublicDelegatedPrefixesConnectionRest(options));
   //! [set-client-endpoint]
+}
+
+void SetClientUniverseDomain(std::vector<std::string> const& argv) {
+  if (!argv.empty()) {
+    throw google::cloud::testing_util::Usage{"set-client-universe-domain"};
+  }
+  //! [set-client-universe-domain]
+  google::cloud::Options options;
+
+  // AddUniverseDomainOption interrogates the UnifiedCredentialsOption, if set,
+  // in the provided Options for the Universe Domain associated with the
+  // credentials and adds it to the set of Options.
+  // If no UnifiedCredentialsOption is set, GoogleDefaultCredentials are used.
+  auto ud_options = google::cloud::AddUniverseDomainOption(std::move(options));
+
+  if (!ud_options.ok()) throw std::move(ud_options).status();
+  auto ud_client = google::cloud::compute_public_delegated_prefixes_v1::
+      PublicDelegatedPrefixesClient(
+          google::cloud::compute_public_delegated_prefixes_v1::
+              MakePublicDelegatedPrefixesConnectionRest(*ud_options));
+  //! [set-client-universe-domain]
 }
 
 //! [custom-idempotency-policy]
@@ -202,6 +224,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning WithServiceAccount() example" << std::endl;
   WithServiceAccount({keyfile});
+
+  std::cout << "\nRunning SetClientUniverseDomain() example" << std::endl;
+  SetClientUniverseDomain({});
 }
 
 }  // namespace
@@ -212,6 +237,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"set-retry-policy", SetRetryPolicy},
       {"set-polling-policy", SetPollingPolicy},
       {"with-service-account", WithServiceAccount},
+      {"set-client-universe-domain", SetClientUniverseDomain},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

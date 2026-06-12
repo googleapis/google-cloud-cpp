@@ -17,9 +17,13 @@
 // source: google/cloud/aiplatform/v1/feature_online_store_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_auth_decorator.h"
-#include <google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h>
+#include "google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -48,6 +52,35 @@ FeatureOnlineStoreServiceAuth::SearchNearestEntities(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchNearestEntities(context, options, request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceAuth::AsyncFeatureViewDirectWrite(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+      google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>;
+
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncFeatureViewDirectWrite(cq, std::move(ctx), options);
+  };
+  return std::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceAuth::GenerateFetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateFetchAccessToken(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -140,3 +173,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

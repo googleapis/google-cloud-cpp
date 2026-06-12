@@ -444,7 +444,7 @@ TEST(ObjectWriteStreambufTest, Regression8868) {
   auto retry = StorageConnectionImpl::Create(std::move(mock));
   google::cloud::internal::OptionsSpan const span(
       Options{}
-          .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
           .set<BackoffPolicyOption>(
               ExponentialBackoffPolicy(us(1), us(2), 2).clone())
@@ -666,6 +666,37 @@ TEST(ObjectWriteStreambufTest, WriteObjectWithCustomHeader) {
   EXPECT_EQ(p0.size(), streambuf.sputn(p0.data(), p0.size()));
   EXPECT_EQ(0, streambuf.pubsync());
   EXPECT_EQ(p1.size(), streambuf.sputn(p1.data(), p1.size()));
+  auto response = streambuf.Close();
+  EXPECT_STATUS_OK(response);
+}
+
+/// @test Verify that hashes are computed and passed in FlushFinal.
+TEST(ObjectWriteStreambufTest, FlushFinalWithHashes) {
+  auto mock = std::make_unique<testing::MockClient>();
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload = "small test payload";
+
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](UploadChunkRequest const& r) {
+    EXPECT_EQ(payload.size(), r.payload_size());
+    EXPECT_EQ(0, r.offset());
+    EXPECT_TRUE(r.last_chunk());
+    EXPECT_EQ(r.hash_function_ptr(), nullptr);
+    EXPECT_EQ(r.known_object_hashes().crc32c, ComputeCrc32cChecksum(payload));
+    EXPECT_EQ(r.known_object_hashes().md5, ComputeMD5Hash(payload));
+    return QueryResumableUploadResponse{payload.size(), ObjectMetadata()};
+  });
+
+  ResumableUploadRequest request;
+  request.set_option(DisableCrc32cChecksum(false));
+  request.set_option(DisableMD5Hash(false));
+  ObjectWriteStreambuf streambuf(
+      std::move(mock), request, "test-only-upload-id",
+      /*committed_size=*/0, absl::nullopt, /*max_buffer_size=*/quantum,
+      CreateHashFunction(Crc32cChecksumValue(), DisableCrc32cChecksum(false),
+                         MD5HashValue(), DisableMD5Hash(false)),
+      HashValues{}, CreateHashValidator(request), AutoFinalizeConfig::kEnabled);
+
+  streambuf.sputn(payload.data(), payload.size());
   auto response = streambuf.Close();
   EXPECT_STATUS_OK(response);
 }

@@ -40,7 +40,7 @@ Options InstancesDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::InstancesRetryPolicyOption>()) {
     options.set<appengine_v1::InstancesRetryPolicyOption>(
-        appengine_v1::InstancesLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        appengine_v1::InstancesLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<appengine_v1::InstancesBackoffPolicyOption>()) {

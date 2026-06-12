@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_ssl_certificates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SslCertificatesTracingConnection::SslCertificatesTracingConnection(
     std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
         child)
@@ -144,17 +142,13 @@ SslCertificatesTracingConnection::ListSslCertificates(
                                                        std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
 MakeSslCertificatesTracingConnection(
     std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<SslCertificatesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -212,6 +212,25 @@ CloudRedisClusterClient::GetClusterCertificateAuthority(
   return connection_->GetClusterCertificateAuthority(request);
 }
 
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+CloudRedisClusterClient::GetSharedRegionalCertificateAuthority(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::
+      GetSharedRegionalCertificateAuthorityRequest request;
+  request.set_name(name);
+  return connection_->GetSharedRegionalCertificateAuthority(request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+CloudRedisClusterClient::GetSharedRegionalCertificateAuthority(
+    google::cloud::redis::cluster::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSharedRegionalCertificateAuthority(request);
+}
+
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterClient::RescheduleClusterMaintenance(
     std::string const& name,

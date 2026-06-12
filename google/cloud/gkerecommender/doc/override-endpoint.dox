@@ -1,0 +1,25 @@
+/*!
+@page gkerecommender-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `gkerecommender_v1::GkeInferenceQuickstartClient`:
+
+@snippet gke_inference_quickstart_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page gkerecommender_v1::GkeInferenceQuickstartClient-endpoint-snippet Override gkerecommender_v1::GkeInferenceQuickstartClient Endpoint Configuration
+
+@snippet google/cloud/gkerecommender/v1/samples/gke_inference_quickstart_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

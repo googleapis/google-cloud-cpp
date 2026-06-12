@@ -44,17 +44,17 @@ RewriterConnectionImpl::RewriterConnectionImpl(
 
 future<StatusOr<google::storage::v2::RewriteResponse>>
 RewriterConnectionImpl::Iterate() {
-  auto policy =
-      current_->get<storage_experimental::IdempotencyPolicyOption>()();
+  auto policy = current_->get<storage::AsyncIdempotencyPolicyOption>()();
   return google::cloud::internal::AsyncRetryLoop(
              current_->get<storage::RetryPolicyOption>()->clone(),
              current_->get<storage::BackoffPolicyOption>()->clone(),
              policy->RewriteObject(request_), cq_,
-             [stub = stub_](
+             [stub = stub_, id = invocation_id_generator_.MakeInvocationId()](
                  CompletionQueue& cq,
                  std::shared_ptr<grpc::ClientContext> context,
                  google::cloud::internal::ImmutableOptions options,
                  google::storage::v2::RewriteObjectRequest const& proto) {
+               AddIdempotencyToken(*context, id);
                return stub->AsyncRewriteObject(cq, std::move(context),
                                                std::move(options), proto);
              },

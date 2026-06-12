@@ -1,5 +1,4 @@
 /*!
-
 @page channel-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
@@ -9,10 +8,6 @@ environment variables are convenient when troubleshooting problems.
 @section channel-env-endpoint Endpoint Overrides
 
 <!-- inject-endpoint-env-vars-start -->
-
-- `GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_REPORTS_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "cloudchannel.googleapis.com")
-  used by `MakeCloudChannelReportsServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "cloudchannel.googleapis.com")

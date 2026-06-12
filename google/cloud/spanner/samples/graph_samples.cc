@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/admin/database_admin_options.h"
 #include "google/cloud/spanner/client.h"
@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include "absl/time/clock.h"
 #include <string>
 #include <tuple>
 #include <utility>
@@ -606,3 +607,4 @@ int main(int ac, char* av[]) try {
   std::cerr << ex.what() << "\n";
   return 1;
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

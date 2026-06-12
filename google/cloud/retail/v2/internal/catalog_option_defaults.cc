@@ -41,7 +41,7 @@ Options CatalogServiceDefaultOptions(Options options) {
   if (!options.has<retail_v2::CatalogServiceRetryPolicyOption>()) {
     options.set<retail_v2::CatalogServiceRetryPolicyOption>(
         retail_v2::CatalogServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<retail_v2::CatalogServiceBackoffPolicyOption>()) {

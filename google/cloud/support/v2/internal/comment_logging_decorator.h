@@ -26,6 +26,9 @@
 #include <set>
 #include <string>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace support_v2_internal {
@@ -46,6 +49,10 @@ class CommentServiceLogging : public CommentServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
+  StatusOr<google::cloud::support::v2::Comment> GetComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetCommentRequest const& request) override;
+
  private:
   std::shared_ptr<CommentServiceStub> child_;
   TracingOptions tracing_options_;
@@ -55,5 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_LOGGING_DECORATOR_H

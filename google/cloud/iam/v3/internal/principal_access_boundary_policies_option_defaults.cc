@@ -44,7 +44,7 @@ Options PrincipalAccessBoundaryPoliciesDefaultOptions(Options options) {
            .has<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>()) {
     options.set<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>(
         iam_v3::PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

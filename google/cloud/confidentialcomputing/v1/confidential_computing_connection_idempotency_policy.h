@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_CONFIDENTIAL_COMPUTING_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_CONFIDENTIAL_COMPUTING_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/confidentialcomputing/v1/service.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -45,6 +45,14 @@ class ConfidentialComputingConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency VerifyAttestation(
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request);
+
+  virtual google::cloud::Idempotency VerifyConfidentialSpace(
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialSpaceRequest const& request);
+
+  virtual google::cloud::Idempotency VerifyConfidentialGke(
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialGkeRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

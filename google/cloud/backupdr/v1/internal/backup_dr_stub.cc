@@ -17,12 +17,15 @@
 // source: google/cloud/backupdr/v1/backupdr.proto
 
 #include "google/cloud/backupdr/v1/internal/backup_dr_stub.h"
+#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/backupdr/v1/backupdr.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -307,6 +310,20 @@ DefaultBackupDRStub::ListBackups(
     google::cloud::backupdr::v1::ListBackupsRequest const& request) {
   google::cloud::backupdr::v1::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+DefaultBackupDRStub::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse response;
+  auto status =
+      grpc_stub_->FetchBackupsForResourceType(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -745,6 +762,20 @@ DefaultBackupDRStub::GetDataSourceReference(
   return response;
 }
 
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+DefaultBackupDRStub::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  google::cloud::backupdr::v1::ListDataSourceReferencesResponse response;
+  auto status =
+      grpc_stub_->ListDataSourceReferences(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::backupdr::v1::
              FetchDataSourceReferencesForResourceTypeResponse>
 DefaultBackupDRStub::FetchDataSourceReferencesForResourceType(
@@ -937,3 +968,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace backupdr_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

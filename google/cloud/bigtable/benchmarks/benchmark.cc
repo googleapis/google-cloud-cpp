@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/benchmarks/random_mutation.h"
 #include "google/cloud/bigtable/resource_names.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
@@ -31,6 +32,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
+using ::google::cloud::bigtable_internal::MergeOptions;
 using ::google::cloud::internal::GetEnv;
 
 google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
@@ -62,6 +64,7 @@ google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
             "--thread-count=1",
             "--test-duration=1s",
             "--table-size=11000",
+            "--enable-metrics=true",
         },
         description);
   }
@@ -124,9 +127,10 @@ void Benchmark::DeleteTable() {
   }
 }
 
-Table Benchmark::MakeTable() const {
+Table Benchmark::MakeTable(Options connection_opts) const {
+  auto connection_options = MergeOptions(std::move(connection_opts), opts_);
   auto table_opts = Options{}.set<AppProfileIdOption>(options_.app_profile_id);
-  return Table(MakeDataConnection(opts_),
+  return Table(MakeDataConnection(std::move(connection_options)),
                TableResource(options_.project_id, options_.instance_id,
                              options_.table_id),
                std::move(table_opts));

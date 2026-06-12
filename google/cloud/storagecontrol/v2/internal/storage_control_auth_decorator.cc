@@ -17,9 +17,12 @@
 // source: google/storage/control/v2/storage_control.proto
 
 #include "google/cloud/storagecontrol/v2/internal/storage_control_auth_decorator.h"
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -90,6 +93,35 @@ StatusOr<google::longrunning::Operation> StorageControlAuth::RenameFolder(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RenameFolder(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageControlAuth::AsyncDeleteFolderRecursive(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteFolderRecursive(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlAuth::DeleteFolderRecursive(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::DeleteFolderRecursiveRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFolderRecursive(context, options, request);
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>
@@ -300,6 +332,31 @@ StorageControlAuth::UpdateOrganizationIntelligenceConfig(
                                                       request);
 }
 
+StatusOr<google::iam::v1::Policy> StorageControlAuth::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> StorageControlAuth::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+StorageControlAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestIamPermissions(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -340,3 +397,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

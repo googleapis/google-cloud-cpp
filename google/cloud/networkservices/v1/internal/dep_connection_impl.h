@@ -32,7 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -154,6 +154,58 @@ class DepServiceConnectionImpl
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>
+  ListLbEdgeExtensions(
+      google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest request)
+      override;
+
+  StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+  GetLbEdgeExtension(
+      google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+  CreateLbEdgeExtension(
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateLbEdgeExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+  CreateLbEdgeExtension(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+  UpdateLbEdgeExtension(
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateLbEdgeExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
+  UpdateLbEdgeExtension(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbEdgeExtension(
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLbEdgeExtension(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbEdgeExtension(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::AuthzExtension>

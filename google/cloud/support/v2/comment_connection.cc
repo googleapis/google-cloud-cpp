@@ -52,6 +52,12 @@ CommentServiceConnection::CreateComment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::support::v2::Comment>
+CommentServiceConnection::GetComment(
+    google::cloud::support::v2::GetCommentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CommentServiceConnection> MakeCommentServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

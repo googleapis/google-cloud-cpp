@@ -42,7 +42,7 @@ Options ConnectionServiceDefaultOptions(Options options) {
   if (!options.has<apigeeconnect_v1::ConnectionServiceRetryPolicyOption>()) {
     options.set<apigeeconnect_v1::ConnectionServiceRetryPolicyOption>(
         apigeeconnect_v1::ConnectionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<apigeeconnect_v1::ConnectionServiceBackoffPolicyOption>()) {

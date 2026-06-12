@@ -44,7 +44,7 @@ Options HttpsHealthChecksDefaultOptions(Options options) {
     options.set<
         compute_https_health_checks_v1::HttpsHealthChecksRetryPolicyOption>(
         compute_https_health_checks_v1::HttpsHealthChecksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_https_health_checks_v1::

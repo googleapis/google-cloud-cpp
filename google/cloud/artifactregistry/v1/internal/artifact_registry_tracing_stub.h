@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
  public:
@@ -364,6 +365,18 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncExportArtifact(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportArtifact(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -394,8 +407,6 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -409,5 +420,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_TRACING_STUB_H

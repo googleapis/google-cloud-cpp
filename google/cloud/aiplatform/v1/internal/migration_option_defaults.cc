@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/migration_option_defaults.h"
 #include "google/cloud/aiplatform/v1/migration_connection.h"
 #include "google/cloud/aiplatform/v1/migration_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options MigrationServiceDefaultOptions(std::string const& location,
   if (!options.has<aiplatform_v1::MigrationServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::MigrationServiceRetryPolicyOption>(
         aiplatform_v1::MigrationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<aiplatform_v1::MigrationServiceBackoffPolicyOption>()) {

@@ -41,7 +41,7 @@ Options CloudRedisClusterDefaultOptions(Options options) {
   if (!options.has<redis_cluster_v1::CloudRedisClusterRetryPolicyOption>()) {
     options.set<redis_cluster_v1::CloudRedisClusterRetryPolicyOption>(
         redis_cluster_v1::CloudRedisClusterLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<redis_cluster_v1::CloudRedisClusterBackoffPolicyOption>()) {

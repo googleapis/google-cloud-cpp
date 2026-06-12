@@ -42,7 +42,7 @@ Options BudgetServiceDefaultOptions(Options options) {
   if (!options.has<billing_budgets_v1::BudgetServiceRetryPolicyOption>()) {
     options.set<billing_budgets_v1::BudgetServiceRetryPolicyOption>(
         billing_budgets_v1::BudgetServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()) {

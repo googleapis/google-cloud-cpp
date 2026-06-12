@@ -9,10 +9,11 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet lineage_client_samples.cc with-service-account
+@snippet config_management_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient](@ref datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient-service-account-snippet)
 - [\c datacatalog_lineage_v1::LineageClient](@ref datacatalog_lineage_v1::LineageClient-service-account-snippet)
 - [\c datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-service-account-snippet)
 - [\c datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-service-account-snippet)
@@ -33,6 +34,12 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient-service-account-snippet Override datacatalog_lineage_configmanagement_v1::ConfigManagementServiceClient Authentication Defaults
+
+@snippet google/cloud/datacatalog/lineage/configmanagement/v1/samples/config_management_client_samples.cc with-service-account
+
+*/
 
 /*! @page datacatalog_lineage_v1::LineageClient-service-account-snippet Override datacatalog_lineage_v1::LineageClient Authentication Defaults
 

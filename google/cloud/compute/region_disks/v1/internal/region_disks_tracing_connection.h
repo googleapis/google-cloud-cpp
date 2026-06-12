@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_disks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RegionDisksTracingConnection
     : public compute_region_disks_v1::RegionDisksConnection {
  public:
@@ -210,8 +208,6 @@ class RegionDisksTracingConnection
  private:
   std::shared_ptr<compute_region_disks_v1::RegionDisksConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

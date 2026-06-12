@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_DEVELOPER_CONNECT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_DEVELOPER_CONNECT_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -127,6 +127,12 @@ class DeveloperConnectConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteSelf(
       google::cloud::developerconnect::v1::DeleteSelfRequest const& request);
+
+  virtual google::cloud::Idempotency StartOAuth(
+      google::cloud::developerconnect::v1::StartOAuthRequest const& request);
+
+  virtual google::cloud::Idempotency FinishOAuth(
+      google::cloud::developerconnect::v1::FinishOAuthRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

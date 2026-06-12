@@ -17,7 +17,7 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: main
 name: universe-domain-ci
 substitutions:
   _BUILD_NAME: universe-domain

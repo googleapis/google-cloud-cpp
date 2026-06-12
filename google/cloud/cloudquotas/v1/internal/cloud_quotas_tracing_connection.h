@@ -28,8 +28,6 @@ namespace cloud {
 namespace cloudquotas_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CloudQuotasTracingConnection
     : public cloudquotas_v1::CloudQuotasConnection {
  public:
@@ -66,8 +64,6 @@ class CloudQuotasTracingConnection
  private:
   std::shared_ptr<cloudquotas_v1::CloudQuotasConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

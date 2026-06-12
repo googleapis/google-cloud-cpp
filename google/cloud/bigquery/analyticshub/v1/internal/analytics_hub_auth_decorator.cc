@@ -17,9 +17,12 @@
 // source: google/cloud/bigquery/analyticshub/v1/analyticshub.proto
 
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_auth_decorator.h"
-#include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
+#include "google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -309,6 +312,75 @@ AnalyticsHubServiceAuth::TestIamPermissions(
   return child_->TestIamPermissions(context, options, request);
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceAuth::CreateQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateQueryTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceAuth::GetQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetQueryTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse>
+AnalyticsHubServiceAuth::ListQueryTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListQueryTemplates(context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceAuth::UpdateQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateQueryTemplate(context, options, request);
+}
+
+Status AnalyticsHubServiceAuth::DeleteQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteQueryTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceAuth::SubmitQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SubmitQueryTemplate(context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceAuth::ApproveQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ApproveQueryTemplate(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -349,3 +421,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

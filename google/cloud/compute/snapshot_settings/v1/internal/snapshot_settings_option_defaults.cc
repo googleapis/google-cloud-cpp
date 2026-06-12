@@ -43,7 +43,7 @@ Options SnapshotSettingsDefaultOptions(Options options) {
     options.set<
         compute_snapshot_settings_v1::SnapshotSettingsRetryPolicyOption>(
         compute_snapshot_settings_v1::SnapshotSettingsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_snapshot_settings_v1::

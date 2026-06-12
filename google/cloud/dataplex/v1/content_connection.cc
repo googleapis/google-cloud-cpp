@@ -38,53 +38,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContentServiceConnection::~ContentServiceConnection() = default;
 
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnection::CreateContent(
-    google::cloud::dataplex::v1::CreateContentRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnection::UpdateContent(
-    google::cloud::dataplex::v1::UpdateContentRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-Status ContentServiceConnection::DeleteContent(
-    google::cloud::dataplex::v1::DeleteContentRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnection::GetContent(
-    google::cloud::dataplex::v1::GetContentRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-StatusOr<google::iam::v1::Policy> ContentServiceConnection::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-StatusOr<google::iam::v1::Policy> ContentServiceConnection::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContentServiceConnection::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
-StreamRange<google::cloud::dataplex::v1::Content>
-ContentServiceConnection::ListContent(
-    google::cloud::dataplex::v1::
-        ListContentRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Content>>();
-}
-
 StreamRange<google::cloud::location::Location>
 ContentServiceConnection::ListLocations(
     google::cloud::location::
@@ -96,6 +49,22 @@ ContentServiceConnection::ListLocations(
 StatusOr<google::cloud::location::Location>
 ContentServiceConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContentServiceConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

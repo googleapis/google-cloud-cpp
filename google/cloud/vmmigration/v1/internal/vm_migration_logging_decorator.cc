@@ -17,13 +17,16 @@
 // source: google/cloud/vmmigration/v1/vmmigration.proto
 
 #include "google/cloud/vmmigration/v1/internal/vm_migration_logging_decorator.h"
+#include "google/cloud/vmmigration/v1/vmmigration.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -161,6 +164,20 @@ VmMigrationLogging::FetchInventory(
              google::cloud::vmmigration::v1::FetchInventoryRequest const&
                  request) {
         return child_->FetchInventory(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmmigration::v1::FetchStorageInventoryResponse>
+VmMigrationLogging::FetchStorageInventory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::FetchStorageInventoryRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::FetchStorageInventoryRequest const&
+                 request) {
+        return child_->FetchStorageInventory(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -634,6 +651,37 @@ StatusOr<google::longrunning::Operation> VmMigrationLogging::FinalizeMigration(
              google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
                  request) {
         return child_->FinalizeMigration(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncExtendMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::vmmigration::v1::ExtendMigrationRequest const&
+                 request) {
+        return child_->AsyncExtendMigration(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::ExtendMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::ExtendMigrationRequest const&
+                 request) {
+        return child_->ExtendMigration(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -1144,6 +1192,357 @@ VmMigrationLogging::GetReplicationCycle(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::vmmigration::v1::ListImageImportsResponse>
+VmMigrationLogging::ListImageImports(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListImageImportsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::ListImageImportsRequest const&
+                 request) {
+        return child_->ListImageImports(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationLogging::GetImageImport(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetImageImportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::GetImageImportRequest const&
+                 request) {
+        return child_->GetImageImport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncCreateImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::vmmigration::v1::CreateImageImportRequest const&
+                 request) {
+        return child_->AsyncCreateImageImport(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::CreateImageImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateImageImportRequest const&
+                 request) {
+        return child_->CreateImageImport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncDeleteImageImport(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::vmmigration::v1::DeleteImageImportRequest const&
+                 request) {
+        return child_->AsyncDeleteImageImport(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationLogging::DeleteImageImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::DeleteImageImportRequest const&
+                 request) {
+        return child_->DeleteImageImport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListImageImportJobsResponse>
+VmMigrationLogging::ListImageImportJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListImageImportJobsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::ListImageImportJobsRequest const&
+                 request) {
+        return child_->ListImageImportJobs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationLogging::GetImageImportJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetImageImportJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::GetImageImportJobRequest const&
+                 request) {
+        return child_->GetImageImportJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncCancelImageImportJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+                 request) {
+        return child_->AsyncCancelImageImportJob(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::CancelImageImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+                 request) {
+        return child_->CancelImageImportJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncCreateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+              request) {
+        return child_->AsyncCreateDiskMigrationJob(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::CreateDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+              request) {
+        return child_->CreateDiskMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ListDiskMigrationJobsResponse>
+VmMigrationLogging::ListDiskMigrationJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest const&
+                 request) {
+        return child_->ListDiskMigrationJobs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationLogging::GetDiskMigrationJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const&
+                 request) {
+        return child_->GetDiskMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncUpdateDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+              request) {
+        return child_->AsyncUpdateDiskMigrationJob(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::UpdateDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+              request) {
+        return child_->UpdateDiskMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncDeleteDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+              request) {
+        return child_->AsyncDeleteDiskMigrationJob(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::DeleteDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+              request) {
+        return child_->DeleteDiskMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncRunDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&
+                 request) {
+        return child_->AsyncRunDiskMigrationJob(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::RunDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&
+                 request) {
+        return child_->RunDiskMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+VmMigrationLogging::AsyncCancelDiskMigrationJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+              request) {
+        return child_->AsyncCancelDiskMigrationJob(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationLogging::CancelDiskMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
+              request) {
+        return child_->CancelDiskMigrationJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 VmMigrationLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -1251,3 +1650,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -46,6 +46,188 @@ class MockDataformConnection : public dataform_v1::DataformConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataform::v1::TeamFolder>, GetTeamFolder,
+      (google::cloud::dataform::v1::GetTeamFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataform::v1::TeamFolder>, CreateTeamFolder,
+      (google::cloud::dataform::v1::CreateTeamFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataform::v1::TeamFolder>, UpdateTeamFolder,
+      (google::cloud::dataform::v1::UpdateTeamFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteTeamFolder,
+      (google::cloud::dataform::v1::DeleteTeamFolderRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTeamFolderTree(Matcher<google::cloud::dataform::v1::DeleteTeamFolderTreeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>,
+      DeleteTeamFolderTree,
+      (google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteTeamFolderTree(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteTeamFolderTree,
+      (NoAwaitTag,
+       google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTeamFolderTree(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>,
+      DeleteTeamFolderTree, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+              TeamFolderContentsEntry>),
+      QueryTeamFolderContents,
+      (google::cloud::dataform::v1::QueryTeamFolderContentsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                       TeamFolderSearchResult>),
+      SearchTeamFolders,
+      (google::cloud::dataform::v1::SearchTeamFoldersRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::dataform::v1::Folder>, GetFolder,
+              (google::cloud::dataform::v1::GetFolderRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::dataform::v1::Folder>, CreateFolder,
+              (google::cloud::dataform::v1::CreateFolderRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::dataform::v1::Folder>, UpdateFolder,
+              (google::cloud::dataform::v1::UpdateFolderRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteFolder,
+              (google::cloud::dataform::v1::DeleteFolderRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFolderTree(Matcher<google::cloud::dataform::v1::DeleteFolderTreeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>,
+      DeleteFolderTree,
+      (google::cloud::dataform::v1::DeleteFolderTreeRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteFolderTree(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteFolderTree,
+      (NoAwaitTag,
+       google::cloud::dataform::v1::DeleteFolderTreeRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteFolderTree(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>,
+      DeleteFolderTree, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                       FolderContentsEntry>),
+      QueryFolderContents,
+      (google::cloud::dataform::v1::QueryFolderContentsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                       RootContentsEntry>),
+      QueryUserRootContents,
+      (google::cloud::dataform::v1::QueryUserRootContentsRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// MoveFolder(Matcher<google::cloud::dataform::v1::MoveFolderRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>,
+              MoveFolder,
+              (google::cloud::dataform::v1::MoveFolderRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, MoveFolder(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, MoveFolder,
+              (NoAwaitTag,
+               google::cloud::dataform::v1::MoveFolderRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, MoveFolder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>,
+              MoveFolder, (google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::dataform::v1::Repository>),
               ListRepositories,
               (google::cloud::dataform::v1::ListRepositoriesRequest request),
@@ -69,6 +251,46 @@ class MockDataformConnection : public dataform_v1::DataformConnection {
   MOCK_METHOD(
       Status, DeleteRepository,
       (google::cloud::dataform::v1::DeleteRepositoryRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// MoveRepository(Matcher<google::cloud::dataform::v1::MoveRepositoryRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>,
+      MoveRepository,
+      (google::cloud::dataform::v1::MoveRepositoryRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, MoveRepository(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, MoveRepository,
+      (NoAwaitTag,
+       google::cloud::dataform::v1::MoveRepositoryRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, MoveRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>,
+      MoveRepository, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -351,6 +573,19 @@ class MockDataformConnection : public dataform_v1::DataformConnection {
               (google::cloud::dataform::v1::UpdateConfigRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));
@@ -359,17 +594,19 @@ class MockDataformConnection : public dataform_v1::DataformConnection {
               (google::cloud::location::GetLocationRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
               (override));
 };
 

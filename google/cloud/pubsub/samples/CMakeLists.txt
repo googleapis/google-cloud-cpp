@@ -94,8 +94,10 @@ foreach (fname ${pubsub_client_integration_samples})
             GOOGLE_CLOUD_CPP_PUBSUB_TESTDATA=${CMAKE_CURRENT_SOURCE_DIR}/testdata/
     )
     target_link_libraries(
-        ${target} PRIVATE pubsub_samples_protos pubsub_samples_common
-                          google_cloud_cpp_testing google-cloud-cpp::pubsub)
+        ${target}
+        PRIVATE pubsub_samples_protos pubsub_samples_common
+                google_cloud_cpp_testing google-cloud-cpp::pubsub
+                google-cloud-cpp::universe_domain)
     google_cloud_cpp_add_common_options(${target})
 endforeach ()
 

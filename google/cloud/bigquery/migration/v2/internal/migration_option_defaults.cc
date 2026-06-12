@@ -43,7 +43,7 @@ Options MigrationServiceDefaultOptions(Options options) {
            .has<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()) {
     options.set<bigquery_migration_v2::MigrationServiceRetryPolicyOption>(
         bigquery_migration_v2::MigrationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

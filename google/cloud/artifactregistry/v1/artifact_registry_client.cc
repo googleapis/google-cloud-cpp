@@ -1093,6 +1093,31 @@ ArtifactRegistryClient::DeleteAttachment(
   return connection_->DeleteAttachment(operation);
 }
 
+future<StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+ArtifactRegistryClient::ExportArtifact(
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportArtifact(request);
+}
+
+StatusOr<google::longrunning::Operation> ArtifactRegistryClient::ExportArtifact(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportArtifact(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+ArtifactRegistryClient::ExportArtifact(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportArtifact(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 ArtifactRegistryClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

@@ -134,6 +134,16 @@ TEST(ListBucketsRequestTest, OStream) {
   EXPECT_THAT(os.str(), HasSubstr("prefix=foo-bar-baz"));
 }
 
+TEST(ListBucketsRequestTest, PartialSuccess) {
+  ListBucketsRequest request("project-to-list");
+  request.set_multiple_options(ReturnPartialSuccess(true));
+
+  std::ostringstream os;
+  os << request;
+  EXPECT_THAT(os.str(), HasSubstr("ListBucketsRequest"));
+  EXPECT_THAT(os.str(), HasSubstr("returnPartialSuccess=true"));
+}
+
 TEST(ListBucketsResponseTest, Parse) {
   std::string bucket1 = R"""({
       "kind": "storage#bucket",
@@ -396,7 +406,8 @@ TEST(PatchBucketRequestTest, DiffSetEncryption) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.reset_encryption();
   BucketMetadata updated = original;
-  updated.set_encryption(BucketEncryption{"invalid-key-name-just-for-test"});
+  updated.set_encryption(
+      BucketEncryption{"invalid-key-name-just-for-test", {}, {}, {}});
   PatchBucketRequest request("test-bucket", original, updated);
 
   auto patch = nlohmann::json::parse(request.payload());
@@ -408,7 +419,8 @@ TEST(PatchBucketRequestTest, DiffSetEncryption) {
 
 TEST(PatchBucketRequestTest, DiffResetEncryption) {
   BucketMetadata original = CreateBucketMetadataForTest();
-  original.set_encryption(BucketEncryption{"invalid-key-name-just-for-test"});
+  original.set_encryption(
+      BucketEncryption{"invalid-key-name-just-for-test", {}, {}, {}});
   BucketMetadata updated = original;
   updated.reset_encryption();
   PatchBucketRequest request("test-bucket", original, updated);

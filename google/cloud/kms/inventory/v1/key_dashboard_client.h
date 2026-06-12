@@ -117,7 +117,7 @@ class KeyDashboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.inventory.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_dashboard_service.proto#L52}
+  /// [google.cloud.kms.inventory.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_dashboard_service.proto#L51}
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
   ///
   // clang-format on
@@ -158,7 +158,7 @@ class KeyDashboardServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.inventory.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_dashboard_service.proto#L52}
+  /// [google.cloud.kms.inventory.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_dashboard_service.proto#L51}
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
   ///
   // clang-format on

@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_admin_option_defaults.h"
 #include "google/cloud/aiplatform/v1/feature_online_store_admin_connection.h"
 #include "google/cloud/aiplatform/v1/feature_online_store_admin_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -46,7 +46,7 @@ Options FeatureOnlineStoreAdminServiceDefaultOptions(
           aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicyOption>(
         aiplatform_v1::FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

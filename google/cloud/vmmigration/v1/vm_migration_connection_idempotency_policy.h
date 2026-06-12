@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_VM_MIGRATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_VM_MIGRATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/vmmigration/v1/vmmigration.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -55,6 +55,9 @@ class VmMigrationConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency FetchInventory(
       google::cloud::vmmigration::v1::FetchInventoryRequest const& request);
+
+  virtual google::cloud::Idempotency FetchStorageInventory(
+      google::cloud::vmmigration::v1::FetchStorageInventoryRequest request);
 
   virtual google::cloud::Idempotency ListUtilizationReports(
       google::cloud::vmmigration::v1::ListUtilizationReportsRequest request);
@@ -115,6 +118,9 @@ class VmMigrationConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency FinalizeMigration(
       google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request);
+
+  virtual google::cloud::Idempotency ExtendMigration(
+      google::cloud::vmmigration::v1::ExtendMigrationRequest const& request);
 
   virtual google::cloud::Idempotency CreateCloneJob(
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request);
@@ -185,6 +191,55 @@ class VmMigrationConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetReplicationCycle(
       google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListImageImports(
+      google::cloud::vmmigration::v1::ListImageImportsRequest request);
+
+  virtual google::cloud::Idempotency GetImageImport(
+      google::cloud::vmmigration::v1::GetImageImportRequest const& request);
+
+  virtual google::cloud::Idempotency CreateImageImport(
+      google::cloud::vmmigration::v1::CreateImageImportRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteImageImport(
+      google::cloud::vmmigration::v1::DeleteImageImportRequest const& request);
+
+  virtual google::cloud::Idempotency ListImageImportJobs(
+      google::cloud::vmmigration::v1::ListImageImportJobsRequest request);
+
+  virtual google::cloud::Idempotency GetImageImportJob(
+      google::cloud::vmmigration::v1::GetImageImportJobRequest const& request);
+
+  virtual google::cloud::Idempotency CancelImageImportJob(
+      google::cloud::vmmigration::v1::CancelImageImportJobRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateDiskMigrationJob(
+      google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListDiskMigrationJobs(
+      google::cloud::vmmigration::v1::ListDiskMigrationJobsRequest request);
+
+  virtual google::cloud::Idempotency GetDiskMigrationJob(
+      google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateDiskMigrationJob(
+      google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteDiskMigrationJob(
+      google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RunDiskMigrationJob(
+      google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CancelDiskMigrationJob(
+      google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&
           request);
 
   virtual google::cloud::Idempotency ListLocations(

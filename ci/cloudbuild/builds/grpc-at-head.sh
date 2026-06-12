@@ -20,10 +20,11 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 source module ci/cloudbuild/builds/lib/integration.sh
+source module ci/etc/quickstart-config.sh
 
 rm -fr /h/grpc && git -C /h clone -q --depth 1 https://github.com/grpc/grpc.git
 rm -fr /h/protobuf && mkdir -p /h/protobuf &&
-  curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.0.tar.gz |
+  curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v31.1.tar.gz |
   tar -C /h/protobuf -xzf - --strip-components=1
 
 mapfile -t args < <(bazel::common_args)
@@ -35,3 +36,9 @@ bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]
 
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
+
+for lib in $(quickstart::libraries); do
+  io::log_h2 "Building Bazel quickstart for ${lib} using MODULE"
+  USE_BAZEL_VERSION=8.5.1 io::run env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \
+    bazel build --noenable_workspace --enable_bzlmod "${args[@]}" :quickstart
+done

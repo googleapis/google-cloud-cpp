@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GkeHubTracingStub::GkeHubTracingStub(std::shared_ptr<GkeHubStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -41,6 +42,18 @@ GkeHubTracingStub::ListMemberships(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListMemberships(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::ListBoundMembershipsResponse>
+GkeHubTracingStub::ListBoundMemberships(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListBoundMembershipsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "ListBoundMemberships");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListBoundMemberships(context, options, request));
 }
 
 StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
@@ -245,6 +258,678 @@ GkeHubTracingStub::GenerateConnectManifest(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncCreateFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateFleetRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "CreateFleet");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateFleet(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingStub::CreateFleet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateFleetRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "CreateFleet");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateFleet(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::Fleet> GkeHubTracingStub::GetFleet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetFleetRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "GetFleet");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetFleet(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncUpdateFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateFleetRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "UpdateFleet");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateFleet(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingStub::UpdateFleet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateFleetRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "UpdateFleet");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateFleet(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncDeleteFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteFleetRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "DeleteFleet");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteFleet(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingStub::DeleteFleet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteFleetRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "DeleteFleet");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFleet(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::ListFleetsResponse>
+GkeHubTracingStub::ListFleets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListFleetsRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "ListFleets");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListFleets(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::Namespace>
+GkeHubTracingStub::GetScopeNamespace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetScopeNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "GetScopeNamespace");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetScopeNamespace(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncCreateScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "CreateScopeNamespace");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateScopeNamespace(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::CreateScopeNamespace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "CreateScopeNamespace");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateScopeNamespace(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncUpdateScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "UpdateScopeNamespace");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateScopeNamespace(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::UpdateScopeNamespace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "UpdateScopeNamespace");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateScopeNamespace(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncDeleteScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "DeleteScopeNamespace");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteScopeNamespace(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::DeleteScopeNamespace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "DeleteScopeNamespace");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteScopeNamespace(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopeNamespacesResponse>
+GkeHubTracingStub::ListScopeNamespaces(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListScopeNamespacesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "ListScopeNamespaces");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListScopeNamespaces(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubTracingStub::GetScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "GetScopeRBACRoleBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetScopeRBACRoleBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncCreateScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "CreateScopeRBACRoleBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateScopeRBACRoleBinding(cq, context,
+                                                   std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::CreateScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "CreateScopeRBACRoleBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateScopeRBACRoleBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncUpdateScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "UpdateScopeRBACRoleBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateScopeRBACRoleBinding(cq, context,
+                                                   std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::UpdateScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "UpdateScopeRBACRoleBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateScopeRBACRoleBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncDeleteScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "DeleteScopeRBACRoleBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteScopeRBACRoleBinding(cq, context,
+                                                   std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::DeleteScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "DeleteScopeRBACRoleBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteScopeRBACRoleBinding(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopeRBACRoleBindingsResponse>
+GkeHubTracingStub::ListScopeRBACRoleBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "ListScopeRBACRoleBindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListScopeRBACRoleBindings(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::Scope> GkeHubTracingStub::GetScope(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetScopeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "GetScope");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetScope(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncCreateScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateScopeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "CreateScope");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateScope(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingStub::CreateScope(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateScopeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "CreateScope");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateScope(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncUpdateScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateScopeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "UpdateScope");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateScope(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingStub::UpdateScope(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateScopeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "UpdateScope");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateScope(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncDeleteScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteScopeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "DeleteScope");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteScope(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingStub::DeleteScope(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteScopeRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "DeleteScope");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteScope(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopesResponse>
+GkeHubTracingStub::ListScopes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListScopesRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "ListScopes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListScopes(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::ListPermittedScopesResponse>
+GkeHubTracingStub::ListPermittedScopes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListPermittedScopesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "ListPermittedScopes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListPermittedScopes(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::MembershipBinding>
+GkeHubTracingStub::GetMembershipBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetMembershipBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "GetMembershipBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetMembershipBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncCreateMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "CreateMembershipBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateMembershipBinding(cq, context, std::move(options),
+                                                request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::CreateMembershipBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "CreateMembershipBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateMembershipBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncUpdateMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "UpdateMembershipBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateMembershipBinding(cq, context, std::move(options),
+                                                request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::UpdateMembershipBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "UpdateMembershipBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateMembershipBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncDeleteMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "DeleteMembershipBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteMembershipBinding(cq, context, std::move(options),
+                                                request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::DeleteMembershipBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "DeleteMembershipBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteMembershipBinding(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::ListMembershipBindingsResponse>
+GkeHubTracingStub::ListMembershipBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListMembershipBindingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "ListMembershipBindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListMembershipBindings(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+GkeHubTracingStub::GetMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "GetMembershipRBACRoleBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetMembershipRBACRoleBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncCreateMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "CreateMembershipRBACRoleBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateMembershipRBACRoleBinding(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::CreateMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "CreateMembershipRBACRoleBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateMembershipRBACRoleBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncUpdateMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "UpdateMembershipRBACRoleBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateMembershipRBACRoleBinding(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::UpdateMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "UpdateMembershipRBACRoleBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateMembershipRBACRoleBinding(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GkeHubTracingStub::AsyncDeleteMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "DeleteMembershipRBACRoleBinding");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteMembershipRBACRoleBinding(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+GkeHubTracingStub::DeleteMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "DeleteMembershipRBACRoleBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteMembershipRBACRoleBinding(context, options, request));
+}
+
+StatusOr<google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsResponse>
+GkeHubTracingStub::ListMembershipRBACRoleBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "ListMembershipRBACRoleBindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListMembershipRBACRoleBindings(context, options, request));
+}
+
+StatusOr<
+    google::cloud::gkehub::v1::GenerateMembershipRBACRoleBindingYAMLResponse>
+GkeHubTracingStub::GenerateMembershipRBACRoleBindingYAML(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkehub::v1::
+        GenerateMembershipRBACRoleBindingYAMLRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
+                                     "GenerateMembershipRBACRoleBindingYAML");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateMembershipRBACRoleBindingYAML(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 GkeHubTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -272,18 +957,14 @@ future<Status> GkeHubTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<GkeHubStub> MakeGkeHubTracingStub(
     std::shared_ptr<GkeHubStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<GkeHubTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

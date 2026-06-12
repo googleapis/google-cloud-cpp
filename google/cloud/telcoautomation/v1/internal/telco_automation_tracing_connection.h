@@ -28,8 +28,6 @@ namespace cloud {
 namespace telcoautomation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TelcoAutomationTracingConnection
     : public telcoautomation_v1::TelcoAutomationConnection {
  public:
@@ -255,8 +253,6 @@ class TelcoAutomationTracingConnection
  private:
   std::shared_ptr<telcoautomation_v1::TelcoAutomationConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

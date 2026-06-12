@@ -28,7 +28,7 @@
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <opentelemetry/sdk/metrics/view/view_registry.h>
 #include <opentelemetry/sdk/resource/resource.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/service_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -40,7 +40,7 @@ using ::testing::IsEmpty;
 using ::testing::Not;
 namespace metrics_api = ::opentelemetry::metrics;
 namespace metrics_sdk = ::opentelemetry::sdk::metrics;
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+namespace sc = opentelemetry::semconv;
 
 auto constexpr kJobName = "monitoring_exporter_integration_test";
 auto constexpr kMeterName =
@@ -59,9 +59,9 @@ void InstallExporter(std::unique_ptr<metrics_sdk::PushMetricExporter> exporter,
   // attributes which will map to a `generic_task`, which seems apt for this
   // workflow.
   auto resource = opentelemetry::sdk::resource::Resource::Create(
-      {{sc::kServiceNamespace, "gl-cpp"},
-       {sc::kServiceName, kJobName},
-       {sc::kServiceInstanceId, task_id}});
+      {{sc::service::kServiceNamespace, "gl-cpp"},
+       {sc::service::kServiceName, kJobName},
+       {sc::service::kServiceInstanceId, task_id}});
 
   // Initialize and set the global MeterProvider
   metrics_sdk::PeriodicExportingMetricReaderOptions options;

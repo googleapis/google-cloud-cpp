@@ -42,7 +42,7 @@ Options VmwareEngineDefaultOptions(Options options) {
   if (!options.has<vmwareengine_v1::VmwareEngineRetryPolicyOption>()) {
     options.set<vmwareengine_v1::VmwareEngineRetryPolicyOption>(
         vmwareengine_v1::VmwareEngineLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<vmwareengine_v1::VmwareEngineBackoffPolicyOption>()) {

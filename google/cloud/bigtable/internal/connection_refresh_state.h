@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_CONNECTION_REFRESH_STATE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_CONNECTION_REFRESH_STATE_H
 
+#include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -81,12 +82,22 @@ class ConnectionRefreshState {
 };
 
 /**
- * Schedule a chain of timers to refresh the connection.
+ * Schedule a chain of timers to refresh the grpc::Channel using
+ * AsyncWaitConnectionReady which leverages grpc::Channel::GetState.
  */
 void ScheduleChannelRefresh(
     std::shared_ptr<internal::CompletionQueueImpl> const& cq,
     std::shared_ptr<ConnectionRefreshState> const& state,
     std::shared_ptr<grpc::Channel> const& channel);
+
+/**
+ * Schedule a chain of timers to refresh the BigtableStub using PingAndWarm.
+ */
+void ScheduleStubRefresh(
+    std::shared_ptr<internal::CompletionQueueImpl> const& cq,
+    std::shared_ptr<ConnectionRefreshState> const& state,
+    std::shared_ptr<BigtableStub> const& stub, std::string const& instance_name,
+    std::function<void(Status const&)> connection_status_fn = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

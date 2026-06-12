@@ -9,10 +9,11 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet hub_client_samples.cc with-service-account
+@snippet data_transfer_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c networkconnectivity_v1::DataTransferServiceClient](@ref networkconnectivity_v1::DataTransferServiceClient-service-account-snippet)
 - [\c networkconnectivity_v1::HubServiceClient](@ref networkconnectivity_v1::HubServiceClient-service-account-snippet)
 - [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref networkconnectivity_v1::PolicyBasedRoutingServiceClient-service-account-snippet)
 
@@ -31,6 +32,12 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page networkconnectivity_v1::DataTransferServiceClient-service-account-snippet Override networkconnectivity_v1::DataTransferServiceClient Authentication Defaults
+
+@snippet google/cloud/networkconnectivity/v1/samples/data_transfer_client_samples.cc with-service-account
+
+*/
 
 /*! @page networkconnectivity_v1::HubServiceClient-service-account-snippet Override networkconnectivity_v1::HubServiceClient Authentication Defaults
 

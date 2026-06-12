@@ -61,6 +61,23 @@ FeatureOnlineStoreServiceClient::SearchNearestEntities(
   return connection_->SearchNearestEntities(request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
+    google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
+FeatureOnlineStoreServiceClient::AsyncFeatureViewDirectWrite(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncFeatureViewDirectWrite();
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceClient::GenerateFetchAccessToken(
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateFetchAccessToken(request);
+}
+
 StreamRange<google::cloud::location::Location>
 FeatureOnlineStoreServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

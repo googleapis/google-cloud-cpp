@@ -42,7 +42,7 @@ Options KeyManagementServiceDefaultOptions(Options options) {
   if (!options.has<kms_v1::KeyManagementServiceRetryPolicyOption>()) {
     options.set<kms_v1::KeyManagementServiceRetryPolicyOption>(
         kms_v1::KeyManagementServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<kms_v1::KeyManagementServiceBackoffPolicyOption>()) {
@@ -50,6 +50,18 @@ Options KeyManagementServiceDefaultOptions(Options options) {
         ExponentialBackoffPolicy(
             std::chrono::seconds(0), std::chrono::seconds(1),
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
+  }
+  if (!options.has<kms_v1::KeyManagementServicePollingPolicyOption>()) {
+    options.set<kms_v1::KeyManagementServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            kms_v1::KeyManagementServiceRetryPolicyOption::Type,
+            kms_v1::KeyManagementServiceBackoffPolicyOption::Type>(
+            options.get<kms_v1::KeyManagementServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
             .clone());
   }
   if (!options.has<

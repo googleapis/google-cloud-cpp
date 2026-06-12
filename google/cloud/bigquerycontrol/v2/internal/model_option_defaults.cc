@@ -41,7 +41,7 @@ Options ModelServiceDefaultOptions(Options options) {
   if (!options.has<bigquerycontrol_v2::ModelServiceRetryPolicyOption>()) {
     options.set<bigquerycontrol_v2::ModelServiceRetryPolicyOption>(
         bigquerycontrol_v2::ModelServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<bigquerycontrol_v2::ModelServiceBackoffPolicyOption>()) {

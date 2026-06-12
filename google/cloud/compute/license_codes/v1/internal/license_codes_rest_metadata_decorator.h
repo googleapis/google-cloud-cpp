@@ -20,10 +20,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_INTERNAL_LICENSE_CODES_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_stub.h"
+#include "google/cloud/compute/license_codes/v1/license_codes.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/license_codes/v1/license_codes.pb.h>
 #include <memory>
 #include <string>
 

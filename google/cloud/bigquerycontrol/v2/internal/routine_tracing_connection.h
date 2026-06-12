@@ -28,8 +28,6 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RoutineServiceTracingConnection
     : public bigquerycontrol_v2::RoutineServiceConnection {
  public:
@@ -51,9 +49,6 @@ class RoutineServiceTracingConnection
       google::cloud::bigquery::v2::UpdateRoutineRequest const& request)
       override;
 
-  StatusOr<google::cloud::bigquery::v2::Routine> PatchRoutine(
-      google::cloud::bigquery::v2::PatchRoutineRequest const& request) override;
-
   Status DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const&
                            request) override;
 
@@ -63,8 +58,6 @@ class RoutineServiceTracingConnection
  private:
   std::shared_ptr<bigquerycontrol_v2::RoutineServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

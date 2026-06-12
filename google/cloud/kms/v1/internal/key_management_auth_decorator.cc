@@ -17,9 +17,12 @@
 // source: google/cloud/kms/v1/service.proto
 
 #include "google/cloud/kms/v1/internal/key_management_auth_decorator.h"
-#include <google/cloud/kms/v1/service.grpc.pb.h>
+#include "google/cloud/kms/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -67,6 +70,15 @@ KeyManagementServiceAuth::ListImportJobs(
   return child_->ListImportJobs(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::ListRetiredResourcesResponse>
+KeyManagementServiceAuth::ListRetiredResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::ListRetiredResourcesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListRetiredResources(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing> KeyManagementServiceAuth::GetKeyRing(
     grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetKeyRingRequest const& request) {
@@ -111,6 +123,15 @@ KeyManagementServiceAuth::GetImportJob(
   return child_->GetImportJob(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceAuth::GetRetiredResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::GetRetiredResourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetRetiredResource(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceAuth::CreateKeyRing(
     grpc::ClientContext& context, Options const& options,
@@ -136,6 +157,64 @@ KeyManagementServiceAuth::CreateCryptoKeyVersion(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCryptoKeyVersion(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceAuth::AsyncDeleteCryptoKey(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteCryptoKey(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceAuth::DeleteCryptoKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCryptoKey(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceAuth::AsyncDeleteCryptoKeyVersion(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteCryptoKeyVersion(cq, *std::move(context),
+                                                  std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceAuth::DeleteCryptoKeyVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
@@ -274,6 +353,15 @@ KeyManagementServiceAuth::MacVerify(
   return child_->MacVerify(context, options, request);
 }
 
+StatusOr<google::cloud::kms::v1::DecapsulateResponse>
+KeyManagementServiceAuth::Decapsulate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::DecapsulateRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->Decapsulate(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceAuth::GenerateRandomBytes(
     grpc::ClientContext& context, Options const& options,
@@ -334,7 +422,45 @@ StatusOr<google::longrunning::Operation> KeyManagementServiceAuth::GetOperation(
   return child_->GetOperation(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+KeyManagementServiceAuth::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::GetOperationRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+future<Status> KeyManagementServiceAuth::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) return make_ready_future(std::move(context).status());
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -266,10 +266,10 @@ std::ostream& operator<<(std::ostream& os, UpdateObjectRequest const& r);
  * Represents a request to the `Objects: compose` API.
  */
 class ComposeObjectRequest
-    : public GenericObjectRequest<ComposeObjectRequest, EncryptionKey,
-                                  DestinationPredefinedAcl, KmsKeyName,
-                                  IfGenerationMatch, IfMetagenerationMatch,
-                                  UserProject, WithObjectMetadata> {
+    : public GenericObjectRequest<
+          ComposeObjectRequest, EncryptionKey, DestinationPredefinedAcl,
+          KmsKeyName, IfGenerationMatch, IfMetagenerationMatch, UserProject,
+          WithObjectMetadata, DeleteSourceObjects> {
  public:
   ComposeObjectRequest() = default;
   explicit ComposeObjectRequest(std::string bucket_name,
@@ -534,6 +534,9 @@ class UploadChunkRequest
   HashValues const& known_object_hashes() const { return known_object_hashes_; }
 
   HashFunction& hash_function() const { return *hash_function_; }
+  std::shared_ptr<HashFunction> hash_function_ptr() const {
+    return hash_function_;
+  }
 
   bool last_chunk() const { return upload_size_.has_value(); }
   std::size_t payload_size() const { return TotalBytes(payload_); }

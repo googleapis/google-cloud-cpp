@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <cstdint>
 #include <string>
 #include <utility>
@@ -27,21 +25,20 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace sc = ::opentelemetry::trace::SemanticConventions;
+namespace sc = ::opentelemetry::semconv;
 
-class AsyncReaderConnectionTracing
-    : public storage_experimental::AsyncReaderConnection {
+class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
  public:
   explicit AsyncReaderConnectionTracing(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      std::unique_ptr<storage_experimental::AsyncReaderConnection> impl)
+      std::unique_ptr<storage::AsyncReaderConnection> impl)
       : span_(std::move(span)), impl_(std::move(impl)) {}
 
   void Cancel() override {
     auto scope = opentelemetry::trace::Scope(span_);
     span_->AddEvent("gl-cpp.cancel",
                     {
-                        {sc::kThreadId, internal::CurrentThreadId()},
+                        {sc::thread::kThreadId, internal::CurrentThreadId()},
                     });
     return impl_->Cancel();
   }
@@ -57,17 +54,17 @@ class AsyncReaderConnectionTracing
                 {
                     {/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
                     {/*sc::kRpcMessageId=*/"rpc.message.id", count},
-                    {sc::kThreadId, internal::CurrentThreadId()},
+                    {sc::thread::kThreadId, internal::CurrentThreadId()},
                 });
             return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
           }
-          auto const& payload = absl::get<storage_experimental::ReadPayload>(r);
+          auto const& payload = absl::get<storage::ReadPayload>(r);
           span->AddEvent(
               "gl-cpp.read",
               {
                   {/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
                   {/*sc::kRpcMessageId=*/"rpc.message.id", count},
-                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {sc::thread::kThreadId, internal::CurrentThreadId()},
                   {"message.starting_offset", payload.offset()},
               });
           return r;
@@ -86,16 +83,15 @@ class AsyncReaderConnectionTracing
 
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
-  std::unique_ptr<storage_experimental::AsyncReaderConnection> impl_;
+  std::unique_ptr<storage::AsyncReaderConnection> impl_;
   std::int64_t count_ = 0;
 };
 
 }  // namespace
 
-std::unique_ptr<storage_experimental::AsyncReaderConnection>
-MakeTracingReaderConnection(
+std::unique_ptr<storage::AsyncReaderConnection> MakeTracingReaderConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::unique_ptr<storage_experimental::AsyncReaderConnection> impl) {
+    std::unique_ptr<storage::AsyncReaderConnection> impl) {
   return std::make_unique<AsyncReaderConnectionTracing>(std::move(span),
                                                         std::move(impl));
 }
@@ -104,5 +100,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -17,7 +17,7 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(translate "Cloud Translation API"
-                                   SERVICE_DIRS "__EMPTY__" "v3/")
+                                   SERVICE_DIRS "v3/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(translate_quickstart "quickstart/quickstart.cc")

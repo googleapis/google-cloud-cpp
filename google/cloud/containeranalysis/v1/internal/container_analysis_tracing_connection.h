@@ -28,8 +28,6 @@ namespace cloud {
 namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ContainerAnalysisTracingConnection
     : public containeranalysis_v1::ContainerAnalysisConnection {
  public:
@@ -62,8 +60,6 @@ class ContainerAnalysisTracingConnection
  private:
   std::shared_ptr<containeranalysis_v1::ContainerAnalysisConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

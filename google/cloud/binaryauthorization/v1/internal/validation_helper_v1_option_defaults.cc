@@ -43,7 +43,7 @@ Options ValidationHelperV1DefaultOptions(Options options) {
           binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>()) {
     options.set<binaryauthorization_v1::ValidationHelperV1RetryPolicyOption>(
         binaryauthorization_v1::ValidationHelperV1LimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

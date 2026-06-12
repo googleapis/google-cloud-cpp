@@ -52,8 +52,8 @@ class PartialResultSetResume : public PartialResultSetReader {
   ~PartialResultSetResume() override = default;
 
   void TryCancel() override;
-  absl::optional<PartialResultSet> Read(
-      absl::optional<std::string> const& resume_token) override;
+  bool Read(absl::optional<std::string> const& resume_token,
+            UnownedPartialResultSet& result) override;
   Status Finish() override;
 
  private:

@@ -63,7 +63,7 @@ class Benchmark {
   google::cloud::StatusOr<BenchmarkResult> PopulateTable();
 
   /// Return a `bigtable::Table` configured for this benchmark.
-  Table MakeTable() const;
+  Table MakeTable(Options connection_opts = Options{}) const;
 
   /// Create a random key.
   std::string MakeRandomKey(google::cloud::internal::DefaultPRNG& gen) const;

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_H
 
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_retry_traits.h"
+#include "google/cloud/bigquery/reservation/v1/reservation.pb.h"
 #include "google/cloud/bigquery/reservation/v1/reservation_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/reservation/v1/reservation.pb.h>
 #include <memory>
 
 namespace google {
@@ -286,6 +286,33 @@ class ReservationServiceConnection {
   virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   UpdateBiReservation(google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  CreateReservationGroup(google::cloud::bigquery::reservation::v1::
+                             CreateReservationGroupRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  GetReservationGroup(google::cloud::bigquery::reservation::v1::
+                          GetReservationGroupRequest const& request);
+
+  virtual Status DeleteReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request);
+
+  virtual StreamRange<
+      google::cloud::bigquery::reservation::v1::ReservationGroup>
+  ListReservationGroups(
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+          request);
 };
 
 /**

@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_routes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RoutesTracingConnection : public compute_routes_v1::RoutesConnection {
  public:
   ~RoutesTracingConnection() override = default;
@@ -74,8 +72,6 @@ class RoutesTracingConnection : public compute_routes_v1::RoutesConnection {
  private:
   std::shared_ptr<compute_routes_v1::RoutesConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

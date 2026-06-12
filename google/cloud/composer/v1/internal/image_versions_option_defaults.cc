@@ -41,7 +41,7 @@ Options ImageVersionsDefaultOptions(Options options) {
   if (!options.has<composer_v1::ImageVersionsRetryPolicyOption>()) {
     options.set<composer_v1::ImageVersionsRetryPolicyOption>(
         composer_v1::ImageVersionsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<composer_v1::ImageVersionsBackoffPolicyOption>()) {

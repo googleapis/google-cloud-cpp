@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace bigquery_analyticshub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AnalyticsHubServiceTracingStub::AnalyticsHubServiceTracingStub(
     std::shared_ptr<AnalyticsHubServiceStub> child)
@@ -387,6 +388,103 @@ AnalyticsHubServiceTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingStub::CreateQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "CreateQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateQueryTemplate(context, options, request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingStub::GetQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "GetQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetQueryTemplate(context, options, request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse>
+AnalyticsHubServiceTracingStub::ListQueryTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "ListQueryTemplates");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListQueryTemplates(context, options, request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingStub::UpdateQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "UpdateQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateQueryTemplate(context, options, request));
+}
+
+Status AnalyticsHubServiceTracingStub::DeleteQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "DeleteQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteQueryTemplate(context, options, request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingStub::SubmitQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "SubmitQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->SubmitQueryTemplate(context, options, request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceTracingStub::ApproveQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "ApproveQueryTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ApproveQueryTemplate(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -415,18 +513,14 @@ future<Status> AnalyticsHubServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<AnalyticsHubServiceStub> MakeAnalyticsHubServiceTracingStub(
     std::shared_ptr<AnalyticsHubServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AnalyticsHubServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

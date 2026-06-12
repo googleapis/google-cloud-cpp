@@ -16,7 +16,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/struct.pb.h>
+#include "google/protobuf/struct.pb.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>

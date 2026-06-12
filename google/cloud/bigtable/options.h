@@ -39,12 +39,16 @@
  */
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/instance_resource.h"
+#include "google/cloud/bigtable/internal/endpoint_options.h"
 #include "google/cloud/bigtable/retry_policy.h"
-#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <functional>
+#include <memory>
 #include <string>
 
 namespace google {
@@ -97,37 +101,6 @@ struct AppProfileIdOption {
  */
 struct ReverseScanOption {
   using Type = bool;
-};
-
-/**
- * The endpoint for data operations.
- *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
- */
-struct DataEndpointOption {
-  using Type = std::string;
-};
-
-/**
- * The endpoint for table admin operations.
- *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
- */
-struct AdminEndpointOption {
-  using Type = std::string;
-};
-
-/**
- * The endpoint for instance admin operations.
- *
- * In most scenarios this should have the same value as `AdminEndpointOption`.
- * The most common exception is testing, where the emulator for instance admin
- * operations may be different than the emulator for admin and data operations.
- *
- * @deprecated Please use `google::cloud::EndpointOption` instead.
- */
-struct InstanceAdminEndpointOption {
-  using Type = std::string;
 };
 
 /**
@@ -187,13 +160,80 @@ struct BulkApplyThrottlingOption {
   using Type = bool;
 };
 
+/**
+ * Option to configure the retry policy used in `bigtable::Client::ExecuteQuery`
+ * to automatically refresh expired or invalid query plans encountered during
+ * execution.
+ */
+struct ExecuteQueryPlanRefreshRetryPolicyOption {
+  using Type = std::shared_ptr<DataRetryPolicy>;
+};
+
+/**
+ * Option to configure the retry policy used for query plan refresh attempts.
+ */
+struct QueryPlanRefreshFunctionRetryPolicyOption {
+  using Type = std::shared_ptr<DataRetryPolicy>;
+};
+
+/**
+ *  If set, a dynamic channel pool is created for each instance that requests
+ *  are destined. Instances specified as part of this Option have dynamic
+ *  channel pools created and primed as part of DataConnection construction. If
+ *  no Instances are specified, then dynamic channel pool creation is deferred
+ *  until the first request sent, increasing time to first byte latency.
+ *
+ * @note This option must be supplied to `MakeDataConnection()` in order to take
+ * effect.
+ */
+struct InstanceChannelAffinityOption {
+  using Type = std::vector<bigtable::InstanceResource>;
+};
+
+/**
+ *  If the `InstanceChannelAffinityOption` is set, then all connections will be
+ *  managed by a Dynamic Channel Pool. The `DynamicChannelPoolSizingPolicy` can
+ *  be provided via the `DynamicChannelPoolSizingPolicyOption` and configures
+ *  the behavior of the `DynamicChannelPool`.
+ */
+struct DynamicChannelPoolSizingPolicy {
+  // Removing unused channels is not as performance critical as adding channels
+  // to handle a surge in RPC calls. Thus, there are separate cooldown settings
+  // for each.
+  std::chrono::milliseconds pool_size_decrease_cooldown_interval =
+      std::chrono::seconds(120);
+
+  // If the average number of outstanding RPCs is below this threshold,
+  // the pool size will be decreased.
+  int minimum_average_outstanding_rpcs_per_channel = 1;
+  // If the average number of outstanding RPCs is above this threshold,
+  // the pool size will be increased.
+  int maximum_average_outstanding_rpcs_per_channel = 25;
+
+  // When channels are removed from the pool, we have to wait until all
+  // outstanding RPCs on that channel are completed before destroying it.
+  std::chrono::milliseconds remove_channel_polling_interval =
+      std::chrono::seconds(30);
+
+  // Limits how large the pool can grow. Default is twice the minimum_pool_size.
+  std::size_t maximum_channel_pool_size = 0;
+
+  // This is set to the value of GrpcNumChannelsOption.
+  std::size_t minimum_channel_pool_size = 0;
+};
+
+struct DynamicChannelPoolSizingPolicyOption {
+  using Type = DynamicChannelPoolSizingPolicy;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`
 using ClientOptionList =
-    OptionList<DataEndpointOption, AdminEndpointOption,
-               InstanceAdminEndpointOption, MinConnectionRefreshOption,
-               MaxConnectionRefreshOption>;
+    OptionList<::google::cloud::bigtable_internal::DataEndpointOption,
+               ::google::cloud::bigtable_internal::AdminEndpointOption,
+               ::google::cloud::bigtable_internal::InstanceAdminEndpointOption,
+               MinConnectionRefreshOption, MaxConnectionRefreshOption>;
 
 /**
  * Option to configure the retry policy used by `Table`.
@@ -211,6 +251,23 @@ struct DataRetryPolicyOption {
  */
 struct DataBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
+};
+
+/**
+ * Option to set the per RPC attempt deadline.
+ *
+ * @note If used in conjunction with a LimitedTimeRetryPolicy the last RPC
+ *     attempt could cause the maximum duration of the RetryPolicy to be
+ *     extended up to the RPC attempt deadline duration.
+ *
+ * @note If both DeadlineOption and GrpcSetupOption are set, DeadlineOption will
+ *     be applied after GrpcSetupOption, overwriting any changes GrpcSetupOption
+ *     made to grpc::ClientContext::deadline.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+struct DeadlineOption {
+  using Type = std::chrono::milliseconds;
 };
 
 /**
@@ -262,6 +319,21 @@ using DataPolicyOptionList =
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/// Bigtable specific MergeOptions that has special handling for merging
+/// `GrpcSetupOption` and `DeadlineOption`.
+Options MergeOptions(Options preferred, Options alternatives);
+
+/// For testing only.
+Options MergeOptions(
+    Options preferred, Options alternatives,
+    std::function<std::chrono::system_clock::time_point()> now_fn);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

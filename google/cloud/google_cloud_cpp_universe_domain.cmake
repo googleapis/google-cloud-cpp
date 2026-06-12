@@ -63,7 +63,7 @@ google_cloud_cpp_add_pkgconfig(
     "Universe Domain Utilities for the Google Cloud C++ Client Library"
     "Provides Universe Domain Utilities for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common"
-    "google_cloud_rest_internal")
+    "google_cloud_cpp_rest_internal")
 
 # Create and install the CMake configuration files.
 configure_file("config-universe-domain.cmake.in"

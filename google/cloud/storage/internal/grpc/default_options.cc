@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc/default_options.h"
-#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
@@ -36,6 +35,7 @@ namespace {
 
 auto constexpr kMinMetricsPeriod = std::chrono::seconds(5);
 auto constexpr kDefaultMetricsPeriod = std::chrono::seconds(60);
+auto constexpr kDefaultMetricsExportTimeout = std::chrono::seconds(30);
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
   // When using Direct Connectivity the gRPC library already does load balancing
@@ -77,13 +77,18 @@ Options DefaultOptionsGrpc(
             google::cloud::internal::MakeAuthOptions(options)));
   }
 
+  auto const preserve_creds =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TESTING_PRESERVE_CREDENTIALS");
   auto const testbench =
       GetEnv("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT");
   if (testbench.has_value() && !testbench->empty()) {
     options.set<EndpointOption>(*testbench);
-    // The emulator does not support HTTPS or authentication, use insecure
-    // (sometimes called "anonymous") credentials, which disable SSL.
-    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+
+    if (!preserve_creds.has_value()) {
+      // The emulator does not support HTTPS or authentication, use insecure
+      // (sometimes called "anonymous") credentials, which disable SSL.
+      options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+    }
   }
 
   // gRPC <= 1.64 may crash when metrics are enabled, so we don't enable them by
@@ -112,7 +117,9 @@ Options DefaultOptionsGrpc(
           .set<storage_experimental::EnableGrpcMetricsOption>(
               enable_grpc_metrics)
           .set<storage_experimental::GrpcMetricsPeriodOption>(
-              kDefaultMetricsPeriod));
+              kDefaultMetricsPeriod)
+          .set<storage_experimental::GrpcMetricsExportTimeoutOption>(
+              kDefaultMetricsExportTimeout));
   if (options.get<storage_experimental::GrpcMetricsPeriodOption>() <
       kMinMetricsPeriod) {
     options.set<storage_experimental::GrpcMetricsPeriodOption>(

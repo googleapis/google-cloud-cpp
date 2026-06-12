@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/workstations/logging/v1:platform_logs.proto
-@com_google_googleapis//google/cloud/workstations/v1:workstations.proto
+@googleapis//google/cloud/workstations/logging/v1:platform_logs.proto
+@googleapis//google/cloud/workstations/v1:workstations.proto

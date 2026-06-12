@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_CLOUD_REDIS_CLUSTER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_CLOUD_REDIS_CLUSTER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -57,6 +57,10 @@ class CloudRedisClusterConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetClusterCertificateAuthority(
       google::cloud::redis::cluster::v1::
           GetClusterCertificateAuthorityRequest const& request);
+
+  virtual google::cloud::Idempotency GetSharedRegionalCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetSharedRegionalCertificateAuthorityRequest const& request);
 
   virtual google::cloud::Idempotency RescheduleClusterMaintenance(
       google::cloud::redis::cluster::v1::

@@ -77,16 +77,15 @@ std::ostream& operator<<(std::ostream& os, HashTestCase const& rhs) {
   os << "expected_status_code=" << rhs.expected_status_code  //
      << std::boolalpha                                       //
      << ", enable_crc32c_validation="
-     << rhs.options.get<storage_experimental::EnableCrc32cValidationOption>();
-  if (rhs.options.has<storage_experimental::UseCrc32cValueOption>()) {
+     << rhs.options.get<storage::EnableCrc32cValidationOption>();
+  if (rhs.options.has<storage::UseCrc32cValueOption>()) {
     os << ", use_crc32_value="
-       << rhs.options.get<storage_experimental::UseCrc32cValueOption>();
+       << rhs.options.get<storage::UseCrc32cValueOption>();
   }
   os << ", enable_md5_validation="
-     << rhs.options.get<storage_experimental::EnableMD5ValidationOption>();
-  if (rhs.options.has<storage_experimental::UseMD5ValueOption>()) {
-    os << ", use_md5_value="
-       << rhs.options.get<storage_experimental::UseMD5ValueOption>();
+     << rhs.options.get<storage::EnableMD5ValidationOption>();
+  if (rhs.options.has<storage::UseMD5ValueOption>()) {
+    os << ", use_md5_value=" << rhs.options.get<storage::UseMD5ValueOption>();
   }
   os << "}, generated={"
      << google::cloud::internal::DebugString(GeneratedObjectChecksums(rhs),
@@ -99,10 +98,10 @@ class AsyncConnectionImplReadHashTest
     : public ::testing::Test,
       public ::testing::WithParamInterface<HashTestCase> {};
 
-// Use gsutil to obtain the CRC32C checksum (in base64):
+// Use gcloud storage to obtain the CRC32C checksum (in base64):
 //    TEXT="The quick brown fox jumps over the lazy dog"
 //    /bin/echo -n $TEXT > /tmp/fox.txt
-//    gsutil hash /tmp/fox.txt
+//    gcloud storage hash /tmp/fox.txt
 // Hashes [base64] for /tmp/fox.txt:
 //    Hash (crc32c): ImIEBA==
 //    Hash (md5)   : nhB9nTcrtoJr2B01QqQZ1g==
@@ -131,105 +130,92 @@ INSTANTIATE_TEST_SUITE_P(
             // service returns both CRC32C and MD5 values.
             StatusCode::kOk,
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(false),
+                .set<storage::EnableCrc32cValidationOption>(true)
+                .set<storage::EnableMD5ValidationOption>(false),
             kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
         HashTestCase{
             // This is also common, the service does not return a MD5 value.
             StatusCode::kOk,
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(false),
+                .set<storage::EnableCrc32cValidationOption>(true)
+                .set<storage::EnableMD5ValidationOption>(false),
             kQuickFoxCrc32cChecksum, ""},
         // Make sure things work when both hashes are validated too.
-        HashTestCase{
-            StatusCode::kOk,
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(true),
-            kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
+        HashTestCase{StatusCode::kOk,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(true),
+                     kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
         // In the next three cases we verify that disabling some validation
         // works.
-        HashTestCase{
-            StatusCode::kOk,
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(false),
-            kQuickFoxCrc32cChecksum, kQuickFoxMD5HashBad},
-        HashTestCase{
-            StatusCode::kOk,
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(true),
-            kQuickFoxCrc32cChecksumBad, kQuickFoxMD5Hash},
-        HashTestCase{
-            StatusCode::kOk,
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(false),
-            kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
+        HashTestCase{StatusCode::kOk,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     kQuickFoxCrc32cChecksum, kQuickFoxMD5HashBad},
+        HashTestCase{StatusCode::kOk,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(true),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5Hash},
+        HashTestCase{StatusCode::kOk,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
         // In the next three cases we verify that validation works when the
         // returned values are not correct.
-        HashTestCase{
-            StatusCode::kInvalidArgument,
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(false)
-                .set<storage_experimental::EnableMD5ValidationOption>(true),
-            kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
-        HashTestCase{
-            StatusCode::kInvalidArgument,
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(false),
-            kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
-        HashTestCase{
-            StatusCode::kInvalidArgument,
-            Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(true),
-            kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
+        HashTestCase{StatusCode::kInvalidArgument,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(true),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
+        HashTestCase{StatusCode::kInvalidArgument,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
+        HashTestCase{StatusCode::kInvalidArgument,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(true),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
         // The application may know what the values should be. Verify the
         // validation works correctly when the application provides correct
         // values.
         HashTestCase{
             StatusCode::kOk,
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(true)
-                .set<storage_experimental::UseCrc32cValueOption>(
-                    kQuickFoxCrc32cChecksum)
-                .set<storage_experimental::UseMD5ValueOption>(
-                    BinaryMD5(kQuickFoxMD5Hash)),
+                .set<storage::EnableCrc32cValidationOption>(true)
+                .set<storage::EnableMD5ValidationOption>(true)
+                .set<storage::UseCrc32cValueOption>(kQuickFoxCrc32cChecksum)
+                .set<storage::UseMD5ValueOption>(BinaryMD5(kQuickFoxMD5Hash)),
             kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
         // Verify bad values are detected
         HashTestCase{
             StatusCode::kInvalidArgument,
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(true)
-                .set<storage_experimental::UseCrc32cValueOption>(
-                    kQuickFoxCrc32cChecksumBad)
-                .set<storage_experimental::UseMD5ValueOption>(
-                    BinaryMD5(kQuickFoxMD5Hash)),
+                .set<storage::EnableCrc32cValidationOption>(true)
+                .set<storage::EnableMD5ValidationOption>(true)
+                .set<storage::UseCrc32cValueOption>(kQuickFoxCrc32cChecksumBad)
+                .set<storage::UseMD5ValueOption>(BinaryMD5(kQuickFoxMD5Hash)),
             kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
         HashTestCase{
             StatusCode::kInvalidArgument,
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(true)
-                .set<storage_experimental::UseCrc32cValueOption>(
-                    kQuickFoxCrc32cChecksum)
-                .set<storage_experimental::UseMD5ValueOption>(
+                .set<storage::EnableCrc32cValidationOption>(true)
+                .set<storage::EnableMD5ValidationOption>(true)
+                .set<storage::UseCrc32cValueOption>(kQuickFoxCrc32cChecksum)
+                .set<storage::UseMD5ValueOption>(
                     BinaryMD5(kQuickFoxMD5HashBad)),
             kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
         HashTestCase{
             StatusCode::kInvalidArgument,
             Options{}
-                .set<storage_experimental::EnableCrc32cValidationOption>(true)
-                .set<storage_experimental::EnableMD5ValidationOption>(true)
-                .set<storage_experimental::UseCrc32cValueOption>(
-                    kQuickFoxCrc32cChecksumBad)
-                .set<storage_experimental::UseMD5ValueOption>(
+                .set<storage::EnableCrc32cValidationOption>(true)
+                .set<storage::EnableMD5ValidationOption>(true)
+                .set<storage::UseCrc32cValueOption>(kQuickFoxCrc32cChecksumBad)
+                .set<storage::UseMD5ValueOption>(
                     BinaryMD5(kQuickFoxMD5HashBad)),
             kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash}));
 
@@ -299,7 +285,7 @@ TEST_P(AsyncConnectionImplReadHashTest, ValidateFullChecksums) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
-  EXPECT_THAT(data.get(), VariantWith<storage_experimental::ReadPayload>(_));
+  EXPECT_THAT(data.get(), VariantWith<storage::ReadPayload>(_));
 
   // The last Read() triggers the end of stream message, including a call to
   // `Finish()`. It should detect the invalid checksum.
@@ -385,7 +371,7 @@ TEST_P(AsyncConnectionImplReadHashTest, ReadFromOffsetNoValidate) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
-  EXPECT_THAT(data.get(), VariantWith<storage_experimental::ReadPayload>(_));
+  EXPECT_THAT(data.get(), VariantWith<storage::ReadPayload>(_));
 
   // The last Read() triggers the end of stream message, including a call to
   // `Finish()`. It should detect the invalid checksum.
@@ -470,7 +456,7 @@ TEST_P(AsyncConnectionImplReadHashTest, PartialReadNoValidate) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
-  EXPECT_THAT(data.get(), VariantWith<storage_experimental::ReadPayload>(_));
+  EXPECT_THAT(data.get(), VariantWith<storage::ReadPayload>(_));
 
   // The last Read() triggers the end of stream message, including a call to
   // `Finish()`. It should detect the invalid checksum.

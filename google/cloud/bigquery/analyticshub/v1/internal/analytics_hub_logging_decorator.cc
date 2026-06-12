@@ -17,13 +17,16 @@
 // source: google/cloud/bigquery/analyticshub/v1/analyticshub.proto
 
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_logging_decorator.h"
+#include "google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -400,6 +403,103 @@ AnalyticsHubServiceLogging::TestIamPermissions(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceLogging::CreateQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::CreateQueryTemplateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 CreateQueryTemplateRequest const& request) {
+        return child_->CreateQueryTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceLogging::GetQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 GetQueryTemplateRequest const& request) {
+        return child_->GetQueryTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse>
+AnalyticsHubServiceLogging::ListQueryTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 ListQueryTemplatesRequest const& request) {
+        return child_->ListQueryTemplates(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceLogging::UpdateQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::UpdateQueryTemplateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 UpdateQueryTemplateRequest const& request) {
+        return child_->UpdateQueryTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status AnalyticsHubServiceLogging::DeleteQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::DeleteQueryTemplateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 DeleteQueryTemplateRequest const& request) {
+        return child_->DeleteQueryTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceLogging::SubmitQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::SubmitQueryTemplateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 SubmitQueryTemplateRequest const& request) {
+        return child_->SubmitQueryTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+AnalyticsHubServiceLogging::ApproveQueryTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::analyticshub::v1::
+        ApproveQueryTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 ApproveQueryTemplateRequest const& request) {
+        return child_->ApproveQueryTemplate(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -439,3 +539,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

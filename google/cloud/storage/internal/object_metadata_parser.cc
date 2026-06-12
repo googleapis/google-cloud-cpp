@@ -19,6 +19,7 @@
 #include <nlohmann/json.hpp>
 #include <functional>
 #include <map>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -35,12 +36,30 @@ namespace {
  * This simplifies the implementation of ToJsonString() because we repeat this
  * check for many attributes.
  */
-void SetIfNotEmpty(nlohmann::json& json, char const* key,
-                   std::string const& value) {
-  if (value.empty()) {
-    return;
-  }
+void SetIfNotEmpty(char const* key, std::string const& value,
+                   nlohmann::json& json) {
+  if (value.empty()) return;
   json[key] = value;
+}
+
+/**
+ * Populates the "contexts" field in the JSON object from the given metadata.
+ */
+void SetJsonContextsIfNotEmpty(ObjectMetadata const& meta,
+                               nlohmann::json& json) {
+  if (!meta.has_contexts()) return;
+
+  nlohmann::json custom_json;
+  for (auto const& kv : meta.contexts().custom()) {
+    nlohmann::json item;
+    item["value"] = kv.second.value;
+    item["createTime"] =
+        google::cloud::internal::FormatRfc3339(kv.second.create_time);
+    item["updateTime"] =
+        google::cloud::internal::FormatRfc3339(kv.second.update_time);
+    custom_json[kv.first] = std::move(item);
+  }
+  json["contexts"] = nlohmann::json{{"custom", std::move(custom_json)}};
 }
 
 Status ParseAcl(ObjectMetadata& meta, nlohmann::json const& json) {
@@ -109,7 +128,19 @@ Status ParseMetadata(ObjectMetadata& meta, nlohmann::json const& json) {
   if (f == json.end()) return Status{};
   std::map<std::string, std::string> metadata;
   for (auto const& kv : f->items()) {
-    metadata.emplace(kv.key(), kv.value().get<std::string>());
+    if (!kv.value().is_string()) {
+      if (kv.value().is_null()) {
+        metadata.emplace(kv.key(), std::string{});
+      } else {
+        std::ostringstream os;
+        os << "Error parsing field <metadata." << kv.key()
+           << "> as a string, json=" << kv.value();
+        return google::cloud::internal::InvalidArgumentError(
+            std::move(os).str(), GCP_ERROR_INFO());
+      }
+    } else {
+      metadata.emplace(kv.key(), kv.value().get<std::string>());
+    }
   }
   meta.mutable_metadata() = std::move(metadata);
   return Status{};
@@ -144,6 +175,36 @@ Status ParseRetention(ObjectMetadata& meta, nlohmann::json const& json) {
   retention.mode = f->value("mode", "");
   retention.retain_until_time = *ts;
   meta.set_retention(std::move(retention));
+  return Status{};
+}
+
+Status ParseContexts(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto f_contexts = json.find("contexts");
+  if (f_contexts == json.end()) return Status{};
+
+  auto f_custom = f_contexts->find("custom");
+  if (f_custom == f_contexts->end()) return Status{};
+
+  ObjectContexts contexts;
+  for (auto const& kv : f_custom->items()) {
+    auto const& payload_json = kv.value();
+    ObjectCustomContextPayload payload;
+
+    payload.value = payload_json.value("value", "");
+
+    auto create_time =
+        internal::ParseTimestampField(payload_json, "createTime");
+    if (!create_time) return std::move(create_time).status();
+    payload.create_time = *create_time;
+
+    auto update_time =
+        internal::ParseTimestampField(payload_json, "updateTime");
+    if (!update_time) return std::move(update_time).status();
+    payload.update_time = *update_time;
+
+    contexts.upsert(kv.key(), std::move(payload));
+  }
+  meta.set_contexts(std::move(contexts));
   return Status{};
 }
 
@@ -204,6 +265,14 @@ Status ParseHardDeleteTime(ObjectMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status SetStringField(ObjectMetadata& meta, nlohmann::json const& json,
+                      char const* key,
+                      ObjectMetadata& (ObjectMetadata::*setter)(std::string)) {
+  auto v = internal::ParseStringField(json, key);
+  if (!v) return std::move(v).status();
+  (meta.*setter)(*std::move(v));
+  return Status{};
+}
 }  // namespace
 
 StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
@@ -214,78 +283,75 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
   Parser parsers[] = {
       ParseAcl,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_bucket(json.value("bucket", ""));
-        return Status{};
+        return SetStringField(meta, json, "bucket",
+                              &ObjectMetadata::set_bucket);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_cache_control(json.value("cacheControl", ""));
-        return Status{};
+        return SetStringField(meta, json, "cacheControl",
+                              &ObjectMetadata::set_cache_control);
       },
       ParseComponentCount,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_content_disposition(json.value("contentDisposition", ""));
-        return Status{};
+        return SetStringField(meta, json, "contentDisposition",
+                              &ObjectMetadata::set_content_disposition);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_content_encoding(json.value("contentEncoding", ""));
-        return Status{};
+        return SetStringField(meta, json, "contentEncoding",
+                              &ObjectMetadata::set_content_encoding);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_content_language(json.value("contentLanguage", ""));
-        return Status{};
+        return SetStringField(meta, json, "contentLanguage",
+                              &ObjectMetadata::set_content_language);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_content_type(json.value("contentType", ""));
-        return Status{};
+        return SetStringField(meta, json, "contentType",
+                              &ObjectMetadata::set_content_type);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_crc32c(json.value("crc32c", ""));
-        return Status{};
+        return SetStringField(meta, json, "crc32c",
+                              &ObjectMetadata::set_crc32c);
       },
       ParseCustomTime,
       ParseCustomerEncryption,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_etag(json.value("etag", ""));
-        return Status{};
+        return SetStringField(meta, json, "etag", &ObjectMetadata::set_etag);
       },
       ParseEventBasedHold,
       ParseGeneration,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_id(json.value("id", ""));
-        return Status{};
+        return SetStringField(meta, json, "id", &ObjectMetadata::set_id);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_kind(json.value("kind", ""));
-        return Status{};
+        return SetStringField(meta, json, "kind", &ObjectMetadata::set_kind);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_kms_key_name(json.value("kmsKeyName", ""));
-        return Status{};
+        return SetStringField(meta, json, "kmsKeyName",
+                              &ObjectMetadata::set_kms_key_name);
       },
       ParseMetageneration,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_md5_hash(json.value("md5Hash", ""));
-        return Status{};
+        return SetStringField(meta, json, "md5Hash",
+                              &ObjectMetadata::set_md5_hash);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_media_link(json.value("mediaLink", ""));
-        return Status{};
+        return SetStringField(meta, json, "mediaLink",
+                              &ObjectMetadata::set_media_link);
       },
       ParseMetadata,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_name(json.value("name", ""));
-        return Status{};
+        return SetStringField(meta, json, "name", &ObjectMetadata::set_name);
       },
       ParseOwner,
       ParseRetentionExpirationTime,
       ParseRetention,
+      ParseContexts,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_self_link(json.value("selfLink", ""));
-        return Status{};
+        return SetStringField(meta, json, "selfLink",
+                              &ObjectMetadata::set_self_link);
       },
       [](ObjectMetadata& meta, nlohmann::json const& json) {
-        meta.set_storage_class(json.value("storageClass", ""));
-        return Status{};
+        return SetStringField(meta, json, "storageClass",
+                              &ObjectMetadata::set_storage_class);
       },
       ParseSize,
       ParseTemporaryHold,
@@ -315,25 +381,25 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
       nlohmann::json entry;
-      SetIfNotEmpty(entry, "entity", a.entity());
-      SetIfNotEmpty(entry, "role", a.role());
+      SetIfNotEmpty("entity", a.entity(), entry);
+      SetIfNotEmpty("role", a.role(), entry);
       metadata_as_json["acl"].emplace_back(std::move(entry));
     }
   }
 
-  SetIfNotEmpty(metadata_as_json, "cacheControl", meta.cache_control());
-  SetIfNotEmpty(metadata_as_json, "contentDisposition",
-                meta.content_disposition());
-  SetIfNotEmpty(metadata_as_json, "contentEncoding", meta.content_encoding());
-  SetIfNotEmpty(metadata_as_json, "contentLanguage", meta.content_language());
-  SetIfNotEmpty(metadata_as_json, "contentType", meta.content_type());
+  SetIfNotEmpty("cacheControl", meta.cache_control(), metadata_as_json);
+  SetIfNotEmpty("contentDisposition", meta.content_disposition(),
+                metadata_as_json);
+  SetIfNotEmpty("contentEncoding", meta.content_encoding(), metadata_as_json);
+  SetIfNotEmpty("contentLanguage", meta.content_language(), metadata_as_json);
+  SetIfNotEmpty("contentType", meta.content_type(), metadata_as_json);
 
   if (meta.event_based_hold()) {
     metadata_as_json["eventBasedHold"] = true;
   }
 
-  SetIfNotEmpty(metadata_as_json, "name", meta.name());
-  SetIfNotEmpty(metadata_as_json, "storageClass", meta.storage_class());
+  SetIfNotEmpty("name", meta.name(), metadata_as_json);
+  SetIfNotEmpty("storageClass", meta.storage_class(), metadata_as_json);
 
   if (!meta.metadata().empty()) {
     nlohmann::json meta_as_json;
@@ -355,6 +421,8 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
                                 meta.retention().retain_until_time)}};
   }
 
+  SetJsonContextsIfNotEmpty(meta, metadata_as_json);
+
   return metadata_as_json;
 }
 
@@ -364,8 +432,8 @@ nlohmann::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta) {
 
 nlohmann::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta) {
   auto json = ObjectMetadataJsonForCompose(meta);
-  SetIfNotEmpty(json, "crc32c", meta.crc32c());
-  SetIfNotEmpty(json, "md5Hash", meta.md5_hash());
+  SetIfNotEmpty("crc32c", meta.crc32c(), json);
+  SetIfNotEmpty("md5Hash", meta.md5_hash(), json);
   return json;
 }
 
@@ -378,18 +446,18 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
   if (!meta.acl().empty()) {
     for (ObjectAccessControl const& a : meta.acl()) {
       nlohmann::json entry;
-      SetIfNotEmpty(entry, "entity", a.entity());
-      SetIfNotEmpty(entry, "role", a.role());
+      SetIfNotEmpty("entity", a.entity(), entry);
+      SetIfNotEmpty("role", a.role(), entry);
       metadata_as_json["acl"].emplace_back(std::move(entry));
     }
   }
 
-  SetIfNotEmpty(metadata_as_json, "cacheControl", meta.cache_control());
-  SetIfNotEmpty(metadata_as_json, "contentDisposition",
-                meta.content_disposition());
-  SetIfNotEmpty(metadata_as_json, "contentEncoding", meta.content_encoding());
-  SetIfNotEmpty(metadata_as_json, "contentLanguage", meta.content_language());
-  SetIfNotEmpty(metadata_as_json, "contentType", meta.content_type());
+  SetIfNotEmpty("cacheControl", meta.cache_control(), metadata_as_json);
+  SetIfNotEmpty("contentDisposition", meta.content_disposition(),
+                metadata_as_json);
+  SetIfNotEmpty("contentEncoding", meta.content_encoding(), metadata_as_json);
+  SetIfNotEmpty("contentLanguage", meta.content_language(), metadata_as_json);
+  SetIfNotEmpty("contentType", meta.content_type(), metadata_as_json);
 
   metadata_as_json["eventBasedHold"] = meta.event_based_hold();
 
@@ -412,6 +480,8 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
         {"retainUntilTime", google::cloud::internal::FormatRfc3339(
                                 meta.retention().retain_until_time)}};
   }
+
+  SetJsonContextsIfNotEmpty(meta, metadata_as_json);
 
   return metadata_as_json;
 }

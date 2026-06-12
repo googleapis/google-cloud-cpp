@@ -28,8 +28,6 @@ namespace cloud {
 namespace confidentialcomputing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ConfidentialComputingTracingConnection
     : public confidentialcomputing_v1::ConfidentialComputingConnection {
  public:
@@ -50,6 +48,18 @@ class ConfidentialComputingTracingConnection
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+  VerifyConfidentialSpace(
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialSpaceRequest const& request) override;
+
+  StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+  VerifyConfidentialGke(
+      google::cloud::confidentialcomputing::v1::
+          VerifyConfidentialGkeRequest const& request) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
@@ -60,8 +70,6 @@ class ConfidentialComputingTracingConnection
   std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

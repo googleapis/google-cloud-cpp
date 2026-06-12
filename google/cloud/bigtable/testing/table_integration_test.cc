@@ -122,9 +122,13 @@ void TableAdminTestEnvironment::TearDown() {
 }
 
 void TableIntegrationTest::SetUp() {
-  data_connection_ = MakeDataConnection();
-  data_client_ = bigtable::MakeDataClient(TableTestEnvironment::project_id(),
-                                          TableTestEnvironment::instance_id());
+  Options options;
+  if (google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
+          .value_or("") == "dynamic") {
+    options.set<experimental::InstanceChannelAffinityOption>({});
+  }
+  data_connection_ = MakeDataConnection(options);
 
   // In production, we cannot use `DropAllRows()` to cleanup the table because
   // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.
@@ -164,15 +168,11 @@ void TableIntegrationTest::SetUp() {
   }
 }
 
-bigtable::Table TableIntegrationTest::GetTable(
-    std::string const& implementation) {
-  if (implementation == "with-data-connection") {
-    return Table(data_connection_,
-                 TableResource(TableTestEnvironment::project_id(),
-                               TableTestEnvironment::instance_id(),
-                               TableTestEnvironment::table_id()));
-  }
-  return bigtable::Table(data_client_, TableTestEnvironment::table_id());
+bigtable::Table TableIntegrationTest::GetTable() {
+  return Table(data_connection_,
+               TableResource(TableTestEnvironment::project_id(),
+                             TableTestEnvironment::instance_id(),
+                             TableTestEnvironment::table_id()));
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
@@ -186,12 +186,6 @@ std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
               std::back_inserter(result));
   }
   return result;
-}
-
-std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(
-    std::string const& table_name, bigtable::Filter filter) {
-  bigtable::Table table(data_client_, table_name);
-  return ReadRows(table, std::move(filter));
 }
 
 std::vector<bigtable::Cell> TableIntegrationTest::ReadRows(

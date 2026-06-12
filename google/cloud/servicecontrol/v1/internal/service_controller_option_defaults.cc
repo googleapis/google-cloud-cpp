@@ -42,7 +42,7 @@ Options ServiceControllerDefaultOptions(Options options) {
   if (!options.has<servicecontrol_v1::ServiceControllerRetryPolicyOption>()) {
     options.set<servicecontrol_v1::ServiceControllerRetryPolicyOption>(
         servicecontrol_v1::ServiceControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<servicecontrol_v1::ServiceControllerBackoffPolicyOption>()) {

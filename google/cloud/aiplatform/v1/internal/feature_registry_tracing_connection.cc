@@ -27,8 +27,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 FeatureRegistryServiceTracingConnection::
     FeatureRegistryServiceTracingConnection(
         std::shared_ptr<aiplatform_v1::FeatureRegistryServiceConnection> child)
@@ -375,17 +373,13 @@ FeatureRegistryServiceTracingConnection::WaitOperation(
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<aiplatform_v1::FeatureRegistryServiceConnection>
 MakeFeatureRegistryServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::FeatureRegistryServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<FeatureRegistryServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

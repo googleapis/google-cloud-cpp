@@ -110,6 +110,8 @@ add_library(
     internal/async/handle_redirect_error.h
     internal/async/insert_object.cc
     internal/async/insert_object.h
+    internal/async/multi_stream_manager.cc
+    internal/async/multi_stream_manager.h
     internal/async/object_descriptor_connection_tracing.cc
     internal/async/object_descriptor_connection_tracing.h
     internal/async/object_descriptor_impl.cc
@@ -270,16 +272,6 @@ create_bazel_config(google_cloud_cpp_storage_grpc)
 
 add_library(google-cloud-cpp::storage_grpc ALIAS google_cloud_cpp_storage_grpc)
 
-# TODO(#13857) - remove the backwards compatibility shims
-add_library(google_cloud_cpp_experimental_storage_grpc INTERFACE)
-set_target_properties(
-    google_cloud_cpp_experimental_storage_grpc
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage_grpc")
-target_link_libraries(google_cloud_cpp_experimental_storage_grpc
-                      INTERFACE google-cloud-cpp::storage_grpc)
-add_library(google-cloud-cpp::experimental-storage_grpc ALIAS
-            google_cloud_cpp_experimental_storage_grpc)
-
 google_cloud_cpp_add_pkgconfig(
     storage_grpc
     "The GCS (Google Cloud Storage) gRPC plugin"
@@ -316,8 +308,6 @@ install(
 
 install(
     TARGETS google_cloud_cpp_storage_grpc google_cloud_cpp_storage_protos
-            # TODO(#13857) - remove the backwards compatibility shims
-            google_cloud_cpp_experimental_storage_grpc
     EXPORT storage_grpc-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -360,13 +350,6 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     add_library(google-cloud-cpp::storage_grpc_mocks ALIAS
                 google_cloud_cpp_storage_grpc_mocks)
 
-    # TODO(#13857) - remove backwards compatibility shims
-    add_library(google_cloud_cpp_experimental_storage_grpc_mocks INTERFACE)
-    target_link_libraries(google_cloud_cpp_experimental_storage_grpc_mocks
-                          INTERFACE google-cloud-cpp::storage_grpc_mocks)
-    add_library(google-cloud-cpp::experimental-storage_grpc_mocks ALIAS
-                google_cloud_cpp_experimental_storage_grpc_mocks)
-
     install(
         FILES ${google_cloud_cpp_storage_grpc_mocks_hdrs}
         DESTINATION "include/google/cloud/storage/mocks"
@@ -380,8 +363,6 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
 
     install(
         TARGETS google_cloud_cpp_storage_grpc_mocks
-                # TODO(#13857) - remove backwards compatibility shims
-                google_cloud_cpp_experimental_storage_grpc_mocks
         EXPORT storage_grpc_mocks-targets
         COMPONENT google_cloud_cpp_development)
 
@@ -442,6 +423,7 @@ set(storage_client_grpc_unit_tests
     internal/async/default_options_test.cc
     internal/async/handle_redirect_error_test.cc
     internal/async/insert_object_test.cc
+    internal/async/multi_stream_manager_test.cc
     internal/async/object_descriptor_connection_tracing_test.cc
     internal/async/object_descriptor_impl_test.cc
     internal/async/object_descriptor_reader_test.cc

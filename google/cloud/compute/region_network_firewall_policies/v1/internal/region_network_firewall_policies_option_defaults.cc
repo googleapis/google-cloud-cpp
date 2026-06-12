@@ -47,7 +47,7 @@ Options RegionNetworkFirewallPoliciesDefaultOptions(Options options) {
                     RegionNetworkFirewallPoliciesRetryPolicyOption>(
         compute_region_network_firewall_policies_v1::
             RegionNetworkFirewallPoliciesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_network_firewall_policies_v1::

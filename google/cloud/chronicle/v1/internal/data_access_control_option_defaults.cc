@@ -43,7 +43,7 @@ Options DataAccessControlServiceDefaultOptions(Options options) {
   if (!options.has<chronicle_v1::DataAccessControlServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::DataAccessControlServiceRetryPolicyOption>(
         chronicle_v1::DataAccessControlServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

@@ -28,6 +28,7 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class Credentials;
 namespace internal {
 class CredentialsVisitor;
 }  // namespace internal
@@ -302,6 +303,64 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object, Options opts = {});
 
 /**
+ * Creates service account credentials from a service account key contained in
+ * a file.
+ *
+ * A [service account] is an account for an application or compute workload
+ * instead of an individual end user. The recommended practice is to use
+ * Google Default Credentials, which relies on the configuration of the Google
+ * Cloud system hosting your application (GCE, GKE, Cloud Run) to authenticate
+ * your workload or application.  But sometimes you may need to create and
+ * download a [service account key], for example, to use a service account
+ * when running your application on a system that is not part of Google Cloud.
+ *
+ * Service account credentials are used in this latter case.
+ *
+ * You can create multiple service account keys for a single service account.
+ * When you create a service account key, the key is returned as string, in the
+ * format described by [aip/4112]. This string contains an id for the service
+ * account, as well as the cryptographical materials (a RSA private key)
+ * required to authenticate the caller.
+ *
+ * Therefore, services account keys should be treated as any other secret
+ * with security implications. Think of them as unencrypted passwords. Do not
+ * store them where unauthorized persons or programs may read them.
+ *
+ * As stated above, most applications should probably use default credentials,
+ * maybe pointing them to a file with these contents. Using this function may be
+ * useful when the service account key is obtained from Cloud Secret Manager or
+ * a similar service.
+ *
+ * [aip/4112]: https://google.aip.dev/auth/4112
+ * [service account]: https://cloud.google.com/iam/docs/overview#service_account
+ * [service account key]:
+ * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
+ *
+ * Use `ScopesOption` to restrict the authentication scope for the obtained
+ * credentials.
+ *
+ * @ingroup guac
+ *
+ * @note While JSON file formats are supported for both REST and gRPC transport,
+ *   PKCS#12 is only supported for REST transport.
+ *
+ * @param file_path path to file containing the service account key
+ * Typically applications read this from a file, or download the contents from
+ * something like Google's secret manager service.
+ * @param opts optional configuration values.
+ *
+ * `ScopesOption` the scopes to request during the authorization grant. If
+ *     omitted, the cloud-platform scope, defined by
+ *     `GoogleOAuthScopeCloudPlatform()`, is used as a default.
+ * `SubjectOption` for domain-wide delegation; the email address of the user for
+ *     which to request delegated access. If omitted AND no "subject" is defined
+ *     in the provided file, no "subject" attribute is included in the
+ *     authorization grant.
+ */
+std::shared_ptr<Credentials> MakeServiceAccountCredentialsFromFile(
+    std::string const& file_path, Options opts = {});
+
+/**
  * Creates credentials based on external accounts.
  *
  * [Workload Identity Federation] can grant on-premises or multi-cloud workloads
@@ -371,6 +430,64 @@ std::shared_ptr<Credentials> MakeApiKeyCredentials(std::string api_key,
                                                    Options opts = {});
 
 /**
+ * Creates credentials for the VM's specified service account.
+ *
+ * When your application is deployed to a GCP environment such as GCE, GKE, or
+ * Cloud Run, each of these deployment environments provides a default service
+ * account to the application [aip/4115]. These environments offer mechanisms to
+ * change the default service account, and thus the credentials based on that
+ * service account, without any code changes to your application.
+ *
+ * @see https://cloud.google.com/docs/authentication for more information on
+ *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
+ *
+ * [aip/4115]: https://google.aip.dev/auth/4115
+ *
+ * @ingroup guac
+ *
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
+ */
+std::shared_ptr<Credentials> MakeComputeEngineCredentials(Options opts = {});
+
+/**
+ * Creates credentials for a Google Distributed Cloud Hosting (GDCH) Service
+ * Account.
+ *
+ * @see https://docs.cloud.google.com/distributed-cloud/hosted/docs/latest/gdcag
+ *     for more information on GDCH air-gapped environments.
+ *
+ *
+ * @see https://cloud.google.com/docs/authentication for more information on
+ *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
+ *
+ * [aip/4115]: https://google.aip.dev/auth/4115
+ *
+ * @ingroup guac
+ *
+ * @param json_object service account configuration as a JSON string. If
+ *     omitted, the contents of the file at GOOGLE_APPLICATION_CREDENTIALS is
+ *     used.
+ *
+ * @param audience authentication endpoint for the service identity.
+ *
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `LoggingComponentsOption` is ignored by gRPC-based services.
+ */
+std::shared_ptr<Credentials> MakeGDCHServiceAccountCredentials(
+    std::string json_object, std::string audience, Options opts = {});
+std::shared_ptr<Credentials> MakeGDCHServiceAccountCredentials(
+    std::string audience, Options opts = {});
+
+/**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
  *
  * @ingroup options
@@ -381,13 +498,26 @@ struct DelegatesOption {
 };
 
 /**
- * Configure the scopes for `MakeImpersonateServiceAccountCredentials()`
+ * Configure the scopes for `MakeImpersonateServiceAccountCredentials()`.
+ * Override the scopes for `MakeServiceAccountCredentials` and
+ * `MakeServiceAccountCredentialsFromFile()`.
  *
  * @ingroup options
  * @ingroup guac
  */
 struct ScopesOption {
   using Type = std::vector<std::string>;
+};
+
+/**
+ * Overrides the subject for `MakeServiceAccountCredentials` and
+ * `MakeServiceAccountCredentialsFromFile()`.
+ *
+ * @ingroup options
+ * @ingroup guac
+ */
+struct SubjectOption {
+  using Type = std::string;
 };
 
 /**

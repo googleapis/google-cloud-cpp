@@ -17,12 +17,15 @@
 // source: google/cloud/storagebatchoperations/v1/storage_batch_operations.proto
 
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -107,6 +110,34 @@ DefaultStorageBatchOperationsStub::CancelJob(
         request) {
   google::cloud::storagebatchoperations::v1::CancelJobResponse response;
   auto status = grpc_stub_->CancelJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::storagebatchoperations::v1::ListBucketOperationsResponse>
+DefaultStorageBatchOperationsStub::ListBucketOperations(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storagebatchoperations::v1::
+        ListBucketOperationsRequest const& request) {
+  google::cloud::storagebatchoperations::v1::ListBucketOperationsResponse
+      response;
+  auto status = grpc_stub_->ListBucketOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+DefaultStorageBatchOperationsStub::GetBucketOperation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storagebatchoperations::v1::GetBucketOperationRequest const&
+        request) {
+  google::cloud::storagebatchoperations::v1::BucketOperation response;
+  auto status = grpc_stub_->GetBucketOperation(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -226,3 +257,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagebatchoperations_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

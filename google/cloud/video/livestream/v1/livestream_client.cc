@@ -273,6 +273,106 @@ LivestreamServiceClient::StopChannel(
   return connection_->StopChannel(operation);
 }
 
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceClient::StartDistribution(
+    std::string const& name, std::vector<std::string> const& distribution_keys,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::StartDistributionRequest request;
+  request.set_name(name);
+  *request.mutable_distribution_keys() = {distribution_keys.begin(),
+                                          distribution_keys.end()};
+  return connection_->StartDistribution(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::StartDistribution(
+    NoAwaitTag, std::string const& name,
+    std::vector<std::string> const& distribution_keys, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::StartDistributionRequest request;
+  request.set_name(name);
+  *request.mutable_distribution_keys() = {distribution_keys.begin(),
+                                          distribution_keys.end()};
+  return connection_->StartDistribution(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceClient::StartDistribution(
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartDistribution(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::StartDistribution(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartDistribution(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceClient::StartDistribution(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartDistribution(operation);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceClient::StopDistribution(
+    std::string const& name, std::vector<std::string> const& distribution_keys,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::StopDistributionRequest request;
+  request.set_name(name);
+  *request.mutable_distribution_keys() = {distribution_keys.begin(),
+                                          distribution_keys.end()};
+  return connection_->StopDistribution(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::StopDistribution(
+    NoAwaitTag, std::string const& name,
+    std::vector<std::string> const& distribution_keys, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::StopDistributionRequest request;
+  request.set_name(name);
+  *request.mutable_distribution_keys() = {distribution_keys.begin(),
+                                          distribution_keys.end()};
+  return connection_->StopDistribution(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceClient::StopDistribution(
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopDistribution(request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceClient::StopDistribution(
+    NoAwaitTag,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopDistribution(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceClient::StopDistribution(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopDistribution(operation);
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceClient::CreateInput(
     std::string const& parent,
@@ -434,6 +534,22 @@ LivestreamServiceClient::UpdateInput(
     google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInput(operation);
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+LivestreamServiceClient::PreviewInput(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::video::livestream::v1::PreviewInputRequest request;
+  request.set_name(name);
+  return connection_->PreviewInput(request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+LivestreamServiceClient::PreviewInput(
+    google::cloud::video::livestream::v1::PreviewInputRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PreviewInput(request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>

@@ -17,6 +17,7 @@
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub_factory.h"
+#include "google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h"
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_auth_decorator.h"
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_logging_decorator.h"
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_metadata_decorator.h"
@@ -28,10 +29,12 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -74,3 +77,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -20,13 +20,53 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include <google/api/client.pb.h>
+#include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
+#include "google/api/client.pb.h"
 #include <google/protobuf/descriptor.h>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+std::string FormatBespokeMethodComments(std::string const& method_name) {
+  if (method_name == "WaitForConsistency") {
+    return R"""(
+  // clang-format off
+  ///
+  /// Polls a table until it is consistent or the RetryPolicy is exhausted based
+  /// on a consistency token, that is, if replication has caught up based on the
+  /// provided conditions specified in the token and the check request.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.CheckConsistencyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.CheckConsistencyResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.CheckConsistencyRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L909}
+  /// [google.bigtable.admin.v2.CheckConsistencyResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L948}
+  ///
+  // clang-format on
+)""";
+  }
+  return "";
+}
+}  // namespace
 
 ClientGenerator::ClientGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
@@ -380,6 +420,13 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
         __FILE__, __LINE__);
   }
 
+  for (auto const& method : bespoke_methods()) {
+    HeaderPrint("\n");
+    HeaderPrint(FormatBespokeMethodComments(method.name()));
+    HeaderPrint(absl::StrCat(method.return_type(), " ", method.name(),
+                             method.parameters(), ";"));
+  }
+
   HeaderPrint(  // clang-format off
     "\n"
     " private:\n"
@@ -410,7 +457,10 @@ Status ClientGenerator::GenerateCc() {
   if (MethodSignatureUsesDeprecatedField()) {
     CcLocalIncludes({"google/cloud/internal/disable_deprecation_warnings.inc"});
   }
-  CcLocalIncludes({vars("client_header_path")});
+  CcLocalIncludes({vars("client_header_path"),
+                   absl::StartsWithIgnoreCase(vars("service_name"), "Bigtable")
+                       ? "google/cloud/bigtable/options.h"
+                       : ""});
   CcSystemIncludes({"memory"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     CcLocalIncludes({vars("options_header_path")});
@@ -427,7 +477,7 @@ $client_class_name$::$client_class_name$()""");
   CcPrint(R"""(
     std::shared_ptr<$connection_class_name$> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
+      options_($merge_options_fn$(std::move(opts),
       connection_->options())) {}
 $client_class_name$::~$client_class_name$() = default;
 )""");
@@ -442,7 +492,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $response_type$>>
 $client_class_name$::Async$method_name$(Options opts) {
   internal::OptionsSpan span(
-      internal::MergeOptions(std::move(opts), options_));
+      $merge_options_fn$(std::move(opts), options_));
   return connection_->Async$method_name$();
 }
 )""");
@@ -467,7 +517,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    {"\n$return_type$\n"},
                    // clang-format off
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -483,7 +533,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                     "\nfuture<Status>\n",
                     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -495,7 +545,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                     "\nStatus\n",
                     "\nStatusOr<$longrunning_operation_type$>\n"},
                   {start_method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -508,7 +558,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    // clang-format off
                    {"\nStreamRange<$range_output_type$>\n"},
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -521,7 +571,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    // clang-format off
                    {"\nStreamRange<$response_type$>\n"},
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -545,7 +595,7 @@ $client_class_name$::Async$method_name$(Options opts) {
              " Options opts) {\n"
              "  internal::CheckExpectedOptions<$service_name$"
              "BackoffPolicyOption>(opts, __func__);\n"
-             "  internal::OptionsSpan span(internal::MergeOptions("
+             "  internal::OptionsSpan span($merge_options_fn$("
              "std::move(opts), options_));\n"},
             {"  "},
             {ProtoNameToCppName(
@@ -598,7 +648,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                  // clang-format off
    {"$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
     "}\n"}  // clang-format on
@@ -613,7 +663,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
     "}\n"},
@@ -625,7 +675,7 @@ $client_class_name$::Async$method_name$(Options opts) {
    {"$client_class_name$::$method_name$(NoAwaitTag"
     ", $request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(NoAwaitTag{}, request);\n"
     "}\n"},
@@ -636,7 +686,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"$client_class_name$::$method_name$("
     "$longrunning_operation_type$ const& operation, Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(operation);\n"},
    {"}\n"}  // clang-format on
@@ -648,7 +698,7 @@ $client_class_name$::Async$method_name$(Options opts) {
    {"\nStreamRange<$range_output_type$>\n"
     "$client_class_name$::$method_name$($request_type$ request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(std::move(request));\n"
     "}\n"}  // clang-format on
@@ -660,7 +710,7 @@ $client_class_name$::Async$method_name$(Options opts) {
    {"\nStreamRange<$response_type$>\n"
     "$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
     "}\n"}  // clang-format on
@@ -687,7 +737,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"\nfuture<$return_type$>\n"},
                   // clang-format off
                   {method_string},
-                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                  {"  internal::OptionsSpan span($merge_options_fn$("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -706,7 +756,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                 // clang-format off
    {"$client_class_name$::Async$method_name$($request_type$ const& request"
     ", Options opts) {\n"
-    "  internal::OptionsSpan span(internal::MergeOptions("
+    "  internal::OptionsSpan span($merge_options_fn$("
     "std::move(opts), options_));\n"
     "  return connection_->Async$method_name$(request);\n"
     "}\n"}  // clang-format on
@@ -714,6 +764,19 @@ $client_class_name$::Async$method_name$(Options opts) {
             All(IsNonStreaming, Not(IsLongrunningOperation),
                 Not(IsPaginated)))},
         __FILE__, __LINE__);
+  }
+
+  for (auto const& method : bespoke_methods()) {
+    CcPrint("\n");
+    CcPrint(absl::StrCat(
+        method.return_type(), R"""( $client_class_name$::)""", method.name(),
+        absl::StrReplaceAll(method.parameters(), {{" = {}", ""}}),
+        absl::StrFormat(R"""( {
+  internal::OptionsSpan span($merge_options_fn$(std::move(opts), options_));
+  return connection_->%s(request);
+}
+)""",
+                        method.name())));
   }
 
   CcCloseNamespaces();

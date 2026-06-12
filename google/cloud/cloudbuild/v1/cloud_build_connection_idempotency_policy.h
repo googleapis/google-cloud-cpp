@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
+#include "google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -93,6 +93,10 @@ class CloudBuildConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListWorkerPools(
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request);
+
+  virtual google::cloud::Idempotency GetDefaultServiceAccount(
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+          request);
 };
 
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>

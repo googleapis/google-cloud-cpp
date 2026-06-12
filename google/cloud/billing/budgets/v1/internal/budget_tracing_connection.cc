@@ -27,8 +27,6 @@ namespace cloud {
 namespace billing_budgets_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BudgetServiceTracingConnection::BudgetServiceTracingConnection(
     std::shared_ptr<billing_budgets_v1::BudgetServiceConnection> child)
     : child_(std::move(child)) {}
@@ -80,16 +78,12 @@ Status BudgetServiceTracingConnection::DeleteBudget(
   return internal::EndSpan(*span, child_->DeleteBudget(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<billing_budgets_v1::BudgetServiceConnection>
 MakeBudgetServiceTracingConnection(
     std::shared_ptr<billing_budgets_v1::BudgetServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BudgetServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

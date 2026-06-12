@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/json_parsing.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {
@@ -61,6 +61,19 @@ StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
   if (it == json.end()) return default_value;
   if (!it->is_number_integer()) return InvalidTypeError(name, object_name, ec);
   return it->get<std::int32_t>();
+}
+
+StatusOr<std::vector<std::string>> ValidateStringArrayField(
+    nlohmann::json const& json, absl::string_view name,
+    absl::string_view object_name, internal::ErrorContext const& ec) {
+  auto it = json.find(std::string{name});
+  if (it == json.end()) return MissingFieldError(name, object_name, ec);
+  if (!it->is_array()) return InvalidTypeError(name, object_name, ec);
+  if (!std::all_of(it->begin(), it->end(),
+                   [](nlohmann::json const& e) { return e.is_string(); })) {
+    return InvalidTypeError(name, object_name, ec);
+  }
+  return it->get<std::vector<std::string>>();
 }
 
 Status MissingFieldError(absl::string_view name, absl::string_view object_name,

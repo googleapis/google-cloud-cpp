@@ -17,16 +17,16 @@
 #include "generator/internal/longrunning.h"
 #include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/types/optional.h"
-#include <google/api/annotations.pb.h>
+#include "google/api/annotations.pb.h"
 #include <google/protobuf/compiler/cpp/names.h>
 #include <google/protobuf/descriptor.h>
 #include <regex>
@@ -214,6 +214,13 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
   absl::optional<QueryParameterInfo> param_info;
   // Only attempt to make non-repeated, simple fields query parameters.
   if (!field.is_repeated() && !field.options().deprecated()) {
+    // TODO(#15707): Most services will error if this is set at all. Skip it
+    //  until a service we generate using REST transport requires it.
+    if (field.name() == "return_partial_success" &&
+        field.containing_type()->full_name() ==
+            "google.longrunning.ListOperationsRequest") {
+      return param_info;
+    }
     if (field.cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
       param_info = QueryParameterInfo{
           field.cpp_type(), absl::StrCat("request.", field.name(), "()"),

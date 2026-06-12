@@ -55,6 +55,14 @@ TEST_F(GrpcConfigureClientContext, AddIdempotencyToken) {
               Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
 }
 
+TEST_F(GrpcConfigureClientContext, AddIdempotencyTokenString) {
+  grpc::ClientContext ctx;
+  AddIdempotencyToken(ctx, "token-123");
+  auto metadata = GetMetadata(ctx);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-gcs-idempotency-token", "token-123")));
+}
+
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
   grpc::ClientContext ctx;
   ApplyQueryParameters(
@@ -156,6 +164,20 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObject) {
                             "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
 }
 
+TEST_F(GrpcConfigureClientContext,
+       ApplyRoutingHeadersInsertObjectWithRoutingToken) {
+  auto spec = google::storage::v2::WriteObjectSpec{};
+  spec.mutable_resource()->set_bucket("projects/_/buckets/test-bucket");
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, spec, {"test-token"});
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-request-params",
+                            "bucket=projects%2F_%2Fbuckets%2Ftest-bucket&"
+                            "routing_token=test-token")));
+}
+
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatchSlash) {
   storage::internal::UploadChunkRequest req(
       "projects/_/buckets/test-bucket/blah/blah", 0, {},
@@ -220,6 +242,20 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersAppendObject) {
   EXPECT_THAT(metadata,
               Contains(Pair("x-goog-request-params",
                             "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
+}
+
+TEST_F(GrpcConfigureClientContext,
+       ApplyRoutingHeadersAppendObjectWithRoutingToken) {
+  auto spec = google::storage::v2::AppendObjectSpec{};
+  spec.set_bucket("projects/_/buckets/test-bucket");
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, spec, {"test-token"});
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-request-params",
+                            "bucket=projects%2F_%2Fbuckets%2Ftest-bucket&"
+                            "routing_token=test-token")));
 }
 
 }  // namespace

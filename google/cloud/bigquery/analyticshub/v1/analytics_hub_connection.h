@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_ANALYTICS_HUB_CONNECTION_H
 
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
+#include "google/cloud/bigquery/analyticshub/v1/analyticshub.pb.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/analyticshub/v1/analyticshub.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -312,6 +312,36 @@ class AnalyticsHubServiceConnection {
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  CreateQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          CreateQueryTemplateRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  GetQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ListQueryTemplates(
+      google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest
+          request);
+
+  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  UpdateQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          UpdateQueryTemplateRequest const& request);
+
+  virtual Status DeleteQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteQueryTemplateRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  SubmitQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          SubmitQueryTemplateRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ApproveQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                           ApproveQueryTemplateRequest const& request);
 };
 
 /**

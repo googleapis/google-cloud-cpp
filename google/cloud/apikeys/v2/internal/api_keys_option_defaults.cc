@@ -40,7 +40,7 @@ Options ApiKeysDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<apikeys_v2::ApiKeysRetryPolicyOption>()) {
     options.set<apikeys_v2::ApiKeysRetryPolicyOption>(
-        apikeys_v2::ApiKeysLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        apikeys_v2::ApiKeysLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<apikeys_v2::ApiKeysBackoffPolicyOption>()) {

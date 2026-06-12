@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_APP_GATEWAYS_CONNECTION_H
 
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection_idempotency_policy.h"
+#include "google/cloud/beyondcorp/appgateways/v1/app_gateways_service.pb.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/beyondcorp/appgateways/v1/app_gateways_service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

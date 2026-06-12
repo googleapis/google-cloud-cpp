@@ -24,13 +24,13 @@
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection_idempotency_policy.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_options.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
 
 namespace google {

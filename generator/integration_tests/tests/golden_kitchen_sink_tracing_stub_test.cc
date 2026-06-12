@@ -33,8 +33,6 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::OTelContextCaptured;
@@ -50,7 +48,7 @@ using ::google::test::admin::database::v1::Response;
 using ::testing::_;
 using ::testing::IsEmpty;
 using ::testing::Not;
-using ::testing::VariantWith;
+using ::testing::Optional;
 
 auto constexpr kErrorCode = "ABORTED";
 
@@ -189,8 +187,9 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream = under_test.StreamingRead(
       std::make_shared<grpc::ClientContext>(), Options{}, Request{});
-  auto v = stream->Read();
-  EXPECT_THAT(v, VariantWith<Status>(StatusIs(StatusCode::kAborted)));
+  Response response;
+  EXPECT_THAT(stream->Read(&response),
+              Optional(StatusIs(StatusCode::kAborted)));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -487,21 +486,6 @@ TEST(MakeGoldenKitchenSinkTracingStub, OpenTelemetry) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Not(IsEmpty()));
 }
-
-#else
-
-TEST(MakeGoldenKitchenSinkTracingStub, NoOpenTelemetry) {
-  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, DoNothing)
-      .WillOnce(Return(internal::AbortedError("fail")));
-
-  auto under_test = MakeGoldenKitchenSinkTracingStub(mock);
-  grpc::ClientContext context;
-  auto result = under_test->DoNothing(context, Options{}, {});
-  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

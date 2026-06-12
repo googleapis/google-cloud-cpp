@@ -43,7 +43,7 @@ Options InstantSnapshotsDefaultOptions(Options options) {
     options.set<
         compute_instant_snapshots_v1::InstantSnapshotsRetryPolicyOption>(
         compute_instant_snapshots_v1::InstantSnapshotsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_instant_snapshots_v1::

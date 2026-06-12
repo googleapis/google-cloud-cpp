@@ -17,16 +17,20 @@
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_metadata_decorator.h"
+#include "google/cloud/confidentialcomputing/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -65,6 +69,30 @@ ConfidentialComputingMetadata::VerifyAttestation(
   return child_->VerifyAttestation(context, options, request);
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingMetadata::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("challenge=", internal::UrlEncode(request.challenge())));
+  return child_->VerifyConfidentialSpace(context, options, request);
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingMetadata::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("challenge=", internal::UrlEncode(request.challenge())));
+  return child_->VerifyConfidentialGke(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -100,3 +128,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -41,7 +41,7 @@ Options LicenseCodesDefaultOptions(Options options) {
   if (!options.has<compute_license_codes_v1::LicenseCodesRetryPolicyOption>()) {
     options.set<compute_license_codes_v1::LicenseCodesRetryPolicyOption>(
         compute_license_codes_v1::LicenseCodesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

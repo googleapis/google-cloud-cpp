@@ -42,7 +42,7 @@ Options InterconnectsDefaultOptions(Options options) {
            .has<compute_interconnects_v1::InterconnectsRetryPolicyOption>()) {
     options.set<compute_interconnects_v1::InterconnectsRetryPolicyOption>(
         compute_interconnects_v1::InterconnectsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

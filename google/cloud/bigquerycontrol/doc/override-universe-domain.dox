@@ -1,0 +1,70 @@
+/*!
+@page bigquerycontrol-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `bigquerycontrol_v2::DatasetServiceClient`:
+
+@snippet dataset_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c bigquerycontrol_v2::DatasetServiceClient](@ref bigquerycontrol_v2::DatasetServiceClient-universe-domain-snippet)
+- [\c bigquerycontrol_v2::JobServiceClient](@ref bigquerycontrol_v2::JobServiceClient-universe-domain-snippet)
+- [\c bigquerycontrol_v2::ModelServiceClient](@ref bigquerycontrol_v2::ModelServiceClient-universe-domain-snippet)
+- [\c bigquerycontrol_v2::ProjectServiceClient](@ref bigquerycontrol_v2::ProjectServiceClient-universe-domain-snippet)
+- [\c bigquerycontrol_v2::RoutineServiceClient](@ref bigquerycontrol_v2::RoutineServiceClient-universe-domain-snippet)
+- [\c bigquerycontrol_v2::RowAccessPolicyServiceClient](@ref bigquerycontrol_v2::RowAccessPolicyServiceClient-universe-domain-snippet)
+- [\c bigquerycontrol_v2::TableServiceClient](@ref bigquerycontrol_v2::TableServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page bigquerycontrol_v2::DatasetServiceClient-universe-domain-snippet Override bigquerycontrol_v2::DatasetServiceClient Universe Domain
+
+@snippet google/cloud/bigquerycontrol/v2/samples/dataset_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquerycontrol_v2::JobServiceClient-universe-domain-snippet Override bigquerycontrol_v2::JobServiceClient Universe Domain
+
+@snippet google/cloud/bigquerycontrol/v2/samples/job_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquerycontrol_v2::ModelServiceClient-universe-domain-snippet Override bigquerycontrol_v2::ModelServiceClient Universe Domain
+
+@snippet google/cloud/bigquerycontrol/v2/samples/model_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquerycontrol_v2::ProjectServiceClient-universe-domain-snippet Override bigquerycontrol_v2::ProjectServiceClient Universe Domain
+
+@snippet google/cloud/bigquerycontrol/v2/samples/project_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquerycontrol_v2::RoutineServiceClient-universe-domain-snippet Override bigquerycontrol_v2::RoutineServiceClient Universe Domain
+
+@snippet google/cloud/bigquerycontrol/v2/samples/routine_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquerycontrol_v2::RowAccessPolicyServiceClient-universe-domain-snippet Override bigquerycontrol_v2::RowAccessPolicyServiceClient Universe Domain
+
+@snippet google/cloud/bigquerycontrol/v2/samples/row_access_policy_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquerycontrol_v2::TableServiceClient-universe-domain-snippet Override bigquerycontrol_v2::TableServiceClient Universe Domain
+
+@snippet google/cloud/bigquerycontrol/v2/samples/table_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

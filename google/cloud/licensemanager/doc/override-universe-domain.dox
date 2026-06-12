@@ -1,0 +1,24 @@
+/*!
+@page licensemanager-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `licensemanager_v1::LicenseManagerClient`:
+
+@snippet license_manager_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page licensemanager_v1::LicenseManagerClient-universe-domain-snippet Override licensemanager_v1::LicenseManagerClient Universe Domain
+
+@snippet google/cloud/licensemanager/v1/samples/license_manager_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

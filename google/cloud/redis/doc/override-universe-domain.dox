@@ -1,0 +1,35 @@
+/*!
+@page redis-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `redis_cluster_v1::CloudRedisClusterClient`:
+
+@snippet cloud_redis_cluster_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c redis_cluster_v1::CloudRedisClusterClient](@ref redis_cluster_v1::CloudRedisClusterClient-universe-domain-snippet)
+- [\c redis_v1::CloudRedisClient](@ref redis_v1::CloudRedisClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page redis_cluster_v1::CloudRedisClusterClient-universe-domain-snippet Override redis_cluster_v1::CloudRedisClusterClient Universe Domain
+
+@snippet google/cloud/redis/cluster/v1/samples/cloud_redis_cluster_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page redis_v1::CloudRedisClient-universe-domain-snippet Override redis_v1::CloudRedisClient Universe Domain
+
+@snippet google/cloud/redis/v1/samples/cloud_redis_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

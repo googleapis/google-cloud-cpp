@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/notification_metadata.h"
 #include "google/cloud/storage/internal/notification_requests.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "absl/strings/str_join.h"
 #include <nlohmann/json.hpp>
 #include <string>
 

@@ -16,10 +16,10 @@
 #include "google/cloud/bigquery/v2/minimal/testing/job_query_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/job_test_utils.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <sstream>
 
@@ -1028,7 +1028,7 @@ TEST(PostQueryRequestTest, DebugString) {
       R"( parameter_value { value: "query-parameter-value" } })"
       R"( labels { key: "lk1" value: "lv1" } labels { key: "lk2" value: "lv2" })"
       R"( default_dataset { project_id: "2" dataset_id: "1" })"
-      R"( format_options { use_int64_timestamp: true })"
+      R"( format_options { use_int64_timestamp: true timestamp_output_format: TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED })"
       R"( job_creation_mode { value: "JOB_CREATION_MODE_UNSPECIFIED" } } })");
 
   EXPECT_EQ(
@@ -1049,7 +1049,7 @@ TEST(PostQueryRequestTest, DebugString) {
       R"( parameter_value { value: "query-p...<truncated>..." } })"
       R"( labels { key: "lk1" value: "lv1" } labels { key: "lk2" value: "lv2" })"
       R"( default_dataset { project_id: "2" dataset_id: "1" })"
-      R"( format_options { use_int64_timestamp: true })"
+      R"( format_options { use_int64_timestamp: true timestamp_output_format: TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED })"
       R"( job_creation_mode { value: "JOB_CRE...<truncated>..." } } })");
 
   EXPECT_EQ(request.DebugString("PostQueryRequest", TracingOptions{}.SetOptions(
@@ -1103,6 +1103,7 @@ TEST(PostQueryRequestTest, DebugString) {
     }
     format_options {
       use_int64_timestamp: true
+      timestamp_output_format: TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED
     }
     job_creation_mode {
       value: "JOB_CREATION_MODE_UNSPECIFIED"

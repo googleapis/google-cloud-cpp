@@ -243,8 +243,6 @@ add_library(
     publisher.h
     publisher_connection.cc
     publisher_connection.h
-    publisher_options.cc
-    publisher_options.h
     pull_ack_handler.cc
     pull_ack_handler.h
     pull_response.h
@@ -266,8 +264,6 @@ add_library(
     subscriber.h
     subscriber_connection.cc
     subscriber_connection.h
-    subscriber_options.cc
-    subscriber_options.h
     subscription.cc
     subscription.h
     subscription_admin_client.cc
@@ -494,14 +490,12 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         message_test.cc
         options_test.cc
         publisher_connection_test.cc
-        publisher_options_test.cc
         publisher_test.cc
         pull_ack_handler_test.cc
         schema_test.cc
         snapshot_builder_test.cc
         snapshot_test.cc
         subscriber_connection_test.cc
-        subscriber_options_test.cc
         subscriber_test.cc
         subscription_admin_client_test.cc
         subscription_admin_connection_test.cc

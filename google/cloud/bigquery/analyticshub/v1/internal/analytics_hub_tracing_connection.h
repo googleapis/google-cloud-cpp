@@ -28,8 +28,6 @@ namespace cloud {
 namespace bigquery_analyticshub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AnalyticsHubServiceTracingConnection
     : public bigquery_analyticshub_v1::AnalyticsHubServiceConnection {
  public:
@@ -161,12 +159,40 @@ class AnalyticsHubServiceTracingConnection
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  CreateQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          CreateQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  GetQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+          request) override;
+
+  StreamRange<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ListQueryTemplates(
+      google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesRequest
+          request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  UpdateQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          UpdateQueryTemplateRequest const& request) override;
+
+  Status DeleteQueryTemplate(
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  SubmitQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                          SubmitQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ApproveQueryTemplate(google::cloud::bigquery::analyticshub::v1::
+                           ApproveQueryTemplateRequest const& request) override;
+
  private:
   std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

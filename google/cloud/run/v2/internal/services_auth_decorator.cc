@@ -17,9 +17,12 @@
 // source: google/cloud/run/v2/service.proto
 
 #include "google/cloud/run/v2/internal/services_auth_decorator.h"
-#include <google/cloud/run/v2/service.grpc.pb.h>
+#include "google/cloud/run/v2/service.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -230,3 +233,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

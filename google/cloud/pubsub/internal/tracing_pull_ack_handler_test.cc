@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/pubsub/internal/tracing_pull_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_pull_ack_handler.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -22,7 +20,8 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -94,7 +93,7 @@ TEST(TracingAckHandlerTest, AckError) {
 }
 
 TEST(TracingAckHandlerTest, AckAttributes) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<MockPullAckHandler>();
   EXPECT_CALL(*mock, ack())
@@ -104,35 +103,34 @@ TEST(TracingAckHandlerTest, AckAttributes) {
   EXPECT_THAT(std::move(handler->ack()).get(), StatusIs(StatusCode::kOk));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription ack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingSystem, "gcp_pubsub")))));
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanNamed("test-subscription ack"),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             sc::messaging::kMessagingSystem, "gcp_pubsub")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription ack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  "gcp.project_id", "test-project")))));
-  EXPECT_THAT(
-      spans, Contains(AllOf(
-                 SpanNamed("test-subscription ack"),
-                 SpanHasAttributes(OTelAttribute<std::string>(
-                     /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                     "ack")))));
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanNamed("test-subscription ack"),
-                     SpanHasAttributes(OTelAttribute<std::string>(
-                         sc::kCodeFunction, "pubsub::PullAckHandler::ack")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription ack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 /*sc::messaging::kMessagingOperationType=*/
+                                 "messaging.operation.type", "ack")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription ack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::code::kCodeFunctionName,
+                                 "pubsub::PullAckHandler::ack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(
                   SpanNamed("test-subscription ack"),
                   SpanHasAttributes(OTelAttribute<std::int32_t>(
                       "messaging.gcp_pubsub.message.delivery_attempt", 42)))));
   EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanNamed("test-subscription ack"),
-                  SpanHasAttributes(OTelAttribute<std::string>(
-                      sc::kMessagingDestinationName, "test-subscription")))));
+              Contains(AllOf(SpanNamed("test-subscription ack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::messaging::kMessagingDestinationName,
+                                 "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, NackSuccess) {
@@ -170,7 +168,7 @@ TEST(TracingAckHandlerTest, NackError) {
 }
 
 TEST(TracingAckHandlerTest, NackAttributes) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_unique<MockPullAckHandler>();
   EXPECT_CALL(*mock, nack())
@@ -180,35 +178,34 @@ TEST(TracingAckHandlerTest, NackAttributes) {
   EXPECT_THAT(std::move(handler->nack()).get(), StatusIs(StatusCode::kOk));
 
   auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Contains(AllOf(
+                         SpanNamed("test-subscription nack"),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             sc::messaging::kMessagingSystem, "gcp_pubsub")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription nack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(
-      spans, Contains(AllOf(
-                 SpanNamed("test-subscription nack"),
-                 SpanHasAttributes(OTelAttribute<std::string>(
-                     /*sc::kMessagingOperationType=*/"messaging.operation.type",
-                     "nack")))));
+                                 /*sc::messaging::kMessagingOperationType=*/
+                                 "messaging.operation.type", "nack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription nack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  "gcp.project_id", "test-project")))));
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanNamed("test-subscription nack"),
-                     SpanHasAttributes(OTelAttribute<std::string>(
-                         sc::kCodeFunction, "pubsub::PullAckHandler::nack")))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-subscription nack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::code::kCodeFunctionName,
+                                 "pubsub::PullAckHandler::nack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(
                   SpanNamed("test-subscription nack"),
                   SpanHasAttributes(OTelAttribute<std::int32_t>(
                       "messaging.gcp_pubsub.message.delivery_attempt", 42)))));
   EXPECT_THAT(spans,
-              Contains(AllOf(
-                  SpanNamed("test-subscription nack"),
-                  SpanHasAttributes(OTelAttribute<std::string>(
-                      sc::kMessagingDestinationName, "test-subscription")))));
+              Contains(AllOf(SpanNamed("test-subscription nack"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 sc::messaging::kMessagingDestinationName,
+                                 "test-subscription")))));
 }
 
 TEST(TracingAckHandlerTest, DeliveryAttemptNoSpans) {
@@ -314,5 +311,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -15,20 +15,16 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #include <sstream>
 #include <string>
 #include <thread>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
     Options const&) {
@@ -147,26 +143,16 @@ std::string CurrentThreadId() {
   return std::move(os).str();
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 bool TracingEnabled(Options const& options) {
   return options.get<OpenTelemetryTracingOption>();
 }
-#else
-bool TracingEnabled(Options const&) { return false; }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 void AddSpanAttribute(Options const& options, std::string const& key,
                       std::string const& value) {
   if (!TracingEnabled(options)) return;
   auto span = opentelemetry::trace::Tracer::GetCurrentSpan();
   span->SetAttribute(key, value);
 }
-#else
-void AddSpanAttribute(Options const&, std::string const&, std::string const&) {}
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

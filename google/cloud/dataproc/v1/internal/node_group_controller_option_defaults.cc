@@ -19,9 +19,9 @@
 #include "google/cloud/dataproc/v1/internal/node_group_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/node_group_controller_connection.h"
 #include "google/cloud/dataproc/v1/node_group_controller_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options NodeGroupControllerDefaultOptions(std::string const& location,
   if (!options.has<dataproc_v1::NodeGroupControllerRetryPolicyOption>()) {
     options.set<dataproc_v1::NodeGroupControllerRetryPolicyOption>(
         dataproc_v1::NodeGroupControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataproc_v1::NodeGroupControllerBackoffPolicyOption>()) {

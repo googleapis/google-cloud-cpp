@@ -33,6 +33,7 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c networkconnectivity_v1::DataTransferServiceClient](@ref google::cloud::networkconnectivity_v1::DataTransferServiceClient)
 - [\c networkconnectivity_v1::HubServiceClient](@ref google::cloud::networkconnectivity_v1::HubServiceClient)
 - [\c networkconnectivity_v1::PolicyBasedRoutingServiceClient](@ref google::cloud::networkconnectivity_v1::PolicyBasedRoutingServiceClient)
 <!-- inject-client-list-end -->
@@ -47,6 +48,7 @@ application.
 - @ref networkconnectivity-override-retry - describes how to change the default retry
   policies.
 - @ref networkconnectivity-env - describes environment variables that can configure the behavior of the library.
+- @ref networkconnectivity-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/network-connectivity/docs
 

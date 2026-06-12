@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/bigtable/testing/mock_policies.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/make_status.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
@@ -195,7 +196,10 @@ TEST_F(DefaultRowReaderTest, EmptyReaderHasNoRows) {
                    google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse*) {
+              return Status();
+            });
         return stream;
       });
 
@@ -237,7 +241,10 @@ TEST_F(DefaultRowReaderTest, ReadOneRow) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -281,11 +288,21 @@ TEST_F(DefaultRowReaderTest, StreamIsDrained) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
         ::testing::InSequence s;
-        EXPECT_CALL(*stream, Read).WillOnce(Return(MakeRow("r1")));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            });
         EXPECT_CALL(*stream, Cancel);
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("discarded-row")))
-            .WillOnce(Return(MakeRow("discarded-row")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("discarded-row");
+              return absl::nullopt;
+            })
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("discarded-row");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -343,7 +360,10 @@ TEST_F(DefaultRowReaderTest, RetryThenSuccess) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -487,7 +507,10 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyReadRows) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
         return stream;
       })
@@ -542,13 +565,16 @@ TEST_F(DefaultRowReaderTest, RetrySkipsAlreadyScannedRows) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2", "r3"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             // Simulate the server returning an empty chunk with
             // `last_scanned_row_key` set to "r2".
-            .WillOnce([]() {
-              google::bigtable::v2::ReadRowsResponse resp;
-              resp.set_last_scanned_row_key("r2");
-              return resp;
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              r->Clear();
+              r->set_last_scanned_row_key("r2");
+              return absl::nullopt;
             })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
         return stream;
@@ -603,7 +629,11 @@ TEST_F(DefaultRowReaderTest, FailedParseIsRetried) {
                    google::bigtable::v2::ReadRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
-        EXPECT_CALL(*stream, Read).WillOnce(Return(MalformedResponse()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MalformedResponse();
+              return absl::nullopt;
+            });
         return stream;
       })
       .WillOnce([](auto, auto const&,
@@ -611,7 +641,10 @@ TEST_F(DefaultRowReaderTest, FailedParseIsRetried) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -662,8 +695,14 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyReadRows) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
-            .WillOnce(Return(MalformedResponse()));
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MalformedResponse();
+              return absl::nullopt;
+            });
         return stream;
       })
       .WillOnce([](auto, auto const&,
@@ -722,15 +761,21 @@ TEST_F(DefaultRowReaderTest, FailedParseSkipsAlreadyScannedRows) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2", "r3"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             // Simulate the server returning an empty chunk with
             // `last_scanned_row_key` set to "r2".
-            .WillOnce([]() {
-              google::bigtable::v2::ReadRowsResponse resp;
-              resp.set_last_scanned_row_key("r2");
-              return resp;
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              r->Clear();
+              r->set_last_scanned_row_key("r2");
+              return absl::nullopt;
             })
-            .WillOnce(Return(MalformedResponse()));
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MalformedResponse();
+              return absl::nullopt;
+            });
         return stream;
       })
       .WillOnce([](auto, auto const&,
@@ -789,7 +834,11 @@ TEST_F(DefaultRowReaderTest, FailedParseWithPermanentError) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
         ::testing::InSequence s;
-        EXPECT_CALL(*stream, Read).WillOnce(Return(MalformedResponse()));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MalformedResponse();
+              return absl::nullopt;
+            });
         // The stream is cancelled when the RowReader goes out of scope.
         EXPECT_CALL(*stream, Cancel);
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
@@ -835,7 +884,10 @@ TEST_F(DefaultRowReaderTest, NoRetryOnEmptyRowSet) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r2")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r2");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
         return stream;
       });
@@ -922,7 +974,10 @@ TEST_F(DefaultRowReaderTest, RowLimitIsDecreasedOnRetry) {
         EXPECT_THAT(request, RequestWithRowsLimit(42));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
         return stream;
       })
@@ -973,7 +1028,10 @@ TEST_F(DefaultRowReaderTest, NoRetryIfRowLimitReached) {
         EXPECT_THAT(request, RequestWithRowsLimit(1));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
         return stream;
       });
@@ -1017,11 +1075,21 @@ TEST_F(DefaultRowReaderTest, CancelDrainsStream) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
         ::testing::InSequence s;
-        EXPECT_CALL(*stream, Read).WillOnce(Return(MakeRow("r1")));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            });
         EXPECT_CALL(*stream, Cancel);
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("discarded-row")))
-            .WillOnce(Return(MakeRow("discarded-row")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("discarded-row");
+              return absl::nullopt;
+            })
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("discarded-row");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -1208,9 +1276,18 @@ TEST_F(DefaultRowReaderTest, ReverseScanSuccess) {
         auto stream = std::make_unique<MockReadRowsStream>();
         ::testing::InSequence s;
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r3")))
-            .WillOnce(Return(MakeRow("r2")))
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r3");
+              return absl::nullopt;
+            })
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r2");
+              return absl::nullopt;
+            })
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -1257,8 +1334,14 @@ TEST_F(DefaultRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
         auto stream = std::make_unique<MockReadRowsStream>();
         ::testing::InSequence s;
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
-            .WillOnce(Return(MakeRow("r2")));
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r2");
+              return absl::nullopt;
+            });
         EXPECT_CALL(*stream, Cancel);
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
         return stream;
@@ -1310,13 +1393,16 @@ TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("r1", "r2", "r3"));
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r3")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r3");
+              return absl::nullopt;
+            })
             // Simulate the server returning an empty chunk with
             // `last_scanned_row_key` set to "r2".
-            .WillOnce([]() {
-              google::bigtable::v2::ReadRowsResponse resp;
-              resp.set_last_scanned_row_key("r2");
-              return resp;
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              r->Clear();
+              r->set_last_scanned_row_key("r2");
+              return absl::nullopt;
             })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
         return stream;
@@ -1406,11 +1492,12 @@ TEST_F(DefaultRowReaderTest, RetryInfoHeeded) {
       .WillOnce([delay](auto, auto const&,
                         google::bigtable::v2::ReadRowsRequest const&) {
         auto stream = std::make_unique<MockReadRowsStream>();
-        EXPECT_CALL(*stream, Read).WillOnce([delay] {
-          auto s = internal::ResourceExhaustedError("try again");
-          internal::SetRetryInfo(s, internal::RetryInfo{delay});
-          return s;
-        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([delay](google::bigtable::v2::ReadRowsResponse*) {
+              auto s = internal::ResourceExhaustedError("try again");
+              internal::SetRetryInfo(s, internal::RetryInfo{delay});
+              return s;
+            });
         return stream;
       })
       .WillOnce([](auto, auto const&,
@@ -1418,7 +1505,10 @@ TEST_F(DefaultRowReaderTest, RetryInfoHeeded) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
-            .WillOnce(Return(MakeRow("r1")))
+            .WillOnce([](google::bigtable::v2::ReadRowsResponse* r) {
+              *r = MakeRow("r1");
+              return absl::nullopt;
+            })
             .WillOnce(Return(Status()));
         return stream;
       });
@@ -1464,11 +1554,12 @@ TEST_F(DefaultRowReaderTest, RetryInfoIgnored) {
       .WillOnce([delay](auto, auto const&,
                         google::bigtable::v2::ReadRowsRequest const&) {
         auto stream = std::make_unique<MockReadRowsStream>();
-        EXPECT_CALL(*stream, Read).WillOnce([delay] {
-          auto s = internal::ResourceExhaustedError("try again");
-          internal::SetRetryInfo(s, internal::RetryInfo{delay});
-          return s;
-        });
+        EXPECT_CALL(*stream, Read)
+            .WillOnce([delay](google::bigtable::v2::ReadRowsResponse*) {
+              auto s = internal::ResourceExhaustedError("try again");
+              internal::SetRetryInfo(s, internal::RetryInfo{delay});
+              return s;
+            });
         return stream;
       });
 

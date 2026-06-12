@@ -47,7 +47,7 @@ Options RegionNotificationEndpointsDefaultOptions(Options options) {
                     RegionNotificationEndpointsRetryPolicyOption>(
         compute_region_notification_endpoints_v1::
             RegionNotificationEndpointsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_notification_endpoints_v1::

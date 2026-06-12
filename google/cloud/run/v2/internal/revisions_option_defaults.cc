@@ -40,7 +40,7 @@ Options RevisionsDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<run_v2::RevisionsRetryPolicyOption>()) {
     options.set<run_v2::RevisionsRetryPolicyOption>(
-        run_v2::RevisionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        run_v2::RevisionsLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<run_v2::RevisionsBackoffPolicyOption>()) {

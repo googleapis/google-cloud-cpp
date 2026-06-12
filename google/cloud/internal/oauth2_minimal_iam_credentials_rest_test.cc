@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/http_payload.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_request.h"
@@ -23,6 +22,7 @@
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -44,8 +44,11 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::A;
 using ::testing::ByMove;
+using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsSupersetOf;
+using ::testing::Pair;
 using ::testing::Return;
 
 class MockCredentials : public google::cloud::oauth2_internal::Credentials {
@@ -250,6 +253,8 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
     return AccessToken{"test-token", tp + lifetime};
   });
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(::testing::Return(StatusOr<std::string>{"googleapis.com"}));
 
   auto stub =
       MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
@@ -339,6 +344,220 @@ TEST(MinimalIamCredentialsRestTest, GetUniverseDomainFromCredentials) {
       MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{}, {});
   EXPECT_THAT(stub.universe_domain(Options{}),
               IsOkAndHolds(kExpectedUniverseDomain));
+}
+
+TEST(MinimalIamCredentialsRestTest, AllowedLocationsAuthorizationFailure) {
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([] {
+    return Status(StatusCode::kPermissionDenied, "Permission Denied");
+  });
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(::testing::Return(StatusOr<std::string>{"googleapis.com"}));
+
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).Times(0);
+  auto stub = MinimalIamCredentialsRestStub(
+      std::move(mock_credentials), {}, mock_client_factory.AsStdFunction());
+  ServiceAccountAllowedLocationsRequest request;
+  request.service_account_email = "foo@somewhere.com";
+  auto access_token = stub.AllowedLocations(request);
+  EXPECT_THAT(access_token, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(MinimalIamCredentialsRestTest, AllowedLocationsMalformedResponseFailure) {
+  std::string service_account = "foo@somewhere.com";
+  std::chrono::seconds lifetime(3600);
+  std::string response = R"""({})""";
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
+    auto client = std::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get)
+        .WillOnce([&](RestContext&, RestRequest const& request) {
+          auto mock_response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*mock_response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+              .WillOnce([response] {
+                return testing_util::MakeMockHttpPayloadSuccess(response);
+              });
+          EXPECT_THAT(
+              request.path(),
+              Eq(absl::StrCat("https://iamcredentials.googleapis.com/v1/",
+                              "projects/-/serviceAccounts/", service_account,
+                              "/allowedLocations")));
+          return std::unique_ptr<RestResponse>(std::move(mock_response));
+        });
+    return std::unique_ptr<rest_internal::RestClient>(std::move(client));
+  });
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
+    return AccessToken{"test-token", tp + lifetime};
+  });
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(::testing::Return(StatusOr<std::string>{"googleapis.com"}));
+
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
+  ServiceAccountAllowedLocationsRequest request;
+  request.service_account_email = service_account;
+  auto allowed_locations = stub.AllowedLocations(request);
+  EXPECT_THAT(allowed_locations, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(
+      allowed_locations.status().error_info().metadata(),
+      IsSupersetOf(
+          {Pair("gcloud-cpp.root.class", "MinimalIamCredentialsRestStub"),
+           Pair("gcloud-cpp.root.function", "AllowedLocationsHelper"),
+           Pair("path",
+                "https://iamcredentials.googleapis.com/v1/projects/-/"
+                "serviceAccounts/foo@somewhere.com/allowedLocations")}));
+}
+
+TEST(MinimalIamCredentialsRestTest, ServiceAccountAllowedLocations) {
+  std::string service_account = "foo@somewhere.com";
+  std::chrono::seconds lifetime(3600);
+  std::string response = R"""({
+    "locations": [
+      "us-central1", "us-east1", "europe-west1", "asia-east1"
+    ],
+    "encodedLocations" : "0xA30"})""";
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
+    auto client = std::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get)
+        .WillOnce([&](RestContext&, RestRequest const& request) {
+          auto mock_response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*mock_response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+              .WillOnce([response] {
+                return testing_util::MakeMockHttpPayloadSuccess(response);
+              });
+          EXPECT_THAT(
+              request.path(),
+              Eq(absl::StrCat("https://iamcredentials.googleapis.com/v1/",
+                              "projects/-/serviceAccounts/", service_account,
+                              "/allowedLocations")));
+          return std::unique_ptr<RestResponse>(std::move(mock_response));
+        });
+    return std::unique_ptr<rest_internal::RestClient>(std::move(client));
+  });
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
+    return AccessToken{"test-token", tp + lifetime};
+  });
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(::testing::Return(StatusOr<std::string>{"googleapis.com"}));
+
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
+  ServiceAccountAllowedLocationsRequest request;
+  request.service_account_email = service_account;
+  auto allowed_locations = stub.AllowedLocations(request);
+  EXPECT_THAT(
+      allowed_locations->locations,
+      ElementsAre("us-central1", "us-east1", "europe-west1", "asia-east1"));
+  EXPECT_THAT(allowed_locations->encoded_locations, Eq("0xA30"));
+}
+
+TEST(MinimalIamCredentialsRestTest, WorkloadIdentityAllowedLocations) {
+  std::string project_id = "my-project";
+  std::string pool_id = "my-pool";
+  std::chrono::seconds lifetime(3600);
+  std::string response = R"""({
+    "locations": [
+      "us-central1", "us-east1", "europe-west1", "asia-east1"
+    ],
+    "encodedLocations" : "0xA30"})""";
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
+    auto client = std::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get)
+        .WillOnce([&](RestContext&, RestRequest const& request) {
+          auto mock_response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*mock_response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+              .WillOnce([response] {
+                return testing_util::MakeMockHttpPayloadSuccess(response);
+              });
+          EXPECT_THAT(
+              request.path(),
+              Eq(absl::StrCat("https://iamcredentials.googleapis.com/v1/",
+                              "projects/", project_id,
+                              "/locations/global/workloadIdentityPools/",
+                              pool_id, "/allowedLocations")));
+          return std::unique_ptr<RestResponse>(std::move(mock_response));
+        });
+    return std::unique_ptr<rest_internal::RestClient>(std::move(client));
+  });
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
+    return AccessToken{"test-token", tp + lifetime};
+  });
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(::testing::Return(StatusOr<std::string>{"googleapis.com"}));
+
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
+  WorkloadIdentityAllowedLocationsRequest request;
+  request.project_id = project_id;
+  request.pool_id = pool_id;
+  auto allowed_locations = stub.AllowedLocations(request);
+  EXPECT_THAT(
+      allowed_locations->locations,
+      ElementsAre("us-central1", "us-east1", "europe-west1", "asia-east1"));
+  EXPECT_THAT(allowed_locations->encoded_locations, Eq("0xA30"));
+}
+
+TEST(MinimalIamCredentialsRestTest, WorkforceIdentityAllowedLocations) {
+  std::string pool_id = "my-pool";
+  std::chrono::seconds lifetime(3600);
+  std::string response = R"""({
+    "locations": [
+      "us-central1", "us-east1", "europe-west1", "asia-east1"
+    ],
+    "encodedLocations" : "0xA30"})""";
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
+    auto client = std::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get)
+        .WillOnce([&](RestContext&, RestRequest const& request) {
+          auto mock_response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*mock_response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+              .WillOnce([response] {
+                return testing_util::MakeMockHttpPayloadSuccess(response);
+              });
+          EXPECT_THAT(
+              request.path(),
+              Eq(absl::StrCat("https://iamcredentials.googleapis.com/v1/",
+                              "locations/global/workforcePools/", pool_id,
+                              "/allowedLocations")));
+          return std::unique_ptr<RestResponse>(std::move(mock_response));
+        });
+    return std::unique_ptr<rest_internal::RestClient>(std::move(client));
+  });
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
+    return AccessToken{"test-token", tp + lifetime};
+  });
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce(::testing::Return(StatusOr<std::string>{"googleapis.com"}));
+
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
+  WorkforceIdentityAllowedLocationsRequest request;
+  request.pool_id = pool_id;
+  auto allowed_locations = stub.AllowedLocations(request);
+  EXPECT_THAT(
+      allowed_locations->locations,
+      ElementsAre("us-central1", "us-east1", "europe-west1", "asia-east1"));
+  EXPECT_THAT(allowed_locations->encoded_locations, Eq("0xA30"));
 }
 
 }  // namespace

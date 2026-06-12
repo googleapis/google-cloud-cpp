@@ -22,10 +22,13 @@
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -177,6 +180,43 @@ class AnalyticsHubServiceLogging : public AnalyticsHubServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  CreateQueryTemplate(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::analyticshub::v1::
+                          CreateQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  GetQueryTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::analyticshub::v1::GetQueryTemplateRequest const&
+          request) override;
+
+  StatusOr<
+      google::cloud::bigquery::analyticshub::v1::ListQueryTemplatesResponse>
+  ListQueryTemplates(grpc::ClientContext& context, Options const& options,
+                     google::cloud::bigquery::analyticshub::v1::
+                         ListQueryTemplatesRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  UpdateQueryTemplate(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::analyticshub::v1::
+                          UpdateQueryTemplateRequest const& request) override;
+
+  Status DeleteQueryTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  SubmitQueryTemplate(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::analyticshub::v1::
+                          SubmitQueryTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::QueryTemplate>
+  ApproveQueryTemplate(grpc::ClientContext& context, Options const& options,
+                       google::cloud::bigquery::analyticshub::v1::
+                           ApproveQueryTemplateRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -198,5 +238,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_analyticshub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_INTERNAL_ANALYTICS_HUB_LOGGING_DECORATOR_H

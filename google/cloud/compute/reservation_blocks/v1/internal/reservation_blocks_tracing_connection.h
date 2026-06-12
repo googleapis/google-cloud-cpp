@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_reservation_blocks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ReservationBlocksTracingConnection
     : public compute_reservation_blocks_v1::ReservationBlocksConnection {
  public:
@@ -67,8 +65,6 @@ class ReservationBlocksTracingConnection
   std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

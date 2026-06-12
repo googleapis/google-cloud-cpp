@@ -153,6 +153,14 @@ TEST(Base64, UrlsafeBase64Encode) {
   EXPECT_EQ("TG9yZ-W0gaXBz_dW1cMACg", UrlsafeBase64Encode(input));
 }
 
+TEST(Base64, UrlsafeBase64EncodeWithPadding) {
+  std::vector<std::uint8_t> input{
+      0x4c, 0x6f, 0x72, 0x67, 0xe5, 0xb4, 0x81, 0xa5,
+      0xc1, 0xcf, 0xf7, 0x56, 0xd5, 0xc3, 0x00, 0x0a,
+  };
+  EXPECT_EQ("TG9yZ-W0gaXBz_dW1cMACg==", UrlsafeBase64EncodeWithPadding(input));
+}
+
 TEST(Base64, Base64Decode) {
   // Produced input using:
   //     echo 'TG9yZ+W0gaXBz/dW1cMACg==' | openssl base64 -d | od -t x1

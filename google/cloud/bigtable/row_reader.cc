@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/internal/legacy_row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -64,32 +63,6 @@ static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
 RowReader::RowReader()
     : RowReader(
           std::make_shared<bigtable_internal::StatusOnlyRowReader>(Status{})) {}
-
-RowReader::RowReader(
-    std::shared_ptr<DataClient> client, std::string table_name, RowSet row_set,
-    std::int64_t rows_limit, Filter filter,
-    std::unique_ptr<RPCRetryPolicy> retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy,
-    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
-    : RowReader(std::make_shared<bigtable_internal::LegacyRowReader>(
-          std::move(client), std::move(table_name), std::move(row_set),
-          rows_limit, std::move(filter), std::move(retry_policy),
-          std::move(backoff_policy), std::move(metadata_update_policy),
-          std::move(parser_factory))) {}
-
-RowReader::RowReader(
-    std::shared_ptr<DataClient> client, std::string app_profile_id,
-    std::string table_name, RowSet row_set, std::int64_t rows_limit,
-    Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
-    std::unique_ptr<RPCBackoffPolicy> backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy,
-    std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
-    : RowReader(std::make_shared<bigtable_internal::LegacyRowReader>(
-          std::move(client), std::move(app_profile_id), std::move(table_name),
-          std::move(row_set), rows_limit, std::move(filter),
-          std::move(retry_policy), std::move(backoff_policy),
-          std::move(metadata_update_policy), std::move(parser_factory))) {}
 
 std::int64_t constexpr RowReader::NO_ROWS_LIMIT;
 

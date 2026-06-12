@@ -17,12 +17,15 @@
 // source: google/cloud/gkehub/v1/service.proto
 
 #include "google/cloud/gkehub/v1/internal/gke_hub_stub.h"
+#include "google/cloud/gkehub/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/gkehub/v1/service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -37,6 +40,18 @@ DefaultGkeHubStub::ListMemberships(
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
   google::cloud::gkehub::v1::ListMembershipsResponse response;
   auto status = grpc_stub_->ListMemberships(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::ListBoundMembershipsResponse>
+DefaultGkeHubStub::ListBoundMemberships(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::ListBoundMembershipsRequest const& request) {
+  google::cloud::gkehub::v1::ListBoundMembershipsResponse response;
+  auto status = grpc_stub_->ListBoundMemberships(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -266,6 +281,757 @@ DefaultGkeHubStub::GenerateConnectManifest(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncCreateFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::CreateFleetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::CreateFleetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::CreateFleetRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateFleet(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::CreateFleet(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::CreateFleetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateFleet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::Fleet> DefaultGkeHubStub::GetFleet(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::GetFleetRequest const& request) {
+  google::cloud::gkehub::v1::Fleet response;
+  auto status = grpc_stub_->GetFleet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncUpdateFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::UpdateFleetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::UpdateFleetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::UpdateFleetRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateFleet(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::UpdateFleet(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::UpdateFleetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateFleet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncDeleteFleet(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::DeleteFleetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::DeleteFleetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::DeleteFleetRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteFleet(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::DeleteFleet(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::DeleteFleetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFleet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::ListFleetsResponse>
+DefaultGkeHubStub::ListFleets(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::ListFleetsRequest const& request) {
+  google::cloud::gkehub::v1::ListFleetsResponse response;
+  auto status = grpc_stub_->ListFleets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::Namespace>
+DefaultGkeHubStub::GetScopeNamespace(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::GetScopeNamespaceRequest const& request) {
+  google::cloud::gkehub::v1::Namespace response;
+  auto status = grpc_stub_->GetScopeNamespace(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncCreateScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::CreateScopeNamespaceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateScopeNamespace(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::CreateScopeNamespace(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateScopeNamespace(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncUpdateScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::UpdateScopeNamespaceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateScopeNamespace(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::UpdateScopeNamespace(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateScopeNamespace(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncDeleteScopeNamespace(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::DeleteScopeNamespaceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteScopeNamespace(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::DeleteScopeNamespace(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteScopeNamespace(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopeNamespacesResponse>
+DefaultGkeHubStub::ListScopeNamespaces(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::ListScopeNamespacesRequest const& request) {
+  google::cloud::gkehub::v1::ListScopeNamespacesResponse response;
+  auto status = grpc_stub_->ListScopeNamespaces(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+DefaultGkeHubStub::GetScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const& request) {
+  google::cloud::gkehub::v1::RBACRoleBinding response;
+  auto status =
+      grpc_stub_->GetScopeRBACRoleBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncCreateScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateScopeRBACRoleBinding(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::CreateScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateScopeRBACRoleBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncUpdateScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateScopeRBACRoleBinding(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::UpdateScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateScopeRBACRoleBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncDeleteScopeRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteScopeRBACRoleBinding(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::DeleteScopeRBACRoleBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteScopeRBACRoleBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopeRBACRoleBindingsResponse>
+DefaultGkeHubStub::ListScopeRBACRoleBindings(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest const&
+        request) {
+  google::cloud::gkehub::v1::ListScopeRBACRoleBindingsResponse response;
+  auto status =
+      grpc_stub_->ListScopeRBACRoleBindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::Scope> DefaultGkeHubStub::GetScope(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::GetScopeRequest const& request) {
+  google::cloud::gkehub::v1::Scope response;
+  auto status = grpc_stub_->GetScope(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncCreateScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::CreateScopeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::CreateScopeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::CreateScopeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateScope(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::CreateScope(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::CreateScopeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateScope(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncUpdateScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::UpdateScopeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::UpdateScopeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::UpdateScopeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateScope(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::UpdateScope(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::UpdateScopeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateScope(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncDeleteScope(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::DeleteScopeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::DeleteScopeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::DeleteScopeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteScope(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultGkeHubStub::DeleteScope(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::DeleteScopeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteScope(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::ListScopesResponse>
+DefaultGkeHubStub::ListScopes(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::ListScopesRequest const& request) {
+  google::cloud::gkehub::v1::ListScopesResponse response;
+  auto status = grpc_stub_->ListScopes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::ListPermittedScopesResponse>
+DefaultGkeHubStub::ListPermittedScopes(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::ListPermittedScopesRequest const& request) {
+  google::cloud::gkehub::v1::ListPermittedScopesResponse response;
+  auto status = grpc_stub_->ListPermittedScopes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::MembershipBinding>
+DefaultGkeHubStub::GetMembershipBinding(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::GetMembershipBindingRequest const& request) {
+  google::cloud::gkehub::v1::MembershipBinding response;
+  auto status = grpc_stub_->GetMembershipBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncCreateMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::CreateMembershipBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::CreateMembershipBindingRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateMembershipBinding(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::CreateMembershipBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateMembershipBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncUpdateMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::UpdateMembershipBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::UpdateMembershipBindingRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateMembershipBinding(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::UpdateMembershipBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateMembershipBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncDeleteMembershipBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::DeleteMembershipBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::DeleteMembershipBindingRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteMembershipBinding(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::DeleteMembershipBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteMembershipBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::ListMembershipBindingsResponse>
+DefaultGkeHubStub::ListMembershipBindings(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::ListMembershipBindingsRequest const& request) {
+  google::cloud::gkehub::v1::ListMembershipBindingsResponse response;
+  auto status =
+      grpc_stub_->ListMembershipBindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::RBACRoleBinding>
+DefaultGkeHubStub::GetMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&
+        request) {
+  google::cloud::gkehub::v1::RBACRoleBinding response;
+  auto status =
+      grpc_stub_->GetMembershipRBACRoleBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncCreateMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::
+                 CreateMembershipRBACRoleBindingRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateMembershipRBACRoleBinding(context,
+                                                                request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::CreateMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateMembershipRBACRoleBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncUpdateMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::
+                 UpdateMembershipRBACRoleBindingRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateMembershipRBACRoleBinding(context,
+                                                                request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::UpdateMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateMembershipRBACRoleBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultGkeHubStub::AsyncDeleteMembershipRBACRoleBinding(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::gkehub::v1::
+                 DeleteMembershipRBACRoleBindingRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteMembershipRBACRoleBinding(context,
+                                                                request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGkeHubStub::DeleteMembershipRBACRoleBinding(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteMembershipRBACRoleBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsResponse>
+DefaultGkeHubStub::ListMembershipRBACRoleBindings(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest const&
+        request) {
+  google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsResponse response;
+  auto status =
+      grpc_stub_->ListMembershipRBACRoleBindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::gkehub::v1::GenerateMembershipRBACRoleBindingYAMLResponse>
+DefaultGkeHubStub::GenerateMembershipRBACRoleBindingYAML(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::gkehub::v1::
+        GenerateMembershipRBACRoleBindingYAMLRequest const& request) {
+  google::cloud::gkehub::v1::GenerateMembershipRBACRoleBindingYAMLResponse
+      response;
+  auto status = grpc_stub_->GenerateMembershipRBACRoleBindingYAML(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -308,3 +1074,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

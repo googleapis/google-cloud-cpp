@@ -43,7 +43,7 @@ Options SecurityPoliciesDefaultOptions(Options options) {
     options.set<
         compute_security_policies_v1::SecurityPoliciesRetryPolicyOption>(
         compute_security_policies_v1::SecurityPoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_security_policies_v1::

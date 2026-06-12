@@ -17,9 +17,12 @@
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_auth_decorator.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
+#include "google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -327,6 +330,16 @@ CloudBuildAuth::ListWorkerPools(
   return child_->ListWorkerPools(context, options, request);
 }
 
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildAuth::GetDefaultServiceAccount(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDefaultServiceAccount(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -367,3 +380,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

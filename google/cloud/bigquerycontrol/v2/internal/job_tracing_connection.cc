@@ -27,8 +27,6 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 JobServiceTracingConnection::JobServiceTracingConnection(
     std::shared_ptr<bigquerycontrol_v2::JobServiceConnection> child)
     : child_(std::move(child)) {}
@@ -97,16 +95,12 @@ JobServiceTracingConnection::Query(
   return internal::EndSpan(*span, child_->Query(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigquerycontrol_v2::JobServiceConnection>
 MakeJobServiceTracingConnection(
     std::shared_ptr<bigquerycontrol_v2::JobServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<JobServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

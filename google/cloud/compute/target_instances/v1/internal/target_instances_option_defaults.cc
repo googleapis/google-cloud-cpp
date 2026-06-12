@@ -42,7 +42,7 @@ Options TargetInstancesDefaultOptions(Options options) {
           compute_target_instances_v1::TargetInstancesRetryPolicyOption>()) {
     options.set<compute_target_instances_v1::TargetInstancesRetryPolicyOption>(
         compute_target_instances_v1::TargetInstancesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

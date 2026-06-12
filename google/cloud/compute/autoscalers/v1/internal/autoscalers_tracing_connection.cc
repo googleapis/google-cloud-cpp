@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_autoscalers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AutoscalersTracingConnection::AutoscalersTracingConnection(
     std::shared_ptr<compute_autoscalers_v1::AutoscalersConnection> child)
     : child_(std::move(child)) {}
@@ -198,16 +196,12 @@ AutoscalersTracingConnection::UpdateAutoscaler(
                            child_->UpdateAutoscaler(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_autoscalers_v1::AutoscalersConnection>
 MakeAutoscalersTracingConnection(
     std::shared_ptr<compute_autoscalers_v1::AutoscalersConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AutoscalersTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

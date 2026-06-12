@@ -17,9 +17,7 @@
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <opentelemetry/trace/semantic_conventions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <memory>
 
 namespace google {
@@ -27,18 +25,16 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 namespace {
 
-namespace sc = ::opentelemetry::trace::SemanticConventions;
+namespace sc = ::opentelemetry::semconv;
 
 class AsyncObjectDescriptorConnectionTracing
-    : public storage_experimental::ObjectDescriptorConnection {
+    : public storage::ObjectDescriptorConnection {
  public:
   explicit AsyncObjectDescriptorConnectionTracing(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl)
+      std::shared_ptr<storage::ObjectDescriptorConnection> impl)
       : span_(std::move(span)), impl_(std::move(impl)) {}
 
   ~AsyncObjectDescriptorConnectionTracing() override {
@@ -50,13 +46,13 @@ class AsyncObjectDescriptorConnectionTracing
   absl::optional<google::storage::v2::Object> metadata() const override {
     return impl_->metadata();
   }
+  bool IsOpen() const override { return impl_->IsOpen(); }
 
-  std::unique_ptr<storage_experimental::AsyncReaderConnection> Read(
-      ReadParams p) override {
+  std::unique_ptr<storage::AsyncReaderConnection> Read(ReadParams p) override {
     internal::OTelScope scope(span_);
     auto result = impl_->Read(p);
     span_->AddEvent("gl-cpp.open.read",
-                    {{sc::kThreadId, internal::CurrentThreadId()},
+                    {{sc::thread::kThreadId, internal::CurrentThreadId()},
                      {"read-start", p.start},
                      {"read-length", p.length}});
     return MakeTracingReaderConnection(span_, std::move(result));
@@ -68,20 +64,18 @@ class AsyncObjectDescriptorConnectionTracing
 
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
-  std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl_;
+  std::shared_ptr<storage::ObjectDescriptorConnection> impl_;
 };
 
 }  // namespace
 
-std::shared_ptr<storage_experimental::ObjectDescriptorConnection>
+std::shared_ptr<storage::ObjectDescriptorConnection>
 MakeTracingObjectDescriptorConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl) {
+    std::shared_ptr<storage::ObjectDescriptorConnection> impl) {
   return std::make_unique<AsyncObjectDescriptorConnectionTracing>(
       std::move(span), std::move(impl));
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

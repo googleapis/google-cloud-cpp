@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -400,7 +400,7 @@ TEST(AsyncClient, StartAppendableObjectUpload1) {
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
         EXPECT_THAT(p.request, IsProtoEqual(expected));
         auto writer = std::make_unique<MockAsyncWriterConnection>();
-        EXPECT_CALL(*writer, PersistedState).WillOnce(Return(0));
+        EXPECT_CALL(*writer, PersistedState).Times(0);
         EXPECT_CALL(*writer, Finalize).WillRepeatedly([] {
           return make_ready_future(make_status_or(TestProtoObject()));
         });
@@ -446,7 +446,7 @@ TEST(AsyncClient, StartAppendableObjectUpload2) {
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
         EXPECT_THAT(p.request, IsProtoEqual(expected));
         auto writer = std::make_unique<MockAsyncWriterConnection>();
-        EXPECT_CALL(*writer, PersistedState).WillOnce(Return(0));
+        EXPECT_CALL(*writer, PersistedState).Times(0);
         EXPECT_CALL(*writer, Finalize).WillRepeatedly([] {
           return make_ready_future(make_status_or(TestProtoObject()));
         });
@@ -513,7 +513,7 @@ TEST(AsyncClient, ResumeAppendableObjectUpload1) {
   AsyncWriter w;
   AsyncToken t;
   std::tie(w, t) = *std::move(wt);
-  EXPECT_FALSE(t.valid());
+  EXPECT_TRUE(t.valid());
   EXPECT_THAT(w.PersistedState(), VariantWith<google::storage::v2::Object>(
                                       IsProtoEqual(TestProtoObject())));
 }
@@ -1399,6 +1399,6 @@ TEST(AsyncClient, ResumeRewrite2) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

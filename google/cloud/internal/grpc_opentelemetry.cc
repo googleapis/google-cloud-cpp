@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/noexcept_action.h"
@@ -21,21 +20,19 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <grpcpp/grpcpp.h>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/rpc_attributes.h>
+#include <opentelemetry/semconv/network_attributes.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 
@@ -110,17 +107,17 @@ std::pair<std::string, std::string> MakeAttribute(
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
     opentelemetry::nostd::string_view service,
     opentelemetry::nostd::string_view method) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   return internal::MakeSpan(
       absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
                    absl::string_view{method.data(), method.size()}),
-      {{sc::kRpcSystem, sc::RpcSystemValues::kGrpc},
-       {sc::kRpcService, service},
-       {sc::kRpcMethod, method},
+      {{sc::rpc::kRpcSystem, sc::rpc::RpcSystemValues::kGrpc},
+       {sc::rpc::kRpcService, service},
+       {sc::rpc::kRpcMethod, method},
        {/*sc::kNetworkTransport=*/"network.transport",
-        sc::NetTransportValues::kIpTcp},
+        sc::network::NetworkTransportValues::kTcp},
        {"grpc.version", grpc::Version()}},
       options);
 }
@@ -165,7 +162,6 @@ future<Status> EndSpan(
     return EndSpan(*s, std::move(t));
   });
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

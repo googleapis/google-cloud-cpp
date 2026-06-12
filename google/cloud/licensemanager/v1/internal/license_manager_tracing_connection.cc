@@ -27,8 +27,6 @@ namespace cloud {
 namespace licensemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 LicenseManagerTracingConnection::LicenseManagerTracingConnection(
     std::shared_ptr<licensemanager_v1::LicenseManagerConnection> child)
     : child_(std::move(child)) {}
@@ -341,16 +339,12 @@ Status LicenseManagerTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<licensemanager_v1::LicenseManagerConnection>
 MakeLicenseManagerTracingConnection(
     std::shared_ptr<licensemanager_v1::LicenseManagerConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<LicenseManagerTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

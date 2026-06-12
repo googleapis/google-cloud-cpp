@@ -11,11 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -785,6 +786,40 @@ void CheckExecuteQueryWithSingleUseOptions(
   }
 
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
+}
+
+TEST_F(ClientIntegrationTest, ReadLockModeOptionIsSent) {
+  auto const singer_id = 101;
+  auto mutation_helper = [singer_id](std::string const& new_name) {
+    return Mutations{MakeInsertOrUpdateMutation(
+        "Singers", {"SingerId", "FirstName"}, singer_id, new_name)};
+  };
+
+  // Initial insert
+  auto insert = client_->Commit(mutation_helper("InitialName"));
+  ASSERT_STATUS_OK(insert);
+
+  auto read_lock_mode = Transaction::ReadLockMode::kOptimistic;
+  auto tx_a =
+      MakeReadWriteTransaction(Transaction::ReadWriteOptions(read_lock_mode));
+  auto tx_a_read_result = client_->Read(
+      tx_a, "Singers", KeySet().AddKey(MakeKey(singer_id)), {"SingerId"});
+  for (auto const& row : StreamOf<std::tuple<std::int64_t>>(tx_a_read_result)) {
+    EXPECT_THAT(
+        row,
+        AnyOf(IsOk(), StatusIs(StatusCode::kUnimplemented,
+                               HasSubstr("Optimistic lock is not enabled"))));
+  }
+  tx_a = MakeReadWriteTransaction(
+      tx_a, Transaction::ReadWriteOptions(read_lock_mode));
+
+  auto optimistic_result =
+      client_->Commit(tx_a, mutation_helper("SecondModifiedName"));
+
+  EXPECT_THAT(
+      optimistic_result,
+      AnyOf(IsOk(), StatusIs(StatusCode::kUnimplemented,
+                             HasSubstr("Optimistic lock is not enabled"))));
 }
 
 /// @test Test ExecuteQuery() with bounded staleness set by a timestamp.
@@ -1729,15 +1764,9 @@ TEST_F(ClientIntegrationTest, MakeConnectionOverloads) {
                      .clone());
 }
 
-/// @test Verify the backwards compatibility `v1` namespace still exists.
-TEST_F(ClientIntegrationTest, BackwardsCompatibility) {
-  auto connection = ::google::cloud::spanner::v1::MakeConnection(GetDatabase());
-  EXPECT_THAT(connection, NotNull());
-  ASSERT_NO_FATAL_FAILURE(Client(std::move(connection)));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

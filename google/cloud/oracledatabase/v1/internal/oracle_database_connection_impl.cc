@@ -700,6 +700,41 @@ OracleDatabaseConnectionImpl::ListGiVersions(
       });
 }
 
+StreamRange<google::cloud::oracledatabase::v1::MinorVersion>
+OracleDatabaseConnectionImpl::ListMinorVersions(
+    google::cloud::oracledatabase::v1::ListMinorVersionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMinorVersions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::MinorVersion>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::ListMinorVersionsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::oracledatabase::v1::
+                       ListMinorVersionsRequest const& request) {
+              return stub->ListMinorVersions(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListMinorVersionsResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::MinorVersion> result(
+            r.minor_versions().size());
+        auto& messages = *r.mutable_minor_versions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
 OracleDatabaseConnectionImpl::ListDbSystemShapes(
     google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request) {
@@ -855,6 +890,101 @@ OracleDatabaseConnectionImpl::CreateAutonomousDatabase(
         StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
         internal::InvalidArgumentError(
             "operation does not correspond to CreateAutonomousDatabase",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::AutonomousDatabase>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::AutonomousDatabase>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnectionImpl::UpdateAutonomousDatabase(
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAutonomousDatabase(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::AutonomousDatabase>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::oracledatabase::v1::
+                         UpdateAutonomousDatabaseRequest const& request) {
+        return stub->AsyncUpdateAutonomousDatabase(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::AutonomousDatabase>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::UpdateAutonomousDatabase(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::UpdateAutonomousDatabaseRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAutonomousDatabase(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 UpdateAutonomousDatabaseRequest const& request) {
+        return stub_->UpdateAutonomousDatabase(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnectionImpl::UpdateAutonomousDatabase(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAutonomousDatabase",
             GCP_ERROR_INFO().WithMetadata("operation",
                                           operation.metadata().DebugString())));
   }
@@ -1492,6 +1622,1807 @@ OracleDatabaseConnectionImpl::RestartAutonomousDatabase(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::oracledatabase::v1::AutonomousDatabase>,
       polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnectionImpl::SwitchoverAutonomousDatabase(
+    google::cloud::oracledatabase::v1::
+        SwitchoverAutonomousDatabaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SwitchoverAutonomousDatabase(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::AutonomousDatabase>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::oracledatabase::v1::
+                         SwitchoverAutonomousDatabaseRequest const& request) {
+        return stub->AsyncSwitchoverAutonomousDatabase(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::AutonomousDatabase>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::SwitchoverAutonomousDatabase(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    SwitchoverAutonomousDatabaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SwitchoverAutonomousDatabase(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 SwitchoverAutonomousDatabaseRequest const& request) {
+        return stub_->SwitchoverAutonomousDatabase(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnectionImpl::SwitchoverAutonomousDatabase(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SwitchoverAutonomousDatabase",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::AutonomousDatabase>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::AutonomousDatabase>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnectionImpl::FailoverAutonomousDatabase(
+    google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->FailoverAutonomousDatabase(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::AutonomousDatabase>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::oracledatabase::v1::
+                         FailoverAutonomousDatabaseRequest const& request) {
+        return stub->AsyncFailoverAutonomousDatabase(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::AutonomousDatabase>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::FailoverAutonomousDatabase(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::FailoverAutonomousDatabaseRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FailoverAutonomousDatabase(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 FailoverAutonomousDatabaseRequest const& request) {
+        return stub_->FailoverAutonomousDatabase(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnectionImpl::FailoverAutonomousDatabase(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to FailoverAutonomousDatabase",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::AutonomousDatabase>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::AutonomousDatabase>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>
+OracleDatabaseConnectionImpl::ListOdbNetworks(
+    google::cloud::oracledatabase::v1::ListOdbNetworksRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListOdbNetworks(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::ListOdbNetworksRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::oracledatabase::v1::ListOdbNetworksRequest const&
+                    request) {
+              return stub->ListOdbNetworks(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListOdbNetworksResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::OdbNetwork> result(
+            r.odb_networks().size());
+        auto& messages = *r.mutable_odb_networks();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>
+OracleDatabaseConnectionImpl::GetOdbNetwork(
+    google::cloud::oracledatabase::v1::GetOdbNetworkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetOdbNetwork(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetOdbNetworkRequest const&
+                 request) {
+        return stub_->GetOdbNetwork(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+OracleDatabaseConnectionImpl::CreateOdbNetwork(
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateOdbNetwork(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OdbNetwork>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&
+              request) {
+        return stub->AsyncCreateOdbNetwork(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::OdbNetwork>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::CreateOdbNetwork(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateOdbNetwork(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::CreateOdbNetworkRequest const&
+                 request) {
+        return stub_->CreateOdbNetwork(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>
+OracleDatabaseConnectionImpl::CreateOdbNetwork(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OdbNetwork>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateOdbNetwork",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OdbNetwork>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::OdbNetwork>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteOdbNetwork(
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteOdbNetwork(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&
+              request) {
+        return stub->AsyncDeleteOdbNetwork(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::DeleteOdbNetwork(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteOdbNetwork(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::DeleteOdbNetworkRequest const&
+                 request) {
+        return stub_->DeleteOdbNetwork(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteOdbNetwork(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteOdbNetwork",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::OdbSubnet>
+OracleDatabaseConnectionImpl::ListOdbSubnets(
+    google::cloud::oracledatabase::v1::ListOdbSubnetsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListOdbSubnets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::OdbSubnet>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::ListOdbSubnetsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::oracledatabase::v1::ListOdbSubnetsRequest const&
+                    request) {
+              return stub->ListOdbSubnets(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListOdbSubnetsResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::OdbSubnet> result(
+            r.odb_subnets().size());
+        auto& messages = *r.mutable_odb_subnets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>
+OracleDatabaseConnectionImpl::GetOdbSubnet(
+    google::cloud::oracledatabase::v1::GetOdbSubnetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetOdbSubnet(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetOdbSubnetRequest const&
+                 request) {
+        return stub_->GetOdbSubnet(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+OracleDatabaseConnectionImpl::CreateOdbSubnet(
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateOdbSubnet(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OdbSubnet>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const&
+              request) {
+        return stub->AsyncCreateOdbSubnet(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::OdbSubnet>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::CreateOdbSubnet(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateOdbSubnet(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::CreateOdbSubnetRequest const&
+                 request) {
+        return stub_->CreateOdbSubnet(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>
+OracleDatabaseConnectionImpl::CreateOdbSubnet(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OdbSubnet>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateOdbSubnet",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OdbSubnet>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::OdbSubnet>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteOdbSubnet(
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteOdbSubnet(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const&
+              request) {
+        return stub->AsyncDeleteOdbSubnet(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::DeleteOdbSubnet(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteOdbSubnet(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::DeleteOdbSubnetRequest const&
+                 request) {
+        return stub_->DeleteOdbSubnet(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteOdbSubnet(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteOdbSubnet",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
+OracleDatabaseConnectionImpl::ListExadbVmClusters(
+    google::cloud::oracledatabase::v1::ListExadbVmClustersRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListExadbVmClusters(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::ListExadbVmClustersRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::oracledatabase::v1::
+                       ListExadbVmClustersRequest const& request) {
+              return stub->ListExadbVmClusters(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListExadbVmClustersResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::ExadbVmCluster> result(
+            r.exadb_vm_clusters().size());
+        auto& messages = *r.mutable_exadb_vm_clusters();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>
+OracleDatabaseConnectionImpl::GetExadbVmCluster(
+    google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetExadbVmCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetExadbVmClusterRequest const&
+                 request) {
+        return stub_->GetExadbVmCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnectionImpl::CreateExadbVmCluster(
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateExadbVmCluster(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::ExadbVmCluster>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+              request) {
+        return stub->AsyncCreateExadbVmCluster(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::ExadbVmCluster>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::CreateExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateExadbVmCluster(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::CreateExadbVmClusterRequest const&
+              request) {
+        return stub_->CreateExadbVmCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnectionImpl::CreateExadbVmCluster(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateExadbVmCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::ExadbVmCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::ExadbVmCluster>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteExadbVmCluster(
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteExadbVmCluster(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+              request) {
+        return stub->AsyncDeleteExadbVmCluster(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::DeleteExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteExadbVmCluster(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::DeleteExadbVmClusterRequest const&
+              request) {
+        return stub_->DeleteExadbVmCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteExadbVmCluster(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteExadbVmCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnectionImpl::UpdateExadbVmCluster(
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateExadbVmCluster(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::ExadbVmCluster>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+              request) {
+        return stub->AsyncUpdateExadbVmCluster(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::ExadbVmCluster>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::UpdateExadbVmCluster(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateExadbVmCluster(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::UpdateExadbVmClusterRequest const&
+              request) {
+        return stub_->UpdateExadbVmCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnectionImpl::UpdateExadbVmCluster(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateExadbVmCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::ExadbVmCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::ExadbVmCluster>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnectionImpl::RemoveVirtualMachineExadbVmCluster(
+    google::cloud::oracledatabase::v1::
+        RemoveVirtualMachineExadbVmClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RemoveVirtualMachineExadbVmCluster(
+          request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::ExadbVmCluster>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::
+              RemoveVirtualMachineExadbVmClusterRequest const& request) {
+        return stub->AsyncRemoveVirtualMachineExadbVmCluster(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::ExadbVmCluster>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::RemoveVirtualMachineExadbVmCluster(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    RemoveVirtualMachineExadbVmClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveVirtualMachineExadbVmCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 RemoveVirtualMachineExadbVmClusterRequest const& request) {
+        return stub_->RemoveVirtualMachineExadbVmCluster(context, options,
+                                                         request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
+OracleDatabaseConnectionImpl::RemoveVirtualMachineExadbVmCluster(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to "
+            "RemoveVirtualMachineExadbVmCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::ExadbVmCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::ExadbVmCluster>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+OracleDatabaseConnectionImpl::ListExascaleDbStorageVaults(
+    google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListExascaleDbStorageVaults(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::
+              ListExascaleDbStorageVaultsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::oracledatabase::v1::
+                       ListExascaleDbStorageVaultsRequest const& request) {
+              return stub->ListExascaleDbStorageVaults(context, options,
+                                                       request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListExascaleDbStorageVaultsResponse
+             r) {
+        std::vector<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+            result(r.exascale_db_storage_vaults().size());
+        auto& messages = *r.mutable_exascale_db_storage_vaults();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
+OracleDatabaseConnectionImpl::GetExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::GetExascaleDbStorageVaultRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetExascaleDbStorageVault(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 GetExascaleDbStorageVaultRequest const& request) {
+        return stub_->GetExascaleDbStorageVault(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+OracleDatabaseConnectionImpl::CreateExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        CreateExascaleDbStorageVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateExascaleDbStorageVault(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::ExascaleDbStorageVault>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::oracledatabase::v1::
+                         CreateExascaleDbStorageVaultRequest const& request) {
+        return stub->AsyncCreateExascaleDbStorageVault(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::ExascaleDbStorageVault>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::CreateExascaleDbStorageVault(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    CreateExascaleDbStorageVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateExascaleDbStorageVault(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 CreateExascaleDbStorageVaultRequest const& request) {
+        return stub_->CreateExascaleDbStorageVault(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>
+OracleDatabaseConnectionImpl::CreateExascaleDbStorageVault(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateExascaleDbStorageVault",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::ExascaleDbStorageVault>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::ExascaleDbStorageVault>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteExascaleDbStorageVault(
+    google::cloud::oracledatabase::v1::
+        DeleteExascaleDbStorageVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteExascaleDbStorageVault(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::oracledatabase::v1::
+                         DeleteExascaleDbStorageVaultRequest const& request) {
+        return stub->AsyncDeleteExascaleDbStorageVault(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::DeleteExascaleDbStorageVault(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    DeleteExascaleDbStorageVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteExascaleDbStorageVault(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 DeleteExascaleDbStorageVaultRequest const& request) {
+        return stub_->DeleteExascaleDbStorageVault(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteExascaleDbStorageVault(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteExascaleDbStorageVault",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>
+OracleDatabaseConnectionImpl::ListDbSystemInitialStorageSizes(
+    google::cloud::oracledatabase::v1::ListDbSystemInitialStorageSizesRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDbSystemInitialStorageSizes(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::
+              ListDbSystemInitialStorageSizesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::oracledatabase::v1::
+                       ListDbSystemInitialStorageSizesRequest const& request) {
+              return stub->ListDbSystemInitialStorageSizes(context, options,
+                                                           request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::
+             ListDbSystemInitialStorageSizesResponse r) {
+        std::vector<
+            google::cloud::oracledatabase::v1::DbSystemInitialStorageSize>
+            result(r.db_system_initial_storage_sizes().size());
+        auto& messages = *r.mutable_db_system_initial_storage_sizes();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::oracledatabase::v1::Database>
+OracleDatabaseConnectionImpl::ListDatabases(
+    google::cloud::oracledatabase::v1::ListDatabasesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDatabases(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::Database>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::ListDatabasesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::oracledatabase::v1::ListDatabasesRequest const&
+                    request) {
+              return stub->ListDatabases(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListDatabasesResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::Database> result(
+            r.databases().size());
+        auto& messages = *r.mutable_databases();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::oracledatabase::v1::Database>
+OracleDatabaseConnectionImpl::GetDatabase(
+    google::cloud::oracledatabase::v1::GetDatabaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDatabase(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetDatabaseRequest const&
+                 request) {
+        return stub_->GetDatabase(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::PluggableDatabase>
+OracleDatabaseConnectionImpl::ListPluggableDatabases(
+    google::cloud::oracledatabase::v1::ListPluggableDatabasesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListPluggableDatabases(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::PluggableDatabase>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::oracledatabase::v1::
+                                      ListPluggableDatabasesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::oracledatabase::v1::
+                       ListPluggableDatabasesRequest const& request) {
+              return stub->ListPluggableDatabases(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListPluggableDatabasesResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::PluggableDatabase>
+            result(r.pluggable_databases().size());
+        auto& messages = *r.mutable_pluggable_databases();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::oracledatabase::v1::PluggableDatabase>
+OracleDatabaseConnectionImpl::GetPluggableDatabase(
+    google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetPluggableDatabase(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oracledatabase::v1::GetPluggableDatabaseRequest const&
+              request) {
+        return stub_->GetPluggableDatabase(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbSystem>
+OracleDatabaseConnectionImpl::ListDbSystems(
+    google::cloud::oracledatabase::v1::ListDbSystemsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDbSystems(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::DbSystem>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::ListDbSystemsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::oracledatabase::v1::ListDbSystemsRequest const&
+                    request) {
+              return stub->ListDbSystems(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListDbSystemsResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::DbSystem> result(
+            r.db_systems().size());
+        auto& messages = *r.mutable_db_systems();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::oracledatabase::v1::DbSystem>
+OracleDatabaseConnectionImpl::GetDbSystem(
+    google::cloud::oracledatabase::v1::GetDbSystemRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDbSystem(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::GetDbSystemRequest const&
+                 request) {
+        return stub_->GetDbSystem(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>>
+OracleDatabaseConnectionImpl::CreateDbSystem(
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDbSystem(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::DbSystem>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::CreateDbSystemRequest const&
+              request) {
+        return stub->AsyncCreateDbSystem(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::DbSystem>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::CreateDbSystem(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateDbSystemRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDbSystem(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::CreateDbSystemRequest const&
+                 request) {
+        return stub_->CreateDbSystem(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::DbSystem>>
+OracleDatabaseConnectionImpl::CreateDbSystem(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::DbSystem>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDbSystem",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::DbSystem>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::oracledatabase::v1::DbSystem>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteDbSystem(
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDbSystem(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&
+              request) {
+        return stub->AsyncDeleteDbSystem(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnectionImpl::DeleteDbSystem(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDbSystem(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::DeleteDbSystemRequest const&
+                 request) {
+        return stub_->DeleteDbSystem(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnectionImpl::DeleteDbSystem(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::oracledatabase::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDbSystem",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::oracledatabase::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::oracledatabase::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DbVersion>
+OracleDatabaseConnectionImpl::ListDbVersions(
+    google::cloud::oracledatabase::v1::ListDbVersionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDbVersions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::DbVersion>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::ListDbVersionsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::oracledatabase::v1::ListDbVersionsRequest const&
+                    request) {
+              return stub->ListDbVersions(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListDbVersionsResponse r) {
+        std::vector<google::cloud::oracledatabase::v1::DbVersion> result(
+            r.db_versions().size());
+        auto& messages = *r.mutable_db_versions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>
+OracleDatabaseConnectionImpl::ListDatabaseCharacterSets(
+    google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListDatabaseCharacterSets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<oracledatabase_v1::OracleDatabaseRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::oracledatabase::v1::
+              ListDatabaseCharacterSetsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::oracledatabase::v1::
+                       ListDatabaseCharacterSetsRequest const& request) {
+              return stub->ListDatabaseCharacterSets(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsResponse
+             r) {
+        std::vector<google::cloud::oracledatabase::v1::DatabaseCharacterSet>
+            result(r.database_character_sets().size());
+        auto& messages = *r.mutable_database_character_sets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 StreamRange<google::cloud::location::Location>

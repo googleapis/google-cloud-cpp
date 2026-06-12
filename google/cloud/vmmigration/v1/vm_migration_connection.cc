@@ -121,6 +121,14 @@ VmMigrationConnection::FetchInventory(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>
+VmMigrationConnection::FetchStorageInventory(
+    google::cloud::vmmigration::v1::
+        FetchStorageInventoryRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::SourceStorageResource>>();
+}
+
 StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationConnection::ListUtilizationReports(
     google::cloud::vmmigration::v1::
@@ -438,6 +446,27 @@ VmMigrationConnection::FinalizeMigration(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+VmMigrationConnection::ExtendMigration(
+    google::cloud::vmmigration::v1::ExtendMigrationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationConnection::ExtendMigration(
+    NoAwaitTag, google::cloud::vmmigration::v1::ExtendMigrationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>
+VmMigrationConnection::ExtendMigration(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::ExtendMigrationResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
@@ -779,6 +808,240 @@ StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
 VmMigrationConnection::GetReplicationCycle(
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationConnection::ListImageImports(
+    google::cloud::vmmigration::v1::
+        ListImageImportsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::ImageImport>>();
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImport>
+VmMigrationConnection::GetImageImport(
+    google::cloud::vmmigration::v1::GetImageImportRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+VmMigrationConnection::CreateImageImport(
+    google::cloud::vmmigration::v1::CreateImageImportRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::ImageImport>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnection::CreateImageImport(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateImageImportRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ImageImport>>
+VmMigrationConnection::CreateImageImport(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::ImageImport>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnection::DeleteImageImport(
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnection::DeleteImageImport(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteImageImportRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnection::DeleteImageImport(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationConnection::ListImageImportJobs(
+    google::cloud::vmmigration::v1::
+        ListImageImportJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::ImageImportJob>>();
+}
+
+StatusOr<google::cloud::vmmigration::v1::ImageImportJob>
+VmMigrationConnection::GetImageImportJob(
+    google::cloud::vmmigration::v1::GetImageImportJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+VmMigrationConnection::CancelImageImportJob(
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnection::CancelImageImportJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::CancelImageImportJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>
+VmMigrationConnection::CancelImageImportJob(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::CancelImageImportJobResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationConnection::CreateDiskMigrationJob(
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnection::CreateDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateDiskMigrationJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationConnection::CreateDiskMigrationJob(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationConnection::ListDiskMigrationJobs(
+    google::cloud::vmmigration::v1::
+        ListDiskMigrationJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::DiskMigrationJob>>();
+}
+
+StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>
+VmMigrationConnection::GetDiskMigrationJob(
+    google::cloud::vmmigration::v1::GetDiskMigrationJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationConnection::UpdateDiskMigrationJob(
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnection::UpdateDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateDiskMigrationJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>
+VmMigrationConnection::UpdateDiskMigrationJob(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::DiskMigrationJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnection::DeleteDiskMigrationJob(
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnection::DeleteDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteDiskMigrationJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnection::DeleteDiskMigrationJob(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+VmMigrationConnection::RunDiskMigrationJob(
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnection::RunDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::RunDiskMigrationJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>
+VmMigrationConnection::RunDiskMigrationJob(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::RunDiskMigrationJobResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+VmMigrationConnection::CancelDiskMigrationJob(
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnection::CancelDiskMigrationJob(
+    NoAwaitTag,
+    google::cloud::vmmigration::v1::CancelDiskMigrationJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>
+VmMigrationConnection::CancelDiskMigrationJob(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vmmigration::v1::CancelDiskMigrationJobResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::location::Location>

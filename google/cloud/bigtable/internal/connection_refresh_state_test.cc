@@ -12,13 +12,20 @@
 // See the License for the specific language governing permissions and
 
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <thread>
 
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using ::google::cloud::bigtable::testing::MockBigtableStub;
+using ::google::cloud::testing_util::IsOk;
+using ::testing::Eq;
+using ::testing::MockFunction;
 
 using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
 
@@ -116,6 +123,71 @@ TEST(ConnectionRefreshState, Disabled) {
   using ms = std::chrono::milliseconds;
   ConnectionRefreshState state(nullptr, ms(0), ms(0));
   EXPECT_FALSE(state.enabled());
+}
+
+class ScheduleStubRefreshTest : public ::testing::Test {
+ public:
+  ScheduleStubRefreshTest() : thread1_([this] { cq_.Run(); }) {}
+  ~ScheduleStubRefreshTest() override {
+    cq_.Shutdown();
+    thread1_.join();
+  }
+
+ protected:
+  CompletionQueue cq_;
+  std::thread thread1_;
+};
+
+TEST_F(ScheduleStubRefreshTest, RefreshedUsingAsyncPingAndWarm) {
+  auto cq_impl = internal::GetCompletionQueueImpl(cq_);
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      cq_impl, std::chrono::milliseconds(1), std::chrono::milliseconds(2));
+  std::string instance_name = "projects/my-project/instances/my-instance";
+
+  // These promises are used to coordinate thread execution to ensure the test
+  // does not finish before the CompletionQueue thread executes all the tasks
+  // on the queue.
+  promise<void> p;
+  promise<StatusOr<google::bigtable::v2::PingAndWarmResponse>> p2;
+
+  auto mock_stub = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, AsyncPingAndWarm)
+      .WillRepeatedly(
+          [&](CompletionQueue&, std::shared_ptr<grpc::ClientContext> const&,
+              internal::ImmutableOptions const&,
+              google::bigtable::v2::PingAndWarmRequest const& request)
+              -> future<StatusOr<google::bigtable::v2::PingAndWarmResponse>> {
+            EXPECT_THAT(request.name(), Eq(instance_name));
+            return p2.get_future();
+          });
+
+  MockFunction<void(Status const&)> mock_fn;
+  EXPECT_CALL(mock_fn, Call).WillOnce([&p](Status const& s) -> void {
+    EXPECT_THAT(s, IsOk());
+    p.set_value();
+  });
+
+  ScheduleStubRefresh(cq_impl, refresh_state, mock_stub, instance_name,
+                      mock_fn.AsStdFunction());
+  p2.set_value(google::bigtable::v2::PingAndWarmResponse{});
+  p.get_future().get();
+}
+
+TEST_F(ScheduleStubRefreshTest, RefreshTimerCancelled) {
+  auto cq_impl = internal::GetCompletionQueueImpl(cq_);
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      cq_impl, std::chrono::seconds(60), std::chrono::seconds(120));
+  std::string instance_name = "projects/my-project/instances/my-instance";
+
+  auto mock_stub = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock_stub, AsyncPingAndWarm).Times(0);
+
+  MockFunction<void(Status const&)> mock_fn;
+  EXPECT_CALL(mock_fn, Call).Times(0);
+
+  ScheduleStubRefresh(cq_impl, refresh_state, mock_stub, instance_name,
+                      mock_fn.AsStdFunction());
+  cq_impl->CancelAll();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

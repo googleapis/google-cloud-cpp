@@ -17,13 +17,16 @@
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_logging_decorator.h"
+#include "google/cloud/confidentialcomputing/v1/service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -63,6 +66,36 @@ ConfidentialComputingLogging::VerifyAttestation(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialSpaceResponse>
+ConfidentialComputingLogging::VerifyConfidentialSpace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialSpaceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::confidentialcomputing::v1::
+                 VerifyConfidentialSpaceRequest const& request) {
+        return child_->VerifyConfidentialSpace(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::confidentialcomputing::v1::VerifyConfidentialGkeResponse>
+ConfidentialComputingLogging::VerifyConfidentialGke(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::
+        VerifyConfidentialGkeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::confidentialcomputing::v1::
+                 VerifyConfidentialGkeRequest const& request) {
+        return child_->VerifyConfidentialGke(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConfidentialComputingLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -91,3 +124,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

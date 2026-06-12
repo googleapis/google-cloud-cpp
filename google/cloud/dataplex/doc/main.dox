@@ -31,8 +31,11 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
+- [\c dataplex_v1::BusinessGlossaryServiceClient](@ref google::cloud::dataplex_v1::BusinessGlossaryServiceClient)
 - [\c dataplex_v1::CatalogServiceClient](@ref google::cloud::dataplex_v1::CatalogServiceClient)
+- [\c dataplex_v1::CmekServiceClient](@ref google::cloud::dataplex_v1::CmekServiceClient)
 - [\c dataplex_v1::ContentServiceClient](@ref google::cloud::dataplex_v1::ContentServiceClient)
+- [\c dataplex_v1::DataProductServiceClient](@ref google::cloud::dataplex_v1::DataProductServiceClient)
 - [\c dataplex_v1::DataScanServiceClient](@ref google::cloud::dataplex_v1::DataScanServiceClient)
 - [\c dataplex_v1::DataTaxonomyServiceClient](@ref google::cloud::dataplex_v1::DataTaxonomyServiceClient)
 - [\c dataplex_v1::DataplexServiceClient](@ref google::cloud::dataplex_v1::DataplexServiceClient)
@@ -49,6 +52,7 @@ application.
 - @ref dataplex-override-retry - describes how to change the default retry
   policies.
 - @ref dataplex-env - describes environment variables that can configure the behavior of the library.
+- @ref dataplex-override-universe-domain - describes how to override the default universe domain.
 
 [cloud-service-docs]: https://cloud.google.com/dataplex
 

@@ -62,6 +62,20 @@ class MockConfidentialComputingConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::confidentialcomputing::v1::
+                           VerifyConfidentialSpaceResponse>,
+              VerifyConfidentialSpace,
+              (google::cloud::confidentialcomputing::v1::
+                   VerifyConfidentialSpaceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::confidentialcomputing::v1::
+                           VerifyConfidentialGkeResponse>,
+              VerifyConfidentialGke,
+              (google::cloud::confidentialcomputing::v1::
+                   VerifyConfidentialGkeRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

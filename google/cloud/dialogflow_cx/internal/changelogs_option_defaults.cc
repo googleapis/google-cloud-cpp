@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_cx/internal/changelogs_option_defaults.h"
 #include "google/cloud/dialogflow_cx/changelogs_connection.h"
 #include "google/cloud/dialogflow_cx/changelogs_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options ChangelogsDefaultOptions(std::string const& location, Options options) {
   if (!options.has<dialogflow_cx::ChangelogsRetryPolicyOption>()) {
     options.set<dialogflow_cx::ChangelogsRetryPolicyOption>(
         dialogflow_cx::ChangelogsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dialogflow_cx::ChangelogsBackoffPolicyOption>()) {

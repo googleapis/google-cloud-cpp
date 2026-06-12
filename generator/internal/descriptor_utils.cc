@@ -26,19 +26,19 @@
 #include "generator/internal/resolve_method_return.h"
 #include "generator/internal/routing.h"
 #include "generator/internal/scaffold_generator.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include "absl/types/variant.h"
-#include <google/api/annotations.pb.h>
-#include <google/api/http.pb.h>
-#include <google/api/routing.pb.h>
-#include <google/longrunning/operations.pb.h>
+#include "google/api/annotations.pb.h"
+#include "google/api/http.pb.h"
+#include "google/api/routing.pb.h"
+#include "google/longrunning/operations.pb.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/compiler/cpp/names.h>
 #include <regex>
@@ -261,6 +261,9 @@ ParameterCommentSubstitution substitutions[] = {
     // Extra quotes in asset/v1.
     {R"""( "folders/12345")", or a )""", R"""( "folders/12345"), or a )"""},
 
+    // From google/cloud/networkconnectivity/v1/data_transfer.proto
+    {R"""(`FieldMask is used)""", R"""(`FieldMask` is used)"""},
+
     // Doxygen gets confused by single quotes in code spans:
     //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
     // The workaround is to double quote these:
@@ -307,6 +310,11 @@ ParameterCommentSubstitution substitutions[] = {
     {"`projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>.",
      "`projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`."},
 
+    // From google/cloud/gkehub/v1/service.proto
+    {R"""(Given 'updated'
+ prefix to follow go/proto-best-practices-checkers#keyword_conflict)""",
+     R"""()"""},
+
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`
     // commands we need to represent them as `@n` or they do would terminate the
@@ -318,6 +326,10 @@ ParameterCommentSubstitution substitutions[] = {
     // Finally, the next line after a newline needs to start as a comment.
     {"\n", "\n  /// "},
 };
+
+char const* bad_suffixes[] = {
+    // Doxygen interprets this as an unpaired formatting character.
+    "\n ."};
 
 // Very long parameters need different formatting.
 auto constexpr kShortParamFormat = "  /// @param %s %s\n";
@@ -346,6 +358,9 @@ std::string FormattedCommentsForParameter(
   if (std::count(comment.begin(), comment.end(), '\n') > kTooManyLines) {
     std::vector<absl::string_view> paragraphs = absl::StrSplit(comment, "\n\n");
     auto brief = std::string{paragraphs.front()};
+    for (auto const& suffix : bad_suffixes) {
+      brief = std::string{absl::StripSuffix(brief, suffix)};
+    }
     for (auto& sub : substitutions) {
       sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &brief);
     }
@@ -354,6 +369,9 @@ std::string FormattedCommentsForParameter(
                            method.input_type()->full_name());
   }
 
+  for (auto const& suffix : bad_suffixes) {
+    comment = std::string{absl::StripSuffix(comment, suffix)};
+  }
   for (auto& sub : substitutions) {
     sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
   }
@@ -707,6 +725,10 @@ VarsDictionary CreateServiceVars(
   vars["logging_rest_header_path"] = absl::StrCat(
       vars["product_path"], "internal/", ServiceNameToFilePath(service_name),
       "_rest_logging_decorator.h");
+  vars["merge_options_fn"] =
+      absl::StartsWithIgnoreCase(service_name, "Bigtable")
+          ? "bigtable_internal::MergeOptions"
+          : "internal::MergeOptions";
   vars["metadata_class_name"] = absl::StrCat(service_name, "Metadata");
   vars["metadata_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
                                           ServiceNameToFilePath(service_name),

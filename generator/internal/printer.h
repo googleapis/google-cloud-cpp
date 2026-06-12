@@ -56,7 +56,7 @@ class Printer {
    * are defined by the given map.
    */
   void Print(VarsDictionary const& variables, std::string const& text) {
-    printer_->Print(variables, text.c_str());
+    printer_->Print(variables, text);
   }
 
   /**
@@ -64,7 +64,7 @@ class Printer {
    */
   template <typename... Args>
   void Print(std::string const& text, Args&&... args) {
-    printer_->Print(text.c_str(), std::forward<Args>(args)...);
+    printer_->Print(text, std::forward<Args>(args)...);
   }
 
   /**

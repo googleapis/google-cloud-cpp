@@ -17,50 +17,50 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
 TEST(RetryPolicyTest, PermanentFailure) {
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kCancelled, "cancelled")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kUnknown, "unknown")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kInvalidArgument, "invalid argument")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kNotFound, "not found")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kAlreadyExists, "already exists")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kPermissionDenied, "permission denied")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kFailedPrecondition, "failed precondition")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kOutOfRange, "out of range")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kUnimplemented, "unimplemented")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kDataLoss, "data loss")));
-  EXPECT_TRUE(StatusTraits::IsPermanentFailure(
+  EXPECT_TRUE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kUnauthenticated, "unauthenticated")));
 
-  EXPECT_FALSE(StatusTraits::IsPermanentFailure(
+  EXPECT_FALSE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kDeadlineExceeded, "deadline exceeded")));
-  EXPECT_FALSE(StatusTraits::IsPermanentFailure(
+  EXPECT_FALSE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kResourceExhausted, "resource exhausted")));
-  EXPECT_FALSE(StatusTraits::IsPermanentFailure(
+  EXPECT_FALSE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kAborted, "aborted")));
-  EXPECT_FALSE(StatusTraits::IsPermanentFailure(
+  EXPECT_FALSE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kInternal, "internal")));
-  EXPECT_FALSE(StatusTraits::IsPermanentFailure(
+  EXPECT_FALSE(AsyncStatusTraits::IsPermanentFailure(
       Status(StatusCode::kUnavailable, "unavailable")));
 }
 
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

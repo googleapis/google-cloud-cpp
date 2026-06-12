@@ -19,15 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFORM_V1_DATAFORM_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFORM_V1_DATAFORM_CONNECTION_H
 
+#include "google/cloud/dataform/v1/dataform.pb.h"
 #include "google/cloud/dataform/v1/dataform_connection_idempotency_policy.h"
 #include "google/cloud/dataform/v1/internal/dataform_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataform/v1/dataform.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -179,6 +183,87 @@ class DataformConnection {
 
   virtual Options options() { return Options{}; }
 
+  virtual StatusOr<google::cloud::dataform::v1::TeamFolder> GetTeamFolder(
+      google::cloud::dataform::v1::GetTeamFolderRequest const& request);
+
+  virtual StatusOr<google::cloud::dataform::v1::TeamFolder> CreateTeamFolder(
+      google::cloud::dataform::v1::CreateTeamFolderRequest const& request);
+
+  virtual StatusOr<google::cloud::dataform::v1::TeamFolder> UpdateTeamFolder(
+      google::cloud::dataform::v1::UpdateTeamFolderRequest const& request);
+
+  virtual Status DeleteTeamFolder(
+      google::cloud::dataform::v1::DeleteTeamFolderRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+  DeleteTeamFolderTree(
+      google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTeamFolderTree(
+      NoAwaitTag,
+      google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+  DeleteTeamFolderTree(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<
+      google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+          TeamFolderContentsEntry>
+  QueryTeamFolderContents(
+      google::cloud::dataform::v1::QueryTeamFolderContentsRequest request);
+
+  virtual StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                          TeamFolderSearchResult>
+  SearchTeamFolders(
+      google::cloud::dataform::v1::SearchTeamFoldersRequest request);
+
+  virtual StatusOr<google::cloud::dataform::v1::Folder> GetFolder(
+      google::cloud::dataform::v1::GetFolderRequest const& request);
+
+  virtual StatusOr<google::cloud::dataform::v1::Folder> CreateFolder(
+      google::cloud::dataform::v1::CreateFolderRequest const& request);
+
+  virtual StatusOr<google::cloud::dataform::v1::Folder> UpdateFolder(
+      google::cloud::dataform::v1::UpdateFolderRequest const& request);
+
+  virtual Status DeleteFolder(
+      google::cloud::dataform::v1::DeleteFolderRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+  DeleteFolderTree(
+      google::cloud::dataform::v1::DeleteFolderTreeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteFolderTree(
+      NoAwaitTag,
+      google::cloud::dataform::v1::DeleteFolderTreeRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+  DeleteFolderTree(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                          FolderContentsEntry>
+  QueryFolderContents(
+      google::cloud::dataform::v1::QueryFolderContentsRequest request);
+
+  virtual StreamRange<google::cloud::dataform::v1::
+                          QueryUserRootContentsResponse::RootContentsEntry>
+  QueryUserRootContents(
+      google::cloud::dataform::v1::QueryUserRootContentsRequest request);
+
+  virtual future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+  MoveFolder(google::cloud::dataform::v1::MoveFolderRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> MoveFolder(
+      NoAwaitTag,
+      google::cloud::dataform::v1::MoveFolderRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+  MoveFolder(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::dataform::v1::Repository> ListRepositories(
       google::cloud::dataform::v1::ListRepositoriesRequest request);
 
@@ -193,6 +278,17 @@ class DataformConnection {
 
   virtual Status DeleteRepository(
       google::cloud::dataform::v1::DeleteRepositoryRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+  MoveRepository(
+      google::cloud::dataform::v1::MoveRepositoryRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> MoveRepository(
+      NoAwaitTag,
+      google::cloud::dataform::v1::MoveRepositoryRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+  MoveRepository(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
   CommitRepositoryChanges(
@@ -387,20 +483,32 @@ class DataformConnection {
   virtual StatusOr<google::cloud::dataform::v1::Config> UpdateConfig(
       google::cloud::dataform::v1::UpdateConfigRequest const& request);
 
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

@@ -28,8 +28,6 @@ namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ClusterControllerTracingConnection
     : public dataproc_v1::ClusterControllerConnection {
  public:
@@ -138,8 +136,6 @@ class ClusterControllerTracingConnection
  private:
   std::shared_ptr<dataproc_v1::ClusterControllerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

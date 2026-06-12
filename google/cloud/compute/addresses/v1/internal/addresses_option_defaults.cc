@@ -41,7 +41,7 @@ Options AddressesDefaultOptions(Options options) {
   if (!options.has<compute_addresses_v1::AddressesRetryPolicyOption>()) {
     options.set<compute_addresses_v1::AddressesRetryPolicyOption>(
         compute_addresses_v1::AddressesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_addresses_v1::AddressesBackoffPolicyOption>()) {

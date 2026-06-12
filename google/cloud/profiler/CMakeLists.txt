@@ -17,7 +17,7 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(profiler "Cloud Profiler API"
-                                   SERVICE_DIRS "__EMPTY__" "v2/")
+                                   SERVICE_DIRS "v2/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(profiler_quickstart "quickstart/quickstart.cc")

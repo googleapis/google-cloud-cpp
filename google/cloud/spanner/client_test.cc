@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/spanner/connection.h"
@@ -1313,26 +1313,6 @@ TEST(ClientTest, UsesConnectionOptions) {
   EXPECT_STATUS_OK(rollback);
 }
 
-TEST(ClientTest, UsesClientOptions) {
-  auto conn = std::make_shared<MockConnection>();
-  auto txn = MakeReadWriteTransaction();
-
-  EXPECT_CALL(*conn, options).WillOnce([] {
-    return Options{}.set<StringOption>("connection");
-  });
-  EXPECT_CALL(*conn, Rollback)
-      .WillOnce([txn](Connection::RollbackParams const& params) {
-        auto const& options = internal::CurrentOptions();
-        EXPECT_THAT(options.get<StringOption>(), Eq("client"));
-        EXPECT_THAT(params.transaction, Eq(txn));
-        return Status();
-      });
-
-  Client client(conn, Options{}.set<StringOption>("client"));
-  auto rollback = client.Rollback(txn, Options{});
-  EXPECT_STATUS_OK(rollback);
-}
-
 TEST(ClientTest, UsesOperationOptions) {
   auto conn = std::make_shared<MockConnection>();
   auto txn = MakeReadWriteTransaction();
@@ -1359,3 +1339,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

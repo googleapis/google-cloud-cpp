@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -1080,7 +1080,7 @@ class OsConfigZonalServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.v1.GetVulnerabilityReportRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L148}
+  /// [google.cloud.osconfig.v1.GetVulnerabilityReportRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L184}
   /// [google.cloud.osconfig.v1.VulnerabilityReport]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L36}
   ///
   // clang-format on
@@ -1111,7 +1111,7 @@ class OsConfigZonalServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.v1.GetVulnerabilityReportRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L148}
+  /// [google.cloud.osconfig.v1.GetVulnerabilityReportRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L184}
   /// [google.cloud.osconfig.v1.VulnerabilityReport]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L36}
   ///
   // clang-format on
@@ -1151,7 +1151,7 @@ class OsConfigZonalServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.v1.ListVulnerabilityReportsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L167}
+  /// [google.cloud.osconfig.v1.ListVulnerabilityReportsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L203}
   /// [google.cloud.osconfig.v1.VulnerabilityReport]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L36}
   ///
   // clang-format on
@@ -1190,7 +1190,7 @@ class OsConfigZonalServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.osconfig.v1.ListVulnerabilityReportsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L167}
+  /// [google.cloud.osconfig.v1.ListVulnerabilityReportsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L203}
   /// [google.cloud.osconfig.v1.VulnerabilityReport]: @googleapis_reference_link{google/cloud/osconfig/v1/vulnerability.proto#L36}
   ///
   // clang-format on

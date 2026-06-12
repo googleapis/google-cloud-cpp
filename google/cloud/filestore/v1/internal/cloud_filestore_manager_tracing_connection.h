@@ -28,8 +28,6 @@ namespace cloud {
 namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CloudFilestoreManagerTracingConnection
     : public filestore_v1::CloudFilestoreManagerConnection {
  public:
@@ -223,8 +221,6 @@ class CloudFilestoreManagerTracingConnection
  private:
   std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

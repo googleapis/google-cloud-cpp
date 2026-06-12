@@ -28,8 +28,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class PredictionServiceTracingConnection
     : public aiplatform_v1::PredictionServiceConnection {
  public:
@@ -95,6 +93,10 @@ class PredictionServiceTracingConnection
       google::cloud::aiplatform::v1::GenerateContentRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse> EmbedContent(
+      google::cloud::aiplatform::v1::EmbedContentRequest const& request)
+      override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 
@@ -128,8 +130,6 @@ class PredictionServiceTracingConnection
  private:
   std::shared_ptr<aiplatform_v1::PredictionServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

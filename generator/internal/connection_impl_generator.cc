@@ -18,7 +18,8 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include <google/protobuf/descriptor.h>
 
 namespace google {
@@ -118,6 +119,14 @@ class $connection_class_name$Impl
     if (IsStreamingRead(method)) continue;
     if (IsStreamingWrite(method)) continue;
     HeaderPrintMethod(method, __FILE__, __LINE__, AsyncMethodDeclaration());
+  }
+
+  for (auto const& method : bespoke_methods()) {
+    HeaderPrint("\n");
+    HeaderPrint(absl::StrCat(
+        method.return_type(), " ", method.name(),
+        absl::StrReplaceAll(method.parameters(), {{", Options opts = {}", ""}}),
+        " override;"));
   }
 
   HeaderPrint(R"""(
@@ -352,8 +361,16 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
       internal::MakeResumableStreamingReadRpc<$response_type$, $request_type$>(
           retry_policy(*current), backoff_policy(*current), factory,
           $service_name$$method_name$StreamingUpdater, request);
-  return internal::MakeStreamRange(internal::StreamReader<$response_type$>(
-      [resumable] { return resumable->Read(); }));
+  return internal::MakeStreamRange<$response_type$>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<
+              Status,
+              $response_type$> {
+        $response_type$ response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
+      });
 }
 )""";
   }

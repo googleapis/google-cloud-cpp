@@ -41,7 +41,7 @@ Options SslPoliciesDefaultOptions(Options options) {
   if (!options.has<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>()) {
     options.set<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>(
         compute_ssl_policies_v1::SslPoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>()) {

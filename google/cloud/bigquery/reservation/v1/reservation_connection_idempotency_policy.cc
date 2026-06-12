@@ -164,6 +164,49 @@ Idempotency ReservationServiceConnectionIdempotencyPolicy::UpdateBiReservation(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ReservationServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ReservationServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency ReservationServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::CreateReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        CreateReservationGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ReservationServiceConnectionIdempotencyPolicy::GetReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        GetReservationGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::DeleteReservationGroup(
+    google::cloud::bigquery::reservation::v1::
+        DeleteReservationGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+ReservationServiceConnectionIdempotencyPolicy::ListReservationGroups(
+    google::cloud::bigquery::reservation::v1::
+        ListReservationGroupsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>
 MakeDefaultReservationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ReservationServiceConnectionIdempotencyPolicy>();

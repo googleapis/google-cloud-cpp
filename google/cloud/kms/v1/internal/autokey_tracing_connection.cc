@@ -27,8 +27,6 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 AutokeyTracingConnection::AutokeyTracingConnection(
     std::shared_ptr<kms_v1::AutokeyConnection> child)
     : child_(std::move(child)) {}
@@ -124,15 +122,11 @@ StatusOr<google::longrunning::Operation> AutokeyTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<kms_v1::AutokeyConnection> MakeAutokeyTracingConnection(
     std::shared_ptr<kms_v1::AutokeyConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AutokeyTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

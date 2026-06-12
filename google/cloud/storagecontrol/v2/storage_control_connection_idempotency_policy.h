@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -51,6 +51,10 @@ class StorageControlConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency RenameFolder(
       google::storage::control::v2::RenameFolderRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteFolderRecursive(
+      google::storage::control::v2::DeleteFolderRecursiveRequest const&
+          request);
 
   virtual google::cloud::Idempotency GetStorageLayout(
       google::storage::control::v2::GetStorageLayoutRequest const& request);
@@ -111,6 +115,15 @@ class StorageControlConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateOrganizationIntelligenceConfig(
       google::storage::control::v2::
           UpdateOrganizationIntelligenceConfigRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>

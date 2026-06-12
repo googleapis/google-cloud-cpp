@@ -27,8 +27,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TensorboardServiceTracingConnection::TensorboardServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::TensorboardServiceConnection> child)
     : child_(std::move(child)) {}
@@ -582,17 +580,13 @@ TensorboardServiceTracingConnection::WaitOperation(
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<aiplatform_v1::TensorboardServiceConnection>
 MakeTensorboardServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::TensorboardServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<TensorboardServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

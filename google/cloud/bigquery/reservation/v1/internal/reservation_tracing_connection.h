@@ -28,8 +28,6 @@ namespace cloud {
 namespace bigquery_reservation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ReservationServiceTracingConnection
     : public bigquery_reservation_v1::ReservationServiceConnection {
  public:
@@ -146,11 +144,36 @@ class ReservationServiceTracingConnection
   UpdateBiReservation(google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  CreateReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          CreateReservationGroupRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  GetReservationGroup(google::cloud::bigquery::reservation::v1::
+                          GetReservationGroupRequest const& request) override;
+
+  Status DeleteReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request) override;
+
+  StreamRange<google::cloud::bigquery::reservation::v1::ReservationGroup>
+  ListReservationGroups(
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+          request) override;
+
  private:
   std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -1,5 +1,5 @@
-@com_google_googleapis//google/cloud/alloydb/v1:csql_resources.proto
-@com_google_googleapis//google/cloud/alloydb/v1:csql_service.proto
-@com_google_googleapis//google/cloud/alloydb/v1:data_model.proto
-@com_google_googleapis//google/cloud/alloydb/v1:resources.proto
-@com_google_googleapis//google/cloud/alloydb/v1:service.proto
+@googleapis//google/cloud/alloydb/v1:csql_resources.proto
+@googleapis//google/cloud/alloydb/v1:csql_service.proto
+@googleapis//google/cloud/alloydb/v1:data_model.proto
+@googleapis//google/cloud/alloydb/v1:resources.proto
+@googleapis//google/cloud/alloydb/v1:service.proto

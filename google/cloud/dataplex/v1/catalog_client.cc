@@ -604,6 +604,13 @@ StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceClient::LookupEntry(
   return connection_->LookupEntry(request);
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceClient::ModifyEntry(
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyEntry(request);
+}
+
 StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
 CatalogServiceClient::SearchEntries(std::string const& name,
                                     std::string const& query, Options opts) {
@@ -717,6 +724,263 @@ Status CatalogServiceClient::CancelMetadataJob(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelMetadataJob(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::CreateEntryLink(
+    std::string const& parent,
+    google::cloud::dataplex::v1::EntryLink const& entry_link,
+    std::string const& entry_link_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateEntryLinkRequest request;
+  request.set_parent(parent);
+  *request.mutable_entry_link() = entry_link;
+  request.set_entry_link_id(entry_link_id);
+  return connection_->CreateEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::CreateEntryLink(
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::UpdateEntryLink(
+    google::cloud::dataplex::v1::EntryLink const& entry_link, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::UpdateEntryLinkRequest request;
+  *request.mutable_entry_link() = entry_link;
+  return connection_->UpdateEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::UpdateEntryLink(
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::DeleteEntryLink(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::DeleteEntryLinkRequest request;
+  request.set_name(name);
+  return connection_->DeleteEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::DeleteEntryLink(
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEntryLink(request);
+}
+
+StreamRange<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::LookupEntryLinks(
+    google::cloud::dataplex::v1::LookupEntryLinksRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LookupEntryLinks(std::move(request));
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+CatalogServiceClient::LookupContext(
+    google::cloud::dataplex::v1::LookupContextRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LookupContext(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::GetEntryLink(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::GetEntryLinkRequest request;
+  request.set_name(name);
+  return connection_->GetEntryLink(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceClient::GetEntryLink(
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEntryLink(request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceClient::CreateMetadataFeed(
+    std::string const& parent,
+    google::cloud::dataplex::v1::MetadataFeed const& metadata_feed,
+    std::string const& metadata_feed_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateMetadataFeedRequest request;
+  request.set_parent(parent);
+  *request.mutable_metadata_feed() = metadata_feed;
+  request.set_metadata_feed_id(metadata_feed_id);
+  return connection_->CreateMetadataFeed(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceClient::CreateMetadataFeed(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::MetadataFeed const& metadata_feed,
+    std::string const& metadata_feed_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateMetadataFeedRequest request;
+  request.set_parent(parent);
+  *request.mutable_metadata_feed() = metadata_feed;
+  request.set_metadata_feed_id(metadata_feed_id);
+  return connection_->CreateMetadataFeed(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceClient::CreateMetadataFeed(
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMetadataFeed(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceClient::CreateMetadataFeed(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMetadataFeed(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceClient::CreateMetadataFeed(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMetadataFeed(operation);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceClient::GetMetadataFeed(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::GetMetadataFeedRequest request;
+  request.set_name(name);
+  return connection_->GetMetadataFeed(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceClient::GetMetadataFeed(
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMetadataFeed(request);
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceClient::ListMetadataFeeds(std::string const& parent,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::ListMetadataFeedsRequest request;
+  request.set_parent(parent);
+  return connection_->ListMetadataFeeds(request);
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceClient::ListMetadataFeeds(
+    google::cloud::dataplex::v1::ListMetadataFeedsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMetadataFeeds(std::move(request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceClient::DeleteMetadataFeed(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::DeleteMetadataFeedRequest request;
+  request.set_name(name);
+  return connection_->DeleteMetadataFeed(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceClient::DeleteMetadataFeed(NoAwaitTag, std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::DeleteMetadataFeedRequest request;
+  request.set_name(name);
+  return connection_->DeleteMetadataFeed(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceClient::DeleteMetadataFeed(
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMetadataFeed(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceClient::DeleteMetadataFeed(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMetadataFeed(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceClient::DeleteMetadataFeed(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMetadataFeed(operation);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceClient::UpdateMetadataFeed(
+    google::cloud::dataplex::v1::MetadataFeed const& metadata_feed,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::UpdateMetadataFeedRequest request;
+  *request.mutable_metadata_feed() = metadata_feed;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMetadataFeed(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceClient::UpdateMetadataFeed(
+    NoAwaitTag, google::cloud::dataplex::v1::MetadataFeed const& metadata_feed,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::UpdateMetadataFeedRequest request;
+  *request.mutable_metadata_feed() = metadata_feed;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMetadataFeed(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceClient::UpdateMetadataFeed(
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMetadataFeed(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceClient::UpdateMetadataFeed(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMetadataFeed(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>
+CatalogServiceClient::UpdateMetadataFeed(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMetadataFeed(operation);
 }
 
 StreamRange<google::cloud::location::Location>

@@ -740,6 +740,40 @@ DeveloperConnectClient::DeleteSelf(
   return connection_->DeleteSelf(operation);
 }
 
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DeveloperConnectClient::StartOAuth(std::string const& account_connector,
+                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::StartOAuthRequest request;
+  request.set_account_connector(account_connector);
+  return connection_->StartOAuth(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DeveloperConnectClient::StartOAuth(
+    google::cloud::developerconnect::v1::StartOAuthRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartOAuth(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DeveloperConnectClient::FinishOAuth(std::string const& account_connector,
+                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::developerconnect::v1::FinishOAuthRequest request;
+  request.set_account_connector(account_connector);
+  return connection_->FinishOAuth(request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DeveloperConnectClient::FinishOAuth(
+    google::cloud::developerconnect::v1::FinishOAuthRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FinishOAuth(request);
+}
+
 StreamRange<google::cloud::location::Location>
 DeveloperConnectClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

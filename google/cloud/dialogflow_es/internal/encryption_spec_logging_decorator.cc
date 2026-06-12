@@ -17,13 +17,16 @@
 // source: google/cloud/dialogflow/v2/encryption_spec.proto
 
 #include "google/cloud/dialogflow_es/internal/encryption_spec_logging_decorator.h"
+#include "google/cloud/dialogflow/v2/encryption_spec.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/v2/encryption_spec.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -182,3 +185,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

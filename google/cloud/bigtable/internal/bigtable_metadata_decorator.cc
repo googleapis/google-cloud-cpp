@@ -18,17 +18,20 @@
 
 #include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "google/bigtable/v2/bigtable.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -52,12 +55,7 @@ BigtableMetadata::ReadRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ReadRowsRequest const& request) {
   std::vector<std::string> params;
-  params.reserve(2);
-
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.reserve(3);
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -78,6 +76,26 @@ BigtableMetadata::ReadRows(
   }();
   table_name_matcher->AppendParam(request, params);
 
+  if (!request.app_profile_id().empty()) {
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
+  }
+
+  static auto* name_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::bigtable::v2::ReadRowsRequest>{
+        "name=",
+        {
+            {[](google::bigtable::v2::ReadRowsRequest const& request)
+                 -> std::string const& {
+               return request.materialized_view_name();
+             },
+             std::regex{"(projects/[^/]+/instances/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  name_matcher->AppendParam(request, params);
+
   if (params.empty()) {
     SetMetadata(*context, options);
   } else {
@@ -92,12 +110,7 @@ BigtableMetadata::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   std::vector<std::string> params;
-  params.reserve(2);
-
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.reserve(3);
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -117,6 +130,26 @@ BigtableMetadata::SampleRowKeys(
         }};
   }();
   table_name_matcher->AppendParam(request, params);
+
+  if (!request.app_profile_id().empty()) {
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
+  }
+
+  static auto* name_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::bigtable::v2::SampleRowKeysRequest>{
+        "name=",
+        {
+            {[](google::bigtable::v2::SampleRowKeysRequest const& request)
+                 -> std::string const& {
+               return request.materialized_view_name();
+             },
+             std::regex{"(projects/[^/]+/instances/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  name_matcher->AppendParam(request, params);
 
   if (params.empty()) {
     SetMetadata(*context, options);
@@ -382,6 +415,49 @@ BigtableMetadata::ExecuteQuery(
   return child_->ExecuteQuery(std::move(context), options, request);
 }
 
+StatusOr<google::bigtable::v2::ClientConfiguration>
+BigtableMetadata::GetClientConfiguration(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request) {
+  SetMetadata(context, options);
+  return child_->GetClientConfiguration(context, options, request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+BigtableMetadata::AsyncOpenTable(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncOpenTable(cq, std::move(context), std::move(options));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+BigtableMetadata::AsyncOpenAuthorizedView(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncOpenAuthorizedView(cq, std::move(context),
+                                         std::move(options));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+BigtableMetadata::AsyncOpenMaterializedView(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncOpenMaterializedView(cq, std::move(context),
+                                           std::move(options));
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableMetadata::AsyncReadRows(
@@ -390,12 +466,7 @@ BigtableMetadata::AsyncReadRows(
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request) {
   std::vector<std::string> params;
-  params.reserve(2);
-
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.reserve(3);
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -416,6 +487,26 @@ BigtableMetadata::AsyncReadRows(
   }();
   table_name_matcher->AppendParam(request, params);
 
+  if (!request.app_profile_id().empty()) {
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
+  }
+
+  static auto* name_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::bigtable::v2::ReadRowsRequest>{
+        "name=",
+        {
+            {[](google::bigtable::v2::ReadRowsRequest const& request)
+                 -> std::string const& {
+               return request.materialized_view_name();
+             },
+             std::regex{"(projects/[^/]+/instances/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  name_matcher->AppendParam(request, params);
+
   if (params.empty()) {
     SetMetadata(*context, *options);
   } else {
@@ -433,12 +524,7 @@ BigtableMetadata::AsyncSampleRowKeys(
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   std::vector<std::string> params;
-  params.reserve(2);
-
-  if (!request.app_profile_id().empty()) {
-    params.push_back(absl::StrCat(
-        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
-  }
+  params.reserve(3);
 
   static auto* table_name_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
@@ -458,6 +544,26 @@ BigtableMetadata::AsyncSampleRowKeys(
         }};
   }();
   table_name_matcher->AppendParam(request, params);
+
+  if (!request.app_profile_id().empty()) {
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
+  }
+
+  static auto* name_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::bigtable::v2::SampleRowKeysRequest>{
+        "name=",
+        {
+            {[](google::bigtable::v2::SampleRowKeysRequest const& request)
+                 -> std::string const& {
+               return request.materialized_view_name();
+             },
+             std::regex{"(projects/[^/]+/instances/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  name_matcher->AppendParam(request, params);
 
   if (params.empty()) {
     SetMetadata(*context, *options);
@@ -595,6 +701,42 @@ BigtableMetadata::AsyncCheckAndMutateRow(
                                         std::move(options), request);
 }
 
+future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
+BigtableMetadata::AsyncPingAndWarm(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PingAndWarmRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(2);
+
+  static auto* name_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::bigtable::v2::PingAndWarmRequest>{
+        "name=",
+        {
+            {[](google::bigtable::v2::PingAndWarmRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/instances/[^/]+)",
+                        std::regex::optimize}},
+        }};
+  }();
+  name_matcher->AppendParam(request, params);
+
+  if (!request.app_profile_id().empty()) {
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context, *options);
+  } else {
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncPingAndWarm(cq, std::move(context), std::move(options),
+                                  request);
+}
+
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableMetadata::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
@@ -637,6 +779,42 @@ BigtableMetadata::AsyncReadModifyWriteRow(
                                          std::move(options), request);
 }
 
+future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+BigtableMetadata::AsyncPrepareQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(2);
+
+  static auto* name_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::bigtable::v2::PrepareQueryRequest>{
+        "name=",
+        {
+            {[](google::bigtable::v2::PrepareQueryRequest const& request)
+                 -> std::string const& { return request.instance_name(); },
+             std::regex{"(projects/[^/]+/instances/[^/]+)",
+                        std::regex::optimize}},
+        }};
+  }();
+  name_matcher->AppendParam(request, params);
+
+  if (!request.app_profile_id().empty()) {
+    params.push_back(absl::StrCat(
+        "app_profile_id=", internal::UrlEncode(request.app_profile_id())));
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context, *options);
+  } else {
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncPrepareQuery(cq, std::move(context), std::move(options),
+                                   request);
+}
+
 void BigtableMetadata::SetMetadata(grpc::ClientContext& context,
                                    Options const& options,
                                    std::string const& request_params) {
@@ -654,3 +832,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

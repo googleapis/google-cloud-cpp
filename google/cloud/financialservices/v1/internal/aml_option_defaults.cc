@@ -41,7 +41,7 @@ Options AMLDefaultOptions(Options options) {
   if (!options.has<financialservices_v1::AMLRetryPolicyOption>()) {
     options.set<financialservices_v1::AMLRetryPolicyOption>(
         financialservices_v1::AMLLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<financialservices_v1::AMLBackoffPolicyOption>()) {
