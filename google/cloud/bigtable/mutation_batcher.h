@@ -15,13 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATION_BATCHER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATION_BATCHER_H
 
-#include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
-#include <google/bigtable/v2/bigtable.pb.h>
+#include "google/bigtable/v2/bigtable.pb.h"
 #include <deque>
 #include <functional>
 #include <memory>

@@ -44,7 +44,7 @@ Options AgentEndpointServiceDefaultOptions(Options options) {
     options.set<
         osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption>(
         osconfig_agentendpoint_v1::AgentEndpointServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<osconfig_agentendpoint_v1::

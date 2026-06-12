@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace backupdr_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class BackupDRTracingStub : public BackupDRStub {
  public:
@@ -150,6 +151,12 @@ class BackupDRTracingStub : public BackupDRStub {
   StatusOr<google::cloud::backupdr::v1::ListBackupsResponse> ListBackups(
       grpc::ClientContext& context, Options const& options,
       google::cloud::backupdr::v1::ListBackupsRequest const& request) override;
+
+  StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+  FetchBackupsForResourceType(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+          request) override;
 
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
       grpc::ClientContext& context, Options const& options,
@@ -322,6 +329,12 @@ class BackupDRTracingStub : public BackupDRStub {
       google::cloud::backupdr::v1::GetDataSourceReferenceRequest const& request)
       override;
 
+  StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+  ListDataSourceReferences(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+          request) override;
+
   StatusOr<google::cloud::backupdr::v1::
                FetchDataSourceReferencesForResourceTypeResponse>
   FetchDataSourceReferencesForResourceType(
@@ -396,8 +409,6 @@ class BackupDRTracingStub : public BackupDRStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -411,5 +422,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace backupdr_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_INTERNAL_BACKUP_DR_TRACING_STUB_H

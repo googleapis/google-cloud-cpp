@@ -42,8 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * underlying streaming RPC. No such RPC is needed or can successfully upload
  * additional data.
  */
-class AsyncWriterConnectionFinalized
-    : public storage_experimental::AsyncWriterConnection {
+class AsyncWriterConnectionFinalized : public storage::AsyncWriterConnection {
  public:
   explicit AsyncWriterConnectionFinalized(std::string upload_id,
                                           google::storage::v2::Object object);
@@ -52,13 +51,15 @@ class AsyncWriterConnectionFinalized
   void Cancel() override;
 
   std::string UploadId() const override;
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const override;
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override;
 
-  future<Status> Write(storage_experimental::WritePayload payload) override;
+  future<Status> Write(storage::WritePayload payload) override;
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage_experimental::WritePayload) override;
-  future<Status> Flush(storage_experimental::WritePayload payload) override;
+      storage::WritePayload) override;
+  future<Status> Flush(storage::WritePayload payload) override;
   future<StatusOr<std::int64_t>> Query() override;
   RpcMetadata GetRequestMetadata() override;
 

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_V1_PREDICTION_CONNECTION_H
 
 #include "google/cloud/automl/v1/internal/prediction_retry_traits.h"
+#include "google/cloud/automl/v1/operations.pb.h"
 #include "google/cloud/automl/v1/prediction_connection_idempotency_policy.h"
+#include "google/cloud/automl/v1/prediction_service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -29,9 +31,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/automl/v1/operations.pb.h>
-#include <google/cloud/automl/v1/prediction_service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

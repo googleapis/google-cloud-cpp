@@ -12,14 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-03-30T00:38:59.589682412Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 2d35a7fd-e273-44d4-b592-fc8810327a27
+    branch: main
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: checkers-ci
 substitutions:

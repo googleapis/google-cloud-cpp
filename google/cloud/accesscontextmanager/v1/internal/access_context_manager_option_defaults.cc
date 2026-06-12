@@ -43,7 +43,7 @@ Options AccessContextManagerDefaultOptions(Options options) {
           accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()) {
     options.set<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>(
         accesscontextmanager_v1::AccessContextManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

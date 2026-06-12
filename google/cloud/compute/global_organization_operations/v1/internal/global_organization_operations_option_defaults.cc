@@ -47,7 +47,7 @@ Options GlobalOrganizationOperationsDefaultOptions(Options options) {
                     GlobalOrganizationOperationsRetryPolicyOption>(
         compute_global_organization_operations_v1::
             GlobalOrganizationOperationsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_global_organization_operations_v1::

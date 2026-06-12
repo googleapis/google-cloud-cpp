@@ -42,7 +42,7 @@ Options IamCheckerDefaultOptions(Options options) {
   if (!options.has<policytroubleshooter_v1::IamCheckerRetryPolicyOption>()) {
     options.set<policytroubleshooter_v1::IamCheckerRetryPolicyOption>(
         policytroubleshooter_v1::IamCheckerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<policytroubleshooter_v1::IamCheckerBackoffPolicyOption>()) {

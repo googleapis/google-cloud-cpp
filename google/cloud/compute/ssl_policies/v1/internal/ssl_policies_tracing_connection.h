@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_ssl_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SslPoliciesTracingConnection
     : public compute_ssl_policies_v1::SslPoliciesConnection {
  public:
@@ -96,8 +94,6 @@ class SslPoliciesTracingConnection
  private:
   std::shared_ptr<compute_ssl_policies_v1::SslPoliciesConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -45,7 +45,7 @@ Options CloudControlsPartnerCoreDefaultOptions(Options options) {
     options.set<
         cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicyOption>(
         cloudcontrolspartner_v1::CloudControlsPartnerCoreLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<cloudcontrolspartner_v1::

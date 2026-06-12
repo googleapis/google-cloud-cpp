@@ -127,6 +127,100 @@ NetworkSecurityConnection::DeleteAuthorizationPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+NetworkSecurityConnection::ListBackendAuthenticationConfigs(
+    google::cloud::networksecurity::v1::
+        ListBackendAuthenticationConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig>>();
+}
+
+StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+NetworkSecurityConnection::GetBackendAuthenticationConfig(
+    google::cloud::networksecurity::v1::
+        GetBackendAuthenticationConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<
+    StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+NetworkSecurityConnection::CreateBackendAuthenticationConfig(
+    google::cloud::networksecurity::v1::
+        CreateBackendAuthenticationConfigRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::CreateBackendAuthenticationConfig(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    CreateBackendAuthenticationConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+NetworkSecurityConnection::CreateBackendAuthenticationConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+NetworkSecurityConnection::UpdateBackendAuthenticationConfig(
+    google::cloud::networksecurity::v1::
+        UpdateBackendAuthenticationConfigRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::UpdateBackendAuthenticationConfig(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    UpdateBackendAuthenticationConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+NetworkSecurityConnection::UpdateBackendAuthenticationConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteBackendAuthenticationConfig(
+    google::cloud::networksecurity::v1::
+        DeleteBackendAuthenticationConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::DeleteBackendAuthenticationConfig(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    DeleteBackendAuthenticationConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteBackendAuthenticationConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
 NetworkSecurityConnection::ListServerTlsPolicies(
     google::cloud::networksecurity::v1::
@@ -293,6 +387,447 @@ NetworkSecurityConnection::DeleteClientTlsPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityConnection::DeleteClientTlsPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+NetworkSecurityConnection::ListGatewaySecurityPolicies(
+    google::cloud::networksecurity::v1::
+        ListGatewaySecurityPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>();
+}
+
+StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+NetworkSecurityConnection::GetGatewaySecurityPolicy(
+    google::cloud::networksecurity::v1::
+        GetGatewaySecurityPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+NetworkSecurityConnection::CreateGatewaySecurityPolicy(
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::CreateGatewaySecurityPolicy(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    CreateGatewaySecurityPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+NetworkSecurityConnection::CreateGatewaySecurityPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+NetworkSecurityConnection::UpdateGatewaySecurityPolicy(
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::UpdateGatewaySecurityPolicy(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    UpdateGatewaySecurityPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+NetworkSecurityConnection::UpdateGatewaySecurityPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteGatewaySecurityPolicy(
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::DeleteGatewaySecurityPolicy(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    DeleteGatewaySecurityPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteGatewaySecurityPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+NetworkSecurityConnection::ListGatewaySecurityPolicyRules(
+    google::cloud::networksecurity::v1::
+        ListGatewaySecurityPolicyRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>();
+}
+
+StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+NetworkSecurityConnection::GetGatewaySecurityPolicyRule(
+    google::cloud::networksecurity::v1::
+        GetGatewaySecurityPolicyRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+NetworkSecurityConnection::CreateGatewaySecurityPolicyRule(
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::CreateGatewaySecurityPolicyRule(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    CreateGatewaySecurityPolicyRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+NetworkSecurityConnection::CreateGatewaySecurityPolicyRule(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+NetworkSecurityConnection::UpdateGatewaySecurityPolicyRule(
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::UpdateGatewaySecurityPolicyRule(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    UpdateGatewaySecurityPolicyRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+NetworkSecurityConnection::UpdateGatewaySecurityPolicyRule(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteGatewaySecurityPolicyRule(
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::DeleteGatewaySecurityPolicyRule(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    DeleteGatewaySecurityPolicyRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteGatewaySecurityPolicyRule(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::networksecurity::v1::UrlList>
+NetworkSecurityConnection::ListUrlLists(
+    google::cloud::networksecurity::v1::
+        ListUrlListsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networksecurity::v1::UrlList>>();
+}
+
+StatusOr<google::cloud::networksecurity::v1::UrlList>
+NetworkSecurityConnection::GetUrlList(
+    google::cloud::networksecurity::v1::GetUrlListRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::UrlList>>
+NetworkSecurityConnection::CreateUrlList(
+    google::cloud::networksecurity::v1::CreateUrlListRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::UrlList>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::CreateUrlList(
+    NoAwaitTag,
+    google::cloud::networksecurity::v1::CreateUrlListRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::UrlList>>
+NetworkSecurityConnection::CreateUrlList(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::UrlList>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::UrlList>>
+NetworkSecurityConnection::UpdateUrlList(
+    google::cloud::networksecurity::v1::UpdateUrlListRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::UrlList>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::UpdateUrlList(
+    NoAwaitTag,
+    google::cloud::networksecurity::v1::UpdateUrlListRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::UrlList>>
+NetworkSecurityConnection::UpdateUrlList(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::UrlList>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteUrlList(
+    google::cloud::networksecurity::v1::DeleteUrlListRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::DeleteUrlList(
+    NoAwaitTag,
+    google::cloud::networksecurity::v1::DeleteUrlListRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteUrlList(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+NetworkSecurityConnection::ListTlsInspectionPolicies(
+    google::cloud::networksecurity::v1::
+        ListTlsInspectionPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networksecurity::v1::TlsInspectionPolicy>>();
+}
+
+StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+NetworkSecurityConnection::GetTlsInspectionPolicy(
+    google::cloud::networksecurity::v1::GetTlsInspectionPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+NetworkSecurityConnection::CreateTlsInspectionPolicy(
+    google::cloud::networksecurity::v1::
+        CreateTlsInspectionPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::CreateTlsInspectionPolicy(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    CreateTlsInspectionPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+NetworkSecurityConnection::CreateTlsInspectionPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+NetworkSecurityConnection::UpdateTlsInspectionPolicy(
+    google::cloud::networksecurity::v1::
+        UpdateTlsInspectionPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::UpdateTlsInspectionPolicy(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    UpdateTlsInspectionPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+NetworkSecurityConnection::UpdateTlsInspectionPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteTlsInspectionPolicy(
+    google::cloud::networksecurity::v1::
+        DeleteTlsInspectionPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::DeleteTlsInspectionPolicy(
+    NoAwaitTag, google::cloud::networksecurity::v1::
+                    DeleteTlsInspectionPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteTlsInspectionPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::networksecurity::v1::AuthzPolicy>
+NetworkSecurityConnection::ListAuthzPolicies(
+    google::cloud::networksecurity::v1::
+        ListAuthzPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networksecurity::v1::AuthzPolicy>>();
+}
+
+StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>
+NetworkSecurityConnection::GetAuthzPolicy(
+    google::cloud::networksecurity::v1::GetAuthzPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+NetworkSecurityConnection::CreateAuthzPolicy(
+    google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::CreateAuthzPolicy(
+    NoAwaitTag,
+    google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+NetworkSecurityConnection::CreateAuthzPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+NetworkSecurityConnection::UpdateAuthzPolicy(
+    google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::UpdateAuthzPolicy(
+    NoAwaitTag,
+    google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+NetworkSecurityConnection::UpdateAuthzPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteAuthzPolicy(
+    google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityConnection::DeleteAuthzPolicy(
+    NoAwaitTag,
+    google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+NetworkSecurityConnection::DeleteAuthzPolicy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>(

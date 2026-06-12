@@ -27,7 +27,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::size_t MinLwmValue() { return 256 * 1024; }
+std::size_t MinLwmValue() { return 16 * 1024 * 1024; }
 
 std::size_t MaxLwmValue() {
   if (std::numeric_limits<std::size_t>::digits < 64) {
@@ -39,7 +39,7 @@ std::size_t MaxLwmValue() {
 }
 
 auto Lwm(Options const& opts) {
-  auto v = opts.get<storage_experimental::BufferedUploadLwmOption>();
+  auto v = opts.get<storage::BufferedUploadLwmOption>();
   if (v < MinLwmValue()) return MinLwmValue();
   if (v >= MaxLwmValue()) return MaxLwmValue();
   return v;
@@ -47,15 +47,15 @@ auto Lwm(Options const& opts) {
 
 auto Hwm(Options const& opts) {
   auto lwm = Lwm(opts);
-  auto v = opts.get<storage_experimental::BufferedUploadHwmOption>();
+  auto v = opts.get<storage::BufferedUploadHwmOption>();
   if (v < 2 * lwm) return 2 * lwm;
   if (v >= 2 * MaxLwmValue()) return 2 * MaxLwmValue();
   return v;
 }
 
 auto Adjust(Options opts) {
-  opts.set<storage_experimental::BufferedUploadLwmOption>(Lwm(opts));
-  opts.set<storage_experimental::BufferedUploadHwmOption>(Hwm(opts));
+  opts.set<storage::BufferedUploadLwmOption>(Lwm(opts));
+  opts.set<storage::BufferedUploadHwmOption>(Hwm(opts));
   return opts;
 }
 
@@ -67,17 +67,16 @@ Options DefaultOptionsAsync(Options opts) {
   opts = internal::MergeOptions(
       std::move(opts),
       Options{}
-          .set<storage_experimental::AsyncRetryPolicyOption>(
-              storage_experimental::LimitedTimeRetryPolicy(
-                  kDefaultMaxRetryPeriod)
+          .set<storage::AsyncRetryPolicyOption>(
+              storage::LimitedTimeAsyncRetryPolicy(kDefaultMaxRetryPeriod)
                   .clone())
-          .set<storage_experimental::ResumePolicyOption>(
-              storage_experimental::StopOnConsecutiveErrorsResumePolicy())
-          .set<storage_experimental::IdempotencyPolicyOption>(
-              storage_experimental::MakeStrictIdempotencyPolicy)
-          .set<storage_experimental::EnableCrc32cValidationOption>(true)
-          .set<storage_experimental::MaximumRangeSizeOption>(128 * 1024 *
-                                                             1024L));
+          .set<storage::ResumePolicyOption>(
+              storage::StopOnConsecutiveErrorsResumePolicy())
+          .set<storage::AsyncIdempotencyPolicyOption>(
+              storage::MakeStrictAsyncIdempotencyPolicy)
+          .set<storage::EnableCrc32cValidationOption>(true)
+          .set<storage::MaximumRangeSizeOption>(128 * 1024 * 1024L)
+          .set<storage::EnableMultiStreamOptimizationOption>(true));
   return Adjust(DefaultOptionsGrpc(std::move(opts)));
 }
 

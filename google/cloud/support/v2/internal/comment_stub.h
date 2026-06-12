@@ -19,12 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_STUB_H
 
+#include "google/cloud/support/v2/comment_service.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/support/v2/comment_service.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -43,6 +46,10 @@ class CommentServiceStub {
   virtual StatusOr<google::cloud::support::v2::Comment> CreateComment(
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::support::v2::Comment> GetComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetCommentRequest const& request) = 0;
 };
 
 class DefaultCommentServiceStub : public CommentServiceStub {
@@ -60,6 +67,10 @@ class DefaultCommentServiceStub : public CommentServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
+  StatusOr<google::cloud::support::v2::Comment> GetComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetCommentRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::support::v2::CommentService::StubInterface>
       grpc_stub_;
@@ -69,5 +80,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_STUB_H

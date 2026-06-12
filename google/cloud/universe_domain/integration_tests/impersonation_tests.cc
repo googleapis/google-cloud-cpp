@@ -110,7 +110,7 @@ TEST_F(ServiceAccountImpersonationTest, SAToSAImpersonationRest) {
           google::cloud::MakeServiceAccountCredentials(credential_),
           impersonated_sa_));
 
-  auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{}, options);
+  auto ud_options = gc::AddUniverseDomainOption(options);
   ASSERT_STATUS_OK(ud_options);
 
   auto client = disks::DisksClient(disks::MakeDisksConnectionRest(*ud_options));
@@ -130,7 +130,7 @@ TEST_F(ServiceAccountImpersonationTest, SAToSAImpersonationGrpc) {
           google::cloud::MakeServiceAccountCredentials(credential_),
           impersonated_sa_));
 
-  auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{}, options);
+  auto ud_options = gc::AddUniverseDomainOption(options);
   ASSERT_STATUS_OK(ud_options);
 
   auto client = kms::KeyManagementServiceClient(
@@ -150,7 +150,7 @@ TEST_F(ExternalAccountImpersonationTest, EAToSAImpersonationRest) {
           google::cloud::MakeExternalAccountCredentials(credential_),
           impersonated_sa_));
 
-  auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{}, options);
+  auto ud_options = gc::AddUniverseDomainOption(options);
   ASSERT_STATUS_OK(ud_options);
 
   auto client = disks::DisksClient(disks::MakeDisksConnectionRest(*ud_options));
@@ -170,7 +170,7 @@ TEST_F(ExternalAccountImpersonationTest, EAToSAImpersonationGrpc) {
           google::cloud::MakeExternalAccountCredentials(credential_),
           impersonated_sa_));
 
-  auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{}, options);
+  auto ud_options = gc::AddUniverseDomainOption(options);
   ASSERT_STATUS_OK(ud_options);
 
   auto client = kms::KeyManagementServiceClient(
@@ -189,7 +189,7 @@ TEST_F(DomainUniverseImpersonationTest, IdTokenSAToSAImpersonationRest) {
   // Use ADC credential
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", id_token_key_file);
 
-  auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{});
+  auto ud_options = gc::AddUniverseDomainOption();
   ASSERT_STATUS_OK(ud_options);
 
   auto client = disks::DisksClient(disks::MakeDisksConnectionRest(*ud_options));

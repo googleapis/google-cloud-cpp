@@ -39,5 +39,6 @@ application.
 - @ref webrisk-override-retry - describes how to change the default retry
   policies.
 - @ref webrisk-env - describes environment variables that can configure the behavior of the library.
+- @ref webrisk-override-universe-domain - describes how to override the default universe domain.
 
 */

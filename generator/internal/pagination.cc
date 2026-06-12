@@ -16,9 +16,9 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/doxygen.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/optional.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {

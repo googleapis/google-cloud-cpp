@@ -27,18 +27,25 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace datacatalog_lineage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+void LineageSearchLineageStreamingStreamingUpdater(
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingResponse const& response,
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingRequest&
+        request);
 
 class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
  public:
@@ -142,6 +149,12 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
       google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
           request) override;
 
+  StreamRange<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+  SearchLineageStreaming(
+      google::cloud::datacatalog::lineage::v1::
+          SearchLineageStreamingRequest const& request) override;
+
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
 
@@ -158,6 +171,9 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datacatalog_lineage_v1_internal::LineageStub> stub_;
   Options options_;
+  std::shared_ptr<google::cloud::internal::InvocationIdGenerator>
+      invocation_id_generator_ =
+          std::make_shared<google::cloud::internal::InvocationIdGenerator>();
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

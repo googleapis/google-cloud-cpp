@@ -41,7 +41,7 @@ Options DiskTypesDefaultOptions(Options options) {
   if (!options.has<compute_disk_types_v1::DiskTypesRetryPolicyOption>()) {
     options.set<compute_disk_types_v1::DiskTypesRetryPolicyOption>(
         compute_disk_types_v1::DiskTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_disk_types_v1::DiskTypesBackoffPolicyOption>()) {

@@ -17,13 +17,16 @@
 // source: google/cloud/backupdr/v1/backupdr.proto
 
 #include "google/cloud/backupdr/v1/internal/backup_dr_logging_decorator.h"
+#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/backupdr/v1/backupdr.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -322,6 +325,21 @@ BackupDRLogging::ListBackups(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::backupdr::v1::ListBackupsRequest const& request) {
         return child_->ListBackups(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+BackupDRLogging::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+              request) {
+        return child_->FetchBackupsForResourceType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -765,6 +783,20 @@ BackupDRLogging::GetDataSourceReference(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+BackupDRLogging::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+                 request) {
+        return child_->ListDataSourceReferences(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::backupdr::v1::
              FetchDataSourceReferencesForResourceTypeResponse>
 BackupDRLogging::FetchDataSourceReferencesForResourceType(
@@ -954,3 +986,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace backupdr_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

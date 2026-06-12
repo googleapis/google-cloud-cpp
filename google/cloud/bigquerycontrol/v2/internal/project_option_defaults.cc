@@ -41,7 +41,7 @@ Options ProjectServiceDefaultOptions(Options options) {
   if (!options.has<bigquerycontrol_v2::ProjectServiceRetryPolicyOption>()) {
     options.set<bigquerycontrol_v2::ProjectServiceRetryPolicyOption>(
         bigquerycontrol_v2::ProjectServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<bigquerycontrol_v2::ProjectServiceBackoffPolicyOption>()) {

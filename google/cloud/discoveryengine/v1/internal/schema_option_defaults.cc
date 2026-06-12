@@ -42,7 +42,7 @@ Options SchemaServiceDefaultOptions(Options options) {
   if (!options.has<discoveryengine_v1::SchemaServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::SchemaServiceRetryPolicyOption>(
         discoveryengine_v1::SchemaServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<discoveryengine_v1::SchemaServiceBackoffPolicyOption>()) {

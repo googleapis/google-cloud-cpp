@@ -42,7 +42,7 @@ Options PipelineServiceDefaultOptions(Options options) {
   if (!options.has<contentwarehouse_v1::PipelineServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::PipelineServiceRetryPolicyOption>(
         contentwarehouse_v1::PipelineServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<contentwarehouse_v1::PipelineServiceBackoffPolicyOption>()) {

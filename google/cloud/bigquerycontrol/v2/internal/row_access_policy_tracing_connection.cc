@@ -27,8 +27,6 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RowAccessPolicyServiceTracingConnection::
     RowAccessPolicyServiceTracingConnection(
         std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
@@ -98,18 +96,14 @@ Status RowAccessPolicyServiceTracingConnection::BatchDeleteRowAccessPolicies(
                            child_->BatchDeleteRowAccessPolicies(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
 MakeRowAccessPolicyServiceTracingConnection(
     std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RowAccessPolicyServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -18,7 +18,7 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/rpc_metadata.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -86,6 +86,10 @@ Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
                 grpc::WriteOptions& options,
                 storage::internal::HashFunction& hash_function,
                 storage::internal::HashValues = {});
+
+Status Finalize(google::storage::v2::WriteObjectRequest& write_request,
+                grpc::WriteOptions& options,
+                storage::internal::HashValues const& hashes);
 
 Status Finalize(google::storage::v2::BidiWriteObjectRequest& write_request,
                 grpc::WriteOptions& options,

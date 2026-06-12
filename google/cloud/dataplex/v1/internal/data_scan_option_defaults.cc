@@ -42,7 +42,7 @@ Options DataScanServiceDefaultOptions(Options options) {
   if (!options.has<dataplex_v1::DataScanServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::DataScanServiceRetryPolicyOption>(
         dataplex_v1::DataScanServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataplex_v1::DataScanServiceBackoffPolicyOption>()) {

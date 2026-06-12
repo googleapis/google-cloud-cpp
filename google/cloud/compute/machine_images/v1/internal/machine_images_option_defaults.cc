@@ -42,7 +42,7 @@ Options MachineImagesDefaultOptions(Options options) {
            .has<compute_machine_images_v1::MachineImagesRetryPolicyOption>()) {
     options.set<compute_machine_images_v1::MachineImagesRetryPolicyOption>(
         compute_machine_images_v1::MachineImagesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

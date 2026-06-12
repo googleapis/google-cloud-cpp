@@ -17,10 +17,10 @@
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
+#include "absl/strings/str_cat.h"
+#include "protos/google/cloud/spanner/testing/singer.pb.h"
 #include <chrono>
 #include <iostream>
 
@@ -94,6 +94,11 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           DateValue DATE,
           JsonValue JSON,
           NumericValue NUMERIC,
+      )sql",
+      (emulator_ ? "" : R"sql(
+          UuidValue UUID,
+      )sql"),
+      R"sql(
           ArrayBoolValue ARRAY<BOOL>,
           ArrayInt64Value ARRAY<INT64>,
           ArrayFloat64Value ARRAY<FLOAT64>,
@@ -107,7 +112,12 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           ArrayTimestampValue ARRAY<TIMESTAMP>,
           ArrayDateValue ARRAY<DATE>,
           ArrayJsonValue ARRAY<JSON>,
-          ArrayNumericValue ARRAY<NUMERIC>
+          ArrayNumericValue ARRAY<NUMERIC>,
+      )sql",
+      (emulator_ ? "" : R"sql(
+          ArrayUuidValue ARRAY<UUID>
+      )sql"),
+      R"sql(
         ) PRIMARY KEY (Id)
       )sql"));
   if (!emulator_) {  // proto columns

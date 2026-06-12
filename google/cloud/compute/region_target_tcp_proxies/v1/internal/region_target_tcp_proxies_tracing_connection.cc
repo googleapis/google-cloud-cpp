@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_region_target_tcp_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RegionTargetTcpProxiesTracingConnection::
     RegionTargetTcpProxiesTracingConnection(
         std::shared_ptr<compute_region_target_tcp_proxies_v1::
@@ -132,20 +130,16 @@ RegionTargetTcpProxiesTracingConnection::ListRegionTargetTcpProxies(
                                                        std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesConnection>
 MakeRegionTargetTcpProxiesTracingConnection(
     std::shared_ptr<
         compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionTargetTcpProxiesTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

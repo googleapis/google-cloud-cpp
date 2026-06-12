@@ -44,7 +44,7 @@ Options ConnectionServiceDefaultOptions(Options options) {
            .has<bigquery_connection_v1::ConnectionServiceRetryPolicyOption>()) {
     options.set<bigquery_connection_v1::ConnectionServiceRetryPolicyOption>(
         bigquery_connection_v1::ConnectionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

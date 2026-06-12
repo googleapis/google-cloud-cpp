@@ -17,12 +17,15 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -211,6 +214,74 @@ DefaultLivestreamServiceStub::StopChannel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultLivestreamServiceStub::AsyncStartDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::livestream::v1::StartDistributionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::video::livestream::v1::StartDistributionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncStartDistribution(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::StartDistribution(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartDistribution(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultLivestreamServiceStub::AsyncStopDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::livestream::v1::StopDistributionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::video::livestream::v1::StopDistributionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncStopDistribution(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultLivestreamServiceStub::StopDistribution(
+    grpc::ClientContext& context, Options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopDistribution(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultLivestreamServiceStub::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -321,6 +392,18 @@ DefaultLivestreamServiceStub::UpdateInput(
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->UpdateInput(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+DefaultLivestreamServiceStub::PreviewInput(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::video::livestream::v1::PreviewInputRequest const& request) {
+  google::cloud::video::livestream::v1::PreviewInputResponse response;
+  auto status = grpc_stub_->PreviewInput(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -829,3 +912,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

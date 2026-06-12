@@ -41,7 +41,7 @@ Options TargetPoolsDefaultOptions(Options options) {
   if (!options.has<compute_target_pools_v1::TargetPoolsRetryPolicyOption>()) {
     options.set<compute_target_pools_v1::TargetPoolsRetryPolicyOption>(
         compute_target_pools_v1::TargetPoolsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_target_pools_v1::TargetPoolsBackoffPolicyOption>()) {

@@ -18,36 +18,17 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/gha/builds/lib/linux.sh
-source module ci/gha/builds/lib/cmake.sh
-source module ci/gha/builds/lib/ctest.sh
+source module ci/gha/builds/lib/bazel.sh
+source module ci/lib/io.sh
 
-mapfile -t args < <(cmake::common_args)
-mapfile -t vcpkg_args < <(cmake::vcpkg_args)
-mapfile -t ctest_args < <(ctest::common_args)
+mapfile -t args < <(bazel::common_args)
+mapfile -t test_args < <(bazel::test_args)
 
-# This is a build to test External Accounts. This is a feature to use accounts
-# from providers other than Google to access Google services. In this case we
-# are using "GitHub Actions" as the provider.
-# The External Accounts feature is sometimes known as Workload Identity
-# Federation, and sometimes BYOID (Bring Your Own ID).
-features=(
-  # Enable the smallest set of libraries libraries that will compile gRPC and
-  # REST-based authentication components and tests.
-  storage
-  iam
-  bigtable
+targets=(
+  "//google/cloud:internal_external_account_integration_test"
 )
-enable=$(printf ";%s" "${features[@]}")
-enable=${enable:1}
 
-io::log_h1 "Starting Build"
-TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
+io::log_h1 "Building Targets"
 time {
-  io::run cmake "${args[@]}" "${vcpkg_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="${enable}"
-}
-
-TIMEFORMAT="==> 🕑 CMake build done in %R seconds"
-time {
-  # Compile only the integration test we need for this build
-  io::run cmake --build cmake-out --target common_internal_external_account_integration_test
+  io::run bazelisk "${args[@]}" build "${test_args[@]}" "${targets[@]}"
 }

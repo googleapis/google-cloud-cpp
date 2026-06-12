@@ -17,22 +17,25 @@
 // source: google/cloud/dataform/v1/dataform.proto
 
 #include "google/cloud/dataform/v1/internal/dataform_stub_factory.h"
+#include "google/cloud/dataform/v1/dataform.grpc.pb.h"
 #include "google/cloud/dataform/v1/internal/dataform_auth_decorator.h"
 #include "google/cloud/dataform/v1/internal/dataform_logging_decorator.h"
 #include "google/cloud/dataform/v1/internal/dataform_metadata_decorator.h"
 #include "google/cloud/dataform/v1/internal/dataform_stub.h"
 #include "google/cloud/dataform/v1/internal/dataform_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/dataform/v1/dataform.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -46,12 +49,11 @@ std::shared_ptr<DataformStub> CreateDefaultDataformStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::dataform::v1::Dataform::NewStub(channel);
-  auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<DataformStub> stub = std::make_shared<DefaultDataformStub>(
-      std::move(service_grpc_stub), std::move(service_iampolicy_stub),
-      std::move(service_locations_stub));
+      std::move(service_grpc_stub), std::move(service_locations_stub),
+      google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<DataformAuth>(std::move(auth), std::move(stub));
@@ -74,3 +76,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataform_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

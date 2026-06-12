@@ -42,7 +42,7 @@ Options HubServiceDefaultOptions(Options options) {
   if (!options.has<networkconnectivity_v1::HubServiceRetryPolicyOption>()) {
     options.set<networkconnectivity_v1::HubServiceRetryPolicyOption>(
         networkconnectivity_v1::HubServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<networkconnectivity_v1::HubServiceBackoffPolicyOption>()) {

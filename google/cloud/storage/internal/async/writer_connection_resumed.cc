@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/async/writer_connection_resumed.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
+#include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
@@ -61,7 +63,7 @@ class AsyncWriterConnectionResumedState
  public:
   AsyncWriterConnectionResumedState(
       WriterResultFactory factory,
-      std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+      std::unique_ptr<storage::AsyncWriterConnection> impl,
       google::storage::v2::BidiWriteObjectRequest initial_request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       google::storage::v2::BidiWriteObjectResponse const& first_response,
@@ -78,14 +80,17 @@ class AsyncWriterConnectionResumedState
     options_ = internal::MakeImmutableOptions(options);
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-      SetFinalized(std::unique_lock<std::mutex>(mu_),
-                   absl::get<google::storage::v2::Object>(std::move(state)));
-      cancelled_ = true;
-      resume_status_ = internal::CancelledError("upload already finalized",
-                                                GCP_ERROR_INFO());
-      return;
+      buffer_offset_ = absl::get<google::storage::v2::Object>(state).size();
+    } else {
+      buffer_offset_ = absl::get<std::int64_t>(state);
     }
-    buffer_offset_ = absl::get<std::int64_t>(state);
+    if (first_response_.has_write_handle()) {
+      latest_write_handle_ = first_response_.write_handle();
+    } else if (initial_request_.has_append_object_spec() &&
+               initial_request_.append_object_spec().has_write_handle()) {
+      latest_write_handle_ =
+          initial_request_.append_object_spec().write_handle();
+    }
   }
 
   void Cancel() {
@@ -100,19 +105,24 @@ class AsyncWriterConnectionResumedState
     return UploadId(std::unique_lock<std::mutex>(mu_));
   }
 
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle() const {
+    std::unique_lock<std::mutex> lk(mu_);
+    return latest_write_handle_;
+  }
+
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const {
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
 
-  future<Status> Write(storage_experimental::WritePayload const& p) {
+  future<Status> Write(storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     return HandleNewData(std::move(lk));
   }
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage_experimental::WritePayload const& p) {
+      storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
@@ -121,7 +131,7 @@ class AsyncWriterConnectionResumedState
     return std::move(finalized_future_);
   }
 
-  future<Status> Flush(storage_experimental::WritePayload const& p) {
+  future<Status> Flush(storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     // Create a new promise for this flush operation.
     promise<Status> current_flush_promise;
@@ -183,16 +193,18 @@ class AsyncWriterConnectionResumedState
   }
 
   void StartWriting(std::unique_lock<std::mutex> lk) {
-    if (writing_) return;
     WriteLoop(std::move(lk));
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
+    if (state_ != State::kIdle) return;
+
     // Determine if there's data left to write *before* potentially finalizing.
-    writing_ = write_offset_ < resend_buffer_.size();
+    auto const has_data = write_offset_ < resend_buffer_.size();
 
     // If we are writing data, continue doing so.
-    if (writing_) {
+    if (has_data) {
+      state_ = State::kWriting;
       // Still data to write, determine the next chunk.
       auto const n = resend_buffer_.size() - write_offset_;
       auto payload = resend_buffer_.Subcord(write_offset_, n);
@@ -200,7 +212,7 @@ class AsyncWriterConnectionResumedState
       return WriteStep(std::move(lk), std::move(payload));
     }
 
-    // No data left to write (writing_ is false).
+    // No data left to write.
     // Check if we need to finalize (only if not already writing data AND not
     // already finalizing).
     if (finalize_ && !finalizing_) {
@@ -209,27 +221,29 @@ class AsyncWriterConnectionResumedState
     }
     // If not finalizing, check if an empty flush is needed.
     if (flush_) {
+      state_ = State::kWriting;
       // Pass empty payload to FlushStep
       return FlushStep(std::move(lk), absl::Cord{});
     }
 
     // No data to write, not finalizing, not flushing. The loop can stop.
-    // writing_ is already false.
+    state_ = State::kIdle;
   }
 
   // FinalizeStep is now called only when all data in resend_buffer_ is written.
   void FinalizeStep(std::unique_lock<std::mutex> lk) {
     // Check *under lock* if we are already finalizing.
-    if (finalizing_) {
+    if (finalizing_ || state_ != State::kIdle) {
       // If another thread initiated FinalizeStep concurrently, just return.
       return;
     }
     // Mark that we are starting the finalization process.
+    state_ = State::kWriting;
     finalizing_ = true;
     auto impl = Impl(lk);
     lk.unlock();
     // Finalize with an empty payload.
-    (void)impl->Finalize(storage_experimental::WritePayload{})
+    (void)impl->Finalize(storage::WritePayload{})
         .then([w = WeakFromThis()](auto f) {
           if (auto self = w.lock()) return self->OnFinalize(f.get());
         });
@@ -259,9 +273,12 @@ class AsyncWriterConnectionResumedState
     write_offset_ += write_size;
     auto impl = Impl(lk);
     lk.unlock();
-    impl->Query().then([this, result, w = WeakFromThis()](auto f) {
-      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
-      if (auto self = w.lock()) return self->OnQuery(f.get());
+    impl->Query().then([result, w = WeakFromThis()](auto f) {
+      auto self = w.lock();
+      if (!self) return;
+      self->OnQuery(f.get());
+      self->SetFlushed(std::unique_lock<std::mutex>(self->mu_),
+                       std::move(result));
     });
   }
 
@@ -284,6 +301,11 @@ class AsyncWriterConnectionResumedState
   }
 
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
+    auto handle = impl_->WriteHandle();
+    if (handle) {
+      latest_write_handle_ = *std::move(handle);
+    }
+
     if (persisted_size < buffer_offset_) {
       return SetError(
           std::move(lk),
@@ -297,10 +319,26 @@ class AsyncWriterConnectionResumedState
     }
     resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
     buffer_offset_ = persisted_size;
-    write_offset_ -= static_cast<std::size_t>(n);
+    if (state_ == State::kResuming) {
+      // Since the buffer has been modified to start exactly at the point of the
+      // resume, the next write on this new stream should start from the
+      // beginning of this truncated buffer.
+      write_offset_ = 0;
+    } else {
+      // While rare, it is possible that n >= write_offset_ (i.e. the server has
+      // persisted more than we have sent) if, for example, multiple clients
+      // resume the same upload. If that is the case, all the bytes covered by
+      // write_offset_ have been flushed and we can reset it to 0.
+      if (static_cast<std::size_t>(n) >= write_offset_) {
+        write_offset_ = 0;
+      } else {
+        write_offset_ -= static_cast<std::size_t>(n);
+      }
+    }
     // If the buffer is small enough, collect all the handlers to notify them.
     auto const handlers = ClearHandlersIfEmpty(lk);
-    WriteLoop(std::move(lk));
+    state_ = State::kIdle;
+    StartWriting(std::move(lk));
     // The notifications are deferred until the lock is released, as they might
     // call back and try to acquire the lock.
     for (auto const& h : handlers) {
@@ -322,16 +360,28 @@ class AsyncWriterConnectionResumedState
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
-    return WriteLoop(std::move(lk));
+    state_ = State::kIdle;
+    return StartWriting(std::move(lk));
   }
 
   void Resume(Status const& s) {
     auto proto_status = ExtractGrpcStatus(s);
     auto request = google::storage::v2::BidiWriteObjectRequest{};
-    auto spec = initial_request_.write_object_spec();
     auto& append_object_spec = *request.mutable_append_object_spec();
-    append_object_spec.set_bucket(spec.resource().bucket());
-    append_object_spec.set_object(spec.resource().name());
+    if (initial_request_.has_write_object_spec()) {
+      auto const& spec = initial_request_.write_object_spec();
+      append_object_spec.set_bucket(spec.resource().bucket());
+      append_object_spec.set_object(spec.resource().name());
+    } else {
+      auto const& spec = initial_request_.append_object_spec();
+      append_object_spec.set_bucket(spec.bucket());
+      append_object_spec.set_object(spec.object());
+    }
+    // Include write_handle to enable fast resume instead of slow
+    // takeover. Without handle, server performs full state validation.
+    if (latest_write_handle_) {
+      *append_object_spec.mutable_write_handle() = *latest_write_handle_;
+    }
     append_object_spec.set_generation(first_response_.resource().generation());
     ApplyWriteRedirectErrors(append_object_spec, std::move(proto_status));
 
@@ -339,10 +389,12 @@ class AsyncWriterConnectionResumedState
     bool was_finalizing;
     {
       std::unique_lock<std::mutex> lk(mu_);
+      if (state_ == State::kResuming) return;
       was_finalizing = finalizing_;
       if (!s.ok() && cancelled_) {
         return SetError(std::move(lk), std::move(s));
       }
+      state_ = State::kResuming;
     }
     // Pass the original status `s` and `was_finalizing` to the callback.
     factory_(std::move(request))
@@ -355,6 +407,10 @@ class AsyncWriterConnectionResumedState
   void OnResume(Status const& original_status, bool was_finalizing,
                 StatusOr<WriteObject::WriteResult> res) {
     std::unique_lock<std::mutex> lk(mu_);
+    // Update write_handle from any resume response that contains it.
+    if (res && res->first_response.has_write_handle()) {
+      latest_write_handle_ = res->first_response.write_handle();
+    }
 
     if (was_finalizing) {
       // If resuming due to a finalization error, we *must* complete the
@@ -385,17 +441,47 @@ class AsyncWriterConnectionResumedState
       return SetError(std::move(lk), std::move(res).status());
     }
     // Regular resume attempt succeeded. Check state.
-    auto state = impl_->PersistedState();
-    if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-      // Found finalized object (maybe finalized concurrently or resumed).
-      return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
-                                             std::move(state)));
+    std::int64_t persisted_offset = 0;
+    absl::optional<google::storage::v2::ObjectChecksums> checksums;
+
+    if (res->first_response.has_resource()) {
+      if (!res->first_response.has_write_handle()) {
+        // Found finalized object (maybe finalized concurrently or resumed).
+        return SetFinalized(std::move(lk),
+                            std::move(*res->first_response.mutable_resource()));
+      }
+      auto const& resource = res->first_response.resource();
+      persisted_offset = resource.size();
+      if (resource.has_checksums()) {
+        checksums = resource.checksums();
+      }
+    } else if (res->first_response.has_persisted_size()) {
+      persisted_offset = res->first_response.persisted_size();
+      if (res->first_response.has_persisted_data_checksums()) {
+        checksums = res->first_response.persisted_data_checksums();
+      }
+    } else {
+      auto state = impl_->PersistedState();
+      if (absl::holds_alternative<google::storage::v2::Object>(state)) {
+        // Found finalized object (maybe finalized concurrently or resumed).
+        return SetFinalized(
+            std::move(lk),
+            absl::get<google::storage::v2::Object>(std::move(state)));
+      }
+      persisted_offset = absl::get<std::int64_t>(state);
+      checksums = impl_->PersistedChecksums();
     }
-    // Regular resume succeeded, object not finalized. Continue writing.
-    auto persisted_offset = absl::get<std::int64_t>(state);
+
+    auto hash = hash_function_;
+    if (checksums && checksums->has_crc32c()) {
+      hash = std::make_shared<
+          ::google::cloud::storage::internal::Crc32cHashFunction>(
+          checksums->crc32c(), persisted_offset);
+    }
+
     impl_ = std::make_unique<AsyncWriterConnectionImpl>(
-        options_, initial_request_, std::move(res->stream), hash_function_,
-        persisted_offset, false);
+        options_, initial_request_, std::move(res->stream), std::move(hash),
+        persisted_offset, false, checksums);
     // OnQuery will restart the WriteLoop if necessary.
     OnQuery(std::move(lk), persisted_offset);
   }
@@ -409,7 +495,7 @@ class AsyncWriterConnectionResumedState
   void SetFinalized(std::unique_lock<std::mutex> lk,
                     google::storage::v2::Object object) {
     resend_buffer_.Clear();
-    writing_ = false;
+    state_ = State::kIdle;
     finalize_ = false;
     finalizing_ = false;  // Reset finalizing flag
     flush_ = false;
@@ -433,9 +519,6 @@ class AsyncWriterConnectionResumedState
 
   void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
-    // This flush step completed. We are no longer actively writing this chunk.
-    // WriteLoop will determine if another flush/write is needed.
-    writing_ = false;
     flush_ = false;  // Reset flush flag; WriteLoop may set it again.
     // Do NOT reset finalize_ or finalizing_ here.
     auto handlers = ClearHandlers(lk);
@@ -456,15 +539,11 @@ class AsyncWriterConnectionResumedState
     // lock.
     for (auto& h : handlers) h->Execute(Status{});
     flushed.set_value(result);
-    // Restart the write loop ONLY if we are not already finalizing.
-    // If finalizing_ is true, the completion will be handled by OnFinalize.
-    std::unique_lock<std::mutex> loop_lk(mu_);
-    if (!finalizing_) WriteLoop(std::move(loop_lk));
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
     resume_status_ = status;
-    writing_ = false;
+    state_ = State::kIdle;
     finalize_ = false;
     finalizing_ = false;  // Reset finalizing flag
     flush_ = false;
@@ -500,7 +579,7 @@ class AsyncWriterConnectionResumedState
     p.set_value(status);
   }
 
-  std::shared_ptr<storage_experimental::AsyncWriterConnection> Impl(
+  std::shared_ptr<storage::AsyncWriterConnection> Impl(
       std::unique_lock<std::mutex> const& /*lk*/) const {
     return impl_;
   }
@@ -525,7 +604,7 @@ class AsyncWriterConnectionResumedState
   Status resume_status_;
 
   // The current writer.
-  std::shared_ptr<storage_experimental::AsyncWriterConnection> impl_;
+  std::shared_ptr<storage::AsyncWriterConnection> impl_;
 
   // The initial request.
   google::storage::v2::BidiWriteObjectRequest initial_request_;
@@ -587,7 +666,12 @@ class AsyncWriterConnectionResumedState
   std::vector<std::unique_ptr<BufferShrinkHandler>> flush_handlers_;
 
   // True if the writing loop is activate.
-  bool writing_ = false;
+  enum class State {
+    kIdle,
+    kWriting,
+    kResuming,
+  };
+  State state_ = State::kIdle;
 
   // True if cancelled, in which case any RPC failures are final.
   bool cancelled_ = false;
@@ -597,6 +681,9 @@ class AsyncWriterConnectionResumedState
 
   // Tracks if the final promise (`finalized_`) has been completed.
   bool finalized_promise_completed_ = false;
+
+  // Track the latest write handle seen in responses.
+  absl::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 };
 
 /**
@@ -633,12 +720,11 @@ class AsyncWriterConnectionResumedState
  *
  * The loop also ends if there are no more bytes to send in the resend buffer.
  */
-class AsyncWriterConnectionResumed
-    : public storage_experimental::AsyncWriterConnection {
+class AsyncWriterConnectionResumed : public storage::AsyncWriterConnection {
  public:
   explicit AsyncWriterConnectionResumed(
       WriterResultFactory factory,
-      std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+      std::unique_ptr<storage::AsyncWriterConnection> impl,
       google::storage::v2::BidiWriteObjectRequest initial_request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       google::storage::v2::BidiWriteObjectResponse const& first_response,
@@ -646,28 +732,33 @@ class AsyncWriterConnectionResumed
       : state_(std::make_shared<AsyncWriterConnectionResumedState>(
             std::move(factory), std::move(impl), std::move(initial_request),
             std::move(hash_function), first_response, options,
-            options.get<storage_experimental::BufferedUploadLwmOption>(),
-            options.get<storage_experimental::BufferedUploadHwmOption>())) {}
+            options.get<storage::BufferedUploadLwmOption>(),
+            options.get<storage::BufferedUploadHwmOption>())) {}
 
   void Cancel() override { return state_->Cancel(); }
 
   std::string UploadId() const override { return state_->UploadId(); }
+
+  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const override {
+    return state_->WriteHandle();
+  }
 
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
       const override {
     return state_->PersistedState();
   }
 
-  future<Status> Write(storage_experimental::WritePayload p) override {
+  future<Status> Write(storage::WritePayload p) override {
     return state_->Write(std::move(p));
   }
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage_experimental::WritePayload p) override {
+      storage::WritePayload p) override {
     return state_->Finalize(std::move(p));
   }
 
-  future<Status> Flush(storage_experimental::WritePayload p) override {
+  future<Status> Flush(storage::WritePayload p) override {
     return state_->Flush(std::move(p));
   }
 
@@ -683,10 +774,9 @@ class AsyncWriterConnectionResumed
 
 }  // namespace
 
-std::unique_ptr<storage_experimental::AsyncWriterConnection>
-MakeWriterConnectionResumed(
+std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionResumed(
     WriterResultFactory factory,
-    std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+    std::unique_ptr<storage::AsyncWriterConnection> impl,
     google::storage::v2::BidiWriteObjectRequest initial_request,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
     google::storage::v2::BidiWriteObjectResponse const& first_response,

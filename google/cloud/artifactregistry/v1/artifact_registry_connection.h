@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/devtools/artifactregistry/v1/service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/devtools/artifactregistry/v1/service.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -482,6 +482,21 @@ class ArtifactRegistryConnection {
   virtual future<
       StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteAttachment(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+  ExportArtifact(
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportArtifact(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::devtools::artifactregistry::v1::ExportArtifactResponse>>
+  ExportArtifact(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

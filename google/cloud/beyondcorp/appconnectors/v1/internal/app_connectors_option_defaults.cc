@@ -44,7 +44,7 @@ Options AppConnectorsServiceDefaultOptions(Options options) {
     options.set<
         beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicyOption>(
         beyondcorp_appconnectors_v1::AppConnectorsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<beyondcorp_appconnectors_v1::

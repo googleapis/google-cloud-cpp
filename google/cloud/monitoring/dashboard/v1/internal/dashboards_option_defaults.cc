@@ -43,7 +43,7 @@ Options DashboardsServiceDefaultOptions(Options options) {
           monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()) {
     options.set<monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>(
         monitoring_dashboard_v1::DashboardsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

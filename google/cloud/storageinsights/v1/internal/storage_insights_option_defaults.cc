@@ -42,7 +42,7 @@ Options StorageInsightsDefaultOptions(Options options) {
   if (!options.has<storageinsights_v1::StorageInsightsRetryPolicyOption>()) {
     options.set<storageinsights_v1::StorageInsightsRetryPolicyOption>(
         storageinsights_v1::StorageInsightsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<storageinsights_v1::StorageInsightsBackoffPolicyOption>()) {

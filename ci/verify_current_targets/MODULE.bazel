@@ -1,0 +1,7 @@
+module(name = "google-cloud-cpp-verify-current-targets")
+
+bazel_dep(name = "google_cloud_cpp", version = "0.0.0")
+local_path_override(
+    module_name = "google_cloud_cpp",
+    path = "../..",
+)

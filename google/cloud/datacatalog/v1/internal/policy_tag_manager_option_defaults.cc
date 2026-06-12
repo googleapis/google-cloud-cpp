@@ -42,7 +42,7 @@ Options PolicyTagManagerDefaultOptions(Options options) {
   if (!options.has<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()) {
     options.set<datacatalog_v1::PolicyTagManagerRetryPolicyOption>(
         datacatalog_v1::PolicyTagManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()) {

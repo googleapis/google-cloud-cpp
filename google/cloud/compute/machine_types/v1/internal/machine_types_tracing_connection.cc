@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_machine_types_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 MachineTypesTracingConnection::MachineTypesTracingConnection(
     std::shared_ptr<compute_machine_types_v1::MachineTypesConnection> child)
     : child_(std::move(child)) {}
@@ -71,16 +69,12 @@ MachineTypesTracingConnection::ListMachineTypes(
                                                     std::move(sr));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_machine_types_v1::MachineTypesConnection>
 MakeMachineTypesTracingConnection(
     std::shared_ptr<compute_machine_types_v1::MachineTypesConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<MachineTypesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

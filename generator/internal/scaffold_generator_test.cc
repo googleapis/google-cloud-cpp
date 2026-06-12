@@ -122,18 +122,18 @@ class ScaffoldGenerator : public ::testing::Test {
     for (auto const* s : kHierarchy) MakeDirectory(path_ + s);
 
     std::ofstream(path_ + "/external/googleapis/protolists/test.list")
-        << R"""(@com_google_googleapis//google/cloud/test/v1:foo.proto
-@com_google_googleapis//google/cloud/test/v1:admin.proto
+        << R"""(@googleapis//google/cloud/test/v1:foo.proto
+@googleapis//google/cloud/test/v1:admin.proto
 )""";
 
     std::ofstream(path_ + "/external/googleapis/protodeps/test.deps")
-        << R"""(@com_google_googleapis//google/longrunning:operations_proto
-@com_google_googleapis//google/rpc:status_proto
-@com_google_googleapis//google/api:resource_proto
-@com_google_googleapis//google/api:field_behavior_proto
-@com_google_googleapis//google/api:client_proto
-@com_google_googleapis//google/api:annotations_proto
-@com_google_googleapis//google/api:http_proto
+        << R"""(@googleapis//google/longrunning:operations_proto
+@googleapis//google/rpc:status_proto
+@googleapis//google/api:resource_proto
+@googleapis//google/api:field_behavior_proto
+@googleapis//google/api:client_proto
+@googleapis//google/api:annotations_proto
+@googleapis//google/api:http_proto
 )""";
 
     std::ofstream(path_ + "/google/cloud/test/v1/test_v1.yaml")
@@ -274,8 +274,7 @@ TEST_F(ScaffoldGenerator, Build) {
   EXPECT_THAT(actual, HasSubstr(R"""(name = "test",)"""));
   EXPECT_THAT(
       actual,
-      HasSubstr(
-          R"""(@com_google_googleapis//google/cloud/test/v1:test_cc_grpc",)"""));
+      HasSubstr(R"""(@googleapis//google/cloud/test/v1:test_cc_grpc",)"""));
 }
 
 TEST_F(ScaffoldGenerator, CMakeLists) {

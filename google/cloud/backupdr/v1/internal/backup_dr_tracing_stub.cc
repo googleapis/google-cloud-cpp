@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace backupdr_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 BackupDRTracingStub::BackupDRTracingStub(std::shared_ptr<BackupDRStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -287,6 +288,20 @@ BackupDRTracingStub::ListBackups(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListBackups(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+BackupDRTracingStub::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "FetchBackupsForResourceType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchBackupsForResourceType(context, options, request));
 }
 
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRTracingStub::GetBackup(
@@ -675,6 +690,20 @@ BackupDRTracingStub::GetDataSourceReference(
       child_->GetDataSourceReference(context, options, request));
 }
 
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+BackupDRTracingStub::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListDataSourceReferences");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListDataSourceReferences(context, options, request));
+}
+
 StatusOr<google::cloud::backupdr::v1::
              FetchDataSourceReferencesForResourceTypeResponse>
 BackupDRTracingStub::FetchDataSourceReferencesForResourceType(
@@ -847,18 +876,14 @@ future<Status> BackupDRTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<BackupDRStub> MakeBackupDRTracingStub(
     std::shared_ptr<BackupDRStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<BackupDRTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace backupdr_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

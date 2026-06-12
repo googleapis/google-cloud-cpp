@@ -19,15 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_KEY_MANAGEMENT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_KEY_MANAGEMENT_STUB_H
 
+#include "google/cloud/kms/v1/service.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/kms/v1/service.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -57,6 +62,11 @@ class KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::ListImportJobsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::kms::v1::ListRetiredResourcesResponse>
+  ListRetiredResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::ListRetiredResourcesRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetKeyRingRequest const& request) = 0;
@@ -78,6 +88,10 @@ class KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetImportJobRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::GetRetiredResourceRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateKeyRingRequest const& request) = 0;
@@ -90,6 +104,27 @@ class KeyManagementServiceStub {
   CreateCryptoKeyVersion(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteCryptoKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCryptoKey(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteCryptoKeyVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCryptoKeyVersion(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
   ImportCryptoKeyVersion(
@@ -161,6 +196,10 @@ class KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::MacVerifyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::kms::v1::DecapsulateResponse> Decapsulate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::DecapsulateRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(
       grpc::ClientContext& context, Options const& options,
@@ -191,23 +230,35 @@ class KeyManagementServiceStub {
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultKeyManagementServiceStub : public KeyManagementServiceStub {
  public:
-  explicit DefaultKeyManagementServiceStub(
+  DefaultKeyManagementServiceStub(
       std::unique_ptr<
           google::cloud::kms::v1::KeyManagementService::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
-          locations_stub)
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
-        locations_stub_(std::move(locations_stub)) {}
+        locations_stub_(std::move(locations_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::kms::v1::ListKeyRingsResponse> ListKeyRings(
       grpc::ClientContext& context, Options const& options,
@@ -226,6 +277,12 @@ class DefaultKeyManagementServiceStub : public KeyManagementServiceStub {
   StatusOr<google::cloud::kms::v1::ListImportJobsResponse> ListImportJobs(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::ListImportJobsRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::ListRetiredResourcesResponse>
+  ListRetiredResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::ListRetiredResourcesRequest const& request)
+      override;
 
   StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
       grpc::ClientContext& context, Options const& options,
@@ -248,6 +305,11 @@ class DefaultKeyManagementServiceStub : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetImportJobRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::GetRetiredResourceRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateKeyRingRequest const& request) override;
@@ -259,6 +321,28 @@ class DefaultKeyManagementServiceStub : public KeyManagementServiceStub {
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCryptoKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKey(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCryptoKeyVersion(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteCryptoKeyVersion(
+      grpc::ClientContext& context, Options options,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
@@ -326,6 +410,10 @@ class DefaultKeyManagementServiceStub : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::MacVerifyRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::DecapsulateResponse> Decapsulate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::DecapsulateRequest const& request) override;
+
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(grpc::ClientContext& context, Options const& options,
                       google::cloud::kms::v1::GenerateRandomBytesRequest const&
@@ -355,19 +443,33 @@ class DefaultKeyManagementServiceStub : public KeyManagementServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::kms::v1::KeyManagementService::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_KEY_MANAGEMENT_STUB_H

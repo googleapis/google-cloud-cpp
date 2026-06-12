@@ -32,4 +32,8 @@ args+=("--test_env=TSAN_OPTIONS=suppressions=${PROJECT_ROOT}/ci/tsan_suppression
 io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
 mapfile -t integration_args < <(integration::bazel_args)
-integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
+if [[ "${INTEGRATION_LIBRARIES:-}" == "storage" ]]; then
+  integration::bazel_storage_with_emulators test "${args[@]}" "${integration_args[@]}"
+else
+  integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
+fi

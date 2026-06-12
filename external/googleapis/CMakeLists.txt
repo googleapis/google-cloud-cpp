@@ -333,7 +333,7 @@ external_googleapis_add_library("google/rpc/status.proto"
 
 external_googleapis_add_library(
     "google/longrunning/operations.proto" api_annotations_protos
-    api_client_protos rpc_status_protos)
+    api_client_protos rpc_status_protos api_field_behavior_protos)
 
 external_googleapis_add_library(
     "google/iam/v1/iam_policy.proto"
@@ -386,51 +386,6 @@ endforeach ()
 foreach (target ${external_googleapis_installed_libraries_list})
     external_googleapis_install_pc("${target}")
 endforeach ()
-
-# Create and install the googleapis pkg-config file for backwards compatibility.
-set(GOOGLE_CLOUD_CPP_PC_LIBS "")
-google_cloud_cpp_set_pkgconfig_paths()
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Google APIS C++ Proto Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to access Google Cloud Platforms.")
-# This list is for backwards compatibility purposes only. DO NOT add new
-# libraries to it.
-string(
-    JOIN
-    " "
-    GOOGLE_CLOUD_CPP_PC_REQUIRES
-    "google_cloud_cpp_bigtable_protos"
-    "google_cloud_cpp_cloud_bigquery_protos"
-    "google_cloud_cpp_iam_protos"
-    "google_cloud_cpp_pubsub_protos"
-    "google_cloud_cpp_storage_protos"
-    "google_cloud_cpp_logging_protos"
-    "google_cloud_cpp_iam_v1_iam_policy_protos"
-    "google_cloud_cpp_iam_v1_options_protos"
-    "google_cloud_cpp_iam_v1_policy_protos"
-    "google_cloud_cpp_longrunning_operations_protos"
-    "google_cloud_cpp_api_auth_protos"
-    "google_cloud_cpp_api_annotations_protos"
-    "google_cloud_cpp_api_client_protos"
-    "google_cloud_cpp_api_field_behavior_protos"
-    "google_cloud_cpp_api_http_protos"
-    "google_cloud_cpp_rpc_status_protos"
-    "google_cloud_cpp_rpc_error_details_protos"
-    "google_cloud_cpp_type_expr_protos"
-    "grpc++"
-    "grpc"
-    "openssl"
-    "protobuf"
-    "zlib"
-    "libcares")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "")
-google_cloud_cpp_set_pkgconfig_paths()
-configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-               "googleapis.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

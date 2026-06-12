@@ -41,7 +41,7 @@ Options VpnTunnelsDefaultOptions(Options options) {
   if (!options.has<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption>()) {
     options.set<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption>(
         compute_vpn_tunnels_v1::VpnTunnelsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_vpn_tunnels_v1::VpnTunnelsBackoffPolicyOption>()) {

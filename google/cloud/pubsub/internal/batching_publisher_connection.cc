@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {

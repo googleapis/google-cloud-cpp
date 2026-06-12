@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/service_endpoint.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/universe_domain_options.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/strip.h"
 
 namespace google {

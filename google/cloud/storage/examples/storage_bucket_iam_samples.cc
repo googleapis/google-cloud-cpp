@@ -328,8 +328,9 @@ void RunAll(std::vector<std::string> const& argv) {
       client, {bucket_name, "roles/storage.objectViewer", condition_title,
                condition_description, condition_expression});
 
-  std::cout << "\nRunning NativeSetBucketPublicIam() example" << std::endl;
-  NativeSetBucketPublicIam(client, {bucket_name});
+  // TODO(#15854): Enable this test when the issue is resolved.
+  // std::cout << "\nRunning NativeSetBucketPublicIam() example" << std::endl;
+  // NativeSetBucketPublicIam(client, {bucket_name});
 
   if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);

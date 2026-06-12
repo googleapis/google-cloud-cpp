@@ -13,13 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_google_credentials.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #ifndef _WIN32
 #include <openssl/err.h>
@@ -42,9 +44,9 @@ using ::google::cloud::UnifiedCredentialsOption;
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::TempFile;
 using ::google::cloud::testing_util::IsOk;
+using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
-using ::testing::StartsWith;
 
 // This is a properly formatted, but invalid, CA Certificate. We will use this
 // as the *only* root of trust and try to contact *.google.com. This will
@@ -86,6 +88,10 @@ KlXA1yQW/ClmnHVg57SN1g1rvOJCcnHBnSbT7kGFqUol
 
 constexpr int kCurleAbortedByCallback = 42;
 constexpr int kCurleOk = 0;
+
+MATCHER_P(HeaderStartsWith, prefix, "header start with") {
+  return absl::StartsWith(std::string{arg}, prefix);
+}
 
 class UnifiedCredentialsIntegrationTest
     : public ::google::cloud::storage::testing::StorageIntegrationTest {
@@ -371,15 +377,21 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessToken) {
   // application one would fetch access tokens from something more interesting,
   // like the IAM credentials service. This is just a reasonably easy way to get
   // a working access token for the test.
-  auto default_credentials = oauth2::GoogleDefaultCredentials();
-  ASSERT_THAT(default_credentials, IsOk());
+  auto default_credentials =
+      rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
-  auto header = default_credentials.value()->AuthorizationHeader();
-  ASSERT_THAT(header, IsOk());
+  auto headers = default_credentials->AuthenticationHeaders(
+      std::chrono::system_clock::now(), "");
+  ASSERT_THAT(headers, IsOk());
 
-  auto constexpr kPrefix = "Authorization: Bearer ";
-  ASSERT_THAT(*header, StartsWith(kPrefix));
-  auto token = header->substr(std::strlen(kPrefix));
+  auto constexpr kPrefix = "authorization: Bearer ";
+  ASSERT_THAT(*headers, Contains(HeaderStartsWith(kPrefix)));
+  std::string authorization;
+  for (auto const& h : *headers) {
+    authorization = std::string{h};
+    if (absl::StartsWith(authorization, kPrefix)) break;
+  }
+  auto token = authorization.substr(std::strlen(kPrefix));
 
   auto client = MakeTestClient(Options{}.set<UnifiedCredentialsOption>(
       MakeAccessTokenCredentials(token, expiration)));
@@ -396,15 +408,21 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
   // application one would fetch access tokens from something more interesting,
   // like the IAM credentials service. This is just a reasonably easy way to get
   // a working access token for the test.
-  auto default_credentials = oauth2::GoogleDefaultCredentials();
-  ASSERT_THAT(default_credentials, IsOk());
+  auto default_credentials =
+      rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
-  auto header = default_credentials.value()->AuthorizationHeader();
-  ASSERT_THAT(header, IsOk());
+  auto headers = default_credentials->AuthenticationHeaders(
+      std::chrono::system_clock::now(), "");
+  ASSERT_THAT(headers, IsOk());
 
-  auto constexpr kPrefix = "Authorization: Bearer ";
-  ASSERT_THAT(*header, StartsWith(kPrefix));
-  auto token = header->substr(std::strlen(kPrefix));
+  auto constexpr kPrefix = "authorization: Bearer ";
+  ASSERT_THAT(*headers, Contains(HeaderStartsWith(kPrefix)));
+  std::string authorization;
+  for (auto const& h : *headers) {
+    authorization = std::string{h};
+    if (absl::StartsWith(authorization, kPrefix)) break;
+  }
+  auto token = authorization.substr(std::strlen(kPrefix));
 
   testing_util::ScopedEnvironment grpc_roots_pem(
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH", absl::nullopt);
@@ -424,15 +442,21 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
   // application one would fetch access tokens from something more interesting,
   // like the IAM credentials service. This is just a reasonably easy way to get
   // a working access token for the test.
-  auto default_credentials = oauth2::GoogleDefaultCredentials();
-  ASSERT_THAT(default_credentials, IsOk());
+  auto default_credentials =
+      rest_internal::MapCredentials((*MakeGoogleDefaultCredentials()));
   auto expiration = std::chrono::system_clock::now() + std::chrono::hours(1);
-  auto header = default_credentials.value()->AuthorizationHeader();
-  ASSERT_THAT(header, IsOk());
+  auto headers = default_credentials->AuthenticationHeaders(
+      std::chrono::system_clock::now(), "");
+  ASSERT_THAT(headers, IsOk());
 
-  auto constexpr kPrefix = "Authorization: Bearer ";
-  ASSERT_THAT(*header, StartsWith(kPrefix));
-  auto token = header->substr(std::strlen(kPrefix));
+  auto constexpr kPrefix = "authorization: Bearer ";
+  ASSERT_THAT(*headers, Contains(HeaderStartsWith(kPrefix)));
+  std::string authorization;
+  for (auto const& h : *headers) {
+    authorization = std::string{h};
+    if (absl::StartsWith(authorization, kPrefix)) break;
+  }
+  auto token = authorization.substr(std::strlen(kPrefix));
 
   auto client = MakeTestClient(
       EmptyTrustStoreOptions()

@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "generator/integration_tests/golden/v1/internal/request_id_tracing_stub.h"
 #include "generator/integration_tests/golden/v1/internal/request_id_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/request_id_option_defaults.h"
@@ -39,27 +37,16 @@ namespace {
 using ::google::cloud::golden_v1_testing::MockRequestIdServiceStub;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
-using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::SpanHasAttributes;
-using ::google::cloud::testing_util::SpanHasInstrumentationScope;
-using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
-using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::google::cloud::testing_util::ValidatePropagator;
 using ::google::test::requestid::v1::CreateFooRequest;
 using ::google::test::requestid::v1::Foo;
-using ::google::test::requestid::v1::ListFoosRequest;
-using ::google::test::requestid::v1::ListFoosResponse;
 using ::google::test::requestid::v1::RenameFooRequest;
-using ::testing::_;
-using ::testing::ByMove;
 using ::testing::ElementsAre;
-using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::Not;
-using ::testing::ResultOf;
-using ::testing::Return;
 
 Status TransientError() {
   return Status(StatusCode::kUnavailable, "try-again");
@@ -214,5 +201,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -43,7 +43,7 @@ Options ResourcePoliciesDefaultOptions(Options options) {
     options.set<
         compute_resource_policies_v1::ResourcePoliciesRetryPolicyOption>(
         compute_resource_policies_v1::ResourcePoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_resource_policies_v1::

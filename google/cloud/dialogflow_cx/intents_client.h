@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -118,7 +118,7 @@ class IntentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L147}
-  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L288}
+  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L291}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
@@ -157,7 +157,7 @@ class IntentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L147}
-  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L288}
+  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L291}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
@@ -184,7 +184,7 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L335}
+  /// [google.cloud.dialogflow.cx.v3.GetIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L338}
   /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L147}
   ///
   // clang-format on
@@ -214,7 +214,7 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L335}
+  /// [google.cloud.dialogflow.cx.v3.GetIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L338}
   /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L147}
   ///
   // clang-format on
@@ -246,7 +246,7 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L361}
+  /// [google.cloud.dialogflow.cx.v3.CreateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L364}
   /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L147}
   ///
   // clang-format on
@@ -282,7 +282,7 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L361}
+  /// [google.cloud.dialogflow.cx.v3.CreateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L364}
   /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L147}
   ///
   // clang-format on
@@ -315,7 +315,7 @@ class IntentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L147}
-  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L388}
+  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L391}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
@@ -350,7 +350,7 @@ class IntentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Intent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L147}
-  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L388}
+  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L391}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
@@ -379,7 +379,7 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L410}
+  /// [google.cloud.dialogflow.cx.v3.DeleteIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L413}
   ///
   // clang-format on
   Status DeleteIntent(std::string const& name, Options opts = {});
@@ -409,7 +409,7 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L410}
+  /// [google.cloud.dialogflow.cx.v3.DeleteIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L413}
   ///
   // clang-format on
   Status DeleteIntent(
@@ -455,9 +455,9 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ImportIntentsMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L531}
-  /// [google.cloud.dialogflow.cx.v3.ImportIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L438}
-  /// [google.cloud.dialogflow.cx.v3.ImportIntentsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L503}
+  /// [google.cloud.dialogflow.cx.v3.ImportIntentsMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L534}
+  /// [google.cloud.dialogflow.cx.v3.ImportIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L441}
+  /// [google.cloud.dialogflow.cx.v3.ImportIntentsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L506}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
@@ -533,9 +533,9 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ExportIntentsMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L608}
-  /// [google.cloud.dialogflow.cx.v3.ExportIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L535}
-  /// [google.cloud.dialogflow.cx.v3.ExportIntentsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L590}
+  /// [google.cloud.dialogflow.cx.v3.ExportIntentsMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L611}
+  /// [google.cloud.dialogflow.cx.v3.ExportIntentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L538}
+  /// [google.cloud.dialogflow.cx.v3.ExportIntentsResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L593}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
@@ -804,10 +804,10 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -843,10 +843,10 @@ class IntentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

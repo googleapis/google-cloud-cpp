@@ -21,12 +21,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANT_SNAPSHOTS_V1_INTERNAL_REGION_INSTANT_SNAPSHOTS_REST_LOGGING_DECORATOR_H
 
 #include "google/cloud/compute/region_instant_snapshots/v1/internal/region_instant_snapshots_rest_stub.h"
+#include "google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.pb.h>
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
 #include <set>
 #include <string>

@@ -27,8 +27,6 @@ namespace cloud {
 namespace managedkafka_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ManagedKafkaTracingConnection::ManagedKafkaTracingConnection(
     std::shared_ptr<managedkafka_v1::ManagedKafkaConnection> child)
     : child_(std::move(child)) {}
@@ -343,16 +341,12 @@ Status ManagedKafkaTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<managedkafka_v1::ManagedKafkaConnection>
 MakeManagedKafkaTracingConnection(
     std::shared_ptr<managedkafka_v1::ManagedKafkaConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ManagedKafkaTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

@@ -17,7 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include <google/rpc/status.pb.h>
+#include "google/rpc/status.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <string>
 

@@ -37,32 +37,8 @@ google::cloud::storage::Client MakeGrpcClient(Options opts = {});
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 
-// TODO(#13857) - remove the backwards compatibility shims.
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/**
- * Configure the GCS+gRPC plugin.
- *
- * @deprecated use `google::cloud::storage::Client()` to create JSON-based
- *     clients and `google::cloud::storage::DefaultGrpcClient()` to create
- *     gRPC-based clients. If you need to pick one dynamically a simple
- *     `if()` statement or ternary expression can do the job.
- */
-struct [[deprecated(
-    "use storage::Client() or storage::MakeGrpcClient()")]] GrpcPluginOption {
-  using Type = std::string;
-};
-
-/**
- * Create a `google::cloud::storage::Client` object configured to use gRPC.
- *
- * @deprecated Please use `google::cloud::storage::MakeGrpcClient`.
- */
-[[deprecated(
-    "use ::google::cloud::storage::MakeGrpcClient() instead")]] google::cloud::
-    storage::Client
-    DefaultGrpcClient(Options opts = {});
 
 /**
  * Enable gRPC telemetry for GCS RPCs.
@@ -100,6 +76,56 @@ struct EnableGrpcMetricsOption {
  */
 struct GrpcMetricsPeriodOption {
   using Type = std::chrono::seconds;
+};
+
+/**
+ * gRPC telemetry export timeout.
+ *
+ * When `EnableGrpcMetrics` is enabled, this option controls the maximum time
+ * to wait for metrics to be exported to [Google Cloud Monitoring]. The default
+ * is 30 seconds.
+ *
+ * This timeout is particularly important for short-lived programs. Setting a
+ * lower timeout ensures metrics are flushed before the program exits. For
+ * long-running services, the default value is appropriate.
+ *
+ * @par Example: Configure for short-lived programs
+ * @code
+ * namespace gcs_ex = google::cloud::storage_experimental;
+ * auto client = google::cloud::storage::MakeGrpcClient(
+ *     google::cloud::Options{}
+ *         .set<gcs_ex::EnableGrpcMetricsOption>(true)
+ *         .set<gcs_ex::GrpcMetricsPeriodOption>(
+ *             std::chrono::seconds(5))
+ *         .set<gcs_ex::GrpcMetricsExportTimeoutOption>(
+ *             std::chrono::seconds(2)));
+ * @endcode
+ *
+ * [Google Cloud Monitoring]: https://cloud.google.com/monitoring/docs
+ */
+struct GrpcMetricsExportTimeoutOption {
+  using Type = std::chrono::seconds;
+};
+
+/**
+ * gRPC telemetry excluded labels.
+ *
+ * A set of OpenTelemetry resource attribute keys to exclude from metric labels
+ * when exporting gRPC telemetry. For example, to exclude the `service.name`
+ * label, configure the option with `{"service_name"}`.
+ *
+ * @par Example: Exclude specific labels from telemetry
+ * @code
+ * namespace gcs_ex = google::cloud::storage_experimental;
+ * auto client = google::cloud::storage::MakeGrpcClient(
+ *     google::cloud::Options{}
+ *         .set<gcs_ex::EnableGrpcMetricsOption>(true)
+ *         .set<gcs_ex::GrpcMetricsExcludedLabelsOption>(
+ *             std::set<std::string>{"service_name", "service_version"}));
+ * @endcode
+ */
+struct GrpcMetricsExcludedLabelsOption {
+  using Type = std::set<std::string>;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) try {
 
   // Interrogate credentials for universe_domain and add the value to returned
   // options.
-  auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{}, options);
+  auto ud_options = gc::AddUniverseDomainOption(options);
   if (!ud_options.ok()) throw std::move(ud_options).status();
 
   // Override retry policy to quickly exit if there's a failure.

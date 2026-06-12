@@ -154,6 +154,8 @@ TEST_F(BucketAclIntegrationTest, AclCRUD) {
 }
 
 TEST_F(BucketAclIntegrationTest, CreatePredefinedAcl) {
+  // TODO(#15854): Enable this test when the issue is resolved.
+  if (!UsingEmulator()) GTEST_SKIP();
   std::vector<PredefinedAcl> test_values{
       PredefinedAcl::AuthenticatedRead(), PredefinedAcl::Private(),
       PredefinedAcl::ProjectPrivate(),    PredefinedAcl::PublicRead(),

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/tracing_http_payload.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
@@ -20,7 +19,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+#include <opentelemetry/semconv/incubating/network_attributes.h>
 
 namespace google {
 namespace cloud {
@@ -66,7 +65,7 @@ auto MakeReadMatcher(std::int64_t buffer_size) {
 }
 
 TEST(TracingHttpPayload, Success) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   auto impl = MakeMockHttpPayloadSuccess(MockContents());
@@ -86,13 +85,13 @@ TEST(TracingHttpPayload, Success) {
           SpanKindIsClient(),
           SpanHasAttributes(OTelAttribute<std::string>(
               /*sc::kNetworkTransport=*/"network.transport",
-              sc::NetTransportValues::kIpTcp)),
+              sc::network::NetworkTransportValues::kTcp)),
           SpanHasEvents(MakeReadMatcher(16, 16), MakeReadMatcher(16, 16),
                         MakeReadMatcher(16, 11), MakeReadMatcher(16, 0)))));
 }
 
 TEST(TracingHttpPayload, Failure) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
   RestRequest request("https://example.com/ignored");
@@ -120,7 +119,7 @@ TEST(TracingHttpPayload, Failure) {
           SpanHasAttributes(
               OTelAttribute<std::string>(
                   /*sc::kNetworkTransport=*/"network.transport",
-                  sc::NetTransportValues::kIpTcp),
+                  sc::network::NetworkTransportValues::kTcp),
               OTelAttribute<std::string>("gl-cpp.status_code", "UNAVAILABLE")),
           SpanHasEvents(MakeReadMatcher(16, 16), MakeReadMatcher(16)))));
 }
@@ -130,5 +129,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

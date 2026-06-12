@@ -483,7 +483,7 @@ class future_shared_state final {  // NOLINT(readability-identifier-naming)
   std::unique_ptr<Continuation<T>> continuation_;
 
   // Allow users "cancel" the future with the given callback.
-  std::atomic<bool> cancelled_ = ATOMIC_VAR_INIT(false);
+  std::atomic<bool> cancelled_{false};
   std::function<void()> cancellation_callback_;
 };
 

@@ -419,6 +419,25 @@ StreamRange<google::cloud::backupdr::v1::Backup> BackupDRClient::ListBackups(
   return connection_->ListBackups(std::move(request));
 }
 
+StreamRange<google::cloud::backupdr::v1::Backup>
+BackupDRClient::FetchBackupsForResourceType(std::string const& parent,
+                                            std::string const& resource_type,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request;
+  request.set_parent(parent);
+  request.set_resource_type(resource_type);
+  return connection_->FetchBackupsForResourceType(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::Backup>
+BackupDRClient::FetchBackupsForResourceType(
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchBackupsForResourceType(std::move(request));
+}
+
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRClient::GetBackup(
     std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -1009,6 +1028,23 @@ BackupDRClient::GetDataSourceReference(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataSourceReference(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRClient::ListDataSourceReferences(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::ListDataSourceReferencesRequest request;
+  request.set_parent(parent);
+  return connection_->ListDataSourceReferences(request);
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRClient::ListDataSourceReferences(
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDataSourceReferences(std::move(request));
 }
 
 StreamRange<google::cloud::backupdr::v1::DataSourceReference>

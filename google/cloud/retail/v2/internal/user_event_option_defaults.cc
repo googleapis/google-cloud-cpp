@@ -41,7 +41,7 @@ Options UserEventServiceDefaultOptions(Options options) {
   if (!options.has<retail_v2::UserEventServiceRetryPolicyOption>()) {
     options.set<retail_v2::UserEventServiceRetryPolicyOption>(
         retail_v2::UserEventServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<retail_v2::UserEventServiceBackoffPolicyOption>()) {

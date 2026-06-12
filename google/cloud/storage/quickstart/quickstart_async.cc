@@ -24,15 +24,15 @@ int main(int argc, char* argv[]) {
   }
   std::string const bucket_name = argv[1];
 
-  namespace gcs_ex = ::google::cloud::storage_experimental;
+  namespace gcs = ::google::cloud::storage;
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  auto client = gcs_ex::AsyncClient();
+  auto client = gcs::AsyncClient();
 
   auto constexpr kObjectName = "quickstart-async.txt";
   auto done = client
-                  .InsertObject(gcs_ex::BucketName(bucket_name), kObjectName,
+                  .InsertObject(gcs::BucketName(bucket_name), kObjectName,
                                 "Hello World!")
                   .then([](auto f) {
                     auto metadata = f.get();
@@ -47,26 +47,24 @@ int main(int argc, char* argv[]) {
                   });
   done.get();
 
-  done = client
-             .ReadObjectRange(gcs_ex::BucketName(bucket_name), kObjectName, 0,
-                              1000)
-             .then([](auto f) {
-               auto payload = f.get();
-               if (!payload) {
-                 std::cerr << "Error reading object: " << payload.status()
-                           << "\n";
-                 std::exit(1);
-               }
-               if (payload->metadata()) {
-                 std::cout << "The object metadata is "
-                           << payload->metadata()->DebugString() << "\n";
-               }
-               std::cout << "Object contents:\n";
-               for (auto const& s : payload->contents()) {
-                 std::cout << s;
-               }
-               std::cout << "\n";
-             });
+  done =
+      client.ReadObjectRange(gcs::BucketName(bucket_name), kObjectName, 0, 1000)
+          .then([](auto f) {
+            auto payload = f.get();
+            if (!payload) {
+              std::cerr << "Error reading object: " << payload.status() << "\n";
+              std::exit(1);
+            }
+            if (payload->metadata()) {
+              std::cout << "The object metadata is "
+                        << payload->metadata()->DebugString() << "\n";
+            }
+            std::cout << "Object contents:\n";
+            for (auto const& s : payload->contents()) {
+              std::cout << s;
+            }
+            std::cout << "\n";
+          });
   done.get();
 
   return 0;

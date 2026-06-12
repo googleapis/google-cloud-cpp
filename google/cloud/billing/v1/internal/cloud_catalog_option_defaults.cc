@@ -41,7 +41,7 @@ Options CloudCatalogDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<billing_v1::CloudCatalogRetryPolicyOption>()) {
     options.set<billing_v1::CloudCatalogRetryPolicyOption>(
-        billing_v1::CloudCatalogLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        billing_v1::CloudCatalogLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<billing_v1::CloudCatalogBackoffPolicyOption>()) {

@@ -42,7 +42,7 @@ Options OracleDatabaseDefaultOptions(Options options) {
   if (!options.has<oracledatabase_v1::OracleDatabaseRetryPolicyOption>()) {
     options.set<oracledatabase_v1::OracleDatabaseRetryPolicyOption>(
         oracledatabase_v1::OracleDatabaseLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<oracledatabase_v1::OracleDatabaseBackoffPolicyOption>()) {

@@ -19,16 +19,15 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "appconnections/v1/",
     "appconnectors/v1/",
     "appgateways/v1/",
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/beyondcorp/appconnections/v1:appconnections_cc_grpc",
-    "@com_google_googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc",
-    "@com_google_googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc",
+    "@googleapis//google/cloud/beyondcorp/appconnections/v1:appconnections_cc_grpc",
+    "@googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc",
+    "@googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc",
 ]
 
 cc_gapic_library(

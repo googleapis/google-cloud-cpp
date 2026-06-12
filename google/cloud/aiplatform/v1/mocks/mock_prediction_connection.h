@@ -117,6 +117,12 @@ class MockPredictionServiceConnection
       (google::cloud::aiplatform::v1::GenerateContentRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>,
+      EmbedContent,
+      (google::cloud::aiplatform::v1::EmbedContentRequest const& request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

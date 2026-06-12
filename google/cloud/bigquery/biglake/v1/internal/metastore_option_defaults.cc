@@ -41,7 +41,7 @@ Options MetastoreServiceDefaultOptions(Options options) {
   if (!options.has<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()) {
     options.set<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>(
         bigquery_biglake_v1::MetastoreServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

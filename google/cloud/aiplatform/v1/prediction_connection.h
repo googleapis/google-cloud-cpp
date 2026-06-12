@@ -21,6 +21,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/prediction_retry_traits.h"
 #include "google/cloud/aiplatform/v1/prediction_connection_idempotency_policy.h"
+#include "google/cloud/aiplatform/v1/prediction_service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/aiplatform/v1/prediction_service.pb.h>
 #include <memory>
 #include <string>
 
@@ -236,6 +236,10 @@ class PredictionServiceConnection {
   virtual StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
   StreamGenerateContent(
       google::cloud::aiplatform::v1::GenerateContentRequest const& request);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+  EmbedContent(
+      google::cloud::aiplatform::v1::EmbedContentRequest const& request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

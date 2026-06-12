@@ -42,7 +42,7 @@ Options UserEventServiceDefaultOptions(Options options) {
   if (!options.has<discoveryengine_v1::UserEventServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::UserEventServiceRetryPolicyOption>(
         discoveryengine_v1::UserEventServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<discoveryengine_v1::UserEventServiceBackoffPolicyOption>()) {

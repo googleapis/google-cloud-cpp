@@ -40,7 +40,7 @@ Options AppHubDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<apphub_v1::AppHubRetryPolicyOption>()) {
     options.set<apphub_v1::AppHubRetryPolicyOption>(
-        apphub_v1::AppHubLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        apphub_v1::AppHubLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<apphub_v1::AppHubBackoffPolicyOption>()) {

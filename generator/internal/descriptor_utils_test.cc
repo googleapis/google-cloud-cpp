@@ -17,11 +17,11 @@
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
 #include "generator/testing/printer_mocks.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
+#include "google/protobuf/descriptor.pb.h"
 #include <google/protobuf/compiler/importer.h>
-#include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/descriptor_database.h>
 #include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 #include <google/protobuf/text_format.h>
@@ -219,43 +219,6 @@ TEST_F(CreateServiceVarsTest, AdditionalGrpcHeaderPathsEmpty) {
   auto iter = service_vars_.find("additional_pb_header_paths");
   EXPECT_TRUE(iter != service_vars_.end());
   EXPECT_THAT(iter->second, Eq(""));
-}
-
-TEST_F(CreateServiceVarsTest, ForwardingHeaderPaths) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
-  service_vars_ = CreateServiceVars(
-      *service_file_descriptor->service(0),
-      {std::make_pair("product_path", "google/cloud/frobber/v1/"),
-       std::make_pair("forwarding_product_path", "google/cloud/frobber/")});
-  EXPECT_THAT(
-      service_vars_,
-      AllOf(Contains(Pair("forwarding_client_header_path",
-                          "google/cloud/frobber/frobber_client.h")),
-            Contains(Pair("forwarding_connection_header_path",
-                          "google/cloud/frobber/frobber_connection.h")),
-            Contains(Pair("forwarding_idempotency_policy_header_path",
-                          "google/cloud/frobber/"
-                          "frobber_connection_idempotency_policy.h")),
-            Contains(
-                Pair("forwarding_mock_connection_header_path",
-                     "google/cloud/frobber/mocks/mock_frobber_connection.h")),
-            Contains(Pair("forwarding_options_header_path",
-                          "google/cloud/frobber/frobber_options.h"))));
-  EXPECT_THAT(
-      service_vars_,
-      AllOf(Contains(Pair("client_header_path",
-                          "google/cloud/frobber/v1/frobber_client.h")),
-            Contains(Pair("connection_header_path",
-                          "google/cloud/frobber/v1/frobber_connection.h")),
-            Contains(Pair("idempotency_policy_header_path",
-                          "google/cloud/frobber/v1/"
-                          "frobber_connection_idempotency_policy.h")),
-            Contains(Pair(
-                "mock_connection_header_path",
-                "google/cloud/frobber/v1/mocks/mock_frobber_connection.h")),
-            Contains(Pair("options_header_path",
-                          "google/cloud/frobber/v1/frobber_options.h"))));
 }
 
 TEST_F(CreateServiceVarsTest, MixinProtoHeaderPaths) {

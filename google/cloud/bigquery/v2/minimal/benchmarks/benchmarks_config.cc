@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmarks_config.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <chrono>
 #include <functional>
 #include <sstream>
@@ -359,6 +359,9 @@ google::cloud::StatusOr<JobConfig> JobConfig::ParseArgs(
   flags_.push_back(
       {"--use-int64-timestamp=", "outputs timestamp as usec int64",
        [this](std::string const& v) { use_int64_timestamp = (v == "true"); }});
+  flags_.push_back(
+      {"--timestamp-output-format=", "sets timestamp output format",
+       [this](std::string const& v) { timestamp_output_format = v; }});
   flags_.push_back(
       {"--min-creation-time=",
        "min job creation time. If set, only jobs created after or at this "

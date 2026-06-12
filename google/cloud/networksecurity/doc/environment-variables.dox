@@ -1,5 +1,4 @@
 /*!
-
 @page networksecurity-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
@@ -10,9 +9,45 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-start -->
 
+- `GOOGLE_CLOUD_CPP_ADDRESS_GROUP_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeAddressGroupServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DNS_THREAT_DETECTOR_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeDnsThreatDetectorServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_FIREWALL_ACTIVATION_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeFirewallActivationConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INTERCEPT_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeInterceptConnection()`.
+
+- `GOOGLE_CLOUD_CPP_MIRRORING_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeMirroringConnection()`.
+
 - `GOOGLE_CLOUD_CPP_NETWORK_SECURITY_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "networksecurity.googleapis.com")
   used by `MakeNetworkSecurityConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ORGANIZATION_ADDRESS_GROUP_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeOrganizationAddressGroupServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ORGANIZATION_SECURITY_PROFILE_GROUP_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeOrganizationSecurityProfileGroupServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SECURITY_PROFILE_GROUP_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeSecurityProfileGroupServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SSE_REALM_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "networksecurity.googleapis.com")
+  used by `MakeSSERealmServiceConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 

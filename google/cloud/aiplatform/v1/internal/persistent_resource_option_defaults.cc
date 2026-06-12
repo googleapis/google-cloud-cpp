@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/persistent_resource_option_defaults.h"
 #include "google/cloud/aiplatform/v1/persistent_resource_connection.h"
 #include "google/cloud/aiplatform/v1/persistent_resource_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -46,7 +46,7 @@ Options PersistentResourceServiceDefaultOptions(std::string const& location,
            .has<aiplatform_v1::PersistentResourceServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::PersistentResourceServiceRetryPolicyOption>(
         aiplatform_v1::PersistentResourceServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

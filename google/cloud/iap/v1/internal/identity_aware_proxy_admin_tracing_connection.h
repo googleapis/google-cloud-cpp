@@ -28,8 +28,6 @@ namespace cloud {
 namespace iap_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class IdentityAwareProxyAdminServiceTracingConnection
     : public iap_v1::IdentityAwareProxyAdminServiceConnection {
  public:
@@ -82,8 +80,6 @@ class IdentityAwareProxyAdminServiceTracingConnection
  private:
   std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

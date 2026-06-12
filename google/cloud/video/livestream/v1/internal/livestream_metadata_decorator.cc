@@ -17,16 +17,20 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream/v1/internal/livestream_metadata_decorator.h"
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -169,6 +173,52 @@ StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::StopChannel(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncStartDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStartDistribution(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::StartDistribution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StartDistributionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartDistribution(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncStopDistribution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStopDistribution(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::StopDistribution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StopDistributionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StopDistribution(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -246,6 +296,15 @@ StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::UpdateInput(
       context, options,
       absl::StrCat("input.name=", internal::UrlEncode(request.input().name())));
   return child_->UpdateInput(context, options, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+LivestreamServiceMetadata::PreviewInput(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::PreviewInputRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->PreviewInput(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
@@ -612,3 +671,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -15,6 +15,8 @@
 #include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
+#include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
@@ -35,9 +37,9 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::ReadPayload;
 using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -189,6 +191,170 @@ TEST(ReadRange, HashFunctionCalled) {
 
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
   actual.OnRead(std::move(data));
+}
+
+TEST(ReadRange, FullObjectChecksumValidationMismatch) {
+  auto hash_function =
+      std::make_shared<storage::internal::Crc32cHashFunction>();
+  auto hash_validator =
+      std::make_unique<storage::internal::Crc32cHashValidator>();
+
+  storage::internal::HashValues expected_hashes;
+  expected_hashes.crc32c = "n3tPLw==";  // Some expected hash
+  hash_validator->ProcessHashValues(expected_hashes);
+
+  ReadRange actual(0, 10, hash_function, std::move(hash_validator));
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "1234567890" }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
+    range_end: true
+  )pb";
+
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  EXPECT_TRUE(actual.IsDone());
+
+  // First read gets the data
+  EXPECT_TRUE(pending.is_ready());
+  EXPECT_THAT(pending.get(), VariantWith<ReadPayload>(_));
+
+  // Second read gets the error
+  auto next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(),
+              VariantWith<Status>(StatusIs(StatusCode::kDataLoss)));
+}
+
+TEST(ReadRange, FullObjectChecksumValidationMismatchMD5) {
+  auto hash_function = std::shared_ptr<storage::internal::HashFunction>(
+      storage::internal::MD5HashFunction::Create());
+  auto hash_validator = std::make_unique<storage::internal::MD5HashValidator>();
+
+  storage::internal::HashValues expected_hashes;
+  expected_hashes.md5 = "wrong-md5-hash";
+  hash_validator->ProcessHashValues(expected_hashes);
+
+  ReadRange actual(0, 43, std::move(hash_function), std::move(hash_validator));
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data {
+      content: "The quick brown fox jumps over the lazy dog"
+      crc32c: 576848900
+    }
+    read_range { read_offset: 0 read_length: 43 read_id: 7 }
+    range_end: true
+  )pb";
+
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  EXPECT_TRUE(actual.IsDone());
+
+  // First read gets the data
+  EXPECT_TRUE(pending.is_ready());
+  EXPECT_THAT(pending.get(), VariantWith<ReadPayload>(_));
+
+  // Second read gets the error
+  auto next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(),
+              VariantWith<Status>(StatusIs(StatusCode::kDataLoss)));
+}
+
+TEST(ReadRange, FullObjectChecksumValidationMismatchComposite) {
+  auto hash_function = std::make_shared<storage::internal::CompositeFunction>(
+      std::make_unique<storage::internal::Crc32cHashFunction>(),
+      storage::internal::MD5HashFunction::Create());
+  auto hash_validator = std::make_unique<storage::internal::CompositeValidator>(
+      std::make_unique<storage::internal::Crc32cHashValidator>(),
+      std::make_unique<storage::internal::MD5HashValidator>());
+
+  storage::internal::HashValues expected_hashes;
+  expected_hashes.crc32c = "wrong-crc32c";
+  expected_hashes.md5 = "wrong-md5";
+  hash_validator->ProcessHashValues(expected_hashes);
+
+  ReadRange actual(0, 43, hash_function, std::move(hash_validator));
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data {
+      content: "The quick brown fox jumps over the lazy dog"
+      crc32c: 576848900
+    }
+    read_range { read_offset: 0 read_length: 43 read_id: 7 }
+    range_end: true
+  )pb";
+
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  EXPECT_TRUE(actual.IsDone());
+
+  // First read gets the data
+  EXPECT_TRUE(pending.is_ready());
+  EXPECT_THAT(pending.get(), VariantWith<ReadPayload>(_));
+
+  // Second read gets the error
+  auto next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(),
+              VariantWith<Status>(StatusIs(StatusCode::kDataLoss)));
+}
+
+TEST(ReadRange, FullObjectChecksumValidationSuccessComposite) {
+  auto hash_function = std::make_shared<storage::internal::CompositeFunction>(
+      std::make_unique<storage::internal::Crc32cHashFunction>(),
+      storage::internal::MD5HashFunction::Create());
+  auto hash_validator = std::make_unique<storage::internal::CompositeValidator>(
+      std::make_unique<storage::internal::Crc32cHashValidator>(),
+      std::make_unique<storage::internal::MD5HashValidator>());
+
+  storage::internal::HashValues expected_hashes;
+  // CRC32C of "The quick brown fox jumps over the lazy dog" is "ImIEBA=="
+  // MD5 of "The quick brown fox jumps over the lazy dog" is
+  // "nhB9nTcrtoJr2B01QqQZ1g=="
+  expected_hashes.crc32c = "ImIEBA==";
+  expected_hashes.md5 = "nhB9nTcrtoJr2B01QqQZ1g==";
+  hash_validator->ProcessHashValues(expected_hashes);
+
+  ReadRange actual(0, 43, hash_function, std::move(hash_validator));
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data {
+      content: "The quick brown fox jumps over the lazy dog"
+      crc32c: 576848900
+    }
+    read_range { read_offset: 0 read_length: 43 read_id: 7 }
+    range_end: true
+  )pb";
+
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+
+  auto pending = actual.Read();
+  actual.OnRead(std::move(data));
+
+  EXPECT_TRUE(actual.IsDone());
+
+  // First read gets the data
+  EXPECT_TRUE(pending.is_ready());
+  EXPECT_THAT(pending.get(), VariantWith<ReadPayload>(_));
+
+  // Second read gets OK status instead of DataLoss
+  auto next_read = actual.Read();
+  EXPECT_TRUE(next_read.is_ready());
+  EXPECT_THAT(next_read.get(), VariantWith<Status>(IsOk()));
 }
 
 }  // namespace

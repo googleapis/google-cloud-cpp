@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
+#include "google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h"
 #include <memory>
 
 namespace google {

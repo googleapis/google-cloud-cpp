@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ArtifactRegistryTracingStub::ArtifactRegistryTracingStub(
     std::shared_ptr<ArtifactRegistryStub> child)
@@ -829,6 +830,35 @@ ArtifactRegistryTracingStub::DeleteAttachment(
                            child_->DeleteAttachment(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryTracingStub::AsyncExportArtifact(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ExportArtifact");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncExportArtifact(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::ExportArtifact(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ExportArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ExportArtifact");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportArtifact(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 ArtifactRegistryTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -893,18 +923,14 @@ future<Status> ArtifactRegistryTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<ArtifactRegistryStub> MakeArtifactRegistryTracingStub(
     std::shared_ptr<ArtifactRegistryStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ArtifactRegistryTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -27,8 +27,6 @@ namespace cloud {
 namespace cloudbuild_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 RepositoryManagerTracingConnection::RepositoryManagerTracingConnection(
     std::shared_ptr<cloudbuild_v2::RepositoryManagerConnection> child)
     : child_(std::move(child)) {}
@@ -345,17 +343,13 @@ Status RepositoryManagerTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<cloudbuild_v2::RepositoryManagerConnection>
 MakeRepositoryManagerTracingConnection(
     std::shared_ptr<cloudbuild_v2::RepositoryManagerConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<RepositoryManagerTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

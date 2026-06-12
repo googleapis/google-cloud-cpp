@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/resolve_comment_references.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
 #include "absl/types/optional.h"
 #include <regex>

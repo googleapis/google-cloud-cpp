@@ -14,8 +14,8 @@
 
 #include "generator/internal/discovery_proto_export_file.h"
 #include "generator/internal/codegen_utils.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_replace.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -55,8 +55,8 @@ TEST(DiscoveryProtoExportFileTest, FormatFile) {
 #define GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_001.pb.h>
-#include <google/cloud/compute/v1/internal/common_002.pb.h>
+#include "google/cloud/compute/v1/internal/common_001.pb.h"
+#include "google/cloud/compute/v1/internal/common_002.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH_H

@@ -18,9 +18,14 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/features.sh
 source module ci/cloudbuild/builds/lib/git.sh
+source module ci/lib/io.sh
 
 bazel_output_base="$(bazel info output_base)"
+
+protobuf_proto_path="${bazel_output_base}/external/protobuf+/src"
+googleapis_proto_path="${bazel_output_base}/external/googleapis+"
 
 if [ -z "${UPDATED_DISCOVERY_DOCUMENT}" ]; then
   io::log_h2 "Removing previously generated golden files"
@@ -34,8 +39,8 @@ fi
 io::log_h2 "Running the generator to update the golden files"
 bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
   //generator:google-cloud-cpp-codegen -- \
-  --protobuf_proto_path="${bazel_output_base}/external/protobuf~/src" \
-  --googleapis_proto_path="${bazel_output_base}/external/googleapis~" \
+  --protobuf_proto_path="${protobuf_proto_path}" \
+  --googleapis_proto_path="${googleapis_proto_path}" \
   --golden_proto_path="${PWD}" \
   --output_path="${PWD}" \
   --update_ci=false \
@@ -47,8 +52,8 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Running the generator to emit protos from discovery docs"
   bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
     //generator:google-cloud-cpp-codegen -- \
-    --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
-    --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
+    --protobuf_proto_path="${protobuf_proto_path}" \
+    --googleapis_proto_path="${googleapis_proto_path}" \
     --discovery_proto_path="${PWD}/protos" \
     --output_path="${PROJECT_ROOT}/protos" \
     --export_output_path="${PROJECT_ROOT}" \
@@ -79,8 +84,8 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Running the generator to update the generated libraries"
   bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
     //generator:google-cloud-cpp-codegen -- \
-    --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
-    --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
+    --protobuf_proto_path="${protobuf_proto_path}" \
+    --googleapis_proto_path="${googleapis_proto_path}" \
     --discovery_proto_path="${PWD}/protos" \
     --output_path="${PROJECT_ROOT}" \
     --check_comment_substitutions=true \
@@ -114,6 +119,11 @@ if [[ "${TRIGGER_TYPE:-}" != "manual" ]]; then
 else
   io::log_yellow "Skipping update of protobuf lists/deps."
 fi
+
+io::log_h2 "Running doxygen landing-page updates:"
+time {
+  features::libraries | xargs -P "$(nproc)" -n 1 ci/generate-markdown/update-library-landing-dox.sh
+}
 
 io::log_h2 "Highlight generated code differences"
 # We use `--compact-summary` because in almost all cases the delta is at

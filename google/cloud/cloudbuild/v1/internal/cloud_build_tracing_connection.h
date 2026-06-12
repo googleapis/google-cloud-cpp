@@ -28,8 +28,6 @@ namespace cloud {
 namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CloudBuildTracingConnection : public cloudbuild_v1::CloudBuildConnection {
  public:
   ~CloudBuildTracingConnection() override = default;
@@ -172,11 +170,14 @@ class CloudBuildTracingConnection : public cloudbuild_v1::CloudBuildConnection {
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request)
       override;
 
+  StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+  GetDefaultServiceAccount(
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+          request) override;
+
  private:
   std::shared_ptr<cloudbuild_v1::CloudBuildConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

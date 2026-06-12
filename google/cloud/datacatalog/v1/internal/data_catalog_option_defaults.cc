@@ -41,7 +41,7 @@ Options DataCatalogDefaultOptions(Options options) {
   if (!options.has<datacatalog_v1::DataCatalogRetryPolicyOption>()) {
     options.set<datacatalog_v1::DataCatalogRetryPolicyOption>(
         datacatalog_v1::DataCatalogLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<datacatalog_v1::DataCatalogBackoffPolicyOption>()) {

@@ -273,8 +273,6 @@ TEST(StreamRange, ReaderDestructorOptionsSpan) {
   // happen with `CurrentOptions()` matching those at `StreamRange` ctor time.
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 using ::google::cloud::testing_util::IsActive;
 
 class FakeReader {
@@ -317,8 +315,6 @@ TEST(StreamRange, CallSpanActiveThroughout) {
   // `~StreamRange()` will now delete the reader, which should happen with
   // the active span matching that at `StreamRange` ctor time.
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

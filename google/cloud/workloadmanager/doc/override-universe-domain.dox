@@ -1,0 +1,24 @@
+/*!
+@page workloadmanager-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `workloadmanager_v1::WorkloadManagerClient`:
+
+@snippet workload_manager_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page workloadmanager_v1::WorkloadManagerClient-universe-domain-snippet Override workloadmanager_v1::WorkloadManagerClient Universe Domain
+
+@snippet google/cloud/workloadmanager/v1/samples/workload_manager_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

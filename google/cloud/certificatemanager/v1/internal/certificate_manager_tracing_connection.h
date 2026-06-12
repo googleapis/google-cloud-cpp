@@ -28,8 +28,6 @@ namespace cloud {
 namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CertificateManagerTracingConnection
     : public certificatemanager_v1::CertificateManagerConnection {
  public:
@@ -348,8 +346,6 @@ class CertificateManagerTracingConnection
  private:
   std::shared_ptr<certificatemanager_v1::CertificateManagerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_INTERNAL_SNAPSHOT_SETTINGS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_INTERNAL_SNAPSHOT_SETTINGS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_rest_stub.h"
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_retry_traits.h"
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_connection.h"
@@ -29,7 +30,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
 #include <memory>
 
 namespace google {

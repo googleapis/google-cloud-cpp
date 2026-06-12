@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -123,6 +123,31 @@ class ReservationServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateBiReservation(
       google::cloud::bigquery::reservation::v1::
           UpdateBiReservationRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency CreateReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          CreateReservationGroupRequest const& request);
+
+  virtual google::cloud::Idempotency GetReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          GetReservationGroupRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteReservationGroup(
+      google::cloud::bigquery::reservation::v1::
+          DeleteReservationGroupRequest const& request);
+
+  virtual google::cloud::Idempotency ListReservationGroups(
+      google::cloud::bigquery::reservation::v1::ListReservationGroupsRequest
+          request);
 };
 
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>

@@ -45,7 +45,7 @@ Options ConversationalSearchServiceDefaultOptions(Options options) {
     options.set<
         discoveryengine_v1::ConversationalSearchServiceRetryPolicyOption>(
         discoveryengine_v1::ConversationalSearchServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<discoveryengine_v1::

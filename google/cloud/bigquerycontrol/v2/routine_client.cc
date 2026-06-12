@@ -55,14 +55,6 @@ RoutineServiceClient::UpdateRoutine(
   return connection_->UpdateRoutine(request);
 }
 
-StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceClient::PatchRoutine(
-    google::cloud::bigquery::v2::PatchRoutineRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchRoutine(request);
-}
-
 Status RoutineServiceClient::DeleteRoutine(
     google::cloud::bigquery::v2::DeleteRoutineRequest const& request,
     Options opts) {

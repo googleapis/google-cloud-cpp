@@ -1,5 +1,5 @@
-@com_google_googleapis//google/cloud/servicedirectory/v1:endpoint.proto
-@com_google_googleapis//google/cloud/servicedirectory/v1:lookup_service.proto
-@com_google_googleapis//google/cloud/servicedirectory/v1:namespace.proto
-@com_google_googleapis//google/cloud/servicedirectory/v1:registration_service.proto
-@com_google_googleapis//google/cloud/servicedirectory/v1:service.proto
+@googleapis//google/cloud/servicedirectory/v1:endpoint.proto
+@googleapis//google/cloud/servicedirectory/v1:lookup_service.proto
+@googleapis//google/cloud/servicedirectory/v1:namespace.proto
+@googleapis//google/cloud/servicedirectory/v1:registration_service.proto
+@googleapis//google/cloud/servicedirectory/v1:service.proto

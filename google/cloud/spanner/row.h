@@ -201,41 +201,6 @@ class Row {
 };
 
 /**
- * Creates a `Row` with the specified column names and values.
- *
- * This overload accepts a vector of pairs, allowing the caller to specify both
- * the column names and the `Value` that goes in each column.
- *
- * This function is intended for application developers who are mocking the
- * results of a `Client::ExecuteQuery` call.
- */
-GOOGLE_CLOUD_CPP_SPANNER_MAKE_TEST_ROW_DEPRECATED()
-Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs);
-
-/**
- * Creates a `Row` with `Value`s created from the given arguments and with
- * auto-generated column names.
- *
- * This overload accepts a variadic list of arguments that will be used to
- * create the `Value`s in the row. The column names will be implicitly
- * generated, the first column being "0", the second "1", and so on,
- * corresponding to the argument's position.
- *
- * This function is intended for application developers who are mocking the
- * results of a `Client::ExecuteQuery` call.
- */
-template <typename... Ts>
-GOOGLE_CLOUD_CPP_SPANNER_MAKE_TEST_ROW_DEPRECATED()
-Row MakeTestRow(Ts&&... ts) {
-  auto columns = std::make_shared<std::vector<std::string>>();
-  for (std::size_t i = 0; i < sizeof...(ts); ++i) {
-    columns->emplace_back(std::to_string(i));
-  }
-  std::vector<Value> v{Value(std::forward<Ts>(ts))...};
-  return spanner_internal::RowFriend::MakeRow(std::move(v), std::move(columns));
-}
-
-/**
  * A `RowStreamIterator` is an _Input Iterator_ (see below) that returns a
  * sequence of `StatusOr<Row>` objects.
  *

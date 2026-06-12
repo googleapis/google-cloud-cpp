@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_instance_groups_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 InstanceGroupsTracingConnection::InstanceGroupsTracingConnection(
     std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection> child)
     : child_(std::move(child)) {}
@@ -244,17 +242,13 @@ InstanceGroupsTracingConnection::SetNamedPorts(
   return internal::EndSpan(std::move(span), child_->SetNamedPorts(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
 MakeInstanceGroupsTracingConnection(
     std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<InstanceGroupsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

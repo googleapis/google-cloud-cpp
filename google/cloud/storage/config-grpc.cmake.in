@@ -18,6 +18,5 @@ find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(google_cloud_cpp_opentelemetry)
 find_dependency(absl)
-find_dependency(Crc32c)
 
 include("${CMAKE_CURRENT_LIST_DIR}/storage_grpc-targets.cmake")

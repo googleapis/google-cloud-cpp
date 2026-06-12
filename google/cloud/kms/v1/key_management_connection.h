@@ -21,13 +21,17 @@
 
 #include "google/cloud/kms/v1/internal/key_management_retry_traits.h"
 #include "google/cloud/kms/v1/key_management_connection_idempotency_policy.h"
+#include "google/cloud/kms/v1/service.pb.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/kms/v1/service.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -199,6 +203,10 @@ class KeyManagementServiceConnection {
   virtual StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
       google::cloud::kms::v1::ListImportJobsRequest request);
 
+  virtual StreamRange<google::cloud::kms::v1::RetiredResource>
+  ListRetiredResources(
+      google::cloud::kms::v1::ListRetiredResourcesRequest request);
+
   virtual StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
       google::cloud::kms::v1::GetKeyRingRequest const& request);
 
@@ -215,6 +223,9 @@ class KeyManagementServiceConnection {
   virtual StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
       google::cloud::kms::v1::GetImportJobRequest const& request);
 
+  virtual StatusOr<google::cloud::kms::v1::RetiredResource> GetRetiredResource(
+      google::cloud::kms::v1::GetRetiredResourceRequest const& request);
+
   virtual StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
       google::cloud::kms::v1::CreateKeyRingRequest const& request);
 
@@ -224,6 +235,30 @@ class KeyManagementServiceConnection {
   virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
   CreateCryptoKeyVersion(
       google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+  DeleteCryptoKey(
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCryptoKey(
+      NoAwaitTag,
+      google::cloud::kms::v1::DeleteCryptoKeyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+  DeleteCryptoKey(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+  DeleteCryptoKeyVersion(
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCryptoKeyVersion(
+      NoAwaitTag,
+      google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+  DeleteCryptoKeyVersion(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
   ImportCryptoKeyVersion(
@@ -276,6 +311,9 @@ class KeyManagementServiceConnection {
 
   virtual StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
       google::cloud::kms::v1::MacVerifyRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::DecapsulateResponse> Decapsulate(
+      google::cloud::kms::v1::DecapsulateRequest const& request);
 
   virtual StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
   GenerateRandomBytes(

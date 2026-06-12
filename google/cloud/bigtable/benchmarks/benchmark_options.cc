@@ -15,12 +15,12 @@
 #include "google/cloud/bigtable/benchmarks/benchmark_options.h"
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
+#include "absl/strings/str_join.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <sstream>
@@ -95,7 +95,11 @@ google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(
        [&options](std::string const& val) {
          options.include_read_rows = ParseBoolean(val).value_or(true);
        }},
-
+      {"--enable-metrics",
+       "whether to enable Client Side Metrics for benchmarking",
+       [&options](std::string const& val) {
+         options.enable_metrics = ParseBoolean(val).value_or(true);
+       }},
   };
 
   auto usage = BuildUsage(desc, argv[0]);

@@ -42,7 +42,7 @@ Options TopicStatsServiceDefaultOptions(Options options) {
   if (!options.has<pubsublite::TopicStatsServiceRetryPolicyOption>()) {
     options.set<pubsublite::TopicStatsServiceRetryPolicyOption>(
         pubsublite::TopicStatsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<pubsublite::TopicStatsServiceBackoffPolicyOption>()) {

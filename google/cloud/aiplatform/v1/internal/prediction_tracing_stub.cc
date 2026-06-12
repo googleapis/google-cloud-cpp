@@ -23,12 +23,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PredictionServiceTracingStub::PredictionServiceTracingStub(
     std::shared_ptr<PredictionServiceStub> child)
@@ -221,6 +222,18 @@ PredictionServiceTracingStub::StreamGenerateContent(
       std::move(context), std::move(stream), std::move(span));
 }
 
+StatusOr<google::cloud::aiplatform::v1::EmbedContentResponse>
+PredictionServiceTracingStub::EmbedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::EmbedContentRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PredictionService", "EmbedContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->EmbedContent(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 PredictionServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -337,18 +350,14 @@ PredictionServiceTracingStub::WaitOperation(
                            child_->WaitOperation(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<PredictionServiceStub> MakePredictionServiceTracingStub(
     std::shared_ptr<PredictionServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<PredictionServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

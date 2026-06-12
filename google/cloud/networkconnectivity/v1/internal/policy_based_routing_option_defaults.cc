@@ -45,7 +45,7 @@ Options PolicyBasedRoutingServiceDefaultOptions(Options options) {
     options.set<
         networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption>(
         networkconnectivity_v1::PolicyBasedRoutingServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<networkconnectivity_v1::

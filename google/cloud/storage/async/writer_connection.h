@@ -23,13 +23,13 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/variant.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -116,11 +116,27 @@ class AsyncWriterConnection {
   /// Uploads some data to the service and flushes the value.
   virtual future<Status> Flush(WritePayload payload) = 0;
 
+  /// Cleanly flushes pending data and piggybacks a stream half-close
+  /// (WritesDone).
+  virtual future<Status> Close(WritePayload payload) {
+    return Flush(std::move(payload));
+  }
+
   /// Wait for the result of a `Flush()` call.
   virtual future<StatusOr<std::int64_t>> Query() = 0;
 
   /// Return the request metadata.
   virtual RpcMetadata GetRequestMetadata() = 0;
+
+  /// Returns the latest write handle, if any.
+  virtual absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+      const = 0;
+
+  /// Returns the latest persisted data checksums, if any.
+  virtual absl::optional<google::storage::v2::ObjectChecksums>
+  PersistedChecksums() const {
+    return absl::nullopt;
+  }
 };
 
 /**
@@ -145,7 +161,7 @@ struct BufferedUploadLwmOption {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 

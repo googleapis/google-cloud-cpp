@@ -550,6 +550,18 @@ class MockDeveloperConnectConnection
       DeleteSelf, (google::longrunning::Operation const& operation),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>,
+      StartOAuth,
+      (google::cloud::developerconnect::v1::StartOAuthRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>,
+      FinishOAuth,
+      (google::cloud::developerconnect::v1::FinishOAuthRequest const& request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -47,6 +48,10 @@ idempotency_policy(Options const& options) {
       ->clone();
 }
 
+std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+  return options.get<dataform_v1::DataformPollingPolicyOption>()->clone();
+}
+
 }  // namespace
 
 DataformConnectionImpl::DataformConnectionImpl(
@@ -56,6 +61,548 @@ DataformConnectionImpl::DataformConnectionImpl(
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
                                       DataformConnection::options())) {}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformConnectionImpl::GetTeamFolder(
+    google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTeamFolder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::GetTeamFolderRequest const& request) {
+        return stub_->GetTeamFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformConnectionImpl::CreateTeamFolder(
+    google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTeamFolder(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::CreateTeamFolderRequest const& request) {
+        return stub_->CreateTeamFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::dataform::v1::TeamFolder>
+DataformConnectionImpl::UpdateTeamFolder(
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTeamFolder(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::UpdateTeamFolderRequest const& request) {
+        return stub_->UpdateTeamFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status DataformConnectionImpl::DeleteTeamFolder(
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTeamFolder(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::DeleteTeamFolderRequest const& request) {
+        return stub_->DeleteTeamFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformConnectionImpl::DeleteTeamFolderTree(
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTeamFolderTree(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataform::v1::DeleteFolderTreeMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const&
+              request) {
+        return stub->AsyncDeleteTeamFolderTree(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataform::v1::DeleteFolderTreeMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataformConnectionImpl::DeleteTeamFolderTree(
+    NoAwaitTag,
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTeamFolderTree(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const&
+                 request) {
+        return stub_->DeleteTeamFolderTree(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformConnectionImpl::DeleteTeamFolderTree(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataform::v1::
+                   DeleteFolderTreeMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteTeamFolderTree",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataform::v1::DeleteFolderTreeMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataform::v1::DeleteFolderTreeMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                TeamFolderContentsEntry>
+DataformConnectionImpl::QueryTeamFolderContents(
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->QueryTeamFolderContents(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                      TeamFolderContentsEntry>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::dataform::v1::QueryTeamFolderContentsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataform::v1::
+                       QueryTeamFolderContentsRequest const& request) {
+              return stub->QueryTeamFolderContents(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::dataform::v1::QueryTeamFolderContentsResponse r) {
+        std::vector<
+            google::cloud::dataform::v1::QueryTeamFolderContentsResponse::
+                TeamFolderContentsEntry>
+            result(r.entries().size());
+        auto& messages = *r.mutable_entries();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                TeamFolderSearchResult>
+DataformConnectionImpl::SearchTeamFolders(
+    google::cloud::dataform::v1::SearchTeamFoldersRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->SearchTeamFolders(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                      TeamFolderSearchResult>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::dataform::v1::SearchTeamFoldersRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataform::v1::SearchTeamFoldersRequest const&
+                       request) {
+              return stub->SearchTeamFolders(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::dataform::v1::SearchTeamFoldersResponse r) {
+        std::vector<google::cloud::dataform::v1::SearchTeamFoldersResponse::
+                        TeamFolderSearchResult>
+            result(r.results().size());
+        auto& messages = *r.mutable_results();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::dataform::v1::Folder> DataformConnectionImpl::GetFolder(
+    google::cloud::dataform::v1::GetFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetFolder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::GetFolderRequest const& request) {
+        return stub_->GetFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder>
+DataformConnectionImpl::CreateFolder(
+    google::cloud::dataform::v1::CreateFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateFolder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CreateFolderRequest const& request) {
+        return stub_->CreateFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::dataform::v1::Folder>
+DataformConnectionImpl::UpdateFolder(
+    google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFolder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::UpdateFolderRequest const& request) {
+        return stub_->UpdateFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status DataformConnectionImpl::DeleteFolder(
+    google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteFolder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::DeleteFolderRequest const& request) {
+        return stub_->DeleteFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformConnectionImpl::DeleteFolderTree(
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFolderTree(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataform::v1::DeleteFolderTreeMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+        return stub->AsyncDeleteFolderTree(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataform::v1::DeleteFolderTreeMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataformConnectionImpl::DeleteFolderTree(
+    NoAwaitTag,
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteFolderTree(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::DeleteFolderTreeRequest const& request) {
+        return stub_->DeleteFolderTree(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>
+DataformConnectionImpl::DeleteFolderTree(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataform::v1::
+                   DeleteFolderTreeMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataform::v1::DeleteFolderTreeMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteFolderTree",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataform::v1::DeleteFolderTreeMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataform::v1::DeleteFolderTreeMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                FolderContentsEntry>
+DataformConnectionImpl::QueryFolderContents(
+    google::cloud::dataform::v1::QueryFolderContentsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->QueryFolderContents(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                      FolderContentsEntry>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::dataform::v1::QueryFolderContentsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::dataform::v1::QueryFolderContentsRequest const&
+                    request) {
+              return stub->QueryFolderContents(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::dataform::v1::QueryFolderContentsResponse r) {
+        std::vector<google::cloud::dataform::v1::QueryFolderContentsResponse::
+                        FolderContentsEntry>
+            result(r.entries().size());
+        auto& messages = *r.mutable_entries();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                RootContentsEntry>
+DataformConnectionImpl::QueryUserRootContents(
+    google::cloud::dataform::v1::QueryUserRootContentsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->QueryUserRootContents(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                      RootContentsEntry>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::dataform::v1::QueryUserRootContentsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::dataform::v1::QueryUserRootContentsRequest const&
+                    request) {
+              return stub->QueryUserRootContents(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::dataform::v1::QueryUserRootContentsResponse r) {
+        std::vector<google::cloud::dataform::v1::QueryUserRootContentsResponse::
+                        RootContentsEntry>
+            result(r.entries().size());
+        auto& messages = *r.mutable_entries();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformConnectionImpl::MoveFolder(
+    google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->MoveFolder(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataform::v1::MoveFolderMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataform::v1::MoveFolderRequest const& request) {
+        return stub->AsyncMoveFolder(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataform::v1::MoveFolderMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> DataformConnectionImpl::MoveFolder(
+    NoAwaitTag, google::cloud::dataform::v1::MoveFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MoveFolder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::MoveFolderRequest const& request) {
+        return stub_->MoveFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>
+DataformConnectionImpl::MoveFolder(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataform::v1::MoveFolderMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataform::v1::MoveFolderMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to MoveFolder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataform::v1::MoveFolderMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataform::v1::MoveFolderMetadata>,
+      polling_policy(*current), __func__);
+}
 
 StreamRange<google::cloud::dataform::v1::Repository>
 DataformConnectionImpl::ListRepositories(
@@ -147,6 +694,98 @@ Status DataformConnectionImpl::DeleteRepository(
         return stub_->DeleteRepository(context, options, request);
       },
       *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformConnectionImpl::MoveRepository(
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->MoveRepository(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataform::v1::MoveRepositoryMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+        return stub->AsyncMoveRepository(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataform::v1::MoveRepositoryMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> DataformConnectionImpl::MoveRepository(
+    NoAwaitTag,
+    google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MoveRepository(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::MoveRepositoryRequest const& request) {
+        return stub_->MoveRepository(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>
+DataformConnectionImpl::MoveRepository(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataform::v1::
+                   MoveRepositoryMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataform::v1::MoveRepositoryMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to MoveRepository",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataform::v1::MoveRepositoryMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataform::v1::MoveRepositoryMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
@@ -1105,6 +1744,46 @@ DataformConnectionImpl::UpdateConfig(
       *current, request, __func__);
 }
 
+StatusOr<google::iam::v1::Policy> DataformConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return stub_->GetIamPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::Policy> DataformConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return stub_->SetIamPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 DataformConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -1152,42 +1831,74 @@ StatusOr<google::cloud::location::Location> DataformConnectionImpl::GetLocation(
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> DataformConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
+StreamRange<google::longrunning::Operation>
+DataformConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListOperations(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::longrunning::ListOperationsRequest const& request) {
+              return stub->ListOperations(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::longrunning::ListOperationsResponse r) {
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
+        auto& messages = *r.mutable_operations();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::longrunning::Operation> DataformConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SetIamPolicy(request),
+      idempotency_policy(*current)->GetOperation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, options, request);
+             google::longrunning::GetOperationRequest const& request) {
+        return stub_->GetOperation(context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> DataformConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
+Status DataformConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetIamPolicy(request),
+      idempotency_policy(*current)->DeleteOperation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, options, request);
+             google::longrunning::DeleteOperationRequest const& request) {
+        return stub_->DeleteOperation(context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
+Status DataformConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TestIamPermissions(request),
+      idempotency_policy(*current)->CancelOperation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, options, request);
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub_->CancelOperation(context, options, request);
       },
       *current, request, __func__);
 }

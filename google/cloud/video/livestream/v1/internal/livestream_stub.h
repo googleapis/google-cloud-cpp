@@ -19,16 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_STUB_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -109,6 +112,32 @@ class LivestreamServiceStub {
       google::cloud::video::livestream::v1::StopChannelRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncStartDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> StartDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncStopDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> StopDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInput(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -153,6 +182,11 @@ class LivestreamServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::video::livestream::v1::UpdateInputRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+  PreviewInput(grpc::ClientContext& context, Options const& options,
+               google::cloud::video::livestream::v1::PreviewInputRequest const&
+                   request) = 0;
 
   virtual StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       grpc::ClientContext& context, Options const& options,
@@ -429,6 +463,30 @@ class DefaultLivestreamServiceStub : public LivestreamServiceStub {
       google::cloud::video::livestream::v1::StopChannelRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncStartDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StartDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncStopDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StopDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInput(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -474,6 +532,11 @@ class DefaultLivestreamServiceStub : public LivestreamServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::video::livestream::v1::UpdateInputRequest const& request)
       override;
+
+  StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+  PreviewInput(grpc::ClientContext& context, Options const& options,
+               google::cloud::video::livestream::v1::PreviewInputRequest const&
+                   request) override;
 
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       grpc::ClientContext& context, Options const& options,
@@ -677,5 +740,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_STUB_H

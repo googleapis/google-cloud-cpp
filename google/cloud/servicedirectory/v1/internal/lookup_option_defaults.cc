@@ -42,7 +42,7 @@ Options LookupServiceDefaultOptions(Options options) {
   if (!options.has<servicedirectory_v1::LookupServiceRetryPolicyOption>()) {
     options.set<servicedirectory_v1::LookupServiceRetryPolicyOption>(
         servicedirectory_v1::LookupServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<servicedirectory_v1::LookupServiceBackoffPolicyOption>()) {

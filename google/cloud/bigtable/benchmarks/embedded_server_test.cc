@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <thread>

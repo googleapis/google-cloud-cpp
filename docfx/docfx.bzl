@@ -35,7 +35,6 @@ docfx_hdrs = [
     "public_docs.h",
     "toc_entry.h",
     "yaml_context.h",
-    "yaml_emit.h",
 ]
 
 docfx_srcs = [
@@ -56,5 +55,4 @@ docfx_srcs = [
     "public_docs.cc",
     "toc_entry.cc",
     "yaml_context.cc",
-    "yaml_emit.cc",
 ]

@@ -1,0 +1,91 @@
+/*!
+@page bigquery-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `bigquery_analyticshub_v1::AnalyticsHubServiceClient`:
+
+@snippet analytics_hub_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c bigquery_analyticshub_v1::AnalyticsHubServiceClient](@ref bigquery_analyticshub_v1::AnalyticsHubServiceClient-universe-domain-snippet)
+- [\c bigquery_biglake_v1::MetastoreServiceClient](@ref bigquery_biglake_v1::MetastoreServiceClient-universe-domain-snippet)
+- [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-universe-domain-snippet)
+- [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-universe-domain-snippet)
+- [\c bigquery_datapolicies_v2::DataPolicyServiceClient](@ref bigquery_datapolicies_v2::DataPolicyServiceClient-universe-domain-snippet)
+- [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-universe-domain-snippet)
+- [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-universe-domain-snippet)
+- [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-universe-domain-snippet)
+- [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-universe-domain-snippet)
+- [\c bigquery_storage_v1::BigQueryWriteClient](@ref bigquery_storage_v1::BigQueryWriteClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page bigquery_analyticshub_v1::AnalyticsHubServiceClient-universe-domain-snippet Override bigquery_analyticshub_v1::AnalyticsHubServiceClient Universe Domain
+
+@snippet google/cloud/bigquery/analyticshub/v1/samples/analytics_hub_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_biglake_v1::MetastoreServiceClient-universe-domain-snippet Override bigquery_biglake_v1::MetastoreServiceClient Universe Domain
+
+@snippet google/cloud/bigquery/biglake/v1/samples/metastore_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_connection_v1::ConnectionServiceClient-universe-domain-snippet Override bigquery_connection_v1::ConnectionServiceClient Universe Domain
+
+@snippet google/cloud/bigquery/connection/v1/samples/connection_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_datapolicies_v1::DataPolicyServiceClient-universe-domain-snippet Override bigquery_datapolicies_v1::DataPolicyServiceClient Universe Domain
+
+@snippet google/cloud/bigquery/datapolicies/v1/samples/data_policy_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_datapolicies_v2::DataPolicyServiceClient-universe-domain-snippet Override bigquery_datapolicies_v2::DataPolicyServiceClient Universe Domain
+
+@snippet google/cloud/bigquery/datapolicies/v2/samples/data_policy_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_datatransfer_v1::DataTransferServiceClient-universe-domain-snippet Override bigquery_datatransfer_v1::DataTransferServiceClient Universe Domain
+
+@snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_migration_v2::MigrationServiceClient-universe-domain-snippet Override bigquery_migration_v2::MigrationServiceClient Universe Domain
+
+@snippet google/cloud/bigquery/migration/v2/samples/migration_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_reservation_v1::ReservationServiceClient-universe-domain-snippet Override bigquery_reservation_v1::ReservationServiceClient Universe Domain
+
+@snippet google/cloud/bigquery/reservation/v1/samples/reservation_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_storage_v1::BigQueryReadClient-universe-domain-snippet Override bigquery_storage_v1::BigQueryReadClient Universe Domain
+
+@snippet google/cloud/bigquery/storage/v1/samples/bigquery_read_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page bigquery_storage_v1::BigQueryWriteClient-universe-domain-snippet Override bigquery_storage_v1::BigQueryWriteClient Universe Domain
+
+@snippet google/cloud/bigquery/storage/v1/samples/bigquery_write_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

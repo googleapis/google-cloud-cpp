@@ -42,7 +42,7 @@ Options BackendBucketsDefaultOptions(Options options) {
           compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()) {
     options.set<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>(
         compute_backend_buckets_v1::BackendBucketsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

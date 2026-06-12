@@ -1,0 +1,24 @@
+/*!
+@page commerce-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `commerce_consumer_procurement_v1::ConsumerProcurementServiceClient`:
+
+@snippet consumer_procurement_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page commerce_consumer_procurement_v1::ConsumerProcurementServiceClient-universe-domain-snippet Override commerce_consumer_procurement_v1::ConsumerProcurementServiceClient Universe Domain
+
+@snippet google/cloud/commerce/consumer/procurement/v1/samples/consumer_procurement_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

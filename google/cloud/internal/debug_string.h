@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DEBUG_STRING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DEBUG_STRING_H
 
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"

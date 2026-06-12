@@ -29,8 +29,6 @@ namespace cloud {
 namespace rapidmigrationassessment_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class RapidMigrationAssessmentTracingConnection
     : public rapidmigrationassessment_v1::RapidMigrationAssessmentConnection {
  public:
@@ -167,8 +165,6 @@ class RapidMigrationAssessmentTracingConnection
       rapidmigrationassessment_v1::RapidMigrationAssessmentConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

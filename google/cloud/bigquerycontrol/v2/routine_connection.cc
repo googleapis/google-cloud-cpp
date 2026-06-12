@@ -53,12 +53,6 @@ RoutineServiceConnection::UpdateRoutine(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceConnection::PatchRoutine(
-    google::cloud::bigquery::v2::PatchRoutineRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
 Status RoutineServiceConnection::DeleteRoutine(
     google::cloud::bigquery::v2::DeleteRoutineRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

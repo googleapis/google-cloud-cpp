@@ -41,7 +41,7 @@ Options CompanyServiceDefaultOptions(Options options) {
   if (!options.has<talent_v4::CompanyServiceRetryPolicyOption>()) {
     options.set<talent_v4::CompanyServiceRetryPolicyOption>(
         talent_v4::CompanyServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<talent_v4::CompanyServiceBackoffPolicyOption>()) {

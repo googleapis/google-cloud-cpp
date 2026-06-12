@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace video_livestream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class LivestreamServiceTracingStub : public LivestreamServiceStub {
  public:
@@ -109,6 +110,30 @@ class LivestreamServiceTracingStub : public LivestreamServiceStub {
       google::cloud::video::livestream::v1::StopChannelRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncStartDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StartDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StartDistributionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncStopDistribution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StopDistribution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::StopDistributionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInput(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -154,6 +179,11 @@ class LivestreamServiceTracingStub : public LivestreamServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::video::livestream::v1::UpdateInputRequest const& request)
       override;
+
+  StatusOr<google::cloud::video::livestream::v1::PreviewInputResponse>
+  PreviewInput(grpc::ClientContext& context, Options const& options,
+               google::cloud::video::livestream::v1::PreviewInputRequest const&
+                   request) override;
 
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       grpc::ClientContext& context, Options const& options,
@@ -349,8 +379,6 @@ class LivestreamServiceTracingStub : public LivestreamServiceStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -364,5 +392,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_TRACING_STUB_H

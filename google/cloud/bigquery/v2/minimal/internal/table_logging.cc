@@ -14,11 +14,11 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/log_wrapper.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/string_view.h"
 
 namespace google {

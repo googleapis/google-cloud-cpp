@@ -47,7 +47,7 @@ Options InterconnectRemoteLocationsDefaultOptions(Options options) {
                     InterconnectRemoteLocationsRetryPolicyOption>(
         compute_interconnect_remote_locations_v1::
             InterconnectRemoteLocationsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_interconnect_remote_locations_v1::

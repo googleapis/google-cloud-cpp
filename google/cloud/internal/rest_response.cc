@@ -120,6 +120,9 @@ StatusCode MapHttpCodeToStatus5xx(std::int32_t code) {
   if (code == HttpStatusCode::kServiceUnavailable) {
     return StatusCode::kUnavailable;
   }
+  if (code == HttpStatusCode::kGatewayTimeout) {
+    return StatusCode::kUnavailable;
+  }
   // 5XX - server errors are mapped to kInternal.
   return StatusCode::kInternal;
 }
@@ -153,8 +156,12 @@ Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
   if (payload.empty()) {
     // If there's no payload, create one to make sure the original http status
     // code received is available.
-    return Status(status_code, "Received HTTP status code: " +
-                                   std::to_string(http_status_code));
+    ErrorInfo error_info{
+        {}, {}, {{"http_status_code", std::to_string(http_status_code)}}};
+    return Status(
+        status_code,
+        "Received HTTP status code: " + std::to_string(http_status_code),
+        std::move(error_info));
   }
   auto p =
       ParseJsonError(static_cast<int>(http_status_code), std::move(payload));

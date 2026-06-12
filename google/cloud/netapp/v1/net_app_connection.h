@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CONNECTION_H
 
+#include "google/cloud/netapp/v1/cloud_netapp_service.pb.h"
 #include "google/cloud/netapp/v1/internal/net_app_retry_traits.h"
 #include "google/cloud/netapp/v1/net_app_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/netapp/v1/cloud_netapp_service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -290,6 +290,17 @@ class NetAppConnection {
 
   virtual future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
       google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  EstablishVolumePeering(
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> EstablishVolumePeering(
+      NoAwaitTag,
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Volume>>
+  EstablishVolumePeering(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::netapp::v1::Snapshot> ListSnapshots(
       google::cloud::netapp::v1::ListSnapshotsRequest request);
@@ -671,6 +682,74 @@ class NetAppConnection {
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteQuotaRule(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>
+  RestoreBackupFiles(
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RestoreBackupFiles(
+      NoAwaitTag,
+      google::cloud::netapp::v1::RestoreBackupFilesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::netapp::v1::RestoreBackupFilesResponse>>
+  RestoreBackupFiles(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::netapp::v1::HostGroup> ListHostGroups(
+      google::cloud::netapp::v1::ListHostGroupsRequest request);
+
+  virtual StatusOr<google::cloud::netapp::v1::HostGroup> GetHostGroup(
+      google::cloud::netapp::v1::GetHostGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+  CreateHostGroup(
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateHostGroup(
+      NoAwaitTag,
+      google::cloud::netapp::v1::CreateHostGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+  CreateHostGroup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+  UpdateHostGroup(
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateHostGroup(
+      NoAwaitTag,
+      google::cloud::netapp::v1::UpdateHostGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::HostGroup>>
+  UpdateHostGroup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteHostGroup(
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteHostGroup(
+      NoAwaitTag,
+      google::cloud::netapp::v1::DeleteHostGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteHostGroup(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+  ExecuteOntapPost(
+      google::cloud::netapp::v1::ExecuteOntapPostRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+  ExecuteOntapGet(
+      google::cloud::netapp::v1::ExecuteOntapGetRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+  ExecuteOntapDelete(
+      google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request);
+
+  virtual StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+  ExecuteOntapPatch(
+      google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

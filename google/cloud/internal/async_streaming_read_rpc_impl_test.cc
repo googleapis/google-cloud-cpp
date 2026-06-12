@@ -172,8 +172,6 @@ TEST(AsyncStreamingReadRpcTest, Error) {
             stream.Finish().get());
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 using ::google::cloud::testing_util::IsActive;
 
 TEST(AsyncStreamingReadRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
@@ -261,8 +259,6 @@ TEST(AsyncStreamingReadRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
   notify_next_op();
   (void)finish.get();
 }
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

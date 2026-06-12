@@ -40,7 +40,7 @@ Options IDSDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<ids_v1::IDSRetryPolicyOption>()) {
     options.set<ids_v1::IDSRetryPolicyOption>(
-        ids_v1::IDSLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+        ids_v1::IDSLimitedTimeRetryPolicy(std::chrono::minutes(10)).clone());
   }
   if (!options.has<ids_v1::IDSBackoffPolicyOption>()) {
     options.set<ids_v1::IDSBackoffPolicyOption>(

@@ -17,9 +17,12 @@
 // source: google/cloud/backupdr/v1/backupdr.proto
 
 #include "google/cloud/backupdr/v1/internal/backup_dr_auth_decorator.h"
-#include <google/cloud/backupdr/v1/backupdr.grpc.pb.h>
+#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -268,6 +271,16 @@ BackupDRAuth::ListBackups(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListBackups(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::FetchBackupsForResourceTypeResponse>
+BackupDRAuth::FetchBackupsForResourceType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FetchBackupsForResourceType(context, options, request);
 }
 
 StatusOr<google::cloud::backupdr::v1::Backup> BackupDRAuth::GetBackup(
@@ -644,6 +657,16 @@ BackupDRAuth::GetDataSourceReference(
   return child_->GetDataSourceReference(context, options, request);
 }
 
+StatusOr<google::cloud::backupdr::v1::ListDataSourceReferencesResponse>
+BackupDRAuth::ListDataSourceReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDataSourceReferences(context, options, request);
+}
+
 StatusOr<google::cloud::backupdr::v1::
              FetchDataSourceReferencesForResourceTypeResponse>
 BackupDRAuth::FetchDataSourceReferencesForResourceType(
@@ -799,3 +822,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace backupdr_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

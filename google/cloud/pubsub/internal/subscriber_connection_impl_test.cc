@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/defaults.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
@@ -45,7 +46,13 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::Property;
+using ::testing::Return;
 using ::testing::StartsWith;
+
+class MockBackgroundThreads : public BackgroundThreads {
+ public:
+  MOCK_METHOD(CompletionQueue, cq, (), (override, const));
+};
 
 Options MakeTestOptions(Subscription subscription, Options opts = {}) {
   opts.set<pubsub::SubscriptionOption>(std::move(subscription));
@@ -163,8 +170,10 @@ TEST(SubscriberConnectionTest, Subscribe) {
       .WillRepeatedly(FakeAsyncStreamingPull);
 
   CompletionQueue cq;
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
   auto subscriber = std::make_shared<SubscriberConnectionImpl>(
-      MakeTestOptions(subscription, cq), mock);
+      MakeTestOptions(subscription, cq), mock, mock_background_threads);
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const& m, AckHandler h) {
@@ -206,8 +215,10 @@ TEST(SubscriberConnectionTest, SubscribeOverrideSubscription) {
       .WillRepeatedly(MakeAsyncStreamingPullMock(s2.FullName()));
 
   CompletionQueue cq;
-  auto subscriber =
-      std::make_shared<SubscriberConnectionImpl>(MakeTestOptions(s1, cq), mock);
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
+  auto subscriber = std::make_shared<SubscriberConnectionImpl>(
+      MakeTestOptions(s1, cq), mock, mock_background_threads);
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const& m, AckHandler h) {
@@ -250,8 +261,10 @@ TEST(SubscriberConnectionTest, ExactlyOnce) {
       .WillRepeatedly(FakeAsyncStreamingPull);
 
   CompletionQueue cq;
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
   auto subscriber = std::make_shared<SubscriberConnectionImpl>(
-      MakeTestOptions(subscription, cq), mock);
+      MakeTestOptions(subscription, cq), mock, mock_background_threads);
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto callback = [&](Message const& m, ExactlyOnceAckHandler h) {
@@ -294,8 +307,10 @@ TEST(SubscriberConnectionTest, ExactlyOnceOverrideSubscription) {
       .WillRepeatedly(MakeAsyncStreamingPullMock(s2.FullName()));
 
   CompletionQueue cq;
-  auto subscriber =
-      std::make_shared<SubscriberConnectionImpl>(MakeTestOptions(s1, cq), mock);
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
+  auto subscriber = std::make_shared<SubscriberConnectionImpl>(
+      MakeTestOptions(s1, cq), mock, mock_background_threads);
   std::atomic_flag received_one{false};
   promise<void> waiter;
   auto handler = [&](Message const& m, AckHandler h) {
@@ -359,7 +374,8 @@ TEST(SubscriberConnectionTest, StreamingPullFailure) {
   auto subscriber = std::make_shared<SubscriberConnectionImpl>(
       pubsub_testing::MakeTestOptions(
           Options{}.set<pubsub::SubscriptionOption>(subscription)),
-      mock);
+      mock,
+      std::make_shared<internal::AutomaticallyCreatedBackgroundThreads>());
   auto handler = [&](Message const&, AckHandler const&) {};
   google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Subscribe({handler});
@@ -401,8 +417,10 @@ TEST(SubscriberConnectionTest, Pull) {
   CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
 
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
   auto subscriber = std::make_shared<SubscriberConnectionImpl>(
-      MakeTestOptions(subscription, cq), mock);
+      MakeTestOptions(subscription, cq), mock, mock_background_threads);
   google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Pull();
   ASSERT_STATUS_OK(response);
@@ -440,7 +458,8 @@ TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
 
   CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
-
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
   auto subscriber = std::make_shared<SubscriberConnectionImpl>(
       MakeTestOptions(
           subscription,
@@ -450,7 +469,7 @@ TEST(SubscriberConnectionTest, PullReturnsNoMessage) {
                   google::cloud::pubsub::LimitedErrorCountRetryPolicy(
                       kNumRetries)
                       .clone())),
-      mock);
+      mock, mock_background_threads);
   google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Pull();
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable,
@@ -496,9 +515,10 @@ TEST(SubscriberConnectionTest, PullOverrideSubscription) {
 
   CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
-
-  auto subscriber =
-      std::make_shared<SubscriberConnectionImpl>(MakeTestOptions(s1, cq), mock);
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
+  auto subscriber = std::make_shared<SubscriberConnectionImpl>(
+      MakeTestOptions(s1, cq), mock, mock_background_threads);
   google::cloud::internal::OptionsSpan span(
       subscriber->options().set<pubsub::SubscriptionOption>(s2));
   auto response = subscriber->Pull();
@@ -523,9 +543,10 @@ TEST(SubscriberConnectionTest, PullPermanentFailure) {
 
   CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
-
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
   auto subscriber = std::make_shared<SubscriberConnectionImpl>(
-      MakeTestOptions(subscription, cq), mock);
+      MakeTestOptions(subscription, cq), mock, mock_background_threads);
   google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Pull();
   EXPECT_THAT(response,
@@ -550,9 +571,10 @@ TEST(SubscriberConnectionTest, PullTooManyTransientFailures) {
 
   CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
-
+  auto mock_background_threads = std::make_shared<MockBackgroundThreads>();
+  ON_CALL(*mock_background_threads, cq()).WillByDefault(Return(cq));
   auto subscriber = std::make_shared<SubscriberConnectionImpl>(
-      MakeTestOptions(subscription, cq), mock);
+      MakeTestOptions(subscription, cq), mock, mock_background_threads);
   google::cloud::internal::OptionsSpan span(subscriber->options());
   auto response = subscriber->Pull();
   EXPECT_THAT(response,

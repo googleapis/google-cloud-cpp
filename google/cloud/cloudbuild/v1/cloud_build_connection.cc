@@ -262,6 +262,12 @@ CloudBuildConnection::ListWorkerPools(
       StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>();
 }
 
+StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+CloudBuildConnection::GetDefaultServiceAccount(
+    google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

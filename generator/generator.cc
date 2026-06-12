@@ -17,12 +17,12 @@
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
 #include "generator/internal/make_generators.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
-#include <google/api/client.pb.h>
+#include "google/api/client.pb.h"
 #include <future>
 #include <string>
 #include <vector>
@@ -72,7 +72,8 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
   services.reserve(file->service_count());
   for (int i = 0; i < file->service_count(); ++i) {
     auto const* service = file->service(i);
-    if (!internal::Contains(omitted_services, service->name())) {
+    if (!internal::Contains(omitted_services, service->name()) &&
+        !internal::Contains(omitted_services, service->full_name())) {
       services.push_back(generator_internal::MakeGenerators(
           service, context, service_config, *command_line_args));
     }

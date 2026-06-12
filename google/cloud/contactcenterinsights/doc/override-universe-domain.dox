@@ -1,0 +1,24 @@
+/*!
+@page contactcenterinsights-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `contactcenterinsights_v1::ContactCenterInsightsClient`:
+
+@snippet contact_center_insights_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page contactcenterinsights_v1::ContactCenterInsightsClient-universe-domain-snippet Override contactcenterinsights_v1::ContactCenterInsightsClient Universe Domain
+
+@snippet google/cloud/contactcenterinsights/v1/samples/contact_center_insights_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

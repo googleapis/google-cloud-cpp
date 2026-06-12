@@ -21,6 +21,7 @@ storage_examples = [
     "storage_bucket_autoclass_samples.cc",
     "storage_bucket_cors_samples.cc",
     "storage_bucket_default_kms_key_samples.cc",
+    "storage_bucket_encryption_enforcement_samples.cc",
     "storage_bucket_iam_samples.cc",
     "storage_bucket_object_retention_samples.cc",
     "storage_bucket_requester_pays_samples.cc",

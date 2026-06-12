@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_BACKUP_DR_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_BACKUP_DR_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/backupdr/v1/backupdr.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -82,6 +82,9 @@ class BackupDRConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListBackups(
       google::cloud::backupdr::v1::ListBackupsRequest request);
+
+  virtual google::cloud::Idempotency FetchBackupsForResourceType(
+      google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request);
 
   virtual google::cloud::Idempotency GetBackup(
       google::cloud::backupdr::v1::GetBackupRequest const& request);
@@ -145,6 +148,9 @@ class BackupDRConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetDataSourceReference(
       google::cloud::backupdr::v1::GetDataSourceReferenceRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListDataSourceReferences(
+      google::cloud::backupdr::v1::ListDataSourceReferencesRequest request);
 
   virtual google::cloud::Idempotency FetchDataSourceReferencesForResourceType(
       google::cloud::backupdr::v1::

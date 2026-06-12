@@ -41,7 +41,7 @@ Options SqlTiersServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<sql_v1::SqlTiersServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlTiersServiceRetryPolicyOption>(
-        sql_v1::SqlTiersServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        sql_v1::SqlTiersServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<sql_v1::SqlTiersServiceBackoffPolicyOption>()) {

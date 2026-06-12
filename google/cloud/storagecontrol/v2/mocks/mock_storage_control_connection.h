@@ -103,6 +103,47 @@ class MockStorageControlConnection
               RenameFolder, (google::longrunning::Operation const& operation),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFolderRecursive(Matcher<google::storage::control::v2::DeleteFolderRecursiveRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<
+                  google::storage::control::v2::DeleteFolderRecursiveMetadata>>,
+              DeleteFolderRecursive,
+              (google::storage::control::v2::DeleteFolderRecursiveRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteFolderRecursive(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteFolderRecursive,
+              (NoAwaitTag,
+               google::storage::control::v2::DeleteFolderRecursiveRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFolderRecursive(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<
+                  google::storage::control::v2::DeleteFolderRecursiveMetadata>>,
+              DeleteFolderRecursive,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::storage::control::v2::StorageLayout>, GetStorageLayout,
       (google::storage::control::v2::GetStorageLayoutRequest const& request),
@@ -270,6 +311,19 @@ class MockStorageControlConnection
               UpdateOrganizationIntelligenceConfig,
               (google::storage::control::v2::
                    UpdateOrganizationIntelligenceConfigRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 };
 

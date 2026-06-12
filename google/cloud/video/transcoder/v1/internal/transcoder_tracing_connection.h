@@ -28,8 +28,6 @@ namespace cloud {
 namespace video_transcoder_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class TranscoderServiceTracingConnection
     : public video_transcoder_v1::TranscoderServiceConnection {
  public:
@@ -73,8 +71,6 @@ class TranscoderServiceTracingConnection
  private:
   std::shared_ptr<video_transcoder_v1::TranscoderServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

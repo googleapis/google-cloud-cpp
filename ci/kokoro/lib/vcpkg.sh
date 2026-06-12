@@ -32,7 +32,7 @@ install_vcpkg() {
   io::log "Downloading vcpkg into ${vcpkg_dir}..."
   VCPKG_VERSION="$(<ci/etc/vcpkg-version.txt)"
   url="https://github.com/microsoft/vcpkg/archive/${VCPKG_VERSION}.tar.gz"
-  if [[ "${VCPKG_VERSION}" =~ [0-9]{4}.[0-9]{2}.[0-9]{2} ]]; then
+  if [[ "${VCPKG_VERSION}" =~ [0-9]{4}\.[0-9]{2}\.[0-9]{2} ]]; then
     # vcpkg uses date-like tags for releases
     url="https://github.com/microsoft/vcpkg/archive/refs/tags/${VCPKG_VERSION}.tar.gz"
   fi
@@ -48,7 +48,7 @@ install_vcpkg() {
   create_gcloud_config
   activate_service_account_keyfile "${CACHE_KEYFILE}"
   export CLOUDSDK_ACTIVE_CONFIG_NAME="${GCLOUD_CONFIG}"
-  io::run gsutil ls "gs://${CACHE_BUCKET}/"
+  io::run gcloud storage ls "gs://${CACHE_BUCKET}/"
   # Eventually we can remove this, but the current caches contain both `ccache`
   # files (which we want), and `vcpkg` files (which we don't want).
   io::run rm -fr "${HOME}/.cache/vcpkg"

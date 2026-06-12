@@ -59,7 +59,7 @@ jobs:
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
     steps:
-    - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+    - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
@@ -70,7 +70,7 @@ jobs:
     - uses: actions/setup-python@v5
       id: py311
       with:
-        python-version: '3.11'
+        python-version: '3.14'
     - uses: google-github-actions/setup-gcloud@v2
       env:
         CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
@@ -84,8 +84,6 @@ jobs:
           spanner
         )
         core2_features=(
-          pubsub
-          pubsublite
           storage
           storage_grpc
         )

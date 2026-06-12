@@ -383,6 +383,13 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
       ListWorkerPools,
       (google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>,
+      GetDefaultServiceAccount,
+      (google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

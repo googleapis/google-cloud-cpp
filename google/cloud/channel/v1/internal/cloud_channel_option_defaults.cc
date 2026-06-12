@@ -42,7 +42,7 @@ Options CloudChannelServiceDefaultOptions(Options options) {
   if (!options.has<channel_v1::CloudChannelServiceRetryPolicyOption>()) {
     options.set<channel_v1::CloudChannelServiceRetryPolicyOption>(
         channel_v1::CloudChannelServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<channel_v1::CloudChannelServiceBackoffPolicyOption>()) {

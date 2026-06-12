@@ -61,10 +61,6 @@ class MockRoutineServiceConnection
       (google::cloud::bigquery::v2::UpdateRoutineRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Routine>, PatchRoutine,
-              (google::cloud::bigquery::v2::PatchRoutineRequest const& request),
-              (override));
-
   MOCK_METHOD(
       Status, DeleteRoutine,
       (google::cloud::bigquery::v2::DeleteRoutineRequest const& request),

@@ -16,8 +16,7 @@
 
 include(GoogleCloudCppLibrary)
 
-google_cloud_cpp_add_gapic_library(tpu "Cloud TPU API" SERVICE_DIRS "__EMPTY__"
-                                                                    "v1/" "v2/")
+google_cloud_cpp_add_gapic_library(tpu "Cloud TPU API" SERVICE_DIRS "v1/" "v2/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(tpu_quickstart "quickstart/quickstart.cc")

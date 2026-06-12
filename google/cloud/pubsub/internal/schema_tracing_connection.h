@@ -28,8 +28,6 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class SchemaServiceTracingConnection : public pubsub::SchemaServiceConnection {
  public:
   ~SchemaServiceTracingConnection() override = default;
@@ -81,8 +79,6 @@ class SchemaServiceTracingConnection : public pubsub::SchemaServiceConnection {
  private:
   std::shared_ptr<pubsub::SchemaServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

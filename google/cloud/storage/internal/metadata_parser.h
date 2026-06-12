@@ -80,6 +80,15 @@ StatusOr<std::uint64_t> ParseUnsignedLongField(nlohmann::json const& json,
 StatusOr<std::chrono::system_clock::time_point> ParseTimestampField(
     nlohmann::json const& json, char const* field_name);
 
+/**
+ * Parses a string field.
+ *
+ * @return the value of @p field_name in @p json, or an empty string if the
+ * field is not present.
+ */
+StatusOr<std::string> ParseStringField(nlohmann::json const& json,
+                                       char const* field_name);
+
 /// Return an error indicating that `j` is not a JSON object (it may be a
 /// string, or other valid JSON)
 Status NotJsonObject(nlohmann::json const& j,

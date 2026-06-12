@@ -52,6 +52,7 @@ can override the default policies.
 - @ref pubsublite-override-retry - describes how to change the default retry
   policies.
 - @ref pubsublite-env - describes environment variables that can configure the behavior of the library.
+- @ref pubsublite-override-universe-domain - describes how to override the default universe domain.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 

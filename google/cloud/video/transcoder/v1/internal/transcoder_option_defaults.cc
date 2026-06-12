@@ -42,7 +42,7 @@ Options TranscoderServiceDefaultOptions(Options options) {
   if (!options.has<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()) {
     options.set<video_transcoder_v1::TranscoderServiceRetryPolicyOption>(
         video_transcoder_v1::TranscoderServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

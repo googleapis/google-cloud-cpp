@@ -17,12 +17,15 @@
 // source: google/cloud/aiplatform/v1/feature_online_store_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_stub.h"
+#include "google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -70,6 +73,20 @@ DefaultFeatureOnlineStoreServiceStub::AsyncFeatureViewDirectWrite(
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncFeatureViewDirectWrite(context, cq);
       });
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+DefaultFeatureOnlineStoreServiceStub::GenerateFetchAccessToken(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse response;
+  auto status =
+      grpc_stub_->GenerateFetchAccessToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -195,3 +212,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

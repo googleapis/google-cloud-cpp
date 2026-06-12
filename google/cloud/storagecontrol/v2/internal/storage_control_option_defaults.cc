@@ -41,7 +41,7 @@ Options StorageControlDefaultOptions(Options options) {
   if (!options.has<storagecontrol_v2::StorageControlRetryPolicyOption>()) {
     options.set<storagecontrol_v2::StorageControlRetryPolicyOption>(
         storagecontrol_v2::StorageControlLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<storagecontrol_v2::StorageControlBackoffPolicyOption>()) {

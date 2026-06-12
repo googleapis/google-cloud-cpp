@@ -27,8 +27,6 @@ namespace cloud {
 namespace backupdr_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 BackupDRTracingConnection::BackupDRTracingConnection(
     std::shared_ptr<backupdr_v1::BackupDRConnection> child)
     : child_(std::move(child)) {}
@@ -294,6 +292,17 @@ BackupDRTracingConnection::ListBackups(
       internal::MakeSpan("backupdr_v1::BackupDRConnection::ListBackups");
   internal::OTelScope scope(span);
   auto sr = child_->ListBackups(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::backupdr::v1::Backup>(
+      std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::backupdr::v1::Backup>
+BackupDRTracingConnection::FetchBackupsForResourceType(
+    google::cloud::backupdr::v1::FetchBackupsForResourceTypeRequest request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::FetchBackupsForResourceType");
+  internal::OTelScope scope(span);
+  auto sr = child_->FetchBackupsForResourceType(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::backupdr::v1::Backup>(
       std::move(span), std::move(sr));
 }
@@ -695,6 +704,18 @@ BackupDRTracingConnection::GetDataSourceReference(
 }
 
 StreamRange<google::cloud::backupdr::v1::DataSourceReference>
+BackupDRTracingConnection::ListDataSourceReferences(
+    google::cloud::backupdr::v1::ListDataSourceReferencesRequest request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::ListDataSourceReferences");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDataSourceReferences(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::backupdr::v1::DataSourceReference>(std::move(span),
+                                                        std::move(sr));
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSourceReference>
 BackupDRTracingConnection::FetchDataSourceReferencesForResourceType(
     google::cloud::backupdr::v1::FetchDataSourceReferencesForResourceTypeRequest
         request) {
@@ -820,15 +841,11 @@ Status BackupDRTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<backupdr_v1::BackupDRConnection> MakeBackupDRTracingConnection(
     std::shared_ptr<backupdr_v1::BackupDRConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BackupDRTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

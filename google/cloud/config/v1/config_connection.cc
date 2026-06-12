@@ -312,6 +312,181 @@ ConfigConnection::GetResourceDrift(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigConnection::GetAutoMigrationConfig(
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigConnection::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::AutoMigrationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnection::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigConnection::UpdateAutoMigrationConfig(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::AutoMigrationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroup>
+ConfigConnection::GetDeploymentGroup(
+    google::cloud::config::v1::GetDeploymentGroupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::CreateDeploymentGroup(
+    google::cloud::config::v1::CreateDeploymentGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnection::CreateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::CreateDeploymentGroup(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::UpdateDeploymentGroup(
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnection::UpdateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::UpdateDeploymentGroup(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::DeleteDeploymentGroup(
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnection::DeleteDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::DeleteDeploymentGroup(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroup>
+ConfigConnection::ListDeploymentGroups(
+    google::cloud::config::v1::
+        ListDeploymentGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::config::v1::DeploymentGroup>>();
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::ProvisionDeploymentGroup(
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnection::ProvisionDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::ProvisionDeploymentGroup(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::DeprovisionDeploymentGroup(
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigConnection::DeprovisionDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigConnection::DeprovisionDeploymentGroup(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::DeploymentGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigConnection::GetDeploymentGroupRevision(
+    google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigConnection::ListDeploymentGroupRevisions(
+    google::cloud::config::v1::
+        ListDeploymentGroupRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::config::v1::DeploymentGroupRevision>>();
+}
+
 StreamRange<google::cloud::location::Location> ConfigConnection::ListLocations(
     google::cloud::location::
         ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)

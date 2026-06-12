@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_KEYS_CONNECTION_H
 
 #include "google/cloud/resourcemanager/v3/internal/tag_keys_retry_traits.h"
+#include "google/cloud/resourcemanager/v3/tag_keys.pb.h"
 #include "google/cloud/resourcemanager/v3/tag_keys_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/resourcemanager/v3/tag_keys.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <string>
 

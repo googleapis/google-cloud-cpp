@@ -22,6 +22,7 @@ licenses(["notice"])  # Apache 2.0
     tags = ["integration-test"],
     deps = [
         "//:spanner",
+        "//:universe_domain",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for sample in glob(["*.cc"])]

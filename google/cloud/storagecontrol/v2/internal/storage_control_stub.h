@@ -24,10 +24,13 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -64,6 +67,19 @@ class StorageControlStub {
   virtual StatusOr<google::longrunning::Operation> RenameFolder(
       grpc::ClientContext& context, Options options,
       google::storage::control::v2::RenameFolderRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteFolderRecursive(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteFolderRecursive(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const&
+          request) = 0;
 
   virtual StatusOr<google::storage::control::v2::StorageLayout>
   GetStorageLayout(
@@ -183,6 +199,19 @@ class StorageControlStub {
       google::storage::control::v2::
           UpdateOrganizationIntelligenceConfigRequest const& request) = 0;
 
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -234,6 +263,18 @@ class DefaultStorageControlStub : public StorageControlStub {
   StatusOr<google::longrunning::Operation> RenameFolder(
       grpc::ClientContext& context, Options options,
       google::storage::control::v2::RenameFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteFolderRecursive(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFolderRecursive(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
       override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -348,6 +389,18 @@ class DefaultStorageControlStub : public StorageControlStub {
       google::storage::control::v2::
           UpdateOrganizationIntelligenceConfigRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -371,5 +424,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_STUB_H

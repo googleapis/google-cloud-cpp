@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/generators_option_defaults.h"
 #include "google/cloud/dialogflow_es/generators_connection.h"
 #include "google/cloud/dialogflow_es/generators_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -44,7 +44,7 @@ Options GeneratorsDefaultOptions(std::string const& location, Options options) {
   if (!options.has<dialogflow_es::GeneratorsRetryPolicyOption>()) {
     options.set<dialogflow_es::GeneratorsRetryPolicyOption>(
         dialogflow_es::GeneratorsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dialogflow_es::GeneratorsBackoffPolicyOption>()) {

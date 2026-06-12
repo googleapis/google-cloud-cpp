@@ -27,8 +27,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 FeatureOnlineStoreServiceTracingConnection::
     FeatureOnlineStoreServiceTracingConnection(
         std::shared_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnection>
@@ -60,6 +58,17 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
 FeatureOnlineStoreServiceTracingConnection::AsyncFeatureViewDirectWrite() {
   return child_->AsyncFeatureViewDirectWrite();
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceTracingConnection::GenerateFetchAccessToken(
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreServiceConnection::"
+      "GenerateFetchAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateFetchAccessToken(request));
 }
 
 StreamRange<google::cloud::location::Location>
@@ -154,17 +163,13 @@ FeatureOnlineStoreServiceTracingConnection::WaitOperation(
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnection>
 MakeFeatureOnlineStoreServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<FeatureOnlineStoreServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

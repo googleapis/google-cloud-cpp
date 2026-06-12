@@ -43,7 +43,7 @@ Options WebSecurityScannerDefaultOptions(Options options) {
            .has<websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>()) {
     options.set<websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>(
         websecurityscanner_v1::WebSecurityScannerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

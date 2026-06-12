@@ -28,8 +28,6 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VersionsTracingConnection : public dialogflow_es::VersionsConnection {
  public:
   ~VersionsTracingConnection() override = default;
@@ -75,8 +73,6 @@ class VersionsTracingConnection : public dialogflow_es::VersionsConnection {
  private:
   std::shared_ptr<dialogflow_es::VersionsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

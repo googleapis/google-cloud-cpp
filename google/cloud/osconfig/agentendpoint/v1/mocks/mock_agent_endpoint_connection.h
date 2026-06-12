@@ -91,6 +91,13 @@ class MockAgentEndpointServiceConnection
       (google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
            request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::agentendpoint::v1::
+                           ReportVmInventoryResponse>,
+              ReportVmInventory,
+              (google::cloud::osconfig::agentendpoint::v1::
+                   ReportVmInventoryRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

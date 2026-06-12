@@ -42,7 +42,7 @@ Options SslCertificatesDefaultOptions(Options options) {
           compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()) {
     options.set<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>(
         compute_ssl_certificates_v1::SslCertificatesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/tpu/v1:cloud_tpu.proto
-@com_google_googleapis//google/cloud/tpu/v2:cloud_tpu.proto
+@googleapis//google/cloud/tpu/v1:cloud_tpu.proto
+@googleapis//google/cloud/tpu/v2:cloud_tpu.proto

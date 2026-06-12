@@ -41,7 +41,7 @@ Options ConfigServiceV2DefaultOptions(Options options) {
   if (!options.has<logging_v2::ConfigServiceV2RetryPolicyOption>()) {
     options.set<logging_v2::ConfigServiceV2RetryPolicyOption>(
         logging_v2::ConfigServiceV2LimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<logging_v2::ConfigServiceV2BackoffPolicyOption>()) {

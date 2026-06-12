@@ -17,9 +17,12 @@
 // source: google/cloud/redis/cluster/v1/cloud_redis_cluster.proto
 
 #include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_auth_decorator.h"
-#include <google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h>
+#include "google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -141,6 +144,17 @@ CloudRedisClusterAuth::GetClusterCertificateAuthority(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetClusterCertificateAuthority(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+CloudRedisClusterAuth::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSharedRegionalCertificateAuthority(context, options,
+                                                       request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -386,3 +400,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_cluster_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

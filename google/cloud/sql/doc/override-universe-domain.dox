@@ -1,0 +1,119 @@
+/*!
+@page sql-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `sql_v1::SqlAvailableDatabaseVersionsServiceClient`:
+
+@snippet sql_available_database_versions_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c sql_v1::SqlAvailableDatabaseVersionsServiceClient](@ref sql_v1::SqlAvailableDatabaseVersionsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlEventsServiceClient](@ref sql_v1::SqlEventsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlIamPoliciesServiceClient](@ref sql_v1::SqlIamPoliciesServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlInstanceNamesServiceClient](@ref sql_v1::SqlInstanceNamesServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlInstancesServiceClient](@ref sql_v1::SqlInstancesServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlOperationsServiceClient](@ref sql_v1::SqlOperationsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlRegionsServiceClient](@ref sql_v1::SqlRegionsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlSslCertsServiceClient](@ref sql_v1::SqlSslCertsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlTiersServiceClient](@ref sql_v1::SqlTiersServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlUsersServiceClient](@ref sql_v1::SqlUsersServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page sql_v1::SqlAvailableDatabaseVersionsServiceClient-universe-domain-snippet Override sql_v1::SqlAvailableDatabaseVersionsServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_available_database_versions_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlBackupRunsServiceClient-universe-domain-snippet Override sql_v1::SqlBackupRunsServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_backup_runs_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlConnectServiceClient-universe-domain-snippet Override sql_v1::SqlConnectServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_connect_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlDatabasesServiceClient-universe-domain-snippet Override sql_v1::SqlDatabasesServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_databases_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlEventsServiceClient-universe-domain-snippet Override sql_v1::SqlEventsServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_events_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlFlagsServiceClient-universe-domain-snippet Override sql_v1::SqlFlagsServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_flags_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlIamPoliciesServiceClient-universe-domain-snippet Override sql_v1::SqlIamPoliciesServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_iam_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlInstanceNamesServiceClient-universe-domain-snippet Override sql_v1::SqlInstanceNamesServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_instance_names_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlInstancesServiceClient-universe-domain-snippet Override sql_v1::SqlInstancesServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_instances_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlOperationsServiceClient-universe-domain-snippet Override sql_v1::SqlOperationsServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_operations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlRegionsServiceClient-universe-domain-snippet Override sql_v1::SqlRegionsServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_regions_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlSslCertsServiceClient-universe-domain-snippet Override sql_v1::SqlSslCertsServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_ssl_certs_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlTiersServiceClient-universe-domain-snippet Override sql_v1::SqlTiersServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_tiers_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlUsersServiceClient-universe-domain-snippet Override sql_v1::SqlUsersServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_users_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

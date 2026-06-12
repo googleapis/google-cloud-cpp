@@ -42,7 +42,7 @@ Options GlobalAddressesDefaultOptions(Options options) {
           compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>()) {
     options.set<compute_global_addresses_v1::GlobalAddressesRetryPolicyOption>(
         compute_global_addresses_v1::GlobalAddressesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

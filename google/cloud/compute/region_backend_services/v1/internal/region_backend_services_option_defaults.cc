@@ -46,7 +46,7 @@ Options RegionBackendServicesDefaultOptions(Options options) {
                     RegionBackendServicesRetryPolicyOption>(
         compute_region_backend_services_v1::
             RegionBackendServicesLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_backend_services_v1::

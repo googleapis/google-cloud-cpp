@@ -28,10 +28,6 @@ add_library(
     grpc_error_delegate.h
     grpc_options.cc
     grpc_options.h
-    grpc_utils/async_operation.h
-    grpc_utils/completion_queue.h
-    grpc_utils/grpc_error_delegate.h
-    grpc_utils/version.h
     iam_updater.h
     internal/async_connection_ready.cc
     internal/async_connection_ready.h
@@ -78,6 +74,8 @@ add_library(
     internal/grpc_async_access_token_cache.h
     internal/grpc_channel_credentials_authentication.cc
     internal/grpc_channel_credentials_authentication.h
+    internal/grpc_compute_engine_authentication.cc
+    internal/grpc_compute_engine_authentication.h
     internal/grpc_impersonate_service_account.cc
     internal/grpc_impersonate_service_account.h
     internal/grpc_metadata_view.h
@@ -188,9 +186,8 @@ google_cloud_cpp_add_pkgconfig(
     "absl_time_zone"
     "absl_variant"
     "openssl")
-
 # Create and install the CMake configuration files.
-configure_file("grpc_utils/config.cmake.in"
+configure_file("config-grpc-utils.cmake.in"
                "google_cloud_cpp_grpc_utils-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_grpc_utils-config-version.cmake"
@@ -261,6 +258,7 @@ if (BUILD_TESTING)
         internal/grpc_api_key_authentication_test.cc
         internal/grpc_async_access_token_cache_test.cc
         internal/grpc_channel_credentials_authentication_test.cc
+        internal/grpc_compute_engine_authentication_test.cc
         internal/grpc_opentelemetry_test.cc
         internal/grpc_request_metadata_test.cc
         internal/grpc_service_account_authentication_test.cc

@@ -46,7 +46,7 @@ Options NetworkEndpointGroupsDefaultOptions(Options options) {
                     NetworkEndpointGroupsRetryPolicyOption>(
         compute_network_endpoint_groups_v1::
             NetworkEndpointGroupsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_network_endpoint_groups_v1::

@@ -373,6 +373,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=VERBOSE_FLAG=${VERBOSE_FLAG:-}"
     "--env=USE_BAZEL_VERSION=${USE_BAZEL_VERSION:-}"
     "--env=LIBRARIES=${LIBRARIES:-}"
+    "--env=INTEGRATION_LIBRARIES=${INTEGRATION_LIBRARIES:-}"
     "--env=SHARD=${SHARD:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.

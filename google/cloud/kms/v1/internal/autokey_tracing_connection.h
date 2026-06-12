@@ -28,8 +28,6 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AutokeyTracingConnection : public kms_v1::AutokeyConnection {
  public:
   ~AutokeyTracingConnection() override = default;
@@ -76,8 +74,6 @@ class AutokeyTracingConnection : public kms_v1::AutokeyConnection {
  private:
   std::shared_ptr<kms_v1::AutokeyConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

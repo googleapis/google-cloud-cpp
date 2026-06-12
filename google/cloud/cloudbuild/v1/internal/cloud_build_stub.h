@@ -24,10 +24,13 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -177,6 +180,12 @@ class CloudBuildStub {
   ListWorkerPools(
       grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+  GetDefaultServiceAccount(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -345,6 +354,12 @@ class DefaultCloudBuildStub : public CloudBuildStub {
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request)
       override;
 
+  StatusOr<google::devtools::cloudbuild::v1::DefaultServiceAccount>
+  GetDefaultServiceAccount(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::GetDefaultServiceAccountRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -368,5 +383,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_STUB_H

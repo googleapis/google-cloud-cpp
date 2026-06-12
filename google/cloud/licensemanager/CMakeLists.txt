@@ -28,6 +28,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         NAME licensemanager_quickstart
         COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
                 $<TARGET_FILE:licensemanager_quickstart> GOOGLE_CLOUD_PROJECT)
-    set_tests_properties(licensemanager_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    # TODO(#15648): Re-enable when RPC is successful again.
+    set_tests_properties(
+        licensemanager_quickstart PROPERTIES DISABLED "True" LABELS
+                                             "integration-test;quickstart")
 endif ()

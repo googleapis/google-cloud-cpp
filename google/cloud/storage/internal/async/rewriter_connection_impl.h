@@ -17,12 +17,13 @@
 
 #include "google/cloud/storage/async/rewriter_connection.h"
 #include "google/cloud/storage/internal/storage_stub.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/invocation_id_generator.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <memory>
 
 namespace google {
@@ -31,7 +32,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class RewriterConnectionImpl
-    : public storage_experimental::AsyncRewriterConnection,
+    : public storage::AsyncRewriterConnection,
       public std::enable_shared_from_this<RewriterConnectionImpl> {
  public:
   RewriterConnectionImpl(CompletionQueue cq, std::shared_ptr<StorageStub> stub,
@@ -53,6 +54,7 @@ class RewriterConnectionImpl
   std::shared_ptr<StorageStub> stub_;
   google::cloud::internal::ImmutableOptions current_;
   google::storage::v2::RewriteObjectRequest request_;
+  google::cloud::internal::InvocationIdGenerator invocation_id_generator_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

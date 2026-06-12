@@ -36,10 +36,9 @@ using WriterResultFactory =
     std::function<future<StatusOr<WriteObject::WriteResult>>(
         google::storage::v2::BidiWriteObjectRequest)>;
 
-std::unique_ptr<storage_experimental::AsyncWriterConnection>
-MakeWriterConnectionResumed(
+std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionResumed(
     WriterResultFactory factory,
-    std::unique_ptr<storage_experimental::AsyncWriterConnection> impl,
+    std::unique_ptr<storage::AsyncWriterConnection> impl,
     google::storage::v2::BidiWriteObjectRequest initial_request,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
     google::storage::v2::BidiWriteObjectResponse const& first_response,

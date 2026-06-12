@@ -22,10 +22,13 @@
 #include "google/cloud/networkservices/v1/internal/dep_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -138,6 +141,54 @@ class DepServiceLogging : public DepServiceStub {
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
           request) override;
 
+  StatusOr<google::cloud::networkservices::v1::ListLbEdgeExtensionsResponse>
+  ListLbEdgeExtensions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListLbEdgeExtensionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
+  GetLbEdgeExtension(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateLbEdgeExtensionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteLbEdgeExtension(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLbEdgeExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteLbEdgeExtensionRequest const&
+          request) override;
+
   StatusOr<google::cloud::networkservices::v1::ListAuthzExtensionsResponse>
   ListAuthzExtensions(
       grpc::ClientContext& context, Options const& options,
@@ -243,5 +294,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkservices_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_INTERNAL_DEP_LOGGING_DECORATOR_H

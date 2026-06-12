@@ -17,9 +17,12 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_auth_decorator.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -468,6 +471,24 @@ StatusOr<google::longrunning::Operation> DeveloperConnectAuth::DeleteSelf(
   return child_->DeleteSelf(context, options, request);
 }
 
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DeveloperConnectAuth::StartOAuth(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::StartOAuthRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartOAuth(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DeveloperConnectAuth::FinishOAuth(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FinishOAuthRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FinishOAuth(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DeveloperConnectAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -558,3 +579,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace developerconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

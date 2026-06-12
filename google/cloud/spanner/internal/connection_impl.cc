@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
@@ -357,7 +357,8 @@ spanner::BatchedCommitResult FromProto(
 }
 
 template <typename T>
-absl::optional<T> GetRandomElement(protobuf::RepeatedPtrField<T> const& m) {
+absl::optional<T> GetRandomElement(
+    google::protobuf::RepeatedPtrField<T> const& m) {
   if (m.empty()) return absl::nullopt;
   std::uniform_int_distribution<decltype(m.size())> d(0, m.size() - 1);
   auto rng = internal::MakeDefaultPRNG();
@@ -1445,3 +1446,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

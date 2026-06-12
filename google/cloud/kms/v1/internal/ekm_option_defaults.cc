@@ -40,7 +40,7 @@ Options EkmServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_v1::EkmServiceRetryPolicyOption>()) {
     options.set<kms_v1::EkmServiceRetryPolicyOption>(
-        kms_v1::EkmServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        kms_v1::EkmServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<kms_v1::EkmServiceBackoffPolicyOption>()) {

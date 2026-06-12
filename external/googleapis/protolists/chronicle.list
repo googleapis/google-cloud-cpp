@@ -1,5 +1,12 @@
-@com_google_googleapis//google/cloud/chronicle/v1:data_access_control.proto
-@com_google_googleapis//google/cloud/chronicle/v1:entity.proto
-@com_google_googleapis//google/cloud/chronicle/v1:instance.proto
-@com_google_googleapis//google/cloud/chronicle/v1:reference_list.proto
-@com_google_googleapis//google/cloud/chronicle/v1:rule.proto
+@googleapis//google/cloud/chronicle/v1:big_query_export.proto
+@googleapis//google/cloud/chronicle/v1:dashboard_chart.proto
+@googleapis//google/cloud/chronicle/v1:dashboard_query.proto
+@googleapis//google/cloud/chronicle/v1:data_access_control.proto
+@googleapis//google/cloud/chronicle/v1:data_table.proto
+@googleapis//google/cloud/chronicle/v1:entity.proto
+@googleapis//google/cloud/chronicle/v1:featured_content_metadata.proto
+@googleapis//google/cloud/chronicle/v1:featured_content_native_dashboard.proto
+@googleapis//google/cloud/chronicle/v1:instance.proto
+@googleapis//google/cloud/chronicle/v1:native_dashboard.proto
+@googleapis//google/cloud/chronicle/v1:reference_list.proto
+@googleapis//google/cloud/chronicle/v1:rule.proto

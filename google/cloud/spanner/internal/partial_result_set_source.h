@@ -23,10 +23,10 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include "google/protobuf/struct.pb.h"
+#include "google/spanner/v1/spanner.pb.h"
 #include <google/protobuf/arena.h>
 #include <google/protobuf/repeated_field.h>
-#include <google/protobuf/struct.pb.h>
-#include <google/spanner/v1/spanner.pb.h>
 #include <cstddef>
 #include <deque>
 #include <memory>
@@ -115,8 +115,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   int usable_rows_ = 0;
 
   // Values that can be assembled into `Row`s ready to be returned by
-  // `NextRow()`.
-  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>>
+  // `NextRow()`. This is a pointer to an arena-allocated RepeatedPtrField.
+  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>*>
       values_;
 
   // `space_used` is the sum of the SpaceUsedLong() by the values at indexes [0,

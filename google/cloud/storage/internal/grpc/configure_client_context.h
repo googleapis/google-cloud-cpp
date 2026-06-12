@@ -20,7 +20,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/rest_context.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <grpcpp/client_context.h>
 
 namespace google {
@@ -28,9 +28,17 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+struct RoutingHeaderOptions {
+  // The routing token to be included in x-goog-request-params.
+  std::string routing_token;
+};
+
 /// Configures @p ctx using @p context.
 void AddIdempotencyToken(grpc::ClientContext& ctx,
                          rest_internal::RestContext const& context);
+
+/// Configures @p ctx using @p token.
+void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token);
 
 /**
  * Inject request query parameters into grpc::ClientContext.
@@ -77,11 +85,13 @@ void ApplyRoutingHeaders(
 
 /// @copydoc ApplyRoutingHeaders(grpc::ClientContext&,)
 void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         google::storage::v2::WriteObjectSpec const& spec);
+                         google::storage::v2::WriteObjectSpec const& spec,
+                         RoutingHeaderOptions const& options = {});
 
 /// @copydoc ApplyRoutingHeaders(grpc::ClientContext&,)
 void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         google::storage::v2::AppendObjectSpec const& spec);
+                         google::storage::v2::AppendObjectSpec const& spec,
+                         RoutingHeaderOptions const& options = {});
 
 /**
  * The generated `StorageMetadata` stub can not handle dynamic routing headers

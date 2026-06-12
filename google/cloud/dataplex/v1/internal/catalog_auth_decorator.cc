@@ -17,9 +17,12 @@
 // source: google/cloud/dataplex/v1/catalog.proto
 
 #include "google/cloud/dataplex/v1/internal/catalog_auth_decorator.h"
-#include <google/cloud/dataplex/v1/catalog.grpc.pb.h>
+#include "google/cloud/dataplex/v1/catalog.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -386,6 +389,14 @@ StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::LookupEntry(
   return child_->LookupEntry(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::ModifyEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ModifyEntry(context, options, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
 CatalogServiceAuth::SearchEntries(
     grpc::ClientContext& context, Options const& options,
@@ -447,6 +458,162 @@ Status CatalogServiceAuth::CancelMetadataJob(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelMetadataJob(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceAuth::CreateEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CreateEntryLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEntryLink(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceAuth::UpdateEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEntryLink(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceAuth::DeleteEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEntryLink(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupEntryLinksResponse>
+CatalogServiceAuth::LookupEntryLinks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::LookupEntryLinksRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->LookupEntryLinks(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+CatalogServiceAuth::LookupContext(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::LookupContextRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->LookupContext(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceAuth::GetEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetEntryLinkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetEntryLink(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceAuth::AsyncCreateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateMetadataFeed(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMetadataFeed(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceAuth::GetMetadataFeed(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetMetadataFeed(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataFeedsResponse>
+CatalogServiceAuth::ListMetadataFeeds(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListMetadataFeedsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMetadataFeeds(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceAuth::AsyncDeleteMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteMetadataFeed(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::DeleteMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMetadataFeed(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceAuth::AsyncUpdateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateMetadataFeed(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::UpdateMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMetadataFeed(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -564,3 +731,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

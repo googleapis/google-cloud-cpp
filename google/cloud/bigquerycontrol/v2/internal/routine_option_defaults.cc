@@ -41,7 +41,7 @@ Options RoutineServiceDefaultOptions(Options options) {
   if (!options.has<bigquerycontrol_v2::RoutineServiceRetryPolicyOption>()) {
     options.set<bigquerycontrol_v2::RoutineServiceRetryPolicyOption>(
         bigquerycontrol_v2::RoutineServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<bigquerycontrol_v2::RoutineServiceBackoffPolicyOption>()) {

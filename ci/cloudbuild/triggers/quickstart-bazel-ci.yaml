@@ -12,14 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-03-29T23:07:34.524944837Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 1967685b-bdf1-48e2-abe5-593db92382ef
+    branch: main
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: quickstart-bazel-ci
 substitutions:

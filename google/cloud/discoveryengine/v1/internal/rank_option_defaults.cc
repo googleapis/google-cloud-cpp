@@ -42,7 +42,7 @@ Options RankServiceDefaultOptions(Options options) {
   if (!options.has<discoveryengine_v1::RankServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::RankServiceRetryPolicyOption>(
         discoveryengine_v1::RankServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<discoveryengine_v1::RankServiceBackoffPolicyOption>()) {

@@ -17,9 +17,12 @@
 // source: google/cloud/dataplex/v1/datascans.proto
 
 #include "google/cloud/dataplex/v1/internal/data_scan_auth_decorator.h"
-#include <google/cloud/dataplex/v1/datascans.grpc.pb.h>
+#include "google/cloud/dataplex/v1/datascans.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -160,6 +163,15 @@ DataScanServiceAuth::ListDataScanJobs(
   return child_->ListDataScanJobs(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceAuth::CancelDataScanJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelDataScanJob(context, options, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceAuth::GenerateDataQualityRules(
     grpc::ClientContext& context, Options const& options,
@@ -285,3 +297,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

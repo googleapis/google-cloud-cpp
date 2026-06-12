@@ -21,8 +21,8 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -132,7 +132,6 @@ std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
 MakeDefaultInstanceAdminConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

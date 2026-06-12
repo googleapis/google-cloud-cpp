@@ -46,5 +46,6 @@ application.
 - @ref billing-override-retry - describes how to change the default retry
   policies.
 - @ref billing-env - describes environment variables that can configure the behavior of the library.
+- @ref billing-override-universe-domain - describes how to override the default universe domain.
 
 */

@@ -28,8 +28,6 @@ namespace cloud {
 namespace vision_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ImageAnnotatorTracingConnection
     : public vision_v1::ImageAnnotatorConnection {
  public:
@@ -83,8 +81,6 @@ class ImageAnnotatorTracingConnection
  private:
   std::shared_ptr<vision_v1::ImageAnnotatorConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

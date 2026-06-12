@@ -1,5 +1,4 @@
 /*!
-
 @page datacatalog-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
@@ -9,6 +8,10 @@ environment variables are convenient when troubleshooting problems.
 @section datacatalog-env-endpoint Endpoint Overrides
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_CONFIG_MANAGEMENT_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "datalineage.googleapis.com")
+  used by `MakeConfigManagementServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_DATA_CATALOG_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "datacatalog.googleapis.com")

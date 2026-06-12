@@ -40,7 +40,7 @@ Options DomainsDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<domains_v1::DomainsRetryPolicyOption>()) {
     options.set<domains_v1::DomainsRetryPolicyOption>(
-        domains_v1::DomainsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        domains_v1::DomainsLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<domains_v1::DomainsBackoffPolicyOption>()) {

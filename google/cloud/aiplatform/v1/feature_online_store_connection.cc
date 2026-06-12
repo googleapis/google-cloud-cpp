@@ -62,6 +62,12 @@ FeatureOnlineStoreServiceConnection::AsyncFeatureViewDirectWrite() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+FeatureOnlineStoreServiceConnection::GenerateFetchAccessToken(
+    google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 FeatureOnlineStoreServiceConnection::ListLocations(
     google::cloud::location::

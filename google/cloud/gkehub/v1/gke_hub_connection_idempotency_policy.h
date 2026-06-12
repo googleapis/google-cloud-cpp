@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/gkehub/v1/service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/gkehub/v1/service.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -38,6 +38,9 @@ class GkeHubConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListMemberships(
       google::cloud::gkehub::v1::ListMembershipsRequest request);
+
+  virtual google::cloud::Idempotency ListBoundMemberships(
+      google::cloud::gkehub::v1::ListBoundMembershipsRequest request);
 
   virtual google::cloud::Idempotency ListFeatures(
       google::cloud::gkehub::v1::ListFeaturesRequest request);
@@ -68,6 +71,110 @@ class GkeHubConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GenerateConnectManifest(
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request);
+
+  virtual google::cloud::Idempotency CreateFleet(
+      google::cloud::gkehub::v1::CreateFleetRequest const& request);
+
+  virtual google::cloud::Idempotency GetFleet(
+      google::cloud::gkehub::v1::GetFleetRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateFleet(
+      google::cloud::gkehub::v1::UpdateFleetRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteFleet(
+      google::cloud::gkehub::v1::DeleteFleetRequest const& request);
+
+  virtual google::cloud::Idempotency ListFleets(
+      google::cloud::gkehub::v1::ListFleetsRequest request);
+
+  virtual google::cloud::Idempotency GetScopeNamespace(
+      google::cloud::gkehub::v1::GetScopeNamespaceRequest const& request);
+
+  virtual google::cloud::Idempotency CreateScopeNamespace(
+      google::cloud::gkehub::v1::CreateScopeNamespaceRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateScopeNamespace(
+      google::cloud::gkehub::v1::UpdateScopeNamespaceRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteScopeNamespace(
+      google::cloud::gkehub::v1::DeleteScopeNamespaceRequest const& request);
+
+  virtual google::cloud::Idempotency ListScopeNamespaces(
+      google::cloud::gkehub::v1::ListScopeNamespacesRequest request);
+
+  virtual google::cloud::Idempotency GetScopeRBACRoleBinding(
+      google::cloud::gkehub::v1::GetScopeRBACRoleBindingRequest const& request);
+
+  virtual google::cloud::Idempotency CreateScopeRBACRoleBinding(
+      google::cloud::gkehub::v1::CreateScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateScopeRBACRoleBinding(
+      google::cloud::gkehub::v1::UpdateScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteScopeRBACRoleBinding(
+      google::cloud::gkehub::v1::DeleteScopeRBACRoleBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListScopeRBACRoleBindings(
+      google::cloud::gkehub::v1::ListScopeRBACRoleBindingsRequest request);
+
+  virtual google::cloud::Idempotency GetScope(
+      google::cloud::gkehub::v1::GetScopeRequest const& request);
+
+  virtual google::cloud::Idempotency CreateScope(
+      google::cloud::gkehub::v1::CreateScopeRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateScope(
+      google::cloud::gkehub::v1::UpdateScopeRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteScope(
+      google::cloud::gkehub::v1::DeleteScopeRequest const& request);
+
+  virtual google::cloud::Idempotency ListScopes(
+      google::cloud::gkehub::v1::ListScopesRequest request);
+
+  virtual google::cloud::Idempotency ListPermittedScopes(
+      google::cloud::gkehub::v1::ListPermittedScopesRequest request);
+
+  virtual google::cloud::Idempotency GetMembershipBinding(
+      google::cloud::gkehub::v1::GetMembershipBindingRequest const& request);
+
+  virtual google::cloud::Idempotency CreateMembershipBinding(
+      google::cloud::gkehub::v1::CreateMembershipBindingRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateMembershipBinding(
+      google::cloud::gkehub::v1::UpdateMembershipBindingRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteMembershipBinding(
+      google::cloud::gkehub::v1::DeleteMembershipBindingRequest const& request);
+
+  virtual google::cloud::Idempotency ListMembershipBindings(
+      google::cloud::gkehub::v1::ListMembershipBindingsRequest request);
+
+  virtual google::cloud::Idempotency GetMembershipRBACRoleBinding(
+      google::cloud::gkehub::v1::GetMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateMembershipRBACRoleBinding(
+      google::cloud::gkehub::v1::CreateMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateMembershipRBACRoleBinding(
+      google::cloud::gkehub::v1::UpdateMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteMembershipRBACRoleBinding(
+      google::cloud::gkehub::v1::DeleteMembershipRBACRoleBindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListMembershipRBACRoleBindings(
+      google::cloud::gkehub::v1::ListMembershipRBACRoleBindingsRequest request);
+
+  virtual google::cloud::Idempotency GenerateMembershipRBACRoleBindingYAML(
+      google::cloud::gkehub::v1::
+          GenerateMembershipRBACRoleBindingYAMLRequest const& request);
 };
 
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>

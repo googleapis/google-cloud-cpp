@@ -32,8 +32,8 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         return()
     endif ()
 
-    cmake_parse_arguments(opt "RECURSIVE;THREADED" "" "INPUTS;TAGFILES;DEPENDS"
-                          ${ARGN})
+    cmake_parse_arguments(opt "RECURSIVE;THREADED" ""
+                          "INPUTS;TAGFILES;DEPENDS;FILE_PATTERNS" ${ARGN})
 
     # Options controlling the inputs into Doxygen
     set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS ${_opt_INPUTS})
@@ -59,7 +59,11 @@ function (google_cloud_cpp_doxygen_targets_impl library)
                 " using DOXYGEN_NUM_PROC_THREADS=${DOXYGEN_NUM_PROC_THREADS}")
     endif ()
 
-    set(DOXYGEN_FILE_PATTERNS "*.dox" "*.h")
+    if (_opt_FILE_PATTERNS)
+        set(DOXYGEN_FILE_PATTERNS ${_opt_FILE_PATTERNS})
+    else ()
+        set(DOXYGEN_FILE_PATTERNS "*.dox" "*.h")
+    endif ()
     set(DOXYGEN_EXCLUDE_PATTERNS
         # We should skip internal directories to speed up the build. We do not
         # use "*/internal/*" because Doxygen breaks when we include

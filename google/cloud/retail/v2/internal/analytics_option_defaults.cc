@@ -41,7 +41,7 @@ Options AnalyticsServiceDefaultOptions(Options options) {
   if (!options.has<retail_v2::AnalyticsServiceRetryPolicyOption>()) {
     options.set<retail_v2::AnalyticsServiceRetryPolicyOption>(
         retail_v2::AnalyticsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<retail_v2::AnalyticsServiceBackoffPolicyOption>()) {

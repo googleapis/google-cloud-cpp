@@ -27,8 +27,6 @@ namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SessionControllerTracingConnection::SessionControllerTracingConnection(
     std::shared_ptr<dataproc_v1::SessionControllerConnection> child)
     : child_(std::move(child)) {}
@@ -202,17 +200,13 @@ Status SessionControllerTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<dataproc_v1::SessionControllerConnection>
 MakeSessionControllerTracingConnection(
     std::shared_ptr<dataproc_v1::SessionControllerConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<SessionControllerTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

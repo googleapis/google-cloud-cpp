@@ -42,7 +42,7 @@ Options FleetRoutingDefaultOptions(Options options) {
   if (!options.has<optimization_v1::FleetRoutingRetryPolicyOption>()) {
     options.set<optimization_v1::FleetRoutingRetryPolicyOption>(
         optimization_v1::FleetRoutingLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<optimization_v1::FleetRoutingBackoffPolicyOption>()) {

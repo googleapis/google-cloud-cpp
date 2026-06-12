@@ -27,8 +27,6 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 JobsTracingConnection::JobsTracingConnection(
     std::shared_ptr<run_v2::JobsConnection> child)
     : child_(std::move(child)) {}
@@ -187,15 +185,11 @@ StatusOr<google::longrunning::Operation> JobsTracingConnection::WaitOperation(
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<run_v2::JobsConnection> MakeJobsTracingConnection(
     std::shared_ptr<run_v2::JobsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<JobsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

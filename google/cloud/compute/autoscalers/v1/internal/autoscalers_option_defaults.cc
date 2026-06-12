@@ -41,7 +41,7 @@ Options AutoscalersDefaultOptions(Options options) {
   if (!options.has<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()) {
     options.set<compute_autoscalers_v1::AutoscalersRetryPolicyOption>(
         compute_autoscalers_v1::AutoscalersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()) {

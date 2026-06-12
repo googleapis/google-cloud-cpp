@@ -41,7 +41,7 @@ Options DomainMappingsDefaultOptions(Options options) {
   if (!options.has<appengine_v1::DomainMappingsRetryPolicyOption>()) {
     options.set<appengine_v1::DomainMappingsRetryPolicyOption>(
         appengine_v1::DomainMappingsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<appengine_v1::DomainMappingsBackoffPolicyOption>()) {

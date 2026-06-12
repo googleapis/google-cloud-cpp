@@ -17,12 +17,15 @@
 // source: google/cloud/networksecurity/v1/network_security.proto
 
 #include "google/cloud/networksecurity/v1/internal/network_security_stub.h"
+#include "google/cloud/networksecurity/v1/network_security.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/networksecurity/v1/network_security.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -156,6 +159,144 @@ DefaultNetworkSecurityStub::DeleteAuthorizationPolicy(
   google::longrunning::Operation response;
   auto status =
       grpc_stub_->DeleteAuthorizationPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::
+             ListBackendAuthenticationConfigsResponse>
+DefaultNetworkSecurityStub::ListBackendAuthenticationConfigs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::
+        ListBackendAuthenticationConfigsRequest const& request) {
+  google::cloud::networksecurity::v1::ListBackendAuthenticationConfigsResponse
+      response;
+  auto status = grpc_stub_->ListBackendAuthenticationConfigs(&context, request,
+                                                             &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+DefaultNetworkSecurityStub::GetBackendAuthenticationConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::
+        GetBackendAuthenticationConfigRequest const& request) {
+  google::cloud::networksecurity::v1::BackendAuthenticationConfig response;
+  auto status =
+      grpc_stub_->GetBackendAuthenticationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncCreateBackendAuthenticationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        CreateBackendAuthenticationConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::
+          CreateBackendAuthenticationConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 CreateBackendAuthenticationConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateBackendAuthenticationConfig(context,
+                                                                  request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateBackendAuthenticationConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        CreateBackendAuthenticationConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackendAuthenticationConfig(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncUpdateBackendAuthenticationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        UpdateBackendAuthenticationConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::
+          UpdateBackendAuthenticationConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 UpdateBackendAuthenticationConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateBackendAuthenticationConfig(context,
+                                                                  request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateBackendAuthenticationConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        UpdateBackendAuthenticationConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackendAuthenticationConfig(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncDeleteBackendAuthenticationConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        DeleteBackendAuthenticationConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::
+          DeleteBackendAuthenticationConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 DeleteBackendAuthenticationConfigRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteBackendAuthenticationConfig(context,
+                                                                  request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteBackendAuthenticationConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        DeleteBackendAuthenticationConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackendAuthenticationConfig(&context, request,
+                                                              &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -412,6 +553,648 @@ DefaultNetworkSecurityStub::DeleteClientTlsPolicy(
   return response;
 }
 
+StatusOr<
+    google::cloud::networksecurity::v1::ListGatewaySecurityPoliciesResponse>
+DefaultNetworkSecurityStub::ListGatewaySecurityPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::
+        ListGatewaySecurityPoliciesRequest const& request) {
+  google::cloud::networksecurity::v1::ListGatewaySecurityPoliciesResponse
+      response;
+  auto status =
+      grpc_stub_->ListGatewaySecurityPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+DefaultNetworkSecurityStub::GetGatewaySecurityPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::GetGatewaySecurityPolicyRequest const&
+        request) {
+  google::cloud::networksecurity::v1::GatewaySecurityPolicy response;
+  auto status =
+      grpc_stub_->GetGatewaySecurityPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncCreateGatewaySecurityPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::CreateGatewaySecurityPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 CreateGatewaySecurityPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateGatewaySecurityPolicy(context, request,
+                                                            cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateGatewaySecurityPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateGatewaySecurityPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncUpdateGatewaySecurityPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::UpdateGatewaySecurityPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 UpdateGatewaySecurityPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateGatewaySecurityPolicy(context, request,
+                                                            cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateGatewaySecurityPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateGatewaySecurityPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncDeleteGatewaySecurityPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::DeleteGatewaySecurityPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 DeleteGatewaySecurityPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteGatewaySecurityPolicy(context, request,
+                                                            cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteGatewaySecurityPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteGatewaySecurityPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::networksecurity::v1::ListGatewaySecurityPolicyRulesResponse>
+DefaultNetworkSecurityStub::ListGatewaySecurityPolicyRules(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::
+        ListGatewaySecurityPolicyRulesRequest const& request) {
+  google::cloud::networksecurity::v1::ListGatewaySecurityPolicyRulesResponse
+      response;
+  auto status =
+      grpc_stub_->ListGatewaySecurityPolicyRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+DefaultNetworkSecurityStub::GetGatewaySecurityPolicyRule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::
+        GetGatewaySecurityPolicyRuleRequest const& request) {
+  google::cloud::networksecurity::v1::GatewaySecurityPolicyRule response;
+  auto status =
+      grpc_stub_->GetGatewaySecurityPolicyRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncCreateGatewaySecurityPolicyRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::networksecurity::v1::
+                                        CreateGatewaySecurityPolicyRuleRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 CreateGatewaySecurityPolicyRuleRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateGatewaySecurityPolicyRule(context,
+                                                                request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateGatewaySecurityPolicyRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        CreateGatewaySecurityPolicyRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateGatewaySecurityPolicyRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncUpdateGatewaySecurityPolicyRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::networksecurity::v1::
+                                        UpdateGatewaySecurityPolicyRuleRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 UpdateGatewaySecurityPolicyRuleRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateGatewaySecurityPolicyRule(context,
+                                                                request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateGatewaySecurityPolicyRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        UpdateGatewaySecurityPolicyRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateGatewaySecurityPolicyRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncDeleteGatewaySecurityPolicyRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::networksecurity::v1::
+                                        DeleteGatewaySecurityPolicyRuleRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 DeleteGatewaySecurityPolicyRuleRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteGatewaySecurityPolicyRule(context,
+                                                                request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteGatewaySecurityPolicyRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::
+        DeleteGatewaySecurityPolicyRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteGatewaySecurityPolicyRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::ListUrlListsResponse>
+DefaultNetworkSecurityStub::ListUrlLists(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::ListUrlListsRequest const& request) {
+  google::cloud::networksecurity::v1::ListUrlListsResponse response;
+  auto status = grpc_stub_->ListUrlLists(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::UrlList>
+DefaultNetworkSecurityStub::GetUrlList(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::GetUrlListRequest const& request) {
+  google::cloud::networksecurity::v1::UrlList response;
+  auto status = grpc_stub_->GetUrlList(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncCreateUrlList(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::CreateUrlListRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::CreateUrlListRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::CreateUrlListRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateUrlList(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateUrlList(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::CreateUrlListRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateUrlList(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncUpdateUrlList(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::UpdateUrlListRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::UpdateUrlListRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::UpdateUrlListRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateUrlList(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateUrlList(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::UpdateUrlListRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateUrlList(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncDeleteUrlList(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::DeleteUrlListRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::DeleteUrlListRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::DeleteUrlListRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteUrlList(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteUrlList(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::DeleteUrlListRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteUrlList(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::ListTlsInspectionPoliciesResponse>
+DefaultNetworkSecurityStub::ListTlsInspectionPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::ListTlsInspectionPoliciesRequest const&
+        request) {
+  google::cloud::networksecurity::v1::ListTlsInspectionPoliciesResponse
+      response;
+  auto status =
+      grpc_stub_->ListTlsInspectionPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+DefaultNetworkSecurityStub::GetTlsInspectionPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::GetTlsInspectionPolicyRequest const&
+        request) {
+  google::cloud::networksecurity::v1::TlsInspectionPolicy response;
+  auto status =
+      grpc_stub_->GetTlsInspectionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncCreateTlsInspectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::CreateTlsInspectionPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::CreateTlsInspectionPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 CreateTlsInspectionPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateTlsInspectionPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateTlsInspectionPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::CreateTlsInspectionPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateTlsInspectionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncUpdateTlsInspectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::UpdateTlsInspectionPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::UpdateTlsInspectionPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 UpdateTlsInspectionPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateTlsInspectionPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateTlsInspectionPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::UpdateTlsInspectionPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateTlsInspectionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncDeleteTlsInspectionPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::DeleteTlsInspectionPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::DeleteTlsInspectionPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::
+                 DeleteTlsInspectionPolicyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteTlsInspectionPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteTlsInspectionPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::DeleteTlsInspectionPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteTlsInspectionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::ListAuthzPoliciesResponse>
+DefaultNetworkSecurityStub::ListAuthzPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::ListAuthzPoliciesRequest const&
+        request) {
+  google::cloud::networksecurity::v1::ListAuthzPoliciesResponse response;
+  auto status = grpc_stub_->ListAuthzPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>
+DefaultNetworkSecurityStub::GetAuthzPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networksecurity::v1::GetAuthzPolicyRequest const& request) {
+  google::cloud::networksecurity::v1::AuthzPolicy response;
+  auto status = grpc_stub_->GetAuthzPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncCreateAuthzPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::CreateAuthzPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAuthzPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateAuthzPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAuthzPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncUpdateAuthzPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAuthzPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateAuthzPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAuthzPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkSecurityStub::AsyncDeleteAuthzPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAuthzPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteAuthzPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAuthzPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultNetworkSecurityStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -560,3 +1343,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networksecurity_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

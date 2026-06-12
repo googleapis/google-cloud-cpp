@@ -21,7 +21,7 @@
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/internal/algorithm.h"
 #include "absl/strings/str_split.h"
-#include <google/api/monitored_resource.pb.h>
+#include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
@@ -45,6 +45,19 @@ ResourceLabels ResourceLabelsFromTableName(std::string const& table_name) {
   ResourceLabels resource_labels = {
       std::string(name_parts[1]), std::string(name_parts[3]),
       std::string(name_parts[5]), "" /*=cluster*/, "" /*=zone*/};
+  return resource_labels;
+}
+
+ResourceLabels ResourceLabelsFromInstanceName(
+    std::string const& instance_name) {
+  // split instance_name into component pieces
+  // projects/<project>/instances/<instance>
+  std::vector<absl::string_view> name_parts =
+      absl::StrSplit(instance_name, '/');
+  if (name_parts.size() < 4) return {};
+  ResourceLabels resource_labels = {std::string(name_parts[1]),
+                                    std::string(name_parts[3]), "",
+                                    "" /*=cluster*/, "" /*=zone*/};
   return resource_labels;
 }
 
@@ -82,6 +95,16 @@ std::shared_ptr<OperationContext> OperationContextFactory::ReadModifyWriteRow(
   return std::make_shared<OperationContext>();
 }
 
+std::shared_ptr<OperationContext> OperationContextFactory::PrepareQuery(
+    std::string const&, std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
+std::shared_ptr<OperationContext> OperationContextFactory::ExecuteQuery(
+    std::string const&, std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
 std::shared_ptr<OperationContext> SimpleOperationContextFactory::ReadRow(
     std::string const&, std::string const&) {
   return std::make_shared<OperationContext>();
@@ -110,6 +133,16 @@ std::shared_ptr<OperationContext> SimpleOperationContextFactory::SampleRowKeys(
 std::shared_ptr<OperationContext>
 SimpleOperationContextFactory::ReadModifyWriteRow(std::string const&,
                                                   std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
+std::shared_ptr<OperationContext> SimpleOperationContextFactory::PrepareQuery(
+    std::string const&, std::string const&) {
+  return std::make_shared<OperationContext>();
+}
+
+std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQuery(
+    std::string const&, std::string const&) {
   return std::make_shared<OperationContext>();
 }
 
@@ -154,6 +187,12 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
   absl::call_once(read_modify_write_row_metrics_.once, [this, metric]() {
     read_modify_write_row_metrics_.metrics.push_back(metric);
   });
+  absl::call_once(prepare_query_metrics_.once, [this, metric]() {
+    prepare_query_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(execute_query_metrics_.once, [this, metric]() {
+    execute_query_metrics_.metrics.push_back(metric);
+  });
 }
 
 void MetricsOperationContextFactory::InitializeProvider(
@@ -175,15 +214,15 @@ void MetricsOperationContextFactory::InitializeProvider(
         auto& labels = *resource.mutable_labels();
         auto const& attributes = pda.attributes.GetAttributes();
         labels[kProjectLabel] =
-            absl::get<std::string>(attributes.find(kProjectLabel)->second);
+            std::get<std::string>(attributes.find(kProjectLabel)->second);
         labels[kInstanceLabel] =
-            absl::get<std::string>(attributes.find(kInstanceLabel)->second);
+            std::get<std::string>(attributes.find(kInstanceLabel)->second);
         labels[kTableLabel] =
-            absl::get<std::string>(attributes.find(kTableLabel)->second);
+            std::get<std::string>(attributes.find(kTableLabel)->second);
         labels[kClusterLabel] =
-            absl::get<std::string>(attributes.find(kClusterLabel)->second);
+            std::get<std::string>(attributes.find(kClusterLabel)->second);
         labels[kZoneLabel] =
-            absl::get<std::string>(attributes.find(kZoneLabel)->second);
+            std::get<std::string>(attributes.find(kZoneLabel)->second);
         return std::make_pair(labels[kProjectLabel], resource);
       };
 
@@ -237,6 +276,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -264,6 +304,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc, provider_));
     v.emplace_back(
@@ -292,6 +333,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -319,6 +361,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -347,6 +390,7 @@ MetricsOperationContextFactory::CheckAndMutateRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -375,6 +419,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -403,6 +448,7 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -422,6 +468,61 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
   return std::make_shared<OperationContext>(
       resource_labels, data_labels, read_modify_write_row_metrics_.metrics,
       clock_);
+}
+
+std::shared_ptr<OperationContext> MetricsOperationContextFactory::PrepareQuery(
+    std::string const& instance_name, std::string const& app_profile) {
+  auto constexpr kRpc = "PrepareQuery";
+  absl::call_once(prepare_query_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    swap(prepare_query_metrics_.metrics, v);
+  });
+
+  auto resource_labels = ResourceLabelsFromInstanceName(instance_name);
+  DataLabels data_labels = {kRpc,
+                            "false", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
+
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, prepare_query_metrics_.metrics, clock_);
+}
+
+std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
+    std::string const& instance_name, std::string const& app_profile) {
+  auto constexpr kRpc = "ExecuteQuery";
+  absl::call_once(execute_query_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc, provider_));
+    v.emplace_back(
+        std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    swap(execute_query_metrics_.metrics, v);
+  });
+
+  auto resource_labels = ResourceLabelsFromInstanceName(instance_name);
+  DataLabels data_labels = {kRpc,
+                            "true", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
+
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, execute_query_metrics_.metrics, clock_);
 }
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

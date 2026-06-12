@@ -28,8 +28,6 @@ namespace cloud {
 namespace vmmigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VmMigrationTracingConnection
     : public vmmigration_v1::VmMigrationConnection {
  public:
@@ -633,8 +631,6 @@ class VmMigrationTracingConnection
  private:
   std::shared_ptr<vmmigration_v1::VmMigrationConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

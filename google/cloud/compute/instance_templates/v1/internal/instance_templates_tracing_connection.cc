@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_instance_templates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 InstanceTemplatesTracingConnection::InstanceTemplatesTracingConnection(
     std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
         child)
@@ -178,18 +176,14 @@ InstanceTemplatesTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
 MakeInstanceTemplatesTracingConnection(
     std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<InstanceTemplatesTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

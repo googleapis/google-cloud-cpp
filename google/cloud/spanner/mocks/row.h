@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/version.h"
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -26,9 +27,6 @@ namespace google {
 namespace cloud {
 namespace spanner_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-// TODO(#9086): Delete this when the MakeRow() implementation is moved here.
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 /**
  * Creates a `spanner::Row` with the specified column names and values.
@@ -41,7 +39,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 inline spanner::Row MakeRow(
     std::vector<std::pair<std::string, spanner::Value>> pairs) {
-  return spanner::MakeTestRow(std::move(pairs));
+  auto values = std::vector<spanner::Value>{};
+  auto columns = std::make_shared<std::vector<std::string>>();
+  for (auto& p : pairs) {
+    values.emplace_back(std::move(p.second));
+    columns->emplace_back(std::move(p.first));
+  }
+  return spanner_internal::RowFriend::MakeRow(std::move(values),
+                                              std::move(columns));
 }
 
 /**
@@ -58,11 +63,13 @@ inline spanner::Row MakeRow(
  */
 template <typename... Ts>
 spanner::Row MakeRow(Ts&&... ts) {
-  return spanner::MakeTestRow(std::forward<Ts>(ts)...);
+  auto columns = std::make_shared<std::vector<std::string>>();
+  for (std::size_t i = 0; i < sizeof...(ts); ++i) {
+    columns->emplace_back(std::to_string(i));
+  }
+  std::vector<spanner::Value> v{spanner::Value(std::forward<Ts>(ts))...};
+  return spanner_internal::RowFriend::MakeRow(std::move(v), std::move(columns));
 }
-
-// TODO(#9086): Delete this when the MakeRow() implementation is moved here.
-#include "google/cloud/internal/diagnostics_pop.inc"
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_mocks

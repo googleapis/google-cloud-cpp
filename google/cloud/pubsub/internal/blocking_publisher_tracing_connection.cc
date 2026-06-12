@@ -13,39 +13,39 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/blocking_publisher_tracing_connection.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/status_or.h"
 #include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
 #include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_startoptions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 namespace {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
     pubsub::Topic const& topic, pubsub::Message const& m) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::semconv;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
   auto span = internal::MakeSpan(
       topic.topic_id() + " create",
-      {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingDestinationName, topic.topic_id()},
+      {{sc::messaging::kMessagingSystem, "gcp_pubsub"},
+       {sc::messaging::kMessagingDestinationName, topic.topic_id()},
        {"gcp.project_id", topic.project_id()},
-       {/*sc::kMessagingOperationType=*/"messaging.operation.type", "create"},
-       {/*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
+       {/*sc::messaging::kMessagingOperationType=*/"messaging.operation.type",
+        "create"},
+       {/*sc::messaging::kMessagingMessageEnvelopeSize=*/"messaging.message."
+                                                         "envelope.size",
         static_cast<std::int64_t>(MessageSize(m))},
-       {sc::kCodeFunction, "pubsub::BlockingPublisher::Publish"}},
+       {sc::code::kCodeFunctionName, "pubsub::BlockingPublisher::Publish"}},
       options);
   if (!m.ordering_key().empty()) {
     span->SetAttribute("messaging.gcp_pubsub.message.ordering_key",
@@ -91,16 +91,6 @@ MakeBlockingPublisherTracingConnection(
   return std::make_shared<BlockingPublisherTracingConnection>(
       std::move(connection));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<pubsub::BlockingPublisherConnection>
-MakeBlockingPublisherTracingConnection(
-    std::shared_ptr<pubsub::BlockingPublisherConnection> connection) {
-  return connection;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

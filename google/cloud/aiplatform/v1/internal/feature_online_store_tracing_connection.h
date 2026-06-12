@@ -28,8 +28,6 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class FeatureOnlineStoreServiceTracingConnection
     : public aiplatform_v1::FeatureOnlineStoreServiceConnection {
  public:
@@ -55,6 +53,11 @@ class FeatureOnlineStoreServiceTracingConnection
       google::cloud::aiplatform::v1::FeatureViewDirectWriteRequest,
       google::cloud::aiplatform::v1::FeatureViewDirectWriteResponse>>
   AsyncFeatureViewDirectWrite() override;
+
+  StatusOr<google::cloud::aiplatform::v1::GenerateFetchAccessTokenResponse>
+  GenerateFetchAccessToken(
+      google::cloud::aiplatform::v1::GenerateFetchAccessTokenRequest const&
+          request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
@@ -89,8 +92,6 @@ class FeatureOnlineStoreServiceTracingConnection
  private:
   std::shared_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

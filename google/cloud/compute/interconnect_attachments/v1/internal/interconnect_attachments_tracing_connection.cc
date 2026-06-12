@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_interconnect_attachments_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 InterconnectAttachmentsTracingConnection::
     InterconnectAttachmentsTracingConnection(
         std::shared_ptr<compute_interconnect_attachments_v1::
@@ -215,20 +213,16 @@ InterconnectAttachmentsTracingConnection::SetLabels(
   return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<
     compute_interconnect_attachments_v1::InterconnectAttachmentsConnection>
 MakeInterconnectAttachmentsTracingConnection(
     std::shared_ptr<
         compute_interconnect_attachments_v1::InterconnectAttachmentsConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<InterconnectAttachmentsTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

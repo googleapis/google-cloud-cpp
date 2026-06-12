@@ -21,8 +21,10 @@
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <nlohmann/json_fwd.hpp>
 #include <functional>
 #include <memory>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -52,7 +54,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 struct ExternalAccountImpersonationConfig {
   std::string url;
+  std::string email;
   std::chrono::seconds token_lifetime;
+};
+
+struct WorkforceIdentityFederationInfo {
+  std::string pool_id;
+};
+
+struct WorkloadIdentityFederationInfo {
+  std::string project_id;
+  std::string pool_id;
 };
 
 /**
@@ -66,10 +78,19 @@ struct ExternalAccountInfo {
   std::string subject_token_type;
   std::string token_url;
   ExternalAccountTokenSource token_source;
-  absl::optional<ExternalAccountImpersonationConfig> impersonation_config;
+  std::optional<ExternalAccountImpersonationConfig> impersonation_config;
   std::string universe_domain;
-  absl::optional<std::string> workforce_pool_user_project;
+  std::optional<std::string> workforce_pool_user_project;
+  std::variant<std::monostate, WorkforceIdentityFederationInfo,
+               WorkloadIdentityFederationInfo>
+      identity_federation_info;
+  bool IsWorkforceIdentityFederation() const;
+  bool IsWorkloadIdentityFederation() const;
 };
+
+StatusOr<std::optional<ExternalAccountImpersonationConfig>>
+GetExternalAccountImpersonationConfiguration(
+    nlohmann::json const& configuration, internal::ErrorContext const& ec);
 
 /// Parse a JSON string with an external account configuration.
 StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
@@ -88,6 +109,8 @@ class ExternalAccountCredentials : public oauth2_internal::Credentials {
   StatusOr<std::string> universe_domain(Options const&) const override {
     return info_.universe_domain;
   }
+
+  AllowedLocationsRequestType AllowedLocationsRequest() const override;
 
  private:
   StatusOr<AccessToken> GetTokenImpersonation(std::string const& access_token,

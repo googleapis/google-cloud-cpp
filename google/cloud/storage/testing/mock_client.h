@@ -31,11 +31,7 @@ namespace testing {
 
 class MockClient : public google::cloud::storage::internal::StorageConnection {
  public:
-  MockClient()
-      : client_options_(
-            google::cloud::storage::oauth2::CreateAnonymousCredentials()) {
-    EXPECT_CALL(*this, client_options())
-        .WillRepeatedly(::testing::ReturnRef(client_options_));
+  MockClient() {
     EXPECT_CALL(*this, options)
         .WillRepeatedly(
             ::testing::Return(storage::internal::DefaultOptionsWithCredentials(
@@ -43,7 +39,6 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
                     MakeInsecureCredentials()))));
   }
 
-  MOCK_METHOD(ClientOptions const&, client_options, (), (const, override));
   MOCK_METHOD(Options, options, (), (const, override));
   MOCK_METHOD(StatusOr<internal::ListBucketsResponse>, ListBuckets,
               (internal::ListBucketsRequest const&), (override));
@@ -181,15 +176,9 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
               (internal::GetNotificationRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::EmptyResponse>, DeleteNotification,
               (internal::DeleteNotificationRequest const&), (override));
-  MOCK_METHOD(
-      StatusOr<std::string>, AuthorizationHeader,
-      (std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&));
 
   MOCK_METHOD(std::vector<std::string>, InspectStackStructure, (),
               (const, override));
-
- private:
-  ClientOptions client_options_;
 };
 
 class MockObjectReadSource : public internal::ObjectReadSource {

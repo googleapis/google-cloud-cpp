@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/interval.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 #include "absl/time/time.h"
@@ -345,22 +345,22 @@ StatusOr<Interval> Interval::ParseISO8601Interval(absl::string_view str) {
   Interval intvl;
   absl::string_view s = str;
 
+  bool negated = !absl::ConsumePrefix(&s, "+") && absl::ConsumePrefix(&s, "-");
+  if (!absl::ConsumePrefix(&s, "P")) {
+    return SyntaxError(str, s, GCP_ERROR_INFO());
+  }
+
   auto const* units = std::begin(kISO8601DateUnitFactories);
   auto const* units_end = std::end(kISO8601DateUnitFactories);
   enum { kValue, kUnit, kNothing } expecting = kValue;
-  bool negated = false;
+  bool seen_time_designator = false;
 
   for (;;) {
-    if (units == std::begin(kISO8601DateUnitFactories)) {
-      negated = !absl::ConsumePrefix(&s, "+") && absl::ConsumePrefix(&s, "-");
-      if (!absl::ConsumePrefix(&s, "P")) break;
-    }
-    if (units_end == std::end(kISO8601DateUnitFactories)) {
-      if (absl::ConsumePrefix(&s, "T")) {
-        units = std::begin(kISO8601TimeUnitFactories);
-        units_end = std::end(kISO8601TimeUnitFactories);
-        expecting = kValue;
-      }
+    if (!seen_time_designator && absl::ConsumePrefix(&s, "T")) {
+      units = std::begin(kISO8601TimeUnitFactories);
+      units_end = std::end(kISO8601TimeUnitFactories);
+      expecting = kValue;
+      seen_time_designator = true;
     }
     if (units == units_end) break;
     double vf;

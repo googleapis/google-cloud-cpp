@@ -1,0 +1,756 @@
+/*!
+@page compute-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `compute_accelerator_types_v1::AcceleratorTypesClient`:
+
+@snippet accelerator_types_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c compute_accelerator_types_v1::AcceleratorTypesClient](@ref compute_accelerator_types_v1::AcceleratorTypesClient-universe-domain-snippet)
+- [\c compute_addresses_v1::AddressesClient](@ref compute_addresses_v1::AddressesClient-universe-domain-snippet)
+- [\c compute_autoscalers_v1::AutoscalersClient](@ref compute_autoscalers_v1::AutoscalersClient-universe-domain-snippet)
+- [\c compute_backend_buckets_v1::BackendBucketsClient](@ref compute_backend_buckets_v1::BackendBucketsClient-universe-domain-snippet)
+- [\c compute_backend_services_v1::BackendServicesClient](@ref compute_backend_services_v1::BackendServicesClient-universe-domain-snippet)
+- [\c compute_disk_types_v1::DiskTypesClient](@ref compute_disk_types_v1::DiskTypesClient-universe-domain-snippet)
+- [\c compute_disks_v1::DisksClient](@ref compute_disks_v1::DisksClient-universe-domain-snippet)
+- [\c compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient](@ref compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-universe-domain-snippet)
+- [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref compute_firewall_policies_v1::FirewallPoliciesClient-universe-domain-snippet)
+- [\c compute_firewalls_v1::FirewallsClient](@ref compute_firewalls_v1::FirewallsClient-universe-domain-snippet)
+- [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-universe-domain-snippet)
+- [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-universe-domain-snippet)
+- [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-universe-domain-snippet)
+- [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-universe-domain-snippet)
+- [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-universe-domain-snippet)
+- [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-universe-domain-snippet)
+- [\c compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient](@ref compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-universe-domain-snippet)
+- [\c compute_health_checks_v1::HealthChecksClient](@ref compute_health_checks_v1::HealthChecksClient-universe-domain-snippet)
+- [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-universe-domain-snippet)
+- [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-universe-domain-snippet)
+- [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-universe-domain-snippet)
+- [\c compute_images_v1::ImagesClient](@ref compute_images_v1::ImagesClient-universe-domain-snippet)
+- [\c compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient](@ref compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient-universe-domain-snippet)
+- [\c compute_instance_group_managers_v1::InstanceGroupManagersClient](@ref compute_instance_group_managers_v1::InstanceGroupManagersClient-universe-domain-snippet)
+- [\c compute_instance_groups_v1::InstanceGroupsClient](@ref compute_instance_groups_v1::InstanceGroupsClient-universe-domain-snippet)
+- [\c compute_instance_settings_v1::InstanceSettingsClient](@ref compute_instance_settings_v1::InstanceSettingsClient-universe-domain-snippet)
+- [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-universe-domain-snippet)
+- [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-universe-domain-snippet)
+- [\c compute_instant_snapshots_v1::InstantSnapshotsClient](@ref compute_instant_snapshots_v1::InstantSnapshotsClient-universe-domain-snippet)
+- [\c compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient](@ref compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-universe-domain-snippet)
+- [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-universe-domain-snippet)
+- [\c compute_interconnect_groups_v1::InterconnectGroupsClient](@ref compute_interconnect_groups_v1::InterconnectGroupsClient-universe-domain-snippet)
+- [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-universe-domain-snippet)
+- [\c compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient](@ref compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient-universe-domain-snippet)
+- [\c compute_interconnects_v1::InterconnectsClient](@ref compute_interconnects_v1::InterconnectsClient-universe-domain-snippet)
+- [\c compute_license_codes_v1::LicenseCodesClient](@ref compute_license_codes_v1::LicenseCodesClient-universe-domain-snippet)
+- [\c compute_licenses_v1::LicensesClient](@ref compute_licenses_v1::LicensesClient-universe-domain-snippet)
+- [\c compute_machine_images_v1::MachineImagesClient](@ref compute_machine_images_v1::MachineImagesClient-universe-domain-snippet)
+- [\c compute_machine_types_v1::MachineTypesClient](@ref compute_machine_types_v1::MachineTypesClient-universe-domain-snippet)
+- [\c compute_network_attachments_v1::NetworkAttachmentsClient](@ref compute_network_attachments_v1::NetworkAttachmentsClient-universe-domain-snippet)
+- [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-universe-domain-snippet)
+- [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-universe-domain-snippet)
+- [\c compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient](@ref compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-universe-domain-snippet)
+- [\c compute_network_profiles_v1::NetworkProfilesClient](@ref compute_network_profiles_v1::NetworkProfilesClient-universe-domain-snippet)
+- [\c compute_networks_v1::NetworksClient](@ref compute_networks_v1::NetworksClient-universe-domain-snippet)
+- [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-universe-domain-snippet)
+- [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-universe-domain-snippet)
+- [\c compute_node_types_v1::NodeTypesClient](@ref compute_node_types_v1::NodeTypesClient-universe-domain-snippet)
+- [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-universe-domain-snippet)
+- [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-universe-domain-snippet)
+- [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-universe-domain-snippet)
+- [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-universe-domain-snippet)
+- [\c compute_region_autoscalers_v1::RegionAutoscalersClient](@ref compute_region_autoscalers_v1::RegionAutoscalersClient-universe-domain-snippet)
+- [\c compute_region_backend_services_v1::RegionBackendServicesClient](@ref compute_region_backend_services_v1::RegionBackendServicesClient-universe-domain-snippet)
+- [\c compute_region_commitments_v1::RegionCommitmentsClient](@ref compute_region_commitments_v1::RegionCommitmentsClient-universe-domain-snippet)
+- [\c compute_region_disk_types_v1::RegionDiskTypesClient](@ref compute_region_disk_types_v1::RegionDiskTypesClient-universe-domain-snippet)
+- [\c compute_region_disks_v1::RegionDisksClient](@ref compute_region_disks_v1::RegionDisksClient-universe-domain-snippet)
+- [\c compute_region_health_check_services_v1::RegionHealthCheckServicesClient](@ref compute_region_health_check_services_v1::RegionHealthCheckServicesClient-universe-domain-snippet)
+- [\c compute_region_health_checks_v1::RegionHealthChecksClient](@ref compute_region_health_checks_v1::RegionHealthChecksClient-universe-domain-snippet)
+- [\c compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient](@ref compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-universe-domain-snippet)
+- [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-universe-domain-snippet)
+- [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-universe-domain-snippet)
+- [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-universe-domain-snippet)
+- [\c compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient](@ref compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-universe-domain-snippet)
+- [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-universe-domain-snippet)
+- [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-universe-domain-snippet)
+- [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-universe-domain-snippet)
+- [\c compute_region_operations_v1::RegionOperationsClient](@ref compute_region_operations_v1::RegionOperationsClient-universe-domain-snippet)
+- [\c compute_region_security_policies_v1::RegionSecurityPoliciesClient](@ref compute_region_security_policies_v1::RegionSecurityPoliciesClient-universe-domain-snippet)
+- [\c compute_region_ssl_certificates_v1::RegionSslCertificatesClient](@ref compute_region_ssl_certificates_v1::RegionSslCertificatesClient-universe-domain-snippet)
+- [\c compute_region_ssl_policies_v1::RegionSslPoliciesClient](@ref compute_region_ssl_policies_v1::RegionSslPoliciesClient-universe-domain-snippet)
+- [\c compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient](@ref compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-universe-domain-snippet)
+- [\c compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient](@ref compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-universe-domain-snippet)
+- [\c compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient](@ref compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-universe-domain-snippet)
+- [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-universe-domain-snippet)
+- [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-universe-domain-snippet)
+- [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-universe-domain-snippet)
+- [\c compute_reservation_blocks_v1::ReservationBlocksClient](@ref compute_reservation_blocks_v1::ReservationBlocksClient-universe-domain-snippet)
+- [\c compute_reservation_sub_blocks_v1::ReservationSubBlocksClient](@ref compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-universe-domain-snippet)
+- [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-universe-domain-snippet)
+- [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-universe-domain-snippet)
+- [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-universe-domain-snippet)
+- [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-universe-domain-snippet)
+- [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-universe-domain-snippet)
+- [\c compute_service_attachments_v1::ServiceAttachmentsClient](@ref compute_service_attachments_v1::ServiceAttachmentsClient-universe-domain-snippet)
+- [\c compute_snapshot_settings_v1::SnapshotSettingsClient](@ref compute_snapshot_settings_v1::SnapshotSettingsClient-universe-domain-snippet)
+- [\c compute_snapshots_v1::SnapshotsClient](@ref compute_snapshots_v1::SnapshotsClient-universe-domain-snippet)
+- [\c compute_ssl_certificates_v1::SslCertificatesClient](@ref compute_ssl_certificates_v1::SslCertificatesClient-universe-domain-snippet)
+- [\c compute_ssl_policies_v1::SslPoliciesClient](@ref compute_ssl_policies_v1::SslPoliciesClient-universe-domain-snippet)
+- [\c compute_storage_pool_types_v1::StoragePoolTypesClient](@ref compute_storage_pool_types_v1::StoragePoolTypesClient-universe-domain-snippet)
+- [\c compute_storage_pools_v1::StoragePoolsClient](@ref compute_storage_pools_v1::StoragePoolsClient-universe-domain-snippet)
+- [\c compute_subnetworks_v1::SubnetworksClient](@ref compute_subnetworks_v1::SubnetworksClient-universe-domain-snippet)
+- [\c compute_target_grpc_proxies_v1::TargetGrpcProxiesClient](@ref compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-universe-domain-snippet)
+- [\c compute_target_http_proxies_v1::TargetHttpProxiesClient](@ref compute_target_http_proxies_v1::TargetHttpProxiesClient-universe-domain-snippet)
+- [\c compute_target_https_proxies_v1::TargetHttpsProxiesClient](@ref compute_target_https_proxies_v1::TargetHttpsProxiesClient-universe-domain-snippet)
+- [\c compute_target_instances_v1::TargetInstancesClient](@ref compute_target_instances_v1::TargetInstancesClient-universe-domain-snippet)
+- [\c compute_target_pools_v1::TargetPoolsClient](@ref compute_target_pools_v1::TargetPoolsClient-universe-domain-snippet)
+- [\c compute_target_ssl_proxies_v1::TargetSslProxiesClient](@ref compute_target_ssl_proxies_v1::TargetSslProxiesClient-universe-domain-snippet)
+- [\c compute_target_tcp_proxies_v1::TargetTcpProxiesClient](@ref compute_target_tcp_proxies_v1::TargetTcpProxiesClient-universe-domain-snippet)
+- [\c compute_target_vpn_gateways_v1::TargetVpnGatewaysClient](@ref compute_target_vpn_gateways_v1::TargetVpnGatewaysClient-universe-domain-snippet)
+- [\c compute_url_maps_v1::UrlMapsClient](@ref compute_url_maps_v1::UrlMapsClient-universe-domain-snippet)
+- [\c compute_vpn_gateways_v1::VpnGatewaysClient](@ref compute_vpn_gateways_v1::VpnGatewaysClient-universe-domain-snippet)
+- [\c compute_vpn_tunnels_v1::VpnTunnelsClient](@ref compute_vpn_tunnels_v1::VpnTunnelsClient-universe-domain-snippet)
+- [\c compute_zone_operations_v1::ZoneOperationsClient](@ref compute_zone_operations_v1::ZoneOperationsClient-universe-domain-snippet)
+- [\c compute_zones_v1::ZonesClient](@ref compute_zones_v1::ZonesClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page compute_accelerator_types_v1::AcceleratorTypesClient-universe-domain-snippet Override compute_accelerator_types_v1::AcceleratorTypesClient Universe Domain
+
+@snippet google/cloud/compute/accelerator_types/v1/samples/accelerator_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_addresses_v1::AddressesClient-universe-domain-snippet Override compute_addresses_v1::AddressesClient Universe Domain
+
+@snippet google/cloud/compute/addresses/v1/samples/addresses_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_autoscalers_v1::AutoscalersClient-universe-domain-snippet Override compute_autoscalers_v1::AutoscalersClient Universe Domain
+
+@snippet google/cloud/compute/autoscalers/v1/samples/autoscalers_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_backend_buckets_v1::BackendBucketsClient-universe-domain-snippet Override compute_backend_buckets_v1::BackendBucketsClient Universe Domain
+
+@snippet google/cloud/compute/backend_buckets/v1/samples/backend_buckets_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_backend_services_v1::BackendServicesClient-universe-domain-snippet Override compute_backend_services_v1::BackendServicesClient Universe Domain
+
+@snippet google/cloud/compute/backend_services/v1/samples/backend_services_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_disk_types_v1::DiskTypesClient-universe-domain-snippet Override compute_disk_types_v1::DiskTypesClient Universe Domain
+
+@snippet google/cloud/compute/disk_types/v1/samples/disk_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_disks_v1::DisksClient-universe-domain-snippet Override compute_disks_v1::DisksClient Universe Domain
+
+@snippet google/cloud/compute/disks/v1/samples/disks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-universe-domain-snippet Override compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient Universe Domain
+
+@snippet google/cloud/compute/external_vpn_gateways/v1/samples/external_vpn_gateways_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_firewall_policies_v1::FirewallPoliciesClient-universe-domain-snippet Override compute_firewall_policies_v1::FirewallPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/firewall_policies/v1/samples/firewall_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_firewalls_v1::FirewallsClient-universe-domain-snippet Override compute_firewalls_v1::FirewallsClient Universe Domain
+
+@snippet google/cloud/compute/firewalls/v1/samples/firewalls_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_forwarding_rules_v1::ForwardingRulesClient-universe-domain-snippet Override compute_forwarding_rules_v1::ForwardingRulesClient Universe Domain
+
+@snippet google/cloud/compute/forwarding_rules/v1/samples/forwarding_rules_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_global_addresses_v1::GlobalAddressesClient-universe-domain-snippet Override compute_global_addresses_v1::GlobalAddressesClient Universe Domain
+
+@snippet google/cloud/compute/global_addresses/v1/samples/global_addresses_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-universe-domain-snippet Override compute_global_forwarding_rules_v1::GlobalForwardingRulesClient Universe Domain
+
+@snippet google/cloud/compute/global_forwarding_rules/v1/samples/global_forwarding_rules_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-universe-domain-snippet Override compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient Universe Domain
+
+@snippet google/cloud/compute/global_network_endpoint_groups/v1/samples/global_network_endpoint_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_global_operations_v1::GlobalOperationsClient-universe-domain-snippet Override compute_global_operations_v1::GlobalOperationsClient Universe Domain
+
+@snippet google/cloud/compute/global_operations/v1/samples/global_operations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-universe-domain-snippet Override compute_global_organization_operations_v1::GlobalOrganizationOperationsClient Universe Domain
+
+@snippet google/cloud/compute/global_organization_operations/v1/samples/global_organization_operations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-universe-domain-snippet Override compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient Universe Domain
+
+@snippet google/cloud/compute/global_public_delegated_prefixes/v1/samples/global_public_delegated_prefixes_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_health_checks_v1::HealthChecksClient-universe-domain-snippet Override compute_health_checks_v1::HealthChecksClient Universe Domain
+
+@snippet google/cloud/compute/health_checks/v1/samples/health_checks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_http_health_checks_v1::HttpHealthChecksClient-universe-domain-snippet Override compute_http_health_checks_v1::HttpHealthChecksClient Universe Domain
+
+@snippet google/cloud/compute/http_health_checks/v1/samples/http_health_checks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_https_health_checks_v1::HttpsHealthChecksClient-universe-domain-snippet Override compute_https_health_checks_v1::HttpsHealthChecksClient Universe Domain
+
+@snippet google/cloud/compute/https_health_checks/v1/samples/https_health_checks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_image_family_views_v1::ImageFamilyViewsClient-universe-domain-snippet Override compute_image_family_views_v1::ImageFamilyViewsClient Universe Domain
+
+@snippet google/cloud/compute/image_family_views/v1/samples/image_family_views_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_images_v1::ImagesClient-universe-domain-snippet Override compute_images_v1::ImagesClient Universe Domain
+
+@snippet google/cloud/compute/images/v1/samples/images_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient-universe-domain-snippet Override compute_instance_group_manager_resize_requests_v1::InstanceGroupManagerResizeRequestsClient Universe Domain
+
+@snippet google/cloud/compute/instance_group_manager_resize_requests/v1/samples/instance_group_manager_resize_requests_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_instance_group_managers_v1::InstanceGroupManagersClient-universe-domain-snippet Override compute_instance_group_managers_v1::InstanceGroupManagersClient Universe Domain
+
+@snippet google/cloud/compute/instance_group_managers/v1/samples/instance_group_managers_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_instance_groups_v1::InstanceGroupsClient-universe-domain-snippet Override compute_instance_groups_v1::InstanceGroupsClient Universe Domain
+
+@snippet google/cloud/compute/instance_groups/v1/samples/instance_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_instance_settings_v1::InstanceSettingsClient-universe-domain-snippet Override compute_instance_settings_v1::InstanceSettingsClient Universe Domain
+
+@snippet google/cloud/compute/instance_settings/v1/samples/instance_settings_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_instance_templates_v1::InstanceTemplatesClient-universe-domain-snippet Override compute_instance_templates_v1::InstanceTemplatesClient Universe Domain
+
+@snippet google/cloud/compute/instance_templates/v1/samples/instance_templates_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_instances_v1::InstancesClient-universe-domain-snippet Override compute_instances_v1::InstancesClient Universe Domain
+
+@snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_instant_snapshots_v1::InstantSnapshotsClient-universe-domain-snippet Override compute_instant_snapshots_v1::InstantSnapshotsClient Universe Domain
+
+@snippet google/cloud/compute/instant_snapshots/v1/samples/instant_snapshots_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-universe-domain-snippet Override compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient Universe Domain
+
+@snippet google/cloud/compute/interconnect_attachment_groups/v1/samples/interconnect_attachment_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_interconnect_attachments_v1::InterconnectAttachmentsClient-universe-domain-snippet Override compute_interconnect_attachments_v1::InterconnectAttachmentsClient Universe Domain
+
+@snippet google/cloud/compute/interconnect_attachments/v1/samples/interconnect_attachments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_interconnect_groups_v1::InterconnectGroupsClient-universe-domain-snippet Override compute_interconnect_groups_v1::InterconnectGroupsClient Universe Domain
+
+@snippet google/cloud/compute/interconnect_groups/v1/samples/interconnect_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_interconnect_locations_v1::InterconnectLocationsClient-universe-domain-snippet Override compute_interconnect_locations_v1::InterconnectLocationsClient Universe Domain
+
+@snippet google/cloud/compute/interconnect_locations/v1/samples/interconnect_locations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient-universe-domain-snippet Override compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient Universe Domain
+
+@snippet google/cloud/compute/interconnect_remote_locations/v1/samples/interconnect_remote_locations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_interconnects_v1::InterconnectsClient-universe-domain-snippet Override compute_interconnects_v1::InterconnectsClient Universe Domain
+
+@snippet google/cloud/compute/interconnects/v1/samples/interconnects_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_license_codes_v1::LicenseCodesClient-universe-domain-snippet Override compute_license_codes_v1::LicenseCodesClient Universe Domain
+
+@snippet google/cloud/compute/license_codes/v1/samples/license_codes_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_licenses_v1::LicensesClient-universe-domain-snippet Override compute_licenses_v1::LicensesClient Universe Domain
+
+@snippet google/cloud/compute/licenses/v1/samples/licenses_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_machine_images_v1::MachineImagesClient-universe-domain-snippet Override compute_machine_images_v1::MachineImagesClient Universe Domain
+
+@snippet google/cloud/compute/machine_images/v1/samples/machine_images_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_machine_types_v1::MachineTypesClient-universe-domain-snippet Override compute_machine_types_v1::MachineTypesClient Universe Domain
+
+@snippet google/cloud/compute/machine_types/v1/samples/machine_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_network_attachments_v1::NetworkAttachmentsClient-universe-domain-snippet Override compute_network_attachments_v1::NetworkAttachmentsClient Universe Domain
+
+@snippet google/cloud/compute/network_attachments/v1/samples/network_attachments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-universe-domain-snippet Override compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient Universe Domain
+
+@snippet google/cloud/compute/network_edge_security_services/v1/samples/network_edge_security_services_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-universe-domain-snippet Override compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient Universe Domain
+
+@snippet google/cloud/compute/network_endpoint_groups/v1/samples/network_endpoint_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-universe-domain-snippet Override compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/network_firewall_policies/v1/samples/network_firewall_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_network_profiles_v1::NetworkProfilesClient-universe-domain-snippet Override compute_network_profiles_v1::NetworkProfilesClient Universe Domain
+
+@snippet google/cloud/compute/network_profiles/v1/samples/network_profiles_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_networks_v1::NetworksClient-universe-domain-snippet Override compute_networks_v1::NetworksClient Universe Domain
+
+@snippet google/cloud/compute/networks/v1/samples/networks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_node_groups_v1::NodeGroupsClient-universe-domain-snippet Override compute_node_groups_v1::NodeGroupsClient Universe Domain
+
+@snippet google/cloud/compute/node_groups/v1/samples/node_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_node_templates_v1::NodeTemplatesClient-universe-domain-snippet Override compute_node_templates_v1::NodeTemplatesClient Universe Domain
+
+@snippet google/cloud/compute/node_templates/v1/samples/node_templates_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_node_types_v1::NodeTypesClient-universe-domain-snippet Override compute_node_types_v1::NodeTypesClient Universe Domain
+
+@snippet google/cloud/compute/node_types/v1/samples/node_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_packet_mirrorings_v1::PacketMirroringsClient-universe-domain-snippet Override compute_packet_mirrorings_v1::PacketMirroringsClient Universe Domain
+
+@snippet google/cloud/compute/packet_mirrorings/v1/samples/packet_mirrorings_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_projects_v1::ProjectsClient-universe-domain-snippet Override compute_projects_v1::ProjectsClient Universe Domain
+
+@snippet google/cloud/compute/projects/v1/samples/projects_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-universe-domain-snippet Override compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient Universe Domain
+
+@snippet google/cloud/compute/public_advertised_prefixes/v1/samples/public_advertised_prefixes_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-universe-domain-snippet Override compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient Universe Domain
+
+@snippet google/cloud/compute/public_delegated_prefixes/v1/samples/public_delegated_prefixes_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_autoscalers_v1::RegionAutoscalersClient-universe-domain-snippet Override compute_region_autoscalers_v1::RegionAutoscalersClient Universe Domain
+
+@snippet google/cloud/compute/region_autoscalers/v1/samples/region_autoscalers_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_backend_services_v1::RegionBackendServicesClient-universe-domain-snippet Override compute_region_backend_services_v1::RegionBackendServicesClient Universe Domain
+
+@snippet google/cloud/compute/region_backend_services/v1/samples/region_backend_services_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_commitments_v1::RegionCommitmentsClient-universe-domain-snippet Override compute_region_commitments_v1::RegionCommitmentsClient Universe Domain
+
+@snippet google/cloud/compute/region_commitments/v1/samples/region_commitments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_disk_types_v1::RegionDiskTypesClient-universe-domain-snippet Override compute_region_disk_types_v1::RegionDiskTypesClient Universe Domain
+
+@snippet google/cloud/compute/region_disk_types/v1/samples/region_disk_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_disks_v1::RegionDisksClient-universe-domain-snippet Override compute_region_disks_v1::RegionDisksClient Universe Domain
+
+@snippet google/cloud/compute/region_disks/v1/samples/region_disks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_health_check_services_v1::RegionHealthCheckServicesClient-universe-domain-snippet Override compute_region_health_check_services_v1::RegionHealthCheckServicesClient Universe Domain
+
+@snippet google/cloud/compute/region_health_check_services/v1/samples/region_health_check_services_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_health_checks_v1::RegionHealthChecksClient-universe-domain-snippet Override compute_region_health_checks_v1::RegionHealthChecksClient Universe Domain
+
+@snippet google/cloud/compute/region_health_checks/v1/samples/region_health_checks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-universe-domain-snippet Override compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient Universe Domain
+
+@snippet google/cloud/compute/region_instance_group_managers/v1/samples/region_instance_group_managers_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_instance_groups_v1::RegionInstanceGroupsClient-universe-domain-snippet Override compute_region_instance_groups_v1::RegionInstanceGroupsClient Universe Domain
+
+@snippet google/cloud/compute/region_instance_groups/v1/samples/region_instance_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_instance_templates_v1::RegionInstanceTemplatesClient-universe-domain-snippet Override compute_region_instance_templates_v1::RegionInstanceTemplatesClient Universe Domain
+
+@snippet google/cloud/compute/region_instance_templates/v1/samples/region_instance_templates_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_instances_v1::RegionInstancesClient-universe-domain-snippet Override compute_region_instances_v1::RegionInstancesClient Universe Domain
+
+@snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-universe-domain-snippet Override compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient Universe Domain
+
+@snippet google/cloud/compute/region_instant_snapshots/v1/samples/region_instant_snapshots_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-universe-domain-snippet Override compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient Universe Domain
+
+@snippet google/cloud/compute/region_network_endpoint_groups/v1/samples/region_network_endpoint_groups_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-universe-domain-snippet Override compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/region_network_firewall_policies/v1/samples/region_network_firewall_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-universe-domain-snippet Override compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient Universe Domain
+
+@snippet google/cloud/compute/region_notification_endpoints/v1/samples/region_notification_endpoints_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_operations_v1::RegionOperationsClient-universe-domain-snippet Override compute_region_operations_v1::RegionOperationsClient Universe Domain
+
+@snippet google/cloud/compute/region_operations/v1/samples/region_operations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_security_policies_v1::RegionSecurityPoliciesClient-universe-domain-snippet Override compute_region_security_policies_v1::RegionSecurityPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/region_security_policies/v1/samples/region_security_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_ssl_certificates_v1::RegionSslCertificatesClient-universe-domain-snippet Override compute_region_ssl_certificates_v1::RegionSslCertificatesClient Universe Domain
+
+@snippet google/cloud/compute/region_ssl_certificates/v1/samples/region_ssl_certificates_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_ssl_policies_v1::RegionSslPoliciesClient-universe-domain-snippet Override compute_region_ssl_policies_v1::RegionSslPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/region_ssl_policies/v1/samples/region_ssl_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-universe-domain-snippet Override compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient Universe Domain
+
+@snippet google/cloud/compute/region_target_http_proxies/v1/samples/region_target_http_proxies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient-universe-domain-snippet Override compute_region_target_https_proxies_v1::RegionTargetHttpsProxiesClient Universe Domain
+
+@snippet google/cloud/compute/region_target_https_proxies/v1/samples/region_target_https_proxies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient-universe-domain-snippet Override compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesClient Universe Domain
+
+@snippet google/cloud/compute/region_target_tcp_proxies/v1/samples/region_target_tcp_proxies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_url_maps_v1::RegionUrlMapsClient-universe-domain-snippet Override compute_region_url_maps_v1::RegionUrlMapsClient Universe Domain
+
+@snippet google/cloud/compute/region_url_maps/v1/samples/region_url_maps_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_zones_v1::RegionZonesClient-universe-domain-snippet Override compute_region_zones_v1::RegionZonesClient Universe Domain
+
+@snippet google/cloud/compute/region_zones/v1/samples/region_zones_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_regions_v1::RegionsClient-universe-domain-snippet Override compute_regions_v1::RegionsClient Universe Domain
+
+@snippet google/cloud/compute/regions/v1/samples/regions_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_reservation_blocks_v1::ReservationBlocksClient-universe-domain-snippet Override compute_reservation_blocks_v1::ReservationBlocksClient Universe Domain
+
+@snippet google/cloud/compute/reservation_blocks/v1/samples/reservation_blocks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-universe-domain-snippet Override compute_reservation_sub_blocks_v1::ReservationSubBlocksClient Universe Domain
+
+@snippet google/cloud/compute/reservation_sub_blocks/v1/samples/reservation_sub_blocks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_reservations_v1::ReservationsClient-universe-domain-snippet Override compute_reservations_v1::ReservationsClient Universe Domain
+
+@snippet google/cloud/compute/reservations/v1/samples/reservations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_resource_policies_v1::ResourcePoliciesClient-universe-domain-snippet Override compute_resource_policies_v1::ResourcePoliciesClient Universe Domain
+
+@snippet google/cloud/compute/resource_policies/v1/samples/resource_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_routers_v1::RoutersClient-universe-domain-snippet Override compute_routers_v1::RoutersClient Universe Domain
+
+@snippet google/cloud/compute/routers/v1/samples/routers_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_routes_v1::RoutesClient-universe-domain-snippet Override compute_routes_v1::RoutesClient Universe Domain
+
+@snippet google/cloud/compute/routes/v1/samples/routes_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_security_policies_v1::SecurityPoliciesClient-universe-domain-snippet Override compute_security_policies_v1::SecurityPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/security_policies/v1/samples/security_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_service_attachments_v1::ServiceAttachmentsClient-universe-domain-snippet Override compute_service_attachments_v1::ServiceAttachmentsClient Universe Domain
+
+@snippet google/cloud/compute/service_attachments/v1/samples/service_attachments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_snapshot_settings_v1::SnapshotSettingsClient-universe-domain-snippet Override compute_snapshot_settings_v1::SnapshotSettingsClient Universe Domain
+
+@snippet google/cloud/compute/snapshot_settings/v1/samples/snapshot_settings_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_snapshots_v1::SnapshotsClient-universe-domain-snippet Override compute_snapshots_v1::SnapshotsClient Universe Domain
+
+@snippet google/cloud/compute/snapshots/v1/samples/snapshots_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_ssl_certificates_v1::SslCertificatesClient-universe-domain-snippet Override compute_ssl_certificates_v1::SslCertificatesClient Universe Domain
+
+@snippet google/cloud/compute/ssl_certificates/v1/samples/ssl_certificates_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_ssl_policies_v1::SslPoliciesClient-universe-domain-snippet Override compute_ssl_policies_v1::SslPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/ssl_policies/v1/samples/ssl_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_storage_pool_types_v1::StoragePoolTypesClient-universe-domain-snippet Override compute_storage_pool_types_v1::StoragePoolTypesClient Universe Domain
+
+@snippet google/cloud/compute/storage_pool_types/v1/samples/storage_pool_types_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_storage_pools_v1::StoragePoolsClient-universe-domain-snippet Override compute_storage_pools_v1::StoragePoolsClient Universe Domain
+
+@snippet google/cloud/compute/storage_pools/v1/samples/storage_pools_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_subnetworks_v1::SubnetworksClient-universe-domain-snippet Override compute_subnetworks_v1::SubnetworksClient Universe Domain
+
+@snippet google/cloud/compute/subnetworks/v1/samples/subnetworks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_target_grpc_proxies_v1::TargetGrpcProxiesClient-universe-domain-snippet Override compute_target_grpc_proxies_v1::TargetGrpcProxiesClient Universe Domain
+
+@snippet google/cloud/compute/target_grpc_proxies/v1/samples/target_grpc_proxies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_target_http_proxies_v1::TargetHttpProxiesClient-universe-domain-snippet Override compute_target_http_proxies_v1::TargetHttpProxiesClient Universe Domain
+
+@snippet google/cloud/compute/target_http_proxies/v1/samples/target_http_proxies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_target_https_proxies_v1::TargetHttpsProxiesClient-universe-domain-snippet Override compute_target_https_proxies_v1::TargetHttpsProxiesClient Universe Domain
+
+@snippet google/cloud/compute/target_https_proxies/v1/samples/target_https_proxies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_target_instances_v1::TargetInstancesClient-universe-domain-snippet Override compute_target_instances_v1::TargetInstancesClient Universe Domain
+
+@snippet google/cloud/compute/target_instances/v1/samples/target_instances_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_target_pools_v1::TargetPoolsClient-universe-domain-snippet Override compute_target_pools_v1::TargetPoolsClient Universe Domain
+
+@snippet google/cloud/compute/target_pools/v1/samples/target_pools_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_target_ssl_proxies_v1::TargetSslProxiesClient-universe-domain-snippet Override compute_target_ssl_proxies_v1::TargetSslProxiesClient Universe Domain
+
+@snippet google/cloud/compute/target_ssl_proxies/v1/samples/target_ssl_proxies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_target_tcp_proxies_v1::TargetTcpProxiesClient-universe-domain-snippet Override compute_target_tcp_proxies_v1::TargetTcpProxiesClient Universe Domain
+
+@snippet google/cloud/compute/target_tcp_proxies/v1/samples/target_tcp_proxies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_target_vpn_gateways_v1::TargetVpnGatewaysClient-universe-domain-snippet Override compute_target_vpn_gateways_v1::TargetVpnGatewaysClient Universe Domain
+
+@snippet google/cloud/compute/target_vpn_gateways/v1/samples/target_vpn_gateways_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_url_maps_v1::UrlMapsClient-universe-domain-snippet Override compute_url_maps_v1::UrlMapsClient Universe Domain
+
+@snippet google/cloud/compute/url_maps/v1/samples/url_maps_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_vpn_gateways_v1::VpnGatewaysClient-universe-domain-snippet Override compute_vpn_gateways_v1::VpnGatewaysClient Universe Domain
+
+@snippet google/cloud/compute/vpn_gateways/v1/samples/vpn_gateways_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_vpn_tunnels_v1::VpnTunnelsClient-universe-domain-snippet Override compute_vpn_tunnels_v1::VpnTunnelsClient Universe Domain
+
+@snippet google/cloud/compute/vpn_tunnels/v1/samples/vpn_tunnels_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_zone_operations_v1::ZoneOperationsClient-universe-domain-snippet Override compute_zone_operations_v1::ZoneOperationsClient Universe Domain
+
+@snippet google/cloud/compute/zone_operations/v1/samples/zone_operations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_zones_v1::ZonesClient-universe-domain-snippet Override compute_zones_v1::ZonesClient Universe Domain
+
+@snippet google/cloud/compute/zones/v1/samples/zones_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->
