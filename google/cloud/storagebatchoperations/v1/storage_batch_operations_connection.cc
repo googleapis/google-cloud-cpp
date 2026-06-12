@@ -87,6 +87,21 @@ StorageBatchOperationsConnection::CancelJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsConnection::ListBucketOperations(
+    google::cloud::storagebatchoperations::v1::
+        ListBucketOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::storagebatchoperations::v1::BucketOperation>>();
+}
+
+StatusOr<google::cloud::storagebatchoperations::v1::BucketOperation>
+StorageBatchOperationsConnection::GetBucketOperation(
+    google::cloud::storagebatchoperations::v1::
+        GetBucketOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 StorageBatchOperationsConnection::ListLocations(
     google::cloud::location::

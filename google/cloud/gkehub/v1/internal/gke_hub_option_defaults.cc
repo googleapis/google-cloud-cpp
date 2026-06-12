@@ -40,7 +40,7 @@ Options GkeHubDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<gkehub_v1::GkeHubRetryPolicyOption>()) {
     options.set<gkehub_v1::GkeHubRetryPolicyOption>(
-        gkehub_v1::GkeHubLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        gkehub_v1::GkeHubLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<gkehub_v1::GkeHubBackoffPolicyOption>()) {

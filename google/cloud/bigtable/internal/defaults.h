@@ -27,6 +27,11 @@ namespace internal {
 int DefaultConnectionPoolSize();
 
 /**
+ * Returns true if Direct Path is enabled for Bigtable.
+ */
+bool IsDirectPath();
+
+/**
  * Returns an `Options` with the appropriate defaults for Bigtable.
  *
  * Environment variables and the optional @p opts argument may be consulted to

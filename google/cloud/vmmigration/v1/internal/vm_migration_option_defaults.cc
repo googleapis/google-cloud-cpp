@@ -41,7 +41,7 @@ Options VmMigrationDefaultOptions(Options options) {
   if (!options.has<vmmigration_v1::VmMigrationRetryPolicyOption>()) {
     options.set<vmmigration_v1::VmMigrationRetryPolicyOption>(
         vmmigration_v1::VmMigrationLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<vmmigration_v1::VmMigrationBackoffPolicyOption>()) {

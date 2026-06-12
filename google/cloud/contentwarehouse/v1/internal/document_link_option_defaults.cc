@@ -43,7 +43,7 @@ Options DocumentLinkServiceDefaultOptions(Options options) {
            .has<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>()) {
     options.set<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>(
         contentwarehouse_v1::DocumentLinkServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

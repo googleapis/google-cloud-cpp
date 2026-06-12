@@ -27,8 +27,6 @@ namespace cloud {
 namespace config_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ConfigTracingConnection::ConfigTracingConnection(
     std::shared_ptr<config_v1::ConfigConnection> child)
     : child_(std::move(child)) {}
@@ -415,6 +413,248 @@ ConfigTracingConnection::GetResourceDrift(
   return internal::EndSpan(*span, child_->GetResourceDrift(request));
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigTracingConnection::GetAutoMigrationConfig(
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::GetAutoMigrationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAutoMigrationConfig(request));
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigTracingConnection::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::UpdateAutoMigrationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAutoMigrationConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingConnection::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::UpdateAutoMigrationConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAutoMigrationConfig(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigTracingConnection::UpdateAutoMigrationConfig(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::UpdateAutoMigrationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAutoMigrationConfig(operation));
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroup>
+ConfigTracingConnection::GetDeploymentGroup(
+    google::cloud::config::v1::GetDeploymentGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::GetDeploymentGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDeploymentGroup(request));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::CreateDeploymentGroup(
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::CreateDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDeploymentGroup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingConnection::CreateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::CreateDeploymentGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDeploymentGroup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::CreateDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::CreateDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDeploymentGroup(operation));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::UpdateDeploymentGroup(
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::UpdateDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDeploymentGroup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingConnection::UpdateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::UpdateDeploymentGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateDeploymentGroup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::UpdateDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::UpdateDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDeploymentGroup(operation));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::DeleteDeploymentGroup(
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::DeleteDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDeploymentGroup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingConnection::DeleteDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::DeleteDeploymentGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDeploymentGroup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::DeleteDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::DeleteDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDeploymentGroup(operation));
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroup>
+ConfigTracingConnection::ListDeploymentGroups(
+    google::cloud::config::v1::ListDeploymentGroupsRequest request) {
+  auto span =
+      internal::MakeSpan("config_v1::ConfigConnection::ListDeploymentGroups");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDeploymentGroups(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::config::v1::DeploymentGroup>(std::move(span),
+                                                  std::move(sr));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::ProvisionDeploymentGroup(
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::ProvisionDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ProvisionDeploymentGroup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingConnection::ProvisionDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::ProvisionDeploymentGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ProvisionDeploymentGroup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::ProvisionDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::ProvisionDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ProvisionDeploymentGroup(operation));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::DeprovisionDeploymentGroup(
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::DeprovisionDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeprovisionDeploymentGroup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigTracingConnection::DeprovisionDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::DeprovisionDeploymentGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeprovisionDeploymentGroup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigTracingConnection::DeprovisionDeploymentGroup(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::DeprovisionDeploymentGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeprovisionDeploymentGroup(operation));
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigTracingConnection::GetDeploymentGroupRevision(
+    google::cloud::config::v1::GetDeploymentGroupRevisionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::GetDeploymentGroupRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDeploymentGroupRevision(request));
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigTracingConnection::ListDeploymentGroupRevisions(
+    google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request) {
+  auto span = internal::MakeSpan(
+      "config_v1::ConfigConnection::ListDeploymentGroupRevisions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDeploymentGroupRevisions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::config::v1::DeploymentGroupRevision>(std::move(span),
+                                                          std::move(sr));
+}
+
 StreamRange<google::cloud::location::Location>
 ConfigTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -489,15 +729,11 @@ Status ConfigTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<config_v1::ConfigConnection> MakeConfigTracingConnection(
     std::shared_ptr<config_v1::ConfigConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ConfigTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

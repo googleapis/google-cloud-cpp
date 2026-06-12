@@ -47,48 +47,25 @@ class MockContentServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Content>, CreateContent,
-      (google::cloud::dataplex::v1::CreateContentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Content>, UpdateContent,
-      (google::cloud::dataplex::v1::UpdateContentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteContent,
-      (google::cloud::dataplex::v1::DeleteContentRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Content>, GetContent,
-              (google::cloud::dataplex::v1::GetContentRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Content>), ListContent,
-              (google::cloud::dataplex::v1::ListContentRequest request),
-              (override));
-
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
               (google::cloud::location::GetLocationRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
   MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,

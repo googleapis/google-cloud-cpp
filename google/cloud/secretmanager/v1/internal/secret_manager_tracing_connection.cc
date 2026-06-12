@@ -27,8 +27,6 @@ namespace cloud {
 namespace secretmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 SecretManagerServiceTracingConnection::SecretManagerServiceTracingConnection(
     std::shared_ptr<secretmanager_v1::SecretManagerServiceConnection> child)
     : child_(std::move(child)) {}
@@ -196,17 +194,13 @@ SecretManagerServiceTracingConnection::GetLocation(
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<secretmanager_v1::SecretManagerServiceConnection>
 MakeSecretManagerServiceTracingConnection(
     std::shared_ptr<secretmanager_v1::SecretManagerServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<SecretManagerServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

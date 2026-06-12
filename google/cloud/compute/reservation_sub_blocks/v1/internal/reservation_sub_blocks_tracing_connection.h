@@ -29,8 +29,6 @@ namespace cloud {
 namespace compute_reservation_sub_blocks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ReservationSubBlocksTracingConnection
     : public compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection {
  public:
@@ -58,8 +56,6 @@ class ReservationSubBlocksTracingConnection
       compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

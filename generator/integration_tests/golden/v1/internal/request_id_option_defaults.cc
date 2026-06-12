@@ -42,7 +42,7 @@ Options RequestIdServiceDefaultOptions(Options options) {
   if (!options.has<golden_v1::RequestIdServiceRetryPolicyOption>()) {
     options.set<golden_v1::RequestIdServiceRetryPolicyOption>(
         golden_v1::RequestIdServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(10)).clone());
   }
   if (!options.has<golden_v1::RequestIdServiceBackoffPolicyOption>()) {
     options.set<golden_v1::RequestIdServiceBackoffPolicyOption>(

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/tracing_batch_sink.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/options.h"
@@ -21,19 +20,18 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/semconv/incubating/code_attributes.h>
+#include <opentelemetry/semconv/incubating/messaging_attributes.h>
+#include <opentelemetry/semconv/incubating/thread_attributes.h>
 #include <opentelemetry/trace/context.h>
-#include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span.h>
 #include <algorithm>
 #include <string>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 using Spans =
@@ -60,23 +58,23 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
 
 auto MakeParent(Links const& links, Spans const& message_spans,
                 pubsub::Topic const& topic, std::string const& endpoint) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::semconv;
   auto options = RootStartSpanOptions();
   options.kind = opentelemetry::trace::SpanKind::kClient;
-  auto batch_sink_parent =
-      internal::MakeSpan(topic.topic_id() + " publish",
-                         /*attributes=*/
-                         {{sc::kMessagingBatchMessageCount,
-                           static_cast<std::int64_t>(message_spans.size())},
-                          {sc::kCodeFunction, "BatchSink::AsyncPublish"},
-                          {/*sc::kMessagingOperationType=*/
-                           "messaging.operation.type", "publish"},
-                          {sc::kThreadId, internal::CurrentThreadId()},
-                          {sc::kMessagingSystem, "gcp_pubsub"},
-                          {/*sc::kServerAddress=*/"server.address", endpoint},
-                          {"gcp.project_id", topic.project_id()},
-                          {sc::kMessagingDestinationName, topic.topic_id()}},
-                         /*links*/ std::move(links), options);
+  auto batch_sink_parent = internal::MakeSpan(
+      topic.topic_id() + " publish",
+      /*attributes=*/
+      {{sc::messaging::kMessagingBatchMessageCount,
+        static_cast<std::int64_t>(message_spans.size())},
+       {sc::code::kCodeFunctionName, "BatchSink::AsyncPublish"},
+       {/*sc::messaging::kMessagingOperationType=*/
+        "messaging.operation.type", "publish"},
+       {sc::thread::kThreadId, internal::CurrentThreadId()},
+       {sc::messaging::kMessagingSystem, "gcp_pubsub"},
+       {/*sc::kServerAddress=*/"server.address", endpoint},
+       {"gcp.project_id", topic.project_id()},
+       {sc::messaging::kMessagingDestinationName, topic.topic_id()}},
+      /*links*/ std::move(links), options);
 
   auto context = batch_sink_parent->GetContext();
   auto trace_id = internal::ToString(context.trace_id());
@@ -210,15 +208,6 @@ std::shared_ptr<BatchSink> MakeTracingBatchSink(
   return std::make_shared<TracingBatchSink>(
       std::move(topic), std::move(batch_sink), std::move(opts));
 }
-
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-std::shared_ptr<BatchSink> MakeTracingBatchSink(
-    pubsub::Topic, std::shared_ptr<BatchSink> batch_sink, Options) {
-  return batch_sink;
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

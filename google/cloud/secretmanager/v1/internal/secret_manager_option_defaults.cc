@@ -42,7 +42,7 @@ Options SecretManagerServiceDefaultOptions(Options options) {
   if (!options.has<secretmanager_v1::SecretManagerServiceRetryPolicyOption>()) {
     options.set<secretmanager_v1::SecretManagerServiceRetryPolicyOption>(
         secretmanager_v1::SecretManagerServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options

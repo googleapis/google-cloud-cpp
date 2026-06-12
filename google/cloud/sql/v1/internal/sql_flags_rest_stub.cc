@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_flags.proto
 
 #include "google/cloud/sql/v1/internal/sql_flags_rest_stub.h"
+#include "google/cloud/sql/v1/cloud_sql_flags.pb.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/sql/v1/cloud_sql_flags.pb.h>
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -46,6 +46,7 @@ DefaultSqlFlagsServiceRestStub::List(
     google::cloud::sql::v1::SqlFlagsListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"database_version", request.database_version()});
+  query_params.push_back({"flag_scope", std::to_string(request.flag_scope())});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::FlagsListResponse>(

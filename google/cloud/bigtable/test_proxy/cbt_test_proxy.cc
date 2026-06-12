@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/test_proxy/cbt_test_proxy.h"
 #include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
+#include "absl/strings/str_cat.h"
 #include "absl/time/time.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
@@ -455,3 +456,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

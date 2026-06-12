@@ -26,8 +26,6 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 DeprecatedServiceTracingConnection::DeprecatedServiceTracingConnection(
     std::shared_ptr<golden_v1::DeprecatedServiceConnection> child)
     : child_(std::move(child)) {}
@@ -39,16 +37,12 @@ DeprecatedServiceTracingConnection::Noop(google::test::deprecated::v1::Deprecate
   return internal::EndSpan(*span, child_->Noop(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<golden_v1::DeprecatedServiceConnection>
 MakeDeprecatedServiceTracingConnection(
     std::shared_ptr<golden_v1::DeprecatedServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DeprecatedServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

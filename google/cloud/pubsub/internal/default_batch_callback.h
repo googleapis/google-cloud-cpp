@@ -18,7 +18,7 @@
 #include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/pubsub.pb.h>
+#include "google/pubsub/v1/pubsub.pb.h"
 
 namespace google {
 namespace cloud {

@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage_experimental {
+namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -38,8 +38,7 @@ using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
-using ReadResponse =
-    ::google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
+using ReadResponse = AsyncReaderConnection::ReadResponse;
 
 TEST(AsyncReader, Basic) {
   auto mock = std::make_unique<MockAsyncReaderConnection>();
@@ -187,6 +186,6 @@ TEST(AsyncReader, ErrorWithMismatchedToken) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_experimental
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google

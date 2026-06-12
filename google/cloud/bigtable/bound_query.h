@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/value.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
-#include <google/bigtable/v2/bigtable.pb.h>
+#include "google/bigtable/v2/bigtable.pb.h"
 #include <string>
 #include <unordered_map>
 

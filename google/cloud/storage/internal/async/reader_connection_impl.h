@@ -21,7 +21,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <memory>
 #include <utility>
@@ -31,8 +31,7 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AsyncReaderConnectionImpl
-    : public storage_experimental::AsyncReaderConnection {
+class AsyncReaderConnectionImpl : public storage::AsyncReaderConnection {
  public:
   using ProtoPayload = google::storage::v2::ReadObjectResponse;
   using StreamingRpc =

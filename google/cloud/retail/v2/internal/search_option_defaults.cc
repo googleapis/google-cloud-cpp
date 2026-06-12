@@ -40,7 +40,7 @@ Options SearchServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<retail_v2::SearchServiceRetryPolicyOption>()) {
     options.set<retail_v2::SearchServiceRetryPolicyOption>(
-        retail_v2::SearchServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        retail_v2::SearchServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<retail_v2::SearchServiceBackoffPolicyOption>()) {

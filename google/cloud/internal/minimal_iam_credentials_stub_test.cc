@@ -25,7 +25,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
 #include "google/cloud/universe_domain_options.h"
-#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
+#include "google/iam/credentials/v1/iamcredentials.grpc.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -219,7 +219,6 @@ TEST_F(MinimalIamCredentialsStubTest, LoggingComponentNames) {
   }
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::OTelAttribute;
@@ -342,7 +341,6 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobTracing) {
               OTelAttribute<std::string>("grpc.peer", _),
               OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TEST(MakeMinimalIamCredentialsOptions, Default) {
   auto o = MakeMinimalIamCredentialsOptions(

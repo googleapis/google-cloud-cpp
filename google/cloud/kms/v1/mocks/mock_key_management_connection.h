@@ -64,6 +64,11 @@ class MockKeyManagementServiceConnection
               (google::cloud::kms::v1::ListImportJobsRequest request),
               (override));
 
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::RetiredResource>),
+              ListRetiredResources,
+              (google::cloud::kms::v1::ListRetiredResourcesRequest request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::KeyRing>, GetKeyRing,
               (google::cloud::kms::v1::GetKeyRingRequest const& request),
               (override));
@@ -85,6 +90,11 @@ class MockKeyManagementServiceConnection
               (google::cloud::kms::v1::GetImportJobRequest const& request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::kms::v1::RetiredResource>, GetRetiredResource,
+      (google::cloud::kms::v1::GetRetiredResourceRequest const& request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::KeyRing>, CreateKeyRing,
               (google::cloud::kms::v1::CreateKeyRingRequest const& request),
               (override));
@@ -97,6 +107,83 @@ class MockKeyManagementServiceConnection
       StatusOr<google::cloud::kms::v1::CryptoKeyVersion>,
       CreateCryptoKeyVersion,
       (google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCryptoKey(Matcher<google::cloud::kms::v1::DeleteCryptoKeyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>,
+              DeleteCryptoKey,
+              (google::cloud::kms::v1::DeleteCryptoKeyRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCryptoKey(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteCryptoKey,
+              (NoAwaitTag,
+               google::cloud::kms::v1::DeleteCryptoKeyRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteCryptoKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>,
+              DeleteCryptoKey,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCryptoKeyVersion(Matcher<google::cloud::kms::v1::DeleteCryptoKeyVersionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>,
+      DeleteCryptoKeyVersion,
+      (google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCryptoKeyVersion(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCryptoKeyVersion,
+      (NoAwaitTag,
+       google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCryptoKeyVersion(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>,
+      DeleteCryptoKeyVersion, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

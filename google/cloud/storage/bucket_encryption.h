@@ -16,12 +16,108 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_ENCRYPTION_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/format_time_point.h"
+#include <chrono>
+#include <iosfwd>
+#include <iostream>
+#include <string>
+#include <tuple>
 #include <utility>
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+template <typename Tag>
+struct EncryptionEnforcementConfigName;
+
+template <typename Tag>
+struct EncryptionEnforcementConfig {
+  std::string restriction_mode;
+  std::chrono::system_clock::time_point effective_time;
+};
+
+template <typename Tag>
+inline bool operator==(EncryptionEnforcementConfig<Tag> const& lhs,
+                       EncryptionEnforcementConfig<Tag> const& rhs) {
+  return std::tie(lhs.restriction_mode, lhs.effective_time) ==
+         std::tie(rhs.restriction_mode, rhs.effective_time);
+}
+
+template <typename Tag>
+inline bool operator<(EncryptionEnforcementConfig<Tag> const& lhs,
+                      EncryptionEnforcementConfig<Tag> const& rhs) {
+  return std::tie(lhs.restriction_mode, lhs.effective_time) <
+         std::tie(rhs.restriction_mode, rhs.effective_time);
+}
+
+template <typename Tag>
+inline bool operator!=(EncryptionEnforcementConfig<Tag> const& lhs,
+                       EncryptionEnforcementConfig<Tag> const& rhs) {
+  return std::rel_ops::operator!=(lhs, rhs);
+}
+
+template <typename Tag>
+inline bool operator>(EncryptionEnforcementConfig<Tag> const& lhs,
+                      EncryptionEnforcementConfig<Tag> const& rhs) {
+  return std::rel_ops::operator>(lhs, rhs);
+}
+
+template <typename Tag>
+inline bool operator<=(EncryptionEnforcementConfig<Tag> const& lhs,
+                       EncryptionEnforcementConfig<Tag> const& rhs) {
+  return std::rel_ops::operator<=(lhs, rhs);
+}
+
+template <typename Tag>
+inline bool operator>=(EncryptionEnforcementConfig<Tag> const& lhs,
+                       EncryptionEnforcementConfig<Tag> const& rhs) {
+  return std::rel_ops::operator>=(lhs, rhs);
+}
+
+template <typename Tag>
+inline std::ostream& operator<<(std::ostream& os,
+                                EncryptionEnforcementConfig<Tag> const& rhs) {
+  return os << EncryptionEnforcementConfigName<Tag>::kValue
+            << "={restriction_mode=" << rhs.restriction_mode
+            << ", effective_time="
+            << google::cloud::internal::FormatRfc3339(rhs.effective_time)
+            << "}";
+}
+
+struct GoogleManagedEncryptionEnforcementConfigTag {};
+using GoogleManagedEncryptionEnforcementConfig =
+    EncryptionEnforcementConfig<GoogleManagedEncryptionEnforcementConfigTag>;
+
+template <>
+struct EncryptionEnforcementConfigName<
+    GoogleManagedEncryptionEnforcementConfigTag> {
+  static constexpr char const* kValue =
+      "GoogleManagedEncryptionEnforcementConfig";
+};
+
+struct CustomerManagedEncryptionEnforcementConfigTag {};
+using CustomerManagedEncryptionEnforcementConfig =
+    EncryptionEnforcementConfig<CustomerManagedEncryptionEnforcementConfigTag>;
+
+template <>
+struct EncryptionEnforcementConfigName<
+    CustomerManagedEncryptionEnforcementConfigTag> {
+  static constexpr char const* kValue =
+      "CustomerManagedEncryptionEnforcementConfig";
+};
+
+struct CustomerSuppliedEncryptionEnforcementConfigTag {};
+using CustomerSuppliedEncryptionEnforcementConfig =
+    EncryptionEnforcementConfig<CustomerSuppliedEncryptionEnforcementConfigTag>;
+
+template <>
+struct EncryptionEnforcementConfigName<
+    CustomerSuppliedEncryptionEnforcementConfigTag> {
+  static constexpr char const* kValue =
+      "CustomerSuppliedEncryptionEnforcementConfig";
+};
 
 /**
  * Describes the default customer managed encryption key for a bucket.
@@ -36,17 +132,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     Service.
  */
 struct BucketEncryption {
+  BucketEncryption() = default;
+  explicit BucketEncryption(std::string default_kms_key_name)
+      : default_kms_key_name(std::move(default_kms_key_name)) {}
+  BucketEncryption(std::string default_kms_key_name,
+                   GoogleManagedEncryptionEnforcementConfig gmek,
+                   CustomerManagedEncryptionEnforcementConfig cmek,
+                   CustomerSuppliedEncryptionEnforcementConfig csek)
+      : default_kms_key_name(std::move(default_kms_key_name)),
+        google_managed_encryption_enforcement_config(std::move(gmek)),
+        customer_managed_encryption_enforcement_config(std::move(cmek)),
+        customer_supplied_encryption_enforcement_config(std::move(csek)) {}
+
   std::string default_kms_key_name;
+  GoogleManagedEncryptionEnforcementConfig
+      google_managed_encryption_enforcement_config;
+  CustomerManagedEncryptionEnforcementConfig
+      customer_managed_encryption_enforcement_config;
+  CustomerSuppliedEncryptionEnforcementConfig
+      customer_supplied_encryption_enforcement_config;
 };
 
 inline bool operator==(BucketEncryption const& lhs,
                        BucketEncryption const& rhs) {
-  return lhs.default_kms_key_name == rhs.default_kms_key_name;
+  return std::tie(lhs.default_kms_key_name,
+                  lhs.google_managed_encryption_enforcement_config,
+                  lhs.customer_managed_encryption_enforcement_config,
+                  lhs.customer_supplied_encryption_enforcement_config) ==
+         std::tie(rhs.default_kms_key_name,
+                  rhs.google_managed_encryption_enforcement_config,
+                  rhs.customer_managed_encryption_enforcement_config,
+                  rhs.customer_supplied_encryption_enforcement_config);
 }
 
 inline bool operator<(BucketEncryption const& lhs,
                       BucketEncryption const& rhs) {
-  return lhs.default_kms_key_name < rhs.default_kms_key_name;
+  return std::tie(lhs.default_kms_key_name,
+                  lhs.google_managed_encryption_enforcement_config,
+                  lhs.customer_managed_encryption_enforcement_config,
+                  lhs.customer_supplied_encryption_enforcement_config) <
+         std::tie(rhs.default_kms_key_name,
+                  rhs.google_managed_encryption_enforcement_config,
+                  rhs.customer_managed_encryption_enforcement_config,
+                  rhs.customer_supplied_encryption_enforcement_config);
 }
 
 inline bool operator!=(BucketEncryption const& lhs,
@@ -67,6 +195,17 @@ inline bool operator<=(BucketEncryption const& lhs,
 inline bool operator>=(BucketEncryption const& lhs,
                        BucketEncryption const& rhs) {
   return std::rel_ops::operator>=(lhs, rhs);
+}
+
+inline std::ostream& operator<<(std::ostream& os, BucketEncryption const& rhs) {
+  os << "BucketEncryption={default_kms_key_name=" << rhs.default_kms_key_name;
+  os << ", google_managed_encryption_enforcement_config="
+     << rhs.google_managed_encryption_enforcement_config;
+  os << ", customer_managed_encryption_enforcement_config="
+     << rhs.customer_managed_encryption_enforcement_config;
+  os << ", customer_supplied_encryption_enforcement_config="
+     << rhs.customer_supplied_encryption_enforcement_config;
+  return os << "}";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

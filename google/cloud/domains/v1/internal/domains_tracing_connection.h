@@ -28,8 +28,6 @@ namespace cloud {
 namespace domains_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DomainsTracingConnection : public domains_v1::DomainsConnection {
  public:
   ~DomainsTracingConnection() override = default;
@@ -175,8 +173,6 @@ class DomainsTracingConnection : public domains_v1::DomainsConnection {
  private:
   std::shared_ptr<domains_v1::DomainsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

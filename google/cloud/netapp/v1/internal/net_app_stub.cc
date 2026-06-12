@@ -17,12 +17,15 @@
 // source: google/cloud/netapp/v1/cloud_netapp_service.proto
 
 #include "google/cloud/netapp/v1/internal/net_app_stub.h"
+#include "google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -339,6 +342,38 @@ StatusOr<google::longrunning::Operation> DefaultNetAppStub::RevertVolume(
     google::cloud::netapp::v1::RevertVolumeRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->RevertVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncEstablishVolumePeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::EstablishVolumePeeringRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::EstablishVolumePeeringRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncEstablishVolumePeering(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetAppStub::EstablishVolumePeering(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::EstablishVolumePeeringRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->EstablishVolumePeering(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -1431,6 +1466,194 @@ StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteQuotaRule(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncRestoreBackupFiles(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::RestoreBackupFilesRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::netapp::v1::RestoreBackupFilesRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRestoreBackupFiles(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::RestoreBackupFiles(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::RestoreBackupFilesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestoreBackupFiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ListHostGroupsResponse>
+DefaultNetAppStub::ListHostGroups(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListHostGroupsRequest const& request) {
+  google::cloud::netapp::v1::ListHostGroupsResponse response;
+  auto status = grpc_stub_->ListHostGroups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::HostGroup> DefaultNetAppStub::GetHostGroup(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetHostGroupRequest const& request) {
+  google::cloud::netapp::v1::HostGroup response;
+  auto status = grpc_stub_->GetHostGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncCreateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateHostGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::CreateHostGroupRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateHostGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateHostGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateHostGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateHostGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncUpdateHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateHostGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::UpdateHostGroupRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateHostGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateHostGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateHostGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateHostGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncDeleteHostGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteHostGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::DeleteHostGroupRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteHostGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteHostGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteHostGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteHostGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPostResponse>
+DefaultNetAppStub::ExecuteOntapPost(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ExecuteOntapPostRequest const& request) {
+  google::cloud::netapp::v1::ExecuteOntapPostResponse response;
+  auto status = grpc_stub_->ExecuteOntapPost(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapGetResponse>
+DefaultNetAppStub::ExecuteOntapGet(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ExecuteOntapGetRequest const& request) {
+  google::cloud::netapp::v1::ExecuteOntapGetResponse response;
+  auto status = grpc_stub_->ExecuteOntapGet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapDeleteResponse>
+DefaultNetAppStub::ExecuteOntapDelete(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ExecuteOntapDeleteRequest const& request) {
+  google::cloud::netapp::v1::ExecuteOntapDeleteResponse response;
+  auto status = grpc_stub_->ExecuteOntapDelete(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::netapp::v1::ExecuteOntapPatchResponse>
+DefaultNetAppStub::ExecuteOntapPatch(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ExecuteOntapPatchRequest const& request) {
+  google::cloud::netapp::v1::ExecuteOntapPatchResponse response;
+  auto status = grpc_stub_->ExecuteOntapPatch(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultNetAppStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -1542,3 +1765,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace netapp_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

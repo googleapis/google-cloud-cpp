@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CatalogServiceTracingStub::CatalogServiceTracingStub(
     std::shared_ptr<CatalogServiceStub> child)
@@ -419,6 +420,18 @@ CatalogServiceTracingStub::LookupEntry(
                            child_->LookupEntry(context, options, request));
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry>
+CatalogServiceTracingStub::ModifyEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "ModifyEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ModifyEntry(context, options, request));
+}
+
 StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
 CatalogServiceTracingStub::SearchEntries(
     grpc::ClientContext& context, Options const& options,
@@ -506,6 +519,18 @@ CatalogServiceTracingStub::CreateEntryLink(
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceTracingStub::UpdateEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "UpdateEntryLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateEntryLink(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
 CatalogServiceTracingStub::DeleteEntryLink(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
@@ -515,6 +540,30 @@ CatalogServiceTracingStub::DeleteEntryLink(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteEntryLink(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupEntryLinksResponse>
+CatalogServiceTracingStub::LookupEntryLinks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::LookupEntryLinksRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "LookupEntryLinks");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->LookupEntryLinks(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+CatalogServiceTracingStub::LookupContext(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::LookupContextRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "LookupContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->LookupContext(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
@@ -527,6 +576,111 @@ CatalogServiceTracingStub::GetEntryLink(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEntryLink(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceTracingStub::AsyncCreateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CreateMetadataFeed");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateMetadataFeed(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::CreateMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "CreateMetadataFeed");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateMetadataFeed(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceTracingStub::GetMetadataFeed(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "GetMetadataFeed");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetMetadataFeed(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataFeedsResponse>
+CatalogServiceTracingStub::ListMetadataFeeds(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListMetadataFeedsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "ListMetadataFeeds");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListMetadataFeeds(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceTracingStub::AsyncDeleteMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "DeleteMetadataFeed");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteMetadataFeed(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::DeleteMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "DeleteMetadataFeed");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteMetadataFeed(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceTracingStub::AsyncUpdateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "UpdateMetadataFeed");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateMetadataFeed(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingStub::UpdateMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.CatalogService",
+                                     "UpdateMetadataFeed");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateMetadataFeed(context, options, request));
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -661,18 +815,14 @@ future<Status> CatalogServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<CatalogServiceStub> MakeCatalogServiceTracingStub(
     std::shared_ptr<CatalogServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CatalogServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

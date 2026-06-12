@@ -19,6 +19,7 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
@@ -315,6 +316,14 @@ class $connection_class_name$ {
         __FILE__, __LINE__);
   }
 
+  for (auto const& method : bespoke_methods()) {
+    HeaderPrint("\n");
+    HeaderPrint(absl::StrCat(
+        "  virtual ", method.return_type(), " ", method.name(),
+        absl::StrReplaceAll(method.parameters(), {{", Options opts = {}", ""}}),
+        ";\n"));
+  }
+
   // close abstract interface Connection base class
   HeaderPrint("};\n");
 
@@ -490,27 +499,31 @@ $connection_class_name$::Async$method_name$(
         __FILE__, __LINE__);
   }
 
+  for (auto const& method : bespoke_methods()) {
+    CcPrint("\n");
+    std::string make_return =
+        absl::StrContains(method.return_type(), "future")
+            ? absl::StrCat("google::cloud::make_ready_", method.return_type())
+            : method.return_type();
+
+    CcPrint(
+        absl::StrCat(method.return_type(), R"""( $connection_class_name$::)""",
+                     method.name(),
+                     absl::StrReplaceAll(method.parameters(),
+                                         {{" request, Options opts = {}", ""}}),
+                     " {\n",
+                     absl::StrFormat(R"""(  return %s(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+)""",
+                                     make_return)));
+  }
+
   if (HasGenerateGrpcTransport()) {
     EmitFactoryFunctionDefinition(EndpointLocationStyle());
   }
 
   CcCloseNamespaces();
-
-  // TODO(#8234): This is a special case for backwards compatibility of the
-  //     streaming update function.
-  if (vars().at("service_name") == "BigQueryRead") {
-    CcOpenForwardingNamespaces();
-    CcPrint(R"""(
-void BigQueryReadReadRowsStreamingUpdater(
-    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
-    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
-  return bigquery_storage_v1_internal::BigQueryReadReadRowsStreamingUpdater(response,
-                                                                 request);
-}
-)""");
-    CcCloseNamespaces();
-  }
-
   return {};
 }
 

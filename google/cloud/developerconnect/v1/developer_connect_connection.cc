@@ -370,6 +370,18 @@ DeveloperConnectConnection::DeleteSelf(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DeveloperConnectConnection::StartOAuth(
+    google::cloud::developerconnect::v1::StartOAuthRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DeveloperConnectConnection::FinishOAuth(
+    google::cloud::developerconnect::v1::FinishOAuthRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::location::Location>
 DeveloperConnectConnection::ListLocations(
     google::cloud::location::

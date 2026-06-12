@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATATRANSFER_V1_DATA_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATATRANSFER_V1_DATA_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 
 namespace google {

@@ -42,7 +42,7 @@ Options TranslationServiceDefaultOptions(Options options) {
   if (!options.has<translate_v3::TranslationServiceRetryPolicyOption>()) {
     options.set<translate_v3::TranslationServiceRetryPolicyOption>(
         translate_v3::TranslationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<translate_v3::TranslationServiceBackoffPolicyOption>()) {

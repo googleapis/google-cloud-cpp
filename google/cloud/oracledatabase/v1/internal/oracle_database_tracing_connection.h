@@ -28,8 +28,6 @@ namespace cloud {
 namespace oracledatabase_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class OracleDatabaseTracingConnection
     : public oracledatabase_v1::OracleDatabaseConnection {
  public:
@@ -551,8 +549,6 @@ class OracleDatabaseTracingConnection
  private:
   std::shared_ptr<oracledatabase_v1::OracleDatabaseConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

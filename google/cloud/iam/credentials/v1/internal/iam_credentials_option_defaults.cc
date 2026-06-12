@@ -42,7 +42,7 @@ Options IAMCredentialsDefaultOptions(Options options) {
   if (!options.has<iam_credentials_v1::IAMCredentialsRetryPolicyOption>()) {
     options.set<iam_credentials_v1::IAMCredentialsRetryPolicyOption>(
         iam_credentials_v1::IAMCredentialsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<iam_credentials_v1::IAMCredentialsBackoffPolicyOption>()) {

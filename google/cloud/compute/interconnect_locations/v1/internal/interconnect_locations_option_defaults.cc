@@ -46,7 +46,7 @@ Options InterconnectLocationsDefaultOptions(Options options) {
                     InterconnectLocationsRetryPolicyOption>(
         compute_interconnect_locations_v1::
             InterconnectLocationsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_interconnect_locations_v1::

@@ -42,7 +42,7 @@ Options LicenseManagerDefaultOptions(Options options) {
   if (!options.has<licensemanager_v1::LicenseManagerRetryPolicyOption>()) {
     options.set<licensemanager_v1::LicenseManagerRetryPolicyOption>(
         licensemanager_v1::LicenseManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<licensemanager_v1::LicenseManagerBackoffPolicyOption>()) {

@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/version.h"
 #include "absl/strings/charconv.h"
+#include "absl/strings/escaping.h"
 #include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_split.h"
@@ -38,13 +39,23 @@ auto constexpr kMeterInstrumentationScopeVersion = "v1";
 // to the map should be more performant than performing a set_difference every
 // time.
 LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
-                      std::set<std::string> const& filtered_data_labels) {
+                      std::set<std::string> const& filtered_data_labels,
+                      std::optional<PeerInfoLabels> const& peer_info_labels) {
   LabelMap labels = {
       {"project_id", r.project_id},
       {"instance", r.instance},
       {"table", r.table},
       {"cluster", r.cluster.empty() ? "<unspecified>" : r.cluster},
       {"zone", r.zone.empty() ? "global" : r.zone}};
+
+  if (peer_info_labels) {
+    labels.insert({
+        {"transport_type", peer_info_labels->transport_type},
+        {"transport_region", peer_info_labels->transport_region},
+        {"transport_subzone", peer_info_labels->transport_subzone},
+    });
+  }
+
   std::map<std::string, std::string> data = {{
       {"method", d.method},
       {"streaming", d.streaming},
@@ -74,6 +85,7 @@ LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
   std::set_difference(data.begin(), data.end(), filtered_data_labels.begin(),
                       filtered_data_labels.end(),
                       std::inserter(labels, labels.begin()), Compare());
+
   return labels;
 }
 
@@ -101,6 +113,33 @@ GetResponseParamsFromTrailingMetadata(
   std::string value{iter->second.data(), iter->second.size()};
   if (p.ParseFromString(value)) return p;
   return absl::nullopt;
+}
+
+std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
+    grpc::ClientContext const& client_context) {
+  // The peer info is sent in the initial metadata and encoded in WebSafeBase64.
+  std::string decoded;
+  auto const& init_metadata = client_context.GetServerInitialMetadata();
+  auto iter_init = init_metadata.find("bigtable-peer-info");
+  if (iter_init == init_metadata.end() ||
+      !absl::WebSafeBase64Unescape(
+          absl::string_view{iter_init->second.data(), iter_init->second.size()},
+          &decoded)) {
+    // Find it in trailing metadata if not found in initial metadata or failed
+    // to decode.
+    auto const& trailing_metadata = client_context.GetServerTrailingMetadata();
+    auto iter_trailing = trailing_metadata.find("bigtable-peer-info");
+    if (iter_trailing == trailing_metadata.end() ||
+        !absl::WebSafeBase64Unescape(
+            absl::string_view{iter_trailing->second.data(),
+                              iter_trailing->second.size()},
+            &decoded)) {
+      return std::nullopt;
+    }
+  }
+  google::bigtable::v2::PeerInfo p;
+  if (p.ParseFromString(decoded)) return p;
+  return std::nullopt;
 }
 
 absl::optional<double> GetServerLatencyFromInitialMetadata(
@@ -199,7 +238,7 @@ AttemptLatency::AttemptLatency(
 
 void AttemptLatency::PreCall(opentelemetry::context::Context const&,
                              PreCallParams const& p) {
-  attempt_start_ = std::move(p.attempt_start);
+  attempt_start_ = p.attempt_start;
 }
 
 void AttemptLatency::PostCall(opentelemetry::context::Context const& context,
@@ -220,6 +259,56 @@ void AttemptLatency::PostCall(opentelemetry::context::Context const& context,
 std::unique_ptr<Metric> AttemptLatency::clone(ResourceLabels resource_labels,
                                               DataLabels data_labels) const {
   auto m = std::make_unique<AttemptLatency>(*this);
+  m->resource_labels_ = std::move(resource_labels);
+  m->data_labels_ = std::move(data_labels);
+  return m;
+}
+
+AttemptLatency2::AttemptLatency2(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : attempt_latencies2_(provider
+                              ->GetMeter(instrumentation_scope,
+                                         kMeterInstrumentationScopeVersion)
+                              ->CreateDoubleHistogram("attempt_latencies2")) {}
+
+void AttemptLatency2::PreCall(opentelemetry::context::Context const&,
+                              PreCallParams const& p) {
+  attempt_start_ = p.attempt_start;
+}
+
+void AttemptLatency2::PostCall(opentelemetry::context::Context const& context,
+                               grpc::ClientContext const& client_context,
+                               PostCallParams const& p) {
+  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  if (response_params) {
+    resource_labels_.cluster = response_params->cluster_id();
+    resource_labels_.zone = response_params->zone_id();
+  }
+
+  auto peer_info = GetPeerInfoFromServerMetadata(client_context);
+  peer_info_labels_.transport_type =
+      absl::AsciiStrToLower(google::bigtable::v2::PeerInfo::TransportType_Name(
+          peer_info ? peer_info->transport_type()
+                    : google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_UNKNOWN));
+  if (peer_info) {
+    peer_info_labels_.transport_region =
+        peer_info->application_frontend_region();
+    peer_info_labels_.transport_subzone =
+        peer_info->application_frontend_subzone();
+  }
+
+  data_labels_.status = StatusCodeToString(p.attempt_status.code());
+  auto attempt_elapsed = std::chrono::duration_cast<LatencyDuration>(
+      p.attempt_end - attempt_start_);
+  auto m = IntoLabelMap(resource_labels_, data_labels_, {}, peer_info_labels_);
+  attempt_latencies2_->Record(attempt_elapsed.count(), std::move(m), context);
+}
+
+std::unique_ptr<Metric> AttemptLatency2::clone(ResourceLabels resource_labels,
+                                               DataLabels data_labels) const {
+  auto m = std::make_unique<AttemptLatency2>(*this);
   m->resource_labels_ = std::move(resource_labels);
   m->data_labels_ = std::move(data_labels);
   return m;

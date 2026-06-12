@@ -70,6 +70,14 @@ KeyManagementServiceConnection::ListImportJobs(
       StreamRange<google::cloud::kms::v1::ImportJob>>();
 }
 
+StreamRange<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceConnection::ListRetiredResources(
+    google::cloud::kms::v1::
+        ListRetiredResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::kms::v1::RetiredResource>>();
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceConnection::GetKeyRing(
     google::cloud::kms::v1::GetKeyRingRequest const&) {
@@ -100,6 +108,12 @@ KeyManagementServiceConnection::GetImportJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceConnection::GetRetiredResource(
+    google::cloud::kms::v1::GetRetiredResourceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceConnection::CreateKeyRing(
     google::cloud::kms::v1::CreateKeyRingRequest const&) {
@@ -116,6 +130,52 @@ StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceConnection::CreateCryptoKeyVersion(
     google::cloud::kms::v1::CreateCryptoKeyVersionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceConnection::DeleteCryptoKey(
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceConnection::DeleteCryptoKey(
+    NoAwaitTag, google::cloud::kms::v1::DeleteCryptoKeyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceConnection::DeleteCryptoKey(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceConnection::DeleteCryptoKeyVersion(
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceConnection::DeleteCryptoKeyVersion(
+    NoAwaitTag, google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceConnection::DeleteCryptoKeyVersion(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>

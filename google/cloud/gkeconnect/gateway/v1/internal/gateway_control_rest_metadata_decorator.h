@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/gkeconnect/gateway/v1/control.pb.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/gkeconnect/gateway/v1/control.pb.h>
 #include <memory>
 #include <string>
 

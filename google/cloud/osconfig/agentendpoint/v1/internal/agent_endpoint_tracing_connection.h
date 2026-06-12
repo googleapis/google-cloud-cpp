@@ -28,8 +28,6 @@ namespace cloud {
 namespace osconfig_agentendpoint_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AgentEndpointServiceTracingConnection
     : public osconfig_agentendpoint_v1::AgentEndpointServiceConnection {
  public:
@@ -72,12 +70,15 @@ class AgentEndpointServiceTracingConnection
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+  ReportVmInventory(google::cloud::osconfig::agentendpoint::v1::
+                        ReportVmInventoryRequest const& request) override;
+
  private:
   std::shared_ptr<osconfig_agentendpoint_v1::AgentEndpointServiceConnection>
       child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

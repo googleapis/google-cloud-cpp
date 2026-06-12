@@ -15,15 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_CONTEXT_H
 
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <chrono>
-#include <map>
 #include <string>
-#include <unordered_map>
 #include <utility>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -36,7 +34,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class RestContext {
  public:
-  using HttpHeaders = std::unordered_map<std::string, std::vector<std::string>>;
   RestContext() = default;
   explicit RestContext(Options options, HttpHeaders headers)
       : options_(std::move(options)), headers_(std::move(headers)) {}
@@ -50,18 +47,17 @@ class RestContext {
 
   // Adding a header/value pair that already exists results in the new value
   // appended to the list of values for the existing header.
+  RestContext& AddHeader(HttpHeader header) &;
+  RestContext&& AddHeader(HttpHeader header) && {
+    return std::move(AddHeader(std::move(header)));
+  }
   RestContext& AddHeader(std::string header, std::string value) &;
   RestContext&& AddHeader(std::string header, std::string value) && {
     return std::move(AddHeader(std::move(header), std::move(value)));
   }
-  RestContext& AddHeader(std::pair<std::string, std::string> header) &;
-  RestContext&& AddHeader(std::pair<std::string, std::string> header) && {
-    return std::move(AddHeader(std::move(header)));
-  }
 
-  // Vector is empty if header name is not found.
   // Header names are case-insensitive; header values are case-sensitive.
-  std::vector<std::string> GetHeader(std::string header) const;
+  HttpHeader GetHeader(HttpHeaderName const& header) const;
 
   absl::optional<std::string> local_ip_address() const {
     return local_ip_address_;

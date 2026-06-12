@@ -18,9 +18,12 @@
 // google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto
 
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_auth_decorator.h"
-#include <google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h>
+#include "google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -371,3 +374,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rapidmigrationassessment_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

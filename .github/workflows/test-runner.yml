@@ -9,7 +9,7 @@ on:
   # branches we can disable builds (to speed up the testing) or add new ones,
   # without impacting the rest of the team.
   push:
-    branches: [ 'v[2-9]**', 'ci-gha**', 'prepare-for-v3.0.0' ]
+    branches: [ 'ci-gha**', 'main' ]
   # Start the build in the context of the target branch. This is considered
   # "safe", as the workflow files are already committed. These types of builds
   # have access to the secrets in the build, which we need to use the remote
@@ -30,19 +30,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  debug:
-    name: debug_job
-    runs-on: ubuntu-latest
-    steps:
-      - name: debug_steps
-        id: debug-steps
-        run: |
-          echo "event=${{ github.event_name }}"
-          echo "assoc=${{ github.event.pull_request.author_association }}"
-          echo "org=${{ github.organization }}" || true
-          echo "user=${{ github.event.pull_request.user }}" || true
-          echo "user_orgs=${{ github.event.pull_request.user.organizations_url }}" || true
-
   pre-flight:
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
     environment: >-
@@ -51,7 +38,6 @@ jobs:
           (github.event.pull_request.head.repo.full_name == github.repository && 'internal')
       }}
     name: Save PR ref
-    needs: [debug]
     if: >-
       ${{
           ((github.event.pull_request.author_association == 'OWNER' ||
@@ -77,17 +63,6 @@ jobs:
   # the additional jobs inherit any secrets needed to use the remote caches and
   # receive what version to checkout as an input.
   macos-bazel:
-    # Disabled
-    if: false
-    name: macOS-Bazel
-    needs: [pre-flight]
-    uses: ./.github/workflows/macos-bazel.yml
-    with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-      bazel-cache-mode: 'READ_WRITE'
-      execute-integration-tests: true
-    secrets: inherit
-  windows-bazel:
     # Build the full matrix only on push events to the default branch, or
     # when PR gets the has a `gha:full-build` label, or when it had the
     # label already and it gets a new commit.
@@ -97,6 +72,17 @@ jobs:
         github.event_name == 'push' ||
         contains(github.event.pull_request.labels.*.name, 'gha:full-build')
       }}
+    name: macOS-Bazel
+    needs: [pre-flight]
+    uses: ./.github/workflows/macos-bazel.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      bazel-cache-mode: 'READ_WRITE'
+      execute-integration-tests: true
+    secrets: inherit
+  windows-bazel:
+    # Disabled
+    if: false
     name: Windows-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/windows-bazel.yml
@@ -147,39 +133,3 @@ jobs:
       vcpkg-cache-mode: 'readwrite'
       execute-integration-tests: true
     secrets: inherit
-  notify:
-    name: Notify-Google-Chat
-    # Wait until all the other jobs have completed.
-    needs:
-      # macos-bazel is disabled
-      # macos-cmake is disabled
-      - windows-bazel
-      # windows-cmake is disabled is disabled
-    # Run even if the other jobs failed or were skipped.
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Google Chat
-        shell: bash
-        run: |
-          event_name="${{ github.event_name }}"
-          case "${event_name}" in
-            schedule)
-              ;;
-            push)
-              ;;
-            *)
-              exit 0
-              ;;
-          esac
-          failure="${{ contains(needs.*.result, 'failure') }}"
-          cancelled="${{ contains(needs.*.result, 'cancelled') }}"
-          status=""
-          # Report whether any of the jobs failed or were cancelled.
-          if [[ "${cancelled}" == "true" ]]; then status="cancelled"; fi
-          if [[ "${failure}" == "true" ]]; then status="failure"; fi
-          # Exit early if there is nothing interesting to report.
-          if [[ -z "${status}" ]]; then exit 0; fi
-          printf '{"text": "GHA Build %s %s/%s/actions/runs/%s"}' \
-            "${status}" "${{ github.server_url }}" "${{ github.repository }}" "${{ github.run_id }}" |
-          curl -fsX POST -o /dev/null -d@- -H "Content-Type: application/json; charset=UTF-8" '${{ secrets.CLOUD_CPP_BUILD_ALERTS_WEBHOOK }}'

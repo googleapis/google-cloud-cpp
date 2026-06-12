@@ -41,7 +41,7 @@ Options RuleServiceDefaultOptions(Options options) {
   if (!options.has<chronicle_v1::RuleServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::RuleServiceRetryPolicyOption>(
         chronicle_v1::RuleServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<chronicle_v1::RuleServiceBackoffPolicyOption>()) {

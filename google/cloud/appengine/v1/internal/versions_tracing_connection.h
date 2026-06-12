@@ -28,8 +28,6 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VersionsTracingConnection : public appengine_v1::VersionsConnection {
  public:
   ~VersionsTracingConnection() override = default;
@@ -78,8 +76,6 @@ class VersionsTracingConnection : public appengine_v1::VersionsConnection {
  private:
   std::shared_ptr<appengine_v1::VersionsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -85,6 +85,7 @@ $env:GOOGLE_CLOUD_CPP_SPANNER_TEST_QUICKSTART_DATABASE="quickstart-db"
 
 # Cloud Pub/Sub configuration parameters
 $env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
+$env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_IMPERSONATED_SERVICE_ACCOUNT="pubsub-impersonate-test-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
 # Cloud Batch configuration parameters
 $env:GOOGLE_CLOUD_CPP_BATCH_TEST_TEMPLATE_NAME="cloud-batch-sample-template"

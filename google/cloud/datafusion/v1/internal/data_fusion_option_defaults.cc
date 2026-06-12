@@ -41,7 +41,7 @@ Options DataFusionDefaultOptions(Options options) {
   if (!options.has<datafusion_v1::DataFusionRetryPolicyOption>()) {
     options.set<datafusion_v1::DataFusionRetryPolicyOption>(
         datafusion_v1::DataFusionLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<datafusion_v1::DataFusionBackoffPolicyOption>()) {

@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CommentServiceTracingStub::CommentServiceTracingStub(
     std::shared_ptr<CommentServiceStub> child)
@@ -56,18 +57,26 @@ CommentServiceTracingStub::CreateComment(
                            child_->CreateComment(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+StatusOr<google::cloud::support::v2::Comment>
+CommentServiceTracingStub::GetComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService",
+                                     "GetComment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetComment(context, options, request));
+}
 
 std::shared_ptr<CommentServiceStub> MakeCommentServiceTracingStub(
     std::shared_ptr<CommentServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<CommentServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -27,8 +27,6 @@ namespace cloud {
 namespace video_livestream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 LivestreamServiceTracingConnection::LivestreamServiceTracingConnection(
     std::shared_ptr<video_livestream_v1::LivestreamServiceConnection> child)
     : child_(std::move(child)) {}
@@ -774,17 +772,13 @@ Status LivestreamServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<video_livestream_v1::LivestreamServiceConnection>
 MakeLivestreamServiceTracingConnection(
     std::shared_ptr<video_livestream_v1::LivestreamServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<LivestreamServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

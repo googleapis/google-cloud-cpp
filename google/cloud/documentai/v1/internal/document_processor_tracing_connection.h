@@ -28,8 +28,6 @@ namespace cloud {
 namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DocumentProcessorServiceTracingConnection
     : public documentai_v1::DocumentProcessorServiceConnection {
  public:
@@ -257,8 +255,6 @@ class DocumentProcessorServiceTracingConnection
  private:
   std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

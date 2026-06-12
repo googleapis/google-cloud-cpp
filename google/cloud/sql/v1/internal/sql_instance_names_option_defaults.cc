@@ -43,7 +43,7 @@ Options SqlInstanceNamesServiceDefaultOptions(Options options) {
   if (!options.has<sql_v1::SqlInstanceNamesServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlInstanceNamesServiceRetryPolicyOption>(
         sql_v1::SqlInstanceNamesServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<sql_v1::SqlInstanceNamesServiceBackoffPolicyOption>()) {

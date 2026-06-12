@@ -27,8 +27,6 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 KeyManagementServiceTracingConnection::KeyManagementServiceTracingConnection(
     std::shared_ptr<kms_v1::KeyManagementServiceConnection> child)
     : child_(std::move(child)) {}
@@ -77,6 +75,17 @@ KeyManagementServiceTracingConnection::ListImportJobs(
       std::move(span), std::move(sr));
 }
 
+StreamRange<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceTracingConnection::ListRetiredResources(
+    google::cloud::kms::v1::ListRetiredResourcesRequest request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::ListRetiredResources");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListRetiredResources(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::kms::v1::RetiredResource>(std::move(span), std::move(sr));
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceTracingConnection::GetKeyRing(
     google::cloud::kms::v1::GetKeyRingRequest const& request) {
@@ -122,6 +131,15 @@ KeyManagementServiceTracingConnection::GetImportJob(
   return internal::EndSpan(*span, child_->GetImportJob(request));
 }
 
+StatusOr<google::cloud::kms::v1::RetiredResource>
+KeyManagementServiceTracingConnection::GetRetiredResource(
+    google::cloud::kms::v1::GetRetiredResourceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::GetRetiredResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRetiredResource(request));
+}
+
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceTracingConnection::CreateKeyRing(
     google::cloud::kms::v1::CreateKeyRingRequest const& request) {
@@ -147,6 +165,65 @@ KeyManagementServiceTracingConnection::CreateCryptoKeyVersion(
       "kms_v1::KeyManagementServiceConnection::CreateCryptoKeyVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCryptoKeyVersion(request));
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceTracingConnection::DeleteCryptoKey(
+    google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::DeleteCryptoKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteCryptoKey(request));
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceTracingConnection::DeleteCryptoKey(
+    NoAwaitTag, google::cloud::kms::v1::DeleteCryptoKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::DeleteCryptoKey");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteCryptoKey(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyMetadata>>
+KeyManagementServiceTracingConnection::DeleteCryptoKey(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::DeleteCryptoKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteCryptoKey(operation));
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceTracingConnection::DeleteCryptoKeyVersion(
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::DeleteCryptoKeyVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCryptoKeyVersion(request));
+}
+
+StatusOr<google::longrunning::Operation>
+KeyManagementServiceTracingConnection::DeleteCryptoKeyVersion(
+    NoAwaitTag,
+    google::cloud::kms::v1::DeleteCryptoKeyVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::DeleteCryptoKeyVersion");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteCryptoKeyVersion(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::kms::v1::DeleteCryptoKeyVersionMetadata>>
+KeyManagementServiceTracingConnection::DeleteCryptoKeyVersion(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::DeleteCryptoKeyVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCryptoKeyVersion(operation));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
@@ -360,17 +437,13 @@ KeyManagementServiceTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<kms_v1::KeyManagementServiceConnection>
 MakeKeyManagementServiceTracingConnection(
     std::shared_ptr<kms_v1::KeyManagementServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<KeyManagementServiceTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

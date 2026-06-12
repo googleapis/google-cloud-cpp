@@ -18,15 +18,15 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/printer.h"
 #include "generator/internal/request_id.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
-#include <google/api/client.pb.h>
-#include <google/api/routing.pb.h>
+#include "google/api/client.pb.h"
+#include "google/api/routing.pb.h"
 #include <google/protobuf/descriptor.h>
 #include <algorithm>
 #include <unordered_map>
@@ -72,9 +72,6 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
   SetMethods();
-  auto e = service_vars_.find("backwards_compatibility_namespace_alias");
-  define_backwards_compatibility_namespace_alias_ =
-      (e != service_vars_.end() && e->second == "true");
 }
 
 ServiceCodeGenerator::ServiceCodeGenerator(
@@ -314,29 +311,40 @@ void ServiceCodeGenerator::CcSystemIncludes(
   GenerateSystemIncludes(cc_, system_includes);
 }
 
+void ServiceCodeGenerator::HeaderGrpcPortsDefInclude() {
+  header_.Print(R"""(
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+)""");
+}
+void ServiceCodeGenerator::HeaderGrpcPortsUndefInclude() {
+  header_.Print(R"""(
+#include "google/cloud/ports_undef.inc"
+)""");
+}
+void ServiceCodeGenerator::CcGrpcPortsDefInclude() {
+  cc_.Print(R"""(
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+)""");
+}
+void ServiceCodeGenerator::CcGrpcPortsUndefInclude() {
+  cc_.Print(R"""(
+#include "google/cloud/ports_undef.inc"
+)""");
+}
+
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(header_, ns_type, "product_path");
 }
 
-Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
-    NamespaceType ns_type, std::string const& ns_documentation) {
-  return OpenNamespaces(header_, ns_type, "forwarding_product_path",
-                        ns_documentation);
-}
-
-void ServiceCodeGenerator::HeaderCloseNamespaces() {
-  CloseNamespaces(header_, define_backwards_compatibility_namespace_alias_);
-}
+void ServiceCodeGenerator::HeaderCloseNamespaces() { CloseNamespaces(header_); }
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(cc_, ns_type, "product_path");
 }
 
-Status ServiceCodeGenerator::CcOpenForwardingNamespaces(NamespaceType ns_type) {
-  return OpenNamespaces(cc_, ns_type, "forwarding_product_path");
-}
-
-void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_, false); }
+void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_); }
 
 void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
   header_.Print(service_vars_, text);
@@ -445,15 +453,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
   return {};
 }
 
-void ServiceCodeGenerator::CloseNamespaces(
-    Printer& p, bool define_backwards_compatibility_namespace_alias) {
+void ServiceCodeGenerator::CloseNamespaces(Printer& p) {
   p.Print(R"""(
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END)""");
-  // TODO(#7463) - remove backwards compatibility namespaces
-  if (define_backwards_compatibility_namespace_alias) {
-    p.Print(R"""(
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls))""");
-  }
   p.Print(R"""(
 }  // namespace $namespace$
 }  // namespace cloud
@@ -502,6 +504,20 @@ void ServiceCodeGenerator::SetMethods() {
 
   for (auto const& mixin_method : mixin_methods_) {
     methods_.emplace_back(mixin_method.method.get());
+  }
+
+  auto bespoke_methods_var = service_vars_.find("bespoke_methods");
+  if (bespoke_methods_var != service_vars_.end()) {
+    auto methods = absl::StrSplit(bespoke_methods_var->second, ',');
+    for (auto const& method : methods) {
+      std::vector<std::string> pieces = absl::StrSplit(method, "@@");
+      assert(pieces.size() == 3);
+      cpp::generator::ServiceConfiguration::BespokeMethod bespoke_method;
+      bespoke_method.set_name(SafeReplaceAll(pieces[0], "@", ","));
+      bespoke_method.set_return_type(SafeReplaceAll(pieces[1], "@", ","));
+      bespoke_method.set_parameters(SafeReplaceAll(pieces[2], "@", ","));
+      bespoke_methods_.emplace_back(std::move(bespoke_method));
+    }
   }
 }
 

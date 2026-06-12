@@ -17,16 +17,20 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_metadata_decorator.h"
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -416,6 +420,26 @@ StatusOr<google::longrunning::Operation> DeveloperConnectMetadata::DeleteSelf(
   return child_->DeleteSelf(context, options, request);
 }
 
+StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse>
+DeveloperConnectMetadata::StartOAuth(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::StartOAuthRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("account_connector=",
+                           internal::UrlEncode(request.account_connector())));
+  return child_->StartOAuth(context, options, request);
+}
+
+StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+DeveloperConnectMetadata::FinishOAuth(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FinishOAuthRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("account_connector=",
+                           internal::UrlEncode(request.account_connector())));
+  return child_->FinishOAuth(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DeveloperConnectMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,
@@ -507,3 +531,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace developerconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

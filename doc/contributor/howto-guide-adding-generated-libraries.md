@@ -42,6 +42,7 @@ cases:
 
 ```shell
 bazelisk --batch query --noshow_progress --noshow_loading_progress \
+    --enable_workspace --noenable_bzlmod  --incompatible_disallow_empty_glob=no \
     "kind(cc_library, @com_google_googleapis//${subdir}/...)"
 ```
 
@@ -96,7 +97,7 @@ and add the new service.
 Find the list of `.proto` files that will need to be included:
 
 ```shell
-find "${bazel_output_base}/external/googleapis~/${subdir}" -name '*.proto' -print0 |
+find "${bazel_output_base}/external/googleapis+/${subdir}" -name '*.proto' -print0 |
   xargs -0 grep -l '^service'
 ```
 
@@ -150,8 +151,8 @@ Then run the micro-generator to create the scaffold and the C++ sources:
 ```shell
 bazelisk run \
   //generator:google-cloud-cpp-codegen -- \
-  --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
-  --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
+  --protobuf_proto_path="${bazel_output_base}"/external/protobuf+/src \
+  --googleapis_proto_path="${bazel_output_base}"/external/googleapis+ \
   --discovery_proto_path="${PWD}/protos" \
   --output_path="${PWD}" \
   --config_file="${PWD}/generator/generator_config.textproto" \

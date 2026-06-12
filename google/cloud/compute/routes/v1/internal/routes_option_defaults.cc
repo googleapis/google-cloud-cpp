@@ -41,7 +41,7 @@ Options RoutesDefaultOptions(Options options) {
   if (!options.has<compute_routes_v1::RoutesRetryPolicyOption>()) {
     options.set<compute_routes_v1::RoutesRetryPolicyOption>(
         compute_routes_v1::RoutesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_routes_v1::RoutesBackoffPolicyOption>()) {

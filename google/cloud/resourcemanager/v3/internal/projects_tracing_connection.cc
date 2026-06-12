@@ -27,8 +27,6 @@ namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ProjectsTracingConnection::ProjectsTracingConnection(
     std::shared_ptr<resourcemanager_v3::ProjectsConnection> child)
     : child_(std::move(child)) {}
@@ -240,16 +238,12 @@ ProjectsTracingConnection::GetOperation(
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<resourcemanager_v3::ProjectsConnection>
 MakeProjectsTracingConnection(
     std::shared_ptr<resourcemanager_v3::ProjectsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ProjectsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

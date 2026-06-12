@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_SERVICE_HEALTH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_SERVICE_HEALTH_CONNECTION_H
 
+#include "google/cloud/servicehealth/v1/event_service.pb.h"
 #include "google/cloud/servicehealth/v1/internal/service_health_retry_traits.h"
 #include "google/cloud/servicehealth/v1/service_health_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/servicehealth/v1/event_service.pb.h>
 #include <memory>
 
 namespace google {

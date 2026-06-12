@@ -28,8 +28,6 @@ namespace cloud {
 namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ClusterManagerTracingConnection
     : public container_v1::ClusterManagerConnection {
  public:
@@ -161,8 +159,6 @@ class ClusterManagerTracingConnection
  private:
   std::shared_ptr<container_v1::ClusterManagerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

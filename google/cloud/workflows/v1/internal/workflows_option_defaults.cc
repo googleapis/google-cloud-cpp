@@ -40,7 +40,7 @@ Options WorkflowsDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<workflows_v1::WorkflowsRetryPolicyOption>()) {
     options.set<workflows_v1::WorkflowsRetryPolicyOption>(
-        workflows_v1::WorkflowsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        workflows_v1::WorkflowsLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<workflows_v1::WorkflowsBackoffPolicyOption>()) {

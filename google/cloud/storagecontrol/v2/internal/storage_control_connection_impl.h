@@ -33,7 +33,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -76,6 +76,20 @@ class StorageControlConnectionImpl
       override;
 
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+  DeleteFolderRecursive(
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFolderRecursive(
+      NoAwaitTag,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
+      override;
+
+  future<StatusOr<google::storage::control::v2::DeleteFolderRecursiveMetadata>>
+  DeleteFolderRecursive(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(

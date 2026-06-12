@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/time_utils.h"
-#include <google/protobuf/timestamp.pb.h>
+#include "google/protobuf/timestamp.pb.h"
 #include <chrono>
 
 namespace google {

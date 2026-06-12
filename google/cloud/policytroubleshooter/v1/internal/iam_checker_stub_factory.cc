@@ -17,6 +17,7 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub_factory.h"
+#include "google/cloud/policytroubleshooter/v1/checker.grpc.pb.h"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_auth_decorator.h"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_logging_decorator.h"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_metadata_decorator.h"
@@ -28,9 +29,11 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/policytroubleshooter/v1/checker.grpc.pb.h>
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -68,3 +71,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

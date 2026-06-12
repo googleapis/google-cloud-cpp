@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/credentials.h"
@@ -66,35 +65,24 @@ class CreateClientIntegrationTest
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 TEST_F(CreateClientIntegrationTest, DefaultWorks) {
-  auto client = Client::CreateDefaultClient();
-  ASSERT_THAT(client, IsOk());
-  ASSERT_NO_FATAL_FAILURE(
-      UseClient(*client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
-}
-
-TEST_F(CreateClientIntegrationTest, SettingPolicies) {
-  auto credentials = oauth2::CreateAnonymousCredentials();
-  if (!UsingEmulator()) {
-    auto c = oauth2::GoogleDefaultCredentials();
-    ASSERT_THAT(c, IsOk());
-    credentials = *std::move(c);
-  }
-  auto client =
-      Client(ClientOptions(std::move(credentials)),
-             LimitedErrorCountRetryPolicy(/*maximum_failures=*/5),
-             ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::seconds(1),
-                                      /*maximum_delay=*/std::chrono::minutes(5),
-                                      /*scaling=*/1.5));
+  auto client = Client(Options{});
   ASSERT_NO_FATAL_FAILURE(
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-/// @test Verify the backwards compatibility `v1` namespace still exists.
-TEST_F(CreateClientIntegrationTest, BackwardsCompatibility) {
-  auto client = ::google::cloud::storage::v1::Client::CreateDefaultClient();
-  ASSERT_THAT(client, IsOk());
+TEST_F(CreateClientIntegrationTest, SettingPolicies) {
+  auto client = Client(
+      Options{}
+          .set<RetryPolicyOption>(
+              LimitedErrorCountRetryPolicy(/*maximum_failures=*/5).clone())
+          .set<BackoffPolicyOption>(
+              ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::seconds(1),
+                  /*maximum_delay=*/std::chrono::minutes(5),
+                  /*scaling=*/1.5)
+                  .clone()));
   ASSERT_NO_FATAL_FAILURE(
-      UseClient(*client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
+      UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
 }  // namespace

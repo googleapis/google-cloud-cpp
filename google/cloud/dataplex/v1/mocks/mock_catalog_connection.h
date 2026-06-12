@@ -449,6 +449,10 @@ class MockCatalogServiceConnection
               (google::cloud::dataplex::v1::LookupEntryRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entry>, ModifyEntry,
+              (google::cloud::dataplex::v1::ModifyEntryRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>),
               SearchEntries,
               (google::cloud::dataplex::v1::SearchEntriesRequest request),
@@ -514,13 +518,156 @@ class MockCatalogServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::EntryLink>, UpdateEntryLink,
+      (google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::dataplex::v1::EntryLink>, DeleteEntryLink,
       (google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::EntryLink>),
+              LookupEntryLinks,
+              (google::cloud::dataplex::v1::LookupEntryLinksRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::LookupContextResponse>,
+      LookupContext,
+      (google::cloud::dataplex::v1::LookupContextRequest const& request),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::EntryLink>, GetEntryLink,
               (google::cloud::dataplex::v1::GetEntryLinkRequest const& request),
               (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMetadataFeed(Matcher<google::cloud::dataplex::v1::CreateMetadataFeedRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>,
+      CreateMetadataFeed,
+      (google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMetadataFeed(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateMetadataFeed,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMetadataFeed(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>,
+              CreateMetadataFeed,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::MetadataFeed>, GetMetadataFeed,
+      (google::cloud::dataplex::v1::GetMetadataFeedRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::MetadataFeed>),
+              ListMetadataFeeds,
+              (google::cloud::dataplex::v1::ListMetadataFeedsRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMetadataFeed(Matcher<google::cloud::dataplex::v1::DeleteMetadataFeedRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
+      DeleteMetadataFeed,
+      (google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMetadataFeed(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteMetadataFeed,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMetadataFeed(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
+              DeleteMetadataFeed,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMetadataFeed(Matcher<google::cloud::dataplex::v1::UpdateMetadataFeedRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>,
+      UpdateMetadataFeed,
+      (google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateMetadataFeed(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateMetadataFeed,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMetadataFeed(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::MetadataFeed>>,
+              UpdateMetadataFeed,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),

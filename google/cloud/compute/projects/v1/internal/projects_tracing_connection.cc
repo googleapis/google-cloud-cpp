@@ -27,8 +27,6 @@ namespace cloud {
 namespace compute_projects_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 ProjectsTracingConnection::ProjectsTracingConnection(
     std::shared_ptr<compute_projects_v1::ProjectsConnection> child)
     : child_(std::move(child)) {}
@@ -386,16 +384,12 @@ ProjectsTracingConnection::SetUsageExportBucket(
                            child_->SetUsageExportBucket(operation));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<compute_projects_v1::ProjectsConnection>
 MakeProjectsTracingConnection(
     std::shared_ptr<compute_projects_v1::ProjectsConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ProjectsTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

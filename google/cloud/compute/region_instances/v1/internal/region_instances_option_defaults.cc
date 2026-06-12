@@ -42,7 +42,7 @@ Options RegionInstancesDefaultOptions(Options options) {
           compute_region_instances_v1::RegionInstancesRetryPolicyOption>()) {
     options.set<compute_region_instances_v1::RegionInstancesRetryPolicyOption>(
         compute_region_instances_v1::RegionInstancesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

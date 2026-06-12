@@ -47,7 +47,7 @@ Options InterconnectAttachmentGroupsDefaultOptions(Options options) {
                     InterconnectAttachmentGroupsRetryPolicyOption>(
         compute_interconnect_attachment_groups_v1::
             InterconnectAttachmentGroupsLimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_interconnect_attachment_groups_v1::

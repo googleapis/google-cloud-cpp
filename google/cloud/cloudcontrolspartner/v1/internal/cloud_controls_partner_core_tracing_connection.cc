@@ -27,8 +27,6 @@ namespace cloud {
 namespace cloudcontrolspartner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 CloudControlsPartnerCoreTracingConnection::
     CloudControlsPartnerCoreTracingConnection(
         std::shared_ptr<
@@ -162,18 +160,14 @@ Status CloudControlsPartnerCoreTracingConnection::DeleteCustomer(
   return internal::EndSpan(*span, child_->DeleteCustomer(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
 MakeCloudControlsPartnerCoreTracingConnection(
     std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
         conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CloudControlsPartnerCoreTracingConnection>(
         std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

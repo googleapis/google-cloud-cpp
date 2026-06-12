@@ -41,7 +41,7 @@ Options DataplexServiceDefaultOptions(Options options) {
   if (!options.has<dataplex_v1::DataplexServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::DataplexServiceRetryPolicyOption>(
         dataplex_v1::DataplexServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<dataplex_v1::DataplexServiceBackoffPolicyOption>()) {

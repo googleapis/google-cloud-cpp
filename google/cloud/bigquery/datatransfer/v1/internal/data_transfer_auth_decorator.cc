@@ -17,9 +17,12 @@
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_auth_decorator.h"
-#include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
+#include "google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -211,3 +214,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

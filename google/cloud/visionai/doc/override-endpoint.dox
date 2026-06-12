@@ -1,0 +1,64 @@
+/*!
+@page visionai-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `visionai_v1::AppPlatformClient`:
+
+@snippet app_platform_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c visionai_v1::AppPlatformClient](@ref visionai_v1::AppPlatformClient-endpoint-snippet)
+- [\c visionai_v1::HealthCheckServiceClient](@ref visionai_v1::HealthCheckServiceClient-endpoint-snippet)
+- [\c visionai_v1::LiveVideoAnalyticsClient](@ref visionai_v1::LiveVideoAnalyticsClient-endpoint-snippet)
+- [\c visionai_v1::StreamingServiceClient](@ref visionai_v1::StreamingServiceClient-endpoint-snippet)
+- [\c visionai_v1::StreamsServiceClient](@ref visionai_v1::StreamsServiceClient-endpoint-snippet)
+- [\c visionai_v1::WarehouseClient](@ref visionai_v1::WarehouseClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page visionai_v1::AppPlatformClient-endpoint-snippet Override visionai_v1::AppPlatformClient Endpoint Configuration
+
+@snippet google/cloud/visionai/v1/samples/app_platform_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page visionai_v1::HealthCheckServiceClient-endpoint-snippet Override visionai_v1::HealthCheckServiceClient Endpoint Configuration
+
+@snippet google/cloud/visionai/v1/samples/health_check_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page visionai_v1::LiveVideoAnalyticsClient-endpoint-snippet Override visionai_v1::LiveVideoAnalyticsClient Endpoint Configuration
+
+@snippet google/cloud/visionai/v1/samples/live_video_analytics_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page visionai_v1::StreamingServiceClient-endpoint-snippet Override visionai_v1::StreamingServiceClient Endpoint Configuration
+
+@snippet google/cloud/visionai/v1/samples/streaming_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page visionai_v1::StreamsServiceClient-endpoint-snippet Override visionai_v1::StreamsServiceClient Endpoint Configuration
+
+@snippet google/cloud/visionai/v1/samples/streams_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page visionai_v1::WarehouseClient-endpoint-snippet Override visionai_v1::WarehouseClient Endpoint Configuration
+
+@snippet google/cloud/visionai/v1/samples/warehouse_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

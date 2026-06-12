@@ -46,7 +46,7 @@ Options BinauthzManagementServiceV1DefaultOptions(Options options) {
         binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicyOption>(
         binaryauthorization_v1::
             BinauthzManagementServiceV1LimitedTimeRetryPolicy(
-                std::chrono::minutes(30))
+                std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<binaryauthorization_v1::

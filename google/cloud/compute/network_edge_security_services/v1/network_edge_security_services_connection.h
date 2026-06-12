@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_EDGE_SECURITY_SERVICES_V1_NETWORK_EDGE_SECURITY_SERVICES_CONNECTION_H
 
 #include "google/cloud/compute/network_edge_security_services/v1/internal/network_edge_security_services_retry_traits.h"
+#include "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h"
 #include "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -31,7 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h>
 #include <memory>
 
 namespace google {

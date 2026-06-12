@@ -41,7 +41,7 @@ Options CompletionServiceDefaultOptions(Options options) {
   if (!options.has<retail_v2::CompletionServiceRetryPolicyOption>()) {
     options.set<retail_v2::CompletionServiceRetryPolicyOption>(
         retail_v2::CompletionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<retail_v2::CompletionServiceBackoffPolicyOption>()) {

@@ -28,8 +28,6 @@ namespace cloud {
 namespace bigquery_connection_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ConnectionServiceTracingConnection
     : public bigquery_connection_v1::ConnectionServiceConnection {
  public:
@@ -76,8 +74,6 @@ class ConnectionServiceTracingConnection
  private:
   std::shared_ptr<bigquery_connection_v1::ConnectionServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

@@ -42,7 +42,7 @@ Options QuotaControllerDefaultOptions(Options options) {
   if (!options.has<servicecontrol_v1::QuotaControllerRetryPolicyOption>()) {
     options.set<servicecontrol_v1::QuotaControllerRetryPolicyOption>(
         servicecontrol_v1::QuotaControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<servicecontrol_v1::QuotaControllerBackoffPolicyOption>()) {

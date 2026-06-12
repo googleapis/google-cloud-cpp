@@ -45,6 +45,7 @@ fi
 # https://github.com/googleapis/google-cloud-cpp/issues/6313
 io::run cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
   -DCMAKE_BUILD_TYPE=Debug \
@@ -73,6 +74,8 @@ function check_abi() {
   elif [[ "${shortlib}" == "storage_grpc" ]]; then
     # `storage_grpc` uses the same header location as `storage`
     public_headers="${prefix}/include/google/cloud/storage"
+  elif [[ "${shortlib}" =~ "hypercomputecluster" ]]; then
+    :
   elif [[ "${shortlib}" =~ "compute" ]]; then
     # Compute libs are also special as their headers are in subdirectories.
     local computelib="${library#google_cloud_cpp_compute_}"

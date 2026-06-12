@@ -17,16 +17,20 @@
 // source: google/cloud/dataplex/v1/datascans.proto
 
 #include "google/cloud/dataplex/v1/internal/data_scan_metadata_decorator.h"
+#include "google/cloud/dataplex/v1/datascans.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/datascans.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -152,6 +156,15 @@ DataScanServiceMetadata::ListDataScanJobs(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataScanJobs(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceMetadata::CancelDataScanJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelDataScanJob(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
@@ -283,3 +296,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -22,10 +22,13 @@
 #include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -66,6 +69,18 @@ class StorageControlAuth : public StorageControlStub {
   StatusOr<google::longrunning::Operation> RenameFolder(
       grpc::ClientContext& context, Options options,
       google::storage::control::v2::RenameFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteFolderRecursive(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFolderRecursive(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::DeleteFolderRecursiveRequest const& request)
       override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -213,5 +228,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_AUTH_DECORATOR_H

@@ -41,7 +41,7 @@ Options CloudQuotasDefaultOptions(Options options) {
   if (!options.has<cloudquotas_v1::CloudQuotasRetryPolicyOption>()) {
     options.set<cloudquotas_v1::CloudQuotasRetryPolicyOption>(
         cloudquotas_v1::CloudQuotasLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<cloudquotas_v1::CloudQuotasBackoffPolicyOption>()) {

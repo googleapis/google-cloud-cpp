@@ -42,7 +42,7 @@ Options NetworkServicesDefaultOptions(Options options) {
   if (!options.has<networkservices_v1::NetworkServicesRetryPolicyOption>()) {
     options.set<networkservices_v1::NetworkServicesRetryPolicyOption>(
         networkservices_v1::NetworkServicesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<networkservices_v1::NetworkServicesBackoffPolicyOption>()) {

@@ -26,7 +26,6 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::bigtable_mocks::MockDataConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::IsOkAndHolds;
@@ -641,7 +640,6 @@ TEST(DataTracingConnection, AsyncReadRowFailure) {
           Not(SpanHasAttributes(
               OTelAttribute<bool>("gcloud.bigtable.row_found", _))))));
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

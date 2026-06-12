@@ -68,7 +68,11 @@ if (GOOGLE_CLOUD_CPP_ENABLE_REST AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     )
 endif ()
 
-if (universe_domain IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+# We need the universe_domain library for the full suite of samples if it isn't
+# already enabled.
+if (universe_domain IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    OR BUILD_TESTING
+    AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     include(
         "${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_universe_domain.cmake")
     add_subdirectory(universe_domain)

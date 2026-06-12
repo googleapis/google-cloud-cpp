@@ -45,7 +45,7 @@ Options RegionHealthChecksDefaultOptions(Options options) {
     options.set<
         compute_region_health_checks_v1::RegionHealthChecksRetryPolicyOption>(
         compute_region_health_checks_v1::
-            RegionHealthChecksLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            RegionHealthChecksLimitedTimeRetryPolicy(std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_region_health_checks_v1::

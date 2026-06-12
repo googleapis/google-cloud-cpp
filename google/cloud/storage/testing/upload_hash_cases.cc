@@ -21,12 +21,12 @@ namespace storage {
 namespace testing {
 namespace {
 // These values were obtained using:
-// /bin/echo -n '' > foo.txt && gsutil hash foo.txt
+// /bin/echo -n '' > foo.txt && gcloud storage hash foo.txt
 auto constexpr kEmptyStringCrc32cChecksum = "AAAAAA==";
 auto constexpr kEmptyStringMD5Hash = "1B2M2Y8AsgTpgAmY7PhCfg==";
 
 // /bin/echo -n 'The quick brown fox jumps over the lazy dog' > foo.txt
-// gsutil hash foo.txt
+// gcloud storage hash foo.txt
 auto constexpr kQuickFoxCrc32cChecksum = "ImIEBA==";
 auto constexpr kQuickFoxMD5Hash = "nhB9nTcrtoJr2B01QqQZ1g==";
 

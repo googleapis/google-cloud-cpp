@@ -13,19 +13,28 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/curl_options.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
+#include "google/cloud/internal/rest_options.h"
+#include "google/cloud/internal/rest_response.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <cstdlib>
+#include <fstream>
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -37,12 +46,11 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::google::cloud::testing_util::IsOkAndHolds;
-using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::ElementsAre;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
  public:
@@ -81,6 +89,13 @@ class ObservableBackoffPolicy : public ExponentialBackoffPolicy {
 int ObservableBackoffPolicy::on_completion_call_count_;
 
 class ClientTest : public ::testing::Test {
+ public:
+  ClientTest()
+      : enable_tracing_("CLOUD_STORAGE_ENABLE_TRACING", {}),
+        endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
+        old_endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}),
+        generator_(std::random_device{}()) {}
+
  protected:
   void SetUp() override {
     mock_ = std::make_shared<testing::MockClient>();
@@ -94,6 +109,10 @@ class ClientTest : public ::testing::Test {
   }
 
   std::shared_ptr<testing::MockClient> mock_;
+  ScopedEnvironment enable_tracing_;
+  ScopedEnvironment endpoint_;
+  ScopedEnvironment old_endpoint_;
+  google::cloud::internal::DefaultPRNG generator_;
 };
 
 TEST_F(ClientTest, Equality) {
@@ -196,7 +215,6 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
               ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 
@@ -239,63 +257,220 @@ TEST_F(ClientTest, OTelDisableTracing) {
               ElementsAre("RestStub", "LoggingStub", "StorageConnectionImpl"));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
-
-TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
-  auto m1 = std::make_shared<testing::MockClient>();
-
-  auto c1 = storage::Client(m1, Client::NoDecorations{});
-  EXPECT_EQ(c1.raw_client().get(), m1.get());
-
-  auto m2 = std::make_shared<testing::MockClient>();
-  auto c2 = storage::Client(m2, LimitedErrorCountRetryPolicy(3));
-  EXPECT_NE(c2.raw_client().get(), m2.get());
+TEST_F(ClientTest, EndpointsDefault) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           {});
+  auto options = internal::DefaultOptions();
+  EXPECT_EQ("https://storage.googleapis.com",
+            options.get<RestEndpointOption>());
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+            options.get<IamEndpointOption>());
 }
 
-TEST_F(ClientTest, DeprecatedRetryPolicies) {
-  auto constexpr kNumRetries = 2;
-  auto mock_b = std::make_unique<MockBackoffPolicy>();
-  EXPECT_CALL(*mock_b, clone).WillOnce([=] {
-    auto clone_1 = std::make_unique<MockBackoffPolicy>();
-    EXPECT_CALL(*clone_1, clone).WillOnce([=] {
-      auto clone_2 = std::make_unique<MockBackoffPolicy>();
-      EXPECT_CALL(*clone_2, OnCompletion)
-          .Times(kNumRetries)
-          .WillRepeatedly(Return(std::chrono::milliseconds(0)));
-      return clone_2;
-    });
-    return clone_1;
-  });
-
-  auto mock = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*mock, ListBuckets)
-      .Times(kNumRetries + 1)
-      .WillRepeatedly(Return(TransientError()));
-
-  auto client = storage::Client(mock, LimitedErrorCountRetryPolicy(kNumRetries),
-                                std::move(*mock_b));
-  (void)client.ListBuckets(OverrideDefaultProject("fake-project"));
+TEST_F(ClientTest, EndpointsOverride) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           {});
+  auto options = internal::DefaultOptions(
+      Options{}.set<RestEndpointOption>("http://127.0.0.1.nip.io:1234"));
+  EXPECT_EQ("http://127.0.0.1.nip.io:1234", options.get<RestEndpointOption>());
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+            options.get<IamEndpointOption>());
 }
 
-TEST_F(ClientTest, DeprecatedClientFromMock) {
-  auto mock = std::make_shared<testing::MockClient>();
-  auto client = testing::ClientFromMock(mock);
+TEST_F(ClientTest, EndpointsEmulator) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           "http://localhost:1234");
+  auto options = internal::DefaultOptions();
+  EXPECT_EQ("http://localhost:1234", options.get<RestEndpointOption>());
+  EXPECT_EQ("http://localhost:1234/iamapi", options.get<IamEndpointOption>());
+}
 
-  internal::ListObjectsResponse response;
-  response.items.push_back(
-      ObjectMetadata{}.set_bucket("bucket").set_name("object/1"));
-  response.items.push_back(
-      ObjectMetadata{}.set_bucket("bucket").set_name("object/2"));
-  EXPECT_CALL(*mock, ListObjects)
-      .WillOnce(Return(TransientError()))
-      .WillOnce(Return(response));
+TEST_F(ClientTest, OldEndpointsEmulator) {
+  google::cloud::testing_util::UnsetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                           "http://localhost:1234");
+  auto options = internal::DefaultOptions();
+  EXPECT_EQ("http://localhost:1234", options.get<RestEndpointOption>());
+  EXPECT_EQ("http://localhost:1234/iamapi", options.get<IamEndpointOption>());
+}
 
-  auto stream = client.ListObjects("bucket", Prefix("object/"));
-  std::vector<StatusOr<ObjectMetadata>> objects{stream.begin(), stream.end()};
-  EXPECT_THAT(objects, ElementsAre(IsOkAndHolds(response.items[0]),
-                                   IsOkAndHolds(response.items[1])));
+TEST_F(ClientTest, DefaultOptions) {
+  auto o = internal::DefaultOptions();
+  EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
+
+  // Verify any set values are respected overridden.
+  o = internal::DefaultOptions(
+      Options{}.set<RestEndpointOption>("https://private.googleapis.com"));
+  EXPECT_EQ("https://private.googleapis.com", o.get<RestEndpointOption>());
+
+  o = internal::DefaultOptions();
+  EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+            o.get<IamEndpointOption>());
+
+  EXPECT_EQ("v1", o.get<internal::TargetApiVersionOption>());
+  EXPECT_LT(0, o.get<ConnectionPoolSizeOption>());
+  EXPECT_LT(0, o.get<DownloadBufferSizeOption>());
+  EXPECT_LT(0, o.get<UploadBufferSizeOption>());
+  EXPECT_LE(0, o.get<MaximumSimpleUploadSizeOption>());
+  EXPECT_TRUE(o.get<EnableCurlSslLockingOption>());
+  EXPECT_TRUE(o.get<EnableCurlSigpipeHandlerOption>());
+  EXPECT_EQ(0, o.get<MaximumCurlSocketRecvSizeOption>());
+  EXPECT_EQ(0, o.get<MaximumCurlSocketSendSizeOption>());
+  EXPECT_LT(std::chrono::seconds(0), o.get<TransferStallTimeoutOption>());
+  EXPECT_LT(0, o.get<TransferStallMinimumRateOption>());
+  EXPECT_LT(std::chrono::seconds(0), o.get<DownloadStallTimeoutOption>());
+  EXPECT_LT(0, o.get<DownloadStallMinimumRateOption>());
+
+  namespace rest = ::google::cloud::rest_internal;
+  EXPECT_EQ(o.get<rest::DownloadStallTimeoutOption>(),
+            o.get<DownloadStallTimeoutOption>());
+  EXPECT_EQ(o.get<rest::DownloadStallMinimumRateOption>(),
+            o.get<DownloadStallMinimumRateOption>());
+  EXPECT_EQ(o.get<rest::TransferStallTimeoutOption>(),
+            o.get<TransferStallTimeoutOption>());
+  EXPECT_EQ(o.get<rest::TransferStallMinimumRateOption>(),
+            o.get<TransferStallMinimumRateOption>());
+  EXPECT_EQ(o.get<rest::MaximumCurlSocketRecvSizeOption>(),
+            o.get<MaximumCurlSocketRecvSizeOption>());
+  EXPECT_EQ(o.get<rest::MaximumCurlSocketSendSizeOption>(),
+            o.get<MaximumCurlSocketSendSizeOption>());
+  EXPECT_EQ(o.get<rest::ConnectionPoolSizeOption>(),
+            o.get<ConnectionPoolSizeOption>());
+  EXPECT_EQ(o.get<rest::EnableCurlSslLockingOption>(),
+            o.get<EnableCurlSslLockingOption>());
+  EXPECT_EQ(o.get<rest::EnableCurlSigpipeHandlerOption>(),
+            o.get<EnableCurlSigpipeHandlerOption>());
+
+  EXPECT_FALSE(o.has<rest::HttpVersionOption>());
+  EXPECT_FALSE(o.has<rest::CAPathOption>());
+}
+
+TEST_F(ClientTest, IncorporatesUniverseDomain) {
+  auto o = internal::DefaultOptions(
+      Options{}.set<google::cloud::internal::UniverseDomainOption>(
+          "my-ud.net"));
+  EXPECT_EQ(o.get<RestEndpointOption>(), "https://storage.my-ud.net");
+  EXPECT_EQ(o.get<IamEndpointOption>(), "https://iamcredentials.my-ud.net/v1");
+}
+
+TEST_F(ClientTest, IncorporatesUniverseDomainEnvVar) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
+  auto o = internal::DefaultOptions(
+      Options{}.set<google::cloud::internal::UniverseDomainOption>(
+          "ud-option.net"));
+  EXPECT_EQ(o.get<RestEndpointOption>(), "https://storage.ud-env-var.net");
+  EXPECT_EQ(o.get<IamEndpointOption>(),
+            "https://iamcredentials.ud-env-var.net/v1");
+}
+
+TEST_F(ClientTest, CustomEndpointOverridesUniverseDomain) {
+  ScopedEnvironment ud("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "ud-env-var.net");
+
+  auto o = internal::DefaultOptions(
+      Options{}
+          .set<RestEndpointOption>("https://custom-storage.googleapis.com")
+          .set<IamEndpointOption>(
+              "https://custom-iamcredentials.googleapis.com/v1")
+          .set<google::cloud::internal::UniverseDomainOption>("ud-option.net"));
+  EXPECT_EQ(o.get<RestEndpointOption>(),
+            "https://custom-storage.googleapis.com");
+  EXPECT_EQ(o.get<IamEndpointOption>(),
+            "https://custom-iamcredentials.googleapis.com/v1");
+}
+
+TEST_F(ClientTest, HttpVersion) {
+  namespace rest = ::google::cloud::rest_internal;
+  auto const options = internal::DefaultOptions(
+      Options{}.set<storage_experimental::HttpVersionOption>("2.0"));
+  EXPECT_EQ("2.0", options.get<rest::HttpVersionOption>());
+}
+
+TEST_F(ClientTest, CAPathOption) {
+  namespace rest = ::google::cloud::rest_internal;
+  auto const options = internal::DefaultOptions(
+      Options{}.set<internal::CAPathOption>("test-only"));
+  EXPECT_EQ("test-only", options.get<rest::CAPathOption>());
+}
+
+TEST_F(ClientTest, LoggingWithoutEnv) {
+  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                               absl::nullopt);
+  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  auto const options = internal::DefaultOptions();
+  EXPECT_FALSE(options.has<LoggingComponentsOption>());
+}
+
+TEST_F(ClientTest, LoggingWithEnv) {
+  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                               absl::nullopt);
+  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", "rpc,http");
+  auto const options = internal::DefaultOptions();
+  EXPECT_THAT(options.get<LoggingComponentsOption>(),
+              UnorderedElementsAre("rpc", "http"));
+}
+
+TEST_F(ClientTest, TracingWithoutEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
+                        absl::nullopt);
+  auto options = internal::DefaultOptions();
+  EXPECT_FALSE(options.get<OpenTelemetryTracingOption>());
+
+  options =
+      internal::DefaultOptions(Options{}.set<OpenTelemetryTracingOption>(true));
+  EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
+}
+
+TEST_F(ClientTest, TracingWithEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", "ON");
+  auto const options = internal::DefaultOptions(
+      Options{}.set<OpenTelemetryTracingOption>(false));
+  EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
+}
+
+TEST_F(ClientTest, ProjectIdWithoutEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto const options = internal::DefaultOptions();
+  EXPECT_FALSE(options.has<ProjectIdOption>());
+}
+
+TEST_F(ClientTest, ProjectIdtWithEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", "my-project");
+  auto const options = internal::DefaultOptions();
+  EXPECT_EQ("my-project", options.get<ProjectIdOption>());
+}
+
+TEST_F(ClientTest, OverrideWithRestInternal) {
+  namespace rest = ::google::cloud::rest_internal;
+  auto const options =
+      internal::DefaultOptions(Options{}
+                                   .set<rest::ConnectionPoolSizeOption>(1234)
+                                   .set<ConnectionPoolSizeOption>(2345));
+  EXPECT_EQ(1234, options.get<rest::ConnectionPoolSizeOption>());
+  EXPECT_EQ(2345, options.get<ConnectionPoolSizeOption>());
+}
+
+TEST_F(ClientTest, Timeouts) {
+  EXPECT_EQ(std::chrono::seconds(42),
+            internal::DefaultOptions(Options{}.set<TransferStallTimeoutOption>(
+                                         std::chrono::seconds(42)))
+                .get<DownloadStallTimeoutOption>());
+
+  EXPECT_EQ(std::chrono::seconds(7),
+            internal::DefaultOptions(
+                Options{}
+                    .set<TransferStallTimeoutOption>(std::chrono::seconds(42))
+                    .set<DownloadStallTimeoutOption>(std::chrono::seconds(7)))
+                .get<DownloadStallTimeoutOption>());
+
+  EXPECT_EQ(std::chrono::seconds(7),
+            internal::DefaultOptions(Options{}.set<DownloadStallTimeoutOption>(
+                                         std::chrono::seconds(7)))
+                .get<DownloadStallTimeoutOption>());
+
+  EXPECT_NE(std::chrono::seconds(0),
+            internal::DefaultOptions().get<DownloadStallTimeoutOption>());
 }
 
 }  // namespace

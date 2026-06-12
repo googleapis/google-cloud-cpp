@@ -20,7 +20,8 @@
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
-#include <google/bigtable/v2/response_params.pb.h>
+#include "google/bigtable/v2/peer_info.pb.h"
+#include "google/bigtable/v2/response_params.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/metrics/meter.h>
@@ -52,9 +53,19 @@ struct DataLabels {
   std::string status;
 };
 
+// Labels populated from the peer info metadata.
+struct PeerInfoLabels {
+  std::string transport_type;
+  std::string transport_region;
+  std::string transport_subzone;
+};
+
 using LabelMap = std::unordered_map<std::string, std::string>;
-LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
-                      std::set<std::string> const& filtered_data_labels = {});
+// `peer_info_labels` is optional because only AttemptLatency2 populates it.
+LabelMap IntoLabelMap(
+    ResourceLabels const& r, DataLabels const& d,
+    std::set<std::string> const& filtered_data_labels = {},
+    std::optional<PeerInfoLabels> const& peer_info_labels = std::nullopt);
 
 bool HasServerTiming(grpc::ClientContext const& client_context);
 bool IsConnectivityError(google::cloud::Status const& status,
@@ -62,7 +73,10 @@ bool IsConnectivityError(google::cloud::Status const& status,
 absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context);
-
+// Retrieve the peer info from server headers or trailers. Returns nullopt if
+// not found or decoding or parsing fails.
+std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
+    grpc::ClientContext const& client_context);
 absl::optional<double> GetServerLatencyFromInitialMetadata(
     grpc::ClientContext const& client_context);
 
@@ -151,6 +165,29 @@ class AttemptLatency : public Metric {
   DataLabels data_labels_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       attempt_latencies_;
+  OperationContext::Clock::time_point attempt_start_;
+};
+
+// Similar to AttemptLatency and also populates the peer info.
+class AttemptLatency2 : public Metric {
+ public:
+  AttemptLatency2(std::string const& instrumentation_scope,
+                  opentelemetry::nostd::shared_ptr<
+                      opentelemetry::metrics::MeterProvider> const& provider);
+  void PreCall(opentelemetry::context::Context const&,
+               PreCallParams const& p) override;
+  void PostCall(opentelemetry::context::Context const& context,
+                grpc::ClientContext const& client_context,
+                PostCallParams const& p) override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
+
+ private:
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
+  PeerInfoLabels peer_info_labels_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
+      attempt_latencies2_;
   OperationContext::Clock::time_point attempt_start_;
 };
 

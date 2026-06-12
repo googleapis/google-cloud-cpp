@@ -41,7 +41,7 @@ Options ControlServiceDefaultOptions(Options options) {
   if (!options.has<retail_v2::ControlServiceRetryPolicyOption>()) {
     options.set<retail_v2::ControlServiceRetryPolicyOption>(
         retail_v2::ControlServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<retail_v2::ControlServiceBackoffPolicyOption>()) {

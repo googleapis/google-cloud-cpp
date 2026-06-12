@@ -116,7 +116,6 @@ TEST(TraceExporter, LogsOnError) {
                      HasSubstr("UNAVAILABLE"), HasSubstr("try again later"))));
 }
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsEmpty;
@@ -140,7 +139,6 @@ TEST(TraceExporter, NoInfiniteExportLoop14611) {
   // Verify that no spans were created.
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

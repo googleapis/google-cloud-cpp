@@ -41,7 +41,7 @@ Options QueryServiceDefaultOptions(Options options) {
   if (!options.has<monitoring_v3::QueryServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::QueryServiceRetryPolicyOption>(
         monitoring_v3::QueryServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<monitoring_v3::QueryServiceBackoffPolicyOption>()) {

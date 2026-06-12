@@ -41,7 +41,7 @@ Options WorkstationsDefaultOptions(Options options) {
   if (!options.has<workstations_v1::WorkstationsRetryPolicyOption>()) {
     options.set<workstations_v1::WorkstationsRetryPolicyOption>(
         workstations_v1::WorkstationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<workstations_v1::WorkstationsBackoffPolicyOption>()) {

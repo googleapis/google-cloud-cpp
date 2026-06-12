@@ -53,6 +53,8 @@ struct PatchBuilderDetails {
       storage::ObjectMetadataPatchBuilder const& patch);
   static nlohmann::json const& GetMetadataSubPatch(
       storage::ObjectMetadataPatchBuilder const& patch);
+  static nlohmann::json const& GetCustomContextsSubPatch(
+      storage::ObjectMetadataPatchBuilder const& patch);
   static nlohmann::json const& GetPatch(PatchBuilder const& patch);
 };
 

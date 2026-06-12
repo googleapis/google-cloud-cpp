@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -431,7 +431,7 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.CustomJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L83}
   /// [google.cloud.aiplatform.v1.CustomJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L61}
   /// [google.cloud.aiplatform.v1.JobService.GetCustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L61}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelCustomJob(std::string const& name, Options opts = {});
@@ -473,7 +473,7 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.CustomJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L83}
   /// [google.cloud.aiplatform.v1.CustomJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L61}
   /// [google.cloud.aiplatform.v1.JobService.GetCustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L61}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelCustomJob(
@@ -1203,7 +1203,7 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.HyperparameterTuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/hyperparameter_tuning_job.proto#L101}
   /// [google.cloud.aiplatform.v1.HyperparameterTuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/hyperparameter_tuning_job.proto#L77}
   /// [google.cloud.aiplatform.v1.JobService.GetHyperparameterTuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L171}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelHyperparameterTuningJob(std::string const& name,
@@ -1247,7 +1247,7 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.HyperparameterTuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/hyperparameter_tuning_job.proto#L101}
   /// [google.cloud.aiplatform.v1.HyperparameterTuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/hyperparameter_tuning_job.proto#L77}
   /// [google.cloud.aiplatform.v1.JobService.GetHyperparameterTuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L171}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelHyperparameterTuningJob(
@@ -1598,7 +1598,7 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.JobService.GetNasJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L234}
   /// [google.cloud.aiplatform.v1.NasJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L80}
   /// [google.cloud.aiplatform.v1.NasJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L58}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelNasJob(std::string const& name, Options opts = {});
@@ -1640,7 +1640,7 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.JobService.GetNasJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L234}
   /// [google.cloud.aiplatform.v1.NasJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L80}
   /// [google.cloud.aiplatform.v1.NasJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L58}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelNasJob(
@@ -2133,7 +2133,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L394}
+  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L413}
   /// [google.cloud.aiplatform.v1.CancelBatchPredictionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1116}
   /// [google.cloud.aiplatform.v1.JobService.GetBatchPredictionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L311}
   ///
@@ -2172,7 +2172,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L394}
+  /// [google.cloud.aiplatform.v1.BatchPredictionJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/batch_prediction_job.proto#L413}
   /// [google.cloud.aiplatform.v1.CancelBatchPredictionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1116}
   /// [google.cloud.aiplatform.v1.JobService.GetBatchPredictionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L311}
   ///
@@ -3232,7 +3232,7 @@ class JobServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -3271,7 +3271,7 @@ class JobServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

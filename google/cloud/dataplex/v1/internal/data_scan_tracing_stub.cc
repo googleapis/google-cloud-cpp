@@ -21,12 +21,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DataScanServiceTracingStub::DataScanServiceTracingStub(
     std::shared_ptr<DataScanServiceStub> child)
@@ -171,6 +172,18 @@ DataScanServiceTracingStub::ListDataScanJobs(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDataScanJobs(context, options, request));
+}
+
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceTracingStub::CancelDataScanJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataScanService",
+                                     "CancelDataScanJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CancelDataScanJob(context, options, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
@@ -319,18 +332,14 @@ future<Status> DataScanServiceTracingStub::AsyncCancelOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<DataScanServiceStub> MakeDataScanServiceTracingStub(
     std::shared_ptr<DataScanServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<DataScanServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

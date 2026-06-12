@@ -28,8 +28,6 @@ namespace cloud {
 namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class CaseAttachmentServiceTracingConnection
     : public support_v2::CaseAttachmentServiceConnection {
  public:
@@ -43,11 +41,12 @@ class CaseAttachmentServiceTracingConnection
   StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
       google::cloud::support::v2::ListAttachmentsRequest request) override;
 
+  StatusOr<google::cloud::support::v2::Attachment> GetAttachment(
+      google::cloud::support::v2::GetAttachmentRequest const& request) override;
+
  private:
   std::shared_ptr<support_v2::CaseAttachmentServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

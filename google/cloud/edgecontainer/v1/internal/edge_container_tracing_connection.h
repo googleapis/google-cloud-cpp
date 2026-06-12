@@ -28,8 +28,6 @@ namespace cloud {
 namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class EdgeContainerTracingConnection
     : public edgecontainer_v1::EdgeContainerConnection {
  public:
@@ -214,8 +212,6 @@ class EdgeContainerTracingConnection
  private:
   std::shared_ptr<edgecontainer_v1::EdgeContainerConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

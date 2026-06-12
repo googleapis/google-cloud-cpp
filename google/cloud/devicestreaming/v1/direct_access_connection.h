@@ -21,6 +21,7 @@
 
 #include "google/cloud/devicestreaming/v1/direct_access_connection_idempotency_policy.h"
 #include "google/cloud/devicestreaming/v1/internal/direct_access_retry_traits.h"
+#include "google/cloud/devicestreaming/v1/service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/devicestreaming/v1/service.pb.h>
 #include <memory>
 
 namespace google {

@@ -19,15 +19,14 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "v1/",
     "iam/v3/",
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/policytroubleshooter/iam/v3:iam_cc_grpc",
-    "@com_google_googleapis//google/cloud/policytroubleshooter/v1:policytroubleshooter_cc_grpc",
-    "@com_google_googleapis//google/iam/v2:iam_cc_grpc",
+    "@googleapis//google/cloud/policytroubleshooter/iam/v3:iam_cc_grpc",
+    "@googleapis//google/cloud/policytroubleshooter/v1:policytroubleshooter_cc_grpc",
+    "@googleapis//google/iam/v2:iam_cc_grpc",
 ]
 
 cc_gapic_library(

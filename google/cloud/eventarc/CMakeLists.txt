@@ -16,8 +16,8 @@
 
 include(GoogleCloudCppLibrary)
 
-google_cloud_cpp_add_gapic_library(
-    eventarc "Eventarc API" SERVICE_DIRS "__EMPTY__" "publishing/v1/" "v1/")
+google_cloud_cpp_add_gapic_library(eventarc "Eventarc API"
+                                   SERVICE_DIRS "publishing/v1/" "v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(eventarc_quickstart "quickstart/quickstart.cc")

@@ -41,7 +41,7 @@ Options LineageDefaultOptions(Options options) {
   if (!options.has<datacatalog_lineage_v1::LineageRetryPolicyOption>()) {
     options.set<datacatalog_lineage_v1::LineageRetryPolicyOption>(
         datacatalog_lineage_v1::LineageLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<datacatalog_lineage_v1::LineageBackoffPolicyOption>()) {

@@ -21,7 +21,6 @@ source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
 
 mapfile -t args < <(bazel::common_args)
-for repo_root in "ci/verify_current_targets" "ci/verify_deprecated_targets"; do
-  io::log_h2 "Verifying Bazel targets in repo root: ${repo_root}"
-  env -C "${repo_root}" bazel test "${args[@]}" ...
-done
+repo_root="ci/verify_current_targets"
+io::log_h2 "Verifying Bazel targets in repo root: ${repo_root}"
+env -C "${repo_root}" bazel test "${args[@]}" ...

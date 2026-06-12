@@ -57,6 +57,12 @@ StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
                                         std::int32_t default_value,
                                         internal::ErrorContext const& ec);
 
+/// Returns the string values for `json[name]` (which must exist) or a
+/// descriptive error.
+StatusOr<std::vector<std::string>> ValidateStringArrayField(
+    nlohmann::json const& json, absl::string_view name,
+    absl::string_view object_name, internal::ErrorContext const& ec);
+
 /// Use when a JSON field cannot be found but is required.
 Status MissingFieldError(absl::string_view name, absl::string_view object_name,
                          internal::ErrorContext const& ec);

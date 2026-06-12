@@ -1,0 +1,42 @@
+/*!
+@page vectorsearch-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `vectorsearch_v1::DataObjectServiceClient`:
+
+@snippet data_object_client_samples.cc set-client-universe-domain
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c vectorsearch_v1::DataObjectServiceClient](@ref vectorsearch_v1::DataObjectServiceClient-universe-domain-snippet)
+- [\c vectorsearch_v1::DataObjectSearchServiceClient](@ref vectorsearch_v1::DataObjectSearchServiceClient-universe-domain-snippet)
+- [\c vectorsearch_v1::VectorSearchServiceClient](@ref vectorsearch_v1::VectorSearchServiceClient-universe-domain-snippet)
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page vectorsearch_v1::DataObjectServiceClient-universe-domain-snippet Override vectorsearch_v1::DataObjectServiceClient Universe Domain
+
+@snippet google/cloud/vectorsearch/v1/samples/data_object_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page vectorsearch_v1::DataObjectSearchServiceClient-universe-domain-snippet Override vectorsearch_v1::DataObjectSearchServiceClient Universe Domain
+
+@snippet google/cloud/vectorsearch/v1/samples/data_object_search_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page vectorsearch_v1::VectorSearchServiceClient-universe-domain-snippet Override vectorsearch_v1::VectorSearchServiceClient Universe Domain
+
+@snippet google/cloud/vectorsearch/v1/samples/vector_search_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

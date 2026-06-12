@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_COMMENT_CONNECTION_H
 
 #include "google/cloud/support/v2/comment_connection_idempotency_policy.h"
+#include "google/cloud/support/v2/comment_service.pb.h"
 #include "google/cloud/support/v2/internal/comment_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/support/v2/comment_service.pb.h>
 #include <memory>
 
 namespace google {
@@ -187,6 +187,9 @@ class CommentServiceConnection {
 
   virtual StatusOr<google::cloud::support::v2::Comment> CreateComment(
       google::cloud::support::v2::CreateCommentRequest const& request);
+
+  virtual StatusOr<google::cloud::support::v2::Comment> GetComment(
+      google::cloud::support::v2::GetCommentRequest const& request);
 };
 
 /**

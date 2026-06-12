@@ -19,14 +19,13 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "v1/",
     "v2/",
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc",
-    "@com_google_googleapis//google/devtools/cloudbuild/v2:cloudbuild_cc_grpc",
+    "@googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc",
+    "@googleapis//google/devtools/cloudbuild/v2:cloudbuild_cc_grpc",
 ]
 
 cc_gapic_library(

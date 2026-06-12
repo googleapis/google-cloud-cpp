@@ -25,12 +25,13 @@
 #include "google/cloud/version.h"
 #include <memory>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class DataplexServiceTracingStub : public DataplexServiceStub {
  public:
@@ -222,56 +223,6 @@ class DataplexServiceTracingStub : public DataplexServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CancelJobRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> CreateEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
-      override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
-      override;
-
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      grpc::ClientContext& context, Options options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
-  ListEnvironments(grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListEnvironmentsRequest const&
-                       request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::GetEnvironmentRequest const& request)
-      override;
-
-  StatusOr<google::cloud::dataplex::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::dataplex::v1::ListSessionsRequest const& request) override;
-
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -326,8 +277,6 @@ class DataplexServiceTracingStub : public DataplexServiceStub {
       propagator_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the given stub.
  *
@@ -341,5 +290,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATAPLEX_TRACING_STUB_H

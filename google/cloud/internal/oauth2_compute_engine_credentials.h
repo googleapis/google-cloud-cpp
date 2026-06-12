@@ -118,6 +118,8 @@ class ComputeEngineCredentials : public Credentials {
   StatusOr<std::string> project_id(
       google::cloud::Options const& options) const override;
 
+  AllowedLocationsRequestType AllowedLocationsRequest() const override;
+
   /**
    * Returns the email or alias of this credential's service account.
    *

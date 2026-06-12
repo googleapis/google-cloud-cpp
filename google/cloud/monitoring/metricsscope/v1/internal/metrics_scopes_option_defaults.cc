@@ -42,7 +42,7 @@ Options MetricsScopesDefaultOptions(Options options) {
            .has<monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption>()) {
     options.set<monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption>(
         monitoring_metricsscope_v1::MetricsScopesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

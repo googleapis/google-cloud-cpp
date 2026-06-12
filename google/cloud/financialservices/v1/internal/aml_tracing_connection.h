@@ -28,8 +28,6 @@ namespace cloud {
 namespace financialservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class AMLTracingConnection : public financialservices_v1::AMLConnection {
  public:
   ~AMLTracingConnection() override = default;
@@ -450,8 +448,6 @@ class AMLTracingConnection : public financialservices_v1::AMLConnection {
  private:
   std::shared_ptr<financialservices_v1::AMLConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

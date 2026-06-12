@@ -31,10 +31,10 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::storage::ReadPayload;
 using ::google::cloud::storage::internal::HashValues;
 using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::google::cloud::storage_experimental::ReadPayload;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
@@ -55,7 +55,7 @@ using ::testing::VariantWith;
 using MockStream = google::cloud::testing_util::MockAsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>;
 using ReadResponse =
-    google::cloud::storage_experimental::AsyncReaderConnection::ReadResponse;
+    google::cloud::storage::AsyncReaderConnection::ReadResponse;
 
 google::cloud::internal::ImmutableOptions TestOptions() {
   return google::cloud::internal::MakeImmutableOptions(
@@ -110,35 +110,30 @@ TEST(ReaderConnectionImpl, CleanFinish) {
 
   AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock),
                                    std::move(hash_function));
-  EXPECT_THAT(tested.Read().get(),
-              VariantWith<ReadPayload>(
-                  AllOf(ResultOf(
-                            "contents match",
-                            [](storage_experimental::ReadPayload const& p) {
-                              return p.contents();
-                            },
-                            ElementsAre("test-only-1")),
-                        ResultOf(
-                            "metadata.size",
-                            [](storage_experimental::ReadPayload const& p) {
-                              return p.metadata()
-                                  .value_or(google::storage::v2::Object{})
-                                  .size();
-                            },
-                            4096),
-                        ResultOf(
-                            "offset",
-                            [](storage_experimental::ReadPayload const& p) {
-                              return p.offset();
-                            },
-                            1024))));
+  EXPECT_THAT(
+      tested.Read().get(),
+      VariantWith<ReadPayload>(
+          AllOf(ResultOf(
+                    "contents match",
+                    [](storage::ReadPayload const& p) { return p.contents(); },
+                    ElementsAre("test-only-1")),
+                ResultOf(
+                    "metadata.size",
+                    [](storage::ReadPayload const& p) {
+                      return p.metadata()
+                          .value_or(google::storage::v2::Object{})
+                          .size();
+                    },
+                    4096),
+                ResultOf(
+                    "offset",
+                    [](storage::ReadPayload const& p) { return p.offset(); },
+                    1024))));
 
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ResultOf(
                   "contents match",
-                  [](storage_experimental::ReadPayload const& p) {
-                    return p.contents();
-                  },
+                  [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre("test-only-2"))));
 
   EXPECT_THAT(tested.Read().get(), VariantWith<Status>(IsOk()));
@@ -207,7 +202,7 @@ TEST(ReaderConnectionImpl, HashingError) {
 
 TEST(ReaderConnectionImpl, FullHashes) {
   // /bin/echo -n 'The quick brown fox jumps over the lazy dog' > foo.txt
-  // gsutil hash foo.txt
+  // gcloud storage hash foo.txt
   auto constexpr kQuickFoxCrc32cChecksum = "ImIEBA==";
   auto constexpr kQuickFoxMD5Hash = "nhB9nTcrtoJr2B01QqQZ1g==";
   auto const crc32c = Crc32cToProto(kQuickFoxCrc32cChecksum).value();
@@ -247,7 +242,7 @@ TEST(ReaderConnectionImpl, FullHashes) {
   EXPECT_THAT(tested.Read().get(),
               VariantWith<ReadPayload>(ResultOf(
                   "read payload without hash values",
-                  [](storage_experimental::ReadPayload p) {
+                  [](storage::ReadPayload p) {
                     return ReadPayloadImpl::GetObjectHashes(p);
                   },
                   Eq(absl::nullopt))));
@@ -255,7 +250,7 @@ TEST(ReaderConnectionImpl, FullHashes) {
   auto has_hash_values = [](HashValues const& expected) {
     return ResultOf(
         "read response has hash values",
-        [](storage_experimental::ReadPayload p) {
+        [](storage::ReadPayload p) {
           return ReadPayloadImpl::GetObjectHashes(p);
         },
         AllOf(Optional(Field("crc32c", &HashValues::crc32c, expected.crc32c)),

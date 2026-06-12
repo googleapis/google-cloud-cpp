@@ -14,14 +14,14 @@
 # limitations under the License.
 # ~~~
 
-cmake_minimum_required(VERSION 3.13...3.24)
+cmake_minimum_required(VERSION 3.22...3.31)
 
 # Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 
 project(
     google-cloud-cpp
-    VERSION 2.45.0
+    VERSION 3.6.0
     LANGUAGES CXX)
 set(PROJECT_VERSION_PRE_RELEASE "rc")
 
@@ -54,19 +54,11 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                     " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 14.0.0)
         message(
             WARNING
-                "The `google-cloud-cpp` library is tested with Clang >= 6.0."
+                "The `google-cloud-cpp` library is tested with Clang >= 14.0.0."
                 " We will consider patches for older versions.")
-    endif ()
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    if (CMAKE_VERSION VERSION_LESS 3.15)
-        message(
-            FATAL_ERROR
-                "MSVC builds require CMake >= 3.15."
-                " Previous versions of CMake lack a standard mechanism to"
-                " select the runtime C++ library.")
     endif ()
 endif ()
 
@@ -95,6 +87,10 @@ if (APPLE
             "disable this check using:"
             "\n"
             "    cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...")
+endif ()
+
+if (WIN32)
+    add_definitions(-DNOMINMAX)
 endif ()
 
 # If ccache is installed use it for the build.

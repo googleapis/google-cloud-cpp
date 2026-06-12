@@ -41,7 +41,7 @@ Options SqlFlagsServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<sql_v1::SqlFlagsServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlFlagsServiceRetryPolicyOption>(
-        sql_v1::SqlFlagsServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        sql_v1::SqlFlagsServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<sql_v1::SqlFlagsServiceBackoffPolicyOption>()) {

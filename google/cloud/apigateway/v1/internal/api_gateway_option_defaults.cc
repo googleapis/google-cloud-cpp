@@ -42,7 +42,7 @@ Options ApiGatewayServiceDefaultOptions(Options options) {
   if (!options.has<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()) {
     options.set<apigateway_v1::ApiGatewayServiceRetryPolicyOption>(
         apigateway_v1::ApiGatewayServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()) {

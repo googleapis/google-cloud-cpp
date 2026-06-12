@@ -23,6 +23,9 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace storage_internal {

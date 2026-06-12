@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/licensemanager/v1:api_entities.proto
-@com_google_googleapis//google/cloud/licensemanager/v1:licensemanager.proto
+@googleapis//google/cloud/licensemanager/v1:api_entities.proto
+@googleapis//google/cloud/licensemanager/v1:licensemanager.proto

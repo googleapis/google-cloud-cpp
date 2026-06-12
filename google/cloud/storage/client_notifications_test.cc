@@ -16,7 +16,6 @@
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"

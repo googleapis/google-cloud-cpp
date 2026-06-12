@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/object_contexts.h"
 #include "google/cloud/storage/object_retention.h"
 #include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
@@ -450,6 +451,29 @@ class ObjectMetadata {
     return *this;
   }
 
+  /// Returns `true` if the object has custom contexts.
+  bool has_contexts() const { return contexts_.has_value(); }
+
+  /**
+   * The object's user custom contexts.
+   *
+   * It is undefined behavior to call this member function if
+   * `has_contexts() == false`.
+   */
+  ObjectContexts const& contexts() const { return *contexts_; }
+
+  /// Change or set the object's custom contexts.
+  ObjectMetadata& set_contexts(ObjectContexts v) {
+    contexts_ = std::move(v);
+    return *this;
+  }
+
+  /// Reset the object contexts.
+  ObjectMetadata& reset_contexts() {
+    contexts_.reset();
+    return *this;
+  }
+
   /// An HTTPS link to the object metadata.
   std::string const& self_link() const { return self_link_; }
 
@@ -612,6 +636,7 @@ class ObjectMetadata {
   std::string md5_hash_;
   std::string media_link_;
   std::map<std::string, std::string> metadata_;
+  absl::optional<ObjectContexts> contexts_;
   std::string name_;
   absl::optional<Owner> owner_;
   std::chrono::system_clock::time_point retention_expiration_time_;
@@ -675,6 +700,11 @@ class ObjectMetadataPatchBuilder {
   ObjectMetadataPatchBuilder& ResetMetadata(std::string const& key);
   ObjectMetadataPatchBuilder& ResetMetadata();
 
+  ObjectMetadataPatchBuilder& SetContext(std::string const& key,
+                                         std::string const& value);
+  ObjectMetadataPatchBuilder& ResetContext(std::string const& key);
+  ObjectMetadataPatchBuilder& ResetContexts();
+
   ObjectMetadataPatchBuilder& SetTemporaryHold(bool v);
   ObjectMetadataPatchBuilder& ResetTemporaryHold();
 
@@ -703,6 +733,8 @@ class ObjectMetadataPatchBuilder {
   internal::PatchBuilder impl_;
   bool metadata_subpatch_dirty_{false};
   internal::PatchBuilder metadata_subpatch_;
+  bool contexts_subpatch_dirty_{false};
+  internal::PatchBuilder contexts_custom_subpatch_;
 };
 
 /**

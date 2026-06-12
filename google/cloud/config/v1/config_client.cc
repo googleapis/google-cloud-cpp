@@ -605,6 +605,348 @@ ConfigClient::GetResourceDrift(
   return connection_->GetResourceDrift(request);
 }
 
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigClient::GetAutoMigrationConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::GetAutoMigrationConfigRequest request;
+  request.set_name(name);
+  return connection_->GetAutoMigrationConfig(request);
+}
+
+StatusOr<google::cloud::config::v1::AutoMigrationConfig>
+ConfigClient::GetAutoMigrationConfig(
+    google::cloud::config::v1::GetAutoMigrationConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAutoMigrationConfig(request);
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigClient::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::AutoMigrationConfig const& auto_migration_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::UpdateAutoMigrationConfigRequest request;
+  *request.mutable_auto_migration_config() = auto_migration_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAutoMigrationConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigClient::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::AutoMigrationConfig const& auto_migration_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::UpdateAutoMigrationConfigRequest request;
+  *request.mutable_auto_migration_config() = auto_migration_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAutoMigrationConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigClient::UpdateAutoMigrationConfig(
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoMigrationConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigClient::UpdateAutoMigrationConfig(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateAutoMigrationConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoMigrationConfig(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
+ConfigClient::UpdateAutoMigrationConfig(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAutoMigrationConfig(operation);
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroup>
+ConfigClient::GetDeploymentGroup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::GetDeploymentGroupRequest request;
+  request.set_name(name);
+  return connection_->GetDeploymentGroup(request);
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroup>
+ConfigClient::GetDeploymentGroup(
+    google::cloud::config::v1::GetDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDeploymentGroup(request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::CreateDeploymentGroup(
+    std::string const& parent,
+    google::cloud::config::v1::DeploymentGroup const& deployment_group,
+    std::string const& deployment_group_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::CreateDeploymentGroupRequest request;
+  request.set_parent(parent);
+  *request.mutable_deployment_group() = deployment_group;
+  request.set_deployment_group_id(deployment_group_id);
+  return connection_->CreateDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::CreateDeploymentGroup(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::config::v1::DeploymentGroup const& deployment_group,
+    std::string const& deployment_group_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::CreateDeploymentGroupRequest request;
+  request.set_parent(parent);
+  *request.mutable_deployment_group() = deployment_group;
+  request.set_deployment_group_id(deployment_group_id);
+  return connection_->CreateDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::CreateDeploymentGroup(
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::CreateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::CreateDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::CreateDeploymentGroup(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDeploymentGroup(operation);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::UpdateDeploymentGroup(
+    google::cloud::config::v1::DeploymentGroup const& deployment_group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::UpdateDeploymentGroupRequest request;
+  *request.mutable_deployment_group() = deployment_group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::UpdateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeploymentGroup const& deployment_group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::UpdateDeploymentGroupRequest request;
+  *request.mutable_deployment_group() = deployment_group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::UpdateDeploymentGroup(
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::UpdateDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::UpdateDeploymentGroup(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeploymentGroup(operation);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::DeleteDeploymentGroup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::DeleteDeploymentGroupRequest request;
+  request.set_name(name);
+  return connection_->DeleteDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::DeleteDeploymentGroup(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::DeleteDeploymentGroupRequest request;
+  request.set_name(name);
+  return connection_->DeleteDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::DeleteDeploymentGroup(
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::DeleteDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeleteDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::DeleteDeploymentGroup(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDeploymentGroup(operation);
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroup>
+ConfigClient::ListDeploymentGroups(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::ListDeploymentGroupsRequest request;
+  request.set_parent(parent);
+  return connection_->ListDeploymentGroups(request);
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroup>
+ConfigClient::ListDeploymentGroups(
+    google::cloud::config::v1::ListDeploymentGroupsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDeploymentGroups(std::move(request));
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::ProvisionDeploymentGroup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::ProvisionDeploymentGroupRequest request;
+  request.set_name(name);
+  return connection_->ProvisionDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::ProvisionDeploymentGroup(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::ProvisionDeploymentGroupRequest request;
+  request.set_name(name);
+  return connection_->ProvisionDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::ProvisionDeploymentGroup(
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ProvisionDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::ProvisionDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::ProvisionDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ProvisionDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::ProvisionDeploymentGroup(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ProvisionDeploymentGroup(operation);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::DeprovisionDeploymentGroup(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::DeprovisionDeploymentGroupRequest request;
+  request.set_name(name);
+  return connection_->DeprovisionDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigClient::DeprovisionDeploymentGroup(NoAwaitTag, std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::DeprovisionDeploymentGroupRequest request;
+  request.set_name(name);
+  return connection_->DeprovisionDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::DeprovisionDeploymentGroup(
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeprovisionDeploymentGroup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigClient::DeprovisionDeploymentGroup(
+    NoAwaitTag,
+    google::cloud::config::v1::DeprovisionDeploymentGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeprovisionDeploymentGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::DeploymentGroup>>
+ConfigClient::DeprovisionDeploymentGroup(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeprovisionDeploymentGroup(operation);
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigClient::GetDeploymentGroupRevision(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::GetDeploymentGroupRevisionRequest request;
+  request.set_name(name);
+  return connection_->GetDeploymentGroupRevision(request);
+}
+
+StatusOr<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigClient::GetDeploymentGroupRevision(
+    google::cloud::config::v1::GetDeploymentGroupRevisionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDeploymentGroupRevision(request);
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigClient::ListDeploymentGroupRevisions(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListDeploymentGroupRevisions(request);
+}
+
+StreamRange<google::cloud::config::v1::DeploymentGroupRevision>
+ConfigClient::ListDeploymentGroupRevisions(
+    google::cloud::config::v1::ListDeploymentGroupRevisionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDeploymentGroupRevisions(std::move(request));
+}
+
 StreamRange<google::cloud::location::Location> ConfigClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

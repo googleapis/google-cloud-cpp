@@ -27,8 +27,6 @@ namespace cloud {
 namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 LoggingServiceV2TracingConnection::LoggingServiceV2TracingConnection(
     std::shared_ptr<logging_v2::LoggingServiceV2Connection> child)
     : child_(std::move(child)) {}
@@ -128,16 +126,12 @@ LoggingServiceV2TracingConnection::AsyncWriteLogEntries(
                            child_->AsyncWriteLogEntries(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<logging_v2::LoggingServiceV2Connection>
 MakeLoggingServiceV2TracingConnection(
     std::shared_ptr<logging_v2::LoggingServiceV2Connection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<LoggingServiceV2TracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

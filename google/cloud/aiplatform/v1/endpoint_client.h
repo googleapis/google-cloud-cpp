@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -1023,9 +1023,9 @@ class EndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.AutomaticResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L168}
+  /// [google.cloud.aiplatform.v1.AutomaticResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L164}
   /// [google.cloud.aiplatform.v1.DedicatedResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L90}
-  /// [google.cloud.aiplatform.v1.DedicatedResources.autoscaling_metric_specs]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L157}
+  /// [google.cloud.aiplatform.v1.DedicatedResources.autoscaling_metric_specs]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L153}
   /// [google.cloud.aiplatform.v1.MutateDeployedModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L426}
   /// [google.cloud.aiplatform.v1.MutateDeployedModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L461}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
@@ -1516,7 +1516,7 @@ class EndpointServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -1555,7 +1555,7 @@ class EndpointServiceClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

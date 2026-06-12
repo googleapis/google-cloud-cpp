@@ -28,8 +28,6 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class EnvironmentsTracingConnection
     : public dialogflow_es::EnvironmentsConnection {
  public:
@@ -82,8 +80,6 @@ class EnvironmentsTracingConnection
  private:
   std::shared_ptr<dialogflow_es::EnvironmentsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

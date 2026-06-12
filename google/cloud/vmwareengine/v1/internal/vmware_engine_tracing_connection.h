@@ -28,8 +28,6 @@ namespace cloud {
 namespace vmwareengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class VmwareEngineTracingConnection
     : public vmwareengine_v1::VmwareEngineConnection {
  public:
@@ -745,8 +743,6 @@ class VmwareEngineTracingConnection
  private:
   std::shared_ptr<vmwareengine_v1::VmwareEngineConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

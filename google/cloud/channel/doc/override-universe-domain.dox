@@ -10,11 +10,6 @@ For example, this will override the default universe domain for `channel_v1::Clo
 
 @snippet cloud_channel_client_samples.cc set-client-universe-domain
 
-Follow these links to find examples for other \c *Client classes:
-
-- [\c channel_v1::CloudChannelServiceClient](@ref channel_v1::CloudChannelServiceClient-universe-domain-snippet)
-- [\c channel_v1::CloudChannelReportsServiceClient](@ref channel_v1::CloudChannelReportsServiceClient-universe-domain-snippet)
-
 <!-- inject-universe-domain-snippet-end -->
 
 */
@@ -24,12 +19,6 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page channel_v1::CloudChannelServiceClient-universe-domain-snippet Override channel_v1::CloudChannelServiceClient Universe Domain
 
 @snippet google/cloud/channel/v1/samples/cloud_channel_client_samples.cc set-client-universe-domain
-
-*/
-
-/*! @page channel_v1::CloudChannelReportsServiceClient-universe-domain-snippet Override channel_v1::CloudChannelReportsServiceClient Universe Domain
-
-@snippet google/cloud/channel/v1/samples/cloud_channel_reports_client_samples.cc set-client-universe-domain
 
 */
 // <!-- inject-universe-domain-pages-end -->

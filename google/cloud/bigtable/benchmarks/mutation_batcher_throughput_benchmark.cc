@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/random_names.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"

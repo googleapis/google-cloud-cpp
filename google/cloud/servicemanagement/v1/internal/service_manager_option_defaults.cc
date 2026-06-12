@@ -42,7 +42,7 @@ Options ServiceManagerDefaultOptions(Options options) {
   if (!options.has<servicemanagement_v1::ServiceManagerRetryPolicyOption>()) {
     options.set<servicemanagement_v1::ServiceManagerRetryPolicyOption>(
         servicemanagement_v1::ServiceManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<servicemanagement_v1::ServiceManagerBackoffPolicyOption>()) {

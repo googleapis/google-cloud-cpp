@@ -41,7 +41,7 @@ Options FirewallsDefaultOptions(Options options) {
   if (!options.has<compute_firewalls_v1::FirewallsRetryPolicyOption>()) {
     options.set<compute_firewalls_v1::FirewallsRetryPolicyOption>(
         compute_firewalls_v1::FirewallsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_firewalls_v1::FirewallsBackoffPolicyOption>()) {

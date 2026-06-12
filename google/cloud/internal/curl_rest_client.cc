@@ -15,8 +15,6 @@
 #include "google/cloud/internal/curl_rest_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/internal/curl_options.h"
@@ -26,6 +24,8 @@
 #include "google/cloud/internal/tracing_rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include "absl/strings/strip.h"
 
 namespace google {
@@ -124,10 +124,12 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   auto impl =
       std::make_unique<CurlImpl>(std::move(handle), handle_factory_, options);
   if (credentials_) {
-    auto auth_header =
-        credentials_->AuthenticationHeader(std::chrono::system_clock::now());
-    if (!auth_header.ok()) return std::move(auth_header).status();
-    impl->SetHeader(HttpHeader(auth_header->first, auth_header->second));
+    auto auth_headers = credentials_->AuthenticationHeaders(
+        std::chrono::system_clock::now(), endpoint_address_);
+    if (!auth_headers.ok()) return std::move(auth_headers).status();
+    for (auto& header : *auth_headers) {
+      impl->SetHeader(std::move(header));
+    }
   }
   impl->SetHeader(HostHeader(options, endpoint_address_));
   impl->SetHeaders(context.headers());

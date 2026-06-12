@@ -17,16 +17,20 @@
 // source: google/cloud/support/v2/comment_service.proto
 
 #include "google/cloud/support/v2/internal/comment_metadata_decorator.h"
+#include "google/cloud/support/v2/comment_service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/support/v2/comment_service.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -62,6 +66,15 @@ CommentServiceMetadata::CreateComment(
   return child_->CreateComment(context, options, request);
 }
 
+StatusOr<google::cloud::support::v2::Comment>
+CommentServiceMetadata::GetComment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetComment(context, options, request);
+}
+
 void CommentServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                          Options const& options,
                                          std::string const& request_params) {
@@ -79,3 +92,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

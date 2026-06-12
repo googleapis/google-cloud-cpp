@@ -42,7 +42,7 @@ Options ParallelstoreDefaultOptions(Options options) {
   if (!options.has<parallelstore_v1::ParallelstoreRetryPolicyOption>()) {
     options.set<parallelstore_v1::ParallelstoreRetryPolicyOption>(
         parallelstore_v1::ParallelstoreLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<parallelstore_v1::ParallelstoreBackoffPolicyOption>()) {

@@ -17,16 +17,20 @@
 // source: google/cloud/dataplex/v1/catalog.proto
 
 #include "google/cloud/dataplex/v1/internal/catalog_metadata_decorator.h"
+#include "google/cloud/dataplex/v1/catalog.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/catalog.grpc.pb.h>
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -347,6 +351,15 @@ CatalogServiceMetadata::LookupEntry(
   return child_->LookupEntry(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry>
+CatalogServiceMetadata::ModifyEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ModifyEntry(context, options, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
 CatalogServiceMetadata::SearchEntries(
     grpc::ClientContext& context, Options const& options,
@@ -413,12 +426,40 @@ CatalogServiceMetadata::CreateEntryLink(
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
+CatalogServiceMetadata::UpdateEntryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::UpdateEntryLinkRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("entry_link.name=",
+                           internal::UrlEncode(request.entry_link().name())));
+  return child_->UpdateEntryLink(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::EntryLink>
 CatalogServiceMetadata::DeleteEntryLink(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeleteEntryLinkRequest const& request) {
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEntryLink(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupEntryLinksResponse>
+CatalogServiceMetadata::LookupEntryLinks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::LookupEntryLinksRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->LookupEntryLinks(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::LookupContextResponse>
+CatalogServiceMetadata::LookupContext(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::LookupContextRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->LookupContext(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::EntryLink>
@@ -428,6 +469,91 @@ CatalogServiceMetadata::GetEntryLink(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEntryLink(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceMetadata::AsyncCreateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMetadataFeed(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::CreateMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataFeedRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMetadataFeed(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataFeed>
+CatalogServiceMetadata::GetMetadataFeed(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetMetadataFeedRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetMetadataFeed(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataFeedsResponse>
+CatalogServiceMetadata::ListMetadataFeeds(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListMetadataFeedsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListMetadataFeeds(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceMetadata::AsyncDeleteMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteMetadataFeed(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::DeleteMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteMetadataFeedRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMetadataFeed(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceMetadata::AsyncUpdateMetadataFeed(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("metadata_feed.name=",
+                   internal::UrlEncode(request.metadata_feed().name())));
+  return child_->AsyncUpdateMetadataFeed(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::UpdateMetadataFeed(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateMetadataFeedRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("metadata_feed.name=",
+                   internal::UrlEncode(request.metadata_feed().name())));
+  return child_->UpdateMetadataFeed(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
@@ -548,3 +674,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

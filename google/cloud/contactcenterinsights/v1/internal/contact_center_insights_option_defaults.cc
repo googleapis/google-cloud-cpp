@@ -44,7 +44,7 @@ Options ContactCenterInsightsDefaultOptions(Options options) {
     options.set<
         contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>(
         contactcenterinsights_v1::ContactCenterInsightsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<contactcenterinsights_v1::

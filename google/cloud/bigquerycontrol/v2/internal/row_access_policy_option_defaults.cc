@@ -43,7 +43,7 @@ Options RowAccessPolicyServiceDefaultOptions(Options options) {
           bigquerycontrol_v2::RowAccessPolicyServiceRetryPolicyOption>()) {
     options.set<bigquerycontrol_v2::RowAccessPolicyServiceRetryPolicyOption>(
         bigquerycontrol_v2::RowAccessPolicyServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

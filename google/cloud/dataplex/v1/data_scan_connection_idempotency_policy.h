@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_SCAN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_SCAN_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/dataplex/v1/datascans.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataplex/v1/datascans.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -63,6 +63,9 @@ class DataScanServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListDataScanJobs(
       google::cloud::dataplex::v1::ListDataScanJobsRequest request);
+
+  virtual google::cloud::Idempotency CancelDataScanJob(
+      google::cloud::dataplex::v1::CancelDataScanJobRequest const& request);
 
   virtual google::cloud::Idempotency GenerateDataQualityRules(
       google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&

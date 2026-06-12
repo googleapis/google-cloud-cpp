@@ -35,16 +35,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
-  auto values = std::vector<Value>{};
-  auto columns = std::make_shared<std::vector<std::string>>();
-  for (auto& p : pairs) {
-    values.emplace_back(std::move(p.second));
-    columns->emplace_back(std::move(p.first));
-  }
-  return spanner_internal::RowFriend::MakeRow(std::move(values),
-                                              std::move(columns));
-}
 
 Row::Row() : Row({}, std::make_shared<std::vector<std::string>>()) {}
 

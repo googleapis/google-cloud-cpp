@@ -42,7 +42,7 @@ Options RepositoryManagerDefaultOptions(Options options) {
   if (!options.has<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()) {
     options.set<cloudbuild_v2::RepositoryManagerRetryPolicyOption>(
         cloudbuild_v2::RepositoryManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()) {

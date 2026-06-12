@@ -408,6 +408,24 @@ CloudRedisClusterConnectionImpl::GetClusterCertificateAuthority(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::redis::cluster::v1::SharedRegionalCertificateAuthority>
+CloudRedisClusterConnectionImpl::GetSharedRegionalCertificateAuthority(
+    google::cloud::redis::cluster::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSharedRegionalCertificateAuthority(
+          request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::
+                 GetSharedRegionalCertificateAuthorityRequest const& request) {
+        return stub_->GetSharedRegionalCertificateAuthority(context, options,
+                                                            request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterConnectionImpl::RescheduleClusterMaintenance(
     google::cloud::redis::cluster::v1::

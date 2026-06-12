@@ -16,7 +16,7 @@
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {

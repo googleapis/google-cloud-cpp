@@ -9,12 +9,15 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet catalog_client_samples.cc with-service-account
+@snippet business_glossary_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
 
+- [\c dataplex_v1::BusinessGlossaryServiceClient](@ref dataplex_v1::BusinessGlossaryServiceClient-service-account-snippet)
 - [\c dataplex_v1::CatalogServiceClient](@ref dataplex_v1::CatalogServiceClient-service-account-snippet)
+- [\c dataplex_v1::CmekServiceClient](@ref dataplex_v1::CmekServiceClient-service-account-snippet)
 - [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-service-account-snippet)
+- [\c dataplex_v1::DataProductServiceClient](@ref dataplex_v1::DataProductServiceClient-service-account-snippet)
 - [\c dataplex_v1::DataScanServiceClient](@ref dataplex_v1::DataScanServiceClient-service-account-snippet)
 - [\c dataplex_v1::DataTaxonomyServiceClient](@ref dataplex_v1::DataTaxonomyServiceClient-service-account-snippet)
 - [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-service-account-snippet)
@@ -36,15 +39,33 @@ guide for more details.
 
 // <!-- inject-authentication-pages-start -->
 
+/*! @page dataplex_v1::BusinessGlossaryServiceClient-service-account-snippet Override dataplex_v1::BusinessGlossaryServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/business_glossary_client_samples.cc with-service-account
+
+*/
+
 /*! @page dataplex_v1::CatalogServiceClient-service-account-snippet Override dataplex_v1::CatalogServiceClient Authentication Defaults
 
 @snippet google/cloud/dataplex/v1/samples/catalog_client_samples.cc with-service-account
 
 */
 
+/*! @page dataplex_v1::CmekServiceClient-service-account-snippet Override dataplex_v1::CmekServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/cmek_client_samples.cc with-service-account
+
+*/
+
 /*! @page dataplex_v1::ContentServiceClient-service-account-snippet Override dataplex_v1::ContentServiceClient Authentication Defaults
 
 @snippet google/cloud/dataplex/v1/samples/content_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataplex_v1::DataProductServiceClient-service-account-snippet Override dataplex_v1::DataProductServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/data_product_client_samples.cc with-service-account
 
 */
 

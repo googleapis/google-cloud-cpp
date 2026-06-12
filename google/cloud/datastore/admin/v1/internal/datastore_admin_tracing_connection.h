@@ -28,8 +28,6 @@ namespace cloud {
 namespace datastore_admin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class DatastoreAdminTracingConnection
     : public datastore_admin_v1::DatastoreAdminConnection {
  public:
@@ -105,8 +103,6 @@ class DatastoreAdminTracingConnection
  private:
   std::shared_ptr<datastore_admin_v1::DatastoreAdminConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

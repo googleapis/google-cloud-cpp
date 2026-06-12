@@ -41,7 +41,7 @@ Options UrlMapsDefaultOptions(Options options) {
   if (!options.has<compute_url_maps_v1::UrlMapsRetryPolicyOption>()) {
     options.set<compute_url_maps_v1::UrlMapsRetryPolicyOption>(
         compute_url_maps_v1::UrlMapsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_url_maps_v1::UrlMapsBackoffPolicyOption>()) {

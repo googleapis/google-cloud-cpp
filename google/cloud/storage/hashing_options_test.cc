@@ -41,7 +41,7 @@ TEST(ComputeMD5HashTest, Simple) {
 TEST(ComputeCrc32cChecksumTest, Empty) {
   std::string actual = ComputeCrc32cChecksum("");
   // Use this command to get the expected value:
-  // echo -n '' > foo.txt && gsutil hash foo.txt
+  // echo -n '' > foo.txt && gcloud storage hash foo.txt
   EXPECT_EQ("AAAAAA==", actual);
 }
 
@@ -50,7 +50,7 @@ TEST(ComputeCrc32cChecksumTest, Simple) {
       ComputeCrc32cChecksum("The quick brown fox jumps over the lazy dog");
   // I used this command to get the expected value:
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" > foo.txt &&
-  // gsutil hash foo.txt
+  // gcloud storage hash foo.txt
   EXPECT_EQ("ImIEBA==", actual);
 }
 

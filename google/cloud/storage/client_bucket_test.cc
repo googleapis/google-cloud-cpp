@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/client_unit_test.h"
@@ -197,7 +196,6 @@ TEST_F(BucketTest, CreateBucket) {
 })""";
   auto expected = internal::BucketMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, client_options()).Times(0);
   EXPECT_CALL(*mock_, CreateBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::CreateBucketRequest const& r) {

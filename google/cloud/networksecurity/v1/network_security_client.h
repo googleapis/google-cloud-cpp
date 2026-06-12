@@ -26,7 +26,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -120,7 +120,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthorizationPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.ListAuthorizationPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L161}
+  /// [google.cloud.networksecurity.v1.ListAuthorizationPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L168}
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>
@@ -159,7 +159,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthorizationPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.ListAuthorizationPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L161}
+  /// [google.cloud.networksecurity.v1.ListAuthorizationPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L168}
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>
@@ -188,7 +188,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthorizationPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.GetAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L194}
+  /// [google.cloud.networksecurity.v1.GetAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L201}
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
@@ -218,7 +218,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthorizationPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.GetAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L194}
+  /// [google.cloud.networksecurity.v1.GetAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L201}
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
@@ -259,7 +259,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthorizationPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.CreateAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L206}
+  /// [google.cloud.networksecurity.v1.CreateAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L213}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -317,7 +317,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthorizationPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.CreateAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L206}
+  /// [google.cloud.networksecurity.v1.CreateAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L213}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -386,7 +386,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthorizationPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.UpdateAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L227}
+  /// [google.cloud.networksecurity.v1.UpdateAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L235}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -443,7 +443,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.AuthorizationPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.UpdateAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L227}
+  /// [google.cloud.networksecurity.v1.UpdateAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L235}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -485,8 +485,8 @@ class NetworkSecurityClient {
   ///
   /// Deletes a single AuthorizationPolicy.
   ///
-  /// @param name  Required. A name of the AuthorizationPolicy to delete. Must be in the format
-  ///  `projects/{project}/locations/{location}/authorizationPolicies/*`.
+  /// @param name  Required. A name of the AuthorizationPolicy to delete. Must be in the
+  ///  format `projects/{project}/locations/{location}/authorizationPolicies/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -507,7 +507,7 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.DeleteAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L240}
+  /// [google.cloud.networksecurity.v1.DeleteAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L250}
   /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
   ///
   // clang-format on
@@ -558,7 +558,7 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.DeleteAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L240}
+  /// [google.cloud.networksecurity.v1.DeleteAuthorizationPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authorization_policy.proto#L250}
   /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
   ///
   // clang-format on
@@ -599,6 +599,531 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
+  /// Lists BackendAuthenticationConfigs in a given project and location.
+  ///
+  /// @param parent  Required. The project and location from which the
+  ///  BackendAuthenticationConfigs should be listed, specified in the format
+  ///  `projects/*/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.BackendAuthenticationConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.BackendAuthenticationConfig]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L56}
+  /// [google.cloud.networksecurity.v1.ListBackendAuthenticationConfigsRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L139}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+  ListBackendAuthenticationConfigs(std::string const& parent,
+                                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists BackendAuthenticationConfigs in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.ListBackendAuthenticationConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.BackendAuthenticationConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.BackendAuthenticationConfig]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L56}
+  /// [google.cloud.networksecurity.v1.ListBackendAuthenticationConfigsRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L139}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+  ListBackendAuthenticationConfigs(
+      google::cloud::networksecurity::v1::
+          ListBackendAuthenticationConfigsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single BackendAuthenticationConfig to
+  /// BackendAuthenticationConfig.
+  ///
+  /// @param name  Required. A name of the BackendAuthenticationConfig to get. Must be in the
+  ///  format `projects/*/locations/{location}/backendAuthenticationConfigs/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.BackendAuthenticationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.BackendAuthenticationConfig]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L56}
+  /// [google.cloud.networksecurity.v1.GetBackendAuthenticationConfigRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L175}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+  GetBackendAuthenticationConfig(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single BackendAuthenticationConfig to
+  /// BackendAuthenticationConfig.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.GetBackendAuthenticationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.BackendAuthenticationConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.BackendAuthenticationConfig]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L56}
+  /// [google.cloud.networksecurity.v1.GetBackendAuthenticationConfigRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L175}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+  GetBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::
+          GetBackendAuthenticationConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new BackendAuthenticationConfig in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource of the BackendAuthenticationConfig. Must be
+  ///  in the format `projects/*/locations/{location}`.
+  /// @param backend_authentication_config  Required. BackendAuthenticationConfig resource to be created.
+  /// @param backend_authentication_config_id  Required. Short name of the BackendAuthenticationConfig resource to be
+  ///  created. This value should be 1-63 characters long, containing only
+  ///  letters, numbers, hyphens, and underscores, and should not start with a
+  ///  number. E.g. "backend-auth-config".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.BackendAuthenticationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.BackendAuthenticationConfig]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L56}
+  /// [google.cloud.networksecurity.v1.CreateBackendAuthenticationConfigRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L187}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+  CreateBackendAuthenticationConfig(
+      std::string const& parent,
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig const&
+          backend_authentication_config,
+      std::string const& backend_authentication_config_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateBackendAuthenticationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateBackendAuthenticationConfig(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig const&
+          backend_authentication_config,
+      std::string const& backend_authentication_config_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new BackendAuthenticationConfig in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.CreateBackendAuthenticationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.BackendAuthenticationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.BackendAuthenticationConfig]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L56}
+  /// [google.cloud.networksecurity.v1.CreateBackendAuthenticationConfigRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L187}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+  CreateBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::
+          CreateBackendAuthenticationConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateBackendAuthenticationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateBackendAuthenticationConfig(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          CreateBackendAuthenticationConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateBackendAuthenticationConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+  CreateBackendAuthenticationConfig(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single BackendAuthenticationConfig to
+  /// BackendAuthenticationConfig.
+  ///
+  /// @param backend_authentication_config  Required. Updated BackendAuthenticationConfig resource.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  BackendAuthenticationConfig resource by the update.  The fields
+  ///  specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the
+  ///  mask. If the user does not provide a mask then all fields will be
+  ///  overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.BackendAuthenticationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.BackendAuthenticationConfig]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L56}
+  /// [google.cloud.networksecurity.v1.UpdateBackendAuthenticationConfigRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L210}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+  UpdateBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig const&
+          backend_authentication_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackendAuthenticationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBackendAuthenticationConfig(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig const&
+          backend_authentication_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single BackendAuthenticationConfig to
+  /// BackendAuthenticationConfig.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.UpdateBackendAuthenticationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.BackendAuthenticationConfig] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.BackendAuthenticationConfig]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L56}
+  /// [google.cloud.networksecurity.v1.UpdateBackendAuthenticationConfigRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L210}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+  UpdateBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::
+          UpdateBackendAuthenticationConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackendAuthenticationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateBackendAuthenticationConfig(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          UpdateBackendAuthenticationConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackendAuthenticationConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>>
+  UpdateBackendAuthenticationConfig(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single BackendAuthenticationConfig to
+  /// BackendAuthenticationConfig.
+  ///
+  /// @param name  Required. A name of the BackendAuthenticationConfig to delete. Must be in
+  ///  the format
+  ///  `projects/*/locations/{location}/backendAuthenticationConfigs/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteBackendAuthenticationConfigRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L226}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteBackendAuthenticationConfig(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackendAuthenticationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteBackendAuthenticationConfig(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single BackendAuthenticationConfig to
+  /// BackendAuthenticationConfig.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.DeleteBackendAuthenticationConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteBackendAuthenticationConfigRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/backend_authentication_config.proto#L226}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::
+          DeleteBackendAuthenticationConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackendAuthenticationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteBackendAuthenticationConfig(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          DeleteBackendAuthenticationConfigRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackendAuthenticationConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteBackendAuthenticationConfig(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// Lists ServerTlsPolicies in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the ServerTlsPolicies should
@@ -625,8 +1150,8 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.ListServerTlsPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L94}
-  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L36}
+  /// [google.cloud.networksecurity.v1.ListServerTlsPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L153}
+  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L42}
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
@@ -664,8 +1189,8 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.ListServerTlsPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L94}
-  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L36}
+  /// [google.cloud.networksecurity.v1.ListServerTlsPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L153}
+  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L42}
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
@@ -692,8 +1217,8 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.GetServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L126}
-  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L36}
+  /// [google.cloud.networksecurity.v1.GetServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L197}
+  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L42}
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
@@ -722,8 +1247,8 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.GetServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L126}
-  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L36}
+  /// [google.cloud.networksecurity.v1.GetServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L197}
+  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L42}
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
@@ -739,9 +1264,10 @@ class NetworkSecurityClient {
   /// @param parent  Required. The parent resource of the ServerTlsPolicy. Must be in
   ///  the format `projects/*/locations/{location}`.
   /// @param server_tls_policy  Required. ServerTlsPolicy resource to be created.
-  /// @param server_tls_policy_id  Required. Short name of the ServerTlsPolicy resource to be created. This value should
-  ///  be 1-63 characters long, containing only letters, numbers, hyphens, and
-  ///  underscores, and should not start with a number. E.g. "server_mtls_policy".
+  /// @param server_tls_policy_id  Required. Short name of the ServerTlsPolicy resource to be created. This
+  ///  value should be 1-63 characters long, containing only letters, numbers,
+  ///  hyphens, and underscores, and should not start with a number. E.g.
+  ///  "server_mtls_policy".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -762,8 +1288,8 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.CreateServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L138}
-  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L36}
+  /// [google.cloud.networksecurity.v1.CreateServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L209}
+  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L42}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -820,8 +1346,8 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.CreateServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L138}
-  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L36}
+  /// [google.cloud.networksecurity.v1.CreateServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L209}
+  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L42}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -891,8 +1417,8 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.UpdateServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L158}
+  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L42}
+  /// [google.cloud.networksecurity.v1.UpdateServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L231}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -948,8 +1474,8 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.UpdateServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L158}
+  /// [google.cloud.networksecurity.v1.ServerTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L42}
+  /// [google.cloud.networksecurity.v1.UpdateServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L231}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -1014,7 +1540,7 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.DeleteServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L172}
+  /// [google.cloud.networksecurity.v1.DeleteServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L247}
   /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1065,7 +1591,7 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.DeleteServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L172}
+  /// [google.cloud.networksecurity.v1.DeleteServerTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/server_tls_policy.proto#L247}
   /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1134,7 +1660,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.ClientTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.ListClientTlsPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L73}
+  /// [google.cloud.networksecurity.v1.ListClientTlsPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L78}
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
@@ -1173,7 +1699,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.ClientTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.ListClientTlsPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L73}
+  /// [google.cloud.networksecurity.v1.ListClientTlsPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L78}
   ///
   // clang-format on
   StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
@@ -1201,7 +1727,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.ClientTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.GetClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L105}
+  /// [google.cloud.networksecurity.v1.GetClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L110}
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
@@ -1231,7 +1757,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.ClientTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.GetClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L105}
+  /// [google.cloud.networksecurity.v1.GetClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L110}
   ///
   // clang-format on
   StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
@@ -1247,9 +1773,10 @@ class NetworkSecurityClient {
   /// @param parent  Required. The parent resource of the ClientTlsPolicy. Must be in
   ///  the format `projects/*/locations/{location}`.
   /// @param client_tls_policy  Required. ClientTlsPolicy resource to be created.
-  /// @param client_tls_policy_id  Required. Short name of the ClientTlsPolicy resource to be created. This value should
-  ///  be 1-63 characters long, containing only letters, numbers, hyphens, and
-  ///  underscores, and should not start with a number. E.g. "client_mtls_policy".
+  /// @param client_tls_policy_id  Required. Short name of the ClientTlsPolicy resource to be created. This
+  ///  value should be 1-63 characters long, containing only letters, numbers,
+  ///  hyphens, and underscores, and should not start with a number. E.g.
+  ///  "client_mtls_policy".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1271,7 +1798,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.ClientTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.CreateClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L117}
+  /// [google.cloud.networksecurity.v1.CreateClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L122}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -1329,7 +1856,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.ClientTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.CreateClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L117}
+  /// [google.cloud.networksecurity.v1.CreateClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L122}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -1400,7 +1927,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.ClientTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.UpdateClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L137}
+  /// [google.cloud.networksecurity.v1.UpdateClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L144}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -1457,7 +1984,7 @@ class NetworkSecurityClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networksecurity.v1.ClientTlsPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L36}
-  /// [google.cloud.networksecurity.v1.UpdateClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L137}
+  /// [google.cloud.networksecurity.v1.UpdateClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L144}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -1522,7 +2049,7 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.DeleteClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L151}
+  /// [google.cloud.networksecurity.v1.DeleteClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L160}
   /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1573,7 +2100,7 @@ class NetworkSecurityClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networksecurity.v1.DeleteClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L151}
+  /// [google.cloud.networksecurity.v1.DeleteClientTlsPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/client_tls_policy.proto#L160}
   /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
   ///
   // clang-format on
@@ -1612,6 +2139,2534 @@ class NetworkSecurityClient {
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteClientTlsPolicy(google::longrunning::Operation const& operation,
                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GatewaySecurityPolicies in a given project and location.
+  ///
+  /// @param parent  Required. The project and location from which the GatewaySecurityPolicies
+  ///  should be listed, specified in the format
+  ///  `projects/{project}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L34}
+  /// [google.cloud.networksecurity.v1.ListGatewaySecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L91}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+  ListGatewaySecurityPolicies(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GatewaySecurityPolicies in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.ListGatewaySecurityPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L34}
+  /// [google.cloud.networksecurity.v1.ListGatewaySecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L91}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+  ListGatewaySecurityPolicies(
+      google::cloud::networksecurity::v1::ListGatewaySecurityPoliciesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GatewaySecurityPolicy.
+  ///
+  /// @param name  Required. A name of the GatewaySecurityPolicy to get. Must be in the format
+  ///  `projects/{project}/locations/{location}/gatewaySecurityPolicies/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.GatewaySecurityPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L34}
+  /// [google.cloud.networksecurity.v1.GetGatewaySecurityPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L127}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+  GetGatewaySecurityPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GatewaySecurityPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.GetGatewaySecurityPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.GatewaySecurityPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L34}
+  /// [google.cloud.networksecurity.v1.GetGatewaySecurityPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L127}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+  GetGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::GetGatewaySecurityPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GatewaySecurityPolicy in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource of the GatewaySecurityPolicy. Must be in the
+  ///  format `projects/{project}/locations/{location}`.
+  /// @param gateway_security_policy  Required. GatewaySecurityPolicy resource to be created.
+  /// @param gateway_security_policy_id  Required. Short name of the GatewaySecurityPolicy resource to be created.
+  ///  This value should be 1-63 characters long, containing only
+  ///  letters, numbers, hyphens, and underscores, and should not start
+  ///  with a number. E.g. "gateway_security_policy1".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.CreateGatewaySecurityPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L68}
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+  CreateGatewaySecurityPolicy(
+      std::string const& parent,
+      google::cloud::networksecurity::v1::GatewaySecurityPolicy const&
+          gateway_security_policy,
+      std::string const& gateway_security_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGatewaySecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGatewaySecurityPolicy(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networksecurity::v1::GatewaySecurityPolicy const&
+          gateway_security_policy,
+      std::string const& gateway_security_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GatewaySecurityPolicy in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.CreateGatewaySecurityPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.CreateGatewaySecurityPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L68}
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+  CreateGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGatewaySecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGatewaySecurityPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGatewaySecurityPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+  CreateGatewaySecurityPolicy(google::longrunning::Operation const& operation,
+                              Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single GatewaySecurityPolicy.
+  ///
+  /// @param gateway_security_policy  Required. Updated GatewaySecurityPolicy resource.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  GatewaySecurityPolicy resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L34}
+  /// [google.cloud.networksecurity.v1.UpdateGatewaySecurityPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L151}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+  UpdateGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::GatewaySecurityPolicy const&
+          gateway_security_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGatewaySecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateGatewaySecurityPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::GatewaySecurityPolicy const&
+          gateway_security_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single GatewaySecurityPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.UpdateGatewaySecurityPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L34}
+  /// [google.cloud.networksecurity.v1.UpdateGatewaySecurityPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L151}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+  UpdateGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGatewaySecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateGatewaySecurityPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGatewaySecurityPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>>
+  UpdateGatewaySecurityPolicy(google::longrunning::Operation const& operation,
+                              Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GatewaySecurityPolicy.
+  ///
+  /// @param name  Required. A name of the GatewaySecurityPolicy to delete. Must be in the
+  ///  format `projects/{project}/locations/{location}/gatewaySecurityPolicies/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteGatewaySecurityPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L139}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteGatewaySecurityPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGatewaySecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGatewaySecurityPolicy(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GatewaySecurityPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.DeleteGatewaySecurityPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteGatewaySecurityPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy.proto#L139}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGatewaySecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGatewaySecurityPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGatewaySecurityPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteGatewaySecurityPolicy(google::longrunning::Operation const& operation,
+                              Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GatewaySecurityPolicyRules in a given project and location.
+  ///
+  /// @param parent  Required. The project, location and GatewaySecurityPolicy from which the
+  ///  GatewaySecurityPolicyRules should be listed, specified in the format
+  ///  `projects/{project}/locations/{location}/gatewaySecurityPolicies/{gatewaySecurityPolicy}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L35}
+  /// [google.cloud.networksecurity.v1.ListGatewaySecurityPolicyRulesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L150}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+  ListGatewaySecurityPolicyRules(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GatewaySecurityPolicyRules in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.ListGatewaySecurityPolicyRulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L35}
+  /// [google.cloud.networksecurity.v1.ListGatewaySecurityPolicyRulesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L150}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+  ListGatewaySecurityPolicyRules(
+      google::cloud::networksecurity::v1::ListGatewaySecurityPolicyRulesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GatewaySecurityPolicyRule.
+  ///
+  /// @param name  Required. The name of the GatewaySecurityPolicyRule to retrieve.
+  ///  Format:
+  ///  projects/{project}/location/{location}/gatewaySecurityPolicies/*/rules/*
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.GatewaySecurityPolicyRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L35}
+  /// [google.cloud.networksecurity.v1.GetGatewaySecurityPolicyRuleRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L122}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+  GetGatewaySecurityPolicyRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GatewaySecurityPolicyRule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.GetGatewaySecurityPolicyRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.GatewaySecurityPolicyRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L35}
+  /// [google.cloud.networksecurity.v1.GetGatewaySecurityPolicyRuleRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L122}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+  GetGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::
+          GetGatewaySecurityPolicyRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GatewaySecurityPolicy in a given project and location.
+  ///
+  /// @param parent  Required. The parent where this rule will be created.
+  ///  Format :
+  ///  projects/{project}/location/{location}/gatewaySecurityPolicies/*
+  /// @param gateway_security_policy_rule  Required. The rule to be created.
+  /// @param gateway_security_policy_rule_id  The ID to use for the rule, which will become the final component of
+  ///  the rule's resource name.
+  ///  This value should be 4-63 characters, and valid characters
+  ///  are /[a-z][0-9]-/.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.CreateGatewaySecurityPolicyRuleRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L99}
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L35}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+  CreateGatewaySecurityPolicyRule(
+      std::string const& parent,
+      google::cloud::networksecurity::v1::GatewaySecurityPolicyRule const&
+          gateway_security_policy_rule,
+      std::string const& gateway_security_policy_rule_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGatewaySecurityPolicyRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGatewaySecurityPolicyRule(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networksecurity::v1::GatewaySecurityPolicyRule const&
+          gateway_security_policy_rule,
+      std::string const& gateway_security_policy_rule_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GatewaySecurityPolicy in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.CreateGatewaySecurityPolicyRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.CreateGatewaySecurityPolicyRuleRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L99}
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L35}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+  CreateGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGatewaySecurityPolicyRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGatewaySecurityPolicyRule(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGatewaySecurityPolicyRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+  CreateGatewaySecurityPolicyRule(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single GatewaySecurityPolicyRule.
+  ///
+  /// @param gateway_security_policy_rule  Required. Updated GatewaySecurityPolicyRule resource.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  GatewaySecurityPolicy resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L35}
+  /// [google.cloud.networksecurity.v1.UpdateGatewaySecurityPolicyRuleRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L135}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+  UpdateGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::GatewaySecurityPolicyRule const&
+          gateway_security_policy_rule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGatewaySecurityPolicyRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateGatewaySecurityPolicyRule(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::GatewaySecurityPolicyRule const&
+          gateway_security_policy_rule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single GatewaySecurityPolicyRule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.UpdateGatewaySecurityPolicyRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GatewaySecurityPolicyRule]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L35}
+  /// [google.cloud.networksecurity.v1.UpdateGatewaySecurityPolicyRuleRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L135}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+  UpdateGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGatewaySecurityPolicyRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateGatewaySecurityPolicyRule(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGatewaySecurityPolicyRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>>
+  UpdateGatewaySecurityPolicyRule(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GatewaySecurityPolicyRule.
+  ///
+  /// @param name  Required. A name of the GatewaySecurityPolicyRule to delete. Must be in the
+  ///  format
+  ///  `projects/{project}/locations/{location}/gatewaySecurityPolicies/{gatewaySecurityPolicy}/rules/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteGatewaySecurityPolicyRuleRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L186}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteGatewaySecurityPolicyRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGatewaySecurityPolicyRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGatewaySecurityPolicyRule(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GatewaySecurityPolicyRule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.DeleteGatewaySecurityPolicyRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteGatewaySecurityPolicyRuleRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/gateway_security_policy_rule.proto#L186}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGatewaySecurityPolicyRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGatewaySecurityPolicyRule(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGatewaySecurityPolicyRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteGatewaySecurityPolicyRule(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists UrlLists in a given project and location.
+  ///
+  /// @param parent  Required. The project and location from which the UrlLists should
+  ///  be listed, specified in the format
+  ///  `projects/{project}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.UrlList], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.ListUrlListsRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L63}
+  /// [google.cloud.networksecurity.v1.UrlList]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L34}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::UrlList> ListUrlLists(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists UrlLists in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.ListUrlListsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.UrlList], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.ListUrlListsRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L63}
+  /// [google.cloud.networksecurity.v1.UrlList]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L34}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::UrlList> ListUrlLists(
+      google::cloud::networksecurity::v1::ListUrlListsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single UrlList.
+  ///
+  /// @param name  Required. A name of the UrlList to get. Must be in the format
+  ///  `projects/*/locations/{location}/urlLists/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.UrlList])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GetUrlListRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L99}
+  /// [google.cloud.networksecurity.v1.UrlList]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::UrlList> GetUrlList(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single UrlList.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.GetUrlListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.UrlList])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GetUrlListRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L99}
+  /// [google.cloud.networksecurity.v1.UrlList]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::UrlList> GetUrlList(
+      google::cloud::networksecurity::v1::GetUrlListRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new UrlList in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource of the UrlList. Must be in
+  ///  the format `projects/*/locations/{location}`.
+  /// @param url_list  Required. UrlList resource to be created.
+  /// @param url_list_id  Required. Short name of the UrlList resource to be created. This value
+  ///  should be 1-63 characters long, containing only letters, numbers, hyphens,
+  ///  and underscores, and should not start with a number. E.g. "url_list".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.UrlList] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.CreateUrlListRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L111}
+  /// [google.cloud.networksecurity.v1.UrlList]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::UrlList>> CreateUrlList(
+      std::string const& parent,
+      google::cloud::networksecurity::v1::UrlList const& url_list,
+      std::string const& url_list_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateUrlList
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateUrlList(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networksecurity::v1::UrlList const& url_list,
+      std::string const& url_list_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new UrlList in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.CreateUrlListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.UrlList] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.CreateUrlListRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L111}
+  /// [google.cloud.networksecurity.v1.UrlList]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::UrlList>> CreateUrlList(
+      google::cloud::networksecurity::v1::CreateUrlListRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateUrlList
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateUrlList(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::CreateUrlListRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateUrlList
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::UrlList>> CreateUrlList(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single UrlList.
+  ///
+  /// @param url_list  Required. Updated UrlList resource.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  UrlList resource by the update.  The fields
+  ///  specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the
+  ///  mask. If the user does not provide a mask then all fields will be
+  ///  overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.UrlList] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.UpdateUrlListRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L131}
+  /// [google.cloud.networksecurity.v1.UrlList]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::UrlList>> UpdateUrlList(
+      google::cloud::networksecurity::v1::UrlList const& url_list,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateUrlList
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateUrlList(
+      NoAwaitTag, google::cloud::networksecurity::v1::UrlList const& url_list,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single UrlList.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.UpdateUrlListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.UrlList] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.UpdateUrlListRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L131}
+  /// [google.cloud.networksecurity.v1.UrlList]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::UrlList>> UpdateUrlList(
+      google::cloud::networksecurity::v1::UpdateUrlListRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateUrlList
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateUrlList(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::UpdateUrlListRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateUrlList
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::UrlList>> UpdateUrlList(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single UrlList.
+  ///
+  /// @param name  Required. A name of the UrlList to delete. Must be in
+  ///  the format `projects/*/locations/{location}/urlLists/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteUrlListRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L146}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteUrlList(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteUrlList
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteUrlList(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single UrlList.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.DeleteUrlListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteUrlListRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/url_list.proto#L146}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteUrlList(
+      google::cloud::networksecurity::v1::DeleteUrlListRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteUrlList
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteUrlList(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::DeleteUrlListRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteUrlList
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteUrlList(google::longrunning::Operation const& operation,
+                Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists TlsInspectionPolicies in a given project and location.
+  ///
+  /// @param parent  Required. The project and location from which the TlsInspectionPolicies
+  ///  should be listed, specified in the format
+  ///  `projects/{project}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.TlsInspectionPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.ListTlsInspectionPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L190}
+  /// [google.cloud.networksecurity.v1.TlsInspectionPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L38}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+  ListTlsInspectionPolicies(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists TlsInspectionPolicies in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.ListTlsInspectionPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.TlsInspectionPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.ListTlsInspectionPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L190}
+  /// [google.cloud.networksecurity.v1.TlsInspectionPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L38}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+  ListTlsInspectionPolicies(
+      google::cloud::networksecurity::v1::ListTlsInspectionPoliciesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single TlsInspectionPolicy.
+  ///
+  /// @param name  Required. A name of the TlsInspectionPolicy to get. Must be in the format
+  ///  `projects/{project}/locations/{location}/tlsInspectionPolicies/{tls_inspection_policy}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.TlsInspectionPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GetTlsInspectionPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L226}
+  /// [google.cloud.networksecurity.v1.TlsInspectionPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L38}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+  GetTlsInspectionPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single TlsInspectionPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.GetTlsInspectionPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.TlsInspectionPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.GetTlsInspectionPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L226}
+  /// [google.cloud.networksecurity.v1.TlsInspectionPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L38}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+  GetTlsInspectionPolicy(
+      google::cloud::networksecurity::v1::GetTlsInspectionPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new TlsInspectionPolicy in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource of the TlsInspectionPolicy. Must be in the
+  ///  format `projects/{project}/locations/{location}`.
+  /// @param tls_inspection_policy  Required. TlsInspectionPolicy resource to be created.
+  /// @param tls_inspection_policy_id  Required. Short name of the TlsInspectionPolicy resource to be created.
+  ///  This value should be 1-63 characters long, containing only
+  ///  letters, numbers, hyphens, and underscores, and should not start
+  ///  with a number. E.g. "tls_inspection_policy1".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.TlsInspectionPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.CreateTlsInspectionPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L168}
+  /// [google.cloud.networksecurity.v1.TlsInspectionPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L38}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+  CreateTlsInspectionPolicy(
+      std::string const& parent,
+      google::cloud::networksecurity::v1::TlsInspectionPolicy const&
+          tls_inspection_policy,
+      std::string const& tls_inspection_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateTlsInspectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateTlsInspectionPolicy(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networksecurity::v1::TlsInspectionPolicy const&
+          tls_inspection_policy,
+      std::string const& tls_inspection_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new TlsInspectionPolicy in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.CreateTlsInspectionPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.TlsInspectionPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.CreateTlsInspectionPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L168}
+  /// [google.cloud.networksecurity.v1.TlsInspectionPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L38}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+  CreateTlsInspectionPolicy(google::cloud::networksecurity::v1::
+                                CreateTlsInspectionPolicyRequest const& request,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateTlsInspectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateTlsInspectionPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          CreateTlsInspectionPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateTlsInspectionPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+  CreateTlsInspectionPolicy(google::longrunning::Operation const& operation,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single TlsInspectionPolicy.
+  ///
+  /// @param tls_inspection_policy  Required. Updated TlsInspectionPolicy resource.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  TlsInspectionPolicy resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.TlsInspectionPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.TlsInspectionPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L38}
+  /// [google.cloud.networksecurity.v1.UpdateTlsInspectionPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L256}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+  UpdateTlsInspectionPolicy(
+      google::cloud::networksecurity::v1::TlsInspectionPolicy const&
+          tls_inspection_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateTlsInspectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateTlsInspectionPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::TlsInspectionPolicy const&
+          tls_inspection_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single TlsInspectionPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.UpdateTlsInspectionPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.TlsInspectionPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.TlsInspectionPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L38}
+  /// [google.cloud.networksecurity.v1.UpdateTlsInspectionPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L256}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+  UpdateTlsInspectionPolicy(google::cloud::networksecurity::v1::
+                                UpdateTlsInspectionPolicyRequest const& request,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateTlsInspectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateTlsInspectionPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          UpdateTlsInspectionPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateTlsInspectionPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>>
+  UpdateTlsInspectionPolicy(google::longrunning::Operation const& operation,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single TlsInspectionPolicy.
+  ///
+  /// @param name  Required. A name of the TlsInspectionPolicy to delete. Must be in the
+  ///  format
+  ///  `projects/{project}/locations/{location}/tlsInspectionPolicies/{tls_inspection_policy}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteTlsInspectionPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L238}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteTlsInspectionPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteTlsInspectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteTlsInspectionPolicy(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single TlsInspectionPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.DeleteTlsInspectionPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteTlsInspectionPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/tls_inspection_policy.proto#L238}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteTlsInspectionPolicy(google::cloud::networksecurity::v1::
+                                DeleteTlsInspectionPolicyRequest const& request,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteTlsInspectionPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteTlsInspectionPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          DeleteTlsInspectionPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteTlsInspectionPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteTlsInspectionPolicy(google::longrunning::Operation const& operation,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AuthzPolicies in a given project and location.
+  ///
+  /// @param parent  Required. The project and location from which the `AuthzPolicy` resources
+  ///  are listed, specified in the following format:
+  ///  `projects/{project}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.AuthzPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
+  /// [google.cloud.networksecurity.v1.ListAuthzPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L599}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::AuthzPolicy>
+  ListAuthzPolicies(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AuthzPolicies in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.ListAuthzPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networksecurity.v1.AuthzPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
+  /// [google.cloud.networksecurity.v1.ListAuthzPoliciesRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L599}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networksecurity::v1::AuthzPolicy>
+  ListAuthzPolicies(
+      google::cloud::networksecurity::v1::ListAuthzPoliciesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single AuthzPolicy.
+  ///
+  /// @param name  Required. A name of the `AuthzPolicy` resource to get. Must be in the
+  ///  format
+  ///  `projects/{project}/locations/{location}/authzPolicies/{authz_policy}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.AuthzPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
+  /// [google.cloud.networksecurity.v1.GetAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L637}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::AuthzPolicy> GetAuthzPolicy(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single AuthzPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.GetAuthzPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networksecurity.v1.AuthzPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
+  /// [google.cloud.networksecurity.v1.GetAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L637}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networksecurity::v1::AuthzPolicy> GetAuthzPolicy(
+      google::cloud::networksecurity::v1::GetAuthzPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AuthzPolicy in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource of the `AuthzPolicy` resource. Must be in
+  ///  the format `projects/{project}/locations/{location}`.
+  /// @param authz_policy  Required. `AuthzPolicy` resource to be created.
+  /// @param authz_policy_id  Required. User-provided ID of the `AuthzPolicy` resource to be created.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.AuthzPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
+  /// [google.cloud.networksecurity.v1.CreateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L563}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+  CreateAuthzPolicy(
+      std::string const& parent,
+      google::cloud::networksecurity::v1::AuthzPolicy const& authz_policy,
+      std::string const& authz_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthzPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAuthzPolicy(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networksecurity::v1::AuthzPolicy const& authz_policy,
+      std::string const& authz_policy_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AuthzPolicy in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.CreateAuthzPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.AuthzPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
+  /// [google.cloud.networksecurity.v1.CreateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L563}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+  CreateAuthzPolicy(
+      google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthzPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAuthzPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthzPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+  CreateAuthzPolicy(google::longrunning::Operation const& operation,
+                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single AuthzPolicy.
+  ///
+  /// @param authz_policy  Required. `AuthzPolicy` resource being updated.
+  /// @param update_mask  Required. Used to specify the fields to be overwritten in the
+  ///  `AuthzPolicy` resource by the update.
+  ///  The fields specified in the `update_mask` are relative to the resource, not
+  ///  the full request. A field is overwritten if it is in the mask. If the
+  ///  user does not specify a mask, then all fields are overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.AuthzPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
+  /// [google.cloud.networksecurity.v1.UpdateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L650}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+  UpdateAuthzPolicy(
+      google::cloud::networksecurity::v1::AuthzPolicy const& authz_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthzPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAuthzPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::AuthzPolicy const& authz_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single AuthzPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.UpdateAuthzPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.AuthzPolicy] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.AuthzPolicy]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L35}
+  /// [google.cloud.networksecurity.v1.UpdateAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L650}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+  UpdateAuthzPolicy(
+      google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthzPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAuthzPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthzPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>>
+  UpdateAuthzPolicy(google::longrunning::Operation const& operation,
+                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single AuthzPolicy.
+  ///
+  /// @param name  Required. The name of the `AuthzPolicy` resource to delete. Must be in
+  ///  the format
+  ///  `projects/{project}/locations/{location}/authzPolicies/{authz_policy}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L682}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteAuthzPolicy(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthzPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAuthzPolicy(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single AuthzPolicy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networksecurity.v1.DeleteAuthzPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networksecurity.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networksecurity.v1.DeleteAuthzPolicyRequest]: @googleapis_reference_link{google/cloud/networksecurity/v1/authz_policy.proto#L682}
+  /// [google.cloud.networksecurity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networksecurity/v1/common.proto#L31}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteAuthzPolicy(
+      google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthzPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAuthzPolicy(
+      NoAwaitTag,
+      google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthzPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteAuthzPolicy(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -2005,7 +5060,7 @@ class NetworkSecurityClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -2044,7 +5099,7 @@ class NetworkSecurityClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

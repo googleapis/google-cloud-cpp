@@ -41,7 +41,7 @@ Options RecommenderDefaultOptions(Options options) {
   if (!options.has<recommender_v1::RecommenderRetryPolicyOption>()) {
     options.set<recommender_v1::RecommenderRetryPolicyOption>(
         recommender_v1::RecommenderLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<recommender_v1::RecommenderBackoffPolicyOption>()) {

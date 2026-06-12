@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/iam/admin/v1/iam.pb.h>
+#include "google/iam/admin/v1/iam.pb.h"
 #include <memory>
 
 namespace google {
@@ -295,7 +295,6 @@ class IAMConnection {
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_admin_v1
 }  // namespace cloud
 }  // namespace google

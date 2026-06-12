@@ -28,8 +28,6 @@ namespace cloud {
 namespace workflows_executions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class ExecutionsTracingConnection
     : public workflows_executions_v1::ExecutionsConnection {
  public:
@@ -59,8 +57,6 @@ class ExecutionsTracingConnection
  private:
   std::shared_ptr<workflows_executions_v1::ExecutionsConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

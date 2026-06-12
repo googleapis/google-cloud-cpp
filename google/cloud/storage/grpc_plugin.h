@@ -37,32 +37,8 @@ google::cloud::storage::Client MakeGrpcClient(Options opts = {});
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 
-// TODO(#13857) - remove the backwards compatibility shims.
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/**
- * Configure the GCS+gRPC plugin.
- *
- * @deprecated use `google::cloud::storage::Client()` to create JSON-based
- *     clients and `google::cloud::storage::DefaultGrpcClient()` to create
- *     gRPC-based clients. If you need to pick one dynamically a simple
- *     `if()` statement or ternary expression can do the job.
- */
-struct [[deprecated(
-    "use storage::Client() or storage::MakeGrpcClient()")]] GrpcPluginOption {
-  using Type = std::string;
-};
-
-/**
- * Create a `google::cloud::storage::Client` object configured to use gRPC.
- *
- * @deprecated Please use `google::cloud::storage::MakeGrpcClient`.
- */
-[[deprecated(
-    "use ::google::cloud::storage::MakeGrpcClient() instead")]] google::cloud::
-    storage::Client
-    DefaultGrpcClient(Options opts = {});
 
 /**
  * Enable gRPC telemetry for GCS RPCs.

@@ -19,9 +19,9 @@
 #include "google/cloud/resourcemanager/v3/internal/organizations_option_defaults.h"
 #include "google/cloud/resourcemanager/v3/organizations_connection.h"
 #include "google/cloud/resourcemanager/v3/organizations_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -46,7 +46,7 @@ Options OrganizationsDefaultOptions(std::string const& location,
   if (!options.has<resourcemanager_v3::OrganizationsRetryPolicyOption>()) {
     options.set<resourcemanager_v3::OrganizationsRetryPolicyOption>(
         resourcemanager_v3::OrganizationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<resourcemanager_v3::OrganizationsBackoffPolicyOption>()) {

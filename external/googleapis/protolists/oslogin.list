@@ -1,2 +1,2 @@
-@com_google_googleapis//google/cloud/oslogin/common:common.proto
-@com_google_googleapis//google/cloud/oslogin/v1:oslogin.proto
+@googleapis//google/cloud/oslogin/common:common.proto
+@googleapis//google/cloud/oslogin/v1:oslogin.proto

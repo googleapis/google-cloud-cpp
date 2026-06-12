@@ -25,7 +25,7 @@ service_dirs = [
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_proto",
+    "@googleapis//google/cloud/bigquery/v2:bigquery_cc_proto",
 ]
 
 cc_gapic_library(

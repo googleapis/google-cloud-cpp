@@ -19,14 +19,13 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
-    "",
     "executions/v1/",
     "v1/",
 ]
 
 googleapis_deps = [
-    "@com_google_googleapis//google/cloud/workflows/executions/v1:executions_cc_grpc",
-    "@com_google_googleapis//google/cloud/workflows/v1:workflows_cc_grpc",
+    "@googleapis//google/cloud/workflows/executions/v1:executions_cc_grpc",
+    "@googleapis//google/cloud/workflows/v1:workflows_cc_grpc",
 ]
 
 cc_gapic_library(

@@ -32,7 +32,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -249,6 +249,14 @@ class DeveloperConnectConnectionImpl
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteSelf(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::developerconnect::v1::StartOAuthResponse> StartOAuth(
+      google::cloud::developerconnect::v1::StartOAuthRequest const& request)
+      override;
+
+  StatusOr<google::cloud::developerconnect::v1::FinishOAuthResponse>
+  FinishOAuth(google::cloud::developerconnect::v1::FinishOAuthRequest const&
+                  request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

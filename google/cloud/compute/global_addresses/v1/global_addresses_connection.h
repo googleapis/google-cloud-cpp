@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_GLOBAL_ADDRESSES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_GLOBAL_ADDRESSES_CONNECTION_H
 
+#include "google/cloud/compute/global_addresses/v1/global_addresses.pb.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_addresses/v1/global_addresses.pb.h>
 #include <memory>
 
 namespace google {

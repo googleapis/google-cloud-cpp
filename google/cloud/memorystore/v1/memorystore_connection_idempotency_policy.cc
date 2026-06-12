@@ -64,6 +64,13 @@ Idempotency MemorystoreConnectionIdempotencyPolicy::GetCertificateAuthority(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+MemorystoreConnectionIdempotencyPolicy::GetSharedRegionalCertificateAuthority(
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency MemorystoreConnectionIdempotencyPolicy::RescheduleMaintenance(
     google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&) {
   return Idempotency::kNonIdempotent;

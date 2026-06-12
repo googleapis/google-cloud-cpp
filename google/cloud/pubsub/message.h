@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsub/version.h"
 #include "absl/strings/string_view.h"
-#include <google/pubsub/v1/pubsub.pb.h>
+#include "google/pubsub/v1/pubsub.pb.h"
 #include <chrono>
 #include <iosfwd>
 #include <map>

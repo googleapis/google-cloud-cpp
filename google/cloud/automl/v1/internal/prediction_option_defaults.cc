@@ -42,7 +42,7 @@ Options PredictionServiceDefaultOptions(Options options) {
   if (!options.has<automl_v1::PredictionServiceRetryPolicyOption>()) {
     options.set<automl_v1::PredictionServiceRetryPolicyOption>(
         automl_v1::PredictionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<automl_v1::PredictionServiceBackoffPolicyOption>()) {

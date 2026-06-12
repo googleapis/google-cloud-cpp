@@ -1,8 +1,8 @@
-@com_google_googleapis//google/cloud/support/v2:actor.proto
-@com_google_googleapis//google/cloud/support/v2:attachment.proto
-@com_google_googleapis//google/cloud/support/v2:attachment_service.proto
-@com_google_googleapis//google/cloud/support/v2:case.proto
-@com_google_googleapis//google/cloud/support/v2:case_service.proto
-@com_google_googleapis//google/cloud/support/v2:comment.proto
-@com_google_googleapis//google/cloud/support/v2:comment_service.proto
-@com_google_googleapis//google/cloud/support/v2:escalation.proto
+@googleapis//google/cloud/support/v2:actor.proto
+@googleapis//google/cloud/support/v2:attachment.proto
+@googleapis//google/cloud/support/v2:attachment_service.proto
+@googleapis//google/cloud/support/v2:case.proto
+@googleapis//google/cloud/support/v2:case_service.proto
+@googleapis//google/cloud/support/v2:comment.proto
+@googleapis//google/cloud/support/v2:comment_service.proto
+@googleapis//google/cloud/support/v2:escalation.proto

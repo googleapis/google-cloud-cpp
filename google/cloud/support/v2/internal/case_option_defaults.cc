@@ -40,7 +40,7 @@ Options CaseServiceDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<support_v2::CaseServiceRetryPolicyOption>()) {
     options.set<support_v2::CaseServiceRetryPolicyOption>(
-        support_v2::CaseServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        support_v2::CaseServiceLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<support_v2::CaseServiceBackoffPolicyOption>()) {

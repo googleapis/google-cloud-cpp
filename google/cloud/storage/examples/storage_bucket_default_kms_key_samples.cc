@@ -34,7 +34,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client,
      std::string const& key_name) {
     StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetEncryption(
-                         gcs::BucketEncryption{key_name}));
+                         gcs::BucketEncryption{key_name, {}, {}, {}}));
     if (!updated) throw std::move(updated).status();
 
     if (!updated->has_encryption()) {

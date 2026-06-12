@@ -19,9 +19,9 @@
 #include "google/cloud/resourcemanager/v3/internal/projects_option_defaults.h"
 #include "google/cloud/resourcemanager/v3/projects_connection.h"
 #include "google/cloud/resourcemanager/v3/projects_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "absl/strings/str_cat.h"
 #include <memory>
 #include <utility>
 
@@ -45,7 +45,7 @@ Options ProjectsDefaultOptions(std::string const& location, Options options) {
   if (!options.has<resourcemanager_v3::ProjectsRetryPolicyOption>()) {
     options.set<resourcemanager_v3::ProjectsRetryPolicyOption>(
         resourcemanager_v3::ProjectsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<resourcemanager_v3::ProjectsBackoffPolicyOption>()) {

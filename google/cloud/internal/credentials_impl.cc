@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include <chrono>
 
@@ -31,6 +32,12 @@ auto constexpr kDefaultTokenLifetime = std::chrono::hours(1);
 std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status) {
   return std::make_shared<internal::ErrorCredentialsConfig>(
       std::move(error_status));
+}
+
+std::shared_ptr<Credentials> MakeUserAccountCredentials(std::string json_object,
+                                                        Options opts) {
+  return std::make_shared<AuthorizedUserConfig>(std::move(json_object),
+                                                std::move(opts));
 }
 
 Options PopulateAuthOptions(Options options) {
@@ -87,9 +94,11 @@ std::vector<std::string> const& ImpersonateServiceAccountConfig::delegates()
   return options_.get<DelegatesOption>();
 }
 
-ServiceAccountConfig::ServiceAccountConfig(std::string json_object,
-                                           Options opts)
+ServiceAccountConfig::ServiceAccountConfig(
+    absl::optional<std::string> json_object,
+    absl::optional<std::string> file_path, Options opts)
     : json_object_(std::move(json_object)),
+      file_path_(std::move(file_path)),
       options_(PopulateAuthOptions(std::move(opts))) {}
 
 ExternalAccountConfig::ExternalAccountConfig(std::string json_object,
@@ -103,6 +112,24 @@ ApiKeyConfig::ApiKeyConfig(std::string api_key, Options opts)
 
 ComputeEngineCredentialsConfig::ComputeEngineCredentialsConfig(Options opts)
     : options_(PopulateAuthOptions(std::move(opts))) {}
+
+AuthorizedUserConfig::AuthorizedUserConfig(std::string json_object,
+                                           Options opts)
+    : json_object_(std::move(json_object)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
+
+GDCHServiceAccountConfig::GDCHServiceAccountConfig(std::string json_object,
+                                                   std::string audience,
+                                                   Options opts)
+    : json_object_(std::move(json_object)),
+      audience_(std::move(audience)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
+
+GDCHServiceAccountConfig::GDCHServiceAccountConfig(std::string audience,
+                                                   Options opts)
+    : file_path_(GetEnv("GOOGLE_APPLICATION_CREDENTIALS")),
+      audience_(std::move(audience)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

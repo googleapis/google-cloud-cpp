@@ -40,7 +40,7 @@ Options OrgPolicyDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<orgpolicy_v2::OrgPolicyRetryPolicyOption>()) {
     options.set<orgpolicy_v2::OrgPolicyRetryPolicyOption>(
-        orgpolicy_v2::OrgPolicyLimitedTimeRetryPolicy(std::chrono::minutes(30))
+        orgpolicy_v2::OrgPolicyLimitedTimeRetryPolicy(std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<orgpolicy_v2::OrgPolicyBackoffPolicyOption>()) {

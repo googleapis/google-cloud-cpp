@@ -20,11 +20,14 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/minimal_iam_credentials_stub.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -296,5 +299,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_STUB_H

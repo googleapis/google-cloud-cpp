@@ -68,6 +68,10 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::string vars(std::string const& key) const;
   MethodDescriptorList const& methods() const { return methods_; }
   MethodDescriptorList const& async_methods() const { return async_methods_; }
+  std::vector<cpp::generator::ServiceConfiguration::BespokeMethod> const&
+  bespoke_methods() const {
+    return bespoke_methods_;
+  }
   void SetVars(absl::string_view header_path);
   VarsDictionary MergeServiceAndMethodVars(
       google::protobuf::MethodDescriptor const& method) const;
@@ -76,6 +80,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void CcLocalIncludes(std::vector<std::string> const& local_includes);
   void HeaderSystemIncludes(std::vector<std::string> const& system_includes);
   void CcSystemIncludes(std::vector<std::string> const& system_includes);
+
+  void HeaderGrpcPortsDefInclude();
+  void HeaderGrpcPortsUndefInclude();
+  void CcGrpcPortsDefInclude();
+  void CcGrpcPortsUndefInclude();
 
   void HeaderProtobufGenCodeIncludes(
       std::vector<std::string> const& pb_h_includes);
@@ -259,17 +268,17 @@ class ServiceCodeGenerator : public GeneratorInterface {
   Status OpenNamespaces(Printer& p, NamespaceType ns_type,
                         std::string const& product_path_var,
                         std::string const& ns_documentation = "");
-  void CloseNamespaces(Printer& p,
-                       bool define_backwards_compatibility_namespace_alias);
+  void CloseNamespaces(Printer& p);
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;
   VarsDictionary service_vars_;
   std::map<std::string, VarsDictionary> service_method_vars_;
   std::string namespace_;
-  bool define_backwards_compatibility_namespace_alias_ = false;
-  bool pb_h_system_includes_ = true;
+  bool pb_h_system_includes_ = false;
   MethodDescriptorList methods_;
   MethodDescriptorList async_methods_;
+  std::vector<cpp::generator::ServiceConfiguration::BespokeMethod>
+      bespoke_methods_;
   Printer header_;
   Printer cc_;
   std::vector<MixinMethod> mixin_methods_;

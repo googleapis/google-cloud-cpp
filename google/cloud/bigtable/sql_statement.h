@@ -20,7 +20,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
-#include <google/bigtable/v2/bigtable.pb.h>
+#include "google/bigtable/v2/bigtable.pb.h"
 #include <string>
 #include <unordered_map>
 #include <vector>

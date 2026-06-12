@@ -20,11 +20,14 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -224,6 +227,31 @@ SpannerLogging::BatchWrite(
       std::move(context), options, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+SpannerLogging::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::spanner::v1::FetchCacheUpdateRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::spanner::v1::CacheUpdate>> {
+        auto stream =
+            child_->FetchCacheUpdate(std::move(context), options, request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::spanner::v1::CacheUpdate>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::spanner::v1::Session>>
 SpannerLogging::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,
@@ -299,3 +327,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

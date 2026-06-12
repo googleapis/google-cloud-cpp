@@ -28,8 +28,6 @@ namespace cloud {
 namespace compute_machine_types_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class MachineTypesTracingConnection
     : public compute_machine_types_v1::MachineTypesConnection {
  public:
@@ -57,8 +55,6 @@ class MachineTypesTracingConnection
  private:
   std::shared_ptr<compute_machine_types_v1::MachineTypesConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

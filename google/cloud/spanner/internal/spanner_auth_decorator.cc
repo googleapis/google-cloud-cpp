@@ -17,9 +17,12 @@
 // source: google/spanner/v1/spanner.proto
 
 #include "google/cloud/spanner/internal/spanner_auth_decorator.h"
-#include <google/spanner/v1/spanner.grpc.pb.h>
+#include "google/spanner/v1/spanner.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -149,6 +152,18 @@ SpannerAuth::BatchWrite(std::shared_ptr<grpc::ClientContext> context,
   return child_->BatchWrite(std::move(context), options, request);
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+SpannerAuth::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::spanner::v1::CacheUpdate>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->FetchCacheUpdate(std::move(context), options, request);
+}
+
 future<StatusOr<google::spanner::v1::Session>> SpannerAuth::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -228,3 +243,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

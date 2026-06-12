@@ -61,7 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Generator]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
 ///
 class GeneratorsClient {
  public:
@@ -115,8 +115,8 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
-  /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L163}
+  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
+  /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L167}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Generator> ListGenerators(
@@ -154,8 +154,8 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
-  /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L163}
+  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
+  /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L167}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Generator> ListGenerators(
@@ -182,8 +182,8 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
-  /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L198}
+  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
+  /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L202}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Generator> GetGenerator(
@@ -212,8 +212,8 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
-  /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L198}
+  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
+  /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L202}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Generator> GetGenerator(
@@ -240,8 +240,8 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L215}
-  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
+  /// [google.cloud.dialogflow.cx.v3.CreateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L219}
+  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Generator> CreateGenerator(
@@ -272,8 +272,8 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L215}
-  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
+  /// [google.cloud.dialogflow.cx.v3.CreateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L219}
+  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Generator> CreateGenerator(
@@ -300,8 +300,8 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
-  /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L236}
+  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
+  /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Generator> UpdateGenerator(
@@ -331,8 +331,8 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L88}
-  /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L236}
+  /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
+  /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Generator> UpdateGenerator(
@@ -357,7 +357,7 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L254}
   ///
   // clang-format on
   Status DeleteGenerator(std::string const& name, Options opts = {});
@@ -383,7 +383,7 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L254}
   ///
   // clang-format on
   Status DeleteGenerator(
@@ -625,7 +625,7 @@ class GeneratorsClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(std::string const& name, Options opts = {});
@@ -664,7 +664,7 @@ class GeneratorsClient {
   /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L212}
   /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
   /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
-  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
+  /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L37}
   ///
   // clang-format on
   Status CancelOperation(

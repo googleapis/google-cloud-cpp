@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <generator/integration_tests/test_request_id.grpc.pb.h>
+#include "generator/integration_tests/test_request_id.grpc.pb.h"
 #include <memory>
 
 namespace google {

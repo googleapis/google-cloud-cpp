@@ -40,16 +40,16 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_google_absl//absl/container:fixed_array",
-        "@com_google_absl//absl/numeric:int128",
-        "@com_google_absl//absl/strings",
-        "@com_google_absl//absl/time",
-        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
-        "@com_google_googleapis//google/spanner/admin/database/v1:database_cc_grpc",
-        "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc",
-        "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
+        "@abseil-cpp//absl/container:fixed_array",
+        "@abseil-cpp//absl/numeric:int128",
+        "@abseil-cpp//absl/strings",
+        "@abseil-cpp//absl/time",
+        "@googleapis//google/longrunning:longrunning_cc_grpc",
+        "@googleapis//google/spanner/admin/database/v1:database_cc_grpc",
+        "@googleapis//google/spanner/admin/instance/v1:instance_cc_grpc",
+        "@googleapis//google/spanner/v1:spanner_cc_grpc",
         # Do not sort: grpc++ must come last
-        "@com_github_grpc_grpc//:grpc++",
+        "@grpc//:grpc++",
     ],
 )
 
@@ -87,7 +87,7 @@ cc_library(
         ":google_cloud_cpp_spanner",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -104,23 +104,20 @@ cc_library(
         ":google_cloud_cpp_spanner_mocks",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//protos:system_includes",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
-        "@com_google_absl//absl/strings",
-        "@com_google_googletest//:gtest_main",
+        "@abseil-cpp//absl/strings",
+        "@googletest//:gtest_main",
     ],
 )
 
-# TODO(#3701): Delete this target after 2023-04-01.
 cc_library(
     name = "spanner_client_testing",
     testonly = True,
-    deprecation = """
-    This target is deprecated and will be removed on or after 2023-04-01. More
-    info: https://github.com/googleapis/google-cloud-cpp/issues/3701
-    """,
     tags = ["manual"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [":spanner_client_testing_private"],
 )
 
@@ -135,10 +132,9 @@ cc_library(
         "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//protos:system_includes",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
-        "@com_google_absl//absl/numeric:int128",
-        "@com_google_googletest//:gtest_main",
+        "@abseil-cpp//absl/numeric:int128",
+        "@googletest//:gtest_main",
     ],
 ) for test in spanner_client_unit_tests]
 

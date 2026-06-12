@@ -43,7 +43,7 @@ Options GlobalOperationsDefaultOptions(Options options) {
     options.set<
         compute_global_operations_v1::GlobalOperationsRetryPolicyOption>(
         compute_global_operations_v1::GlobalOperationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<compute_global_operations_v1::

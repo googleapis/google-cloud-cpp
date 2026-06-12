@@ -27,7 +27,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/substitute.h"
-#include <google/bigtable/v2/data.pb.h>
+#include "google/bigtable/v2/data.pb.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>

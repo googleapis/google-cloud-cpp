@@ -121,7 +121,8 @@ void CaptureIdempotencyToken(std::vector<std::string>& tokens,
   auto const& headers = context.headers();
   auto l = headers.find(kIdempotencyTokenHeader);
   if (l == headers.end()) return;
-  tokens.insert(tokens.end(), l->second.begin(), l->second.end());
+  auto values = l->second.values();
+  tokens.insert(tokens.end(), values.begin(), values.end());
 }
 
 void CaptureAuthorityOption(std::vector<std::string>& authority,

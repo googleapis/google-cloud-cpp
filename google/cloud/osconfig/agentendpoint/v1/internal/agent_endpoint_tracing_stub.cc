@@ -22,12 +22,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace osconfig_agentendpoint_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AgentEndpointServiceTracingStub::AgentEndpointServiceTracingStub(
     std::shared_ptr<AgentEndpointServiceStub> child)
@@ -122,18 +123,28 @@ AgentEndpointServiceTracingStub::ReportInventory(
                            child_->ReportInventory(context, options, request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryResponse>
+AgentEndpointServiceTracingStub::ReportVmInventory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportVmInventoryRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.osconfig.agentendpoint.v1.AgentEndpointService",
+      "ReportVmInventory");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ReportVmInventory(context, options, request));
+}
 
 std::shared_ptr<AgentEndpointServiceStub> MakeAgentEndpointServiceTracingStub(
     std::shared_ptr<AgentEndpointServiceStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AgentEndpointServiceTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_agentendpoint_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

@@ -18,7 +18,7 @@ include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
     video "A C++ Client Library for several Video Services"
-    SERVICE_DIRS "__EMPTY__" "livestream/v1/" "stitcher/v1/" "transcoder/v1/")
+    SERVICE_DIRS "livestream/v1/" "stitcher/v1/" "transcoder/v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(video_quickstart "quickstart/quickstart.cc")

@@ -28,8 +28,6 @@ namespace cloud {
 namespace storagetransfer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 class StorageTransferServiceTracingConnection
     : public storagetransfer_v1::StorageTransferServiceConnection {
  public:
@@ -115,8 +113,6 @@ class StorageTransferServiceTracingConnection
  private:
   std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection> child_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
  * Conditionally applies the tracing decorator to the given connection.

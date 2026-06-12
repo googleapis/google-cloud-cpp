@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/log.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {

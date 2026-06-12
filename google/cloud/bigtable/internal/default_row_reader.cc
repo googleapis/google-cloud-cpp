@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 

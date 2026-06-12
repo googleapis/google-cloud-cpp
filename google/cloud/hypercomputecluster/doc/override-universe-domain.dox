@@ -1,0 +1,24 @@
+/*!
+@page hypercomputecluster-override-universe-domain How to Override the Default Universe Domain
+
+In some cases, you may need to override the default universe domain used by the
+client library. Use `AddUniverseDomainOption` when initializing the client
+library to change this default.
+
+<!-- inject-universe-domain-snippet-start -->
+For example, this will override the default universe domain for `hypercomputecluster_v1::HypercomputeClusterClient`:
+
+@snippet hypercompute_cluster_client_samples.cc set-client-universe-domain
+
+<!-- inject-universe-domain-snippet-end -->
+
+*/
+
+// <!-- inject-universe-domain-pages-start -->
+
+/*! @page hypercomputecluster_v1::HypercomputeClusterClient-universe-domain-snippet Override hypercomputecluster_v1::HypercomputeClusterClient Universe Domain
+
+@snippet google/cloud/hypercomputecluster/v1/samples/hypercompute_cluster_client_samples.cc set-client-universe-domain
+
+*/
+// <!-- inject-universe-domain-pages-end -->

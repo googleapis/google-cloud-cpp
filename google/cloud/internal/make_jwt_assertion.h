@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_JWT_ASSERTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_JWT_ASSERTION_H
 
+#include "google/cloud/internal/sign_using_sha256.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <string>
@@ -23,9 +24,17 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
-                                              std::string const& payload,
-                                              std::string const& pem_contents);
+
+/**
+ * Creates a JWT.
+ *
+ * @note SignatureFormat defaults to SignatureFormat::kDER for backwards
+ * compatibility.
+ */
+StatusOr<std::string> MakeJWTAssertionNoThrow(
+    std::string const& header, std::string const& payload,
+    std::string const& pem_contents,
+    SignatureFormat format = SignatureFormat::kDER);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

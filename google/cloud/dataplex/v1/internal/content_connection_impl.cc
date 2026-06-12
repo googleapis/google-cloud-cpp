@@ -59,135 +59,6 @@ ContentServiceConnectionImpl::ContentServiceConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       ContentServiceConnection::options())) {}
 
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnectionImpl::CreateContent(
-    google::cloud::dataplex::v1::CreateContentRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateContent(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreateContentRequest const& request) {
-        return stub_->CreateContent(context, options, request);
-      },
-      *current, request, __func__);
-}
-
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnectionImpl::UpdateContent(
-    google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateContent(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-        return stub_->UpdateContent(context, options, request);
-      },
-      *current, request, __func__);
-}
-
-Status ContentServiceConnectionImpl::DeleteContent(
-    google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteContent(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-        return stub_->DeleteContent(context, options, request);
-      },
-      *current, request, __func__);
-}
-
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceConnectionImpl::GetContent(
-    google::cloud::dataplex::v1::GetContentRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetContent(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::GetContentRequest const& request) {
-        return stub_->GetContent(context, options, request);
-      },
-      *current, request, __func__);
-}
-
-StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, options, request);
-      },
-      *current, request, __func__);
-}
-
-StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, options, request);
-      },
-      *current, request, __func__);
-}
-
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContentServiceConnectionImpl::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, options, request);
-      },
-      *current, request, __func__);
-}
-
-StreamRange<google::cloud::dataplex::v1::Content>
-ContentServiceConnectionImpl::ListContent(
-    google::cloud::dataplex::v1::ListContentRequest request) {
-  request.clear_page_token();
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListContent(request);
-  char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::dataplex::v1::Content>>(
-      current, std::move(request),
-      [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(
-           retry_policy(*current)),
-       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::dataplex::v1::ListContentRequest const& r) {
-        return google::cloud::internal::RetryLoop(
-            retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListContentRequest const&
-                       request) {
-              return stub->ListContent(context, options, request);
-            },
-            options, r, function_name);
-      },
-      [](google::cloud::dataplex::v1::ListContentResponse r) {
-        std::vector<google::cloud::dataplex::v1::Content> result(
-            r.content().size());
-        auto& messages = *r.mutable_content();
-        std::move(messages.begin(), messages.end(), result.begin());
-        return result;
-      });
-}
-
 StreamRange<google::cloud::location::Location>
 ContentServiceConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
@@ -232,6 +103,46 @@ ContentServiceConnectionImpl::GetLocation(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return stub_->GetLocation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return stub_->SetIamPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return stub_->GetIamPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContentServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(context, options, request);
       },
       *current, request, __func__);
 }

@@ -42,7 +42,7 @@ Options ForwardingRulesDefaultOptions(Options options) {
           compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()) {
     options.set<compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>(
         compute_forwarding_rules_v1::ForwardingRulesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<

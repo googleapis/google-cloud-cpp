@@ -44,7 +44,7 @@ Options NetworkAttachmentsDefaultOptions(Options options) {
     options.set<
         compute_network_attachments_v1::NetworkAttachmentsRetryPolicyOption>(
         compute_network_attachments_v1::
-            NetworkAttachmentsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            NetworkAttachmentsLimitedTimeRetryPolicy(std::chrono::minutes(10))
                 .clone());
   }
   if (!options.has<compute_network_attachments_v1::

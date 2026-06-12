@@ -22,12 +22,13 @@
 #include <memory>
 #include <utility>
 
+// Must be included last.
+#include "google/cloud/ports_def.inc"
+
 namespace google {
 namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SpannerTracingStub::SpannerTracingStub(std::shared_ptr<SpannerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
@@ -187,6 +188,21 @@ SpannerTracingStub::BatchWrite(
       std::move(context), std::move(stream), std::move(span));
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+SpannerTracingStub::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.v1.Spanner", "FetchCacheUpdate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->FetchCacheUpdate(context, options, request);
+  return std::make_unique<
+      internal::StreamingReadRpcTracing<google::spanner::v1::CacheUpdate>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
 future<StatusOr<google::spanner::v1::Session>>
 SpannerTracingStub::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,
@@ -242,18 +258,14 @@ SpannerTracingStub::AsyncExecuteSql(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<SpannerStub> MakeSpannerTracingStub(
     std::shared_ptr<SpannerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SpannerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

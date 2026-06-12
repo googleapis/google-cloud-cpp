@@ -25,13 +25,13 @@
 #include "google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules_options.h"
 #include "google/cloud/compute/global_forwarding_rules/v1/internal/global_forwarding_rules_rest_stub.h"
 #include "google/cloud/compute/global_forwarding_rules/v1/internal/global_forwarding_rules_retry_traits.h"
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
 #include <memory>
 
 namespace google {

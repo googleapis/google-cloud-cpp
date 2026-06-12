@@ -17,9 +17,12 @@
 // source: google/datastore/admin/v1/datastore_admin.proto
 
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_auth_decorator.h"
-#include <google/datastore/admin/v1/datastore_admin.grpc.pb.h>
+#include "google/datastore/admin/v1/datastore_admin.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -233,3 +236,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastore_admin_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

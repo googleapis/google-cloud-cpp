@@ -27,8 +27,6 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TopicStatsServiceTracingConnection::TopicStatsServiceTracingConnection(
     std::shared_ptr<pubsublite::TopicStatsServiceConnection> child)
     : child_(std::move(child)) {}
@@ -96,17 +94,13 @@ Status TopicStatsServiceTracingConnection::CancelOperation(
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::shared_ptr<pubsublite::TopicStatsServiceConnection>
 MakeTopicStatsServiceTracingConnection(
     std::shared_ptr<pubsublite::TopicStatsServiceConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
         std::make_shared<TopicStatsServiceTracingConnection>(std::move(conn));
   }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;
 }
 

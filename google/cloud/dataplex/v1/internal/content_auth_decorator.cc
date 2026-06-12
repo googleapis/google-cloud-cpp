@@ -17,9 +17,12 @@
 // source: google/cloud/dataplex/v1/content.proto
 
 #include "google/cloud/dataplex/v1/internal/content_auth_decorator.h"
-#include <google/cloud/dataplex/v1/content.grpc.pb.h>
+#include "google/cloud/dataplex/v1/content.grpc.pb.h"
 #include <memory>
 #include <utility>
+
+// Must be included last.
+#include "google/cloud/ports_def.inc"
 
 namespace google {
 namespace cloud {
@@ -30,74 +33,6 @@ ContentServiceAuth::ContentServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<ContentServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
-
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceAuth::CreateContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::CreateContentRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->CreateContent(context, options, request);
-}
-
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceAuth::UpdateContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->UpdateContent(context, options, request);
-}
-
-Status ContentServiceAuth::DeleteContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->DeleteContent(context, options, request);
-}
-
-StatusOr<google::cloud::dataplex::v1::Content> ContentServiceAuth::GetContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::GetContentRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetContent(context, options, request);
-}
-
-StatusOr<google::iam::v1::Policy> ContentServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::iam::v1::GetIamPolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, options, request);
-}
-
-StatusOr<google::iam::v1::Policy> ContentServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context, Options const& options,
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, options, request);
-}
-
-StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContentServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context, Options const& options,
-    google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, options, request);
-}
-
-StatusOr<google::cloud::dataplex::v1::ListContentResponse>
-ContentServiceAuth::ListContent(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::dataplex::v1::ListContentRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListContent(context, options, request);
-}
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ContentServiceAuth::ListLocations(
@@ -114,6 +49,31 @@ StatusOr<google::cloud::location::Location> ContentServiceAuth::GetLocation(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceAuth::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> ContentServiceAuth::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContentServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
@@ -153,3 +113,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/ports_undef.inc"

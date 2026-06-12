@@ -41,7 +41,7 @@ Options EnvironmentsDefaultOptions(Options options) {
   if (!options.has<composer_v1::EnvironmentsRetryPolicyOption>()) {
     options.set<composer_v1::EnvironmentsRetryPolicyOption>(
         composer_v1::EnvironmentsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
+            std::chrono::minutes(10))
             .clone());
   }
   if (!options.has<composer_v1::EnvironmentsBackoffPolicyOption>()) {

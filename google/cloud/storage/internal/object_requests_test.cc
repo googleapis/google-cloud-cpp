@@ -749,6 +749,20 @@ ObjectMetadata CreateObjectMetadataForTest() {
         "foo": "bar",
         "baz": "qux"
       },
+      "contexts": {
+        "custom": {
+          "environment": {
+            "value": "prod",
+            "createTime": "2024-07-18T00:00:00Z",
+            "updateTime": "2024-07-18T00:00:00Z"
+          },
+          "department": {
+            "value": "human resource",
+            "createTime": "2024-07-18T00:00:00Z",
+            "updateTime": "2024-07-18T00:00:00Z"
+          }
+        }
+      },
       "metageneration": "4",
       "name": "baz",
       "owner": {
@@ -961,6 +975,65 @@ TEST(PatchObjectRequestTest, DiffResetMetadata) {
 
   auto patch = nlohmann::json::parse(request.payload());
   auto expected = nlohmann::json::parse(R"""({"metadata": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffSetContexts) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+
+  ObjectMetadata updated = original;
+  ObjectContexts contexts;
+  contexts.upsert("department", {"engineering", {}, {}})
+      .upsert("environment", {"preprod", {}, {}});
+  updated.set_contexts(contexts);
+
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
+      "contexts": {
+        "custom": {
+          "environment": {
+            "value": "preprod"
+          },
+          "department": {
+            "value": "engineering"
+          }
+        }
+      }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetOneContext) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  ObjectMetadata updated = original;
+  ObjectContexts contexts = updated.contexts();
+  contexts.delete_key("environment");
+  updated.set_contexts(contexts);
+
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected = nlohmann::json::parse(R"""({
+      "contexts": {
+        "custom": {
+          "environment": null
+        }
+      }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchObjectRequestTest, DiffResetContexts) {
+  ObjectMetadata original = CreateObjectMetadataForTest();
+  ObjectMetadata updated = original;
+  updated.reset_contexts();
+  PatchObjectRequest request("test-bucket", "test-object", original, updated);
+
+  auto patch = nlohmann::json::parse(request.payload());
+  auto expected =
+      nlohmann::json::parse(R"""({"contexts": {"custom": null}})""");
   EXPECT_EQ(expected, patch);
 }
 
