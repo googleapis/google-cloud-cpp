@@ -446,9 +446,11 @@ function integration::ctest_with_emulators() {
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
-  io::log_h2 "Running Storage integration tests (with emulator)"
-  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+  if ! [[ "${skip_args[*]}" =~ "storage" ]]; then
+    io::log_h2 "Running Storage integration tests (with emulator)"
+    "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+      "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+  fi
 
   if ! [[ "${skip_args[*]}" =~ "spanner" ]]; then
     io::log_h2 "Running Spanner integration tests (with emulator)"
@@ -462,5 +464,25 @@ function integration::ctest_with_emulators() {
 
   io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+}
+
+# Runs Storage integration tests with CTest using emulators.
+function integration::ctest_storage_with_emulators() {
+  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
+  if [[ $# == 0 ]]; then
+    io::log_red "error: build output directory required"
+    return 1
+  fi
+
+  local cmake_out="$1"
+
+  mapfile -t ctest_args < <(ctest::common_args)
+  # Integration tests are inherently flaky. Make up to three attempts to get the
+  # test passing.
+  ctest_args+=(--repeat until-pass:3)
+
+  io::log_h2 "Running Storage integration tests (with emulator)"
+  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }
