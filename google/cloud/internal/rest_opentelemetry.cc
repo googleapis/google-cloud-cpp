@@ -17,8 +17,8 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/strings/match.h"
-#include "absl/strings/str_cat.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/semconv/network_attributes.h>
@@ -81,7 +81,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
        {/*sc::kUrlFull=*/"url.full", request.path()}},
       options);
   for (auto const& kv : request.headers()) {
-    auto const name = "http.request.header." + std::string{kv.first};
+    auto const name = "http.request.header." + kv.first.name();
     if (kv.second.EmptyValues()) {
       span->SetAttribute(name, "");
       continue;

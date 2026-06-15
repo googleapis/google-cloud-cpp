@@ -178,15 +178,16 @@ class RegionalAccessBoundaryTokenManager
       (void)failed_lookup_cooldown_.get();
     }
 
-    promise<Status> pending_refresh;
-    pending_refresh_ = pending_refresh.get_future();
+    promise<Status> pr;
+    pending_refresh_ = pr.get_future();
+    auto p = std::make_shared<promise<Status>>(std::move(pr));
     auto constexpr kLocation = __func__;
-    auto pending_refresh_fn = [p = std::move(pending_refresh),
+    auto pending_refresh_fn = [p,
                                weak = weak_from_this(), request,
                                stub = iam_stub_,
                                retry_policy = retry_policy_->clone(),
                                backoff_policy = backoff_policy_->clone(),
-                               options = options_]() mutable {
+                               options = options_]() {
       auto refresh_attempt_fn = [stub](rest_internal::RestContext&,
                                        Options const&, Request const& request) {
         return stub->AllowedLocations(request);
@@ -209,7 +210,7 @@ class RegionalAccessBoundaryTokenManager
         self->allowed_locations_ = *allowed_locations;
         self->expire_time_ = self->clock_->Now() + TokenTtl();
         self->failed_lookup_backoff_policy_.reset();
-        p.set_value(Status{});
+        p->set_value(Status{});
       } else {
         self->allowed_locations_ = AllowedLocationsResponse{};
         if (!self->failed_lookup_backoff_policy_) {
@@ -219,7 +220,7 @@ class RegionalAccessBoundaryTokenManager
         self->failed_lookup_cooldown_ =
             self->background_->cq().MakeRelativeTimer(
                 self->failed_lookup_backoff_policy_->OnCompletion());
-        p.set_value(allowed_locations.status());
+        p->set_value(allowed_locations.status());
       }
       self->refresh_in_progress_ = false;
     };

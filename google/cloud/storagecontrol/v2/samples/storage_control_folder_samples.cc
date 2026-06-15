@@ -30,11 +30,11 @@ void RemoveStaleFolders(
     google::cloud::storagecontrol_v2::StorageControlClient client,
     std::string const& bucket_name, std::string const& prefix,
     std::chrono::system_clock::time_point created_time_limit) {
-  std::regex re(prefix + R"re(-[a-z]{32})re");
+  std::regex re(prefix + R"re(-[a-z]{32}/?)re");
   auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
   for (auto folder : client.ListFolders(parent)) {
     if (!folder) throw std::move(folder).status();
-    if (!std::regex_match(folder->name(), re)) continue;
+    if (!std::regex_search(folder->name(), re)) continue;
     auto const create_time =
         google::cloud::internal::ToChronoTimePoint(folder->create_time());
     if (create_time > created_time_limit) continue;
@@ -170,9 +170,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const folder_id = prefix + "-" +
                          google::cloud::internal::Sample(
                              generator, 32, "abcdefghijklmnopqrstuvwxyz");
-  auto const dest_folder_id = prefix + "-" +
-                              google::cloud::internal::Sample(
-                                  generator, 32, "abcdefghijklmnopqrstuvwxyz");
   auto const create_time_limit =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   // This is the only example that cleans up stale folders. The examples run in
@@ -182,24 +179,25 @@ void AutoRun(std::vector<std::string> const& argv) {
   RemoveStaleFolders(client, bucket_name, prefix, create_time_limit);
 
   std::cout << "\nRunning CreateFolder() example" << std::endl;
-  CreateFolder(client, {bucket_name, folder_id});
+  CreateFolder(client, {bucket_name, folder_id + "/"});
 
   std::cout << "\nRunning GetFolder() example" << std::endl;
-  GetFolder(client, {bucket_name, folder_id});
+  GetFolder(client, {bucket_name, folder_id + "/"});
 
   std::cout << "\nRunning ListFolders() example" << std::endl;
   ListFolders(client, {bucket_name});
 
+  auto const dest_folder_id = folder_id + "-dest/";
   std::cout << "\nRunning RenameFolder() example" << std::endl;
-  RenameFolder(client, {bucket_name, folder_id, dest_folder_id});
+  RenameFolder(client, {bucket_name, folder_id + "/", dest_folder_id});
 
   std::cout << "\nRunning DeleteFolder() example" << std::endl;
   DeleteFolder(client, {bucket_name, dest_folder_id});
 
   std::cout << "\nRunning DeleteFolderRecursive() example" << std::endl;
-  CreateFolder(client, {bucket_name, folder_id});
-  CreateFolder(client, {bucket_name, folder_id + "/subfolder"});
-  DeleteFolderRecursive(client, {bucket_name, folder_id});
+  CreateFolder(client, {bucket_name, folder_id + "/"});
+  CreateFolder(client, {bucket_name, folder_id + "/subfolder/"});
+  DeleteFolderRecursive(client, {bucket_name, folder_id + "/"});
 }
 
 }  // namespace
