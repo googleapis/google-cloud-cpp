@@ -461,29 +461,27 @@ class AsyncWriterConnectionResumedState
     // Resume attempt succeeded. Check if finalized.
     std::int64_t persisted_offset = 0;
     absl::optional<google::storage::v2::ObjectChecksums> checksums;
-    bool finalized_in_response = false;
+    bool finalized = false;
     google::storage::v2::Object finalized_object;
 
-    if (res->first_response.has_resource()) {
-      if (!res->first_response.has_write_handle()) {
-        finalized_in_response = true;
-        finalized_object = res->first_response.resource();
-      } else {
-        auto const& resource = res->first_response.resource();
-        persisted_offset = resource.size();
-        if (resource.has_checksums()) {
-          checksums = resource.checksums();
-        }
+    auto const& first_res = res->first_response;
+    if (first_res.has_resource() && !first_res.has_write_handle()) {
+      finalized = true;
+      finalized_object = first_res.resource();
+    } else if (first_res.has_resource()) {
+      persisted_offset = first_res.resource().size();
+      if (first_res.resource().has_checksums()) {
+        checksums = first_res.resource().checksums();
       }
-    } else if (res->first_response.has_persisted_size()) {
-      persisted_offset = res->first_response.persisted_size();
-      if (res->first_response.has_persisted_data_checksums()) {
-        checksums = res->first_response.persisted_data_checksums();
+    } else if (first_res.has_persisted_size()) {
+      persisted_offset = first_res.persisted_size();
+      if (first_res.has_persisted_data_checksums()) {
+        checksums = first_res.persisted_data_checksums();
       }
     } else {
       auto state = impl_->PersistedState();
       if (absl::holds_alternative<google::storage::v2::Object>(state)) {
-        finalized_in_response = true;
+        finalized = true;
         finalized_object =
             absl::get<google::storage::v2::Object>(std::move(state));
       } else {
@@ -492,18 +490,14 @@ class AsyncWriterConnectionResumedState
       }
     }
 
-    if (finalized_in_response) {
-      if (was_finalizing) {
-        return SetFinalized(std::move(lk), std::move(finalized_object));
-      }
+    if (finalized) {
       if (was_closing) {
         return SetClosed(std::move(lk), Status{});
       }
       return SetFinalized(std::move(lk), std::move(finalized_object));
     }
 
-    // Resume succeeded, but not finalized.
-    // If we were finalizing or closing, this is a failure of that operation.
+    // Handle failure if we expected finalization/closing but didn't get it.
     if (was_finalizing) {
       finalizing_ = false;
       return SetError(std::move(lk), std::move(original_status));
@@ -513,7 +507,7 @@ class AsyncWriterConnectionResumedState
       return SetError(std::move(lk), std::move(original_status));
     }
 
-    // Recreate impl_
+    // Recreate the underlying stream if still active.
     auto hash = hash_function_;
     if (checksums && checksums->has_crc32c()) {
       hash = std::make_shared<
