@@ -106,6 +106,10 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   absl::optional<std::string> storage_class_;
   absl::optional<std::uint64_t> size_;
   absl::optional<std::string> transformation_;
+  std::string bucket_name_;
+  std::string object_name_;
+  absl::optional<std::int64_t> expected_bytes_;
+  std::int64_t total_bytes_received_ = 0;
 };
 
 }  // namespace internal
