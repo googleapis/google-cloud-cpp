@@ -21,6 +21,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <memory>
 #include <string>
@@ -59,8 +60,8 @@ class BackgroundCredentials : public Credentials {
   StatusOr<std::string> project_id() const override {
     return child_->project_id();
   }
-  StatusOr<std::string> project_id(Options const&) const override {
-    return child_->project_id();
+  StatusOr<std::string> project_id(Options const& options) const override {
+    return child_->project_id(options);
   }
   StatusOr<rest_internal::HttpHeader> Authorization(
       std::chrono::system_clock::time_point tp) override {
