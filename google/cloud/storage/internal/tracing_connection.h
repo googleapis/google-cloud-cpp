@@ -15,10 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TRACING_CONNECTION_H
 
+#include "google/cloud/storage/internal/bucket_metadata_cache.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
+#include <future>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -30,7 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TracingConnection : public storage::internal::StorageConnection {
  public:
   explicit TracingConnection(std::shared_ptr<StorageConnection> impl);
-  ~TracingConnection() override = default;
+  ~TracingConnection() override;
+
+  static void ResetCacheForTesting();
 
   Options options() const override;
 
@@ -178,7 +183,33 @@ class TracingConnection : public storage::internal::StorageConnection {
   std::vector<std::string> InspectStackStructure() const override;
 
  private:
+  void EnrichSpan(opentelemetry::trace::Span& span,
+                  std::string const& bucket_name);
+  static void EnrichSpan(opentelemetry::trace::Span& span,
+                         storage::BucketMetadata const& metadata);
+  static void EnrichSpan(opentelemetry::trace::Span& span,
+                         BucketCacheEntry const& entry);
+  void MaybeTriggerBackgroundFetch(std::string const& bucket_name);
+  void CleanupCompletedTasks();
+
+  static void MaybeInvalidate(Status const& status,
+                              std::string const& bucket_name) {
+    if (!status.ok() && status.code() == StatusCode::kNotFound) {
+      cache().Invalidate(bucket_name);
+    }
+  }
+
+  template <typename T>
+  static void MaybeInvalidate(StatusOr<T> const& result,
+                              std::string const& bucket_name) {
+    MaybeInvalidate(result.status(), bucket_name);
+  }
+
+  static BucketMetadataCache& cache();
+
   std::shared_ptr<StorageConnection> impl_;
+  std::mutex mu_;
+  std::vector<std::future<void>> bg_tasks_;
 };
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(

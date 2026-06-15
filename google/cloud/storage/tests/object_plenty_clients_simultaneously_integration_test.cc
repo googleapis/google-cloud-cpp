@@ -16,6 +16,7 @@
 #include "google/cloud/storage/testing/object_integration_test.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -45,22 +46,24 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   // own tests.
   if (UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient();
+  auto options =
+      Options{}.set<google::cloud::OpenTelemetryTracingOption>(false);
   auto object_name = MakeRandomObjectName();
-
   std::string expected = LoremIpsum();
 
-  // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client.InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
+  {
+    auto client = MakeIntegrationTestClient(options);
+    StatusOr<ObjectMetadata> meta = client.InsertObject(
+        bucket_name_, object_name, expected, IfGenerationMatch(0));
+    ASSERT_STATUS_OK(meta);
+    ScheduleForDelete(*meta);
+  }
 
   auto num_fds_before_test = GetNumOpenFiles();
   std::vector<Client> read_clients;
   std::vector<ObjectReadStream> read_streams;
   for (int i = 0; i != 100; ++i) {
-    auto read_client = MakeIntegrationTestClient();
+    auto read_client = MakeIntegrationTestClient(options);
     auto stream = read_client.ReadObject(bucket_name_, object_name);
     char c;
     stream.read(&c, 1);
