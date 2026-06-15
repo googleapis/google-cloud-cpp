@@ -64,7 +64,7 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
     auto res = child_->Read(buf, n);
     if (!res) return res;
 
-    received_bytes_ += res->bytes_received;
+    received_bytes_ += static_cast<std::int64_t>(res->bytes_received);
 
     // Dynamically learn size for full-object reads
     if (res->size.has_value() && !requested_length_.has_value()) {
@@ -83,8 +83,9 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
  private:
   void CheckOverrun() {
     if (requested_length_.has_value() && *requested_length_ >= 0 &&
-        received_bytes_ > static_cast<std::size_t>(*requested_length_) &&
-        !is_transcoded_ && !logged_warning_.exchange(true)) {
+        received_bytes_ > *requested_length_ && !is_transcoded_ &&
+        !logged_warning_) {
+      logged_warning_ = true;
       GCP_LOG(WARNING) << "storage: received "
                        << (received_bytes_ - *requested_length_)
                        << " more bytes than requested from GCS for bucket \""
@@ -97,9 +98,9 @@ class OverrunLoggingObjectReadSource : public ObjectReadSource {
   absl::optional<std::int64_t> requested_length_;
   std::string bucket_name_;
   std::string object_name_;
-  std::size_t received_bytes_ = 0;
+  std::int64_t received_bytes_ = 0;
   bool is_transcoded_ = false;
-  std::atomic<bool> logged_warning_{false};
+  bool logged_warning_ = false;
 };
 
 absl::optional<std::int64_t> ExtractRequestedLength(

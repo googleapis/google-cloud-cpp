@@ -94,7 +94,7 @@ class ReadRange {
   std::int64_t length_;
   std::string bucket_name_;
   std::string object_name_;
-  std::size_t received_bytes_ = 0;
+  std::int64_t received_bytes_ = 0;
   bool is_transcoded_ = false;
   bool logged_warning_ = false;
   absl::optional<std::int64_t> object_size_;

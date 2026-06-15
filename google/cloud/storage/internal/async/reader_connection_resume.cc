@@ -79,6 +79,14 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
     CheckOverrun();
     // The download finished. Validate the hash results, if any.
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
+    // GCS decompresses gzipped files on-the-fly (server-side transcoding)
+    // if decompression is not explicitly disabled by the user. In this case,
+    // the received bytes do not match the server-provided checksums (which
+    // are for the compressed object). We only bypass checksum validation if
+    // transcoding actually occurred (i.e. the received bytes do not match the
+    // compressed object size, or if the size is unknown). If they match, the
+    // file was downloaded as compressed, and we must validate the checksums
+    // to detect transit corruption.
     bool transcoded_download =
         is_transcoded_ &&
         (!object_size_.has_value() || (total_received_bytes_ != *object_size_));
@@ -142,8 +150,7 @@ void AsyncReaderConnectionResume::CheckOverrun() {
       !logged_warning_) {
     logged_warning_ = true;
     GCP_LOG(WARNING) << "storage: received "
-                     << (total_received_bytes_ -
-                         static_cast<std::size_t>(*requested_length_))
+                     << (total_received_bytes_ - *requested_length_)
                      << " more bytes than requested from GCS for bucket \""
                      << bucket_name_ << "\", object \"" << object_name_ << "\"";
   }

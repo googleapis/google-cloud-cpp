@@ -166,6 +166,15 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   auto hash_function = CreateHashFunction(is_full_read);
   auto hash_validator = CreateHashValidator(is_full_read);
 
+  // Calculate the download limit (number of bytes to read) based on GCS range
+  // read options:
+  // 1. If `p.start < 0`, this is a tail read (ReadLast). The limit is the
+  // absolute value of `p.start`.
+  //    We handle the overflow edge case where `p.start` is the minimum signed
+  //    value.
+  // 2. If `p.start >= 0` and `p.length > 0`, this is a standard range request
+  // (ReadRange). The limit is `p.length`.
+  // 3. Otherwise, the limit is not set (unlimited / read to end).
   absl::optional<std::int64_t> limit;
   if (p.start < 0) {
     if (p.start == (std::numeric_limits<std::int64_t>::min)()) {
@@ -348,6 +357,8 @@ void ObjectDescriptorImpl::OnRead(
     is_transcoded = metadata_->content_encoding() == "gzip";
     object_size = metadata_->size();
   }
+  // Release the lock while notifying the ranges. The notifications may trigger
+  // application code, and that code may callback on this class.
   lk.unlock();
   for (auto& range_data : *response->mutable_object_data_ranges()) {
     auto id = range_data.read_range().read_id();
