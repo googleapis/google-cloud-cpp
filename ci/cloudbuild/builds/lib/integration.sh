@@ -428,7 +428,7 @@ function integration::bazel_with_emulators() {
 #   integration::ctest_with_emulators "cmake-out"
 #
 function integration::ctest_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
+  local -r EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: build output directory required"
     return 1
@@ -469,7 +469,7 @@ function integration::ctest_with_emulators() {
 
 # Runs Storage integration tests with CTest using emulators.
 function integration::ctest_storage_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
+  local -r EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: build output directory required"
     return 1
@@ -477,6 +477,7 @@ function integration::ctest_storage_with_emulators() {
 
   local cmake_out="$1"
 
+  local -a ctest_args
   mapfile -t ctest_args < <(ctest::common_args)
   # Integration tests are inherently flaky. Make up to three attempts to get the
   # test passing.
