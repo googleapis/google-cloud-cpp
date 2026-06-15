@@ -94,7 +94,10 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data,
   if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
   auto p = ReadPayloadImpl::Make(std::move(content));
 
-  if (data.range_end()) {
+  bool satisfied = requested_length_.has_value() && *requested_length_ >= 0 &&
+                   received_bytes_ >= *requested_length_;
+
+  if (data.range_end() || satisfied) {
     status_ = Status{};
     CheckOverrun();
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
