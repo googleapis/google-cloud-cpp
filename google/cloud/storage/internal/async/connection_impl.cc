@@ -21,6 +21,7 @@
 #include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/internal/async/open_object.h"
@@ -242,19 +243,22 @@ AsyncConnectionImpl::Open(OpenParams p) {
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
   auto const* function_name = __func__;
+  auto feature_tracker = std::make_shared<storage::internal::FeatureTracker>();
   auto factory = OpenStreamFactory(
       [stub = stub_, cq = cq_, retry = std::move(retry),
        backoff = std::move(backoff), current = std::move(current),
-       function_name](google::storage::v2::BidiReadObjectRequest request) {
+       function_name,
+       feature_tracker](google::storage::v2::BidiReadObjectRequest request) {
         struct DummyRequest {};
 
-        auto call = [stub, request = std::move(request)](
+        auto call = [stub, request = std::move(request), feature_tracker](
                         CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
                         DummyRequest const&) mutable {
           auto open = std::make_shared<OpenObject>(
-              *stub, cq, std::move(context), std::move(options), request);
+              *stub, cq, std::move(context), std::move(options), request,
+              feature_tracker);
           // Extend the lifetime of the coroutine until it finishes.
           return open->Call().then([open, &request](auto f) mutable {
             open.reset();
@@ -275,7 +279,8 @@ AsyncConnectionImpl::Open(OpenParams p) {
   using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
   return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
                        rs = std::move(p.read_spec),
-                       options = std::move(p.options), refresh = refresh_](
+                       options = std::move(p.options), refresh = refresh_,
+                       feature_tracker](
                           auto f) mutable -> StatusOr<ReturnType> {
     auto result = f.get();
     if (!result) return std::move(result).status();
@@ -296,7 +301,7 @@ AsyncConnectionImpl::Open(OpenParams p) {
     };
     auto impl = std::make_shared<ObjectDescriptorImpl>(
         std::move(rp), std::move(fa), std::move(rs), std::move(result->stream),
-        std::move(options), std::move(transport_ok));
+        std::move(options), std::move(transport_ok), feature_tracker);
     impl->Start(std::move(result->first_response));
     return ReturnType(impl);
   });
@@ -317,19 +322,11 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
           CreateHashFunction(*current));
   auto hash_validator = CreateHashValidator(p.request, *current);
 
-  absl::optional<std::int64_t> requested_length;
-  if (p.request.read_limit() > 0) {
-    requested_length = p.request.read_limit();
-  }
-  auto bucket = p.request.bucket();
-  auto object = p.request.object();
-
   auto connection_factory = MakeReaderConnectionFactory(
       std::move(current), std::move(p.request), hash_function);
   auto connection = std::make_unique<AsyncReaderConnectionResume>(
       std::move(resume_policy), std::move(hash_function),
-      std::move(hash_validator), std::move(connection_factory),
-      requested_length, std::move(bucket), std::move(object));
+      std::move(hash_validator), std::move(connection_factory));
 
   return make_ready_future(ReturnType(std::move(connection)));
 }

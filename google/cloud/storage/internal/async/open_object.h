@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OPEN_OBJECT_H
 
 #include "google/cloud/storage/internal/async/open_stream.h"
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -80,10 +81,12 @@ std::string RequestParams(
 class OpenObject : public std::enable_shared_from_this<OpenObject> {
  public:
   /// Create a coroutine to create an open a bidi streaming read RPC.
-  OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::storage::v2::BidiReadObjectRequest request);
+  OpenObject(
+      storage_internal::StorageStub& stub, CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::BidiReadObjectRequest request,
+      std::shared_ptr<storage::internal::FeatureTracker> tracker = {});
 
   /// Start the coroutine.
   future<StatusOr<OpenStreamResult>> Call();
@@ -95,7 +98,8 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
       storage_internal::StorageStub& stub, CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::storage::v2::BidiReadObjectRequest const& request);
+      google::storage::v2::BidiReadObjectRequest const& request,
+      std::shared_ptr<storage::internal::FeatureTracker> const& tracker);
 
   void OnStart(bool ok);
   void OnWrite(bool ok);
