@@ -46,6 +46,7 @@ using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtMost;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::NotNull;
 using ::testing::Optional;
 using ::testing::ResultOf;
@@ -2292,6 +2293,73 @@ TEST(ObjectDescriptorImpl, PartialReadChecksumValidationBypassed) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
+}
+
+TEST(ObjectDescriptorImpl, MultiStreamFeatureTracking) {
+  auto feature_tracker = std::make_shared<storage::internal::FeatureTracker>();
+  EXPECT_THAT(feature_tracker->GetMask(), Eq(0));
+
+  auto s1 = std::make_unique<MockStream>();
+  EXPECT_CALL(*s1, Cancel).Times(AtMost(1));
+  EXPECT_CALL(*s1, Write).WillRepeatedly([](Request const&, grpc::WriteOptions) {
+    return make_ready_future(true);
+  });
+  EXPECT_CALL(*s1, Read).WillRepeatedly([] {
+    return make_ready_future(absl::optional<Response>{});
+  });
+
+  auto s2 = std::make_unique<MockStream>();
+  EXPECT_CALL(*s2, Cancel).Times(AtMost(1));
+  EXPECT_CALL(*s2, Write).WillRepeatedly([](Request const&, grpc::WriteOptions) {
+    return make_ready_future(true);
+  });
+  EXPECT_CALL(*s2, Read).WillRepeatedly([] {
+    return make_ready_future(absl::optional<Response>{});
+  });
+  auto open_stream2 = std::make_shared<OpenStream>(std::move(s2));
+
+  auto s3 = std::make_unique<MockStream>();
+  EXPECT_CALL(*s3, Cancel).Times(AtMost(1));
+  EXPECT_CALL(*s3, Write).WillRepeatedly([](Request const&, grpc::WriteOptions) {
+    return make_ready_future(true);
+  });
+  EXPECT_CALL(*s3, Read).WillRepeatedly([] {
+    return make_ready_future(absl::optional<Response>{});
+  });
+  auto open_stream3 = std::make_shared<OpenStream>(std::move(s3));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([&](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(
+            OpenStreamResult{open_stream2, Response{}}));
+      })
+      .WillRepeatedly([&](Request const&) {
+        return make_ready_future(StatusOr<OpenStreamResult>(
+            OpenStreamResult{open_stream3, Response{}}));
+      });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(true);
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(s1)), options, [] { return true; },
+      feature_tracker);
+
+  tested->Start(Response{});
+  // After Start, we have 1 open stream and 1 pending stream. Mask should still be 0.
+  EXPECT_THAT(feature_tracker->GetMask(), Eq(0));
+
+  // Make the first stream busy by initiating a read.
+  auto reader1 = tested->Read({0, 100});
+
+  // Now that the first stream is busy, MakeSubsequentStream will consume the
+  // pending stream (adding it as the 2nd active stream) and trigger
+  // AssurePendingStreamQueued for the 3rd stream, registering the feature.
+  tested->MakeSubsequentStream();
+  EXPECT_THAT(feature_tracker->GetMask(), Eq(1));
 }
 
 }  // namespace
