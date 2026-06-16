@@ -504,6 +504,7 @@ class AsyncWriterConnectionBufferedState
     close_ = false;
     closing_ = false;
     flush_ = false;
+    resuming_ = false;
     // Check if the promise has already been completed.
     if (closed_promise_completed_) {
       return;

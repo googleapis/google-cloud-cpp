@@ -1028,29 +1028,53 @@ TEST(WriteConnectionBuffered, CloseFailsAndResumeSucceedsButNotClosed) {
 TEST(WriteConnectionBuffered, CloseFailsAndResumeSucceedsAndFinalized) {
   AsyncSequencer<bool> sequencer;
   auto close_error = TransientError();
+  auto write_error = TransientError();
+  auto resume2_error = PermanentError();
 
-  auto mock = std::make_unique<MockAsyncWriterConnection>();
-  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
+  auto mock1 = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock1, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock1, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, Close).WillOnce([&](auto) {
+  EXPECT_CALL(*mock1, Close).WillOnce([&](auto) {
     return sequencer.PushBack("Close").then(
         [close_error](auto) { return close_error; });
   });
 
-  MockFactory mock_factory;
-  EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
-    return sequencer.PushBack("Resume").then([](auto) {
-      auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
-      EXPECT_CALL(*resumed_mock, PersistedState)
-          .WillRepeatedly(Return(TestObject()));
-      return make_status_or(std::unique_ptr<storage::AsyncWriterConnection>(
-          std::move(resumed_mock)));
-    });
+  auto resumed_mock = std::make_unique<MockAsyncWriterConnection>();
+  auto* resumed_mock_ptr = resumed_mock.get();
+
+  // Mock Write on the resumed connection to fail, to trigger a second resume.
+  EXPECT_CALL(*resumed_mock_ptr, Write).WillOnce([&](auto) {
+    return sequencer.PushBack("Write2").then(
+        [write_error](auto) { return write_error; });
   });
 
+  MockFactory mock_factory;
+  {
+    InSequence seq;
+    // The resume will succeed and return a new mock that reports the object is
+    // already finalized (which implies closed).
+    EXPECT_CALL(mock_factory, Call)
+        .WillOnce([&, rm = std::move(resumed_mock)]() mutable {
+          return sequencer.PushBack("Resume").then([rm = std::move(rm)](
+                                                       auto) mutable {
+            EXPECT_CALL(*rm, PersistedState)
+                .WillRepeatedly(Return(TestObject()));
+            return make_status_or(
+                std::unique_ptr<storage::AsyncWriterConnection>(std::move(rm)));
+          });
+        });
+    // The second resume (after write failure) will fail.
+    EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
+      return sequencer.PushBack("Resume2").then([resume2_error](auto) {
+        return StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
+            resume2_error);
+      });
+    });
+  }
+
   auto connection = MakeWriterConnectionBuffered(
-      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+      mock_factory.AsStdFunction(), std::move(mock1), TestOptions());
 
   auto close = connection->Close({});
   ASSERT_FALSE(close.is_ready());
@@ -1064,6 +1088,30 @@ TEST(WriteConnectionBuffered, CloseFailsAndResumeSucceedsAndFinalized) {
   next.first.set_value(true);
 
   EXPECT_STATUS_OK(close.get());
+
+  // Write to the closed connection. Since HWM is 32KB, writing 16 bytes
+  // returns OK immediately because it is buffered.
+  auto w = connection->Write(TestPayload(16));
+  ASSERT_TRUE(w.is_ready());
+  EXPECT_STATUS_OK(w.get());
+
+  // However, the background write loop will call resumed_mock->Write.
+  // Let that background Write fail.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write2");
+  next.first.set_value(true);
+
+  // This triggers a second Resume. If resuming_ was not reset in SetClosed,
+  // this would hang because Resume would return early and not call
+  // mock_factory.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Resume2");
+  next.first.set_value(true);
+
+  // A subsequent write should fail immediately with the second resume error.
+  auto w2 = connection->Write(TestPayload(16));
+  ASSERT_TRUE(w2.is_ready());
+  EXPECT_THAT(w2.get(), StatusIs(resume2_error.code()));
 }
 
 TEST(WriteConnectionBuffered, Query) {
