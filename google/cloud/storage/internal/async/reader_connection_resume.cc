@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
 
 namespace google {
@@ -61,16 +62,36 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
         ReadPayloadImpl::GetObjectHashes(response).value_or(
             storage::internal::HashValues{}));
     received_bytes_ += response.size();
-    if (response.metadata().has_value() && !generation_.has_value()) {
-      generation_ = storage::Generation(response.metadata()->generation());
+    total_received_bytes_ += response.size();
+    if (response.metadata().has_value()) {
+      if (!generation_.has_value()) {
+        generation_ = storage::Generation(response.metadata()->generation());
+      }
+      object_size_ = response.metadata()->size();
+      if (response.metadata()->content_encoding() == "gzip") {
+        is_transcoded_ = true;
+      }
     }
     return make_ready_future(ReadResponse(std::move(response)));
   }
   auto const& status = absl::get<Status>(r);
   if (status.ok()) {
+    CheckOverrun();
     // The download finished. Validate the hash results, if any.
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
-    if (!result.is_mismatch) return make_ready_future(std::move(r));
+    // GCS decompresses gzipped files on-the-fly (server-side transcoding)
+    // if decompression is not explicitly disabled by the user. In this case,
+    // the received bytes do not match the server-provided checksums (which
+    // are for the compressed object). We only bypass checksum validation if
+    // transcoding actually occurred (i.e. the received bytes do not match the
+    // compressed object size, or if the size is unknown). If they match, the
+    // file was downloaded as compressed, and we must validate the checksums
+    // to detect transit corruption.
+    bool transcoded_download =
+        is_transcoded_ &&
+        (!object_size_.has_value() || (total_received_bytes_ != *object_size_));
+    if (!result.is_mismatch || transcoded_download)
+      return make_ready_future(std::move(r));
     return make_ready_future(ReadResponse(internal::InvalidArgumentError(
         absl::StrCat("mismatched checksums detected at the end of the "
                      "download, received={",
@@ -78,7 +99,13 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
                      FormatComputedHashes(result), "}"),
         GCP_ERROR_INFO())));
   }
+  if (requested_length_.has_value() && *requested_length_ >= 0 &&
+      total_received_bytes_ >= *requested_length_) {
+    CheckOverrun();
+    return make_ready_future(ReadResponse(Status()));
+  }
   if (resume_policy_->OnFinish(status) == ResumePolicy::kStop) {
+    CheckOverrun();
     return make_ready_future(std::move(r));
   }
   return Reconnect();
@@ -87,6 +114,10 @@ future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
 future<ReadResponse> AsyncReaderConnectionResume::Reconnect() {
   // Capturing `this` is safe here. See the comments in the implementation of
   // `Read()` for details.
+  if (CurrentImpl() != nullptr && requested_length_.has_value() &&
+      *requested_length_ >= 0 && total_received_bytes_ >= *requested_length_) {
+    return make_ready_future(ReadResponse(Status()));
+  }
   return reader_factory_(generation_, received_bytes_).then([this](auto f) {
     return OnResume(f.get());
   });
@@ -111,6 +142,18 @@ AsyncReaderConnectionResume::CurrentImpl(std::unique_lock<std::mutex> const&) {
 std::shared_ptr<storage::AsyncReaderConnection>
 AsyncReaderConnectionResume::CurrentImpl() {
   return CurrentImpl(std::unique_lock<std::mutex>(mu_));
+}
+
+void AsyncReaderConnectionResume::CheckOverrun() {
+  if (requested_length_.has_value() && *requested_length_ >= 0 &&
+      total_received_bytes_ > *requested_length_ && !is_transcoded_ &&
+      !logged_warning_) {
+    logged_warning_ = true;
+    GCP_LOG(WARNING) << "storage: received "
+                     << (total_received_bytes_ - *requested_length_)
+                     << " more bytes than requested from GCS for bucket \""
+                     << bucket_name_ << "\", object \"" << object_name_ << "\"";
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

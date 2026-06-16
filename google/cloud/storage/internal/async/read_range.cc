@@ -36,6 +36,10 @@ absl::optional<google::storage::v2::ReadRange> ReadRange::RangeForResume(
   range.set_read_id(read_id);
   std::lock_guard<std::mutex> lk(mu_);
   if (status_.has_value()) return absl::nullopt;
+  if (requested_length_.has_value() && *requested_length_ >= 0 &&
+      received_bytes_ >= *requested_length_) {
+    return absl::nullopt;
+  }
   range.set_read_offset(offset_);
   range.set_read_length(length_);
   return range;
@@ -61,6 +65,7 @@ void ReadRange::OnFinish(Status status) {
   std::unique_lock<std::mutex> lk(mu_);
   if (status_) return;
   status_ = std::move(status);
+  CheckOverrun();
   if (!wait_) return;
   auto p = std::move(*wait_);
   wait_.reset();
@@ -68,8 +73,12 @@ void ReadRange::OnFinish(Status status) {
   p.set_value(*status_);
 }
 
-void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
+void ReadRange::OnRead(google::storage::v2::ObjectRangeData data,
+                       bool is_transcoded,
+                       absl::optional<std::int64_t> object_size) {
   std::unique_lock<std::mutex> lk(mu_);
+  is_transcoded_ = is_transcoded_ || is_transcoded;
+  if (object_size.has_value()) object_size_ = object_size;
   if (status_) return;
   auto* check_summed_data = data.mutable_checksummed_data();
   auto content = StealMutableContent(*data.mutable_checksummed_data());
@@ -81,13 +90,29 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   }
 
   offset_ += content.size();
+  received_bytes_ += content.size();
   if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
   auto p = ReadPayloadImpl::Make(std::move(content));
 
-  if (data.range_end()) {
+  bool satisfied = requested_length_.has_value() && *requested_length_ >= 0 &&
+                   received_bytes_ >= *requested_length_;
+
+  if (data.range_end() || satisfied) {
     status_ = Status{};
+    CheckOverrun();
     auto result = std::move(*hash_validator_).Finish(hash_function_->Finish());
-    if (result.is_mismatch) {
+    // GCS decompresses gzipped files on-the-fly (server-side transcoding)
+    // if decompression is not explicitly disabled by the user. In this case,
+    // the received bytes do not match the server-provided checksums (which
+    // are for the compressed object). We only bypass checksum validation if
+    // transcoding actually occurred (i.e. the received bytes do not match the
+    // compressed object size, or if the size is unknown). If they match, the
+    // file was downloaded as compressed, and we must validate the checksums
+    // to detect transit corruption.
+    bool transcoded_download =
+        is_transcoded_ &&
+        (!object_size_.has_value() || (received_bytes_ != *object_size_));
+    if (result.is_mismatch && !transcoded_download) {
       status_ = google::cloud::internal::DataLossError(
           absl::StrCat("mismatched checksums detected at the end of the "
                        "download, received={",
@@ -103,6 +128,18 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   }
   if (payload_) return ReadPayloadImpl::Append(*payload_, std::move(p));
   payload_ = std::move(p);
+}
+
+void ReadRange::CheckOverrun() {
+  if (requested_length_.has_value() && *requested_length_ >= 0 &&
+      received_bytes_ > *requested_length_ && !is_transcoded_ &&
+      !logged_warning_) {
+    logged_warning_ = true;
+    GCP_LOG(WARNING) << "storage: received "
+                     << (received_bytes_ - *requested_length_)
+                     << " more bytes than requested from GCS for bucket \""
+                     << bucket_name_ << "\", object \"" << object_name_ << "\"";
+  }
 }
 
 void ReadRange::Notify(std::unique_lock<std::mutex> lk,
