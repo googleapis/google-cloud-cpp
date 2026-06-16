@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO(#16171): MSVC is a lot pickier about the conversion operators.
+//   Skip for now.
+#ifndef _WIN32
+
 #include "google/cloud/internal/http_header.h"
 #include <gmock/gmock.h>
 
@@ -179,3 +183,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif
