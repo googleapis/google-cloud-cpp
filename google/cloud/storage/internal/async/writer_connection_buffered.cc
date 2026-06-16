@@ -350,6 +350,19 @@ class AsyncWriterConnectionBufferedState
     }
     // If the buffer is small enough, collect all the handlers to notify them.
     auto const handlers = ClearHandlersIfEmpty(lk);
+    if (is_resume) {
+      // We are resuming. The pending flush promises (if any) should not be
+      // satisfied yet, because we haven't actually flushed the data on the new
+      // connection. The `WriteLoop` will trigger a flush (potentially empty)
+      // if `flush_` is still true, which will satisfy the promises when it
+      // completes. However, we still need to notify any handlers waiting for
+      // the buffer to shrink, and we need to restart the write loop.
+      resuming_ = false;
+      lk.unlock();
+      for (auto const& h : handlers) h->Execute(Status{});
+      WriteLoop(std::unique_lock<std::mutex>(mu_));
+      return;
+    }
     // SetFlushed will release the lock before returning.
     SetFlushed(std::move(lk), Status{});
     // Re-acquire the lock to re-enter the write loop.
@@ -388,6 +401,9 @@ class AsyncWriterConnectionBufferedState
       if (!s.ok() && cancelled_) {
         return SetError(std::move(lk), std::move(s));
       }
+      // Guard against concurrent resume attempts.
+      if (resuming_) return;
+      resuming_ = true;
     }
     // Pass the original status `s`, `was_finalizing`, and `was_closing` to the
     // callback.
@@ -463,6 +479,7 @@ class AsyncWriterConnectionBufferedState
     finalize_ = false;
     finalizing_ = false;  // Reset finalizing flag
     flush_ = false;
+    resuming_ = false;  // Reset resuming flag
     // Check if the promise has already been completed.
     if (finalized_promise_completed_) {
       // Since the lock is passed by value, no explicit unlock is needed.
@@ -526,10 +543,6 @@ class AsyncWriterConnectionBufferedState
     // lock.
     for (auto& h : handlers) h->Execute(Status{});
     flushed.set_value(result);
-    // Restart the write loop ONLY if we are not already finalizing.
-    // If finalizing_ is true, the completion will be handled by OnFinalize.
-    std::unique_lock<std::mutex> loop_lk(mu_);
-    if (!finalizing_) WriteLoop(std::move(loop_lk));
   }
 
   void SetError(std::unique_lock<std::mutex> lk, Status const& status) {
@@ -540,6 +553,7 @@ class AsyncWriterConnectionBufferedState
     close_ = false;
     closing_ = false;  // Reset closing flag
     flush_ = false;
+    resuming_ = false;  // Reset resuming flag
 
     // Always clear handlers and pending flushes on error.
     auto handlers = ClearHandlers(lk);
@@ -685,6 +699,9 @@ class AsyncWriterConnectionBufferedState
 
   // Tracks if the final promise (`finalized_`) has been completed.
   bool finalized_promise_completed_ = false;
+
+  // True if the resume loop is running. Prevents re-entry.
+  bool resuming_ = false;
 };
 
 /**

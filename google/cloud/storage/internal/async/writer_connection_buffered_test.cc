@@ -771,6 +771,84 @@ TEST(WriteConnectionBuffered, ErrorFailsPendingFlushes) {
   EXPECT_THAT(f2.get(), StatusIs(resume_error.code()));
 }
 
+TEST(WriteConnectionBuffered, FlushResumesAndDoesNotCompletePrematurely) {
+  AsyncSequencer<bool> sequencer;
+
+  auto expected_write_size = [](std::size_t n) {
+    return ResultOf(
+        "payload size", [](auto payload) { return payload.size(); }, Eq(n));
+  };
+
+  auto mock1 = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock1, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock1, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  // The first flush fails, triggering resume.
+  EXPECT_CALL(*mock1, Flush(expected_write_size(8 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush1").then(
+        [](auto) { return Status(StatusCode::kUnavailable, "try again"); });
+  });
+
+  auto mock2 = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock2, UploadId).WillRepeatedly(Return("test-upload-id"));
+  // OnResume will query persisted state. We return 0, meaning the data was
+  // lost.
+  EXPECT_CALL(*mock2, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  // The resumed connection should receive the Flush call again.
+  EXPECT_CALL(*mock2, Flush(expected_write_size(8 * 1024))).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush2").then([](auto) { return Status{}; });
+  });
+  // After Flush2 succeeds, it will query the status.
+  EXPECT_CALL(*mock2, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query").then([](auto) {
+      return make_status_or(static_cast<std::int64_t>(8 * 1024));
+    });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
+    return sequencer.PushBack("Resume").then([&](auto) {
+      return make_status_or(
+          std::unique_ptr<storage::AsyncWriterConnection>(std::move(mock2)));
+    });
+  });
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock1), TestOptions());
+
+  auto f = connection->Flush(TestPayload(8 * 1024));
+  ASSERT_FALSE(f.is_ready());
+
+  // Let the first flush fail.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush1");
+  next.first.set_value(true);
+
+  // Trigger resume.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Resume");
+  next.first.set_value(true);
+
+  // The flush promise must not be ready yet, because the data has not been
+  // flushed on the new connection.
+  ASSERT_FALSE(f.is_ready());
+
+  // Let the second flush succeed.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush2");
+  next.first.set_value(true);
+
+  // Let the query complete.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query");
+  next.first.set_value(true);
+
+  // Now the flush promise should be completed.
+  ASSERT_TRUE(f.is_ready());
+  EXPECT_STATUS_OK(f.get());
+}
+
 TEST(WriteConnectionBuffered, CloseEmpty) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();
@@ -1253,8 +1331,8 @@ TEST(WriteConnectionBuffered, MultipleConcurrentFlushesAreQueued) {
     // The race causes Write() to be called twice for the remaining
     // 8k.
     EXPECT_CALL(*mock, Write(expected_write_size(8192)))
-        .Times(2)
-        .WillRepeatedly([&](auto) {
+        .Times(1)
+        .WillOnce([&](auto) {
           return sequencer.PushBack("Write").then(
               [](auto) { return Status{}; });
         });
@@ -1285,10 +1363,7 @@ TEST(WriteConnectionBuffered, MultipleConcurrentFlushesAreQueued) {
   // After the Query, the first Flush future should be completed.
   EXPECT_STATUS_OK(f1.get());
 
-  // Satisfy the two racy Write calls for the remaining data.
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Write");
-  next.first.set_value(true);
+  // Satisfy the Write call for the remaining data.
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
