@@ -61,6 +61,14 @@ steps:
                 tail -n +"$((log_lines + 1))" build.log
              fi
           fi
+          if gcloud storage cp "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/vcpkg-manifest-install.log" vcpkg-manifest-install.log 2>/dev/null; then
+             echo "========================================================================="
+             echo " Content of vcpkg-manifest-install.log:"
+             echo "========================================================================="
+             cat vcpkg-manifest-install.log
+             echo "========================================================================="
+             rm -f vcpkg-manifest-install.log
+          fi
           echo "Cleaning up VM and source archive..."
           gcloud compute instances delete "wincmake-${BUILD_ID}" --zone="${_ZONE}" --quiet || true
           gcloud storage rm "gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz" || true

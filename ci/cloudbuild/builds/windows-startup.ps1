@@ -136,6 +136,9 @@ catch {
 }
 finally {
     Stop-Transcript
+    if (Test-Path "C:\b\vcpkg-manifest-install.log") {
+        gcloud storage cp "C:\b\vcpkg-manifest-install.log" "$LogsBucket/vcpkg-manifest-install.log"
+    }
     # Upload final logs and status to GCS bucket
     gcloud storage cp C:\build.log "$LogsBucket/build.log"
     gcloud storage cp C:\status.json "$LogsBucket/status.json"
