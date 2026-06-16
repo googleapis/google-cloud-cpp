@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_REGIONAL_ACCESS_BOUNDARY_TOKEN_MANAGER_H
 
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/clock.h"
 #include "google/cloud/internal/http_header.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
@@ -28,6 +29,8 @@
 #include "google/cloud/version.h"
 #include "absl/strings/match.h"
 #include <chrono>
+#include <memory>
+#include <mutex>
 #include <string>
 
 namespace google {
@@ -182,8 +185,7 @@ class RegionalAccessBoundaryTokenManager
     pending_refresh_ = pr.get_future();
     auto p = std::make_shared<promise<Status>>(std::move(pr));
     auto constexpr kLocation = __func__;
-    auto pending_refresh_fn = [p,
-                               weak = weak_from_this(), request,
+    auto pending_refresh_fn = [p, weak = weak_from_this(), request,
                                stub = iam_stub_,
                                retry_policy = retry_policy_->clone(),
                                backoff_policy = backoff_policy_->clone(),
