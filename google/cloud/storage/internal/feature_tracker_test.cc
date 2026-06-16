@@ -39,6 +39,30 @@ TEST(FeatureTrackerTest, RegisterAndRetrieve) {
   tracker.RegisterFeature(TrackedFeature::kMultiStreamInMRD);
   EXPECT_THAT(tracker.GetMask(), Eq(1));
   EXPECT_THAT(tracker.HeaderValue(), Eq("AQ=="));
+
+  tracker.RegisterFeature(TrackedFeature::kPCU);
+  EXPECT_THAT(tracker.GetMask(), Eq(3));
+}
+
+TEST(FeatureTrackerTest, InitialMask) {
+  FeatureTracker tracker(1U << static_cast<std::uint32_t>(
+                             TrackedFeature::kGrpcDirectPathEnforced));
+  EXPECT_THAT(tracker.GetMask(), Eq(4));
+
+  tracker.RegisterFeature(TrackedFeature::kJsonReads);
+  EXPECT_THAT(tracker.GetMask(), Eq(12));
+}
+
+TEST(FeatureTrackerTest, SetupFeatureTracker) {
+  Options opts;
+  auto configured = SetupFeatureTracker(std::move(opts));
+  ASSERT_TRUE(configured.has<FeatureTrackerOption>());
+  EXPECT_NE(configured.get<FeatureTrackerOption>(), nullptr);
+
+  // Calling it again should preserve the exact same tracker instance.
+  auto reconfigured = SetupFeatureTracker(configured);
+  EXPECT_EQ(reconfigured.get<FeatureTrackerOption>(),
+            configured.get<FeatureTrackerOption>());
 }
 
 }  // namespace

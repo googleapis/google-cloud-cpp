@@ -16,8 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_FEATURE_TRACKER_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/options.h"
 #include <atomic>
 #include <cstdint>
+#include <memory>
 #include <string>
 
 namespace google {
@@ -30,8 +32,13 @@ inline constexpr auto kFeatureTrackerHeaderName = "x-goog-storage-cpp-features";
 
 // Tracked features represented as bit positions in a bitmask.
 enum class TrackedFeature : std::uint32_t {
+  // Operation-Driven Optimizations
   kMultiStreamInMRD = 0,
-  // Future features (e.g. PCU, configuration-driven features) go here.
+  kPCU = 1,
+
+  // Configuration-Driven Options
+  kGrpcDirectPathEnforced = 2,
+  kJsonReads = 3,
 };
 
 // Converts a feature bitmask to a Base64-encoded string, stripping leading
@@ -44,6 +51,7 @@ std::string EncodeFeatureTrackerBitmask(std::uint32_t mask);
 class FeatureTracker {
  public:
   FeatureTracker() = default;
+  explicit FeatureTracker(std::uint32_t initial) : mask_(initial) {}
 
   void RegisterFeature(TrackedFeature feature) {
     mask_.fetch_or(1U << static_cast<std::uint32_t>(feature),
@@ -61,6 +69,15 @@ class FeatureTracker {
  private:
   std::atomic<std::uint32_t> mask_{0};
 };
+
+struct FeatureTrackerOption {
+  using Type = std::shared_ptr<FeatureTracker>;
+};
+
+// Evaluates client configuration options, creates a shared FeatureTracker
+// initialized with configuration-driven feature flags (if any), and stores it
+// into the Options list under FeatureTrackerOption.
+Options SetupFeatureTracker(Options opts);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

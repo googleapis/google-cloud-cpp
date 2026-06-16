@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CONFIGURE_CLIENT_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CONFIGURE_CLIENT_CONTEXT_H
 
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
@@ -70,6 +71,16 @@ void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
   if (request.template HasOption<storage::Fields>()) {
     ctx.AddMetadata("x-goog-fieldmask",
                     request.template GetOption<storage::Fields>().value());
+  }
+  if (options.has<storage::internal::FeatureTrackerOption>()) {
+    auto const& tracker =
+        options.get<storage::internal::FeatureTrackerOption>();
+    if (tracker) {
+      auto const val = tracker->HeaderValue();
+      if (!val.empty()) {
+        ctx.AddMetadata(storage::internal::kFeatureTrackerHeaderName, val);
+      }
+    }
   }
   internal::ConfigureContext(ctx, options);
 }

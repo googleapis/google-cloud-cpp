@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/base64.h"
+#include "google/cloud/options.h"
+#include <memory>
 #include <vector>
 
 namespace google {
@@ -33,6 +35,15 @@ std::string EncodeFeatureTrackerBitmask(std::uint32_t mask) {
     }
   }
   return Base64Encode(bytes);
+}
+
+Options SetupFeatureTracker(Options opts) {
+  if (opts.has<FeatureTrackerOption>()) return opts;
+
+  std::uint32_t mask = 0;
+  // Add checks for configuration-driven options here as they are introduced.
+  opts.set<FeatureTrackerOption>(std::make_shared<FeatureTracker>(mask));
+  return opts;
 }
 
 }  // namespace internal

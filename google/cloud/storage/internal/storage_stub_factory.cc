@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
 #include "google/cloud/storage/internal/storage_logging_decorator.h"
 #include "google/cloud/storage/internal/storage_metadata_decorator.h"
@@ -85,8 +86,22 @@ CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<StorageAuth>(std::move(auth), std::move(stub));
   }
+
+  std::multimap<std::string, std::string> fixed_metadata;
+  if (options.has<storage::internal::FeatureTrackerOption>()) {
+    auto const& tracker =
+        options.get<storage::internal::FeatureTrackerOption>();
+    if (tracker) {
+      auto const val = tracker->HeaderValue();
+      if (!val.empty()) {
+        fixed_metadata.emplace(storage::internal::kFeatureTrackerHeaderName,
+                               val);
+      }
+    }
+  }
+
   stub = std::make_shared<StorageMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{},
+      std::move(stub), std::move(fixed_metadata),
       internal::HandCraftedLibClientHeader());
   if (google::cloud::internal::Contains(options.get<LoggingComponentsOption>(),
                                         "rpc")) {
