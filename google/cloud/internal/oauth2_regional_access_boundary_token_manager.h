@@ -184,8 +184,8 @@ class RegionalAccessBoundaryTokenManager
     promise<Status> pending_refresh;
     pending_refresh_ = pending_refresh.get_future();
     auto constexpr kLocation = __func__;
-    auto pending_refresh_fn = [p = std::move(pending_refresh),
-                               weak = weak_from_this(), request,
+    auto pending_refresh_fn = [=, p = std::move(pending_refresh),
+                               weak = weak_from_this(), request = request,
                                stub = iam_stub_,
                                retry_policy = retry_policy_->clone(),
                                backoff_policy = backoff_policy_->clone(),

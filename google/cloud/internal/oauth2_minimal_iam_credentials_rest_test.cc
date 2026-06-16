@@ -364,6 +364,9 @@ TEST(MinimalIamCredentialsRestTest, AllowedLocationsAuthorizationFailure) {
   EXPECT_THAT(access_token, StatusIs(StatusCode::kPermissionDenied));
 }
 
+// TODO(#16177): Update these tests to compile with MSVC.
+#ifndef _WIN32
+
 TEST(MinimalIamCredentialsRestTest, AllowedLocationsMalformedResponseFailure) {
   std::string service_account = "foo@somewhere.com";
   std::chrono::seconds lifetime(3600);
@@ -559,6 +562,8 @@ TEST(MinimalIamCredentialsRestTest, WorkforceIdentityAllowedLocations) {
       ElementsAre("us-central1", "us-east1", "europe-west1", "asia-east1"));
   EXPECT_THAT(allowed_locations->encoded_locations, Eq("0xA30"));
 }
+
+#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
