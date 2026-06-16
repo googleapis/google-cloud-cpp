@@ -41,14 +41,14 @@ std::string EncodeFeatureTrackerBitmask(std::uint32_t mask) {
 Options SetupFeatureTracker(Options opts) {
   if (opts.has<EnableFeatureReportsOption>() &&
       !opts.get<EnableFeatureReportsOption>()) {
-    return opts;
+    return std::move(opts);
   }
-  if (opts.has<FeatureTrackerOption>()) return opts;
+  if (opts.has<FeatureTrackerOption>()) return std::move(opts);
 
   std::uint32_t mask = 0;
   // Add checks for configuration-driven options here as they are introduced.
   opts.set<FeatureTrackerOption>(std::make_shared<FeatureTracker>(mask));
-  return opts;
+  return std::move(opts);
 }
 
 }  // namespace internal
