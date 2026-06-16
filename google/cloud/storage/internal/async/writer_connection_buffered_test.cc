@@ -1328,8 +1328,6 @@ TEST(WriteConnectionBuffered, MultipleConcurrentFlushesAreQueued) {
       return sequencer.PushBack("Query1").then(
           [](auto) { return make_status_or(static_cast<std::int64_t>(4096)); });
     });
-    // The race causes Write() to be called twice for the remaining
-    // 8k.
     EXPECT_CALL(*mock, Write(expected_write_size(8192)))
         .Times(1)
         .WillOnce([&](auto) {
