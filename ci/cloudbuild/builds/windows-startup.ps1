@@ -136,8 +136,17 @@ catch {
 }
 finally {
     Stop-Transcript
-    if (Test-Path "C:\b\vcpkg-manifest-install.log") {
-        gcloud storage cp "C:\b\vcpkg-manifest-install.log" "$LogsBucket/vcpkg-manifest-install.log"
+    if (Test-Path "C:\vcpkg\buildtrees") {
+        Get-ChildItem -Path "C:\vcpkg\buildtrees" -Filter "*.log" -Recurse | ForEach-Object {
+            $RelativePath = $_.FullName.Substring("C:\vcpkg\buildtrees\".Length).Replace("\", "/")
+            gcloud storage cp $_.FullName "$LogsBucket/build-logs/vcpkg/$RelativePath"
+        }
+    }
+    if (Test-Path "C:\b") {
+        Get-ChildItem -Path "C:\b" -Filter "*.log" -Recurse | ForEach-Object {
+            $RelativePath = $_.FullName.Substring("C:\b\".Length).Replace("\", "/")
+            gcloud storage cp $_.FullName "$LogsBucket/build-logs/cmake/$RelativePath"
+        }
     }
     # Upload final logs and status to GCS bucket
     gcloud storage cp C:\build.log "$LogsBucket/build.log"

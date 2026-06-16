@@ -61,13 +61,37 @@ steps:
                 tail -n +"$((log_lines + 1))" build.log
              fi
           fi
-          if gcloud storage cp "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/vcpkg-manifest-install.log" vcpkg-manifest-install.log 2>/dev/null; then
-             echo "========================================================================="
-             echo " Content of vcpkg-manifest-install.log:"
-             echo "========================================================================="
-             cat vcpkg-manifest-install.log
-             echo "========================================================================="
-             rm -f vcpkg-manifest-install.log
+          rm -rf build-logs
+          if gcloud storage cp -r "gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID}/build-logs" . 2>/dev/null; then
+             if [ -f build-logs/cmake/vcpkg-manifest-install.log ]; then
+                echo "========================================================================="
+                echo " Content of vcpkg-manifest-install.log:"
+                echo "========================================================================="
+                cat build-logs/cmake/vcpkg-manifest-install.log
+                echo "========================================================================="
+             fi
+
+             files_to_scan="build.log"
+             if [ -f build-logs/cmake/vcpkg-manifest-install.log ]; then
+                files_to_scan="$files_to_scan build-logs/cmake/vcpkg-manifest-install.log"
+             fi
+             failed_logs=$(grep -A 1 -i "See logs for more information:" $files_to_scan 2>/dev/null | \
+                           sed -n -e 's/.*buildtrees[/\\]\(.*\)/\1/p' | \
+                           tr '\\' '/' | tr -d '\r' | sort -u)
+
+             if [ -n "$failed_logs" ]; then
+                echo "========================================================================="
+                echo " Content of failed package logs:"
+                echo "========================================================================="
+                echo "$failed_logs" | while read -r logpath; do
+                   if [ -f "build-logs/vcpkg/$logpath" ]; then
+                      echo "--- File: vcpkg/$logpath ---"
+                      cat "build-logs/vcpkg/$logpath"
+                      echo "------------------------------------------------------------------------"
+                   fi
+                done
+             fi
+             rm -rf build-logs
           fi
           echo "Cleaning up VM and source archive..."
           gcloud compute instances delete "wincmake-${BUILD_ID}" --zone="${_ZONE}" --quiet || true
