@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/base64.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/options.h"
 #include <memory>
 #include <vector>
@@ -38,6 +39,10 @@ std::string EncodeFeatureTrackerBitmask(std::uint32_t mask) {
 }
 
 Options SetupFeatureTracker(Options opts) {
+  if (opts.has<EnableFeatureReportsOption>() &&
+      !opts.get<EnableFeatureReportsOption>()) {
+    return opts;
+  }
   if (opts.has<FeatureTrackerOption>()) return opts;
 
   std::uint32_t mask = 0;

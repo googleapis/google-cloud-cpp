@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/feature_tracker.h"
+#include "google/cloud/storage/options.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -63,6 +64,13 @@ TEST(FeatureTrackerTest, SetupFeatureTracker) {
   auto reconfigured = SetupFeatureTracker(configured);
   EXPECT_EQ(reconfigured.get<FeatureTrackerOption>(),
             configured.get<FeatureTrackerOption>());
+}
+
+TEST(FeatureTrackerTest, SetupFeatureTrackerDisabled) {
+  Options opts;
+  opts.set<EnableFeatureReportsOption>(false);
+  auto configured = SetupFeatureTracker(std::move(opts));
+  EXPECT_FALSE(configured.has<FeatureTrackerOption>());
 }
 
 }  // namespace

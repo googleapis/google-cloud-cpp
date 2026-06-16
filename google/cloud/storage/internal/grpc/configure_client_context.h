@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/generic_request.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/grpc_options.h"
@@ -72,7 +73,11 @@ void ApplyQueryParameters(grpc::ClientContext& ctx, Options const& options,
     ctx.AddMetadata("x-goog-fieldmask",
                     request.template GetOption<storage::Fields>().value());
   }
-  if (options.has<storage::internal::FeatureTrackerOption>()) {
+  bool const enable_reports =
+      !options.has<storage::EnableFeatureReportsOption>() ||
+      options.get<storage::EnableFeatureReportsOption>();
+  if (enable_reports &&
+      options.has<storage::internal::FeatureTrackerOption>()) {
     auto const& tracker =
         options.get<storage::internal::FeatureTrackerOption>();
     if (tracker) {

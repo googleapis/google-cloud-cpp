@@ -15,8 +15,10 @@
 #include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
-#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/feature_tracker.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/storage/internal/base64.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
@@ -117,7 +119,10 @@ void AddCustomHeaders(Options const& options, RestRequestBuilder& builder) {
 
 Status AddHeaders(Options const& options, RestRequestBuilder& builder) {
   AddCustomHeaders(options, builder);
-  if (options.has<FeatureTrackerOption>()) {
+  bool const enable_reports =
+      !options.has<EnableFeatureReportsOption>() ||
+      options.get<EnableFeatureReportsOption>();
+  if (enable_reports && options.has<FeatureTrackerOption>()) {
     auto const& tracker = options.get<FeatureTrackerOption>();
     if (tracker) {
       auto const val = tracker->HeaderValue();

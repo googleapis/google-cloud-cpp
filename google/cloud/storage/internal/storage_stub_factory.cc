@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/feature_tracker.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
 #include "google/cloud/storage/internal/storage_logging_decorator.h"
 #include "google/cloud/storage/internal/storage_metadata_decorator.h"
@@ -88,7 +89,11 @@ CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
   }
 
   std::multimap<std::string, std::string> fixed_metadata;
-  if (options.has<storage::internal::FeatureTrackerOption>()) {
+  bool const enable_reports =
+      !options.has<storage::EnableFeatureReportsOption>() ||
+      options.get<storage::EnableFeatureReportsOption>();
+  if (enable_reports &&
+      options.has<storage::internal::FeatureTrackerOption>()) {
     auto const& tracker =
         options.get<storage::internal::FeatureTrackerOption>();
     if (tracker) {
