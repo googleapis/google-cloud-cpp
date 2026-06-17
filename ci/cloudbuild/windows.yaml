@@ -6,13 +6,14 @@ options:
 substitutions:
   _ZONE: 'us-east1-b'
   _MACHINE_TYPE: 'n2-standard-64' # 64 vCPUs, 256 GB RAM for fast compilation
-  _IMAGE_FAMILY: 'windows-2022' # Public image family
-  _IMAGE_PROJECT: 'windows-cloud'
+  _IMAGE_FAMILY: 'windows-cmake-builder' # Custom builder image family
+  _IMAGE_PROJECT: 'cloud-cpp-testing-resources'
   _SERVICE_ACCOUNT: 'windows-builder-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com'
   _CACHE_BUCKET: 'cloud-cpp-testing-resources_cloudbuild'
   _LOGS_BUCKET: 'cloud-cpp-testing-resources_cloudbuild'
   _BUILD_TYPE: 'Release'
   _FEATURES: 'storage'
+  _BOOT_DISK_SIZE: '200GB'
 
 steps:
   # Step 1: Compress and upload workspace source code to GCS
@@ -124,6 +125,7 @@ steps:
             --machine-type="${_MACHINE_TYPE}" \
             --image-family="${_IMAGE_FAMILY}" \
             --image-project="${_IMAGE_PROJECT}" \
+            --boot-disk-size="${_BOOT_DISK_SIZE}" \
             --service-account="${_SERVICE_ACCOUNT}" \
             --scopes="https://www.googleapis.com/auth/cloud-platform" \
             --metadata="source-archive=gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz,build-type=${_BUILD_TYPE},features=${_FEATURES},logs-bucket=gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID},vcpkg-version=${vcpkg_version}" \
