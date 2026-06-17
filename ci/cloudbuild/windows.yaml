@@ -25,6 +25,18 @@ steps:
         gcloud storage cp "source-${BUILD_ID}.tar.gz" "gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz"
         rm "source-${BUILD_ID}.tar.gz"
 
+  # Step 1.5: Select US zone with most available N2 CPU quota
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'select-zone'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if ! python3 ci/cloudbuild/select_zone.py; then
+          echo "Warning: failed to dynamically select zone. Falling back to ${_ZONE}."
+          echo "${_ZONE}" > selected_zone.txt
+        fi
+
   # Step 2: Create ephemeral GCE Windows Instance and run startup script
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: 'create-vm'
@@ -32,10 +44,11 @@ steps:
     args:
       - '-c'
       - |
+        selected_zone=$(cat selected_zone.txt)
         vcpkg_version=$(cat ci/etc/vcpkg-version.txt)
         gcloud compute instances create "wincmake-${BUILD_ID}" \
           --project="${PROJECT_ID}" \
-          --zone="${_ZONE}" \
+          --zone="$$selected_zone" \
           --machine-type="${_MACHINE_TYPE}" \
           --image-family="${_IMAGE_FAMILY}" \
           --image-project="${_IMAGE_PROJECT}" \
@@ -51,6 +64,12 @@ steps:
     args:
       - '-c'
       - |
+        selected_zone="${_ZONE}"
+        if [ -f selected_zone.txt ]; then
+          selected_zone=$(cat selected_zone.txt)
+        fi
+        echo "Using zone: $$selected_zone"
+
         log_lines=0
         cleanup() {
           echo "Fetching final logs..."
@@ -94,7 +113,7 @@ steps:
              rm -rf build-logs
           fi
           echo "Cleaning up VM and source archive..."
-          gcloud compute instances delete "wincmake-${BUILD_ID}" --zone="${_ZONE}" --quiet || true
+          gcloud compute instances delete "wincmake-${BUILD_ID}" --zone="$$selected_zone" --quiet || true
           gcloud storage rm "gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz" || true
         }
         trap cleanup EXIT
