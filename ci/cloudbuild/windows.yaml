@@ -64,11 +64,10 @@ steps:
             
             regions_quota.sort(key=lambda x: x[1], reverse=True)
             
-            selected_zone = None
+            candidate_zones = []
             for region_name, available in regions_quota:
-                print(f"Checking region {region_name} (Available N2_CPUS: {available})...", file=sys.stderr)
                 if available < 64:
-                    print(f"Skipping region {region_name}: not enough available N2_CPUS.", file=sys.stderr)
+                    print(f"Skipping region {region_name}: not enough available N2_CPUS ({available}).", file=sys.stderr)
                     continue
                 
                 zones_result = subprocess.run([
@@ -81,25 +80,22 @@ steps:
                 for zone in zones:
                     print(f"Checking machine type availability in zone {zone}...", file=sys.stderr)
                     if is_machine_type_available(zone, "${_MACHINE_TYPE}"):
-                        selected_zone = zone
-                        break
-                
-                if selected_zone:
-                    print(f"Selected zone: {selected_zone}", file=sys.stderr)
-                    break
-                    
-            if not selected_zone:
-                print("Error: No suitable zone with enough quota and machine type support was found.", file=sys.stderr)
+                        candidate_zones.append(zone)
+            
+            if not candidate_zones:
+                print("Error: No suitable zones with enough quota and machine type support found.", file=sys.stderr)
                 sys.exit(1)
                 
-            with open("selected_zone.txt", "w") as f:
-                f.write(selected_zone + "\n")
+            print(f"Found candidate zones: {candidate_zones}", file=sys.stderr)
+            with open("candidate_zones.txt", "w") as f:
+                for zone in candidate_zones:
+                    f.write(zone + "\n")
         except Exception as e:
             print(f"Error selecting zone: {e}", file=sys.stderr)
             sys.exit(1)
         '; then
           echo "Warning: failed to dynamically select zone. Falling back to ${_ZONE}."
-          echo "${_ZONE}" > selected_zone.txt
+          echo "${_ZONE}" > candidate_zones.txt
         fi
 
   # Step 2: Create ephemeral GCE Windows Instance and run startup script
@@ -109,18 +105,40 @@ steps:
     args:
       - '-c'
       - |
-        selected_zone=$(cat selected_zone.txt)
         vcpkg_version=$(cat ci/etc/vcpkg-version.txt)
-        gcloud compute instances create "wincmake-${BUILD_ID}" \
-          --project="${PROJECT_ID}" \
-          --zone="$$selected_zone" \
-          --machine-type="${_MACHINE_TYPE}" \
-          --image-family="${_IMAGE_FAMILY}" \
-          --image-project="${_IMAGE_PROJECT}" \
-          --service-account="${_SERVICE_ACCOUNT}" \
-          --scopes="https://www.googleapis.com/auth/cloud-platform" \
-          --metadata="source-archive=gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz,build-type=${_BUILD_TYPE},features=${_FEATURES},logs-bucket=gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID},vcpkg-version=${vcpkg_version}" \
-          --metadata-from-file="windows-startup-script-ps1=ci/cloudbuild/builds/windows-startup.ps1"
+        created=false
+        
+        # Read candidate zones
+        if [ -f candidate_zones.txt ]; then
+          mapfile -t zones < candidate_zones.txt
+        else
+          zones=("${_ZONE}")
+        fi
+        
+        for zone in "$${zones[@]}"; do
+          echo "Attempting to create VM in zone: $$zone..."
+          if gcloud compute instances create "wincmake-${BUILD_ID}" \
+            --project="${PROJECT_ID}" \
+            --zone="$$zone" \
+            --machine-type="${_MACHINE_TYPE}" \
+            --image-family="${_IMAGE_FAMILY}" \
+            --image-project="${_IMAGE_PROJECT}" \
+            --service-account="${_SERVICE_ACCOUNT}" \
+            --scopes="https://www.googleapis.com/auth/cloud-platform" \
+            --metadata="source-archive=gs://${_CACHE_BUCKET}/source/source-${BUILD_ID}.tar.gz,build-type=${_BUILD_TYPE},features=${_FEATURES},logs-bucket=gs://${_LOGS_BUCKET}/logs/wincmake-${BUILD_ID},vcpkg-version=${vcpkg_version}" \
+            --metadata-from-file="windows-startup-script-ps1=ci/cloudbuild/builds/windows-startup.ps1"; then
+            echo "$$zone" > selected_zone.txt
+            created=true
+            break
+          else
+            echo "Warning: failed to create VM in zone $$zone, trying next candidate."
+          fi
+        done
+        
+        if [ "$$created" = false ]; then
+          echo "Error: Failed to create VM in all candidate zones."
+          exit 1
+        fi
 
   # Step 3: Poll GCS for status file and stream build logs, then clean up GCE VM
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
