@@ -35,30 +35,65 @@ steps:
         if ! python3 -c '
         import json, subprocess, sys
         STANDARD_US_REGIONS = {"us-central1", "us-east1", "us-east4", "us-east5", "us-south1", "us-west1", "us-west2", "us-west3", "us-west4"}
+
+        def is_machine_type_available(zone, machine_type):
+            try:
+                res = subprocess.run([
+                    "gcloud", "compute", "machine-types", "list",
+                    f"--filter=zone:{zone} AND name:{machine_type}",
+                    "--format=value(name)"
+                ], capture_output=True, text=True, check=True)
+                return machine_type in res.stdout
+            except Exception as e:
+                print(f"Error checking machine type availability in zone {zone}: {e}", file=sys.stderr)
+                return False
+
         try:
             result = subprocess.run(["gcloud", "compute", "regions", "list", "--filter=name ~ ^us-", "--format=json(name,quotas)"], capture_output=True, text=True, check=True)
             regions = json.loads(result.stdout)
-            best_region, max_available = None, -1
+            
+            regions_quota = []
             for region in regions:
                 name = region.get("name")
                 if name not in STANDARD_US_REGIONS: continue
                 for quota in region.get("quotas", []):
                     if quota.get("metric") == "N2_CPUS":
                         available = quota.get("limit", 0.0) - quota.get("usage", 0.0)
-                        print(f"Region: {name}, Available: {available}", file=sys.stderr)
-                        if available > max_available:
-                            max_available = available
-                            best_region = name
+                        regions_quota.append((name, available))
                         break
-            if not best_region or max_available < 64:
-                print(f"Warning: No standard region found with at least 64 N2_CPUS available.", file=sys.stderr)
+            
+            regions_quota.sort(key=lambda x: x[1], reverse=True)
+            
+            selected_zone = None
+            for region_name, available in regions_quota:
+                print(f"Checking region {region_name} (Available N2_CPUS: {available})...", file=sys.stderr)
+                if available < 64:
+                    print(f"Skipping region {region_name}: not enough available N2_CPUS.", file=sys.stderr)
+                    continue
+                
+                zones_result = subprocess.run([
+                    "gcloud", "compute", "zones", "list",
+                    f"--filter=region ~ /regions/{region_name} AND status=UP",
+                    "--format=value(name)"
+                ], capture_output=True, text=True, check=True)
+                zones = [line.strip() for line in zones_result.stdout.splitlines() if line.strip()]
+                
+                for zone in zones:
+                    print(f"Checking machine type availability in zone {zone}...", file=sys.stderr)
+                    if is_machine_type_available(zone, "${_MACHINE_TYPE}"):
+                        selected_zone = zone
+                        break
+                
+                if selected_zone:
+                    print(f"Selected zone: {selected_zone}", file=sys.stderr)
+                    break
+                    
+            if not selected_zone:
+                print("Error: No suitable zone with enough quota and machine type support was found.", file=sys.stderr)
                 sys.exit(1)
-            print(f"Selected region: {best_region} with {max_available} available N2_CPUS", file=sys.stderr)
-            zones_result = subprocess.run(["gcloud", "compute", "zones", "list", f"--filter=region ~ /regions/{best_region} AND status=UP", "--format=value(name)"], capture_output=True, text=True, check=True)
-            zones = [line.strip() for line in zones_result.stdout.splitlines() if line.strip()]
-            if not zones: raise Exception(f"No UP zones found in region {best_region}")
-            print(f"Selected zone: {zones[0]}", file=sys.stderr)
-            with open("selected_zone.txt", "w") as f: f.write(zones[0] + "\n")
+                
+            with open("selected_zone.txt", "w") as f:
+                f.write(selected_zone + "\n")
         except Exception as e:
             print(f"Error selecting zone: {e}", file=sys.stderr)
             sys.exit(1)
