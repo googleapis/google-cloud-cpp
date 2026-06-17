@@ -184,12 +184,21 @@ class RegionalAccessBoundaryTokenManager
     promise<Status> pending_refresh;
     pending_refresh_ = pending_refresh.get_future();
     auto constexpr kLocation = __func__;
+#ifdef _WIN32
+    auto pending_refresh_fn = [p = std::move(pending_refresh),
+                               weak = weak_from_this(), request,
+                               stub = iam_stub_,
+                               retry_policy = retry_policy_->clone(),
+                               backoff_policy = backoff_policy_->clone(),
+                               options = options_, kLocation]() mutable {
+#else
     auto pending_refresh_fn = [p = std::move(pending_refresh),
                                weak = weak_from_this(), request,
                                stub = iam_stub_,
                                retry_policy = retry_policy_->clone(),
                                backoff_policy = backoff_policy_->clone(),
                                options = options_]() mutable {
+#endif
       auto refresh_attempt_fn = [stub](rest_internal::RestContext&,
                                        Options const&, Request const& request) {
         return stub->AllowedLocations(request);
