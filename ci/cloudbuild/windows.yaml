@@ -32,7 +32,37 @@ steps:
     args:
       - '-c'
       - |
-        if ! python3 ci/cloudbuild/select_zone.py; then
+        if ! python3 -c '
+        import json, subprocess, sys
+        STANDARD_US_REGIONS = {"us-central1", "us-east1", "us-east4", "us-east5", "us-south1", "us-west1", "us-west2", "us-west3", "us-west4"}
+        try:
+            result = subprocess.run(["gcloud", "compute", "regions", "list", "--filter=name ~ ^us-", "--format=json(name,quotas)"], capture_output=True, text=True, check=True)
+            regions = json.loads(result.stdout)
+            best_region, max_available = None, -1
+            for region in regions:
+                name = region.get("name")
+                if name not in STANDARD_US_REGIONS: continue
+                for quota in region.get("quotas", []):
+                    if quota.get("metric") == "N2_CPUS":
+                        available = quota.get("limit", 0.0) - quota.get("usage", 0.0)
+                        print(f"Region: {name}, Available: {available}", file=sys.stderr)
+                        if available > max_available:
+                            max_available = available
+                            best_region = name
+                        break
+            if not best_region or max_available < 64:
+                print(f"Warning: No standard region found with at least 64 N2_CPUS available.", file=sys.stderr)
+                sys.exit(1)
+            print(f"Selected region: {best_region} with {max_available} available N2_CPUS", file=sys.stderr)
+            zones_result = subprocess.run(["gcloud", "compute", "zones", "list", f"--filter=region ~ /regions/{best_region} AND status=UP", "--format=value(name)"], capture_output=True, text=True, check=True)
+            zones = [line.strip() for line in zones_result.stdout.splitlines() if line.strip()]
+            if not zones: raise Exception(f"No UP zones found in region {best_region}")
+            print(f"Selected zone: {zones[0]}", file=sys.stderr)
+            with open("selected_zone.txt", "w") as f: f.write(zones[0] + "\n")
+        except Exception as e:
+            print(f"Error selecting zone: {e}", file=sys.stderr)
+            sys.exit(1)
+        '; then
           echo "Warning: failed to dynamically select zone. Falling back to ${_ZONE}."
           echo "${_ZONE}" > selected_zone.txt
         fi
