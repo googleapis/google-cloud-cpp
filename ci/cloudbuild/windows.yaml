@@ -1,6 +1,7 @@
 options:
   dynamic_substitutions: true
   substitutionOption: 'ALLOW_LOOSE'
+  timeout: '7200s' # 2 hours
 
 substitutions:
   _ZONE: 'us-east1-b'

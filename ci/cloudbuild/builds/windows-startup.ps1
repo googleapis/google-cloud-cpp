@@ -13,6 +13,18 @@ try {
     $LogsBucket = Invoke-RestMethod -Headers $Headers -Uri "$MetadataUrl/logs-bucket"
     $VcpkgVersion = Invoke-RestMethod -Headers $Headers -Uri "$MetadataUrl/vcpkg-version"
 
+    # Start background job to periodically upload build.log to GCS for streaming logs
+    $LogUploadJob = Start-Job -ScriptBlock {
+        param($LogPath, $LogsBucket)
+        while ($true) {
+            if (Test-Path $LogPath) {
+                # Use Out-Null to suppress output to avoid writing back to the transcript log
+                & gcloud storage cp $LogPath "$LogsBucket/build.log" 2>&1 | Out-Null
+            }
+            Start-Sleep -Seconds 20
+        }
+    } -ArgumentList $LogPath, $LogsBucket
+
     Write-Host "Source Archive: $SourceArchive"
     Write-Host "Build Type: $BuildType"
     Write-Host "Features: $Features"
@@ -135,6 +147,10 @@ catch {
     $Status | ConvertTo-Json | Out-File -FilePath "C:\status.json" -Encoding ascii
 }
 finally {
+    if ($LogUploadJob) {
+        Stop-Job $LogUploadJob -ErrorAction SilentlyContinue
+        Remove-Job $LogUploadJob -ErrorAction SilentlyContinue
+    }
     Stop-Transcript
     if (Test-Path "C:\vcpkg\buildtrees") {
         Get-ChildItem -Path "C:\vcpkg\buildtrees" -Filter "*.log" -Recurse | ForEach-Object {
