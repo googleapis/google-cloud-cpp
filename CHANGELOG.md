@@ -7,6 +7,8 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
+## v3.7.0 - TBD
+
 ## v3.6.0 - 2026-06
 
 ### New Libraries
