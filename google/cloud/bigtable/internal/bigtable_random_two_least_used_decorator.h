@@ -35,7 +35,7 @@ class BigtableRandomTwoLeastUsed : public BigtableStub {
 
   ~BigtableRandomTwoLeastUsed() override = default;
 
-  std::shared_ptr<DynamicChannelPool<BigtableStub>> pool() const {
+  std::shared_ptr<DynamicChannelPool<BigtableStub>> const& pool() const {
     return pool_;
   }
 

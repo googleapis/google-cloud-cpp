@@ -211,9 +211,9 @@ TEST(BigtableStubFactory, DynamicChannelPoolSizingPolicyOption) {
   auto random_two_least_used =
       std::dynamic_pointer_cast<BigtableRandomTwoLeastUsed>(stub);
   ASSERT_NE(random_two_least_used, nullptr);
-  auto pool = random_two_least_used->pool();
+  auto const& pool = random_two_least_used->pool();
   ASSERT_NE(pool, nullptr);
-  auto policy = pool->sizing_policy();
+  auto const& policy = pool->sizing_policy();
   EXPECT_EQ(policy.minimum_average_outstanding_rpcs_per_channel, 42);
   EXPECT_EQ(policy.maximum_average_outstanding_rpcs_per_channel, 99);
   EXPECT_EQ(policy.pool_size_decrease_cooldown_interval,
