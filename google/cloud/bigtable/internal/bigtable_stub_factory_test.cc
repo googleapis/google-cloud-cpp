@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
+#include "google/cloud/bigtable/internal/bigtable_random_two_least_used_decorator.h"
+#include "google/cloud/bigtable/internal/dynamic_channel_pool.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/common_options.h"
@@ -164,6 +166,59 @@ TEST(BigtableStubFactory, RandomTwoLeastUsed) {
 
 // Note that the channel refreshing decorator is tested in
 // bigtable_channel_refresh_test.cc
+
+TEST(BigtableStubFactory, DynamicChannelPoolSizingPolicyOption) {
+  auto constexpr kTestChannels = 1;
+
+  MockFactory factory;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, PingAndWarm)
+      .WillRepeatedly(Return(google::bigtable::v2::PingAndWarmResponse{}));
+
+  EXPECT_CALL(factory, Call)
+      .Times(kTestChannels)
+      .WillRepeatedly(
+          [&](std::shared_ptr<grpc::Channel> const&) { return mock; });
+
+  auto auth = MakeStubFactoryMockAuth();
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", _));
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillRepeatedly(Return(false));
+
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+
+  google::cloud::bigtable::experimental::DynamicChannelPoolSizingPolicy
+      custom_policy;
+  custom_policy.minimum_average_outstanding_rpcs_per_channel = 42;
+  custom_policy.maximum_average_outstanding_rpcs_per_channel = 99;
+  custom_policy.pool_size_decrease_cooldown_interval =
+      std::chrono::seconds(300);
+
+  auto stub = CreateBigtableStubRandomTwoLeastUsed(
+      std::move(auth), fake_cq_impl,
+      "projects/my-projects/instances/my-instance",
+      StubManager::Priming::kSynchronousPriming,
+      Options{}
+          .set<GrpcNumChannelsOption>(kTestChannels)
+          .set<EndpointOption>("localhost:1")
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<google::cloud::bigtable::experimental::
+                   DynamicChannelPoolSizingPolicyOption>(custom_policy),
+      factory.AsStdFunction(), std::move(refresh_state));
+
+  auto random_two_least_used =
+      std::dynamic_pointer_cast<BigtableRandomTwoLeastUsed>(stub);
+  ASSERT_NE(random_two_least_used, nullptr);
+  auto pool = random_two_least_used->pool();
+  ASSERT_NE(pool, nullptr);
+  auto policy = pool->sizing_policy();
+  EXPECT_EQ(policy.minimum_average_outstanding_rpcs_per_channel, 42);
+  EXPECT_EQ(policy.maximum_average_outstanding_rpcs_per_channel, 99);
+  EXPECT_EQ(policy.pool_size_decrease_cooldown_interval,
+            std::chrono::seconds(300));
+}
 
 TEST(BigtableStubFactory, Auth) {
   MockFactory factory;

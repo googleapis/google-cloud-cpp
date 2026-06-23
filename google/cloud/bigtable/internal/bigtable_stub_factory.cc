@@ -174,7 +174,9 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
       DynamicChannelPool<BigtableStub>::Create(
           std::string{instance_name}, CompletionQueue(std::move(cq_impl)),
           std::move(children), std::move(refresh_state),
-          std::move(refreshing_channel_stub_factory)));
+          std::move(refreshing_channel_stub_factory),
+          options.get<
+              bigtable::experimental::DynamicChannelPoolSizingPolicyOption>()));
 }
 
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(

@@ -93,6 +93,11 @@ class DynamicChannelPool
     return channels_.empty();
   }
 
+  bigtable::experimental::DynamicChannelPoolSizingPolicy const& sizing_policy()
+      const {
+    return sizing_policy_;
+  }
+
   // Calls CheckPoolChannelHealth before picking a channel.
   //
   // Pick two random channels from channels_ and return the channel with the
