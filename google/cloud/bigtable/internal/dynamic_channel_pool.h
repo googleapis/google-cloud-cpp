@@ -58,8 +58,7 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy =
-          {}) {
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy) {
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(instance_name), std::move(cq), std::move(initial_channels),
         std::move(refresh_state), std::move(stub_factory_fn),
