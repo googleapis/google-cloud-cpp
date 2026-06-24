@@ -181,6 +181,14 @@ class MockMemorystoreConnection : public memorystore_v1::MemorystoreConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>,
+      GetSharedRegionalCertificateAuthority,
+      (google::cloud::memorystore::v1::
+           GetSharedRegionalCertificateAuthorityRequest const& request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

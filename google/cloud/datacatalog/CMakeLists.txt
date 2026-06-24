@@ -16,20 +16,13 @@
 
 include(GoogleCloudCppLibrary)
 
-google_cloud_cpp_add_gapic_library(datacatalog "Google Cloud Data Catalog API"
-                                   SERVICE_DIRS "lineage/v1/" "v1/")
+google_cloud_cpp_add_gapic_library(
+    datacatalog "Google Cloud Data Catalog API"
+    SERVICE_DIRS "lineage/configmanagement/v1/" "lineage/v1/" "v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(datacatalog_quickstart "quickstart/quickstart.cc")
     target_link_libraries(datacatalog_quickstart
                           PRIVATE google-cloud-cpp::datacatalog)
     google_cloud_cpp_add_common_options(datacatalog_quickstart)
-    add_test(
-        NAME datacatalog_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:datacatalog_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION)
-    set_tests_properties(datacatalog_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()

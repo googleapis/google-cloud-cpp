@@ -27,6 +27,7 @@
 #include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <mutex>
 #include <unordered_map>
@@ -59,8 +60,8 @@ class ObjectDescriptorImpl
   ObjectDescriptorImpl(std::unique_ptr<storage::ResumePolicy> resume_policy,
                        OpenStreamFactory make_stream,
                        google::storage::v2::BidiReadObjectSpec read_object_spec,
-                       std::shared_ptr<OpenStream> stream,
-                       Options options = {});
+                       std::shared_ptr<OpenStream> stream, Options options = {},
+                       std::function<bool()> transport_ok = {});
   ~ObjectDescriptorImpl() override;
 
   // Start the read loop.
@@ -81,6 +82,8 @@ class ObjectDescriptorImpl
   void MakeSubsequentStream() override;
 
   std::size_t StreamSize() const;
+
+  bool IsOpen() const override;
 
  private:
   using StreamManager = MultiStreamManager<ReadStream, ReadRange>;
@@ -108,6 +111,11 @@ class ObjectDescriptorImpl
   bool IsResumable(StreamIterator it, Status const& status,
                    google::rpc::Status const& proto_status);
 
+  std::shared_ptr<storage::internal::HashFunction> CreateHashFunction(
+      bool is_full_read) const;
+  std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
+      bool is_full_read) const;
+
   std::unique_ptr<storage::ResumePolicy> resume_policy_prototype_;
   OpenStreamFactory make_stream_;
 
@@ -123,6 +131,7 @@ class ObjectDescriptorImpl
       google::cloud::StatusOr<storage_internal::OpenStreamResult>>
       pending_stream_;
   bool cancelled_ = false;
+  std::function<bool()> transport_ok_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

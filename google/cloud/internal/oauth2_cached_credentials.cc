@@ -83,6 +83,11 @@ StatusOr<std::string> CachedCredentials::project_id(
   return impl_->project_id(options);
 }
 
+Credentials::AllowedLocationsRequestType
+CachedCredentials::AllowedLocationsRequest() const {
+  return impl_->AllowedLocationsRequest();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

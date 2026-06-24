@@ -139,6 +139,11 @@ Idempotency CatalogServiceConnectionIdempotencyPolicy::LookupEntry(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ModifyEntry(
+    google::cloud::dataplex::v1::ModifyEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CatalogServiceConnectionIdempotencyPolicy::SearchEntries(
     google::cloud::dataplex::v1::SearchEntriesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;

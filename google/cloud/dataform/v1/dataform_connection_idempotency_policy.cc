@@ -34,6 +34,81 @@ DataformConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DataformConnectionIdempotencyPolicy>(*this);
 }
 
+Idempotency DataformConnectionIdempotencyPolicy::GetTeamFolder(
+    google::cloud::dataform::v1::GetTeamFolderRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::CreateTeamFolder(
+    google::cloud::dataform::v1::CreateTeamFolderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::UpdateTeamFolder(
+    google::cloud::dataform::v1::UpdateTeamFolderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::DeleteTeamFolder(
+    google::cloud::dataform::v1::DeleteTeamFolderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::DeleteTeamFolderTree(
+    google::cloud::dataform::v1::DeleteTeamFolderTreeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::QueryTeamFolderContents(
+    google::cloud::dataform::v1::QueryTeamFolderContentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::SearchTeamFolders(
+    google::cloud::dataform::v1::SearchTeamFoldersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::GetFolder(
+    google::cloud::dataform::v1::GetFolderRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::CreateFolder(
+    google::cloud::dataform::v1::CreateFolderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::UpdateFolder(
+    google::cloud::dataform::v1::UpdateFolderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::DeleteFolder(
+    google::cloud::dataform::v1::DeleteFolderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::DeleteFolderTree(
+    google::cloud::dataform::v1::DeleteFolderTreeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::QueryFolderContents(
+    google::cloud::dataform::v1::QueryFolderContentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::QueryUserRootContents(
+    google::cloud::dataform::v1::QueryUserRootContentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::MoveFolder(
+    google::cloud::dataform::v1::MoveFolderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DataformConnectionIdempotencyPolicy::ListRepositories(
     google::cloud::dataform::v1::ListRepositoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -56,6 +131,11 @@ Idempotency DataformConnectionIdempotencyPolicy::UpdateRepository(
 
 Idempotency DataformConnectionIdempotencyPolicy::DeleteRepository(
     google::cloud::dataform::v1::DeleteRepositoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::MoveRepository(
+    google::cloud::dataform::v1::MoveRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -310,6 +390,22 @@ Idempotency DataformConnectionIdempotencyPolicy::UpdateConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DataformConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency DataformConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -320,20 +416,24 @@ Idempotency DataformConnectionIdempotencyPolicy::GetLocation(
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request) {
-  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
-                                         : Idempotency::kIdempotent;
-}
-
-Idempotency DataformConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataformConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency DataformConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataformConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataformConnectionIdempotencyPolicy>

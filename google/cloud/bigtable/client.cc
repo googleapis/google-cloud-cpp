@@ -21,7 +21,7 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::internal::MergeOptions;
+using ::google::cloud::bigtable_internal::MergeOptions;
 using ::google::cloud::internal::OptionsSpan;
 
 StatusOr<PreparedQuery> Client::PrepareQuery(InstanceResource const& instance,

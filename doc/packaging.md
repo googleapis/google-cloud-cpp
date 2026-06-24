@@ -218,7 +218,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-OFF}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -235,7 +235,7 @@ Install the minimal development tools:
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
-        patch unzip tar wget zip dnf-utils
+        patch unzip tar wget zip dnf-utils zlib-devel
 sudo dnf makecache && sudo dnf debuginfo-install -y glibc
 ```
 
@@ -244,8 +244,7 @@ dependencies of `google-cloud-cpp`.
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y protobuf-compiler protobuf-devel grpc-cpp grpc-devel \
-        json-devel libcurl-devel openssl-devel
+sudo dnf install -y json-devel libcurl-devel openssl-devel
 ```
 
 #### Patching pkg-config
@@ -276,6 +275,23 @@ the search path.
 export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib64/pkgconfig
 ```
 
+#### Protobuf
+
+```bash
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+      -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
+```
+
 #### opentelemetry-cpp
 
 ```bash
@@ -296,6 +312,33 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### gRPC
+
+```bash
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+sudo dnf makecache && sudo dnf install -y c-ares-devel re2-devel
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DBUILD_SHARED_LIBS=ON \
+      -DgRPC_INSTALL=ON \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DgRPC_ABSL_PROVIDER=package \
+      -DgRPC_CARES_PROVIDER=package \
+      -DgRPC_PROTOBUF_PROVIDER=package \
+      -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
+      -DgRPC_RE2_PROVIDER=package \
+      -DgRPC_SSL_PROVIDER=package \
+      -DgRPC_ZLIB_PROVIDER=package \
+      -DgRPC_OPENTELEMETRY_PROVIDER=package \
+      -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
+      -GNinja -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig && cd /var/tmp && rm -fr build
+```
+
 #### Compile and install the main project
 
 We can now compile and install `google-cloud-cpp`:
@@ -310,7 +353,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-OFF}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -332,7 +375,7 @@ use GCC 8 or higher to compile `google-cloud-cpp`.
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y automake cmake curl \
-        gcc9 gcc9-c++ git gzip libtool make patch tar wget
+        gcc gcc-c++ git gzip libtool make patch tar wget
 ```
 
 Install some of the dependencies for `google-cloud-cpp`.
@@ -355,7 +398,7 @@ export PATH=/usr/local/bin:${PATH}
 ```
 
 Use the following environment variables to configure the compiler used by CMake.
-export CC=gcc-9 export CXX=g++-9
+export CC=gcc export CXX=g++
 
 #### Abseil
 
@@ -444,7 +487,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -478,7 +521,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-OFF}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -650,7 +693,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-OFF}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -793,7 +836,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-OFF}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -964,7 +1007,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-OFF}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -1118,7 +1161,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-OFF}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
@@ -1323,7 +1366,7 @@ cmake -S . -B cmake-out \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-ON}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND="${DEMO_CORD_WORKAROUND:-OFF}" \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install

@@ -239,6 +239,21 @@ StatusOr<std::string> ComputeEngineCredentials::project_id(
   return RetrieveProjectId(lk, options);
 }
 
+Credentials::AllowedLocationsRequestType
+ComputeEngineCredentials::AllowedLocationsRequest() const {
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  auto email = AccountEmail();
+  // RAB only supports values that contain the '@' character.
+  if (absl::StrContains(email, "@")) {
+    return ServiceAccountAllowedLocationsRequest{std::move(email)};
+  }
+  return std::monostate{};
+#else
+  return std::monostate{};
+#endif
+}
+
 StatusOr<std::string> ComputeEngineCredentials::RetrieveUniverseDomain(
     std::lock_guard<std::mutex> const&, Options const& options) const {
   // Fetch the universe domain only once.

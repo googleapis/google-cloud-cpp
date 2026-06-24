@@ -42,6 +42,9 @@ class CommentServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CreateComment(
       google::cloud::support::v2::CreateCommentRequest const& request);
+
+  virtual google::cloud::Idempotency GetComment(
+      google::cloud::support::v2::GetCommentRequest const& request);
 };
 
 std::unique_ptr<CommentServiceConnectionIdempotencyPolicy>

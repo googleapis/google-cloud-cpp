@@ -48,7 +48,7 @@ StatusOr<rest_internal::RestRequest> PrepareRestRequest(
   if (!rest_context.headers().empty()) {
     for (auto const& h : rest_context.headers()) {
       if (!h.second.empty()) {
-        rest_request->AddHeader(h.first, absl::StrJoin(h.second, "&"));
+        rest_request->AddHeader(h.first, absl::StrJoin(h.second.values(), "&"));
       }
     }
   }

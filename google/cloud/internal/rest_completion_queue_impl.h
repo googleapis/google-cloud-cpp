@@ -17,6 +17,7 @@
 
 #include "google/cloud/future.h"
 #include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/internal/rest_pure_completion_queue_impl.h"
 #include "google/cloud/internal/timer_queue.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
@@ -69,19 +70,18 @@ class RestCompletionQueueImpl final
   /// This function is not supported by RestCompletionQueueImpl, but as the
   /// function is pure virtual, it must be overridden.
   void StartOperation(std::shared_ptr<internal::AsyncGrpcOperation>,
-                      absl::FunctionRef<void(void*)>) override;
+                      absl::FunctionRef<void(void*)>) override {
+    GCP_LOG(FATAL) << " function not supported.\n";
+  }
 
   /// The underlying gRPC completion queue, which does not exist.
   grpc::CompletionQueue* cq() override { return nullptr; }
 
   /// Some counters for testing and debugging.
-  std::int64_t run_async_counter() const { return run_async_counter_.load(); }
+  std::int64_t run_async_counter() const { return impl_->run_async_counter(); }
 
  private:
-  std::shared_ptr<internal::TimerQueue> tq_;
-
-  // These are metrics used in testing.
-  std::atomic<std::int64_t> run_async_counter_{0};
+  std::shared_ptr<RestPureCompletionQueueImpl> impl_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

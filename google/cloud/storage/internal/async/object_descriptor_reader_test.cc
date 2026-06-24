@@ -39,7 +39,7 @@ TEST(ObjectDescriptorReader, Basic) {
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-  impl->OnRead(std::move(data));
+  impl->OnRead(std::move(data), /*is_transcoded=*/false);
 
   auto actual = tested.Read().get();
   EXPECT_THAT(actual,

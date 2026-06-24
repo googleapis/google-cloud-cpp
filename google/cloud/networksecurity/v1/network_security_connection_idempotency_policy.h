@@ -60,6 +60,26 @@ class NetworkSecurityConnectionIdempotencyPolicy {
       google::cloud::networksecurity::v1::
           DeleteAuthorizationPolicyRequest const& request);
 
+  virtual google::cloud::Idempotency ListBackendAuthenticationConfigs(
+      google::cloud::networksecurity::v1::
+          ListBackendAuthenticationConfigsRequest request);
+
+  virtual google::cloud::Idempotency GetBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::
+          GetBackendAuthenticationConfigRequest const& request);
+
+  virtual google::cloud::Idempotency CreateBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::
+          CreateBackendAuthenticationConfigRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::
+          UpdateBackendAuthenticationConfigRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteBackendAuthenticationConfig(
+      google::cloud::networksecurity::v1::
+          DeleteBackendAuthenticationConfigRequest const& request);
+
   virtual google::cloud::Idempotency ListServerTlsPolicies(
       google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest request);
 
@@ -96,6 +116,99 @@ class NetworkSecurityConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteClientTlsPolicy(
       google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListGatewaySecurityPolicies(
+      google::cloud::networksecurity::v1::ListGatewaySecurityPoliciesRequest
+          request);
+
+  virtual google::cloud::Idempotency GetGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::GetGatewaySecurityPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteGatewaySecurityPolicy(
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency ListGatewaySecurityPolicyRules(
+      google::cloud::networksecurity::v1::ListGatewaySecurityPolicyRulesRequest
+          request);
+
+  virtual google::cloud::Idempotency GetGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::
+          GetGatewaySecurityPolicyRuleRequest const& request);
+
+  virtual google::cloud::Idempotency CreateGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRuleRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRuleRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteGatewaySecurityPolicyRule(
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRuleRequest const& request);
+
+  virtual google::cloud::Idempotency ListUrlLists(
+      google::cloud::networksecurity::v1::ListUrlListsRequest request);
+
+  virtual google::cloud::Idempotency GetUrlList(
+      google::cloud::networksecurity::v1::GetUrlListRequest const& request);
+
+  virtual google::cloud::Idempotency CreateUrlList(
+      google::cloud::networksecurity::v1::CreateUrlListRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateUrlList(
+      google::cloud::networksecurity::v1::UpdateUrlListRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteUrlList(
+      google::cloud::networksecurity::v1::DeleteUrlListRequest const& request);
+
+  virtual google::cloud::Idempotency ListTlsInspectionPolicies(
+      google::cloud::networksecurity::v1::ListTlsInspectionPoliciesRequest
+          request);
+
+  virtual google::cloud::Idempotency GetTlsInspectionPolicy(
+      google::cloud::networksecurity::v1::GetTlsInspectionPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateTlsInspectionPolicy(
+      google::cloud::networksecurity::v1::
+          CreateTlsInspectionPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateTlsInspectionPolicy(
+      google::cloud::networksecurity::v1::
+          UpdateTlsInspectionPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteTlsInspectionPolicy(
+      google::cloud::networksecurity::v1::
+          DeleteTlsInspectionPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency ListAuthzPolicies(
+      google::cloud::networksecurity::v1::ListAuthzPoliciesRequest request);
+
+  virtual google::cloud::Idempotency GetAuthzPolicy(
+      google::cloud::networksecurity::v1::GetAuthzPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency CreateAuthzPolicy(
+      google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateAuthzPolicy(
+      google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteAuthzPolicy(
+      google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
           request);
 
   virtual google::cloud::Idempotency ListLocations(

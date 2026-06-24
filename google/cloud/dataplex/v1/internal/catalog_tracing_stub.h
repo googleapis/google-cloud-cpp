@@ -200,6 +200,10 @@ class CatalogServiceTracingStub : public CatalogServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::LookupEntryRequest const& request) override;
 
+  StatusOr<google::cloud::dataplex::v1::Entry> ModifyEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::ModifyEntryRequest const& request) override;
+
   StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse> SearchEntries(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::SearchEntriesRequest const& request)

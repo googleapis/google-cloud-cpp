@@ -136,10 +136,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/0b3dec847f1045e47991c1539d4c69d8b025cfe8.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/ef19b7b7a73f19f33ab86c5b3603e9590025acd7.tar.gz",
         ],
-        sha256 = "815f0297d0e90158a68a4fe2e2a164ce45b36de12d868585837b67f5dfd90964",
-        strip_prefix = "googleapis-0b3dec847f1045e47991c1539d4c69d8b025cfe8",
+        sha256 = "31c37576b66942a3afa23b985833936e903cfd7975af50f8958119047ab44847",
+        strip_prefix = "googleapis-ef19b7b7a73f19f33ab86c5b3603e9590025acd7",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         patches = [
@@ -150,7 +150,7 @@ def gl_cpp_workspace0(name = None):
             #"googleapis.patch",
 
             # Mirrors the patch from the current bazel module
-            "//bazel:remove_upb_c_rules.patch",
+            Label("//bazel:remove_upb_c_rules.patch"),
         ],
         patch_tool = "patch",
 

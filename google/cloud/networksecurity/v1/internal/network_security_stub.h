@@ -96,6 +96,62 @@ class NetworkSecurityStub {
       google::cloud::networksecurity::v1::
           DeleteAuthorizationPolicyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::networksecurity::v1::
+                       ListBackendAuthenticationConfigsResponse>
+  ListBackendAuthenticationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          ListBackendAuthenticationConfigsRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+  GetBackendAuthenticationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          GetBackendAuthenticationConfigRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateBackendAuthenticationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          CreateBackendAuthenticationConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateBackendAuthenticationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          CreateBackendAuthenticationConfigRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateBackendAuthenticationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          UpdateBackendAuthenticationConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateBackendAuthenticationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          UpdateBackendAuthenticationConfigRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteBackendAuthenticationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          DeleteBackendAuthenticationConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteBackendAuthenticationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          DeleteBackendAuthenticationConfigRequest const& request) = 0;
+
   virtual StatusOr<
       google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
   ListServerTlsPolicies(
@@ -198,6 +254,263 @@ class NetworkSecurityStub {
   virtual StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
       grpc::ClientContext& context, Options options,
       google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::networksecurity::v1::ListGatewaySecurityPoliciesResponse>
+  ListGatewaySecurityPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          ListGatewaySecurityPoliciesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+  GetGatewaySecurityPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::GetGatewaySecurityPolicyRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGatewaySecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateGatewaySecurityPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateGatewaySecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateGatewaySecurityPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGatewaySecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteGatewaySecurityPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::networksecurity::v1::
+                       ListGatewaySecurityPolicyRulesResponse>
+  ListGatewaySecurityPolicyRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          ListGatewaySecurityPolicyRulesRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+  GetGatewaySecurityPolicyRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          GetGatewaySecurityPolicyRuleRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGatewaySecurityPolicyRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateGatewaySecurityPolicyRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRuleRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateGatewaySecurityPolicyRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  UpdateGatewaySecurityPolicyRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRuleRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGatewaySecurityPolicyRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteGatewaySecurityPolicyRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRuleRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::networksecurity::v1::ListUrlListsResponse>
+  ListUrlLists(grpc::ClientContext& context, Options const& options,
+               google::cloud::networksecurity::v1::ListUrlListsRequest const&
+                   request) = 0;
+
+  virtual StatusOr<google::cloud::networksecurity::v1::UrlList> GetUrlList(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::GetUrlListRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateUrlList(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::CreateUrlListRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateUrlList(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::CreateUrlListRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateUrlList(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::UpdateUrlListRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateUrlList(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::UpdateUrlListRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteUrlList(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::DeleteUrlListRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteUrlList(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::DeleteUrlListRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::networksecurity::v1::ListTlsInspectionPoliciesResponse>
+  ListTlsInspectionPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          ListTlsInspectionPoliciesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+  GetTlsInspectionPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::GetTlsInspectionPolicyRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateTlsInspectionPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          CreateTlsInspectionPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateTlsInspectionPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          CreateTlsInspectionPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateTlsInspectionPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          UpdateTlsInspectionPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateTlsInspectionPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          UpdateTlsInspectionPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteTlsInspectionPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          DeleteTlsInspectionPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTlsInspectionPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          DeleteTlsInspectionPolicyRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::networksecurity::v1::ListAuthzPoliciesResponse>
+  ListAuthzPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::ListAuthzPoliciesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::networksecurity::v1::AuthzPolicy>
+  GetAuthzPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::GetAuthzPolicyRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateAuthzPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateAuthzPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateAuthzPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAuthzPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteAuthzPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAuthzPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
@@ -319,6 +632,58 @@ class DefaultNetworkSecurityStub : public NetworkSecurityStub {
       google::cloud::networksecurity::v1::
           DeleteAuthorizationPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::networksecurity::v1::
+               ListBackendAuthenticationConfigsResponse>
+  ListBackendAuthenticationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          ListBackendAuthenticationConfigsRequest const& request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::BackendAuthenticationConfig>
+  GetBackendAuthenticationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          GetBackendAuthenticationConfigRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateBackendAuthenticationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          CreateBackendAuthenticationConfigRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateBackendAuthenticationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          CreateBackendAuthenticationConfigRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateBackendAuthenticationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          UpdateBackendAuthenticationConfigRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBackendAuthenticationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          UpdateBackendAuthenticationConfigRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteBackendAuthenticationConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          DeleteBackendAuthenticationConfigRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteBackendAuthenticationConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          DeleteBackendAuthenticationConfigRequest const& request) override;
+
   StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
   ListServerTlsPolicies(
       grpc::ClientContext& context, Options const& options,
@@ -413,6 +778,255 @@ class DefaultNetworkSecurityStub : public NetworkSecurityStub {
   StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
       grpc::ClientContext& context, Options options,
       google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
+          request) override;
+
+  StatusOr<
+      google::cloud::networksecurity::v1::ListGatewaySecurityPoliciesResponse>
+  ListGatewaySecurityPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          ListGatewaySecurityPoliciesRequest const& request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicy>
+  GetGatewaySecurityPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::GetGatewaySecurityPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGatewaySecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateGatewaySecurityPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateGatewaySecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateGatewaySecurityPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGatewaySecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGatewaySecurityPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::
+               ListGatewaySecurityPolicyRulesResponse>
+  ListGatewaySecurityPolicyRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          ListGatewaySecurityPolicyRulesRequest const& request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::GatewaySecurityPolicyRule>
+  GetGatewaySecurityPolicyRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          GetGatewaySecurityPolicyRuleRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGatewaySecurityPolicyRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRuleRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateGatewaySecurityPolicyRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          CreateGatewaySecurityPolicyRuleRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateGatewaySecurityPolicyRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRuleRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateGatewaySecurityPolicyRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          UpdateGatewaySecurityPolicyRuleRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGatewaySecurityPolicyRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRuleRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGatewaySecurityPolicyRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          DeleteGatewaySecurityPolicyRuleRequest const& request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::ListUrlListsResponse>
+  ListUrlLists(grpc::ClientContext& context, Options const& options,
+               google::cloud::networksecurity::v1::ListUrlListsRequest const&
+                   request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::UrlList> GetUrlList(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::GetUrlListRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateUrlList(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::CreateUrlListRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateUrlList(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::CreateUrlListRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateUrlList(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::UpdateUrlListRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateUrlList(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::UpdateUrlListRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteUrlList(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::DeleteUrlListRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteUrlList(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::DeleteUrlListRequest const& request)
+      override;
+
+  StatusOr<
+      google::cloud::networksecurity::v1::ListTlsInspectionPoliciesResponse>
+  ListTlsInspectionPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::
+          ListTlsInspectionPoliciesRequest const& request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::TlsInspectionPolicy>
+  GetTlsInspectionPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::GetTlsInspectionPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateTlsInspectionPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          CreateTlsInspectionPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateTlsInspectionPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          CreateTlsInspectionPolicyRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateTlsInspectionPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          UpdateTlsInspectionPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateTlsInspectionPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          UpdateTlsInspectionPolicyRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteTlsInspectionPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::
+          DeleteTlsInspectionPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteTlsInspectionPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::
+          DeleteTlsInspectionPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::ListAuthzPoliciesResponse>
+  ListAuthzPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::ListAuthzPoliciesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networksecurity::v1::AuthzPolicy> GetAuthzPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networksecurity::v1::GetAuthzPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAuthzPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAuthzPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::CreateAuthzPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAuthzPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAuthzPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::UpdateAuthzPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAuthzPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAuthzPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networksecurity::v1::DeleteAuthzPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/bound_query.h"
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/instance_resource.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/prepared_query.h"
 #include "google/cloud/bigtable/sql_statement.h"
 #include "google/cloud/bigtable/version.h"
@@ -62,8 +63,8 @@ class Client {
    */
   explicit Client(std::shared_ptr<DataConnection> conn, Options opts = {})
       : conn_(std::move(conn)),
-        opts_(google::cloud::internal::MergeOptions(std::move(opts),
-                                                    conn_->options())) {}
+        opts_(bigtable_internal::MergeOptions(std::move(opts),
+                                              conn_->options())) {}
 
   /**
    * Prepares a query for future execution.

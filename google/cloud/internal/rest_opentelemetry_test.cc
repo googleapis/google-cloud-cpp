@@ -42,7 +42,7 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
   auto span_catcher = InstallSpanCatcher();
 
   auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
-  RestRequest request(kUrl, RestRequest::HttpHeaders{{"empty", {}}});
+  RestRequest request(kUrl, HttpHeaders{{"empty", {}}});
   auto const secret =
       std::string{"Bearer secret-0123456789aaaaabbbbbcccccddddd"};
   ASSERT_THAT(secret.size(), Gt(static_cast<std::size_t>(32)));
@@ -81,7 +81,7 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
 TEST(RestOpentelemetry, InjectTraceContext) {
   auto span_catcher = InstallSpanCatcher();
   auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
-  RestRequest request(kUrl, RestRequest::HttpHeaders{{"empty", {}}});
+  RestRequest request(kUrl, HttpHeaders{{"empty", {}}});
 
   auto span = MakeSpanHttp(request, "GET");
   auto scope = opentelemetry::trace::Scope(span);

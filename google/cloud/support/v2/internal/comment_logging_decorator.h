@@ -49,6 +49,10 @@ class CommentServiceLogging : public CommentServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
+  StatusOr<google::cloud::support::v2::Comment> GetComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetCommentRequest const& request) override;
+
  private:
   std::shared_ptr<CommentServiceStub> child_;
   TracingOptions tracing_options_;

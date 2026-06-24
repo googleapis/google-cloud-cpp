@@ -63,6 +63,19 @@ StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
   return it->get<std::int32_t>();
 }
 
+StatusOr<std::vector<std::string>> ValidateStringArrayField(
+    nlohmann::json const& json, absl::string_view name,
+    absl::string_view object_name, internal::ErrorContext const& ec) {
+  auto it = json.find(std::string{name});
+  if (it == json.end()) return MissingFieldError(name, object_name, ec);
+  if (!it->is_array()) return InvalidTypeError(name, object_name, ec);
+  if (!std::all_of(it->begin(), it->end(),
+                   [](nlohmann::json const& e) { return e.is_string(); })) {
+    return InvalidTypeError(name, object_name, ec);
+  }
+  return it->get<std::vector<std::string>>();
+}
+
 Status MissingFieldError(absl::string_view name, absl::string_view object_name,
                          internal::ErrorContext const& ec) {
   return InvalidArgumentError(

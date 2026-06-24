@@ -63,12 +63,18 @@ TEST(ChannelUsageTest, InstantOutstandingRpcs) {
 TEST(ChannelUsageTest, SetLastRefreshStatus) {
   auto mock = std::make_shared<MockBigtableStub>();
   auto channel = std::make_shared<ChannelUsage<BigtableStub>>(mock);
-  Status expected_status = internal::InternalError("uh oh");
+  Status error_status = internal::InternalError("uh oh");
+  Status not_found_status = internal::NotFoundError("not found");
+  Status permission_denied_status = internal::PermissionDeniedError("denied");
   (void)channel->AcquireStub();
   EXPECT_THAT(channel->instant_outstanding_rpcs(), IsOkAndHolds(1));
-  channel->set_last_refresh_status(expected_status);
+  channel->set_last_refresh_status(not_found_status);
+  EXPECT_THAT(channel->instant_outstanding_rpcs(), IsOkAndHolds(1));
+  channel->set_last_refresh_status(permission_denied_status);
+  EXPECT_THAT(channel->instant_outstanding_rpcs(), IsOkAndHolds(1));
+  channel->set_last_refresh_status(error_status);
   EXPECT_THAT(channel->instant_outstanding_rpcs(),
-              StatusIs(expected_status.code()));
+              StatusIs(error_status.code()));
 }
 
 TEST(ChannelUsageTest, MakeWeak) {

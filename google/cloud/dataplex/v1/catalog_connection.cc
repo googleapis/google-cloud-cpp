@@ -324,6 +324,12 @@ CatalogServiceConnection::LookupEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry>
+CatalogServiceConnection::ModifyEntry(
+    google::cloud::dataplex::v1::ModifyEntryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
 CatalogServiceConnection::SearchEntries(
     google::cloud::dataplex::v1::

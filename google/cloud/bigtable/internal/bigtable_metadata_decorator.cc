@@ -415,6 +415,49 @@ BigtableMetadata::ExecuteQuery(
   return child_->ExecuteQuery(std::move(context), options, request);
 }
 
+StatusOr<google::bigtable::v2::ClientConfiguration>
+BigtableMetadata::GetClientConfiguration(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::v2::GetClientConfigurationRequest const& request) {
+  SetMetadata(context, options);
+  return child_->GetClientConfiguration(context, options, request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+BigtableMetadata::AsyncOpenTable(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncOpenTable(cq, std::move(context), std::move(options));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+BigtableMetadata::AsyncOpenAuthorizedView(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncOpenAuthorizedView(cq, std::move(context),
+                                         std::move(options));
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::bigtable::v2::SessionRequest,
+    google::bigtable::v2::SessionResponse>>
+BigtableMetadata::AsyncOpenMaterializedView(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncOpenMaterializedView(cq, std::move(context),
+                                           std::move(options));
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableMetadata::AsyncReadRows(

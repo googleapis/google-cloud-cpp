@@ -53,6 +53,7 @@ using ::testing::Property;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
+using ::testing::VariantWith;
 
 using MockHttpClientFactory =
     ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
@@ -223,6 +224,7 @@ TEST(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
       {R"js({"email": "foo@bar.baz"})js",
        ServiceAccountMetadata{{}, "foo@bar.baz", "googleapis.com"}},
       {R"js({})js", ServiceAccountMetadata{{}, "", "googleapis.com"}},
+      {R"js([])js", ServiceAccountMetadata{{}, "", "googleapis.com"}},
   };
 
   for (auto const& test : cases) {
@@ -387,6 +389,10 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
                        HasSubstr("Could not find all required fields")));
 }
 
+MATCHER_P(RequestServiceAccountEmailIs, email, "has service account email") {
+  return email == arg.service_account_email;
+}
+
 /// @test Verify that we can force a refresh of the service account email.
 TEST(ComputeEngineCredentialsTest, AccountEmail) {
   auto const alias = std::string{"default"};
@@ -416,6 +422,53 @@ TEST(ComputeEngineCredentialsTest, AccountEmail) {
   auto refreshed_email = credentials.AccountEmail();
   EXPECT_EQ(email, refreshed_email);
   EXPECT_EQ(credentials.service_account_email(), refreshed_email);
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<ServiceAccountAllowedLocationsRequest>(
+                  RequestServiceAccountEmailIs(email)));
+#else
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate()));
+#endif
+}
+
+TEST(ComputeEngineCredentialsTest, AccountEmailInvalidForRAB) {
+  auto const alias = std::string{"default"};
+  auto const not_an_email = std::string{"not-an-email"};
+  auto const svc_acct_info_resp = std::string{R"""({
+      "email": ")""" + not_an_email + R"""(",
+      "scopes": ["scope1","scope2"]
+  })"""};
+
+  auto client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*client, Get(_, expect_service_config(alias)))
+      .WillOnce([&](RestContext&, RestRequest const&) {
+        auto response = std::make_unique<MockRestResponse>();
+        EXPECT_CALL(*response, StatusCode)
+            .WillRepeatedly(Return(HttpStatusCode::kOk));
+        EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([&] {
+          return MakeMockHttpPayloadSuccess(svc_acct_info_resp);
+        });
+        return std::unique_ptr<RestResponse>(std::move(response));
+      });
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce(Return(ByMove(std::move(client))));
+  ComputeEngineCredentials credentials(alias, Options{},
+                                       client_factory.AsStdFunction());
+  EXPECT_EQ(credentials.service_account_email(), alias);
+  auto refreshed_email = credentials.AccountEmail();
+  EXPECT_EQ(not_an_email, refreshed_email);
+  EXPECT_EQ(credentials.service_account_email(), refreshed_email);
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate()));
+#else
+  EXPECT_THAT(credentials.AllowedLocationsRequest(),
+              VariantWith<std::monostate>(std::monostate()));
+#endif
 }
 
 auto expected_universe_domain_request = []() {

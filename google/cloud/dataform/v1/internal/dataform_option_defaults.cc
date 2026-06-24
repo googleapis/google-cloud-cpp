@@ -50,6 +50,16 @@ Options DataformDefaultOptions(Options options) {
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
+  if (!options.has<dataform_v1::DataformPollingPolicyOption>()) {
+    options.set<dataform_v1::DataformPollingPolicyOption>(
+        GenericPollingPolicy<dataform_v1::DataformRetryPolicyOption::Type,
+                             dataform_v1::DataformBackoffPolicyOption::Type>(
+            options.get<dataform_v1::DataformRetryPolicyOption>()->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options.has<dataform_v1::DataformConnectionIdempotencyPolicyOption>()) {
     options.set<dataform_v1::DataformConnectionIdempotencyPolicyOption>(
         dataform_v1::MakeDefaultDataformConnectionIdempotencyPolicy());

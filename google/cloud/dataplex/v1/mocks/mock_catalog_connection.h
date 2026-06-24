@@ -449,6 +449,10 @@ class MockCatalogServiceConnection
               (google::cloud::dataplex::v1::LookupEntryRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entry>, ModifyEntry,
+              (google::cloud::dataplex::v1::ModifyEntryRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>),
               SearchEntries,
               (google::cloud::dataplex::v1::SearchEntriesRequest request),

@@ -21,12 +21,19 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
+VARIATIONS = {
+    "default": {"GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL": "static"},
+    "dynamic-pool": {"GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL": "dynamic"},
+}
+
 [cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", "") + "-" + v_label,
     timeout = "long",
     srcs = [test],
+    env = v_env,
     tags = [
         "integration-test",
+        "integration-test-" + v_label,
     ],
     deps = [
         "//:bigtable",
@@ -36,7 +43,7 @@ licenses(["notice"])  # Apache 2.0
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@googletest//:gtest_main",
     ],
-) for test in bigtable_client_integration_tests]
+) for test in bigtable_client_integration_tests for v_label, v_env in VARIATIONS.items()]
 
 cc_binary(
     name = "instance_admin_emulator",

@@ -23,6 +23,7 @@ name: asan-ci
 substitutions:
   _BUILD_NAME: asan
   _DISTRO: fedora-latest-bazel
+  _INTEGRATION_LIBRARIES: all_bar_storage
   _TRIGGER_TYPE: ci
 tags:
 - ci

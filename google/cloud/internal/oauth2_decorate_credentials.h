@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_DECORATE_CREDENTIALS_H
 
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -29,7 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Add a full stack of logging (if requested in @p opts) and caching decorators
 /// to the credentials.
 std::shared_ptr<oauth2_internal::Credentials> Decorate(
-    std::shared_ptr<oauth2_internal::Credentials> impl, Options const& opts);
+    std::shared_ptr<oauth2_internal::Credentials> impl,
+    HttpClientFactory client_factory, Options const& opts);
 
 /// Add only a logging decorator to the credentials if requested in @p opts
 std::shared_ptr<oauth2_internal::Credentials> WithLogging(
@@ -39,6 +41,11 @@ std::shared_ptr<oauth2_internal::Credentials> WithLogging(
 /// Add only a caching decorator to the credentials.
 std::shared_ptr<oauth2_internal::Credentials> WithCaching(
     std::shared_ptr<oauth2_internal::Credentials> impl);
+
+/// Add regional access boundary decorator to the credentials.
+std::shared_ptr<oauth2_internal::Credentials> WithRegionalAccessBoundary(
+    std::shared_ptr<oauth2_internal::Credentials> impl,
+    HttpClientFactory client_factory, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal

@@ -362,16 +362,16 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetDefaultAcl() {
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetEncryption(
     BucketEncryption const& v) {
   internal::PatchBuilder builder;
-  builder.SetStringField("defaultKmsKeyName", v.default_kms_key_name);
+  if (v.default_kms_key_name.empty()) {
+    builder.RemoveField("defaultKmsKeyName");
+  } else {
+    builder.SetStringField("defaultKmsKeyName", v.default_kms_key_name);
+  }
 
   auto add_config_patch = [&](char const* name, auto const& config) {
     if (config.restriction_mode.empty()) return;
-    builder.AddSubPatch(
-        name, internal::PatchBuilder()
-                  .SetStringField("restrictionMode", config.restriction_mode)
-                  .SetStringField("effectiveTime",
-                                  google::cloud::internal::FormatRfc3339(
-                                      config.effective_time)));
+    builder.AddSubPatch(name, internal::PatchBuilder().SetStringField(
+                                  "restrictionMode", config.restriction_mode));
   };
   add_config_patch("googleManagedEncryptionEnforcementConfig",
                    v.google_managed_encryption_enforcement_config);

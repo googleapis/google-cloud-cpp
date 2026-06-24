@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
+#include "google/cloud/bigtable/internal/bigtable_random_two_least_used_decorator.h"
+#include "google/cloud/bigtable/internal/dynamic_channel_pool.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/common_options.h"
@@ -20,14 +22,17 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
+#include "google/bigtable/v2/feature_flags.pb.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <regex>
@@ -51,7 +56,6 @@ using ::testing::IsEmpty;
 using ::testing::MockFunction;
 using ::testing::Not;
 using ::testing::Optional;
-using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
 
@@ -162,6 +166,61 @@ TEST(BigtableStubFactory, RandomTwoLeastUsed) {
 
 // Note that the channel refreshing decorator is tested in
 // bigtable_channel_refresh_test.cc
+
+TEST(BigtableStubFactory, DynamicChannelPoolSizingPolicyOption) {
+  auto constexpr kTestChannels = 1;
+
+  MockFactory factory;
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, PingAndWarm)
+      .WillRepeatedly(Return(google::bigtable::v2::PingAndWarmResponse{}));
+
+  EXPECT_CALL(factory, Call)
+      .Times(kTestChannels)
+      .WillRepeatedly(
+          [&](std::shared_ptr<grpc::Channel> const&) { return mock; });
+
+  auto auth = MakeStubFactoryMockAuth();
+  EXPECT_CALL(*auth, CreateChannel("localhost:1", _));
+  EXPECT_CALL(*auth, RequiresConfigureContext).WillRepeatedly(Return(false));
+
+  auto fake_cq_impl = std::make_shared<testing_util::FakeCompletionQueueImpl>();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+
+  google::cloud::bigtable::experimental::DynamicChannelPoolSizingPolicy
+      custom_policy;
+  custom_policy.minimum_average_outstanding_rpcs_per_channel = 42;
+  custom_policy.maximum_average_outstanding_rpcs_per_channel = 99;
+  custom_policy.pool_size_decrease_cooldown_interval =
+      std::chrono::seconds(300);
+
+  auto stub = CreateBigtableStubRandomTwoLeastUsed(
+      std::move(auth), fake_cq_impl,
+      "projects/my-projects/instances/my-instance",
+      StubManager::Priming::kSynchronousPriming,
+      Options{}
+          .set<GrpcNumChannelsOption>(kTestChannels)
+          .set<EndpointOption>("localhost:1")
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<google::cloud::bigtable::experimental::
+                   DynamicChannelPoolSizingPolicyOption>(custom_policy),
+      factory.AsStdFunction(), std::move(refresh_state));
+
+  auto random_two_least_used =
+      std::dynamic_pointer_cast<BigtableRandomTwoLeastUsed>(stub);
+  ASSERT_NE(random_two_least_used, nullptr);
+  auto const& pool = random_two_least_used->pool();
+  ASSERT_NE(pool, nullptr);
+  auto const& policy = pool->sizing_policy();
+  EXPECT_EQ(policy.minimum_average_outstanding_rpcs_per_channel, 42);
+  EXPECT_EQ(policy.maximum_average_outstanding_rpcs_per_channel, 99);
+  EXPECT_EQ(policy.pool_size_decrease_cooldown_interval,
+            std::chrono::seconds(300));
+
+  fake_cq_impl->SimulateCompletion(false);
+}
 
 TEST(BigtableStubFactory, Auth) {
   MockFactory factory;
@@ -285,6 +344,104 @@ TEST(BigtableStubFactory, LoggingDisabled) {
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
 }
 
+TEST(BigtableStubFactory, FeaturesFlagsCloudDirectPath) {
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce([](grpc::ClientContext& context, Options const&,
+                         google::bigtable::v2::MutateRowRequest const&) {
+              ValidateMetadataFixture fixture;
+              auto headers = fixture.GetMetadata(context);
+              auto it = headers.find("bigtable-features");
+              EXPECT_NE(it, headers.end());
+              if (it == headers.end())
+                return internal::AbortedError("header not found");
+              auto decoded = internal::UrlsafeBase64Decode(it->second);
+              EXPECT_STATUS_OK(decoded);
+              if (!decoded) return internal::AbortedError("fail to decode");
+              google::bigtable::v2::FeatureFlags proto;
+              EXPECT_TRUE(proto.ParseFromArray(
+                  decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_TRUE(proto.reverse_scans());
+              EXPECT_TRUE(proto.last_scanned_row_responses());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit2());
+              EXPECT_TRUE(proto.routing_cookie());
+              EXPECT_TRUE(proto.retry_info());
+              EXPECT_TRUE(proto.peer_info());
+              EXPECT_TRUE(proto.traffic_director_enabled());
+              EXPECT_TRUE(proto.direct_access_requested());
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  testing_util::SetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+  auto auth = MakeStubFactoryMockAuth();
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(auth), std::move(cq),
+      Options{}
+          .set<EndpointOption>("localhost:1")
+          .set<GrpcNumChannelsOption>(1)
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  (void)stub->MutateRow(context, Options{}, {});
+  testing_util::UnsetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
+}
+
+TEST(BigtableStubFactory, FeaturesFlagsBigtableDirectPath) {
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce([](grpc::ClientContext& context, Options const&,
+                         google::bigtable::v2::MutateRowRequest const&) {
+              ValidateMetadataFixture fixture;
+              auto headers = fixture.GetMetadata(context);
+              auto it = headers.find("bigtable-features");
+              EXPECT_NE(it, headers.end());
+              auto decoded = internal::UrlsafeBase64Decode(it->second);
+              if (it == headers.end())
+                return internal::AbortedError("header not found");
+              EXPECT_STATUS_OK(decoded);
+              if (!decoded) return internal::AbortedError("fail to decode");
+              google::bigtable::v2::FeatureFlags proto;
+              EXPECT_TRUE(proto.ParseFromArray(
+                  decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_TRUE(proto.reverse_scans());
+              EXPECT_TRUE(proto.last_scanned_row_responses());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit2());
+              EXPECT_TRUE(proto.routing_cookie());
+              EXPECT_TRUE(proto.retry_info());
+              EXPECT_TRUE(proto.peer_info());
+              EXPECT_TRUE(proto.traffic_director_enabled());
+              EXPECT_TRUE(proto.direct_access_requested());
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  testing_util::SetEnv("CBT_ENABLE_DIRECTPATH", "true");
+  auto auth = MakeStubFactoryMockAuth();
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(auth), std::move(cq),
+      Options{}
+          .set<EndpointOption>("localhost:1")
+          .set<GrpcNumChannelsOption>(1)
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials()),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  (void)stub->MutateRow(context, Options{}, {});
+  testing_util::UnsetEnv("CBT_ENABLE_DIRECTPATH");
+}
+
 TEST(BigtableStubFactory, FeaturesFlags) {
   MockFactory factory;
   EXPECT_CALL(factory, Call)
@@ -295,10 +452,25 @@ TEST(BigtableStubFactory, FeaturesFlags) {
                          google::bigtable::v2::MutateRowRequest const&) {
               ValidateMetadataFixture fixture;
               auto headers = fixture.GetMetadata(context);
-              EXPECT_THAT(
-                  headers,
-                  Contains(Pair("bigtable-features",
-                                AllOf(Not(IsEmpty()), IsWebSafeBase64()))));
+              auto it = headers.find("bigtable-features");
+              EXPECT_NE(it, headers.end());
+              if (it == headers.end())
+                return internal::AbortedError("header not found");
+              auto decoded = internal::UrlsafeBase64Decode(it->second);
+              EXPECT_STATUS_OK(decoded);
+              if (!decoded) return internal::AbortedError("fail to decode");
+              google::bigtable::v2::FeatureFlags proto;
+              EXPECT_TRUE(proto.ParseFromArray(
+                  decoded->data(), static_cast<int>(decoded->size())));
+              EXPECT_TRUE(proto.reverse_scans());
+              EXPECT_TRUE(proto.last_scanned_row_responses());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit());
+              EXPECT_TRUE(proto.mutate_rows_rate_limit2());
+              EXPECT_TRUE(proto.routing_cookie());
+              EXPECT_TRUE(proto.retry_info());
+              EXPECT_TRUE(proto.peer_info());
+              EXPECT_FALSE(proto.traffic_director_enabled());
+              EXPECT_FALSE(proto.direct_access_requested());
               return internal::AbortedError("fail");
             });
         return mock;

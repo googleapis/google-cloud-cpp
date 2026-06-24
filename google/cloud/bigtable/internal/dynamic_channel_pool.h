@@ -34,55 +34,6 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// TODO(#16035): Move this struct and Option to bigtable/options.h in the
-// experimental namespace when the feature is ready.
-struct DynamicChannelPoolSizingPolicy {
-  // To reduce channel churn, the pool will not add channels more frequently
-  // than this period.
-  std::chrono::milliseconds pool_size_increase_cooldown_interval =
-      std::chrono::seconds(10);
-
-  // Removing unused channels is not as performance critical as adding channels
-  // to handle a surge in RPC calls. Thus, there are separate cooldown settings
-  // for each.
-  std::chrono::milliseconds pool_size_decrease_cooldown_interval =
-      std::chrono::seconds(120);
-
-  struct DiscreteChannels {
-    explicit DiscreteChannels(int number = 0) : number(number) {}
-    int number;
-  };
-  struct PercentageOfPoolSize {
-    explicit PercentageOfPoolSize(double percentage = 0.0)
-        : percentage(percentage) {}
-    double percentage;
-  };
-  absl::variant<DiscreteChannels, PercentageOfPoolSize>
-      channels_to_add_per_resize = DiscreteChannels{1};
-
-  // If the average number of outstanding RPCs is below this threshold,
-  // the pool size will be decreased.
-  int minimum_average_outstanding_rpcs_per_channel = 1;
-  // If the average number of outstanding RPCs is above this threshold,
-  // the pool size will be increased.
-  int maximum_average_outstanding_rpcs_per_channel = 25;
-
-  // When channels are removed from the pool, we have to wait until all
-  // outstanding RPCs on that channel are completed before destroying it.
-  std::chrono::milliseconds remove_channel_polling_interval =
-      std::chrono::seconds(30);
-
-  // Limits how large the pool can grow. Default is twice the minimum_pool_size.
-  std::size_t maximum_channel_pool_size = 0;
-
-  // This is set to the value of GrpcNumChannelsOption.
-  std::size_t minimum_channel_pool_size = 0;
-};
-
-struct DynamicChannelPoolSizingPolicyOption {
-  using Type = DynamicChannelPoolSizingPolicy;
-};
-
 //
 // This class manages a pool of Stubs wrapped in a ChannelUsage object, and
 // selects one for use using a "Random Two Least Used" strategy.
@@ -107,7 +58,7 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      DynamicChannelPoolSizingPolicy sizing_policy = {}) {
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy) {
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(instance_name), std::move(cq), std::move(initial_channels),
         std::move(refresh_state), std::move(stub_factory_fn),
@@ -139,6 +90,11 @@ class DynamicChannelPool
   bool empty() const {
     std::scoped_lock lk(mu_);
     return channels_.empty();
+  }
+
+  bigtable::experimental::DynamicChannelPoolSizingPolicy const& sizing_policy()
+      const {
+    return sizing_policy_;
   }
 
   // Calls CheckPoolChannelHealth before picking a channel.
@@ -207,7 +163,7 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_wrapped_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      DynamicChannelPoolSizingPolicy sizing_policy)
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy)
       : instance_name_(std::move(instance_name)),
         cq_(std::move(cq)),
         refresh_state_(std::move(refresh_state)),
@@ -289,28 +245,13 @@ class DynamicChannelPool
     return channel;
   }
 
-  struct ChannelAddVisitor {
-    std::size_t pool_size;
-    explicit ChannelAddVisitor(std::size_t pool_size) : pool_size(pool_size) {}
-    std::size_t operator()(
-        typename DynamicChannelPoolSizingPolicy::DiscreteChannels const& c)
-        const {
-      return c.number;
-    }
-    std::size_t operator()(
-        typename DynamicChannelPoolSizingPolicy::PercentageOfPoolSize const& c)
-        const {
-      return static_cast<std::size_t>(
-          std::floor(static_cast<double>(pool_size) * c.percentage));
-    }
-  };
-
   // Determines the number of channels to add and reserves the channel ids to
   // be used. Lastly, it calls CompletionQueue::RunAsync with a callback that
   // executes AddChannels with the reserved ids.
   void ScheduleAddChannels(
       std::scoped_lock<std::mutex> const&,
       std::function<void(std::vector<int> const&)> const& test_fn = nullptr) {
+    constexpr std::size_t kOneAddedChannel = 1;
     std::size_t num_channels_to_add;
     // If we're undersized due to bad channels, get us back to the minimum size.
     if (channels_.size() < sizing_policy_.minimum_channel_pool_size) {
@@ -319,8 +260,7 @@ class DynamicChannelPool
     } else {
       num_channels_to_add =
           std::min(sizing_policy_.maximum_channel_pool_size - channels_.size(),
-                   absl::visit(ChannelAddVisitor(channels_.size()),
-                               sizing_policy_.channels_to_add_per_resize));
+                   kOneAddedChannel);
     }
     num_pending_channels_ += num_channels_to_add;
     std::vector<int> new_channel_ids;
@@ -487,7 +427,7 @@ class DynamicChannelPool
   StubFactoryFn stub_factory_fn_;
   std::vector<std::shared_ptr<ChannelUsage<T>>> channels_;
   std::size_t num_pending_channels_ = 0;
-  DynamicChannelPoolSizingPolicy sizing_policy_;
+  bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy_;
   std::vector<std::shared_ptr<ChannelUsage<T>>> draining_channels_;
   future<void> remove_channel_poll_timer_;
   future<StatusOr<std::chrono::system_clock::time_point>>

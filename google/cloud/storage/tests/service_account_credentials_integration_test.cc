@@ -56,8 +56,8 @@ TEST_F(ServiceAccountCredentialsTest, UserInfoOAuth2) {
   auto factory = [c = sa_creds]() {
     auto authorization = c->GetToken(std::chrono::system_clock::now());
     if (!authorization) return rest_internal::RestRequest();
-    return rest_internal::RestRequest().AddHeader(
-        std::make_pair("Authorization", "Bearer " + authorization->token));
+    return rest_internal::RestRequest().AddHeader(rest_internal::HttpHeader(
+        "Authorization", "Bearer " + authorization->token));
   };
 
   auto response = RetryHttpGet(kUrl, factory);

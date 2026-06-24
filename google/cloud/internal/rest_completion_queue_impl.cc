@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_completion_queue_impl.h"
-#include "google/cloud/internal/timer_queue.h"
 
 namespace google {
 namespace cloud {
@@ -21,42 +20,28 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RestCompletionQueueImpl::RestCompletionQueueImpl()
-    : tq_(internal::TimerQueue::Create()) {}
+    : impl_(std::make_shared<RestPureCompletionQueueImpl>()) {}
 
-void RestCompletionQueueImpl::Run() { tq_->Service(); }
+void RestCompletionQueueImpl::Run() { impl_->Run(); }
 
-void RestCompletionQueueImpl::Shutdown() { tq_->Shutdown(); }
+void RestCompletionQueueImpl::Shutdown() { impl_->Shutdown(); }
 
 void RestCompletionQueueImpl::CancelAll() {}
 
 future<StatusOr<std::chrono::system_clock::time_point>>
 RestCompletionQueueImpl::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
-  return tq_->Schedule(deadline);
+  return impl_->MakeDeadlineTimer(deadline);
 }
 
 future<StatusOr<std::chrono::system_clock::time_point>>
 RestCompletionQueueImpl::MakeRelativeTimer(std::chrono::nanoseconds duration) {
-  using std::chrono::system_clock;
-  auto d = std::chrono::duration_cast<system_clock::duration>(duration);
-  if (d < duration) d += system_clock::duration{1};
-  return MakeDeadlineTimer(system_clock::now() + d);
+  return impl_->MakeRelativeTimer(duration);
 }
 
-// Use an "immediately" expiring timer in order to get the thread(s) servicing
-// the TimerQueue to execute the function. However, if the timer
-// expires before .then() is invoked, the lambda will be immediately called and
-// the passing of execution to the queue servicing thread will not occur.
 void RestCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
-  ++run_async_counter_;
-  tq_->Schedule([f = std::move(function)](auto) { f->exec(); });
-}
-
-void RestCompletionQueueImpl::StartOperation(
-    std::shared_ptr<internal::AsyncGrpcOperation>,
-    absl::FunctionRef<void(void*)>) {
-  GCP_LOG(FATAL) << " function not supported.\n";
+  impl_->RunAsync(std::move(function));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

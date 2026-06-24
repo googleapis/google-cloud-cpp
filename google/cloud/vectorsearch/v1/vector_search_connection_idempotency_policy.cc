@@ -75,6 +75,11 @@ Idempotency VectorSearchServiceConnectionIdempotencyPolicy::CreateIndex(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency VectorSearchServiceConnectionIdempotencyPolicy::UpdateIndex(
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency VectorSearchServiceConnectionIdempotencyPolicy::DeleteIndex(
     google::cloud::vectorsearch::v1::DeleteIndexRequest const&) {
   return Idempotency::kNonIdempotent;

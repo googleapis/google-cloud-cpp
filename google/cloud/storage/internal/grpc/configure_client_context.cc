@@ -20,6 +20,19 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+void ApplyRoutingHeadersImpl(grpc::ClientContext& context,
+                             std::string const& bucket_name,
+                             RoutingHeaderOptions const& options) {
+  std::string params =
+      "bucket=" + google::cloud::internal::UrlEncode(bucket_name);
+  if (!options.routing_token.empty()) {
+    params += "&routing_token=" +
+              google::cloud::internal::UrlEncode(options.routing_token);
+  }
+  context.AddMetadata("x-goog-request-params", std::move(params));
+}
+}  // namespace
 
 auto constexpr kIdempotencyTokenHeader = "x-goog-gcs-idempotency-token";
 
@@ -28,10 +41,14 @@ void AddIdempotencyToken(grpc::ClientContext& ctx,
   auto const& headers = context.headers();
   auto const l = headers.find(kIdempotencyTokenHeader);
   if (l != headers.end()) {
-    for (auto const& v : l->second) {
+    for (auto const& v : l->second.values()) {
       ctx.AddMetadata(kIdempotencyTokenHeader, v);
     }
   }
+}
+
+void AddIdempotencyToken(grpc::ClientContext& ctx, std::string const& token) {
+  ctx.AddMetadata(kIdempotencyTokenHeader, token);
 }
 
 void ApplyRoutingHeaders(
@@ -44,17 +61,15 @@ void ApplyRoutingHeaders(
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         google::storage::v2::WriteObjectSpec const& spec) {
-  context.AddMetadata(
-      "x-goog-request-params",
-      "bucket=" + google::cloud::internal::UrlEncode(spec.resource().bucket()));
+                         google::storage::v2::WriteObjectSpec const& spec,
+                         RoutingHeaderOptions const& options) {
+  ApplyRoutingHeadersImpl(context, spec.resource().bucket(), options);
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
-                         google::storage::v2::AppendObjectSpec const& spec) {
-  context.AddMetadata(
-      "x-goog-request-params",
-      "bucket=" + google::cloud::internal::UrlEncode(spec.bucket()));
+                         google::storage::v2::AppendObjectSpec const& spec,
+                         RoutingHeaderOptions const& options) {
+  ApplyRoutingHeadersImpl(context, spec.bucket(), options);
 }
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,

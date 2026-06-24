@@ -389,6 +389,14 @@ StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::LookupEntry(
   return child_->LookupEntry(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::ModifyEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ModifyEntry(context, options, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
 CatalogServiceAuth::SearchEntries(
     grpc::ClientContext& context, Options const& options,

@@ -116,6 +116,23 @@ class AsyncWriterConnectionTracing : public storage::AsyncWriterConnection {
         });
   }
 
+  future<Status> Close(storage::WritePayload p) override {
+    internal::OTelScope scope(span_);
+    auto size = static_cast<std::uint64_t>(p.size());
+    return impl_->Close(std::move(p))
+        .then([count = ++sent_count_, span = span_, size](auto f) {
+          span->AddEvent(
+              "gl-cpp.close",
+              {
+                  {/*sc::kRpcMessageType=*/"rpc.message.type", "SENT"},
+                  {/*sc::kRpcMessageId=*/"rpc.message.id", count},
+                  {sc::thread::kThreadId, internal::CurrentThreadId()},
+                  {"gl-cpp.size", size},
+              });
+          return internal::EndSpan(*span, f.get());
+        });
+  }
+
   future<StatusOr<std::int64_t>> Query() override {
     internal::OTelScope scope(span_);
     return impl_->Query().then([count = ++recv_count_, span = span_](auto f) {

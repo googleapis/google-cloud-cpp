@@ -604,6 +604,13 @@ StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceClient::LookupEntry(
   return connection_->LookupEntry(request);
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceClient::ModifyEntry(
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyEntry(request);
+}
+
 StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
 CatalogServiceClient::SearchEntries(std::string const& name,
                                     std::string const& query, Options opts) {

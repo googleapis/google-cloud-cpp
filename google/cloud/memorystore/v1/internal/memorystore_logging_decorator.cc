@@ -172,6 +172,21 @@ MemorystoreLogging::GetCertificateAuthority(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreLogging::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::
+                 GetSharedRegionalCertificateAuthorityRequest const& request) {
+        return child_->GetSharedRegionalCertificateAuthority(context, options,
+                                                             request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreLogging::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,

@@ -138,6 +138,17 @@ MemorystoreMetadata::GetCertificateAuthority(
   return child_->GetCertificateAuthority(context, options, request);
 }
 
+StatusOr<google::cloud::memorystore::v1::SharedRegionalCertificateAuthority>
+MemorystoreMetadata::GetSharedRegionalCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::
+        GetSharedRegionalCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetSharedRegionalCertificateAuthority(context, options,
+                                                       request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreMetadata::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,

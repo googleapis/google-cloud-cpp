@@ -725,6 +725,10 @@ VarsDictionary CreateServiceVars(
   vars["logging_rest_header_path"] = absl::StrCat(
       vars["product_path"], "internal/", ServiceNameToFilePath(service_name),
       "_rest_logging_decorator.h");
+  vars["merge_options_fn"] =
+      absl::StartsWithIgnoreCase(service_name, "Bigtable")
+          ? "bigtable_internal::MergeOptions"
+          : "internal::MergeOptions";
   vars["metadata_class_name"] = absl::StrCat(service_name, "Metadata");
   vars["metadata_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
                                           ServiceNameToFilePath(service_name),

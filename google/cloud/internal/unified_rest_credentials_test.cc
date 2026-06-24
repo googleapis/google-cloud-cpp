@@ -102,6 +102,14 @@ YvLLIc82V7eqcVJTZtaFkuht68qu/Jn1ezbzJMJ4YXDYo1+KFi+2CAGR06QILb+I
 lUtj+/nH3HDQjM4ltYfTPUg=
 -----END PRIVATE KEY-----
 )""";
+// This is an invalidated private key. It was created using the Google Cloud
+// Platform console, but then the key (and service account) were deleted.
+auto constexpr kWellFormattedECKey = R"""(-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIDGD4hNeIBG3lo4BKS1k4jpYhbnJSZwAuUwyK8wEiOP5oAoGCCqGSM49
+AwEHoUQDQgAEWK7gDAGAAzOfl6pHhpmvjbTeUPyclQk7+HgAWE6uGUtox/U8/sQQ
+X3IM7YomoAWiNKWwBVskpXWj7L9dLkqhyQ==
+-----END EC PRIVATE KEY-----
+)""";
 
 std::string TempKeyFileName() {
   static auto generator =
@@ -125,10 +133,12 @@ std::unique_ptr<RestResponse> MakeMockResponse(std::string contents) {
   return response;
 }
 
+auto constexpr kProjectId = "invalid-test-only-project";
+
 nlohmann::json MakeServiceAccountContents() {
   return nlohmann::json{
       {"type", "service_account"},
-      {"project_id", "invalid-test-only-project"},
+      {"project_id", kProjectId},
       {"private_key_id", kServiceAccountKeyId},
       {"private_key", kWellFormattedKey},
       {"client_email", kServiceAccountEmail},
@@ -140,6 +150,19 @@ nlohmann::json MakeServiceAccountContents() {
       {"client_x509_cert_url",
        "https://www.googleapis.com/robot/v1/metadata/x509/"
        "foo-email%40invalid-test-only-project.iam.gserviceaccount.com"},
+  };
+}
+
+auto constexpr kCaCertPath = "/test/ca.crt";
+auto constexpr kTokenUri = "https://gdc.token.uri/v1/token";
+nlohmann::json MakeGDCHServiceAccountContents() {
+  return nlohmann::json{
+      {"project", kProjectId},
+      {"private_key_id", kServiceAccountKeyId},
+      {"private_key", kWellFormattedECKey},
+      {"name", kServiceAccountEmail},
+      {"ca_cert_path", kCaCertPath},
+      {"token_uri", kTokenUri},
   };
 }
 
@@ -244,7 +267,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
       ScopedEnvironment(oauth2_internal::GoogleGcloudAdcFileEnvVar(), filename);
   auto const now = std::chrono::system_clock::now();
 
-  auto metadata_client = []() {
+  auto metadata_client_1 = []() {
     auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
         Property(&RestRequest::path,
@@ -258,6 +281,27 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
             Status{StatusCode::kPermissionDenied, "uh-oh - GCE metadata"}));
     return client;
   }();
+
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  // If the first MDS call is not successful in updating the service account
+  // email, we will try again.
+  auto metadata_client_2 = []() {
+    auto client = std::make_unique<MockRestClient>();
+    auto expected_request = AllOf(
+        Property(&RestRequest::path,
+                 absl::StrCat("http://metadata.google.internal/",
+                              "computeMetadata/v1/instance/service-accounts/",
+                              "default/")),
+        Property(&RestRequest::headers,
+                 Contains(Pair("metadata-flavor", Contains("Google")))));
+    EXPECT_CALL(*client, Get(_, expected_request))
+        .WillOnce(Return(
+            Status{StatusCode::kPermissionDenied, "uh-oh - GCE metadata"}));
+    return client;
+  }();
+#endif
+
   auto token_client = []() {
     auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
@@ -275,7 +319,11 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call)
-      .WillOnce(Return(ByMove(std::move(metadata_client))))
+      .WillOnce(Return(ByMove(std::move(metadata_client_1))))
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+      .WillOnce(Return(ByMove(std::move(metadata_client_2))))
+#endif
       .WillOnce(Return(ByMove(std::move(token_client))));
 
   auto const config = internal::GoogleDefaultCredentialsConfig(Options{});
@@ -413,6 +461,44 @@ TEST(UnifiedRestCredentialsTest, ServiceAccount) {
   EXPECT_EQ(access_token->token, *jwt);
 }
 
+TEST(UnifiedRestCredentialsTest, AuthorizedUser) {
+  auto const token_uri = std::string{"https://user-refresh.example.com"};
+  auto const contents = nlohmann::json{
+      {"client_id", "a-client-id.example.com"},
+      {"client_secret", "a-123456ABCDEF"},
+      {"refresh_token", "1/THETOKEN"},
+      {"type", "authorized_user"},
+      {"token_uri", token_uri},
+  };
+
+  auto const now = std::chrono::system_clock::now();
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce([token_uri]() {
+    auto client = std::make_unique<MockRestClient>();
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto expected_request = Property(&RestRequest::path, token_uri);
+    auto expected_form_data = MatcherCast<FormDataType const&>(IsSupersetOf({
+        Pair("grant_type", "refresh_token"),
+        Pair("client_id", "a-client-id.example.com"),
+        Pair("client_secret", "a-123456ABCDEF"),
+        Pair("refresh_token", "1/THETOKEN"),
+    }));
+    EXPECT_CALL(*client, Post(_, expected_request, expected_form_data))
+        .WillOnce(Return(
+            Status{StatusCode::kPermissionDenied, "uh-oh - user refresh"}));
+    return client;
+  });
+
+  auto const config =
+      internal::AuthorizedUserConfig(contents.dump(), Options{});
+  auto credentials = MapCredentials(config, client_factory.AsStdFunction());
+
+  auto access_token = credentials->GetToken(now);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kPermissionDenied, "uh-oh - user refresh"));
+}
+
 TEST(UnifiedRestCredentialsTest, ExternalAccount) {
   // This sets up a mocked request for the subject token.
   auto const subject_url = std::string{"https://test-only-oidc.example.com/"};
@@ -462,6 +548,16 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
               StatusIs(StatusCode::kPermissionDenied, "uh-oh - STS exchange"));
 }
 
+TEST(UnifiedRestCredentialsTest, AuthorizedUserParseError) {
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+
+  auto const config = internal::AuthorizedUserConfig("invalid-json", Options{});
+  auto credentials = MapCredentials(config, client_factory.AsStdFunction());
+  auto access_token = credentials->GetToken(std::chrono::system_clock::now());
+  EXPECT_THAT(access_token, Not(IsOk()));
+}
+
 TEST(UnifiedRestCredentialsTest, ApiKey) {
   auto creds = MakeApiKeyCredentials("api-key");
   ASSERT_THAT(creds, NotNull());
@@ -470,9 +566,61 @@ TEST(UnifiedRestCredentialsTest, ApiKey) {
   ASSERT_THAT(oauth2_creds, NotNull());
 
   auto header =
-      oauth2_creds->AuthenticationHeader(std::chrono::system_clock::now());
-  EXPECT_THAT(header, IsOkAndHolds(Pair("x-goog-api-key", "api-key")));
+      oauth2_creds->AuthenticationHeaders(std::chrono::system_clock::now(), "");
+  EXPECT_THAT(header,
+              IsOkAndHolds(Contains(HttpHeader("x-goog-api-key", "api-key"))));
 }
+
+// TODO(#16172): GDCH is not currently supported on Windows.
+#ifndef _WIN32
+
+TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceParameter) {
+  auto constexpr kAudience = "test-audience";
+  auto const post_response = std::string{R"""({
+    "access_token":"access-token-value",
+    "issued_token_type":"urn:ietf:params:oauth:token-type:access_token",
+    "token_type":"Bearer",
+    "expires_in":3599
+  })"""};
+
+  auto token_client = [=] {
+    using PayloadType = std::vector<absl::Span<char const>>;
+    auto mock = std::make_unique<MockRestClient>();
+    auto expected_request = Property(&RestRequest::path, kTokenUri);
+    EXPECT_CALL(*mock, Post(_, expected_request, A<PayloadType const&>()))
+        .WillOnce([post_response]() {
+          auto response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*response), ExtractPayload)
+              .WillOnce(
+                  Return(ByMove(MakeMockHttpPayloadSuccess(post_response))));
+          return std::unique_ptr<rest_internal::RestResponse>(
+              std::move(response));
+        });
+    return mock;
+  }();
+
+  MockClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(token_client))));
+
+  auto creds = MakeGDCHServiceAccountCredentials(
+      MakeGDCHServiceAccountContents().dump(), kAudience, {});
+  ASSERT_THAT(creds, NotNull());
+
+  auto oauth2_creds =
+      MapCredentials(*creds, mock_client_factory.AsStdFunction());
+  ASSERT_THAT(oauth2_creds, NotNull());
+
+  auto header = oauth2_creds->AuthenticationHeaders(
+      std::chrono::system_clock::now(), "service.googleapis.com");
+
+  EXPECT_THAT(header, IsOkAndHolds(Contains(HttpHeader(
+                          "Authorization", "Bearer access-token-value"))));
+}
+
+#endif
 
 TEST(UnifiedRestCredentialsTest, LoadError) {
   // Create a name for a non-existing file, try to load it, and verify it

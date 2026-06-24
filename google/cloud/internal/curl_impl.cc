@@ -297,10 +297,9 @@ void CurlImpl::MergeAndWriteHeaders(
   }
 }
 
-void CurlImpl::SetHeaders(
-    std::unordered_map<std::string, std::vector<std::string>> const& headers) {
+void CurlImpl::SetHeaders(HttpHeaders const& headers) {
   for (auto const& header : headers) {
-    SetHeader(HttpHeader(header.first, header.second));
+    SetHeader(header.second);
   }
 }
 
