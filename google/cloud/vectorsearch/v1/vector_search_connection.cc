@@ -161,6 +161,29 @@ VectorSearchServiceConnection::CreateIndex(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::vectorsearch::v1::Index>>
+VectorSearchServiceConnection::UpdateIndex(
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vectorsearch::v1::Index>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceConnection::UpdateIndex(
+    NoAwaitTag, google::cloud::vectorsearch::v1::UpdateIndexRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vectorsearch::v1::Index>>
+VectorSearchServiceConnection::UpdateIndex(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vectorsearch::v1::Index>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::vectorsearch::v1::OperationMetadata>>
 VectorSearchServiceConnection::DeleteIndex(
     google::cloud::vectorsearch::v1::DeleteIndexRequest const&) {

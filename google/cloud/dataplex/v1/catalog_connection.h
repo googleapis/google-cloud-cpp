@@ -321,6 +321,9 @@ class CatalogServiceConnection {
   virtual StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
       google::cloud::dataplex::v1::LookupEntryRequest const& request);
 
+  virtual StatusOr<google::cloud::dataplex::v1::Entry> ModifyEntry(
+      google::cloud::dataplex::v1::ModifyEntryRequest const& request);
+
   virtual StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
   SearchEntries(google::cloud::dataplex::v1::SearchEntriesRequest request);
 

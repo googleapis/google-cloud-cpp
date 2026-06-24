@@ -49,6 +49,10 @@ class CommentServiceMetadata : public CommentServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
+  StatusOr<google::cloud::support::v2::Comment> GetComment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::GetCommentRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

@@ -454,6 +454,18 @@ DefaultCatalogServiceStub::LookupEntry(
   return response;
 }
 
+StatusOr<google::cloud::dataplex::v1::Entry>
+DefaultCatalogServiceStub::ModifyEntry(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ModifyEntryRequest const& request) {
+  google::cloud::dataplex::v1::Entry response;
+  auto status = grpc_stub_->ModifyEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
 DefaultCatalogServiceStub::SearchEntries(
     grpc::ClientContext& context, Options const&,

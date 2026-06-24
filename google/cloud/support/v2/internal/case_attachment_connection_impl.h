@@ -52,6 +52,9 @@ class CaseAttachmentServiceConnectionImpl
   StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
       google::cloud::support::v2::ListAttachmentsRequest request) override;
 
+  StatusOr<google::cloud::support::v2::Attachment> GetAttachment(
+      google::cloud::support::v2::GetAttachmentRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<support_v2_internal::CaseAttachmentServiceStub> stub_;

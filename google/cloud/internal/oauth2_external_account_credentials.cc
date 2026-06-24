@@ -24,7 +24,9 @@
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/rest_client.h"
 #include "absl/strings/str_cat.h"
+#include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -49,7 +51,94 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSource(
       GCP_ERROR_INFO().WithContext(ec));
 }
 
+std::variant<std::monostate, WorkforceIdentityFederationInfo,
+             WorkloadIdentityFederationInfo>
+IdentityFederationFromAudience(std::string const& audience) {
+  auto constexpr kWorkloadPattern =
+      R"""(iam.googleapis.com/projects/([^/]+)/locations/global/workloadIdentityPools/([^/]+)/)""";
+  static auto* workload_re =
+      new std::regex{kWorkloadPattern, std::regex::optimize};
+
+  auto constexpr kWorkforcePattern =
+      R"""(iam.googleapis.com/locations/global/workforcePools/([^/]+)/)""";
+  static auto* workforce_re =
+      new std::regex{kWorkforcePattern, std::regex::optimize};
+
+  std::smatch match;
+  if (std::regex_search(audience, match, *workload_re)) {
+    return WorkloadIdentityFederationInfo{match[1], match[2]};
+  }
+  if (std::regex_search(audience, match, *workforce_re)) {
+    return WorkforceIdentityFederationInfo{match[1]};
+  }
+  return std::monostate{};
+}
+
 }  // namespace
+
+bool ExternalAccountInfo::IsWorkforceIdentityFederation() const {
+  return std::holds_alternative<WorkforceIdentityFederationInfo>(
+      identity_federation_info);
+}
+
+bool ExternalAccountInfo::IsWorkloadIdentityFederation() const {
+  return std::holds_alternative<WorkloadIdentityFederationInfo>(
+      identity_federation_info);
+}
+
+StatusOr<std::optional<ExternalAccountImpersonationConfig>>
+GetExternalAccountImpersonationConfiguration(
+    nlohmann::json const& configuration, internal::ErrorContext const& ec) {
+  auto constexpr kDefaultImpersonationTokenLifetime =
+      std::chrono::seconds(3600);
+  auto impersonation_config =
+      StatusOr<std::optional<ExternalAccountImpersonationConfig>>(std::nullopt);
+  auto it = configuration.find("service_account_impersonation_url");
+  if (it == configuration.end()) return impersonation_config;
+  if (!it->is_string()) {
+    return InvalidTypeError("service_account_impersonation_url",
+                            "credentials-file", ec);
+  }
+
+  // AIP-4117 https://google.aip.dev/auth/4117 specifies the
+  // service_account_impersonation_url ends with "<email>:generateAccessToken".
+  std::string url = it->get<std::string>();
+  std::vector<std::string_view> pieces = absl::StrSplit(url, '/');
+  std::string email;
+  for (auto const& p : pieces) {
+    if (absl::StrContains(p, ":")) {
+      std::vector<std::string_view> t = absl::StrSplit(p, ':');
+      email = t.front();
+    }
+  }
+
+  if (email.empty()) {
+    return InvalidArgumentError(
+        "invalid service_account_impersonation_url; must conform to AIP-4117",
+        GCP_ERROR_INFO()
+            .WithMetadata("service_account_impersonation_url", url)
+            .WithContext(ec));
+  }
+
+  impersonation_config = ExternalAccountImpersonationConfig{
+      std::move(url), std::move(email), kDefaultImpersonationTokenLifetime};
+
+  it = configuration.find("service_account_impersonation");
+  if (it == configuration.end()) return impersonation_config;
+  if (!it->is_object()) {
+    return InvalidTypeError("service_account_impersonation", "credentials-file",
+                            ec);
+  }
+  auto lifetime = ValidateIntField(
+      it.value(), "token_lifetime_seconds",
+      "credentials-file.service_account_impersonation",
+      static_cast<std::int32_t>(kDefaultImpersonationTokenLifetime.count()),
+      ec);
+  if (!lifetime) return std::move(lifetime).status();
+  (*impersonation_config)->token_lifetime = std::chrono::seconds(*lifetime);
+
+  return impersonation_config;
+}
 
 /// Parse a JSON string with an external account configuration.
 StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
@@ -70,6 +159,8 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
 
   auto audience = ValidateStringField(json, "audience", "credentials-file", ec);
   if (!audience) return std::move(audience).status();
+  auto identity_federation = IdentityFederationFromAudience(*audience);
+
   auto subject_token_type =
       ValidateStringField(json, "subject_token_type", "credentials-file", ec);
   if (!subject_token_type) return std::move(subject_token_type).status();
@@ -108,33 +199,14 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
                                   *std::move(source),
                                   absl::nullopt,
                                   *std::move(universe_domain),
-                                  std::move(workforce_pool_user_project)};
+                                  std::move(workforce_pool_user_project),
+                                  std::move(identity_federation)};
 
-  it = json.find("service_account_impersonation_url");
-  if (it == json.end()) return info;
+  auto impersonate_config =
+      GetExternalAccountImpersonationConfiguration(json, ec);
 
-  auto constexpr kDefaultImpersonationTokenLifetime =
-      std::chrono::seconds(3600);
-  if (!it->is_string()) {
-    return InvalidTypeError("service_account_impersonation_url",
-                            "credentials-file", ec);
-  }
-  info.impersonation_config = ExternalAccountImpersonationConfig{
-      it->get<std::string>(), kDefaultImpersonationTokenLifetime};
-  it = json.find("service_account_impersonation");
-  if (it == json.end()) return info;
-  if (!it->is_object()) {
-    return InvalidTypeError("service_account_impersonation", "credentials-file",
-                            ec);
-  }
-  auto lifetime = ValidateIntField(
-      it.value(), "token_lifetime_seconds",
-      "credentials-file.service_account_impersonation",
-      static_cast<std::int32_t>(kDefaultImpersonationTokenLifetime.count()),
-      ec);
-  if (!lifetime) return std::move(lifetime).status();
-  info.impersonation_config->token_lifetime = std::chrono::seconds(*lifetime);
-
+  if (!impersonate_config.ok()) return impersonate_config.status();
+  info.impersonation_config = *std::move(impersonate_config);
   return info;
 }
 
@@ -161,7 +233,8 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
   // Workforce Identity is handled at the org level and requires the userProject
   // header. Workload Identity is handled at the project level and doesn't
   // require the header.
-  if (info_.workforce_pool_user_project) {
+  if (info_.IsWorkforceIdentityFederation() &&
+      info_.workforce_pool_user_project.has_value()) {
     form_data.emplace_back(
         "options", absl::StrCat(R"({"userProject": ")",
                                 *info_.workforce_pool_user_project, R"("})"));
@@ -219,6 +292,28 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
       ValidateIntField(access, "expires_in", "token-exchange-response", ec);
   if (!expires_in) return std::move(expires_in).status();
   return AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
+}
+
+Credentials::AllowedLocationsRequestType
+ExternalAccountCredentials::AllowedLocationsRequest() const {
+  Credentials::AllowedLocationsRequestType request = std::monostate{};
+  // TODO(#16079): Remove conditional and else clause when GA.
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  if (info_.impersonation_config.has_value()) {
+    request = ServiceAccountAllowedLocationsRequest{
+        info_.impersonation_config->email};
+  } else if (info_.IsWorkforceIdentityFederation()) {
+    auto wif = std::get<WorkforceIdentityFederationInfo>(
+        info_.identity_federation_info);
+    request = WorkforceIdentityAllowedLocationsRequest{wif.pool_id};
+  } else if (info_.IsWorkloadIdentityFederation()) {
+    auto wif = std::get<WorkloadIdentityFederationInfo>(
+        info_.identity_federation_info);
+    request =
+        WorkloadIdentityAllowedLocationsRequest{wif.project_id, wif.pool_id};
+  }
+#endif
+  return request;
 }
 
 StatusOr<AccessToken> ExternalAccountCredentials::GetTokenImpersonation(

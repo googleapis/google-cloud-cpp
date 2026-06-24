@@ -276,6 +276,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -303,6 +304,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc, provider_));
     v.emplace_back(
@@ -331,6 +333,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -358,6 +361,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -386,6 +390,7 @@ MetricsOperationContextFactory::CheckAndMutateRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -414,6 +419,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -442,6 +448,7 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
@@ -470,6 +477,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::PrepareQuery(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
@@ -495,6 +503,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
     std::vector<std::shared_ptr<Metric const>> v;
     v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency2>(kRpc, provider_));
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc, provider_));
     v.emplace_back(

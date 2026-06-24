@@ -110,6 +110,47 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
   return storage::internal::CreateNullHashFunction();
 }
 
+StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
+    google::cloud::internal::ImmutableOptions const& current,
+    google::storage::v2::BidiWriteObjectRequest request,
+    std::int64_t persisted_size,
+    std::function<future<StatusOr<WriteObject::WriteResult>>(
+        google::storage::v2::BidiWriteObjectRequest)>
+        factory,
+    StatusOr<WriteObject::WriteResult> rpc) {
+  if (!rpc) return std::move(rpc).status();
+
+  std::shared_ptr<storage::internal::HashFunction> hash;
+  std::unique_ptr<AsyncWriterConnectionImpl> impl;
+
+  if (rpc->first_response.has_resource()) {
+    auto const& resource = rpc->first_response.resource();
+    if (current->get<storage::EnableCrc32cValidationOption>() &&
+        resource.has_checksums() && resource.checksums().has_crc32c()) {
+      hash = std::make_shared<
+          ::google::cloud::storage::internal::Crc32cHashFunction>(
+          resource.checksums().crc32c(), resource.size());
+    } else {
+      hash = CreateHashFunction(*current);
+    }
+    impl = std::make_unique<AsyncWriterConnectionImpl>(
+        current, request, std::move(rpc->stream), hash, resource, false);
+  } else {
+    persisted_size = rpc->first_response.persisted_size();
+    hash = CreateHashFunction(*current);
+    auto checksums = rpc->first_response.has_persisted_data_checksums()
+                         ? absl::make_optional(
+                               rpc->first_response.persisted_data_checksums())
+                         : absl::nullopt;
+    impl = std::make_unique<AsyncWriterConnectionImpl>(
+        current, request, std::move(rpc->stream), hash, persisted_size, false,
+        checksums);
+  }
+  return MakeWriterConnectionResumed(std::move(factory), std::move(impl),
+                                     std::move(request), std::move(hash),
+                                     rpc->first_response, *current);
+}
+
 std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
     google::storage::v2::ReadObjectRequest const& request,
     Options const& options) {
@@ -169,7 +210,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
 
     auto hash_function = CreateHashFunction(*options);
     ApplyRoutingHeaders(*context, request.write_object_spec());
-    context->AddMetadata("x-goog-gcs-idempotency-token", id);
+    AddIdempotencyToken(*context, id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), options);
     rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
                                                 std::move(rpc));
@@ -276,11 +317,19 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
           CreateHashFunction(*current));
   auto hash_validator = CreateHashValidator(p.request, *current);
 
+  absl::optional<std::int64_t> requested_length;
+  if (p.request.read_limit() > 0) {
+    requested_length = p.request.read_limit();
+  }
+  auto bucket = p.request.bucket();
+  auto object = p.request.object();
+
   auto connection_factory = MakeReaderConnectionFactory(
       std::move(current), std::move(p.request), hash_function);
   auto connection = std::make_unique<AsyncReaderConnectionResume>(
       std::move(resume_policy), std::move(hash_function),
-      std::move(hash_validator), std::move(connection_factory));
+      std::move(hash_validator), std::move(connection_factory),
+      requested_length, std::move(bucket), std::move(object));
 
   return make_ready_future(ReturnType(std::move(connection)));
 }
@@ -315,8 +364,6 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = p.request;
   std::int64_t persisted_size = 0;
-  std::shared_ptr<storage::internal::HashFunction> hash_function =
-      CreateHashFunction(*current);
   auto retry =
       std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
   auto backoff =
@@ -334,13 +381,16 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto factory = WriteResultFactory(
       [stub = stub_, cq = cq_, retry = std::move(retry),
        // NOLINTNEXTLINE(bugprone-lambda-function-name)
-       backoff = std::move(backoff), current, function_name = __func__](
+       backoff = std::move(backoff), current, function_name = __func__,
+       // Use shared_ptr to propagate RoutingHeaderOptions across retries.
+       current_routing_options = std::make_shared<RoutingHeaderOptions>(),
+       id = invocation_id_generator_.MakeInvocationId()](
           google::storage::v2::BidiWriteObjectRequest req) {
-        auto call = [stub, request = std::move(req)](
-                        CompletionQueue& cq,
-                        std::shared_ptr<grpc::ClientContext> context,
-                        google::cloud::internal::ImmutableOptions options,
-                        RequestPlaceholder const&) mutable
+        auto call = [stub, request = std::move(req), current_routing_options,
+                     id](CompletionQueue& cq,
+                         std::shared_ptr<grpc::ClientContext> context,
+                         google::cloud::internal::ImmutableOptions options,
+                         RequestPlaceholder const&) mutable
             -> future<StatusOr<WriteObject::WriteResult>> {
           auto start_timeout = ScaleStallTimeout(
               options->get<storage::TransferStallTimeoutOption>(),
@@ -351,9 +401,13 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
 
           // Apply the routing header
           if (request.has_write_object_spec())
-            ApplyRoutingHeaders(*context, request.write_object_spec());
+            ApplyRoutingHeaders(*context, request.write_object_spec(),
+                                *current_routing_options);
           else
-            ApplyRoutingHeaders(*context, request.append_object_spec());
+            ApplyRoutingHeaders(*context, request.append_object_spec(),
+                                *current_routing_options);
+
+          AddIdempotencyToken(*context, id);
 
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
@@ -362,18 +416,30 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
               std::move(rpc));
           request.set_state_lookup(true);
           auto open = std::make_shared<WriteObject>(std::move(rpc), request);
-          return open->Call().then([open, &request](auto f) mutable {
-            open.reset();
-            auto response = f.get();
-            if (!response) {
-              google::rpc::Status grpc_status =
-                  ExtractGrpcStatus(response.status());
-              EnsureFirstMessageAppendObjectSpec(request, grpc_status);
-              ApplyWriteRedirectErrors(*request.mutable_append_object_spec(),
-                                       grpc_status);
-            }
-            return response;
-          });
+          return open->Call().then(
+              [open, &request, current_routing_options](auto f) mutable {
+                open.reset();
+                auto response = f.get();
+                if (!response) {
+                  google::rpc::Status grpc_status =
+                      ExtractGrpcStatus(response.status());
+                  // Handle redirect and get info for updating routing options.
+                  BidiWriteRedirectInfo redirect_info =
+                      HandleBidiWriteRedirect(request, grpc_status);
+
+                  // Only update the routing token if the new info has a
+                  // non-empty token.
+                  // Otherwise, retain the existing token for subsequent
+                  // retries.
+                  if (!redirect_info.routing_token.empty() &&
+                      current_routing_options->routing_token !=
+                          redirect_info.routing_token) {
+                    current_routing_options->routing_token =
+                        redirect_info.routing_token;
+                  }
+                }
+                return response;
+              });
         };
 
         return google::cloud::internal::AsyncRetryLoop(
@@ -385,24 +451,10 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto pending = factory(std::move(request));
   return pending.then(
       [current, request = std::move(p.request), persisted_size,
-       hash = std::move(hash_function), fa = std::move(factory)](auto f) mutable
+       fa = std::move(factory)](auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-        auto rpc = f.get();
-        if (!rpc) return std::move(rpc).status();
-        std::unique_ptr<AsyncWriterConnectionImpl> impl;
-        if (rpc->first_response.has_resource()) {
-          impl = std::make_unique<AsyncWriterConnectionImpl>(
-              current, request, std::move(rpc->stream), hash,
-              rpc->first_response.resource(), false);
-        } else {
-          persisted_size = rpc->first_response.persisted_size();
-          impl = std::make_unique<AsyncWriterConnectionImpl>(
-              current, request, std::move(rpc->stream), hash, persisted_size,
-              false);
-        }
-        return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
-                                           std::move(request), std::move(hash),
-                                           rpc->first_response, *current);
+        return MakeAppendableWriter(current, std::move(request), persisted_size,
+                                    std::move(fa), f.get());
       });
 }
 
@@ -491,11 +543,12 @@ AsyncConnectionImpl::ComposeObject(ComposeObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto const idempotency =
       idempotency_policy(*current)->ComposeObject(p.request);
-  auto call = [stub = stub_](
+  auto call = [stub = stub_, id = invocation_id_generator_.MakeInvocationId()](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::ComposeObjectRequest const& request) {
+    AddIdempotencyToken(*context, id);
     return stub->AsyncComposeObject(cq, std::move(context), std::move(options),
                                     request);
   };
@@ -514,10 +567,11 @@ future<Status> AsyncConnectionImpl::DeleteObject(DeleteObjectParams p) {
   auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
       std::move(retry), std::move(backoff), idempotency, cq_,
-      [stub = stub_](CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::storage::v2::DeleteObjectRequest const& proto) {
+      [stub = stub_, id = invocation_id_generator_.MakeInvocationId()](
+          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::storage::v2::DeleteObjectRequest const& proto) {
+        AddIdempotencyToken(*context, id);
         return stub->AsyncDeleteObject(cq, std::move(context),
                                        std::move(options), proto);
       },

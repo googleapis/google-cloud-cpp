@@ -146,6 +146,13 @@ class LineageTracingStub : public LineageStub {
       google::cloud::datacatalog::lineage::v1::
           BatchSearchLinkProcessesRequest const& request) override;
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>>
+  SearchLineageStreaming(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::datacatalog::lineage::v1::
+          SearchLineageStreamingRequest const& request) override;
+
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;

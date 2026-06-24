@@ -158,6 +158,15 @@ DataScanServiceMetadata::ListDataScanJobs(
   return child_->ListDataScanJobs(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceMetadata::CancelDataScanJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelDataScanJob(context, options, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceMetadata::GenerateDataQualityRules(
     grpc::ClientContext& context, Options const& options,

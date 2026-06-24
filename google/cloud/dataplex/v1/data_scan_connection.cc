@@ -141,6 +141,12 @@ DataScanServiceConnection::ListDataScanJobs(
       StreamRange<google::cloud::dataplex::v1::DataScanJob>>();
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceConnection::CancelDataScanJob(
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceConnection::GenerateDataQualityRules(
     google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&) {

@@ -44,8 +44,11 @@
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <functional>
+#include <memory>
 #include <string>
 
 namespace google {
@@ -251,6 +254,23 @@ struct DataBackoffPolicyOption {
 };
 
 /**
+ * Option to set the per RPC attempt deadline.
+ *
+ * @note If used in conjunction with a LimitedTimeRetryPolicy the last RPC
+ *     attempt could cause the maximum duration of the RetryPolicy to be
+ *     extended up to the RPC attempt deadline duration.
+ *
+ * @note If both DeadlineOption and GrpcSetupOption are set, DeadlineOption will
+ *     be applied after GrpcSetupOption, overwriting any changes GrpcSetupOption
+ *     made to grpc::ClientContext::deadline.
+ *
+ * @ingroup google-cloud-bigtable-options
+ */
+struct DeadlineOption {
+  using Type = std::chrono::milliseconds;
+};
+
+/**
  * Option to configure the idempotency policy used by `Table`.
  *
  * @ingroup google-cloud-bigtable-options
@@ -299,6 +319,21 @@ using DataPolicyOptionList =
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/// Bigtable specific MergeOptions that has special handling for merging
+/// `GrpcSetupOption` and `DeadlineOption`.
+Options MergeOptions(Options preferred, Options alternatives);
+
+/// For testing only.
+Options MergeOptions(
+    Options preferred, Options alternatives,
+    std::function<std::chrono::system_clock::time_point()> now_fn);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 

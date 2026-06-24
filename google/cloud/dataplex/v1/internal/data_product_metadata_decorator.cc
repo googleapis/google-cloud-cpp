@@ -131,6 +131,16 @@ DataProductServiceMetadata::UpdateDataProduct(
   return child_->UpdateDataProduct(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceMetadata::RequestDataProductAccess(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RequestDataProductAccess(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataProductServiceMetadata::AsyncCreateDataAsset(
     google::cloud::CompletionQueue& cq,

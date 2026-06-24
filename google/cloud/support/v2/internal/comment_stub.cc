@@ -57,6 +57,18 @@ DefaultCommentServiceStub::CreateComment(
   return response;
 }
 
+StatusOr<google::cloud::support::v2::Comment>
+DefaultCommentServiceStub::GetComment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  google::cloud::support::v2::Comment response;
+  auto status = grpc_stub_->GetComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2_internal
 }  // namespace cloud

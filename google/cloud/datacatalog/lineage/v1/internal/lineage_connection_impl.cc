@@ -23,7 +23,9 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
 #include <utility>
 
@@ -58,6 +60,11 @@ std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
 
 }  // namespace
 
+void LineageSearchLineageStreamingStreamingUpdater(
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingResponse const&,
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingRequest&) {}
+
 LineageConnectionImpl::LineageConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<datacatalog_lineage_v1_internal::LineageStub> stub,
@@ -73,15 +80,19 @@ LineageConnectionImpl::ProcessOpenLineageRunEvent(
     google::cloud::datacatalog::lineage::v1::
         ProcessOpenLineageRunEventRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ProcessOpenLineageRunEvent(request),
+      idempotency_policy(*current)->ProcessOpenLineageRunEvent(request_copy),
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::
                  ProcessOpenLineageRunEventRequest const& request) {
         return stub_->ProcessOpenLineageRunEvent(context, options, request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
@@ -89,16 +100,20 @@ LineageConnectionImpl::CreateProcess(
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateProcess(request),
+      idempotency_policy(*current)->CreateProcess(request_copy),
       [this](
           grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
               request) {
         return stub_->CreateProcess(context, options, request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
@@ -106,16 +121,20 @@ LineageConnectionImpl::UpdateProcess(
     google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateProcess(request),
+      idempotency_policy(*current)->UpdateProcess(request_copy),
       [this](
           grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
               request) {
         return stub_->UpdateProcess(context, options, request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
@@ -268,15 +287,19 @@ StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageConnectionImpl::CreateRun(
     google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRun(request),
+      idempotency_policy(*current)->CreateRun(request_copy),
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::CreateRunRequest const&
                  request) {
         return stub_->CreateRun(context, options, request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
@@ -439,15 +462,19 @@ LineageConnectionImpl::CreateLineageEvent(
     google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateLineageEvent(request),
+      idempotency_policy(*current)->CreateLineageEvent(request_copy),
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::lineage::v1::
                  CreateLineageEventRequest const& request) {
         return stub_->CreateLineageEvent(context, options, request);
       },
-      *current, request, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
@@ -586,6 +613,36 @@ LineageConnectionImpl::BatchSearchLinkProcesses(
         auto& messages = *r.mutable_process_links();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
+      });
+}
+
+StreamRange<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+LineageConnectionImpl::SearchLineageStreaming(
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto factory = [stub = stub_,
+                  current](google::cloud::datacatalog::lineage::v1::
+                               SearchLineageStreamingRequest const& request) {
+    return stub->SearchLineageStreaming(std::make_shared<grpc::ClientContext>(),
+                                        *current, request);
+  };
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse,
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingRequest>(
+      retry_policy(*current), backoff_policy(*current), factory,
+      LineageSearchLineageStreamingStreamingUpdater, request);
+  return internal::MakeStreamRange<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>(
+      [resumable = std::move(resumable)]()
+          -> absl::variant<Status, google::cloud::datacatalog::lineage::v1::
+                                       SearchLineageStreamingResponse> {
+        google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse
+            response;
+        auto status = resumable->Read(&response);
+        if (status.has_value()) return *status;
+        return response;
       });
 }
 

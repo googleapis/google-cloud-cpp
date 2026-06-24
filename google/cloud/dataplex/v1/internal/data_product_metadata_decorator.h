@@ -89,6 +89,12 @@ class DataProductServiceMetadata : public DataProductServiceStub {
       google::cloud::dataplex::v1::UpdateDataProductRequest const& request)
       override;
 
+  StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+  RequestDataProductAccess(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDataAsset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

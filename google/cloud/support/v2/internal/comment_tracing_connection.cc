@@ -51,6 +51,15 @@ CommentServiceTracingConnection::CreateComment(
   return internal::EndSpan(*span, child_->CreateComment(request));
 }
 
+StatusOr<google::cloud::support::v2::Comment>
+CommentServiceTracingConnection::GetComment(
+    google::cloud::support::v2::GetCommentRequest const& request) {
+  auto span =
+      internal::MakeSpan("support_v2::CommentServiceConnection::GetComment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetComment(request));
+}
+
 std::shared_ptr<support_v2::CommentServiceConnection>
 MakeCommentServiceTracingConnection(
     std::shared_ptr<support_v2::CommentServiceConnection> conn) {

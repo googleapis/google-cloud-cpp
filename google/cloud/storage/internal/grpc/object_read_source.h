@@ -16,11 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_READ_SOURCE_H
 
 #include "google/cloud/storage/internal/grpc/buffer_read_object_data.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "absl/functional/function_ref.h"
+#include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <functional>
 #include <string>
@@ -49,8 +51,10 @@ class GrpcObjectReadSource : public storage::internal::ObjectReadSource {
   // `false` if the timer was canceled, and with `true` if the timer triggered.
   using TimerSource = std::function<future<bool>()>;
 
-  explicit GrpcObjectReadSource(TimerSource timer_source,
-                                std::unique_ptr<StreamingRpc> stream);
+  explicit GrpcObjectReadSource(
+      TimerSource timer_source, std::unique_ptr<StreamingRpc> stream,
+      std::shared_ptr<storage::internal::HashFunction> hash_function =
+          storage::internal::CreateNullHashFunction());
 
   ~GrpcObjectReadSource() override = default;
 
@@ -65,12 +69,14 @@ class GrpcObjectReadSource : public storage::internal::ObjectReadSource {
                                                      std::size_t n) override;
 
  private:
-  void HandleResponse(storage::internal::ReadSourceResult& result, char* buf,
-                      std::size_t n,
-                      google::storage::v2::ReadObjectResponse response);
+  Status HandleResponse(storage::internal::ReadSourceResult& result, char* buf,
+                        std::size_t n,
+                        google::storage::v2::ReadObjectResponse response);
 
   TimerSource timer_source_;
   std::unique_ptr<StreamingRpc> stream_;
+  std::shared_ptr<storage::internal::HashFunction> hash_function_;
+  absl::optional<std::int64_t> offset_;
 
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.

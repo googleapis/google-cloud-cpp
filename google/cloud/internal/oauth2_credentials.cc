@@ -31,8 +31,9 @@ Credentials::AuthenticationHeaders(std::chrono::system_clock::time_point tp,
   if (!authorization->empty()) headers.push_back(*std::move(authorization));
 
   auto allowed_locations = AllowedLocations(tp, endpoint);
-  // Not all credential types support the x-allowed-locations header. For those
-  // that do, if there is a problem retrieving the header, omit the header.
+  // Not all credential types support the x-allowed-locations header. For
+  // those that do, if there is a problem retrieving the header, omit the
+  // header.
   if (allowed_locations.ok() && !allowed_locations->empty()) {
     headers.push_back(*std::move(allowed_locations));
   }

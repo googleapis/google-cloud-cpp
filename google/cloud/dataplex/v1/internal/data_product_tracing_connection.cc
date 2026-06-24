@@ -141,6 +141,16 @@ DataProductServiceTracingConnection::UpdateDataProduct(
                            child_->UpdateDataProduct(operation));
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceTracingConnection::RequestDataProductAccess(
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataProductServiceConnection::RequestDataProductAccess");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RequestDataProductAccess(request));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataAsset>>
 DataProductServiceTracingConnection::CreateDataAsset(
     google::cloud::dataplex::v1::CreateDataAssetRequest const& request) {

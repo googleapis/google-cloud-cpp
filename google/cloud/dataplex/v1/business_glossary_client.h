@@ -125,8 +125,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L370}
-  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L201}
+  /// [google.cloud.dataplex.v1.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L373}
+  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Glossary>> CreateGlossary(
@@ -180,8 +180,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L370}
-  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L201}
+  /// [google.cloud.dataplex.v1.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L373}
+  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Glossary>> CreateGlossary(
@@ -245,8 +245,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L201}
-  /// [google.cloud.dataplex.v1.UpdateGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L393}
+  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L204}
+  /// [google.cloud.dataplex.v1.UpdateGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L396}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Glossary>> UpdateGlossary(
@@ -298,8 +298,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L201}
-  /// [google.cloud.dataplex.v1.UpdateGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L393}
+  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L204}
+  /// [google.cloud.dataplex.v1.UpdateGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L396}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Glossary>> UpdateGlossary(
@@ -362,8 +362,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L410}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L413}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -414,8 +414,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L410}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L413}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -472,8 +472,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L429}
-  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L201}
+  /// [google.cloud.dataplex.v1.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L432}
+  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L204}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Glossary> GetGlossary(
@@ -502,8 +502,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L429}
-  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L201}
+  /// [google.cloud.dataplex.v1.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L432}
+  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L204}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::Glossary> GetGlossary(
@@ -539,8 +539,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L201}
-  /// [google.cloud.dataplex.v1.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L442}
+  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L204}
+  /// [google.cloud.dataplex.v1.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L445}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Glossary> ListGlossaries(
@@ -578,8 +578,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L201}
-  /// [google.cloud.dataplex.v1.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L442}
+  /// [google.cloud.dataplex.v1.Glossary]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L204}
+  /// [google.cloud.dataplex.v1.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L445}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::Glossary> ListGlossaries(
@@ -609,8 +609,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L493}
-  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L258}
+  /// [google.cloud.dataplex.v1.CreateGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L496}
+  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L261}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryCategory>
@@ -642,8 +642,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L493}
-  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L258}
+  /// [google.cloud.dataplex.v1.CreateGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L496}
+  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L261}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryCategory>
@@ -673,8 +673,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L258}
-  /// [google.cloud.dataplex.v1.UpdateGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L513}
+  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L261}
+  /// [google.cloud.dataplex.v1.UpdateGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L516}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryCategory>
@@ -705,8 +705,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L258}
-  /// [google.cloud.dataplex.v1.UpdateGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L513}
+  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L261}
+  /// [google.cloud.dataplex.v1.UpdateGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L516}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryCategory>
@@ -734,7 +734,7 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L526}
+  /// [google.cloud.dataplex.v1.DeleteGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L529}
   ///
   // clang-format on
   Status DeleteGlossaryCategory(std::string const& name, Options opts = {});
@@ -762,7 +762,7 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L526}
+  /// [google.cloud.dataplex.v1.DeleteGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L529}
   ///
   // clang-format on
   Status DeleteGlossaryCategory(
@@ -789,8 +789,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L539}
-  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L258}
+  /// [google.cloud.dataplex.v1.GetGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L542}
+  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L261}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryCategory> GetGlossaryCategory(
@@ -819,8 +819,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L539}
-  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L258}
+  /// [google.cloud.dataplex.v1.GetGlossaryCategoryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L542}
+  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L261}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryCategory> GetGlossaryCategory(
@@ -857,8 +857,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L258}
-  /// [google.cloud.dataplex.v1.ListGlossaryCategoriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L552}
+  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L261}
+  /// [google.cloud.dataplex.v1.ListGlossaryCategoriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L555}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::GlossaryCategory>
@@ -896,8 +896,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L258}
-  /// [google.cloud.dataplex.v1.ListGlossaryCategoriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L552}
+  /// [google.cloud.dataplex.v1.GlossaryCategory]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L261}
+  /// [google.cloud.dataplex.v1.ListGlossaryCategoriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L555}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::GlossaryCategory>
@@ -928,8 +928,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L610}
-  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L313}
+  /// [google.cloud.dataplex.v1.CreateGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L613}
+  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryTerm> CreateGlossaryTerm(
@@ -960,8 +960,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L610}
-  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L313}
+  /// [google.cloud.dataplex.v1.CreateGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L613}
+  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryTerm> CreateGlossaryTerm(
@@ -990,8 +990,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L313}
-  /// [google.cloud.dataplex.v1.UpdateGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L630}
+  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L316}
+  /// [google.cloud.dataplex.v1.UpdateGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L633}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryTerm> UpdateGlossaryTerm(
@@ -1021,8 +1021,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L313}
-  /// [google.cloud.dataplex.v1.UpdateGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L630}
+  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L316}
+  /// [google.cloud.dataplex.v1.UpdateGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L633}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryTerm> UpdateGlossaryTerm(
@@ -1047,7 +1047,7 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L643}
+  /// [google.cloud.dataplex.v1.DeleteGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L646}
   ///
   // clang-format on
   Status DeleteGlossaryTerm(std::string const& name, Options opts = {});
@@ -1073,7 +1073,7 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L643}
+  /// [google.cloud.dataplex.v1.DeleteGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L646}
   ///
   // clang-format on
   Status DeleteGlossaryTerm(
@@ -1100,8 +1100,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L656}
-  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L313}
+  /// [google.cloud.dataplex.v1.GetGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L659}
+  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryTerm> GetGlossaryTerm(
@@ -1130,8 +1130,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GetGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L656}
-  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L313}
+  /// [google.cloud.dataplex.v1.GetGlossaryTermRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L659}
+  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GlossaryTerm> GetGlossaryTerm(
@@ -1168,8 +1168,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L313}
-  /// [google.cloud.dataplex.v1.ListGlossaryTermsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L669}
+  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L316}
+  /// [google.cloud.dataplex.v1.ListGlossaryTermsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L672}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::GlossaryTerm> ListGlossaryTerms(
@@ -1207,8 +1207,8 @@ class BusinessGlossaryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L313}
-  /// [google.cloud.dataplex.v1.ListGlossaryTermsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L669}
+  /// [google.cloud.dataplex.v1.GlossaryTerm]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L316}
+  /// [google.cloud.dataplex.v1.ListGlossaryTermsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/business_glossary.proto#L672}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::GlossaryTerm> ListGlossaryTerms(

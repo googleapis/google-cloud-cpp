@@ -139,6 +139,16 @@ DataProductServiceAuth::UpdateDataProduct(
   return child_->UpdateDataProduct(context, options, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceAuth::RequestDataProductAccess(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RequestDataProductAccess(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataProductServiceAuth::AsyncCreateDataAsset(
     google::cloud::CompletionQueue& cq,

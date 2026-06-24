@@ -451,6 +451,21 @@ DataScanServiceConnectionImpl::ListDataScanJobs(
       });
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceConnectionImpl::CancelDataScanJob(
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelDataScanJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CancelDataScanJobRequest const&
+                 request) {
+        return stub_->CancelDataScanJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceConnectionImpl::GenerateDataQualityRules(
     google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&

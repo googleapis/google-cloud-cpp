@@ -101,6 +101,11 @@ class DataScanServiceLogging : public DataScanServiceStub {
                    google::cloud::dataplex::v1::ListDataScanJobsRequest const&
                        request) override;
 
+  StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+  CancelDataScanJob(grpc::ClientContext& context, Options const& options,
+                    google::cloud::dataplex::v1::CancelDataScanJobRequest const&
+                        request) override;
+
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
   GenerateDataQualityRules(
       grpc::ClientContext& context, Options const& options,

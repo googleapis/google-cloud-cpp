@@ -10,4 +10,5 @@
 @googleapis//google/bigtable/v2:peer_info.proto
 @googleapis//google/bigtable/v2:request_stats.proto
 @googleapis//google/bigtable/v2:response_params.proto
+@googleapis//google/bigtable/v2:session.proto
 @googleapis//google/bigtable/v2:types.proto

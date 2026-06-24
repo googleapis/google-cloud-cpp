@@ -44,6 +44,11 @@ Idempotency CommentServiceConnectionIdempotencyPolicy::CreateComment(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CommentServiceConnectionIdempotencyPolicy::GetComment(
+    google::cloud::support::v2::GetCommentRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CommentServiceConnectionIdempotencyPolicy>
 MakeDefaultCommentServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CommentServiceConnectionIdempotencyPolicy>();

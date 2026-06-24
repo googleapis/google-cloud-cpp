@@ -237,6 +237,17 @@ LineageMetadata::BatchSearchLinkProcesses(
   return child_->BatchSearchLinkProcesses(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>>
+LineageMetadata::SearchLineageStreaming(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::
+        SearchLineageStreamingRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SearchLineageStreaming(std::move(context), options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 LineageMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,

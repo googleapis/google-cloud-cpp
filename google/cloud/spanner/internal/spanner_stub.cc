@@ -180,6 +180,16 @@ DefaultSpannerStub::BatchWrite(
                                                 std::move(stream));
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+DefaultSpannerStub::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  auto stream = grpc_stub_->FetchCacheUpdate(context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::spanner::v1::CacheUpdate>>(std::move(context), std::move(stream));
+}
+
 future<StatusOr<google::spanner::v1::Session>>
 DefaultSpannerStub::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,

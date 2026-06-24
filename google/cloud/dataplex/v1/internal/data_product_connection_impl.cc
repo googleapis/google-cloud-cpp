@@ -395,6 +395,22 @@ DataProductServiceConnectionImpl::UpdateDataProduct(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>
+DataProductServiceConnectionImpl::RequestDataProductAccess(
+    google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RequestDataProductAccess(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+                 request) {
+        return stub_->RequestDataProductAccess(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataAsset>>
 DataProductServiceConnectionImpl::CreateDataAsset(
     google::cloud::dataplex::v1::CreateDataAssetRequest const& request) {

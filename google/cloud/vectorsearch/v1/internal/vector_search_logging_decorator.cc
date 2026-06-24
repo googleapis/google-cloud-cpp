@@ -218,6 +218,38 @@ VectorSearchServiceLogging::CreateIndex(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VectorSearchServiceLogging::AsyncUpdateIndex(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+        return child_->AsyncUpdateIndex(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VectorSearchServiceLogging::UpdateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+        return child_->UpdateIndex(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VectorSearchServiceLogging::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

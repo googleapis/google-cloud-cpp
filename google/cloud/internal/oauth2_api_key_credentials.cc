@@ -27,12 +27,9 @@ StatusOr<AccessToken> ApiKeyCredentials::GetToken(
   return AccessToken{std::string{}, tp};
 }
 
-StatusOr<std::vector<rest_internal::HttpHeader>>
-ApiKeyCredentials::AuthenticationHeaders(std::chrono::system_clock::time_point,
-                                         std::string_view) {
-  std::vector<rest_internal::HttpHeader> headers;
-  headers.emplace_back("x-goog-api-key", api_key_);
-  return headers;
+StatusOr<rest_internal::HttpHeader> ApiKeyCredentials::Authorization(
+    std::chrono::system_clock::time_point) {
+  return rest_internal::HttpHeader{"x-goog-api-key", api_key_};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -70,58 +70,150 @@ TEST(ApplyRedirectErrors, NoRedirect) {
   EXPECT_TRUE(spec.routing_token().empty());
 }
 
-TEST(EnsureFirstMessageAppendObjectSpec, Success) {
+TEST(ApplyWriteRedirectErrors, NoRedirect) {
+  google::storage::v2::AppendObjectSpec spec;
+  spec.set_bucket("projects/_/buckets/test-bucket");
+  spec.set_object("test-object");
+  google::rpc::Status rpc_status;
+  rpc_status.set_code(static_cast<int>(StatusCode::kNotFound));
+  rpc_status.set_message("test-message");
+
+  ApplyWriteRedirectErrors(spec, rpc_status);
+  EXPECT_EQ(spec.bucket(), "projects/_/buckets/test-bucket");
+  EXPECT_EQ(spec.object(), "test-object");
+  EXPECT_FALSE(spec.has_write_handle());
+  EXPECT_TRUE(spec.routing_token().empty());
+  EXPECT_EQ(spec.generation(), 0);
+}
+
+TEST(ApplyWriteRedirectErrors, Success) {
+  google::storage::v2::AppendObjectSpec spec;
+  spec.set_bucket("projects/_/buckets/test-bucket");
+  spec.set_object("test-object");
+  google::rpc::Status rpc_status;
+  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.mutable_write_handle()->set_handle("test-handle");
+  redirect.set_routing_token("test-token");
+  redirect.set_generation(1234);
+  rpc_status.add_details()->PackFrom(redirect);
+
+  ApplyWriteRedirectErrors(spec, rpc_status);
+  EXPECT_EQ(spec.bucket(), "projects/_/buckets/test-bucket");
+  EXPECT_EQ(spec.object(), "test-object");
+  EXPECT_EQ(spec.write_handle().handle(), "test-handle");
+  EXPECT_EQ(spec.routing_token(), "test-token");
+  EXPECT_EQ(spec.generation(), 1234);
+}
+
+TEST(HandleBidiWriteRedirect, NoRedirect) {
+  google::storage::v2::BidiWriteObjectRequest request;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        write_object_spec {
+          resource { bucket: "projects/_/buckets/b", name: "o" }
+        }
+      )pb",
+      &request));
+
+  google::rpc::Status rpc_status;
+  rpc_status.set_code(static_cast<int>(StatusCode::kNotFound));
+  rpc_status.set_message("test-message");
+
+  auto info = HandleBidiWriteRedirect(request, rpc_status);
+  EXPECT_TRUE(info.routing_token.empty());
+  EXPECT_TRUE(request.has_write_object_spec());
+  EXPECT_FALSE(request.has_append_object_spec());
+}
+
+TEST(HandleBidiWriteRedirect, NoWriteHandle) {
+  google::storage::v2::BidiWriteObjectRequest request;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        write_object_spec {
+          resource { bucket: "projects/_/buckets/b", name: "o" }
+        }
+      )pb",
+      &request));
+
+  google::rpc::Status rpc_status;
+  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.set_routing_token("test-token");
+  rpc_status.add_details()->PackFrom(redirect);
+
+  auto info = HandleBidiWriteRedirect(request, rpc_status);
+  EXPECT_EQ(info.routing_token, "test-token");
+  EXPECT_TRUE(request.has_write_object_spec());
+  EXPECT_FALSE(request.has_append_object_spec());
+}
+
+TEST(HandleBidiWriteRedirect, WithWriteHandleForWriteObjectSpec) {
   google::storage::v2::BidiWriteObjectRequest request;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         write_object_spec {
           resource { bucket: "projects/_/buckets/b", name: "o" }
           if_metageneration_match: 1
-          if_metageneration_not_match: 1
+          if_metageneration_not_match: 2
         }
       )pb",
       &request));
 
   google::rpc::Status rpc_status;
   google::storage::v2::BidiWriteObjectRedirectedError redirect;
-  redirect.mutable_write_handle();
-  rpc_status.add_details()->PackFrom(redirect);
-
-  EnsureFirstMessageAppendObjectSpec(request, rpc_status);
-
-  EXPECT_FALSE(request.has_write_object_spec());
-  EXPECT_TRUE(request.has_append_object_spec());
-
-  auto const& append_spec = request.append_object_spec();
-  EXPECT_EQ(append_spec.bucket(), "projects/_/buckets/b");
-  EXPECT_EQ(append_spec.object(), "o");
-
-  EXPECT_FALSE(append_spec.has_write_handle());
-  EXPECT_TRUE(append_spec.routing_token().empty());
-  EXPECT_EQ(append_spec.if_metageneration_match(), 1);
-  EXPECT_EQ(append_spec.if_metageneration_not_match(), 1);
-  EXPECT_EQ(append_spec.generation(), 0);
-}
-
-TEST(EnsureFirstMessageAppendObjectSpec, WriteHandleIsNotSet) {
-  google::storage::v2::BidiWriteObjectRequest request;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        write_object_spec {
-          resource { bucket: "projects/_/buckets/b", name: "o" }
-        }
-      )pb",
-      &request));
-
-  google::rpc::Status rpc_status;
-  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.mutable_write_handle()->set_handle("test-handle");
+  redirect.set_routing_token("test-token");
   redirect.set_generation(1234);
   rpc_status.add_details()->PackFrom(redirect);
 
-  EnsureFirstMessageAppendObjectSpec(request, rpc_status);
+  auto info = HandleBidiWriteRedirect(request, rpc_status);
+  EXPECT_EQ(info.routing_token, "test-token");
+  EXPECT_FALSE(request.has_write_object_spec());
+  EXPECT_TRUE(request.has_append_object_spec());
 
-  EXPECT_TRUE(request.has_write_object_spec());
-  EXPECT_FALSE(request.has_append_object_spec());
+  auto const& spec = request.append_object_spec();
+  EXPECT_EQ(spec.bucket(), "projects/_/buckets/b");
+  EXPECT_EQ(spec.object(), "o");
+  EXPECT_EQ(spec.if_metageneration_match(), 1);
+  EXPECT_EQ(spec.if_metageneration_not_match(), 2);
+  EXPECT_EQ(spec.write_handle().handle(), "test-handle");
+  EXPECT_EQ(spec.routing_token(), "test-token");
+  EXPECT_EQ(spec.generation(), 1234);
+}
+
+TEST(HandleBidiWriteRedirect, WithWriteHandleForAppendObjectSpec) {
+  google::storage::v2::BidiWriteObjectRequest request;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        append_object_spec {
+          bucket: "projects/_/buckets/b"
+          object: "o"
+          generation: 123
+          if_metageneration_match: 1
+          if_metageneration_not_match: 2
+        }
+      )pb",
+      &request));
+
+  google::rpc::Status rpc_status;
+  google::storage::v2::BidiWriteObjectRedirectedError redirect;
+  redirect.mutable_write_handle()->set_handle("test-handle");
+  redirect.set_routing_token("test-token");
+  redirect.set_generation(1234);
+  rpc_status.add_details()->PackFrom(redirect);
+
+  auto info = HandleBidiWriteRedirect(request, rpc_status);
+  EXPECT_EQ(info.routing_token, "test-token");
+  EXPECT_FALSE(request.has_write_object_spec());
+  EXPECT_TRUE(request.has_append_object_spec());
+
+  auto const& spec = request.append_object_spec();
+  EXPECT_EQ(spec.bucket(), "projects/_/buckets/b");
+  EXPECT_EQ(spec.object(), "o");
+  EXPECT_EQ(spec.if_metageneration_match(), 1);
+  EXPECT_EQ(spec.if_metageneration_not_match(), 2);
+  EXPECT_EQ(spec.write_handle().handle(), "test-handle");
+  EXPECT_EQ(spec.routing_token(), "test-token");
+  EXPECT_EQ(spec.generation(), 1234);
 }
 
 }  // namespace

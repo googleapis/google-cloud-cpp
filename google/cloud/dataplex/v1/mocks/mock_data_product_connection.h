@@ -174,6 +174,13 @@ class MockDataProductServiceConnection
               UpdateDataProduct,
               (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::RequestDataProductAccessResponse>,
+      RequestDataProductAccess,
+      (google::cloud::dataplex::v1::RequestDataProductAccessRequest const&
+           request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

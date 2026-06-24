@@ -275,6 +275,11 @@ class LineageConnection {
       google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
           request);
 
+  virtual StreamRange<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+  SearchLineageStreaming(google::cloud::datacatalog::lineage::v1::
+                             SearchLineageStreamingRequest const& request);
+
   virtual StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request);
 

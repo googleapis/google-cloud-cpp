@@ -163,6 +163,17 @@ SpannerMetadata::BatchWrite(
   return child_->BatchWrite(std::move(context), options, request);
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::spanner::v1::CacheUpdate>>
+SpannerMetadata::FetchCacheUpdate(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::spanner::v1::FetchCacheUpdateRequest const& request) {
+  SetMetadata(
+      *context, options,
+      absl::StrCat("database=", internal::UrlEncode(request.database())));
+  return child_->FetchCacheUpdate(std::move(context), options, request);
+}
+
 future<StatusOr<google::spanner::v1::Session>>
 SpannerMetadata::AsyncCreateSession(
     google::cloud::CompletionQueue& cq,

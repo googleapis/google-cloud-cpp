@@ -129,6 +129,12 @@ class LineageTracingConnection
       google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
           request) override;
 
+  StreamRange<
+      google::cloud::datacatalog::lineage::v1::SearchLineageStreamingResponse>
+  SearchLineageStreaming(
+      google::cloud::datacatalog::lineage::v1::
+          SearchLineageStreamingRequest const& request) override;
+
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
 

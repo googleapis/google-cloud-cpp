@@ -124,6 +124,28 @@ TEST(Credentials, ApiKeyCredentials) {
   EXPECT_EQ("api-key", visitor.api_key);
 }
 
+TEST(Credentials, AuthorizedUserCredentials) {
+  auto credentials = MakeUserAccountCredentials(
+      "test-only-invalid", Options{}.set<ScopesOption>({"scope1", "scope2"}));
+  TestCredentialsVisitor visitor;
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  ASSERT_EQ("AuthorizedUserConfig", visitor.name);
+  EXPECT_EQ("test-only-invalid", visitor.json_object);
+  EXPECT_THAT(visitor.options.get<ScopesOption>(),
+              ElementsAre("scope1", "scope2"));
+}
+
+TEST(Credentials, GDCHServiceAccountCredentials) {
+  TestCredentialsVisitor visitor;
+
+  auto credentials =
+      MakeGDCHServiceAccountCredentials("test-json", "test-audience");
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  EXPECT_EQ("GDCHServiceAccountConfig", visitor.name);
+  EXPECT_EQ("test-json", visitor.json_object);
+  EXPECT_EQ("test-audience", visitor.audience);
+}
+
 TEST(PopulateAuthOptions, EmptyOptions) {
   auto result_options = PopulateAuthOptions(Options{});
 

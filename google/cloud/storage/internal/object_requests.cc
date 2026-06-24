@@ -379,6 +379,9 @@ std::string ComposeObjectRequest::JsonPayload() const {
     source_object_list.emplace_back(std::move(source_object_json));
   }
   compose_object_payload_json["sourceObjects"] = source_object_list;
+  if (GetOption<DeleteSourceObjects>().value_or(false)) {
+    compose_object_payload_json["deleteSourceObjects"] = true;
+  }
 
   return compose_object_payload_json.dump();
 }

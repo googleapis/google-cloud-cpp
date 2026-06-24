@@ -193,6 +193,19 @@ DataScanServiceLogging::ListDataScanJobs(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dataplex::v1::CancelDataScanJobResponse>
+DataScanServiceLogging::CancelDataScanJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelDataScanJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CancelDataScanJobRequest const&
+                 request) {
+        return child_->CancelDataScanJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DataScanServiceLogging::GenerateDataQualityRules(
     grpc::ClientContext& context, Options const& options,

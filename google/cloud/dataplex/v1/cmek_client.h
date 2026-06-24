@@ -117,8 +117,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L198}
-  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L110}
+  /// [google.cloud.dataplex.v1.CreateEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L199}
+  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L111}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::EncryptionConfig>>
@@ -173,8 +173,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L198}
-  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L110}
+  /// [google.cloud.dataplex.v1.CreateEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L199}
+  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L111}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::EncryptionConfig>>
@@ -239,8 +239,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L110}
-  /// [google.cloud.dataplex.v1.UpdateEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L229}
+  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L111}
+  /// [google.cloud.dataplex.v1.UpdateEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::EncryptionConfig>>
@@ -294,8 +294,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L110}
-  /// [google.cloud.dataplex.v1.UpdateEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L229}
+  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L111}
+  /// [google.cloud.dataplex.v1.UpdateEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::EncryptionConfig>>
@@ -357,8 +357,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L242}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L243}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -408,8 +408,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L242}
-  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L702}
+  /// [google.cloud.dataplex.v1.DeleteEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L243}
+  /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L705}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -473,8 +473,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L110}
-  /// [google.cloud.dataplex.v1.ListEncryptionConfigsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L256}
+  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L111}
+  /// [google.cloud.dataplex.v1.ListEncryptionConfigsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L257}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::EncryptionConfig>
@@ -512,8 +512,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L110}
-  /// [google.cloud.dataplex.v1.ListEncryptionConfigsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L256}
+  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L111}
+  /// [google.cloud.dataplex.v1.ListEncryptionConfigsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L257}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::EncryptionConfig>
@@ -539,8 +539,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L110}
-  /// [google.cloud.dataplex.v1.GetEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L218}
+  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L111}
+  /// [google.cloud.dataplex.v1.GetEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L219}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::EncryptionConfig> GetEncryptionConfig(
@@ -569,8 +569,8 @@ class CmekServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L110}
-  /// [google.cloud.dataplex.v1.GetEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L218}
+  /// [google.cloud.dataplex.v1.EncryptionConfig]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L111}
+  /// [google.cloud.dataplex.v1.GetEncryptionConfigRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/cmek.proto#L219}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::EncryptionConfig> GetEncryptionConfig(

@@ -187,6 +187,9 @@ class CommentServiceConnection {
 
   virtual StatusOr<google::cloud::support::v2::Comment> CreateComment(
       google::cloud::support::v2::CreateCommentRequest const& request);
+
+  virtual StatusOr<google::cloud::support::v2::Comment> GetComment(
+      google::cloud::support::v2::GetCommentRequest const& request);
 };
 
 /**

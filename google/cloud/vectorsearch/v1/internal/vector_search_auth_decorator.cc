@@ -186,6 +186,34 @@ StatusOr<google::longrunning::Operation> VectorSearchServiceAuth::CreateIndex(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VectorSearchServiceAuth::AsyncUpdateIndex(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateIndex(cq, *std::move(context),
+                                       std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> VectorSearchServiceAuth::UpdateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vectorsearch::v1::UpdateIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateIndex(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VectorSearchServiceAuth::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

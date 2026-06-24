@@ -39,20 +39,8 @@ struct GenerateAccessTokenRequest {
   std::vector<std::string> delegates;
 };
 
-struct ServiceAccountAllowedLocationsRequest {
-  std::string service_account_email;
-};
-
-struct WorkloadIdentityAllowedLocationsRequest {
-  std::string project_id;
-  std::string pool_id;
-};
-
-struct WorkforceIdentityAllowedLocationsRequest {
-  std::string pool_id;
-};
-
 struct AllowedLocationsResponse {
+  bool IsUnbounded() const;
   std::vector<std::string> locations;
   std::string encoded_locations;
 };

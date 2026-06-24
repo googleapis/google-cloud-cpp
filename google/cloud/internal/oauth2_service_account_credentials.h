@@ -293,6 +293,8 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   StatusOr<std::string> project_id() const override;
   StatusOr<std::string> project_id(Options const&) const override;
 
+  AllowedLocationsRequestType AllowedLocationsRequest() const override;
+
  private:
   bool UseOAuth();
   StatusOr<AccessToken> GetTokenOAuth(
