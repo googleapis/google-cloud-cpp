@@ -218,6 +218,8 @@ TEST(BigtableStubFactory, DynamicChannelPoolSizingPolicyOption) {
   EXPECT_EQ(policy.maximum_average_outstanding_rpcs_per_channel, 99);
   EXPECT_EQ(policy.pool_size_decrease_cooldown_interval,
             std::chrono::seconds(300));
+
+  fake_cq_impl->SimulateCompletion(false);
 }
 
 TEST(BigtableStubFactory, Auth) {
