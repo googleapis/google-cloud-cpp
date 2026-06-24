@@ -764,6 +764,9 @@ TEST_F(AsyncConnectionImplAppendableTest,
   next.first.set_value(true);
 }
 
+// TODO(#16174): Figure out why this test fails to compile in MSVC.
+#ifndef _WIN32
+
 TEST_F(AsyncConnectionImplAppendableTest,
        ResumeAppendableObjectUploadWithChecksum) {
   auto constexpr kRequestText = R"pb(
@@ -881,6 +884,8 @@ TEST_F(AsyncConnectionImplAppendableTest,
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 }
+
+#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

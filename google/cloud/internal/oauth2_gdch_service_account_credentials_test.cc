@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO(#16172): GDCH is not currently supported on Windows.
+#ifndef _WIN32
+
 #include "google/cloud/internal/oauth2_gdch_service_account_credentials.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/base64_transforms.h"
@@ -464,3 +467,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif

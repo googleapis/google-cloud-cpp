@@ -40,4 +40,10 @@ io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 
-integration::ctest_with_emulators "cmake-out"
+if [[ "${INTEGRATION_LIBRARIES:-}" == "storage" ]]; then
+  integration::ctest_storage_with_emulators "cmake-out"
+elif [[ "${INTEGRATION_LIBRARIES:-}" == "all_bar_storage" ]]; then
+  integration::ctest_with_emulators "cmake-out" "storage"
+else
+  integration::ctest_with_emulators "cmake-out"
+fi

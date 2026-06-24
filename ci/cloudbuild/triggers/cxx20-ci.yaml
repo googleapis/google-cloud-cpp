@@ -23,6 +23,7 @@ name: cxx20-ci
 substitutions:
   _BUILD_NAME: cxx20
   _DISTRO: fedora-latest-cxx20
+  _INTEGRATION_LIBRARIES: all_bar_storage
   _TRIGGER_TYPE: ci
 tags:
 - ci
