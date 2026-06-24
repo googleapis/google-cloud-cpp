@@ -571,6 +571,9 @@ TEST(UnifiedRestCredentialsTest, ApiKey) {
               IsOkAndHolds(Contains(HttpHeader("x-goog-api-key", "api-key"))));
 }
 
+// TODO(#16172): GDCH is not currently supported on Windows.
+#ifndef _WIN32
+
 TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceParameter) {
   auto constexpr kAudience = "test-audience";
   auto const post_response = std::string{R"""({
@@ -616,6 +619,8 @@ TEST(UnifiedRestCredentialsTest, MakeGDCHServiceAccountUsesAudienceParameter) {
   EXPECT_THAT(header, IsOkAndHolds(Contains(HttpHeader(
                           "Authorization", "Bearer access-token-value"))));
 }
+
+#endif
 
 TEST(UnifiedRestCredentialsTest, LoadError) {
   // Create a name for a non-existing file, try to load it, and verify it

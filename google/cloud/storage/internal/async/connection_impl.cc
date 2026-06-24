@@ -317,11 +317,19 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
           CreateHashFunction(*current));
   auto hash_validator = CreateHashValidator(p.request, *current);
 
+  absl::optional<std::int64_t> requested_length;
+  if (p.request.read_limit() > 0) {
+    requested_length = p.request.read_limit();
+  }
+  auto bucket = p.request.bucket();
+  auto object = p.request.object();
+
   auto connection_factory = MakeReaderConnectionFactory(
       std::move(current), std::move(p.request), hash_function);
   auto connection = std::make_unique<AsyncReaderConnectionResume>(
       std::move(resume_policy), std::move(hash_function),
-      std::move(hash_validator), std::move(connection_factory));
+      std::move(hash_validator), std::move(connection_factory),
+      requested_length, std::move(bucket), std::move(object));
 
   return make_ready_future(ReturnType(std::move(connection)));
 }

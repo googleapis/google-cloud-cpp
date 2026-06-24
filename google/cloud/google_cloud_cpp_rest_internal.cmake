@@ -65,6 +65,7 @@ add_library(
     internal/oauth2_api_key_credentials.h
     internal/oauth2_authorized_user_credentials.cc
     internal/oauth2_authorized_user_credentials.h
+    internal/oauth2_background_credentials.h
     internal/oauth2_cached_credentials.cc
     internal/oauth2_cached_credentials.h
     internal/oauth2_compute_engine_credentials.cc
