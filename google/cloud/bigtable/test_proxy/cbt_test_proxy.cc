@@ -123,7 +123,8 @@ grpc::Status CbtTestProxy::CreateClient(
         grpc::StatusCode::ALREADY_EXISTS,
         absl::StrCat("Client ", request->client_id(), " already exists."));
   }
-  connections_.insert({request->client_id(), MakeDataConnection(options)});
+  connections_.insert(
+      {request->client_id(), MakeDataConnection(std::move(options))});
   return grpc::Status();
 }
 

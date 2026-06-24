@@ -128,7 +128,9 @@ void TableIntegrationTest::SetUp() {
           .value_or("") == "dynamic") {
     options.set<experimental::InstanceChannelAffinityOption>({});
   }
-  data_connection_ = MakeDataConnection(options);
+  data_connection_ = MakeDataConnection(
+      {InstanceResource(Project(project_id()), instance_id())},
+      std::move(options));
 
   // In production, we cannot use `DropAllRows()` to cleanup the table because
   // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.

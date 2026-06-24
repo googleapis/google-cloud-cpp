@@ -129,6 +129,8 @@ TEST_F(DataIntegrationTest, TableBulkApplyThrottling) {
   // Make a custom table with throttling enabled.
   auto table =
       Table(MakeDataConnection(
+                {InstanceResource(Project(TableTestEnvironment::project_id()),
+                                  TableTestEnvironment::instance_id())},
                 Options{}.set<experimental::BulkApplyThrottlingOption>(true)),
             TableResource(TableTestEnvironment::project_id(),
                           TableTestEnvironment::instance_id(),
@@ -578,7 +580,8 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   // Make a `Table` with an implementation that depends on the test's value
   // parameter.
   auto make_table = [&](Options const& options) {
-    auto conn = MakeDataConnection(options);
+    auto conn = MakeDataConnection(
+        {InstanceResource(Project(project_id()), instance_id())}, options);
     return Table(std::move(conn),
                  TableResource(project_id(), instance_id(), table_id));
   };
@@ -617,7 +620,10 @@ TEST_F(DataIntegrationTest, ClientQueryColumnFamily) {
           .set<
               bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
-  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto connection = google::cloud::bigtable::MakeDataConnection(
+      {google::cloud::bigtable::InstanceResource(
+          google::cloud::Project(project_id()), instance_id())},
+      opts);
   auto table =
       Table(connection, TableResource(project_id(), instance_id(), table_id));
   std::string const row_key = "row-key-for-client-query-test";
@@ -632,7 +638,7 @@ TEST_F(DataIntegrationTest, ClientQueryColumnFamily) {
       {row_key, family, column2, 0, value2},
   };
   BulkApply(table, created);
-  auto client = Client(connection, opts);
+  auto client = Client(connection, std::move(opts));
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
@@ -683,7 +689,10 @@ TEST_F(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
           .set<
               bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
-  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto connection = google::cloud::bigtable::MakeDataConnection(
+      {google::cloud::bigtable::InstanceResource(
+          google::cloud::Project(project_id()), instance_id())},
+      opts);
   auto table =
       Table(connection, TableResource(project_id(), instance_id(), table_id));
   std::string const row_key = "row-key-for-history-test";
@@ -724,7 +733,7 @@ TEST_F(DataIntegrationTest, ClientQueryColumnFamilyWithHistory) {
   ASSERT_TRUE(apply_status.ok()) << apply_status.message();
 
   // Execute query using WITH_HISTORY
-  auto client = Client(connection, opts);
+  auto client = Client(connection, std::move(opts));
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
@@ -827,7 +836,10 @@ TEST_F(DataIntegrationTest, SingleColumnQuery) {
           .set<
               bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
-  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto connection = google::cloud::bigtable::MakeDataConnection(
+      {google::cloud::bigtable::InstanceResource(
+          google::cloud::Project(project_id()), instance_id())},
+      opts);
   auto table =
       Table(connection, TableResource(project_id(), instance_id(), table_id));
   std::string const row_key = "row-key-for-client-query-test";
@@ -842,7 +854,7 @@ TEST_F(DataIntegrationTest, SingleColumnQuery) {
       {row_key, family, column2, 0, value2},
   };
   BulkApply(table, created);
-  auto client = Client(connection, opts);
+  auto client = Client(connection, std::move(opts));
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
@@ -890,7 +902,10 @@ TEST_F(DataIntegrationTest, SingleColumnQueryWithHistory) {
           .set<
               bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
-  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto connection = google::cloud::bigtable::MakeDataConnection(
+      {google::cloud::bigtable::InstanceResource(
+          google::cloud::Project(project_id()), instance_id())},
+      opts);
   auto table =
       Table(connection, TableResource(project_id(), instance_id(), table_id));
   std::string const row_key = "row-key-for-history-test";
@@ -920,7 +935,7 @@ TEST_F(DataIntegrationTest, SingleColumnQueryWithHistory) {
   ASSERT_TRUE(apply_status.ok()) << apply_status.message();
 
   // Execute query using WITH_HISTORY
-  auto client = Client(connection, opts);
+  auto client = Client(connection, std::move(opts));
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
@@ -994,7 +1009,10 @@ TEST_F(DataIntegrationTest, MultiColumnQuery) {
           .set<
               bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
-  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto connection = google::cloud::bigtable::MakeDataConnection(
+      {google::cloud::bigtable::InstanceResource(
+          google::cloud::Project(project_id()), instance_id())},
+      opts);
   auto table =
       Table(connection, TableResource(project_id(), instance_id(), table_id));
   std::string const row_key1 = "multi-column-query-row-1";
@@ -1014,7 +1032,7 @@ TEST_F(DataIntegrationTest, MultiColumnQuery) {
   };
 
   BulkApply(table, created);
-  auto client = Client(connection, opts);
+  auto client = Client(connection, std::move(opts));
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();
@@ -1061,7 +1079,10 @@ TEST_F(DataIntegrationTest, QueryWithNulls) {
           .set<
               bigtable::experimental::ExecuteQueryPlanRefreshRetryPolicyOption>(
               std::move(query_refresh_option));
-  auto connection = google::cloud::bigtable::MakeDataConnection(opts);
+  auto connection = google::cloud::bigtable::MakeDataConnection(
+      {google::cloud::bigtable::InstanceResource(
+          google::cloud::Project(project_id()), instance_id())},
+      opts);
   auto table =
       Table(connection, TableResource(project_id(), instance_id(), table_id));
   std::string const row_key1 = "query-with-nulls-row-1";
@@ -1081,7 +1102,7 @@ TEST_F(DataIntegrationTest, QueryWithNulls) {
   };
   BulkApply(table, created);
 
-  auto client = Client(connection, opts);
+  auto client = Client(connection, std::move(opts));
   std::vector<std::string> full_table_path =
       absl::StrSplit(table.table_name(), '/');
   auto table_name = full_table_path.back();

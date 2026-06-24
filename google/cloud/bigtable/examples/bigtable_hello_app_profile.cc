@@ -43,7 +43,8 @@ void HelloWorldAppProfile(std::vector<std::string> const& argv) {
   std::string const& profile_id = argv[3];
 
   // Create an object to access the Cloud Bigtable Data API.
-  auto connection = cbt::MakeDataConnection();
+  auto connection = cbt::MakeDataConnection(
+      {cbt::InstanceResource(google::cloud::Project(project_id), instance_id)});
 
   // Use the default profile to write some data.
   cbt::Table write(connection,

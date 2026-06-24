@@ -40,7 +40,12 @@ void TableSetEndpoint(std::vector<std::string> const& argv) {
     auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
         "private.googleapis.com");
     auto resource = bigtable::TableResource(project_id, instance_id, table_id);
-    return bigtable::Table(bigtable::MakeDataConnection(options), resource);
+    return bigtable::Table(
+        bigtable::MakeDataConnection(
+            {bigtable::InstanceResource(google::cloud::Project(project_id),
+                                        instance_id)},
+            std::move(options)),
+        resource);
   }
   //! [table-set-endpoint]
   (argv.at(0), argv.at(1), argv.at(2));
@@ -66,7 +71,10 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
                                /*maximum_delay=*/std::chrono::seconds(45),
                                /*scaling=*/2.0)
                                .clone());
-    auto connection = cbt::MakeDataConnection(options);
+    auto connection = cbt::MakeDataConnection(
+        {cbt::InstanceResource(google::cloud::Project(project_id),
+                               instance_id)},
+        std::move(options));
 
     auto const table_name =
         cbt::TableResource(project_id, instance_id, table_id);
@@ -111,7 +119,12 @@ void TableWithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     auto resource = bigtable::TableResource(project_id, instance_id, table_id);
-    return bigtable::Table(bigtable::MakeDataConnection(options), resource);
+    return bigtable::Table(
+        bigtable::MakeDataConnection(
+            {bigtable::InstanceResource(google::cloud::Project(project_id),
+                                        instance_id)},
+            std::move(options)),
+        resource);
   }
   //! [table-with-service-account]
   (argv.at(0), argv.at(1), argv.at(2), argv.at(3));
@@ -137,7 +150,12 @@ void TableSetUniverseDomain(std::vector<std::string> const& argv) {
 
     if (!ud_options.ok()) throw std::move(ud_options).status();
     auto resource = bigtable::TableResource(project_id, instance_id, table_id);
-    return bigtable::Table(bigtable::MakeDataConnection(*ud_options), resource);
+    return bigtable::Table(
+        bigtable::MakeDataConnection(
+            {bigtable::InstanceResource(google::cloud::Project(project_id),
+                                        instance_id)},
+            *std::move(ud_options)),
+        resource);
   }
   //! [table-set-universe-domain]
   (argv.at(0), argv.at(1), argv.at(2));
