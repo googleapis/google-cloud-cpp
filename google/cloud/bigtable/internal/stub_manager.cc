@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/stub_manager.h"
+#include "google/cloud/log.h"
 #include <utility>
 
 namespace google {
@@ -39,6 +40,8 @@ std::shared_ptr<BigtableStub> StubManager::GetStub(
       iter != affinity_stubs_.end()) {
     return iter->second;
   }
+  GCP_LOG(INFO) << "Dynamic connection resolution adding new channel pool "
+                << "for instance: " << instance_name;
   auto inserted = affinity_stubs_.emplace(
       std::string{instance_name},
       stub_creation_fn_(instance_name, Priming::kNoPriming));
