@@ -155,8 +155,8 @@ class ParallelUploadTest
  protected:
   std::string ExpectCreateSessionFailure(
       std::string const& object_name, Status status,
-      absl::optional<std::string> const& resumable_session_id =
-          absl::optional<std::string>()) {
+      std::optional<std::string> const& resumable_session_id =
+          std::optional<std::string>()) {
     auto id = resumable_session_id.value_or(CreateSessionId());
 
     EXPECT_THAT(status, Not(IsOk()));
@@ -169,8 +169,8 @@ class ParallelUploadTest
 
   std::string ExpectCreateFailingSession(
       std::string const& object_name, Status status,
-      absl::optional<std::string> const& resumable_session_id =
-          absl::optional<std::string>()) {
+      std::optional<std::string> const& resumable_session_id =
+          std::optional<std::string>()) {
     auto id = resumable_session_id.value_or(CreateSessionId());
     EXPECT_CALL(*mock_, CreateResumableUpload(Property(
                             &ResumableUploadRequest::object_name, object_name)))
@@ -188,7 +188,7 @@ class ParallelUploadTest
 
   std::string ExpectCreateSession(
       std::string const& object_name, int generation,
-      absl::optional<std::string> const& expected_content = absl::nullopt) {
+      std::optional<std::string> const& expected_content = std::nullopt) {
     auto id = CreateSessionId();
     EXPECT_CALL(*mock_, CreateResumableUpload(Property(
                             &ResumableUploadRequest::object_name, object_name)))
@@ -214,14 +214,14 @@ class ParallelUploadTest
 
   std::string ExpectResumeSession(
       std::string const& object_name, int generation, std::string id,
-      absl::optional<std::uint64_t> const& committed_size = absl::nullopt,
-      absl::optional<std::string> const& expected_content = absl::nullopt) {
+      std::optional<std::uint64_t> const& committed_size = std::nullopt,
+      std::optional<std::string> const& expected_content = std::nullopt) {
     EXPECT_CALL(*mock_,
                 QueryResumableUpload(Property(
                     &QueryResumableUploadRequest::upload_session_url, id)))
         .WillOnce([=](internal::QueryResumableUploadRequest const&) {
           return internal::QueryResumableUploadResponse{committed_size,
-                                                        absl::nullopt};
+                                                        std::nullopt};
         })
         .RetiresOnSaturation();
 
@@ -266,13 +266,13 @@ class ParallelUploadTest
 
   std::string ExpectResumeSessionToSuspend(
       std::string const&, std::string id,
-      absl::optional<std::uint64_t> committed_size) {
+      std::optional<std::uint64_t> committed_size) {
     EXPECT_CALL(*mock_,
                 QueryResumableUpload(Property(
                     &QueryResumableUploadRequest::upload_session_url, id)))
         .WillOnce([=](internal::QueryResumableUploadRequest const&) {
           return internal::QueryResumableUploadResponse{committed_size,
-                                                        absl::nullopt};
+                                                        std::nullopt};
         })
         .RetiresOnSaturation();
 
@@ -289,8 +289,8 @@ class ParallelUploadTest
 auto create_composition_check =
     [](std::vector<std::pair<std::string, int>> source_objects,
        std::string const& dest_obj, StatusOr<ObjectMetadata> const& res,
-       absl::optional<std::int64_t> const& expected_if_gen_match =
-           absl::optional<std::int64_t>()) {
+       std::optional<std::int64_t> const& expected_if_gen_match =
+           std::optional<std::int64_t>()) {
       nlohmann::json json_source_objects;
       for (auto& obj : source_objects) {
         json_source_objects.emplace_back(nlohmann::json{
@@ -554,14 +554,14 @@ TEST_F(ParallelUploadTest, BrokenStream) {
 }
 
 TEST(FirstOccurrenceTest, Basic) {
-  EXPECT_EQ(absl::optional<std::string>(),
+  EXPECT_EQ(std::optional<std::string>(),
             ExtractFirstOccurrenceOfType<std::string>(std::tuple<>()));
-  EXPECT_EQ(absl::optional<std::string>(),
+  EXPECT_EQ(std::optional<std::string>(),
             ExtractFirstOccurrenceOfType<std::string>(std::make_tuple(5, 5.5)));
-  EXPECT_EQ(absl::optional<std::string>("foo"),
+  EXPECT_EQ(std::optional<std::string>("foo"),
             ExtractFirstOccurrenceOfType<std::string>(
                 std::make_tuple(std::string("foo"), std::string("bar"))));
-  EXPECT_EQ(absl::optional<std::string>("foo"),
+  EXPECT_EQ(std::optional<std::string>("foo"),
             ExtractFirstOccurrenceOfType<std::string>(
                 std::make_tuple(5, 6, std::string("foo"), std::string("bar"))));
 }
@@ -1061,17 +1061,17 @@ TEST(ParallelUploadPersistentState, CustomDataNotAString) {
 }
 
 TEST(ParallelUploadPersistentState, NoStreams) {
-  auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
-      {"destination", "dest"}, {"expected_generation", 1}}.dump());
+  auto res = ParallelUploadPersistentState::FromString(
+      nlohmann::json{{"destination", "dest"}, {"expected_generation", 1}}
+          .dump());
   EXPECT_THAT(res, StatusIs(StatusCode::kInternal,
                             HasSubstr("doesn't contain 'streams'")));
 }
 
 TEST(ParallelUploadPersistentState, StreamsNotArray) {
   auto res = ParallelUploadPersistentState::FromString(nlohmann::json{
-      {"destination", "dest"},
-      {"expected_generation", 1},
-      {"streams", 5}}.dump());
+      {"destination", "dest"}, {"expected_generation", 1}, {"streams", 5}}
+                                                           .dump());
   EXPECT_THAT(res,
               StatusIs(StatusCode::kInternal, HasSubstr("is not an array")));
 }
@@ -1775,7 +1775,7 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResume) {
                           /*committed_size=*/1, "hi");
   auto const id_1 =
       ExpectResumeSession(kPrefix + ".upload_shard_1", 222, "session-id-1",
-                          /*committed_size=*/absl::nullopt, "def");
+                          /*committed_size=*/std::nullopt, "def");
   auto const id_0 =
       ExpectResumeSession(kPrefix + ".upload_shard_0", 111, "session-id-3",
                           /*committed_size=*/3);
@@ -1856,9 +1856,9 @@ TEST_F(ParallelUploadTest, SuspendUploadFileResumeBadOffset) {
 
   // The expectations need to be reversed.
   auto const id_2 = ExpectResumeSessionToSuspend(kPrefix + ".upload_shard_2",
-                                                 "session-id-2", absl::nullopt);
+                                                 "session-id-2", std::nullopt);
   auto const id_1 = ExpectResumeSessionToSuspend(kPrefix + ".upload_shard_1",
-                                                 "session-id-1", absl::nullopt);
+                                                 "session-id-1", std::nullopt);
   auto const id_0 = ExpectResumeSessionToSuspend(
       kPrefix + ".upload_shard_0", "session-id-0", kCommittedSize);
 

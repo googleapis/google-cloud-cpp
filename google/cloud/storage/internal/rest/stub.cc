@@ -119,7 +119,7 @@ Status AddHeaders(Options const& options, RestRequestBuilder& builder) {
   return {};
 }
 
-absl::optional<std::string> GetEmulator() {
+std::optional<std::string> GetEmulator() {
   auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   if (emulator) return emulator;
   return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");

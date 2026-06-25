@@ -35,8 +35,8 @@ namespace {
 namespace gcs = ::google::cloud::storage;
 
 Status ValidateQuantizedRange(std::string const& name,
-                              absl::optional<std::int64_t> minimum,
-                              absl::optional<std::int64_t> maximum,
+                              std::optional<std::int64_t> minimum,
+                              std::optional<std::int64_t> maximum,
                               std::int64_t quantum) {
   using ::google::cloud::StatusCode;
   if (!minimum.has_value() && !maximum.has_value()) return {};

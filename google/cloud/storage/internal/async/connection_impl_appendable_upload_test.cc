@@ -92,7 +92,7 @@ std::unique_ptr<MockAsyncBidiWriteObjectStream> MakeCommonAppendStream(
             .then([persisted_size](auto) {
               auto response = google::storage::v2::BidiWriteObjectResponse{};
               response.set_persisted_size(persisted_size);
-              return absl::make_optional(std::move(response));
+              return std::make_optional(std::move(response));
             });
       })
       // The second `Read()` call, after the final write, returns the full
@@ -106,7 +106,7 @@ std::unique_ptr<MockAsyncBidiWriteObjectStream> MakeCommonAppendStream(
               response.mutable_resource()->set_name("test-object");
               // The final size should be greater than the persisted size.
               response.mutable_resource()->set_size(persisted_size + 1024);
-              return absl::make_optional(std::move(response));
+              return std::make_optional(std::move(response));
             });
       });
 
@@ -662,7 +662,7 @@ TEST_F(AsyncConnectionImplAppendableTest,
             .then([initial_resource](auto) {
               auto response = google::storage::v2::BidiWriteObjectResponse{};
               *response.mutable_resource() = initial_resource;
-              return absl::make_optional(std::move(response));
+              return std::make_optional(std::move(response));
             });
       })
       .WillOnce([&, initial_resource] {
@@ -672,7 +672,7 @@ TEST_F(AsyncConnectionImplAppendableTest,
               *response.mutable_resource() = initial_resource;
               response.mutable_resource()->set_size(
                   initial_resource.size() + 9);  // "some data" size is 9
-              return absl::make_optional(std::move(response));
+              return std::make_optional(std::move(response));
             });
       });
 
@@ -790,7 +790,7 @@ TEST_F(AsyncConnectionImplAppendableTest,
           response.set_persisted_size(kPersistedSize);
           response.mutable_persisted_data_checksums()->set_crc32c(
               kPersistedCrc);
-          return absl::make_optional(std::move(response));
+          return std::make_optional(std::move(response));
         });
       })
       .WillOnce([&] {
@@ -801,7 +801,7 @@ TEST_F(AsyncConnectionImplAppendableTest,
           object.set_name("test-object");
           object.set_size(kPersistedSize + 9);
           *response.mutable_resource() = std::move(object);
-          return absl::make_optional(std::move(response));
+          return std::make_optional(std::move(response));
         });
       });
 

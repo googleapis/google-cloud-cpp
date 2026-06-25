@@ -456,7 +456,7 @@ TEST(ReadRange, TranscodingSuppressesWarning) {
 TEST(ReadRange, ZeroLengthOverrunLogging) {
   ScopedLog log;
   // Pass 0 as the limit (not nullopt, which would mean read to end).
-  ReadRange actual(0, absl::make_optional<std::int64_t>(0), "my-bucket",
+  ReadRange actual(0, std::make_optional<std::int64_t>(0), "my-bucket",
                    "my-object");
 
   auto data = google::storage::v2::ObjectRangeData{};
@@ -482,7 +482,7 @@ TEST(ReadRange, ZeroLengthOverrunLogging) {
 TEST(ReadRange, ReadLastOverrunLogging) {
   ScopedLog log;
   // ReadLast(5) is represented by start = -5, limit = 5.
-  ReadRange actual(-5, absl::make_optional<std::int64_t>(5), "my-bucket",
+  ReadRange actual(-5, std::make_optional<std::int64_t>(5), "my-bucket",
                    "my-object");
 
   // GCS returns 10 bytes (overrun of 5 bytes)

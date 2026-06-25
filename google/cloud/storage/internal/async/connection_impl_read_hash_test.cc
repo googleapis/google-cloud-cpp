@@ -25,10 +25,10 @@
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <cstdint>
+#include <optional>
 #include <ostream>
 #include <string>
 
@@ -52,7 +52,7 @@ using AsyncReadObjectStream = ::google::cloud::internal::AsyncStreamingReadRpc<
 struct HashTestCase {
   StatusCode expected_status_code;
   Options options;
-  absl::optional<std::int32_t> generated_crc32c;
+  std::optional<std::int32_t> generated_crc32c;
   std::string generated_md5;
 };
 
@@ -246,12 +246,12 @@ TEST_P(AsyncConnectionImplReadHashTest, ValidateFullChecksums) {
                 kQuickFoxCrc32cChecksum);
             *response.mutable_object_checksums() =
                 GeneratedObjectChecksums(param);
-            return absl::make_optional(response);
+            return std::make_optional(response);
           });
         })
         .WillOnce([&] {
           return sequencer.PushBack("Read").then([](auto) {
-            return absl::optional<google::storage::v2::ReadObjectResponse>{};
+            return std::optional<google::storage::v2::ReadObjectResponse>{};
           });
         });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -329,12 +329,12 @@ TEST_P(AsyncConnectionImplReadHashTest, ReadFromOffsetNoValidate) {
                 kQuickFoxCrc32cChecksum);
             *response.mutable_object_checksums() =
                 GeneratedObjectChecksums(param);
-            return absl::make_optional(response);
+            return std::make_optional(response);
           });
         })
         .WillOnce([&] {
           return sequencer.PushBack("Read").then([](auto) {
-            return absl::optional<google::storage::v2::ReadObjectResponse>{};
+            return std::optional<google::storage::v2::ReadObjectResponse>{};
           });
         });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -414,12 +414,12 @@ TEST_P(AsyncConnectionImplReadHashTest, PartialReadNoValidate) {
                 kQuickFoxCrc32cChecksum);
             *response.mutable_object_checksums() =
                 GeneratedObjectChecksums(param);
-            return absl::make_optional(response);
+            return std::make_optional(response);
           });
         })
         .WillOnce([&] {
           return sequencer.PushBack("Read").then([](auto) {
-            return absl::optional<google::storage::v2::ReadObjectResponse>{};
+            return std::optional<google::storage::v2::ReadObjectResponse>{};
           });
         });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {

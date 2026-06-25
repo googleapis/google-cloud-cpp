@@ -175,7 +175,7 @@ TEST_F(AsyncConnectionImplTest, StartUnbufferedUpload) {
                 "projects/_/buckets/test-bucket");
             response.mutable_resource()->set_name("test-object");
             response.mutable_resource()->set_generation(123456);
-            return absl::make_optional(std::move(response));
+            return std::make_optional(std::move(response));
           });
         });
         EXPECT_CALL(*stream, Cancel).Times(1);
@@ -295,7 +295,7 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUploadWithTimeout) {
             "projects/_/buckets/test-bucket");
         response.mutable_resource()->set_name("test-object");
         response.mutable_resource()->set_generation(123456);
-        return absl::make_optional(std::move(response));
+        return std::make_optional(std::move(response));
       });
     });
     EXPECT_CALL(*stream, Cancel).Times(1);
@@ -519,7 +519,7 @@ TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUpload) {
                 "projects/_/buckets/test-bucket");
             response.mutable_resource()->set_name("test-object");
             response.mutable_resource()->set_generation(123456);
-            return absl::make_optional(std::move(response));
+            return std::make_optional(std::move(response));
           });
         });
         EXPECT_CALL(*stream, Cancel).Times(1);
@@ -875,7 +875,7 @@ TEST_F(AsyncConnectionImplTest, BufferedUploadNewUpload) {
                 "projects/_/buckets/test-bucket");
             response.mutable_resource()->set_name("test-object");
             response.mutable_resource()->set_generation(123456);
-            return absl::make_optional(std::move(response));
+            return std::make_optional(std::move(response));
           });
         });
         EXPECT_CALL(*stream, Cancel).Times(1);
@@ -966,7 +966,7 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUploadNewUploadResume) {
         });
         EXPECT_CALL(*stream, Read).WillOnce([&] {
           return sequencer.PushBack("Read").then([](auto) {
-            return absl::optional<
+            return std::optional<
                 google::storage::v2::BidiWriteObjectResponse>{};
           });
         });
@@ -1118,7 +1118,7 @@ TEST_F(AsyncConnectionImplTest, ResumeBufferedUpload) {
           return sequencer.PushBack("Read").then([](auto) {
             auto response = google::storage::v2::BidiWriteObjectResponse{};
             *response.mutable_resource() = TestProtoObject();
-            return absl::make_optional(std::move(response));
+            return std::make_optional(std::move(response));
           });
         });
         EXPECT_CALL(*stream, Cancel).Times(1);

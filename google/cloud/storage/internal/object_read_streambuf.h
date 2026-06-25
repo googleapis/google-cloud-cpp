@@ -70,15 +70,15 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   }
 
   // See ObjectReadStream for details about these attributes.
-  absl::optional<std::int64_t> const& generation() const { return generation_; }
-  absl::optional<std::int64_t> const& metageneration() const {
+  std::optional<std::int64_t> const& generation() const { return generation_; }
+  std::optional<std::int64_t> const& metageneration() const {
     return metageneration_;
   }
-  absl::optional<std::string> const& storage_class() const {
+  std::optional<std::string> const& storage_class() const {
     return storage_class_;
   }
-  absl::optional<std::uint64_t> const& size() const { return size_; }
-  absl::optional<std::string> const& transformation() const {
+  std::optional<std::uint64_t> const& size() const { return size_; }
+  std::optional<std::string> const& transformation() const {
     return transformation_;
   }
 
@@ -101,11 +101,11 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   std::string received_hash_;
   Status status_;
   std::multimap<std::string, std::string> headers_;
-  absl::optional<std::int64_t> generation_;
-  absl::optional<std::int64_t> metageneration_;
-  absl::optional<std::string> storage_class_;
-  absl::optional<std::uint64_t> size_;
-  absl::optional<std::string> transformation_;
+  std::optional<std::int64_t> generation_;
+  std::optional<std::int64_t> metageneration_;
+  std::optional<std::string> storage_class_;
+  std::optional<std::uint64_t> size_;
+  std::optional<std::string> transformation_;
 };
 
 }  // namespace internal

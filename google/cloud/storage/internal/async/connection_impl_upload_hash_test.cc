@@ -47,7 +47,7 @@ using AsyncBidiWriteObjectStream = ::google::cloud::AsyncStreamingReadWriteRpc<
 
 struct HashTestCase {
   Options options;
-  absl::optional<std::int32_t> expected_crc32c;
+  std::optional<std::int32_t> expected_crc32c;
   std::string expected_md5;
 };
 
@@ -128,11 +128,11 @@ INSTANTIATE_TEST_SUITE_P(
         HashTestCase{Options{}
                          .set<storage::EnableCrc32cValidationOption>(false)
                          .set<storage::EnableMD5ValidationOption>(true),
-                     absl::nullopt, kQuickFoxMD5Hash},
+                     std::nullopt, kQuickFoxMD5Hash},
         HashTestCase{Options{}
                          .set<storage::EnableCrc32cValidationOption>(false)
                          .set<storage::EnableMD5ValidationOption>(false),
-                     absl::nullopt, ""}));
+                     std::nullopt, ""}));
 
 INSTANTIATE_TEST_SUITE_P(
     PreComputed, AsyncConnectionImplUploadHashTest,
@@ -155,11 +155,11 @@ INSTANTIATE_TEST_SUITE_P(
                 .set<storage::EnableCrc32cValidationOption>(false)
                 .set<storage::EnableMD5ValidationOption>(false)
                 .set<storage::UseMD5ValueOption>(BinaryMD5(kQuickFoxMD5Hash)),
-            absl::nullopt, kQuickFoxMD5Hash},
+            std::nullopt, kQuickFoxMD5Hash},
         HashTestCase{Options{}
                          .set<storage::EnableCrc32cValidationOption>(false)
                          .set<storage::EnableMD5ValidationOption>(false),
-                     absl::nullopt, ""}));
+                     std::nullopt, ""}));
 
 TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
   auto const& param = GetParam();
@@ -199,7 +199,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
             "projects/_/buckets/test-bucket");
         response.mutable_resource()->set_name("test-object");
         response.mutable_resource()->set_generation(123456);
-        return absl::make_optional(std::move(response));
+        return std::make_optional(std::move(response));
       });
     });
     EXPECT_CALL(*stream, Cancel).Times(1);
@@ -299,7 +299,7 @@ TEST_P(AsyncConnectionImplUploadHashTest,
             "projects/_/buckets/test-bucket");
         response.mutable_resource()->set_name("test-object");
         response.mutable_resource()->set_generation(123456);
-        return absl::make_optional(std::move(response));
+        return std::make_optional(std::move(response));
       });
     });
     EXPECT_CALL(*stream, Cancel).Times(1);
@@ -397,7 +397,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
             "projects/_/buckets/test-bucket");
         response.mutable_resource()->set_name("test-object");
         response.mutable_resource()->set_generation(123456);
-        return absl::make_optional(std::move(response));
+        return std::make_optional(std::move(response));
       });
     });
     EXPECT_CALL(*stream, Cancel).Times(1);
@@ -494,25 +494,25 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
     EXPECT_CALL(*stream, Read)
         .WillOnce([&]() {
           return sequencer.PushBack("Read(1)").then(
-              [](auto f) -> absl::optional<
+              [](auto f) -> std::optional<
                              google::storage::v2::BidiWriteObjectResponse> {
-                if (!f.get()) return absl::nullopt;
+                if (!f.get()) return std::nullopt;
                 auto response = google::storage::v2::BidiWriteObjectResponse{};
                 response.set_persisted_size(43);
-                return absl::make_optional(std::move(response));
+                return std::make_optional(std::move(response));
               });
         })
         .WillOnce([&]() {
           return sequencer.PushBack("Read(2)").then(
-              [](auto f) -> absl::optional<
+              [](auto f) -> std::optional<
                              google::storage::v2::BidiWriteObjectResponse> {
-                if (!f.get()) return absl::nullopt;
+                if (!f.get()) return std::nullopt;
                 auto response = google::storage::v2::BidiWriteObjectResponse{};
                 response.mutable_resource()->set_bucket(
                     "projects/_/buckets/test-bucket");
                 response.mutable_resource()->set_name("test-object");
                 response.mutable_resource()->set_generation(123456);
-                return absl::make_optional(std::move(response));
+                return std::make_optional(std::move(response));
               });
         });
     EXPECT_CALL(*stream, Cancel).Times(1);
@@ -619,7 +619,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
             "projects/_/buckets/test-bucket");
         response.mutable_resource()->set_name("test-object");
         response.mutable_resource()->set_generation(123456);
-        return absl::make_optional(std::move(response));
+        return std::make_optional(std::move(response));
       });
     });
     EXPECT_CALL(*stream, Cancel).Times(1);
@@ -717,7 +717,7 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
             "projects/_/buckets/test-bucket");
         response.mutable_resource()->set_name("test-object");
         response.mutable_resource()->set_generation(123456);
-        return absl::make_optional(std::move(response));
+        return std::make_optional(std::move(response));
       });
     });
     EXPECT_CALL(*stream, Cancel).Times(1);

@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_IAM_CONFIGURATION_H
 
 #include "google/cloud/storage/version.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <iosfwd>
+#include <optional>
 #include <utility>
 
 namespace google {
@@ -97,8 +97,8 @@ std::ostream& operator<<(std::ostream& os, UniformBucketLevelAccess const& rhs);
  * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
  */
 struct BucketIamConfiguration {
-  absl::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
-  absl::optional<std::string> public_access_prevention;
+  std::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
+  std::optional<std::string> public_access_prevention;
 };
 
 ///@{

@@ -32,7 +32,7 @@ RpcMetadata AsyncReaderConnectionImpl::GetRequestMetadata() {
 }
 
 future<AsyncReaderConnectionImpl::ReadResponse>
-AsyncReaderConnectionImpl::OnRead(absl::optional<ProtoPayload> r) {
+AsyncReaderConnectionImpl::OnRead(std::optional<ProtoPayload> r) {
   if (!r) return DoFinish();
   auto response = *std::move(r);
   if (!offset_ && response.has_content_range()) {

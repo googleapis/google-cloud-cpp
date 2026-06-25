@@ -231,7 +231,6 @@ target_link_libraries(
            google-cloud-cpp::common
            nlohmann_json::nlohmann_json
            gRPC::grpc++
-           absl::optional
            absl::strings
            absl::time
            Threads::Threads)
@@ -281,7 +280,6 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
     "grpc++"
-    "absl_optional"
     "absl_strings"
     "absl_time"
     ${EXTRA_MODULES})

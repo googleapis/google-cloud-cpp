@@ -21,10 +21,10 @@
 #include "google/cloud/storage/version.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
-#include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <map>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -57,7 +57,7 @@ class ReadPayload {
   }
 
   /// The object metadata.
-  absl::optional<google::storage::v2::Object> metadata() const {
+  std::optional<google::storage::v2::Object> metadata() const {
     return metadata_;
   }
 
@@ -121,10 +121,10 @@ class ReadPayload {
 
   absl::Cord impl_;
   std::int64_t offset_ = 0;
-  absl::optional<google::storage::v2::Object> metadata_;
+  std::optional<google::storage::v2::Object> metadata_;
   storage::HeadersMap headers_;
   // The full object checksums (aka hash values), if known.
-  absl::optional<storage::internal::HashValues> object_hash_values_;
+  std::optional<storage::internal::HashValues> object_hash_values_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
