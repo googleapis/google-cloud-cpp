@@ -33,5 +33,7 @@ args+=(
   --enable_workspace
   # Only run the unit tests, no need to waste time running everything.
   --test_tag_filters=-integration-test
+  # Necessary for workspace builds with newer rules_cc.
+  --repositories_without_autoloads=cc_compatibility_proxy
 )
 io::run bazel test "${args[@]}" -- "${BAZEL_TARGETS[@]}"
