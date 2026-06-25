@@ -78,7 +78,7 @@ class ConnectionImpl : public spanner::Connection {
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
       SessionHolder& session, google::spanner::v1::TransactionOptions options,
       std::string request_tag, TransactionContext& ctx,
-      absl::optional<google::spanner::v1::Mutation> mutation, char const* func);
+      std::optional<google::spanner::v1::Mutation> mutation, char const* func);
 
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
       SessionHolder& session, google::spanner::v1::TransactionOptions options,

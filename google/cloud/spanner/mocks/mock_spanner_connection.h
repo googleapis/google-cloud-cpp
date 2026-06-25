@@ -76,9 +76,9 @@ class MockConnection : public spanner::Connection {
 class MockResultSetSource : public spanner::ResultSourceInterface {
  public:
   MOCK_METHOD(StatusOr<spanner::Row>, NextRow, (), (override));
-  MOCK_METHOD(absl::optional<google::spanner::v1::ResultSetMetadata>, Metadata,
+  MOCK_METHOD(std::optional<google::spanner::v1::ResultSetMetadata>, Metadata,
               (), (override));
-  MOCK_METHOD(absl::optional<google::spanner::v1::ResultSetStats>, Stats, (),
+  MOCK_METHOD(std::optional<google::spanner::v1::ResultSetStats>, Stats, (),
               (const, override));
 };
 

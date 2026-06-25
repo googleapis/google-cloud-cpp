@@ -33,10 +33,10 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/time/civil_time.h"
-#include "absl/types/optional.h"
 #include "google/protobuf/struct.pb.h"
 #include "google/spanner/v1/type.pb.h"
 #include <google/protobuf/util/message_differencer.h>
+#include <optional>
 #include <ostream>
 #include <string>
 #include <tuple>
@@ -101,7 +101,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Callers may create instances by passing any of the supported values
  * (shown in the table above) to the constructor. "Null" values are created
  * using the `MakeNullValue<T>()` factory function or by passing an empty
- * `absl::optional<T>` to the Value constructor..
+ * `std::optional<T>` to the Value constructor..
  *
  * @par Example
  * Using a non-null value.
@@ -120,8 +120,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * spanner::Value v = spanner::MakeNullValue<std::int64_t>();
  * StatusOr<std::int64_t> i = v.get<std::int64_t>();
  * assert(!i.ok());  // Can't get the value because v is null
- * StatusOr < absl::optional<std::int64_t> j =
- *     v.get<absl::optional<std::int64_t>>();
+ * StatusOr < std::optional<std::int64_t> j =
+ *     v.get<std::optional<std::int64_t>>();
  * assert(j.ok());  // OK because an empty option can represent the null
  * assert(!j->has_value());  // v held no value.
  * @endcode
@@ -131,11 +131,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * All of the supported types (above) are "nullable". A null is created in one
  * of two ways:
  *
- * 1. Passing an `absl::optional<T>()` with no value to `Value`'s constructor.
+ * 1. Passing an `std::optional<T>()` with no value to `Value`'s constructor.
  * 2. Using the `MakeNullValue<T>()` helper function (defined below).
  *
  * Nulls can be retrieved from a `Value::get<T>` by specifying the type `T`
- * as an `absl::optional<U>`. The returned optional will either be empty
+ * as an `std::optional<U>`. The returned optional will either be empty
  * (indicating null) or it will contain the actual value. See the documentation
  * for `Value::get<T>` below for more details.
  *
@@ -263,7 +263,7 @@ class Value {
    * a null instance with the specified type `T`.
    */
   template <typename T>
-  explicit Value(absl::optional<T> opt)
+  explicit Value(std::optional<T> opt)
       : Value(PrivateConstructor{}, std::move(opt)) {}
 
   /**
@@ -303,7 +303,7 @@ class Value {
    *
    * Returns a non-OK status IFF:
    *
-   * * The contained value is "null", and `T` is not an `absl::optional`.
+   * * The contained value is "null", and `T` is not an `std::optional`.
    * * There is an error converting the contained value to `T`.
    *
    * @par Example
@@ -321,8 +321,8 @@ class Value {
    * if (!i) {
    *   std::cerr << "Could not get integer: " << i.status();
    * }
-   * StatusOr<absl::optional<std::int64_t>> j =
-   *     v.get<absl::optional<std::int64_t>>();
+   * StatusOr<std::optional<std::int64_t>> j =
+   *     v.get<std::optional<std::int64_t>>();
    * assert(j.ok());  // Since we know the types match in this example
    * assert(!v->has_value());  // Since we know v was null in this example
    * @endcode
@@ -374,11 +374,11 @@ class Value {
   friend void PrintTo(Value const& v, std::ostream* os) { *os << v; }
 
  private:
-  // Metafunction that returns true if `T` is an `absl::optional<U>`
+  // Metafunction that returns true if `T` is an `std::optional<U>`
   template <typename T>
   struct IsOptional : std::false_type {};
   template <typename T>
-  struct IsOptional<absl::optional<T>> : std::true_type {};
+  struct IsOptional<std::optional<T>> : std::true_type {};
 
   // Metafunction that returns true if `T` is a std::vector<U>
   template <typename T>
@@ -417,7 +417,7 @@ class Value {
            type.proto_type_fqn() == ProtoMessage<M>::TypeName();
   }
   template <typename T>
-  static bool TypeProtoIs(absl::optional<T>,
+  static bool TypeProtoIs(std::optional<T>,
                           google::spanner::v1::Type const& type) {
     return TypeProtoIs(T{}, type);
   }
@@ -490,7 +490,7 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(int);
   static google::spanner::v1::Type MakeTypeProto(char const*);
   template <typename T>
-  static google::spanner::v1::Type MakeTypeProto(absl::optional<T> const&) {
+  static google::spanner::v1::Type MakeTypeProto(std::optional<T> const&) {
     return MakeTypeProto(T{});
   }
   template <typename T>
@@ -568,7 +568,7 @@ class Value {
   static google::protobuf::Value MakeValueProto(int i);
   static google::protobuf::Value MakeValueProto(char const* s);
   template <typename T>
-  static google::protobuf::Value MakeValueProto(absl::optional<T> opt) {
+  static google::protobuf::Value MakeValueProto(std::optional<T> opt) {
     if (opt.has_value()) return MakeValueProto(*std::move(opt));
     google::protobuf::Value v;
     v.set_null_value(google::protobuf::NullValue::NULL_VALUE);
@@ -676,14 +676,14 @@ class Value {
     return ProtoMessage<M>(std::string(bytes->begin(), bytes->end()));
   }
   template <typename T, typename V>
-  static StatusOr<absl::optional<T>> GetValue(
-      absl::optional<T> const&, V&& pv, google::spanner::v1::Type const& pt) {
+  static StatusOr<std::optional<T>> GetValue(
+      std::optional<T> const&, V&& pv, google::spanner::v1::Type const& pt) {
     if (pv.kind_case() == google::protobuf::Value::kNullValue) {
-      return absl::optional<T>{};
+      return std::optional<T>{};
     }
     auto value = GetValue(T{}, std::forward<V>(pv), pt);
     if (!value) return std::move(value).status();
-    return absl::optional<T>{*std::move(value)};
+    return std::optional<T>{*std::move(value)};
   }
   template <typename T, typename V>
   static StatusOr<std::vector<T>> GetValue(
@@ -786,13 +786,13 @@ class Value {
 /**
  * Factory to construct a "null" Value of the specified type `T`.
  *
- * This is equivalent to passing an `absl::optional<T>` without a value to
+ * This is equivalent to passing an `std::optional<T>` without a value to
  * the constructor, though this factory may be easier to invoke and result
  * in clearer code at the call site.
  */
 template <typename T>
 Value MakeNullValue() {
-  return Value(absl::optional<T>{});
+  return Value(std::optional<T>{});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -22,7 +22,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include "google/protobuf/struct.pb.h"
 #include "google/spanner/v1/spanner.pb.h"
 #include <google/protobuf/arena.h>
@@ -30,6 +29,7 @@
 #include <cstddef>
 #include <deque>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -46,9 +46,9 @@ class PartialResultSourceInterface : public spanner::ResultSourceInterface {
    * number from this transaction attempt is added to the Commit request for
    * this transaction by the library.
    */
-  virtual absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  virtual std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
   PrecommitToken() const {
-    return absl::nullopt;
+    return std::nullopt;
   }
 };
 
@@ -67,15 +67,15 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   StatusOr<spanner::Row> NextRow() override;
 
-  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+  std::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
     return metadata_;
   }
 
-  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
+  std::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return stats_;
   }
 
-  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
   PrecommitToken() const override {
     return precommit_token_;
   }
@@ -94,17 +94,17 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   // The `PartialResultSet.metadata` we received in the first response, and
   // the column names it contained (which will be shared between rows).
-  absl::optional<google::spanner::v1::ResultSetMetadata> metadata_;
+  std::optional<google::spanner::v1::ResultSetMetadata> metadata_;
   std::shared_ptr<std::vector<std::string>> columns_;
 
   // The `PartialResultSet.stats` received in the last response, corresponding
   // to the `QueryMode` implied by the particular streaming read/query type.
-  absl::optional<google::spanner::v1::ResultSetStats> stats_;
+  std::optional<google::spanner::v1::ResultSetStats> stats_;
 
   // Each PartialResultSet proto message can contain a token when using a
   // multiplexed session.
-  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
-      precommit_token_ = absl::nullopt;
+  std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      precommit_token_ = std::nullopt;
 
   // Number of rows returned to the client.
   int rows_returned_ = 0;
@@ -116,7 +116,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   // Values that can be assembled into `Row`s ready to be returned by
   // `NextRow()`. This is a pointer to an arena-allocated RepeatedPtrField.
-  absl::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>*>
+  std::optional<google::protobuf::RepeatedPtrField<google::protobuf::Value>*>
       values_;
 
   // `space_used` is the sum of the SpaceUsedLong() by the values at indexes [0,
@@ -136,7 +136,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   // any data in (or previously in) `rows_`. When disengaged, we have already
   // delivered data that would be replayed, so resumption is disabled until we
   // see a new token.
-  absl::optional<std::string> resume_token_ = "";
+  std::optional<std::string> resume_token_ = "";
 
   // Should the space used by `values_` get larger than this limit, we will
   // move complete rows into `rows_` and disable resumption until we see a
