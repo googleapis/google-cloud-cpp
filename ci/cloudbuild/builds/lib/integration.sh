@@ -166,71 +166,82 @@ function integration::bazel_args() {
 #   mapfile -t integration_args < <(integration::bazel_args)
 #   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 #
-function integration::bazel_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+# Runs Pub/Sub integration tests (including Pub/Sub Lite if BAZEL_TARGETS is default).
+function integration::bazel_pubsub_with_emulators() {
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: bazel verb required"
     return 1
   fi
-
   local verb="$1"
   local args=("${@:2}")
 
-  production_integration_tests=(
-    # gRPC Utils integration tests
-    "google/cloud:internal_grpc_impersonate_service_account_integration_test"
-    # Generator integration tests
-    "generator/..."
-    # BigQuery integration tests
-    "google/cloud/bigquery/..."
-    # Compute integration tests
-    "google/cloud/compute/..."
-    # IAM and IAM Credentials integration tests
-    "google/cloud/iam/..."
-    # Logging integration tests
-    "google/cloud/logging/..."
-    # Pub/Sub Lite integration tests
-    "google/cloud/pubsublite/..."
-    # Cloud Sql Admin integration tests
-    "google/cloud/sql/integration_tests/..."
-    # Unified Rest Credentials test
-    "google/cloud:internal_unified_rest_credentials_integration_test"
-  )
+  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
+  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
+
+  if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
+    return 0
+  fi
 
   production_tests_tag_filters="integration-test,-ud-only"
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
     production_tests_tag_filters="integration-test,-no-msan,-ud-only"
   fi
 
-  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
-  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
+  io::log_h2 "Running Pub/Sub production integration tests"
+  bazel "${verb}" "${args[@]}" \
+    --test_tag_filters="${production_tests_tag_filters}" \
+    "google/cloud/pubsublite/..."
+}
+
+# Runs Storage integration tests.
+function integration::bazel_storage_with_emulators() {
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  if [[ $# == 0 ]]; then
+    io::log_red "error: bazel verb required"
+    return 1
+  fi
+  local verb="$1"
+  local args=("${@:2}")
 
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
+}
+
+# Runs Spanner integration tests.
+function integration::bazel_spanner_with_emulators() {
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  if [[ $# == 0 ]]; then
+    io::log_red "error: bazel verb required"
+    return 1
+  fi
+  local verb="$1"
+  local args=("${@:2}")
 
   io::log_h2 "Running Spanner integration tests (with emulator)"
   "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
+}
+
+# Runs Bigtable integration tests.
+function integration::bazel_bigtable_with_emulators() {
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  if [[ $# == 0 ]]; then
+    io::log_red "error: bazel verb required"
+    return 1
+  fi
+  local verb="$1"
+  local args=("${@:2}")
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
-  io::log_h2 "Running REST integration tests (with emulator)"
-  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
-
   if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
-    io::log_h2 "Skipping some integration tests because BAZEL_TARGETS is not the default"
     return 0
   fi
-
-  io::log_h2 "Running integration tests that require production access"
-  bazel "${verb}" "${args[@]}" \
-    --test_tag_filters="${production_tests_tag_filters}" \
-    "${production_integration_tests[@]}"
 
   # This test is run separately because the access token changes every time and
   # that would mess up bazel's test cache for all the other tests.
@@ -239,6 +250,49 @@ function integration::bazel_with_emulators() {
   bazel "${verb}" "${args[@]}" \
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${access_token}" \
     //google/cloud/bigtable/examples:bigtable_grpc_credentials
+}
+
+# Runs REST integration tests.
+function integration::bazel_rest_with_emulators() {
+  local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
+  if [[ $# == 0 ]]; then
+    io::log_red "error: bazel verb required"
+    return 1
+  fi
+  local verb="$1"
+  local args=("${@:2}")
+
+  io::log_h2 "Running REST integration tests (with emulator)"
+  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
+
+  if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
+    return 0
+  fi
+
+  production_tests_tag_filters="integration-test,-ud-only"
+  if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
+    production_tests_tag_filters="integration-test,-no-msan,-ud-only"
+  fi
+
+  io::log_h2 "Running REST production integration tests"
+  bazel "${verb}" "${args[@]}" \
+    --test_tag_filters="${production_tests_tag_filters}" \
+    "google/cloud:internal_unified_rest_credentials_integration_test"
+}
+
+# Runs combined examples integration tests.
+function integration::bazel_examples_with_emulators() {
+  if [[ $# == 0 ]]; then
+    io::log_red "error: bazel verb required"
+    return 1
+  fi
+  local verb="$1"
+  local args=("${@:2}")
+
+  if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
+    return 0
+  fi
 
   # This test is run separately because the URL may change and that would mess
   # up Bazel's test cache for all the other tests.
@@ -260,6 +314,30 @@ function integration::bazel_with_emulators() {
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
     //examples/...
+}
+
+# Runs generator integration tests.
+function integration::bazel_generator_with_emulators() {
+  if [[ $# == 0 ]]; then
+    io::log_red "error: bazel verb required"
+    return 1
+  fi
+  local verb="$1"
+  local args=("${@:2}")
+
+  if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
+    return 0
+  fi
+
+  production_tests_tag_filters="integration-test,-ud-only"
+  if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
+    production_tests_tag_filters="integration-test,-no-msan,-ud-only"
+  fi
+
+  io::log_h2 "Running generator production integration tests"
+  bazel "${verb}" "${args[@]}" \
+    --test_tag_filters="${production_tests_tag_filters}" \
+    "generator/..."
 
   local bazel_output_base
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
@@ -293,6 +371,55 @@ function integration::bazel_with_emulators() {
   fi
 }
 
+# Runs all integration tests with bazel using emulators when possible.
+function integration::bazel_with_emulators() {
+  if [[ $# == 0 ]]; then
+    io::log_red "error: bazel verb required"
+    return 1
+  fi
+
+  local verb="$1"
+  local args=("${@:2}")
+
+  integration::bazel_pubsub_with_emulators "${verb}" "${args[@]}"
+  integration::bazel_spanner_with_emulators "${verb}" "${args[@]}"
+  integration::bazel_bigtable_with_emulators "${verb}" "${args[@]}"
+  integration::bazel_rest_with_emulators "${verb}" "${args[@]}"
+
+  if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
+    io::log_h2 "Skipping some integration tests because BAZEL_TARGETS is not the default"
+    return 0
+  fi
+
+  production_integration_tests=(
+    # gRPC Utils integration tests
+    "google/cloud:internal_grpc_impersonate_service_account_integration_test"
+    # BigQuery integration tests
+    "google/cloud/bigquery/..."
+    # Compute integration tests
+    "google/cloud/compute/..."
+    # IAM and IAM Credentials integration tests
+    "google/cloud/iam/..."
+    # Logging integration tests
+    "google/cloud/logging/..."
+    # Cloud Sql Admin integration tests
+    "google/cloud/sql/integration_tests/..."
+  )
+
+  production_tests_tag_filters="integration-test,-ud-only"
+  if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
+    production_tests_tag_filters="integration-test,-no-msan,-ud-only"
+  fi
+
+  io::log_h2 "Running production integration tests for other libraries"
+  bazel "${verb}" "${args[@]}" \
+    --test_tag_filters="${production_tests_tag_filters}" \
+    "${production_integration_tests[@]}"
+
+  integration::bazel_examples_with_emulators "${verb}" "${args[@]}"
+  integration::bazel_generator_with_emulators "${verb}" "${args[@]}"
+}
+
 # Runs integration tests with CTest using emulators. This function requires a
 # first argument that is the "cmake-out" directory where the tests live.
 #
@@ -301,7 +428,7 @@ function integration::bazel_with_emulators() {
 #   integration::ctest_with_emulators "cmake-out"
 #
 function integration::ctest_with_emulators() {
-  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
+  local -r EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: build output directory required"
     return 1
@@ -319,9 +446,11 @@ function integration::ctest_with_emulators() {
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
-  io::log_h2 "Running Storage integration tests (with emulator)"
-  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+  if ! [[ "${skip_args[*]}" =~ "storage" ]]; then
+    io::log_h2 "Running Storage integration tests (with emulator)"
+    "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+      "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+  fi
 
   if ! [[ "${skip_args[*]}" =~ "spanner" ]]; then
     io::log_h2 "Running Spanner integration tests (with emulator)"
@@ -335,5 +464,26 @@ function integration::ctest_with_emulators() {
 
   io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+}
+
+# Runs Storage integration tests with CTest using emulators.
+function integration::ctest_storage_with_emulators() {
+  local -r EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
+  if [[ $# == 0 ]]; then
+    io::log_red "error: build output directory required"
+    return 1
+  fi
+
+  local cmake_out="$1"
+
+  local -a ctest_args
+  mapfile -t ctest_args < <(ctest::common_args)
+  # Integration tests are inherently flaky. Make up to three attempts to get the
+  # test passing.
+  ctest_args+=(--repeat until-pass:3)
+
+  io::log_h2 "Running Storage integration tests (with emulator)"
+  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }

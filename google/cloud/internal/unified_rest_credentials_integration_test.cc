@@ -34,7 +34,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::IsEmpty;
+using ::testing::Not;
+using ::testing::NotNull;
 
 auto constexpr kEndpointThatUsesRAB = "storage.googleapis.com";
 
@@ -353,6 +357,26 @@ TEST(UnifiedRestCredentialsIntegrationTest, StorageSelfSignedJWT) {
   ASSERT_NO_FATAL_FAILURE(
       MakeStorageRpcCall(Options{}.set<UnifiedCredentialsOption>(
           MakeServiceAccountCredentials(contents))));
+}
+
+MATCHER(AccessTokenIsSTSBearer, "access token is STS Bearer") {
+  return absl::StartsWith(arg.token, "STS-Bearer-");
+}
+
+TEST(UnifiedRestCredentialsIntegrationTest, GDCHServiceAccountCredentials) {
+  auto key_file_env =
+      internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_GDCH_KEY_FILE");
+  if (!key_file_env.has_value()) GTEST_SKIP();
+  std::ifstream is(*key_file_env);
+  auto contents = std::string{std::istreambuf_iterator<char>{is}, {}};
+  ASSERT_THAT(contents, Not(IsEmpty()));
+
+  std::string const audience = "global-api";
+  auto gdch_creds = MakeGDCHServiceAccountCredentials(contents, audience);
+  ASSERT_THAT(gdch_creds, NotNull());
+  auto oauth2_creds = MapCredentials(*gdch_creds);
+  EXPECT_THAT(oauth2_creds->GetToken(std::chrono::system_clock::now()),
+              IsOkAndHolds(AccessTokenIsSTSBearer()));
 }
 
 }  // namespace

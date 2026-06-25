@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/oauth2_background_credentials.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_logging_credentials.h"
 #include "google/cloud/internal/oauth2_regional_access_boundary_token_manager.h"
@@ -54,8 +55,13 @@ std::shared_ptr<oauth2_internal::Credentials> WithCaching(
 std::shared_ptr<oauth2_internal::Credentials> WithRegionalAccessBoundary(
     std::shared_ptr<oauth2_internal::Credentials> impl,
     HttpClientFactory client_factory, Options options) {
-  return RegionalAccessBoundaryTokenManager::Create(
-      std::move(impl), std::move(client_factory), std::move(options));
+  auto background = std::make_unique<
+      rest_internal::AutomaticallyCreatedRestPureBackgroundThreads>();
+  auto rab = RegionalAccessBoundaryTokenManager::Create(
+      std::move(impl), std::move(client_factory), background->cq(),
+      std::move(options));
+  return std::make_shared<BackgroundCredentials>(std::move(background),
+                                                 std::move(rab));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

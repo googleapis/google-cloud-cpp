@@ -17,6 +17,7 @@
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_cat.h"
+#include <array>
 
 namespace google {
 namespace cloud {
@@ -81,17 +82,19 @@ class RegionalAccessBoundaryTokenManager::RefreshTokenLimitedTimeRetryPolicy
   google::cloud::internal::LimitedTimeRetryPolicy<RetryTraits> impl_;
 };
 
+RegionalAccessBoundaryTokenManager::~RegionalAccessBoundaryTokenManager() {
+  if (failed_lookup_cooldown_.valid()) failed_lookup_cooldown_.cancel();
+}
+
 std::shared_ptr<RegionalAccessBoundaryTokenManager>
-RegionalAccessBoundaryTokenManager::Create(std::shared_ptr<Credentials> child,
-                                           HttpClientFactory client_factory,
-                                           Options options) {
+RegionalAccessBoundaryTokenManager::Create(
+    std::shared_ptr<Credentials> child, HttpClientFactory client_factory,
+    rest_internal::RestPureCompletionQueue cq, Options options) {
   auto iam_stub = MakeMinimalIamCredentialsRestStub(child, options,
                                                     std::move(client_factory));
   return std::shared_ptr<RegionalAccessBoundaryTokenManager>(
       new RegionalAccessBoundaryTokenManager(
-          std::move(child), std::move(iam_stub),
-          std::make_unique<
-              rest_internal::AutomaticallyCreatedRestPureBackgroundThreads>(),
+          std::move(child), std::move(iam_stub), std::move(cq),
           std::move(options), FailedLookupBackoffPolicy,
           std::make_shared<Clock>()));
 }
@@ -99,12 +102,11 @@ RegionalAccessBoundaryTokenManager::Create(std::shared_ptr<Credentials> child,
 std::shared_ptr<RegionalAccessBoundaryTokenManager>
 RegionalAccessBoundaryTokenManager::Create(
     std::shared_ptr<Credentials> child,
-    std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options) {
+    std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
+    rest_internal::RestPureCompletionQueue cq, Options options) {
   return std::shared_ptr<RegionalAccessBoundaryTokenManager>(
       new RegionalAccessBoundaryTokenManager(
-          std::move(child), std::move(iam_stub),
-          std::make_unique<
-              rest_internal::AutomaticallyCreatedRestPureBackgroundThreads>(),
+          std::move(child), std::move(iam_stub), std::move(cq),
           std::move(options), FailedLookupBackoffPolicy,
           std::make_shared<Clock>()));
 }
@@ -112,15 +114,14 @@ RegionalAccessBoundaryTokenManager::Create(
 std::shared_ptr<RegionalAccessBoundaryTokenManager>
 RegionalAccessBoundaryTokenManager::Create(
     std::shared_ptr<Credentials> child,
-    std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options,
+    std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
+    rest_internal::RestPureCompletionQueue cq, Options options,
     std::function<std::unique_ptr<BackoffPolicy>()>
         failed_lookup_backoff_policy_fn,
     std::shared_ptr<Clock> clock, AllowedLocationsResponse allowed_locations) {
   return std::shared_ptr<RegionalAccessBoundaryTokenManager>(
       new RegionalAccessBoundaryTokenManager(
-          std::move(child), std::move(iam_stub),
-          std::make_unique<
-              rest_internal::AutomaticallyCreatedRestPureBackgroundThreads>(),
+          std::move(child), std::move(iam_stub), std::move(cq),
           std::move(options), std::move(failed_lookup_backoff_policy_fn),
           std::move(clock), std::move(allowed_locations)));
 }
@@ -135,13 +136,12 @@ RegionalAccessBoundaryTokenManager::FailedLookupBackoffPolicy() {
 RegionalAccessBoundaryTokenManager::RegionalAccessBoundaryTokenManager(
     std::shared_ptr<Credentials> child,
     std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
-    std::unique_ptr<rest_internal::RestPureBackgroundThreads> background,
-    Options options,
+    rest_internal::RestPureCompletionQueue cq, Options options,
     std::function<std::unique_ptr<BackoffPolicy>()>
         failed_lookup_backoff_policy_fn,
     std::shared_ptr<Clock> clock, AllowedLocationsResponse allowed_locations)
     : child_(std::move(child)),
-      background_(std::move(background)),
+      cq_(std::move(cq)),
       options_(std::move(options)),
       clock_(std::move(clock)),
       retry_policy_(std::make_unique<RefreshTokenLimitedTimeRetryPolicy>(
@@ -159,9 +159,19 @@ RegionalAccessBoundaryTokenManager::RegionalAccessBoundaryTokenManager(
 
 bool RegionalAccessBoundaryTokenManager::DoesEndpointRequireToken(
     std::string_view endpoint) {
+  static constexpr std::array<std::string_view, 4> kRegionalEndpointSuffixes = {
+      ".rep.googleapis.com",
+      ".rep.sandbox.googleapis.com",
+      ".rep.mtls.googleapis.com",
+      ".rep.mtls.sandbox.googleapis.com",
+  };
+
   return absl::EndsWithIgnoreCase(endpoint, ".googleapis.com") &&
-         !absl::EndsWithIgnoreCase(endpoint, ".rep.googleapis.com") &&
-         !absl::EndsWithIgnoreCase(endpoint, (".rep.sandbox.googleapis.com"));
+         std::all_of(kRegionalEndpointSuffixes.begin(),
+                     kRegionalEndpointSuffixes.end(),
+                     [&](std::string_view suffix) {
+                       return !absl::EndsWithIgnoreCase(endpoint, suffix);
+                     });
 }
 
 bool RegionalAccessBoundaryTokenManager::IsTokenValid(

@@ -375,7 +375,7 @@ use GCC 8 or higher to compile `google-cloud-cpp`.
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y automake cmake curl \
-        gcc9 gcc9-c++ git gzip libtool make patch tar wget
+        gcc gcc-c++ git gzip libtool make patch tar wget
 ```
 
 Install some of the dependencies for `google-cloud-cpp`.
@@ -398,7 +398,7 @@ export PATH=/usr/local/bin:${PATH}
 ```
 
 Use the following environment variables to configure the compiler used by CMake.
-export CC=gcc-9 export CXX=g++-9
+export CC=gcc export CXX=g++
 
 #### Abseil
 
@@ -487,7 +487,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \

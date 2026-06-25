@@ -135,8 +135,10 @@ StatusOr<std::vector<std::uint8_t>> SignSha256Digest(BCRYPT_KEY_HANDLE key,
 
 }  // namespace
 
+// TODO(#16172): GDCH is not currently supported on Windows.
+// Only supports RAW signature format as only RSA keys are supported.
 StatusOr<std::vector<std::uint8_t>> SignUsingSha256(
-    std::string const& str, std::string const& pem_contents) {
+    std::string const& str, std::string const& pem_contents, SignatureFormat) {
   auto pem_buffer = DecodePem(pem_contents);
   if (!pem_buffer) return std::move(pem_buffer).status();
 

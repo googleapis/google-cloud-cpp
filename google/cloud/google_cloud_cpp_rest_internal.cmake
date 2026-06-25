@@ -65,6 +65,7 @@ add_library(
     internal/oauth2_api_key_credentials.h
     internal/oauth2_authorized_user_credentials.cc
     internal/oauth2_authorized_user_credentials.h
+    internal/oauth2_background_credentials.h
     internal/oauth2_cached_credentials.cc
     internal/oauth2_cached_credentials.h
     internal/oauth2_compute_engine_credentials.cc
@@ -79,6 +80,8 @@ add_library(
     internal/oauth2_external_account_credentials.cc
     internal/oauth2_external_account_credentials.h
     internal/oauth2_external_account_token_source.h
+    internal/oauth2_gdch_service_account_credentials.cc
+    internal/oauth2_gdch_service_account_credentials.h
     internal/oauth2_google_application_default_credentials_file.cc
     internal/oauth2_google_application_default_credentials_file.h
     internal/oauth2_google_credentials.cc
@@ -280,6 +283,7 @@ if (BUILD_TESTING)
         internal/oauth2_compute_engine_credentials_test.cc
         internal/oauth2_credentials_test.cc
         internal/oauth2_external_account_credentials_test.cc
+        internal/oauth2_gdch_service_account_credentials_test.cc
         internal/oauth2_google_application_default_credentials_file_test.cc
         internal/oauth2_google_credentials_test.cc
         internal/oauth2_impersonate_service_account_credentials_test.cc

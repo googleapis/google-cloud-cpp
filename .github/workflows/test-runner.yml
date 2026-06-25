@@ -63,8 +63,6 @@ jobs:
   # the additional jobs inherit any secrets needed to use the remote caches and
   # receive what version to checkout as an input.
   macos-bazel:
-    # Disabled
-    if: false
     name: macOS-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/macos-bazel.yml
@@ -106,8 +104,6 @@ jobs:
       execute-integration-tests: true
     secrets: inherit
   windows-cmake:
-    # Disabled
-    if: false
     name: Windows-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/windows-cmake.yml
