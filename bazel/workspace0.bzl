@@ -71,10 +71,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "rules_cc",
         urls = [
-            "https://github.com/bazelbuild/rules_cc/releases/download/0.1.4/rules_cc-0.1.4.tar.gz",
+            "https://github.com/bazelbuild/rules_cc/releases/download/0.2.20/rules_cc-0.2.20.tar.gz",
         ],
-        sha256 = "0d3b4f984c4c2e1acfd1378e0148d35caf2ef1d9eb95b688f8e19ce0c41bdf5b",
-        strip_prefix = "rules_cc-0.1.4",
+        sha256 = "69e05df29f0010ba248ef8dafc1f084c8fd2f5c553da634422d8167f5c4b277b",
+        strip_prefix = "rules_cc-0.2.20",
     )
 
     maybe(
