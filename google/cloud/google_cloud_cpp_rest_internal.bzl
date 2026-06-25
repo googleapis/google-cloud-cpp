@@ -39,6 +39,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/oauth2_anonymous_credentials.h",
     "internal/oauth2_api_key_credentials.h",
     "internal/oauth2_authorized_user_credentials.h",
+    "internal/oauth2_background_credentials.h",
     "internal/oauth2_cached_credentials.h",
     "internal/oauth2_compute_engine_credentials.h",
     "internal/oauth2_credential_constants.h",

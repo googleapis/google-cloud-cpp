@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/object_integration_test.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
@@ -42,7 +43,19 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   // own tests.
   if (UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient();
+  // With the advent of Regional Access Boundaries, connecting to non-regional
+  // endpoints requires background calls to IAM. These background calls use
+  // additional file descriptors which causes this test to fail when using the
+  // default endpoint.
+  auto regional_bucket = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION");
+  if (!regional_bucket.has_value()) GTEST_SKIP();
+  bucket_name_ = *regional_bucket;
+  // The regional_bucket was created in the us-west2 region.
+  auto options = Options{}.set<RestEndpointOption>(
+      "https://storage.us-west2.rep.googleapis.com");
+
+  auto client = MakeIntegrationTestClient(options);
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -64,7 +77,7 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   }
   std::size_t delta = 0;
   for (int i = 0; i != 100; ++i) {
-    auto read_client = MakeIntegrationTestClient();
+    auto read_client = MakeIntegrationTestClient(options);
     auto stream = read_client.ReadObject(bucket_name_, object_name);
     char c;
     stream.read(&c, 1);

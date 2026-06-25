@@ -71,7 +71,7 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
                        *context.local_port());
   }
   for (auto const& kv : context.headers()) {
-    auto const name = "http.request.header." + std::string{kv.first};
+    auto const name = absl::StrCat("http.request.header.", kv.first.name());
     if (kv.second.EmptyValues()) {
       span->SetAttribute(name, "");
       continue;

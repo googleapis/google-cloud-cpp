@@ -63,15 +63,6 @@ jobs:
   # the additional jobs inherit any secrets needed to use the remote caches and
   # receive what version to checkout as an input.
   macos-bazel:
-    # Build the full matrix only on push events to the default branch, or
-    # when PR gets the has a `gha:full-build` label, or when it had the
-    # label already and it gets a new commit.
-    if: |-
-      ${{
-        github.event_name == 'schedule' ||
-        github.event_name == 'push' ||
-        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
-      }}
     name: macOS-Bazel
     needs: [pre-flight]
     uses: ./.github/workflows/macos-bazel.yml
@@ -113,8 +104,6 @@ jobs:
       execute-integration-tests: true
     secrets: inherit
   windows-cmake:
-    # Disabled
-    if: false
     name: Windows-CMake
     needs: [pre-flight]
     uses: ./.github/workflows/windows-cmake.yml
