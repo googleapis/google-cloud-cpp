@@ -279,7 +279,7 @@ export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/loca
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -421,7 +421,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -594,7 +594,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -740,7 +740,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -907,7 +907,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -1032,7 +1032,7 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 #### Install CMake v3.22
 
 mkdir -p $HOME/Downloads/cmake && cd $HOME/Downloads/cmake curl -fsSL
-https://github.com/Kitware/cmake/archive/v3.22.3.tar.gz | \
+https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
 tar -xzf - --strip-components=1 && \
 ./bootstrap && make -j ${NCPU:-4} && sudo make install
 
@@ -1072,7 +1072,7 @@ to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -1249,7 +1249,7 @@ install Protobuf (and any downstream packages) from source.
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
