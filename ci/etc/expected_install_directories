@@ -32,6 +32,10 @@
 ./include/google/cloud/advisorynotifications/v1
 ./include/google/cloud/advisorynotifications/v1/internal
 ./include/google/cloud/advisorynotifications/v1/mocks
+./include/google/cloud/agentregistry
+./include/google/cloud/agentregistry/v1
+./include/google/cloud/agentregistry/v1/internal
+./include/google/cloud/agentregistry/v1/mocks
 ./include/google/cloud/aiplatform
 ./include/google/cloud/aiplatform/v1
 ./include/google/cloud/aiplatform/v1/internal
@@ -1304,6 +1308,8 @@
 ./lib64/cmake/google_cloud_cpp_accesscontextmanager_mocks
 ./lib64/cmake/google_cloud_cpp_advisorynotifications
 ./lib64/cmake/google_cloud_cpp_advisorynotifications_mocks
+./lib64/cmake/google_cloud_cpp_agentregistry
+./lib64/cmake/google_cloud_cpp_agentregistry_mocks
 ./lib64/cmake/google_cloud_cpp_aiplatform
 ./lib64/cmake/google_cloud_cpp_aiplatform_mocks
 ./lib64/cmake/google_cloud_cpp_alloydb

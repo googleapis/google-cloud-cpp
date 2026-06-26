@@ -1,0 +1,7 @@
+@googleapis//google/cloud/agentregistry/v1:agent.proto
+@googleapis//google/cloud/agentregistry/v1:agentregistry_service.proto
+@googleapis//google/cloud/agentregistry/v1:binding.proto
+@googleapis//google/cloud/agentregistry/v1:endpoint.proto
+@googleapis//google/cloud/agentregistry/v1:mcp_server.proto
+@googleapis//google/cloud/agentregistry/v1:properties.proto
+@googleapis//google/cloud/agentregistry/v1:service.proto

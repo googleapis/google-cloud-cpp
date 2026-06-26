@@ -17,6 +17,7 @@ set -euo pipefail
 
 declare -A -r LIBRARIES=(
   ["accessapproval"]="@googleapis//google/cloud/accessapproval/v1:accessapproval_cc_grpc"
+  ["agentregistry"]="@googleapis//google/cloud/agentregistry/v1:agentregistry_cc_grpc"
   ["accesscontextmanager"]="$(
     printf ",%s" \
       "@googleapis//google/identity/accesscontextmanager/type:type_cc_grpc" \
