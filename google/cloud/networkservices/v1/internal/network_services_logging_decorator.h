@@ -570,6 +570,53 @@ class NetworkServicesLogging : public NetworkServicesStub {
       google::cloud::networkservices::v1::ListMeshRouteViewsRequest const&
           request) override;
 
+  StatusOr<google::cloud::networkservices::v1::ListAgentGatewaysResponse>
+  ListAgentGateways(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListAgentGatewaysRequest const&
+          request) override;
+
+  StatusOr<google::cloud::networkservices::v1::AgentGateway> GetAgentGateway(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetAgentGatewayRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAgentGateway(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAgentGateway(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAgentGateway(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAgentGateway(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAgentGateway(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAgentGateway(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

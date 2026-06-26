@@ -81,6 +81,18 @@ DefaultReferenceListServiceStub::UpdateReferenceList(
   return response;
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+DefaultReferenceListServiceStub::VerifyReferenceList(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const& request) {
+  google::cloud::chronicle::v1::VerifyReferenceListResponse response;
+  auto status = grpc_stub_->VerifyReferenceList(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultReferenceListServiceStub::ListOperations(
     grpc::ClientContext& context, Options const&,

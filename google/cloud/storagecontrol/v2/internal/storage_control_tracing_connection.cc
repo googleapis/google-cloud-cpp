@@ -380,6 +380,68 @@ StorageControlTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlTracingConnection::GetIntelligenceFinding(
+    google::storage::control::v2::GetIntelligenceFindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::GetIntelligenceFinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIntelligenceFinding(request));
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFinding>
+StorageControlTracingConnection::ListIntelligenceFindings(
+    google::storage::control::v2::ListIntelligenceFindingsRequest request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::ListIntelligenceFindings");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListIntelligenceFindings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::storage::control::v2::IntelligenceFinding>(std::move(span),
+                                                         std::move(sr));
+}
+
+StreamRange<google::storage::control::v2::FindingSummary>
+StorageControlTracingConnection::SummarizeIntelligenceFindings(
+    google::storage::control::v2::SummarizeIntelligenceFindingsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "SummarizeIntelligenceFindings");
+  internal::OTelScope scope(span);
+  auto sr = child_->SummarizeIntelligenceFindings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::storage::control::v2::FindingSummary>(std::move(span),
+                                                    std::move(sr));
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlTracingConnection::GetIntelligenceFindingRevision(
+    google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "GetIntelligenceFindingRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetIntelligenceFindingRevision(request));
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlTracingConnection::ListIntelligenceFindingRevisions(
+    google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::"
+      "ListIntelligenceFindingRevisions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListIntelligenceFindingRevisions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::storage::control::v2::IntelligenceFindingRevision>(
+      std::move(span), std::move(sr));
+}
+
 std::shared_ptr<storagecontrol_v2::StorageControlConnection>
 MakeStorageControlTracingConnection(
     std::shared_ptr<storagecontrol_v2::StorageControlConnection> conn) {

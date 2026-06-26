@@ -127,6 +127,45 @@ OracleDatabaseTracingConnection::DeleteCloudExadataInfrastructure(
                            child_->DeleteCloudExadataInfrastructure(operation));
 }
 
+future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+OracleDatabaseTracingConnection::ConfigureExascaleCloudExadataInfrastructure(
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ConfigureExascaleCloudExadataInfrastructure");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ConfigureExascaleCloudExadataInfrastructure(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::ConfigureExascaleCloudExadataInfrastructure(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ConfigureExascaleCloudExadataInfrastructure");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ConfigureExascaleCloudExadataInfrastructure(NoAwaitTag{},
+                                                                 request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+OracleDatabaseTracingConnection::ConfigureExascaleCloudExadataInfrastructure(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ConfigureExascaleCloudExadataInfrastructure");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ConfigureExascaleCloudExadataInfrastructure(operation));
+}
+
 StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
 OracleDatabaseTracingConnection::ListCloudVmClusters(
     google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request) {
@@ -1211,6 +1250,318 @@ OracleDatabaseTracingConnection::DeleteDbSystem(
   return internal::EndSpan(std::move(span), child_->DeleteDbSystem(operation));
 }
 
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseTracingConnection::ListGoldengateDeployments(
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListGoldengateDeployments");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListGoldengateDeployments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeployment>(std::move(span),
+                                                               std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseTracingConnection::GetGoldengateDeployment(
+    google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetGoldengateDeployment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGoldengateDeployment(request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseTracingConnection::CreateGoldengateDeployment(
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateDeployment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGoldengateDeployment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateDeployment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateGoldengateDeployment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseTracingConnection::CreateGoldengateDeployment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateDeployment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGoldengateDeployment(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteGoldengateDeployment(
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateDeployment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGoldengateDeployment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateDeployment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteGoldengateDeployment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteGoldengateDeployment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateDeployment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGoldengateDeployment(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseTracingConnection::StopGoldengateDeployment(
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::StopGoldengateDeployment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StopGoldengateDeployment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::StopGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::StopGoldengateDeployment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->StopGoldengateDeployment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseTracingConnection::StopGoldengateDeployment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::StopGoldengateDeployment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StopGoldengateDeployment(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseTracingConnection::StartGoldengateDeployment(
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::StartGoldengateDeployment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StartGoldengateDeployment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::StartGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::StartGoldengateDeployment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->StartGoldengateDeployment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseTracingConnection::StartGoldengateDeployment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::StartGoldengateDeployment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StartGoldengateDeployment(operation));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseTracingConnection::ListGoldengateConnections(
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::ListGoldengateConnections");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListGoldengateConnections(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::GoldengateConnection>(std::move(span),
+                                                               std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseTracingConnection::GetGoldengateConnection(
+    google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::GetGoldengateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGoldengateConnection(request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+OracleDatabaseTracingConnection::CreateGoldengateConnection(
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGoldengateConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateGoldengateConnection(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateConnection");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateGoldengateConnection(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+OracleDatabaseTracingConnection::CreateGoldengateConnection(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGoldengateConnection(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteGoldengateConnection(
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGoldengateConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteGoldengateConnection(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateConnection");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteGoldengateConnection(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteGoldengateConnection(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGoldengateConnection(operation));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>
+OracleDatabaseTracingConnection::ListGoldengateDeploymentVersions(
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ListGoldengateDeploymentVersions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListGoldengateDeploymentVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>(
+      std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentType>
+OracleDatabaseTracingConnection::ListGoldengateDeploymentTypes(
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ListGoldengateDeploymentTypes");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListGoldengateDeploymentTypes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentType>(
+      std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>
+OracleDatabaseTracingConnection::ListGoldengateDeploymentEnvironments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentEnvironmentsRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ListGoldengateDeploymentEnvironments");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListGoldengateDeploymentEnvironments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>(
+      std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionType>
+OracleDatabaseTracingConnection::ListGoldengateConnectionTypes(
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ListGoldengateConnectionTypes");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListGoldengateConnectionTypes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::GoldengateConnectionType>(
+      std::move(span), std::move(sr));
+}
+
 StreamRange<google::cloud::oracledatabase::v1::DbVersion>
 OracleDatabaseTracingConnection::ListDbVersions(
     google::cloud::oracledatabase::v1::ListDbVersionsRequest request) {
@@ -1234,6 +1585,119 @@ OracleDatabaseTracingConnection::ListDatabaseCharacterSets(
   return internal::MakeTracedStreamRange<
       google::cloud::oracledatabase::v1::DatabaseCharacterSet>(std::move(span),
                                                                std::move(sr));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseTracingConnection::ListGoldengateConnectionAssignments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionAssignmentsRequest request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "ListGoldengateConnectionAssignments");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListGoldengateConnectionAssignments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseTracingConnection::GetGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        GetGoldengateConnectionAssignmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "GetGoldengateConnectionAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetGoldengateConnectionAssignment(request));
+}
+
+future<
+    StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+OracleDatabaseTracingConnection::CreateGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateConnectionAssignment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateGoldengateConnectionAssignment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::CreateGoldengateConnectionAssignment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateConnectionAssignment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CreateGoldengateConnectionAssignment(
+                                      NoAwaitTag{}, request));
+}
+
+future<
+    StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+OracleDatabaseTracingConnection::CreateGoldengateConnectionAssignment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "CreateGoldengateConnectionAssignment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateGoldengateConnectionAssignment(operation));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateConnectionAssignment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteGoldengateConnectionAssignment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::DeleteGoldengateConnectionAssignment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateConnectionAssignment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteGoldengateConnectionAssignment(
+                                      NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseTracingConnection::DeleteGoldengateConnectionAssignment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "DeleteGoldengateConnectionAssignment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteGoldengateConnectionAssignment(operation));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             TestGoldengateConnectionAssignmentResponse>
+OracleDatabaseTracingConnection::TestGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        TestGoldengateConnectionAssignmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "TestGoldengateConnectionAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->TestGoldengateConnectionAssignment(request));
 }
 
 StreamRange<google::cloud::location::Location>

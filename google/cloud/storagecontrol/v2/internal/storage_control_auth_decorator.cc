@@ -357,6 +357,56 @@ StorageControlAuth::TestIamPermissions(
   return child_->TestIamPermissions(context, options, request);
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlAuth::GetIntelligenceFinding(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetIntelligenceFindingRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIntelligenceFinding(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingsResponse>
+StorageControlAuth::ListIntelligenceFindings(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListIntelligenceFindingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListIntelligenceFindings(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::SummarizeIntelligenceFindingsResponse>
+StorageControlAuth::SummarizeIntelligenceFindings(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::SummarizeIntelligenceFindingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SummarizeIntelligenceFindings(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlAuth::GetIntelligenceFindingRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIntelligenceFindingRevision(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingRevisionsResponse>
+StorageControlAuth::ListIntelligenceFindingRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListIntelligenceFindingRevisionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListIntelligenceFindingRevisions(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -241,6 +241,25 @@ class NetworkServicesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListMeshRouteViews(
       google::cloud::networkservices::v1::ListMeshRouteViewsRequest request);
 
+  virtual google::cloud::Idempotency ListAgentGateways(
+      google::cloud::networkservices::v1::ListAgentGatewaysRequest request);
+
+  virtual google::cloud::Idempotency GetAgentGateway(
+      google::cloud::networkservices::v1::GetAgentGatewayRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateAgentGateway(
+      google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateAgentGateway(
+      google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteAgentGateway(
+      google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

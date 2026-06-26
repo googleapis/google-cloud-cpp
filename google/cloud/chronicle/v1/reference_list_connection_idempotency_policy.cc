@@ -57,6 +57,12 @@ ReferenceListServiceConnectionIdempotencyPolicy::UpdateReferenceList(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+ReferenceListServiceConnectionIdempotencyPolicy::VerifyReferenceList(
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ReferenceListServiceConnectionIdempotencyPolicy::ListOperations(
     google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

@@ -328,6 +328,31 @@ Idempotency NetworkServicesConnectionIdempotencyPolicy::ListMeshRouteViews(
   return Idempotency::kIdempotent;
 }
 
+Idempotency NetworkServicesConnectionIdempotencyPolicy::ListAgentGateways(
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::GetAgentGateway(
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::CreateAgentGateway(
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::UpdateAgentGateway(
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetworkServicesConnectionIdempotencyPolicy::DeleteAgentGateway(
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetworkServicesConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

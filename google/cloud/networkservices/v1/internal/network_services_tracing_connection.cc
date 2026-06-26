@@ -1284,6 +1284,126 @@ NetworkServicesTracingConnection::ListMeshRouteViews(
                                                          std::move(sr));
 }
 
+StreamRange<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesTracingConnection::ListAgentGateways(
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::ListAgentGateways");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAgentGateways(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkservices::v1::AgentGateway>(std::move(span),
+                                                        std::move(sr));
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesTracingConnection::GetAgentGateway(
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::GetAgentGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAgentGateway(request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesTracingConnection::CreateAgentGateway(
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateAgentGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAgentGateway(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateAgentGateway");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateAgentGateway(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesTracingConnection::CreateAgentGateway(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateAgentGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAgentGateway(operation));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesTracingConnection::UpdateAgentGateway(
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateAgentGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAgentGateway(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::UpdateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateAgentGateway");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateAgentGateway(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesTracingConnection::UpdateAgentGateway(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateAgentGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAgentGateway(operation));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteAgentGateway(
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteAgentGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAgentGateway(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteAgentGateway");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteAgentGateway(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteAgentGateway(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteAgentGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAgentGateway(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 NetworkServicesTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

@@ -441,6 +441,77 @@ DefaultStorageControlStub::TestIamPermissions(
   return response;
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+DefaultStorageControlStub::GetIntelligenceFinding(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::GetIntelligenceFindingRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceFinding response;
+  auto status =
+      grpc_stub_->GetIntelligenceFinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingsResponse>
+DefaultStorageControlStub::ListIntelligenceFindings(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::ListIntelligenceFindingsRequest const&
+        request) {
+  google::storage::control::v2::ListIntelligenceFindingsResponse response;
+  auto status =
+      grpc_stub_->ListIntelligenceFindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::SummarizeIntelligenceFindingsResponse>
+DefaultStorageControlStub::SummarizeIntelligenceFindings(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::SummarizeIntelligenceFindingsRequest const&
+        request) {
+  google::storage::control::v2::SummarizeIntelligenceFindingsResponse response;
+  auto status =
+      grpc_stub_->SummarizeIntelligenceFindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+DefaultStorageControlStub::GetIntelligenceFindingRevision(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+        request) {
+  google::storage::control::v2::IntelligenceFindingRevision response;
+  auto status =
+      grpc_stub_->GetIntelligenceFindingRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingRevisionsResponse>
+DefaultStorageControlStub::ListIntelligenceFindingRevisions(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::ListIntelligenceFindingRevisionsRequest const&
+        request) {
+  google::storage::control::v2::ListIntelligenceFindingRevisionsResponse
+      response;
+  auto status = grpc_stub_->ListIntelligenceFindingRevisions(&context, request,
+                                                             &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -134,6 +134,43 @@ DefaultOracleDatabaseStub::DeleteCloudExadataInfrastructure(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncConfigureExascaleCloudExadataInfrastructure(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::
+          ConfigureExascaleCloudExadataInfrastructureRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::oracledatabase::v1::
+              ConfigureExascaleCloudExadataInfrastructureRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncConfigureExascaleCloudExadataInfrastructure(
+            context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::ConfigureExascaleCloudExadataInfrastructure(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ConfigureExascaleCloudExadataInfrastructure(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
 DefaultOracleDatabaseStub::ListCloudVmClusters(
     grpc::ClientContext& context, Options const&,
@@ -1287,6 +1324,334 @@ DefaultOracleDatabaseStub::DeleteDbSystem(
   return response;
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListGoldengateDeploymentsResponse>
+DefaultOracleDatabaseStub::ListGoldengateDeployments(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ListGoldengateDeploymentsResponse response;
+  auto status =
+      grpc_stub_->ListGoldengateDeployments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+DefaultOracleDatabaseStub::GetGoldengateDeployment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::GoldengateDeployment response;
+  auto status =
+      grpc_stub_->GetGoldengateDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateDeploymentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateGoldengateDeployment(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateGoldengateDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateGoldengateDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateDeploymentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteGoldengateDeployment(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteGoldengateDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteGoldengateDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncStopGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 StopGoldengateDeploymentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncStopGoldengateDeployment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::StopGoldengateDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->StopGoldengateDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncStartGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 StartGoldengateDeploymentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncStartGoldengateDeployment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::StartGoldengateDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->StartGoldengateDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListGoldengateConnectionsResponse>
+DefaultOracleDatabaseStub::ListGoldengateConnections(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::ListGoldengateConnectionsResponse response;
+  auto status =
+      grpc_stub_->ListGoldengateConnections(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+DefaultOracleDatabaseStub::GetGoldengateConnection(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+        request) {
+  google::cloud::oracledatabase::v1::GoldengateConnection response;
+  auto status =
+      grpc_stub_->GetGoldengateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateGoldengateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateConnectionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateGoldengateConnection(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateGoldengateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateGoldengateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteGoldengateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateConnectionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteGoldengateConnection(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteGoldengateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteGoldengateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsResponse>
+DefaultOracleDatabaseStub::ListGoldengateDeploymentVersions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentVersionsRequest const& request) {
+  google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsResponse
+      response;
+  auto status = grpc_stub_->ListGoldengateDeploymentVersions(&context, request,
+                                                             &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesResponse>
+DefaultOracleDatabaseStub::ListGoldengateDeploymentTypes(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentTypesRequest const& request) {
+  google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesResponse
+      response;
+  auto status =
+      grpc_stub_->ListGoldengateDeploymentTypes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             ListGoldengateDeploymentEnvironmentsResponse>
+DefaultOracleDatabaseStub::ListGoldengateDeploymentEnvironments(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentEnvironmentsRequest const& request) {
+  google::cloud::oracledatabase::v1::
+      ListGoldengateDeploymentEnvironmentsResponse response;
+  auto status = grpc_stub_->ListGoldengateDeploymentEnvironments(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesResponse>
+DefaultOracleDatabaseStub::ListGoldengateConnectionTypes(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionTypesRequest const& request) {
+  google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesResponse
+      response;
+  auto status =
+      grpc_stub_->ListGoldengateConnectionTypes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListDbVersionsResponse>
 DefaultOracleDatabaseStub::ListDbVersions(
     grpc::ClientContext& context, Options const&,
@@ -1307,6 +1672,124 @@ DefaultOracleDatabaseStub::ListDatabaseCharacterSets(
   google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsResponse response;
   auto status =
       grpc_stub_->ListDatabaseCharacterSets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             ListGoldengateConnectionAssignmentsResponse>
+DefaultOracleDatabaseStub::ListGoldengateConnectionAssignments(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionAssignmentsRequest const& request) {
+  google::cloud::oracledatabase::v1::ListGoldengateConnectionAssignmentsResponse
+      response;
+  auto status = grpc_stub_->ListGoldengateConnectionAssignments(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+DefaultOracleDatabaseStub::GetGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        GetGoldengateConnectionAssignmentRequest const& request) {
+  google::cloud::oracledatabase::v1::GoldengateConnectionAssignment response;
+  auto status = grpc_stub_->GetGoldengateConnectionAssignment(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncCreateGoldengateConnectionAssignment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionAssignmentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateConnectionAssignmentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateGoldengateConnectionAssignment(
+            context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::CreateGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateGoldengateConnectionAssignment(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncDeleteGoldengateConnectionAssignment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionAssignmentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateConnectionAssignmentRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteGoldengateConnectionAssignment(
+            context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::DeleteGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteGoldengateConnectionAssignment(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             TestGoldengateConnectionAssignmentResponse>
+DefaultOracleDatabaseStub::TestGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        TestGoldengateConnectionAssignmentRequest const& request) {
+  google::cloud::oracledatabase::v1::TestGoldengateConnectionAssignmentResponse
+      response;
+  auto status = grpc_stub_->TestGoldengateConnectionAssignment(
+      &context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

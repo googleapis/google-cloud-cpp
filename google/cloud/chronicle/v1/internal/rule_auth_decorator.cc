@@ -75,6 +75,15 @@ Status RuleServiceAuth::DeleteRule(
   return child_->DeleteRule(context, options, request);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceAuth::VerifyRuleText(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->VerifyRuleText(context, options, request);
+}
+
 StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
 RuleServiceAuth::ListRuleRevisions(
     grpc::ClientContext& context, Options const& options,

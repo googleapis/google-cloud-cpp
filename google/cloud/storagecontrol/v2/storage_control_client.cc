@@ -649,6 +649,93 @@ StorageControlClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlClient::GetIntelligenceFinding(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::GetIntelligenceFindingRequest request;
+  request.set_name(name);
+  return connection_->GetIntelligenceFinding(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlClient::GetIntelligenceFinding(
+    google::storage::control::v2::GetIntelligenceFindingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIntelligenceFinding(request);
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFinding>
+StorageControlClient::ListIntelligenceFindings(std::string const& parent,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ListIntelligenceFindingsRequest request;
+  request.set_parent(parent);
+  return connection_->ListIntelligenceFindings(request);
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFinding>
+StorageControlClient::ListIntelligenceFindings(
+    google::storage::control::v2::ListIntelligenceFindingsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListIntelligenceFindings(std::move(request));
+}
+
+StreamRange<google::storage::control::v2::FindingSummary>
+StorageControlClient::SummarizeIntelligenceFindings(std::string const& parent,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::SummarizeIntelligenceFindingsRequest request;
+  request.set_parent(parent);
+  return connection_->SummarizeIntelligenceFindings(request);
+}
+
+StreamRange<google::storage::control::v2::FindingSummary>
+StorageControlClient::SummarizeIntelligenceFindings(
+    google::storage::control::v2::SummarizeIntelligenceFindingsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SummarizeIntelligenceFindings(std::move(request));
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlClient::GetIntelligenceFindingRevision(std::string const& name,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::GetIntelligenceFindingRevisionRequest request;
+  request.set_name(name);
+  return connection_->GetIntelligenceFindingRevision(request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlClient::GetIntelligenceFindingRevision(
+    google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIntelligenceFindingRevision(request);
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlClient::ListIntelligenceFindingRevisions(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ListIntelligenceFindingRevisionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListIntelligenceFindingRevisions(request);
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlClient::ListIntelligenceFindingRevisions(
+    google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListIntelligenceFindingRevisions(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2
 }  // namespace cloud
