@@ -29,7 +29,7 @@ RUN apt-get update && \
 
 # #### Install CMake v3.22
 WORKDIR /var/tmp/build/cmake
-RUN curl -fsSL https://github.com/Kitware/cmake/archive/v3.22.3.tar.gz | \
+RUN curl -fsSL https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./bootstrap && make -j ${NCPU:-4} && make install
 
