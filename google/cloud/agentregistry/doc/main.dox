@@ -1,0 +1,50 @@
+/*!
+
+@mainpage Agent Registry API C++ Client Library
+
+An idiomatic C++ client library for the [Agent Registry API][cloud-service-docs].
+
+Agent Registry is a centralized, unified catalog that lets you store,
+discover, and govern Model Context Protocol (MCP) servers, tools, and AI
+agents within Google Cloud.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/agentregistry/quickstart/` directory,
+which should give you a taste of the Agent Registry API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`agentregistry_v1::AgentRegistryClient`](@ref google::cloud::agentregistry_v1::AgentRegistryClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`agentregistry_v1::AgentRegistryClient`](@ref google::cloud::agentregistry_v1::AgentRegistryClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref agentregistry-override-endpoint - describes how to override the default
+  endpoint.
+- @ref agentregistry-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref agentregistry-override-retry - describes how to change the default retry
+  policies.
+- @ref agentregistry-env - describes environment variables that can configure the
+  behavior of the library.
+- @ref agentregistry-override-universe-domain - describes how to override the default universe domain.
+
+[cloud-service-docs]: https://docs.cloud.google.com/agent-registry/overview
+
+*/
