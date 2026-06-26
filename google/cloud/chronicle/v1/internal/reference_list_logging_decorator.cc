@@ -90,6 +90,19 @@ ReferenceListServiceLogging::UpdateReferenceList(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+ReferenceListServiceLogging::VerifyReferenceList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::VerifyReferenceListRequest const&
+                 request) {
+        return child_->VerifyReferenceList(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 ReferenceListServiceLogging::ListOperations(
     grpc::ClientContext& context, Options const& options,

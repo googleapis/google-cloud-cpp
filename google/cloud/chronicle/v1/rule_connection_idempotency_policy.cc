@@ -59,6 +59,11 @@ Idempotency RuleServiceConnectionIdempotencyPolicy::DeleteRule(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency RuleServiceConnectionIdempotencyPolicy::VerifyRuleText(
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency RuleServiceConnectionIdempotencyPolicy::ListRuleRevisions(
     google::cloud::chronicle::v1::ListRuleRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

@@ -1214,6 +1214,118 @@ NetworkServicesAuth::ListMeshRouteViews(
   return child_->ListMeshRouteViews(context, options, request);
 }
 
+StatusOr<google::cloud::networkservices::v1::ListAgentGatewaysResponse>
+NetworkServicesAuth::ListAgentGateways(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAgentGateways(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesAuth::GetAgentGateway(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAgentGateway(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesAuth::AsyncCreateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateAgentGateway(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesAuth::CreateAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAgentGateway(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesAuth::AsyncUpdateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateAgentGateway(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesAuth::UpdateAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAgentGateway(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesAuth::AsyncDeleteAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteAgentGateway(cq, *std::move(context),
+                                              std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesAuth::DeleteAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAgentGateway(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetworkServicesAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

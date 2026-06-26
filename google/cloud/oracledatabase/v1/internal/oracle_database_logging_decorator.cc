@@ -138,6 +138,43 @@ OracleDatabaseLogging::DeleteCloudExadataInfrastructure(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncConfigureExascaleCloudExadataInfrastructure(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 ConfigureExascaleCloudExadataInfrastructureRequest const&
+                     request) {
+        return child_->AsyncConfigureExascaleCloudExadataInfrastructure(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::ConfigureExascaleCloudExadataInfrastructure(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ConfigureExascaleCloudExadataInfrastructureRequest const&
+                     request) {
+        return child_->ConfigureExascaleCloudExadataInfrastructure(
+            context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
 OracleDatabaseLogging::ListCloudVmClusters(
     grpc::ClientContext& context, Options const& options,
@@ -1320,6 +1357,328 @@ StatusOr<google::longrunning::Operation> OracleDatabaseLogging::DeleteDbSystem(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListGoldengateDeploymentsResponse>
+OracleDatabaseLogging::ListGoldengateDeployments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListGoldengateDeploymentsRequest const& request) {
+        return child_->ListGoldengateDeployments(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseLogging::GetGoldengateDeployment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 GetGoldengateDeploymentRequest const& request) {
+        return child_->GetGoldengateDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateDeploymentRequest const& request) {
+        return child_->AsyncCreateGoldengateDeployment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::CreateGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateDeploymentRequest const& request) {
+        return child_->CreateGoldengateDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateDeploymentRequest const& request) {
+        return child_->AsyncDeleteGoldengateDeployment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::DeleteGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateDeploymentRequest const& request) {
+        return child_->DeleteGoldengateDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncStopGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 StopGoldengateDeploymentRequest const& request) {
+        return child_->AsyncStopGoldengateDeployment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::StopGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 StopGoldengateDeploymentRequest const& request) {
+        return child_->StopGoldengateDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncStartGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 StartGoldengateDeploymentRequest const& request) {
+        return child_->AsyncStartGoldengateDeployment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::StartGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 StartGoldengateDeploymentRequest const& request) {
+        return child_->StartGoldengateDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListGoldengateConnectionsResponse>
+OracleDatabaseLogging::ListGoldengateConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListGoldengateConnectionsRequest const& request) {
+        return child_->ListGoldengateConnections(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseLogging::GetGoldengateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 GetGoldengateConnectionRequest const& request) {
+        return child_->GetGoldengateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateGoldengateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateConnectionRequest const& request) {
+        return child_->AsyncCreateGoldengateConnection(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::CreateGoldengateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateConnectionRequest const& request) {
+        return child_->CreateGoldengateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteGoldengateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateConnectionRequest const& request) {
+        return child_->AsyncDeleteGoldengateConnection(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::DeleteGoldengateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateConnectionRequest const& request) {
+        return child_->DeleteGoldengateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsResponse>
+OracleDatabaseLogging::ListGoldengateDeploymentVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentVersionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListGoldengateDeploymentVersionsRequest const& request) {
+        return child_->ListGoldengateDeploymentVersions(context, options,
+                                                        request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesResponse>
+OracleDatabaseLogging::ListGoldengateDeploymentTypes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentTypesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListGoldengateDeploymentTypesRequest const& request) {
+        return child_->ListGoldengateDeploymentTypes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             ListGoldengateDeploymentEnvironmentsResponse>
+OracleDatabaseLogging::ListGoldengateDeploymentEnvironments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentEnvironmentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListGoldengateDeploymentEnvironmentsRequest const& request) {
+        return child_->ListGoldengateDeploymentEnvironments(context, options,
+                                                            request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesResponse>
+OracleDatabaseLogging::ListGoldengateConnectionTypes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionTypesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListGoldengateConnectionTypesRequest const& request) {
+        return child_->ListGoldengateConnectionTypes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListDbVersionsResponse>
 OracleDatabaseLogging::ListDbVersions(
     grpc::ClientContext& context, Options const& options,
@@ -1343,6 +1702,123 @@ OracleDatabaseLogging::ListDatabaseCharacterSets(
              google::cloud::oracledatabase::v1::
                  ListDatabaseCharacterSetsRequest const& request) {
         return child_->ListDatabaseCharacterSets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             ListGoldengateConnectionAssignmentsResponse>
+OracleDatabaseLogging::ListGoldengateConnectionAssignments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionAssignmentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 ListGoldengateConnectionAssignmentsRequest const& request) {
+        return child_->ListGoldengateConnectionAssignments(context, options,
+                                                           request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseLogging::GetGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GetGoldengateConnectionAssignmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 GetGoldengateConnectionAssignmentRequest const& request) {
+        return child_->GetGoldengateConnectionAssignment(context, options,
+                                                         request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncCreateGoldengateConnectionAssignment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateConnectionAssignmentRequest const& request) {
+        return child_->AsyncCreateGoldengateConnectionAssignment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::CreateGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 CreateGoldengateConnectionAssignmentRequest const& request) {
+        return child_->CreateGoldengateConnectionAssignment(context, options,
+                                                            request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncDeleteGoldengateConnectionAssignment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateConnectionAssignmentRequest const& request) {
+        return child_->AsyncDeleteGoldengateConnectionAssignment(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::DeleteGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 DeleteGoldengateConnectionAssignmentRequest const& request) {
+        return child_->DeleteGoldengateConnectionAssignment(context, options,
+                                                            request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             TestGoldengateConnectionAssignmentResponse>
+OracleDatabaseLogging::TestGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        TestGoldengateConnectionAssignmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 TestGoldengateConnectionAssignmentRequest const& request) {
+        return child_->TestGoldengateConnectionAssignment(context, options,
+                                                          request);
       },
       context, options, request, __func__, tracing_options_);
 }

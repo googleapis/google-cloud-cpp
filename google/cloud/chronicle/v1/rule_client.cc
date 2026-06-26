@@ -108,6 +108,24 @@ Status RuleServiceClient::DeleteRule(
   return connection_->DeleteRule(request);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceClient::VerifyRuleText(std::string const& instance,
+                                  std::string const& rule_text, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::chronicle::v1::VerifyRuleTextRequest request;
+  request.set_instance(instance);
+  request.set_rule_text(rule_text);
+  return connection_->VerifyRuleText(request);
+}
+
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceClient::VerifyRuleText(
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->VerifyRuleText(request);
+}
+
 StreamRange<google::cloud::chronicle::v1::Rule>
 RuleServiceClient::ListRuleRevisions(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -116,8 +116,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L722}
+  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
+  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L967}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -155,8 +155,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L722}
+  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
+  /// [google.cloud.oracledatabase.v1.ListCloudExadataInfrastructuresRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L967}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -185,8 +185,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L757}
+  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
+  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1006}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -215,8 +215,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L757}
+  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
+  /// [google.cloud.oracledatabase.v1.GetCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1006}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
@@ -256,8 +256,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L770}
+  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
+  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1019}
   ///
   // clang-format on
   future<
@@ -315,8 +315,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L36}
-  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L770}
+  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
+  /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1019}
   ///
   // clang-format on
   future<
@@ -384,8 +384,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L806}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1055}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -435,8 +435,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L806}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1055}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -477,6 +477,133 @@ class OracleDatabaseClient {
 
   // clang-format off
   ///
+  /// Configures Exascale for a single Exadata Infrastructure.
+  ///
+  /// @param name  Required. The name of the Cloud Exadata Infrastructure in the following
+  ///  format:
+  ///  projects/{project}/locations/{location}/cloudExadataInfrastructures/{cloud_exadata_infrastructure}.
+  /// @param total_storage_size_gb  Required. The total storage to be allocated to Exascale in GBs.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.CloudExadataInfrastructure] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
+  /// [google.cloud.oracledatabase.v1.ConfigureExascaleCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L308}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  ConfigureExascaleCloudExadataInfrastructure(
+      std::string const& name, std::int32_t total_storage_size_gb,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ConfigureExascaleCloudExadataInfrastructure
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation>
+  ConfigureExascaleCloudExadataInfrastructure(
+      NoAwaitTag, std::string const& name, std::int32_t total_storage_size_gb,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Configures Exascale for a single Exadata Infrastructure.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ConfigureExascaleCloudExadataInfrastructureRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.CloudExadataInfrastructure] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CloudExadataInfrastructure]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L37}
+  /// [google.cloud.oracledatabase.v1.ConfigureExascaleCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadata_infra.proto#L308}
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  ConfigureExascaleCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          ConfigureExascaleCloudExadataInfrastructureRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ConfigureExascaleCloudExadataInfrastructure
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation>
+  ConfigureExascaleCloudExadataInfrastructure(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          ConfigureExascaleCloudExadataInfrastructureRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ConfigureExascaleCloudExadataInfrastructure
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  ConfigureExascaleCloudExadataInfrastructure(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// Lists the VM Clusters in a given project and location.
   ///
   /// @param parent  Required. The name of the parent in the following format:
@@ -504,7 +631,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L837}
+  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1086}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
@@ -543,7 +670,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L837}
+  /// [google.cloud.oracledatabase.v1.ListCloudVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1086}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
@@ -571,7 +698,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L869}
+  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1122}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
@@ -601,7 +728,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L869}
+  /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1122}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
@@ -641,7 +768,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L881}
+  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1134}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
@@ -697,7 +824,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.CloudVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/vm_cluster.proto#L35}
-  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L881}
+  /// [google.cloud.oracledatabase.v1.CreateCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1134}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
@@ -762,8 +889,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L915}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1168}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -813,8 +940,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L915}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1168}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -882,7 +1009,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Entitlement]: @googleapis_reference_link{google/cloud/oracledatabase/v1/entitlement.proto#L31}
-  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L945}
+  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1198}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::Entitlement> ListEntitlements(
@@ -921,7 +1048,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Entitlement]: @googleapis_reference_link{google/cloud/oracledatabase/v1/entitlement.proto#L31}
-  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L945}
+  /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1198}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::Entitlement> ListEntitlements(
@@ -957,7 +1084,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbServer]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_server.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L974}
+  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1227}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbServer> ListDbServers(
@@ -996,7 +1123,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbServer]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_server.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L974}
+  /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1227}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbServer> ListDbServers(
@@ -1032,7 +1159,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbNode]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_node.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1003}
+  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1256}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
@@ -1071,7 +1198,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbNode]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_node.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1003}
+  /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1256}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
@@ -1108,7 +1235,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.GiVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/gi_version.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1033}
+  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1286}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::GiVersion> ListGiVersions(
@@ -1148,7 +1275,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.GiVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/gi_version.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1033}
+  /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1286}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::GiVersion> ListGiVersions(
@@ -1262,7 +1389,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystemShape]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_shape.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1068}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1321}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
@@ -1301,7 +1428,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystemShape]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system_shape.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1068}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemShapesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1321}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
@@ -1338,7 +1465,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1136}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1389}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1377,7 +1504,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1136}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1389}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1405,7 +1532,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1171}
+  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1428}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1435,7 +1562,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1171}
+  /// [google.cloud.oracledatabase.v1.GetAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1428}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
@@ -1476,7 +1603,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1183}
+  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1440}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1534,7 +1661,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1183}
+  /// [google.cloud.oracledatabase.v1.CreateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1440}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1604,7 +1731,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1218}
+  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1475}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1661,7 +1788,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1218}
+  /// [google.cloud.oracledatabase.v1.UpdateAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1475}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1726,8 +1853,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1246}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1503}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -1777,8 +1904,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1246}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1503}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -1845,7 +1972,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1271}
+  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1528}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1899,7 +2026,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1271}
+  /// [google.cloud.oracledatabase.v1.RestoreAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1528}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -1963,8 +2090,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1363}
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1387}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1622}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1646}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::
@@ -1997,8 +2124,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1363}
-  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1387}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1622}
+  /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1646}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::
@@ -2038,7 +2165,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDbVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_version.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1393}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1652}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
@@ -2078,7 +2205,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDbVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_version.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1393}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDbVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1652}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
@@ -2116,7 +2243,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseCharacterSet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database_character_set.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1422}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1681}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
@@ -2156,7 +2283,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseCharacterSet]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database_character_set.proto#L32}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1422}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseCharacterSetsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1681}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
@@ -2194,7 +2321,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseBackup]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_backup.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1458}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1717}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
@@ -2233,7 +2360,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabaseBackup]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_db_backup.proto#L33}
-  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1458}
+  /// [google.cloud.oracledatabase.v1.ListAutonomousDatabaseBackupsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1717}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
@@ -2269,7 +2396,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1287}
+  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1544}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2320,7 +2447,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1287}
+  /// [google.cloud.oracledatabase.v1.StopAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1544}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2386,7 +2513,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1299}
+  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1556}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2437,7 +2564,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1299}
+  /// [google.cloud.oracledatabase.v1.StartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1556}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2503,7 +2630,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1311}
+  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1568}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2554,7 +2681,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1311}
+  /// [google.cloud.oracledatabase.v1.RestartAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1568}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2600,7 +2727,8 @@ class OracleDatabaseClient {
   ///
   /// @param name  Required. The name of the Autonomous Database in the following format:
   ///  projects/{project}/locations/{location}/autonomousDatabases/{autonomous_database}.
-  /// @param peer_autonomous_database  Required. The peer database name to switch over to.
+  /// @param peer_autonomous_database  Optional. The peer database name to switch over to. Required for
+  ///  cross-region standby, and must be omitted for in-region Data Guard.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2622,7 +2750,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1323}
+  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1580}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2677,7 +2805,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1323}
+  /// [google.cloud.oracledatabase.v1.SwitchoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1580}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2723,7 +2851,8 @@ class OracleDatabaseClient {
   ///
   /// @param name  Required. The name of the Autonomous Database in the following format:
   ///  projects/{project}/locations/{location}/autonomousDatabases/{autonomous_database}.
-  /// @param peer_autonomous_database  Required. The peer database name to fail over to.
+  /// @param peer_autonomous_database  Optional. The peer database name to fail over to. Required for cross-region
+  ///  standby, and must be omitted for in-region Data Guard.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2745,7 +2874,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1343}
+  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1601}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -2800,7 +2929,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.AutonomousDatabase]: @googleapis_reference_link{google/cloud/oracledatabase/v1/autonomous_database.proto#L162}
-  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1343}
+  /// [google.cloud.oracledatabase.v1.FailoverAutonomousDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1601}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
@@ -3123,7 +3252,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L125}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3174,7 +3303,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteOdbNetworkRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_network.proto#L125}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3495,7 +3624,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L127}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3546,7 +3675,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DeleteOdbSubnetRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/odb_subnet.proto#L127}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3613,7 +3742,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1572}
+  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1831}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
@@ -3653,7 +3782,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1572}
+  /// [google.cloud.oracledatabase.v1.ListExadbVmClustersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1831}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::ExadbVmCluster>
@@ -3681,7 +3810,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1560}
+  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1819}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster> GetExadbVmCluster(
@@ -3711,7 +3840,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1560}
+  /// [google.cloud.oracledatabase.v1.GetExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1819}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster> GetExadbVmCluster(
@@ -3750,7 +3879,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1496}
+  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1755}
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
   ///
   // clang-format on
@@ -3806,7 +3935,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1496}
+  /// [google.cloud.oracledatabase.v1.CreateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1755}
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
   ///
   // clang-format on
@@ -3872,8 +4001,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1535}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1794}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3923,8 +4052,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1535}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1794}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -3993,7 +4122,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1609}
+  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1872}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
@@ -4049,7 +4178,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1609}
+  /// [google.cloud.oracledatabase.v1.UpdateExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1872}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
@@ -4117,7 +4246,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1634}
+  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1897}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
@@ -4171,7 +4300,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExadbVmCluster]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exadb_vm_cluster.proto#L36}
-  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1634}
+  /// [google.cloud.oracledatabase.v1.RemoveVirtualMachineExadbVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1897}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::ExadbVmCluster>>
@@ -4240,7 +4369,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
-  /// [google.cloud.oracledatabase.v1.ListExascaleDbStorageVaultsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L183}
+  /// [google.cloud.oracledatabase.v1.ListExascaleDbStorageVaultsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L194}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
@@ -4280,7 +4409,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
-  /// [google.cloud.oracledatabase.v1.ListExascaleDbStorageVaultsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L183}
+  /// [google.cloud.oracledatabase.v1.ListExascaleDbStorageVaultsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L194}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
@@ -4309,7 +4438,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
-  /// [google.cloud.oracledatabase.v1.GetExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L171}
+  /// [google.cloud.oracledatabase.v1.GetExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L182}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
@@ -4339,7 +4468,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
-  /// [google.cloud.oracledatabase.v1.GetExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L171}
+  /// [google.cloud.oracledatabase.v1.GetExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L182}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::ExascaleDbStorageVault>
@@ -4379,7 +4508,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CreateExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L223}
+  /// [google.cloud.oracledatabase.v1.CreateExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L238}
   /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
   ///
   // clang-format on
@@ -4437,7 +4566,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CreateExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L223}
+  /// [google.cloud.oracledatabase.v1.CreateExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L238}
   /// [google.cloud.oracledatabase.v1.ExascaleDbStorageVault]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L35}
   ///
   // clang-format on
@@ -4503,8 +4632,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L264}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L279}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -4554,8 +4683,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L264}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteExascaleDbStorageVaultRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/exascale_db_storage_vault.proto#L279}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -4702,7 +4831,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Database]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L35}
-  /// [google.cloud.oracledatabase.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L301}
+  /// [google.cloud.oracledatabase.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L337}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::Database> ListDatabases(
@@ -4741,7 +4870,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Database]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L35}
-  /// [google.cloud.oracledatabase.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L301}
+  /// [google.cloud.oracledatabase.v1.ListDatabasesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L337}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::Database> ListDatabases(
@@ -4768,7 +4897,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Database]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L35}
-  /// [google.cloud.oracledatabase.v1.GetDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L289}
+  /// [google.cloud.oracledatabase.v1.GetDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L325}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::Database> GetDatabase(
@@ -4798,7 +4927,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.Database]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L35}
-  /// [google.cloud.oracledatabase.v1.GetDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L289}
+  /// [google.cloud.oracledatabase.v1.GetDatabaseRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/database.proto#L325}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::Database> GetDatabase(
@@ -4972,7 +5101,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListDbSystemsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L367}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L368}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystem> ListDbSystems(
@@ -5011,7 +5140,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
-  /// [google.cloud.oracledatabase.v1.ListDbSystemsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L367}
+  /// [google.cloud.oracledatabase.v1.ListDbSystemsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L368}
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystem> ListDbSystems(
@@ -5038,7 +5167,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L355}
+  /// [google.cloud.oracledatabase.v1.GetDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L356}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::DbSystem> GetDbSystem(
@@ -5068,7 +5197,7 @@ class OracleDatabaseClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
-  /// [google.cloud.oracledatabase.v1.GetDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L355}
+  /// [google.cloud.oracledatabase.v1.GetDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L356}
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::DbSystem> GetDbSystem(
@@ -5106,7 +5235,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CreateDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L291}
+  /// [google.cloud.oracledatabase.v1.CreateDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L292}
   /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
   ///
   // clang-format on
@@ -5161,7 +5290,7 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.CreateDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L291}
+  /// [google.cloud.oracledatabase.v1.CreateDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L292}
   /// [google.cloud.oracledatabase.v1.DbSystem]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L36}
   ///
   // clang-format on
@@ -5223,8 +5352,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L330}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L331}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -5274,8 +5403,8 @@ class OracleDatabaseClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.oracledatabase.v1.DeleteDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L330}
-  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1102}
+  /// [google.cloud.oracledatabase.v1.DeleteDbSystemRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/db_system.proto#L331}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
@@ -5311,6 +5440,1317 @@ class OracleDatabaseClient {
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
   DeleteDbSystem(google::longrunning::Operation const& operation,
                  Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the GoldengateDeployments for the given project and location.
+  ///
+  /// @param parent  Required. The parent value for GoldengateDeployments in the following
+  ///  format: projects/{project}/locations/{location}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeployment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateDeploymentsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L700}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>
+  ListGoldengateDeployments(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the GoldengateDeployments for the given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListGoldengateDeploymentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeployment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateDeploymentsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L700}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>
+  ListGoldengateDeployments(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GoldengateDeployment.
+  ///
+  /// @param name  Required. The name of the GoldengateDeployment in the following format:
+  ///  projects/{project}/locations/{location}/goldengateDeployments/{goldengate_deployment}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.GoldengateDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L688}
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+  GetGoldengateDeployment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GoldengateDeployment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetGoldengateDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.GoldengateDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L688}
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+  GetGoldengateDeployment(
+      google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GoldengateDeployment in a given project and location.
+  ///
+  /// @param parent  Required. The value for parent of the GoldengateDeployment in the following
+  ///  format: projects/{project}/locations/{location}.
+  /// @param goldengate_deployment  Required. The resource being created.
+  /// @param goldengate_deployment_id  Required. The ID of the GoldengateDeployment to create. This value is
+  ///  restricted to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of
+  ///  63 characters in length. The value must start with a letter and end with a
+  ///  letter or a number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeployment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L623}
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  CreateGoldengateDeployment(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::GoldengateDeployment const&
+          goldengate_deployment,
+      std::string const& goldengate_deployment_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGoldengateDeployment(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::GoldengateDeployment const&
+          goldengate_deployment,
+      std::string const& goldengate_deployment_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GoldengateDeployment in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateGoldengateDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeployment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L623}
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  CreateGoldengateDeployment(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateDeploymentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGoldengateDeployment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateDeploymentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  CreateGoldengateDeployment(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GoldengateDeployment.
+  ///
+  /// @param name  Required. The name of the GoldengateDeployment in the following format:
+  ///  projects/{project}/locations/{location}/goldengateDeployments/{goldengate_deployment}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L663}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateDeployment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGoldengateDeployment(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GoldengateDeployment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteGoldengateDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L663}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateDeployment(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateDeploymentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGoldengateDeployment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateDeploymentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateDeployment(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Stops a single GoldengateDeployment.
+  ///
+  /// @param name  Required. The name of the Goldengate Deployment in the following format:
+  ///  projects/{project}/locations/{location}/goldengateDeployments/{goldengate_deployment}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeployment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  /// [google.cloud.oracledatabase.v1.StopGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L739}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StopGoldengateDeployment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StopGoldengateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> StopGoldengateDeployment(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Stops a single GoldengateDeployment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.StopGoldengateDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeployment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  /// [google.cloud.oracledatabase.v1.StopGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L739}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StopGoldengateDeployment(
+      google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StopGoldengateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> StopGoldengateDeployment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StopGoldengateDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StopGoldengateDeployment(google::longrunning::Operation const& operation,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Starts a single GoldengateDeployment.
+  ///
+  /// @param name  Required. The name of the Goldengate Deployment in the following format:
+  ///  projects/{project}/locations/{location}/goldengateDeployments/{goldengate_deployment}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeployment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  /// [google.cloud.oracledatabase.v1.StartGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L751}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StartGoldengateDeployment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StartGoldengateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> StartGoldengateDeployment(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Starts a single GoldengateDeployment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.StartGoldengateDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeployment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeployment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L34}
+  /// [google.cloud.oracledatabase.v1.StartGoldengateDeploymentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment.proto#L751}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StartGoldengateDeployment(
+      google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StartGoldengateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> StartGoldengateDeployment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StartGoldengateDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StartGoldengateDeployment(google::longrunning::Operation const& operation,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the GoldengateConnections for the given project and location.
+  ///
+  /// @param parent  Required. The parent value for GoldengateConnections in the following
+  ///  format: projects/{project}/locations/{location}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnection], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateConnection]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L33}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateConnectionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2311}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>
+  ListGoldengateConnections(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists all the GoldengateConnections for the given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListGoldengateConnectionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnection], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateConnection]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L33}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateConnectionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2311}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>
+  ListGoldengateConnections(
+      google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GoldengateConnection.
+  ///
+  /// @param name  Required. The name of the GoldengateConnection in the following format:
+  ///  projects/{project}/locations/{location}/goldengateConnections/{goldengate_connection}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.GoldengateConnection])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetGoldengateConnectionRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2299}
+  /// [google.cloud.oracledatabase.v1.GoldengateConnection]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+  GetGoldengateConnection(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GoldengateConnection.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetGoldengateConnectionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.GoldengateConnection])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetGoldengateConnectionRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2299}
+  /// [google.cloud.oracledatabase.v1.GoldengateConnection]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+  GetGoldengateConnection(
+      google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GoldengateConnection in a given project and location.
+  ///
+  /// @param parent  Required. The value for parent of the GoldengateConnection in the following
+  ///  format: projects/{project}/locations/{location}.
+  /// @param goldengate_connection  Required. The resource being created.
+  /// @param goldengate_connection_id  Required. The ID of the GoldengateConnection to create. This value is
+  ///  restricted to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of
+  ///  63 characters in length. The value must start with a letter and end with a
+  ///  letter or a number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnection] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateGoldengateConnectionRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2234}
+  /// [google.cloud.oracledatabase.v1.GoldengateConnection]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+  CreateGoldengateConnection(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::GoldengateConnection const&
+          goldengate_connection,
+      std::string const& goldengate_connection_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGoldengateConnection(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::GoldengateConnection const&
+          goldengate_connection,
+      std::string const& goldengate_connection_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GoldengateConnection in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateGoldengateConnectionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnection] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateGoldengateConnectionRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2234}
+  /// [google.cloud.oracledatabase.v1.GoldengateConnection]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+  CreateGoldengateConnection(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGoldengateConnection(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+  CreateGoldengateConnection(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GoldengateConnection.
+  ///
+  /// @param name  Required. The name of the GoldengateConnection in the following format:
+  ///  projects/{project}/locations/{location}/goldengateConnections/{goldengate_connection}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2274}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnection(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGoldengateConnection(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GoldengateConnection.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection.proto#L2274}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnection(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGoldengateConnection(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnection(google::longrunning::Operation const& operation,
+                             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldengateDeploymentVersions in a given project and location.
+  ///
+  /// @param parent  Required. Parent value for ListGoldengateDeploymentVersionsRequest
+  ///  Format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeploymentVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeploymentVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_version.proto#L32}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateDeploymentVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_version.proto#L137}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>
+  ListGoldengateDeploymentVersions(std::string const& parent,
+                                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldengateDeploymentVersions in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListGoldengateDeploymentVersionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeploymentVersion], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeploymentVersion]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_version.proto#L32}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateDeploymentVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_version.proto#L137}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>
+  ListGoldengateDeploymentVersions(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldenGateDeploymentTypes in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource.
+  ///  Format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeploymentType], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeploymentType]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_type.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateDeploymentTypesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_type.proto#L137}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentType>
+  ListGoldengateDeploymentTypes(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldenGateDeploymentTypes in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListGoldengateDeploymentTypesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeploymentType], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeploymentType]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_type.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateDeploymentTypesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_type.proto#L137}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentType>
+  ListGoldengateDeploymentTypes(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldengateDeploymentEnvironments in a given project and location.
+  ///
+  /// @param parent  Required. The parent, which owns this collection of
+  ///  GoldengateDeploymentEnvironments. Format:
+  ///  projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeploymentEnvironment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeploymentEnvironment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_environment.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateDeploymentEnvironmentsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_environment.proto#L112}
+  ///
+  // clang-format on
+  StreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>
+  ListGoldengateDeploymentEnvironments(std::string const& parent,
+                                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldengateDeploymentEnvironments in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListGoldengateDeploymentEnvironmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateDeploymentEnvironment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateDeploymentEnvironment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_environment.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateDeploymentEnvironmentsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_deployment_environment.proto#L112}
+  ///
+  // clang-format on
+  StreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>
+  ListGoldengateDeploymentEnvironments(
+      google::cloud::oracledatabase::v1::
+          ListGoldengateDeploymentEnvironmentsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldengateConnectionTypes in a given project and location.
+  ///
+  /// @param parent  Required. Parent value for ListGoldengateConnectionTypesRequest
+  ///  Format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnectionType], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateConnectionType]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_type.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateConnectionTypesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_type.proto#L149}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionType>
+  ListGoldengateConnectionTypes(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldengateConnectionTypes in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListGoldengateConnectionTypesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnectionType], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateConnectionType]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_type.proto#L31}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateConnectionTypesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_type.proto#L149}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionType>
+  ListGoldengateConnectionTypes(
+      google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5462,6 +6902,458 @@ class OracleDatabaseClient {
   ListDatabaseCharacterSets(
       google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldengateConnectionAssignments in a given project and location.
+  ///
+  /// @param parent  Required. The parent value for the GoldengateConnectionAssignments.
+  ///  Format: projects/{project}/locations/{location}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L33}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateConnectionAssignmentsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L121}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+  ListGoldengateConnectionAssignments(std::string const& parent,
+                                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists GoldengateConnectionAssignments in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.ListGoldengateConnectionAssignmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L33}
+  /// [google.cloud.oracledatabase.v1.ListGoldengateConnectionAssignmentsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L121}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+  ListGoldengateConnectionAssignments(
+      google::cloud::oracledatabase::v1::
+          ListGoldengateConnectionAssignmentsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GoldengateConnectionAssignment.
+  ///
+  /// @param name  Required. The name of the GoldengateConnectionAssignment to retrieve.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/goldengateConnectionAssignments/{goldengate_connection_assignment}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.GoldengateConnectionAssignment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L170}
+  /// [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+  GetGoldengateConnectionAssignment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single GoldengateConnectionAssignment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.GetGoldengateConnectionAssignmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.GoldengateConnectionAssignment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.GetGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L170}
+  /// [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L33}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+  GetGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          GetGoldengateConnectionAssignmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GoldengateConnectionAssignment in a given project and
+  /// location.
+  ///
+  /// @param parent  Required. The parent resource where this GoldengateConnectionAssignment
+  ///  will be created. Format: projects/{project}/locations/{location}
+  /// @param goldengate_connection_assignment  Required. The GoldengateConnectionAssignment to create.
+  /// @param goldengate_connection_assignment_id  Required. The ID of the GoldengateConnectionAssignment to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L183}
+  /// [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+  CreateGoldengateConnectionAssignment(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment const&
+          goldengate_connection_assignment,
+      std::string const& goldengate_connection_assignment_id,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateConnectionAssignment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGoldengateConnectionAssignment(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment const&
+          goldengate_connection_assignment,
+      std::string const& goldengate_connection_assignment_id,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new GoldengateConnectionAssignment in a given project and
+  /// location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.CreateGoldengateConnectionAssignmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.CreateGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L183}
+  /// [google.cloud.oracledatabase.v1.GoldengateConnectionAssignment]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L33}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+  CreateGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionAssignmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateConnectionAssignment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGoldengateConnectionAssignment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionAssignmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoldengateConnectionAssignment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+  CreateGoldengateConnectionAssignment(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GoldengateConnectionAssignment.
+  ///
+  /// @param name  Required. The name of the GoldengateConnectionAssignment to delete.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/goldengateConnectionAssignments/{goldengate_connection_assignment}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L289}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnectionAssignment(std::string const& name,
+                                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateConnectionAssignment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGoldengateConnectionAssignment(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single GoldengateConnectionAssignment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionAssignmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.oracledatabase.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.DeleteGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L289}
+  /// [google.cloud.oracledatabase.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L1355}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionAssignmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateConnectionAssignment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGoldengateConnectionAssignment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionAssignmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoldengateConnectionAssignment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnectionAssignment(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Tests a single GoldengateConnectionAssignment.
+  ///
+  /// @param name  Required. Name of the connection assignment for which to test connection.
+  ///  projects/{project}/locations/{region}/goldengateConnectionAssignments/{goldengate_connection_assignment}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.TestGoldengateConnectionAssignmentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.TestGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L221}
+  /// [google.cloud.oracledatabase.v1.TestGoldengateConnectionAssignmentResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L262}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::
+               TestGoldengateConnectionAssignmentResponse>
+  TestGoldengateConnectionAssignment(std::string const& name,
+                                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Tests a single GoldengateConnectionAssignment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oracledatabase.v1.TestGoldengateConnectionAssignmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oracledatabase.v1.TestGoldengateConnectionAssignmentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oracledatabase.v1.TestGoldengateConnectionAssignmentRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L221}
+  /// [google.cloud.oracledatabase.v1.TestGoldengateConnectionAssignmentResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/goldengate_connection_assignment.proto#L262}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::oracledatabase::v1::
+               TestGoldengateConnectionAssignmentResponse>
+  TestGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          TestGoldengateConnectionAssignmentRequest const& request,
       Options opts = {});
 
   // clang-format off

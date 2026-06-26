@@ -63,6 +63,12 @@ class ReferenceListServiceMetadata : public ReferenceListServiceStub {
       google::cloud::chronicle::v1::UpdateReferenceListRequest const& request)
       override;
 
+  StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+  VerifyReferenceList(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::VerifyReferenceListRequest const& request)
+      override;
+
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;

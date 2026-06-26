@@ -489,7 +489,7 @@ class ConversationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.ListMessagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L578}
-  /// [google.cloud.dialogflow.v2.Message]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L323}
+  /// [google.cloud.dialogflow.v2.Message]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L328}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
@@ -532,7 +532,7 @@ class ConversationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.ListMessagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L578}
-  /// [google.cloud.dialogflow.v2.Message]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L323}
+  /// [google.cloud.dialogflow.v2.Message]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L328}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
@@ -727,8 +727,8 @@ class ConversationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.GenerateSuggestionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L1273}
-  /// [google.cloud.dialogflow.v2.GenerateSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L894}
+  /// [google.cloud.dialogflow.v2.GenerateSuggestionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L1279}
+  /// [google.cloud.dialogflow.v2.GenerateSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L902}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
@@ -759,8 +759,8 @@ class ConversationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.GenerateSuggestionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L1273}
-  /// [google.cloud.dialogflow.v2.GenerateSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L894}
+  /// [google.cloud.dialogflow.v2.GenerateSuggestionsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L1279}
+  /// [google.cloud.dialogflow.v2.GenerateSuggestionsResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L902}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>

@@ -1270,6 +1270,118 @@ NetworkServicesTracingStub::ListMeshRouteViews(
       context, *span, child_->ListMeshRouteViews(context, options, request));
 }
 
+StatusOr<google::cloud::networkservices::v1::ListAgentGatewaysResponse>
+NetworkServicesTracingStub::ListAgentGateways(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.NetworkServices", "ListAgentGateways");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListAgentGateways(context, options, request));
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesTracingStub::GetAgentGateway(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.NetworkServices", "GetAgentGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAgentGateway(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesTracingStub::AsyncCreateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.NetworkServices", "CreateAgentGateway");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateAgentGateway(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingStub::CreateAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.NetworkServices", "CreateAgentGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateAgentGateway(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesTracingStub::AsyncUpdateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.NetworkServices", "UpdateAgentGateway");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateAgentGateway(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingStub::UpdateAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.NetworkServices", "UpdateAgentGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateAgentGateway(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesTracingStub::AsyncDeleteAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.NetworkServices", "DeleteAgentGateway");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteAgentGateway(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingStub::DeleteAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkservices.v1.NetworkServices", "DeleteAgentGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteAgentGateway(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetworkServicesTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

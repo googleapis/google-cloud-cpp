@@ -53,6 +53,10 @@ class RuleServiceTracingConnection
   Status DeleteRule(
       google::cloud::chronicle::v1::DeleteRuleRequest const& request) override;
 
+  StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse> VerifyRuleText(
+      google::cloud::chronicle::v1::VerifyRuleTextRequest const& request)
+      override;
+
   StreamRange<google::cloud::chronicle::v1::Rule> ListRuleRevisions(
       google::cloud::chronicle::v1::ListRuleRevisionsRequest request) override;
 

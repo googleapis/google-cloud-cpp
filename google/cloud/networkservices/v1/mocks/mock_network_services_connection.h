@@ -1501,6 +1501,144 @@ class MockNetworkServicesConnection
       (google::cloud::networkservices::v1::ListMeshRouteViewsRequest request),
       (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networkservices::v1::AgentGateway>),
+      ListAgentGateways,
+      (google::cloud::networkservices::v1::ListAgentGatewaysRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::networkservices::v1::AgentGateway>,
+              GetAgentGateway,
+              (google::cloud::networkservices::v1::GetAgentGatewayRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAgentGateway(Matcher<google::cloud::networkservices::v1::CreateAgentGatewayRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>,
+      CreateAgentGateway,
+      (google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAgentGateway(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAgentGateway,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAgentGateway(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>,
+      CreateAgentGateway, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAgentGateway(Matcher<google::cloud::networkservices::v1::UpdateAgentGatewayRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>,
+      UpdateAgentGateway,
+      (google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAgentGateway(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAgentGateway,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAgentGateway(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>,
+      UpdateAgentGateway, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAgentGateway(Matcher<google::cloud::networkservices::v1::DeleteAgentGatewayRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteAgentGateway,
+      (google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAgentGateway(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAgentGateway,
+      (NoAwaitTag,
+       google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAgentGateway(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteAgentGateway, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

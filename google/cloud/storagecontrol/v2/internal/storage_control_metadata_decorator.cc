@@ -786,6 +786,56 @@ StorageControlMetadata::TestIamPermissions(
   return child_->TestIamPermissions(context, options, request);
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlMetadata::GetIntelligenceFinding(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetIntelligenceFindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetIntelligenceFinding(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingsResponse>
+StorageControlMetadata::ListIntelligenceFindings(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListIntelligenceFindingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListIntelligenceFindings(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::SummarizeIntelligenceFindingsResponse>
+StorageControlMetadata::SummarizeIntelligenceFindings(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::SummarizeIntelligenceFindingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SummarizeIntelligenceFindings(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlMetadata::GetIntelligenceFindingRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetIntelligenceFindingRevision(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingRevisionsResponse>
+StorageControlMetadata::ListIntelligenceFindingRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListIntelligenceFindingRevisionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListIntelligenceFindingRevisions(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

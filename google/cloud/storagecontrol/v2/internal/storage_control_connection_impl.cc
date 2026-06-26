@@ -899,6 +899,152 @@ StorageControlConnectionImpl::TestIamPermissions(
       *current, request, __func__);
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlConnectionImpl::GetIntelligenceFinding(
+    google::storage::control::v2::GetIntelligenceFindingRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIntelligenceFinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::GetIntelligenceFindingRequest const&
+                 request) {
+        return stub_->GetIntelligenceFinding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFinding>
+StorageControlConnectionImpl::ListIntelligenceFindings(
+    google::storage::control::v2::ListIntelligenceFindingsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListIntelligenceFindings(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::storage::control::v2::IntelligenceFinding>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::storage::control::v2::ListIntelligenceFindingsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::storage::control::v2::
+                       ListIntelligenceFindingsRequest const& request) {
+              return stub->ListIntelligenceFindings(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::storage::control::v2::ListIntelligenceFindingsResponse r) {
+        std::vector<google::storage::control::v2::IntelligenceFinding> result(
+            r.intelligence_findings().size());
+        auto& messages = *r.mutable_intelligence_findings();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::storage::control::v2::FindingSummary>
+StorageControlConnectionImpl::SummarizeIntelligenceFindings(
+    google::storage::control::v2::SummarizeIntelligenceFindingsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->SummarizeIntelligenceFindings(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::storage::control::v2::FindingSummary>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::storage::control::v2::
+              SummarizeIntelligenceFindingsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::storage::control::v2::
+                       SummarizeIntelligenceFindingsRequest const& request) {
+              return stub->SummarizeIntelligenceFindings(context, options,
+                                                         request);
+            },
+            options, r, function_name);
+      },
+      [](google::storage::control::v2::SummarizeIntelligenceFindingsResponse
+             r) {
+        std::vector<google::storage::control::v2::FindingSummary> result(
+            r.finding_summaries().size());
+        auto& messages = *r.mutable_finding_summaries();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlConnectionImpl::GetIntelligenceFindingRevision(
+    google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIntelligenceFindingRevision(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 GetIntelligenceFindingRevisionRequest const& request) {
+        return stub_->GetIntelligenceFindingRevision(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlConnectionImpl::ListIntelligenceFindingRevisions(
+    google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListIntelligenceFindingRevisions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::storage::control::v2::IntelligenceFindingRevision>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::storage::control::v2::
+              ListIntelligenceFindingRevisionsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::storage::control::v2::
+                       ListIntelligenceFindingRevisionsRequest const& request) {
+              return stub->ListIntelligenceFindingRevisions(context, options,
+                                                            request);
+            },
+            options, r, function_name);
+      },
+      [](google::storage::control::v2::ListIntelligenceFindingRevisionsResponse
+             r) {
+        std::vector<google::storage::control::v2::IntelligenceFindingRevision>
+            result(r.intelligence_finding_revisions().size());
+        auto& messages = *r.mutable_intelligence_finding_revisions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud

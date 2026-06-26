@@ -66,6 +66,12 @@ class MockRuleServiceConnection : public chronicle_v1::RuleServiceConnection {
               (google::cloud::chronicle::v1::DeleteRuleRequest const& request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>,
+      VerifyRuleText,
+      (google::cloud::chronicle::v1::VerifyRuleTextRequest const& request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::chronicle::v1::Rule>),
               ListRuleRevisions,
               (google::cloud::chronicle::v1::ListRuleRevisionsRequest request),

@@ -1014,6 +1014,98 @@ NetworkServicesMetadata::ListMeshRouteViews(
   return child_->ListMeshRouteViews(context, options, request);
 }
 
+StatusOr<google::cloud::networkservices::v1::ListAgentGatewaysResponse>
+NetworkServicesMetadata::ListAgentGateways(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAgentGateways(context, options, request);
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesMetadata::GetAgentGateway(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAgentGateway(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncCreateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAgentGateway(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::CreateAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAgentGateway(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncUpdateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("agent_gateway.name=",
+                   internal::UrlEncode(request.agent_gateway().name())));
+  return child_->AsyncUpdateAgentGateway(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::UpdateAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("agent_gateway.name=",
+                   internal::UrlEncode(request.agent_gateway().name())));
+  return child_->UpdateAgentGateway(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesMetadata::AsyncDeleteAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAgentGateway(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesMetadata::DeleteAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAgentGateway(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetworkServicesMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

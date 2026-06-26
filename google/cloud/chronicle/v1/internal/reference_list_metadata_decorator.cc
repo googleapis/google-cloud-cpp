@@ -86,6 +86,16 @@ ReferenceListServiceMetadata::UpdateReferenceList(
   return child_->UpdateReferenceList(context, options, request);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+ReferenceListServiceMetadata::VerifyReferenceList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->VerifyReferenceList(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 ReferenceListServiceMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,

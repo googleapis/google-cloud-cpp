@@ -445,6 +445,76 @@ StorageControlTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlTracingStub::GetIntelligenceFinding(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetIntelligenceFindingRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "GetIntelligenceFinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetIntelligenceFinding(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingsResponse>
+StorageControlTracingStub::ListIntelligenceFindings(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListIntelligenceFindingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "ListIntelligenceFindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListIntelligenceFindings(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::SummarizeIntelligenceFindingsResponse>
+StorageControlTracingStub::SummarizeIntelligenceFindings(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::SummarizeIntelligenceFindingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "SummarizeIntelligenceFindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->SummarizeIntelligenceFindings(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlTracingStub::GetIntelligenceFindingRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "GetIntelligenceFindingRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetIntelligenceFindingRevision(context, options, request));
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingRevisionsResponse>
+StorageControlTracingStub::ListIntelligenceFindingRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListIntelligenceFindingRevisionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "ListIntelligenceFindingRevisions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListIntelligenceFindingRevisions(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

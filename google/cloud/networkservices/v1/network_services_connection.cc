@@ -979,6 +979,92 @@ NetworkServicesConnection::ListMeshRouteViews(
       StreamRange<google::cloud::networkservices::v1::MeshRouteView>>();
 }
 
+StreamRange<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesConnection::ListAgentGateways(
+    google::cloud::networkservices::v1::
+        ListAgentGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::networkservices::v1::AgentGateway>>();
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesConnection::GetAgentGateway(
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesConnection::CreateAgentGateway(
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::AgentGateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesConnection::CreateAgentGateway(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::AgentGateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesConnection::UpdateAgentGateway(
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::AgentGateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::UpdateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesConnection::UpdateAgentGateway(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::AgentGateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteAgentGateway(
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteAgentGateway(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 NetworkServicesConnection::ListLocations(
     google::cloud::location::

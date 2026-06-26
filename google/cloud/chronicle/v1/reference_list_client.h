@@ -107,8 +107,8 @@ class ReferenceListServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.GetReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L127}
-  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
+  /// [google.cloud.chronicle.v1.GetReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L138}
+  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::ReferenceList> GetReferenceList(
@@ -137,8 +137,8 @@ class ReferenceListServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.GetReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L127}
-  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
+  /// [google.cloud.chronicle.v1.GetReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L138}
+  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::ReferenceList> GetReferenceList(
@@ -174,8 +174,8 @@ class ReferenceListServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListReferenceListsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L144}
-  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
+  /// [google.cloud.chronicle.v1.ListReferenceListsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L155}
+  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L267}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::ReferenceList> ListReferenceLists(
@@ -213,8 +213,8 @@ class ReferenceListServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListReferenceListsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L144}
-  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
+  /// [google.cloud.chronicle.v1.ListReferenceListsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L155}
+  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L267}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::ReferenceList> ListReferenceLists(
@@ -247,8 +247,8 @@ class ReferenceListServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.CreateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L184}
-  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
+  /// [google.cloud.chronicle.v1.CreateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L195}
+  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::ReferenceList> CreateReferenceList(
@@ -279,8 +279,8 @@ class ReferenceListServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.CreateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L184}
-  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
+  /// [google.cloud.chronicle.v1.CreateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L195}
+  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::ReferenceList> CreateReferenceList(
@@ -313,8 +313,8 @@ class ReferenceListServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
-  /// [google.cloud.chronicle.v1.UpdateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L207}
+  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L267}
+  /// [google.cloud.chronicle.v1.UpdateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L218}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::ReferenceList> UpdateReferenceList(
@@ -344,12 +344,44 @@ class ReferenceListServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L225}
-  /// [google.cloud.chronicle.v1.UpdateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L207}
+  /// [google.cloud.chronicle.v1.ReferenceList]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L267}
+  /// [google.cloud.chronicle.v1.UpdateReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L218}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::ReferenceList> UpdateReferenceList(
       google::cloud::chronicle::v1::UpdateReferenceListRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// VerifyReferenceList validates list content and returns line errors, if any.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.chronicle.v1.VerifyReferenceListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.chronicle.v1.VerifyReferenceListResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.chronicle.v1.VerifyReferenceListRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L234}
+  /// [google.cloud.chronicle.v1.VerifyReferenceListResponse]: @googleapis_reference_link{google/cloud/chronicle/v1/reference_list.proto#L256}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+  VerifyReferenceList(
+      google::cloud::chronicle::v1::VerifyReferenceListRequest const& request,
       Options opts = {});
 
   // clang-format off
