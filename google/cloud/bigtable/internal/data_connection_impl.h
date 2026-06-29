@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DATA_CONNECTION_IMPL_H
 
 #include "google/cloud/bigtable/data_connection.h"
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
@@ -28,11 +29,18 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+// TODO(#16216): Remove this option in favor of addind a member variable to
+// store the instances.
+struct InstanceChannelAffinityOption {
+  using Type = std::vector<bigtable::InstanceResource>;
+};
 
 bigtable::Row TransformReadModifyWriteRowResponse(
     google::bigtable::v2::ReadModifyWriteRowResponse response);

@@ -177,7 +177,7 @@ bigtable::RowStream DataConnection::ExecuteQuery(bigtable::ExecuteQueryParams) {
 
 std::shared_ptr<DataConnection> MakeDataConnection(
     std::vector<InstanceResource> instances, Options options) {
-  options.set<experimental::InstanceChannelAffinityOption>(
+  options.set<bigtable_internal::InstanceChannelAffinityOption>(
       std::move(instances));
   return MakeDataConnection(std::move(options));
 }
@@ -196,7 +196,7 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
   std::shared_ptr<DataConnection> conn;
 
-  if (options.has<experimental::InstanceChannelAffinityOption>()) {
+  if (options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
     auto stub_creation_fn =
         [auth, cq = background->cq(), options](
             std::string_view instance_name,
@@ -206,7 +206,7 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
         };
 
     auto affinity_stubs = bigtable_internal::CreateBigtableAffinityStubs(
-        options.get<experimental::InstanceChannelAffinityOption>(),
+        options.get<bigtable_internal::InstanceChannelAffinityOption>(),
         stub_creation_fn);
     conn = std::make_shared<bigtable_internal::DataConnectionImpl>(
         std::move(background),

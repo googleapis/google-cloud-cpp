@@ -175,8 +175,8 @@ class DataConnection {
  * pools to scale dynamically based on outstanding RPC load.
  *
  * The returned connection object should not be used directly; instead it
- * should be given to a `Table` instance, and methods should be invoked on
- * `Table`.
+ * should be given to a `Table` or `Client` object, and methods should be
+ * invoked there.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `DataConnection`. Expected options are any of the following options
