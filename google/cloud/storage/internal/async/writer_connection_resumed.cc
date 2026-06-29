@@ -508,15 +508,8 @@ class AsyncWriterConnectionResumedState
     }
 
     // Recreate the underlying stream if still active.
-    auto hash = hash_function_;
-    if (checksums && checksums->has_crc32c()) {
-      hash = std::make_shared<
-          ::google::cloud::storage::internal::Crc32cHashFunction>(
-          checksums->crc32c(), persisted_offset);
-    }
-
     impl_ = std::make_unique<AsyncWriterConnectionImpl>(
-        options_, initial_request_, std::move(res->stream), std::move(hash),
+        options_, initial_request_, std::move(res->stream), hash_function_,
         persisted_offset, false, checksums);
     // OnQuery will restart the WriteLoop if necessary.
     OnQuery(std::move(lk), persisted_offset);
