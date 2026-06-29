@@ -60,6 +60,11 @@ class AsyncWriterConnectionTracing : public storage::AsyncWriterConnection {
     return impl_->PersistedState();
   }
 
+  absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums()
+      const override {
+    return impl_->PersistedChecksums();
+  }
+
   future<Status> Write(storage::WritePayload p) override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());
@@ -81,9 +86,16 @@ class AsyncWriterConnectionTracing : public storage::AsyncWriterConnection {
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload p) override {
+    return Finalize(std::move(p), absl::nullopt);
+  }
+
+  future<StatusOr<google::storage::v2::Object>> Finalize(
+      storage::WritePayload p,
+      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum)
+      override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());
-    return impl_->Finalize(std::move(p))
+    return impl_->Finalize(std::move(p), expected_checksum)
         .then([count = ++sent_count_, span = span_, size](auto f) {
           span->AddEvent(
               "gl-cpp.finalize",
