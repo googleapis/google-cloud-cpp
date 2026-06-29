@@ -115,6 +115,17 @@ class AsyncWriterConnectionBufferedState
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
+    if (finalize_called_) {
+      return make_ready_future(StatusOr<google::storage::v2::Object>(
+          internal::FailedPreconditionError("Finalize() already called",
+                                            GCP_ERROR_INFO())));
+    }
+    if (close_called_) {
+      return make_ready_future(StatusOr<google::storage::v2::Object>(
+          internal::FailedPreconditionError(
+              "Finalize() cannot be called after Close()", GCP_ERROR_INFO())));
+    }
+    finalize_called_ = true;
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
     HandleNewData(std::move(lk), true);
@@ -124,10 +135,15 @@ class AsyncWriterConnectionBufferedState
 
   future<Status> Close(storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (close_ || closed_promise_completed_) {
+    if (close_called_) {
       return make_ready_future(internal::FailedPreconditionError(
           "Close() already called", GCP_ERROR_INFO()));
     }
+    if (finalize_called_) {
+      return make_ready_future(internal::FailedPreconditionError(
+          "Close() cannot be called after Finalize()", GCP_ERROR_INFO()));
+    }
+    close_called_ = true;
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     close_ = true;
     // Force flush to drain the buffer first.
@@ -703,6 +719,19 @@ class AsyncWriterConnectionBufferedState
 
   // True if the resume loop is running. Prevents re-entry.
   bool resuming_ = false;
+
+  // Tracks if the `Finalize()` method has been called.
+  // This is distinct from `finalize_` (which tracks if a finalize operation is
+  // pending in the write loop) and `finalized_promise_completed_` (which tracks
+  // if the upload is finalized).
+  // We need this separate field to support the case where the upload is
+  // finalized on construction; in that case, the promise is completed
+  // immediately, but the application is still allowed to call `Finalize()` once
+  // to retrieve the object.
+  bool finalize_called_ = false;
+
+  // Tracks if the `Close()` method has been called.
+  bool close_called_ = false;
 };
 
 /**
