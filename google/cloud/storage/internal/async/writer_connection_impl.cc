@@ -146,15 +146,10 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto action = PartialUpload::kFinalizeWithChecksum;
-  if (request_.has_append_object_spec() ||
-      request_.write_object_spec().appendable()) {
-    if (!absl::holds_alternative<google::storage::v2::Object>(
-            persisted_state_) &&
-        !persisted_data_checksums_.has_value()) {
-      action = PartialUpload::kFinalize;
-    }
-  }
+  auto action = request_.has_append_object_spec() ||
+                        request_.write_object_spec().appendable()
+                    ? PartialUpload::kFinalize
+                    : PartialUpload::kFinalizeWithChecksum;
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
                                   std::move(p), std::move(action));
   return coro->Start().then([coro, size, this](auto f) mutable {
