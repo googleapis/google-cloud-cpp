@@ -36,6 +36,8 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// TODO(#16216): Remove this option in favor of addind a member variable to
+// store the instances.
 struct InstanceChannelAffinityOption {
   using Type = std::vector<bigtable::InstanceResource>;
 };
