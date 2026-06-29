@@ -180,8 +180,8 @@ struct QueryPlanRefreshFunctionRetryPolicyOption {
  * If `MakeDataConnection(std::vector<InstanceResource>, Options)` is called,
  * then all connections will be managed by a Dynamic Channel Pool. The
  * `DynamicChannelPoolSizingPolicy` can be provided via the
- * `DynamicChannelPoolSizingPolicyOption` and configures the behavior of the
- * `DynamicChannelPool`.
+ * `experimental::DynamicChannelPoolSizingPolicyOption` and configures the
+ * behavior of the `DynamicChannelPool`.
  */
 struct DynamicChannelPoolSizingPolicy {
   // Removing unused channels is not as performance critical as adding channels
