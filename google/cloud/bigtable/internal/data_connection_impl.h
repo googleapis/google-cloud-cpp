@@ -25,6 +25,7 @@
 #include "google/cloud/bigtable/prepared_query.h"
 #include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/monitoring/v3/metric_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -142,6 +143,8 @@ class DataConnectionImpl : public bigtable::DataConnection {
 
   std::unique_ptr<BackgroundThreads> background_;
   std::unique_ptr<StubManager> stub_manager_;
+  std::shared_ptr<::google::cloud::monitoring_v3::MetricServiceConnection>
+      metric_service_connection_;
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;
