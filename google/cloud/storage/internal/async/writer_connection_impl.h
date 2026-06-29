@@ -69,7 +69,13 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
 
   future<Status> Write(storage::WritePayload payload) override;
   future<StatusOr<google::storage::v2::Object>> Finalize(
-      storage::WritePayload) override;
+      storage::WritePayload payload) override {
+    return Finalize(std::move(payload), absl::nullopt);
+  }
+  future<StatusOr<google::storage::v2::Object>> Finalize(
+      storage::WritePayload payload,
+      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum)
+      override;
   future<Status> Flush(storage::WritePayload payload) override;
   future<Status> Close(storage::WritePayload payload) override;
   future<StatusOr<std::int64_t>> Query() override;

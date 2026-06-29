@@ -62,6 +62,15 @@ class CompositeFunction : public HashFunction {
                 std::uint32_t buffer_crc) override;
   Status Update(std::int64_t offset, absl::Cord const& buffer,
                 std::uint32_t buffer_crc) override;
+  absl::optional<std::uint32_t> CurrentCrc32c() const override {
+    auto c = a_->CurrentCrc32c();
+    if (c.has_value()) return c;
+    return b_->CurrentCrc32c();
+  }
+  void RestoreCrc32c(std::uint32_t crc32c, std::int64_t offset) override {
+    a_->RestoreCrc32c(crc32c, offset);
+    b_->RestoreCrc32c(crc32c, offset);
+  }
   HashValues Finish() override;
 
  private:
@@ -120,6 +129,13 @@ class Crc32cHashFunction : public HashFunction {
                 std::uint32_t buffer_crc) override;
   Status Update(std::int64_t offset, absl::Cord const& buffer,
                 std::uint32_t buffer_crc) override;
+  absl::optional<std::uint32_t> CurrentCrc32c() const override {
+    return current_;
+  }
+  void RestoreCrc32c(std::uint32_t crc32c, std::int64_t offset) override {
+    current_ = crc32c;
+    minimum_offset_ = offset;
+  }
   HashValues Finish() override;
 
  private:

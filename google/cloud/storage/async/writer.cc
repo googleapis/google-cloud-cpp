@@ -70,21 +70,22 @@ future<StatusOr<AsyncToken>> AsyncWriter::Write(AsyncToken token,
 }
 
 future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
-    AsyncToken token, WritePayload payload) {
+    AsyncToken token, WritePayload payload,
+    absl::optional<Crc32cChecksumValue> const& expected_checksum) {
   if (!impl_) return StreamError<google::storage::v2::Object>(GCP_ERROR_INFO());
   auto t = storage_internal::MakeAsyncToken(impl_.get());
   if (token != t) {
     return TokenError<google::storage::v2::Object>(GCP_ERROR_INFO());
   }
 
-  return impl_->Finalize(std::move(payload)).then([impl = impl_](auto f) {
-    return f.get();
-  });
+  return impl_->Finalize(std::move(payload), expected_checksum)
+      .then([impl = impl_](auto f) { return f.get(); });
 }
 
 future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
-    AsyncToken token) {
-  return Finalize(std::move(token), WritePayload{});
+    AsyncToken token,
+    absl::optional<Crc32cChecksumValue> const& expected_checksum) {
+  return Finalize(std::move(token), WritePayload{}, expected_checksum);
 }
 
 future<Status> AsyncWriter::Flush() {

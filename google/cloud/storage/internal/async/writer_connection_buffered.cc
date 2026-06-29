@@ -106,6 +106,11 @@ class AsyncWriterConnectionBufferedState
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
 
+  absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums()
+      const {
+    return Impl(std::unique_lock<std::mutex>(mu_))->PersistedChecksums();
+  }
+
   future<Status> Write(storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
@@ -114,7 +119,15 @@ class AsyncWriterConnectionBufferedState
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload const& p) {
+    return Finalize(p, absl::nullopt);
+  }
+  future<StatusOr<google::storage::v2::Object>> Finalize(
+      storage::WritePayload const& p,
+      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum) {
     std::unique_lock<std::mutex> lk(mu_);
+    if (expected_checksum.has_value()) {
+      expected_checksum_ = expected_checksum;
+    }
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
     HandleNewData(std::move(lk), true);
@@ -246,7 +259,7 @@ class AsyncWriterConnectionBufferedState
     auto impl = Impl(lk);
     lk.unlock();
     // Finalize with an empty payload.
-    (void)impl->Finalize(storage::WritePayload{})
+    (void)impl->Finalize(storage::WritePayload{}, expected_checksum_)
         .then([w = WeakFromThis()](auto f) {
           if (auto self = w.lock()) return self->OnFinalize(f.get());
         });
@@ -636,6 +649,7 @@ class AsyncWriterConnectionBufferedState
   // Retrieve the future in the constructor, as some operations reset
   // finalized_.
   future<StatusOr<google::storage::v2::Object>> finalized_future_;
+  absl::optional<storage::Crc32cChecksumValue> expected_checksum_;
 
   // The result of calling `Close()`. Note that only one such call is ever
   // made.
@@ -763,13 +777,24 @@ class AsyncWriterConnectionBuffered : public storage::AsyncWriterConnection {
     return state_->PersistedState();
   }
 
+  absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums()
+      const override {
+    return state_->PersistedChecksums();
+  }
+
   future<Status> Write(storage::WritePayload p) override {
     return state_->Write(std::move(p));
   }
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload p) override {
-    return state_->Finalize(std::move(p));
+    return Finalize(std::move(p), absl::nullopt);
+  }
+  future<StatusOr<google::storage::v2::Object>> Finalize(
+      storage::WritePayload p,
+      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum)
+      override {
+    return state_->Finalize(std::move(p), expected_checksum);
   }
 
   future<Status> Flush(storage::WritePayload p) override {

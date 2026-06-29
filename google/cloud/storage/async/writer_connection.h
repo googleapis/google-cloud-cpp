@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_WRITER_CONNECTION_H
 
 #include "google/cloud/storage/async/write_payload.h"
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rpc_metadata.h"
@@ -112,6 +113,11 @@ class AsyncWriterConnection {
   /// Finalizes an upload.
   virtual future<StatusOr<google::storage::v2::Object>> Finalize(
       WritePayload) = 0;
+  virtual future<StatusOr<google::storage::v2::Object>> Finalize(
+      WritePayload p,
+      absl::optional<Crc32cChecksumValue> const& /*expected_checksum*/) {
+    return Finalize(std::move(p));
+  }
 
   /// Uploads some data to the service and flushes the value.
   virtual future<Status> Flush(WritePayload payload) = 0;

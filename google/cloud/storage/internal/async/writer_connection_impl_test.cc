@@ -904,6 +904,68 @@ TEST(AsyncWriterConnectionTest, CloseError) {
   EXPECT_THAT(response.get(), StatusIs(PermanentError().code()));
 }
 
+TEST(AsyncWriterConnectionTest, FinalizeExpectedChecksumMismatchImmediate) {
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Finish).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Finish).WillOnce(Return(storage::internal::HashValues{"ImIEBA==", ""}));
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto response = tested->Finalize(WritePayload{}, storage::Crc32cChecksumValue("AAAAAA=="));
+  EXPECT_THAT(response.get(), StatusIs(StatusCode::kDataLoss));
+}
+
+TEST(AsyncWriterConnectionTest, FinalizeExpectedChecksumMatchImmediate) {
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Finish).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Write).WillOnce([](Request const&, grpc::WriteOptions) {
+    return make_ready_future(true);
+  });
+  EXPECT_CALL(*mock, Read).WillOnce([] {
+    return make_ready_future(absl::make_optional(MakeTestResponse()));
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Finish).WillRepeatedly(Return(storage::internal::HashValues{"ImIEBA==", ""}));
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto response = tested->Finalize(WritePayload{}, storage::Crc32cChecksumValue("ImIEBA=="));
+  EXPECT_THAT(response.get(), IsOk());
+}
+
+TEST(AsyncWriterConnectionTest, FinalizeExpectedChecksumMismatchOnComplete) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Finish).WillOnce([] {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        return sequencer.PushBack("Write");
+      });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish).WillRepeatedly(Return(storage::internal::HashValues{"ImIEBA==", ""}));
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto response = tested->Finalize(WritePayload(std::string(128, 'A')), storage::Crc32cChecksumValue("AAAAAA=="));
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+  EXPECT_THAT(response.get(), StatusIs(StatusCode::kDataLoss));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

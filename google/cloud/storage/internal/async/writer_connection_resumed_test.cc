@@ -32,6 +32,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
@@ -40,6 +41,8 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
+using ::testing::An;
+using ::testing::AnyNumber;
 using ::testing::Eq;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -1196,6 +1199,115 @@ TEST(WriterConnectionResumed, CloseFailsAndResumeSucceedsAndFinalized) {
   next.first.set_value(true);
 
   EXPECT_STATUS_OK(close.get());
+}
+
+TEST(WriterConnectionResumed, FinalizeExpectedChecksumMismatch) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly(Return(MakePersistedState(0)));
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, CurrentCrc32c).WillRepeatedly(Return(100));
+  EXPECT_CALL(*hash, Finish).WillOnce(Return(storage::internal::HashValues{"ImIEBA==", ""}));
+  MockFactory mock_factory;
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, hash,
+      first_response, Options{});
+  auto finalize = connection->Finalize({}, storage::Crc32cChecksumValue("AAAAAA=="));
+  EXPECT_THAT(finalize.get(), StatusIs(StatusCode::kDataLoss));
+}
+
+TEST(WriterConnectionResumed, RollbackChecksumOnResume) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Flush).WillRepeatedly([&](auto const&) {
+    return sequencer.PushBack("Flush").then([](auto f) {
+      if (!f.get()) return TransientError();
+      return Status{};
+    });
+  });
+
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, CurrentCrc32c)
+      .WillOnce(Return(100))
+      .WillOnce(Return(200))
+      .WillRepeatedly(Return(200));
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(AnyNumber());
+  EXPECT_CALL(*hash, RestoreCrc32c(_, _)).Times(AnyNumber());
+
+  MockFactory mock_factory;
+  auto mock_stream =
+      std::make_unique<google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
+          google::storage::v2::BidiWriteObjectRequest,
+          google::storage::v2::BidiWriteObjectResponse>>();
+  auto* mock_stream_ptr = mock_stream.get();
+
+  google::storage::v2::BidiWriteObjectResponse query_resp1;
+  query_resp1.set_persisted_size(10);
+  google::storage::v2::BidiWriteObjectResponse query_resp2;
+  query_resp2.set_persisted_size(20);
+  EXPECT_CALL(mock_factory, Call(_)).WillOnce([&](auto const&) {
+    WriteObject::WriteResult result;
+    result.stream = std::move(mock_stream);
+    return sequencer.PushBack("Factory").then([r = std::move(result)](auto) mutable {
+      return StatusOr<WriteObject::WriteResult>(std::move(r));
+    });
+  });
+
+  EXPECT_CALL(*mock_stream_ptr, Write).WillRepeatedly([&](auto const&, auto) {
+    return sequencer.PushBack("StreamWrite").then([](auto) { return true; });
+  });
+  EXPECT_CALL(*mock_stream_ptr, Read)
+      .WillOnce([&, query_resp1]() {
+        return sequencer.PushBack("StreamRead").then([query_resp1](auto) {
+          return absl::make_optional(query_resp1);
+        });
+      })
+      .WillRepeatedly([&, query_resp2]() {
+        return sequencer.PushBack("StreamRead").then([query_resp2](auto) {
+          return absl::make_optional(query_resp2);
+        });
+      });
+  EXPECT_CALL(*mock_stream_ptr, Cancel).Times(AnyNumber());
+  EXPECT_CALL(*mock_stream_ptr, Finish).WillRepeatedly([] {
+    return make_ready_future(Status{});
+  });
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, hash,
+      first_response, Options{});
+  auto write = connection->Write(TestPayload(20));
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Factory");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "StreamWrite");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "StreamRead");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "StreamWrite");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "StreamRead");
+  next.first.set_value(true);
+
+  EXPECT_STATUS_OK(write.get());
 }
 
 }  // namespace
