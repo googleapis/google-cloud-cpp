@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
@@ -172,6 +173,13 @@ bigtable::RowStream DataConnection::ExecuteQuery(bigtable::ExecuteQueryParams) {
   return RowStream(
       std::make_unique<bigtable_internal::StatusOnlyResultSetSource>(
           Status(StatusCode::kUnimplemented, "not implemented")));
+}
+
+std::shared_ptr<DataConnection> MakeDataConnection(
+    std::vector<InstanceResource> instances, Options options) {
+  options.set<experimental::InstanceChannelAffinityOption>(
+      std::move(instances));
+  return MakeDataConnection(std::move(options));
 }
 
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {

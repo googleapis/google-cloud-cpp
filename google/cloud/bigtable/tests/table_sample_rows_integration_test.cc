@@ -65,6 +65,8 @@ class SampleRowsIntegrationTest
     // disabled because it simply generates too much data.
     auto table =
         Table(MakeDataConnection(
+                  {InstanceResource(Project(TableTestEnvironment::project_id()),
+                                    TableTestEnvironment::instance_id())},
                   Options{}
                       .set<LoggingComponentsOption>({"rpc"})
                       .set<GrpcTracingOptionsOption>(TracingOptions())),
@@ -112,7 +114,9 @@ class SampleRowsIntegrationTest
 };
 
 TEST_F(SampleRowsIntegrationTest, SyncWithDataConnection) {
-  auto table = Table(MakeDataConnection(),
+  auto table = Table(MakeDataConnection({InstanceResource(
+                         Project(TableTestEnvironment::project_id()),
+                         TableTestEnvironment::instance_id())}),
                      TableResource(TableTestEnvironment::project_id(),
                                    TableTestEnvironment::instance_id(),
                                    TableTestEnvironment::table_id()));
@@ -120,7 +124,9 @@ TEST_F(SampleRowsIntegrationTest, SyncWithDataConnection) {
 };
 
 TEST_F(SampleRowsIntegrationTest, AsyncWithDataConnection) {
-  auto table = Table(MakeDataConnection(),
+  auto table = Table(MakeDataConnection({InstanceResource(
+                         Project(TableTestEnvironment::project_id()),
+                         TableTestEnvironment::instance_id())}),
                      TableResource(TableTestEnvironment::project_id(),
                                    TableTestEnvironment::instance_id(),
                                    TableTestEnvironment::table_id()));

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/options.h"
@@ -98,6 +99,22 @@ TEST(MakeDataConnection, TracingDisabled) {
   (void)conn->Apply("table-name", SingleRowMutation("row"));
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+}
+
+TEST(MakeDataConnection, WithInstances) {
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  InstanceResource instance_b{Project("my-project"), "instance-b"};
+  auto conn = MakeDataConnection(
+      {instance_a, instance_b},
+      TestOptions().set<AppProfileIdOption>("user-supplied"));
+  auto options = conn->options();
+  EXPECT_TRUE(options.has<DataBackoffPolicyOption>())
+      << "Options are not defaulted in MakeDataConnection()";
+  EXPECT_EQ(options.get<AppProfileIdOption>(), "user-supplied")
+      << "User supplied Options are overridden in MakeDataConnection()";
+  ASSERT_TRUE(options.has<experimental::InstanceChannelAffinityOption>());
+  EXPECT_THAT(options.get<experimental::InstanceChannelAffinityOption>().size(),
+              Eq(2));
 }
 
 }  // namespace
