@@ -354,7 +354,7 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   // by default. We should unset this variable and create a fresh client in
   // order to have a conclusive test.
   testing_util::ScopedEnvironment env = {"GOOGLE_CLOUD_CPP_ENABLE_TRACING",
-                                         absl::nullopt};
+                                         std::nullopt};
   testing_util::ScopedLog log;
 
   auto const instance_name =

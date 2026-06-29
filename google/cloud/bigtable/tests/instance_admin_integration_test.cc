@@ -429,7 +429,7 @@ TEST_F(InstanceAdminIntegrationTest,
   // by default. We should unset this variable and create a fresh client in
   // order to have a conclusive test.
   testing_util::ScopedEnvironment env = {"GOOGLE_CLOUD_CPP_ENABLE_TRACING",
-                                         absl::nullopt};
+                                         std::nullopt};
   testing_util::ScopedLog log;
   auto const instance_id = RandomInstanceId(generator_);
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);

@@ -42,21 +42,21 @@ TEST(AsyncStreamingReadTest, FullStream) {
   ::testing::InSequence s;
   EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
   EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(absl::make_optional(FakeResponse{"v0"}));
+    return make_ready_future(std::make_optional(FakeResponse{"v0"}));
   });
   EXPECT_CALL(on_read, Call).WillOnce([](FakeResponse const& r) {
     EXPECT_EQ(r.value, "v0");
     return make_ready_future(true);
   });
   EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(absl::make_optional(FakeResponse{"v1"}));
+    return make_ready_future(std::make_optional(FakeResponse{"v1"}));
   });
   EXPECT_CALL(on_read, Call).WillOnce([](FakeResponse const& r) {
     EXPECT_EQ(r.value, "v1");
     return make_ready_future(true);
   });
   EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(absl::optional<FakeResponse>{});
+    return make_ready_future(std::optional<FakeResponse>{});
   });
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status{});
@@ -91,7 +91,7 @@ TEST(AsyncStreamingReadTest, CancelMidStream) {
   ::testing::InSequence s;
   EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
   EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(absl::make_optional(FakeResponse{"v0"}));
+    return make_ready_future(std::make_optional(FakeResponse{"v0"}));
   });
   EXPECT_CALL(on_read, Call).WillOnce([](FakeResponse const& r) {
     EXPECT_EQ(r.value, "v0");
@@ -99,10 +99,10 @@ TEST(AsyncStreamingReadTest, CancelMidStream) {
   });
   EXPECT_CALL(*mock, Cancel);
   EXPECT_CALL(*mock, Read).Times(3).WillRepeatedly([] {
-    return make_ready_future(absl::make_optional(FakeResponse{"ignored"}));
+    return make_ready_future(std::make_optional(FakeResponse{"ignored"}));
   });
   EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(absl::optional<FakeResponse>{});
+    return make_ready_future(std::optional<FakeResponse>{});
   });
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status(StatusCode::kCancelled, "cancelled"));

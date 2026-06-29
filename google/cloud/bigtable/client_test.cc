@@ -103,7 +103,7 @@ TEST(Client, AsyncPrepareQuery) {
 class MockQueryRowSource : public ResultSourceInterface {
  public:
   MOCK_METHOD(StatusOr<QueryRow>, NextRow, (), (override));
-  MOCK_METHOD(absl::optional<google::bigtable::v2::ResultSetMetadata>, Metadata,
+  MOCK_METHOD(std::optional<google::bigtable::v2::ResultSetMetadata>, Metadata,
               (), (override));
 };
 
