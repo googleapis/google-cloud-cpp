@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/random_names.h"
@@ -126,11 +127,12 @@ void TableIntegrationTest::SetUp() {
   if (google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
           .value_or("") == "dynamic") {
-    options.set<experimental::InstanceChannelAffinityOption>({});
+    data_connection_ = MakeDataConnection(
+        {InstanceResource(Project(project_id()), instance_id())},
+        std::move(options));
+  } else {
+    data_connection_ = MakeDataConnection(std::move(options));
   }
-  data_connection_ = MakeDataConnection(
-      {InstanceResource(Project(project_id()), instance_id())},
-      std::move(options));
 
   // In production, we cannot use `DropAllRows()` to cleanup the table because
   // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.

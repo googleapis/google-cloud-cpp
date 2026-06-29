@@ -18,7 +18,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### [Bigtable](/google/cloud/bigtable/README.md)
 
-- Explicit instance declaration is now encouraged during client initialization via a new overload of `MakeDataConnection` that takes a `std::vector<InstanceResource>`. Specifying the target instances at client startup enables optimizing connection pooling (pre-warming/priming channels) and telemetry.
+- Explicit instance declaration is now encouraged during client initialization via a new overload of `MakeDataConnection` that takes a `std::vector<InstanceResource>`. Specifying the target instances at client startup enables optimizing connection pooling (pre-warming/priming channels) and telemetry. The experimental `InstanceChannelAffinityOption` has been removed; the new `MakeDataConnection` overload should be used instead.
 
   ```cpp
   #include "google/cloud/bigtable/data_connection.h"
