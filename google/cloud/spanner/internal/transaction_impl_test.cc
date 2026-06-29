@@ -63,7 +63,7 @@ class Client {
   // `txn_id` we want to use during the upcoming `Read()` calls.
   void Reset(spanner::Timestamp read_timestamp, std::string session_id,
              std::string txn_id,
-             absl::optional<std::shared_ptr<SpannerStub>> stub) {
+             std::optional<std::shared_ptr<SpannerStub>> stub) {
     read_timestamp_ = read_timestamp;
     session_id_ = std::move(session_id);
     txn_id_ = std::move(txn_id);
@@ -125,7 +125,7 @@ class Client {
   spanner::Timestamp read_timestamp_;
   std::string session_id_;
   std::string txn_id_;
-  absl::optional<std::shared_ptr<SpannerStub>> expected_stub_;
+  std::optional<std::shared_ptr<SpannerStub>> expected_stub_;
   std::array<std::shared_ptr<SpannerStub>, 3>::iterator next_stub_;
   std::array<std::shared_ptr<SpannerStub>, 3> stubs_;
   std::mutex mu_;
@@ -248,7 +248,7 @@ ResultSet Client::Read(SessionHolder& session,
 // number of valid visitations to that transaction (should be `n_threads`).
 int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
                       std::string const& session_id, std::string const& txn_id,
-                      absl::optional<std::shared_ptr<SpannerStub>> stub) {
+                      std::optional<std::shared_ptr<SpannerStub>> stub) {
   auto read_timestamp =
       spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(read_time))
           .value();
@@ -297,21 +297,21 @@ TEST(InternalTransaction, ReadSucceeds) {
 TEST(InternalTransaction, ReadFailsAndTxnRemainsBegin) {
   Client client(Client::Mode::kReadFailsAndTxnRemainsBegin);
   EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess0", "txn0",
-                                 absl::nullopt));
+                                 std::nullopt));
   EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess1", "txn1",
-                                  absl::nullopt));
+                                  std::nullopt));
   EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess2", "txn2",
-                                   absl::nullopt));
+                                   std::nullopt));
 }
 
 TEST(InternalTransaction, ReadFailsAndTxnInvalidated) {
   Client client(Client::Mode::kReadFailsAndTxnInvalidated);
   EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess0", "txn0",
-                                 absl::nullopt));
+                                 std::nullopt));
   EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess1", "txn1",
-                                  absl::nullopt));
+                                  std::nullopt));
   EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess2", "txn2",
-                                   absl::nullopt));
+                                   std::nullopt));
 }
 
 }  // namespace

@@ -20,9 +20,9 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
-#include "absl/types/optional.h"
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -52,7 +52,7 @@ class PartialResultSetResume : public PartialResultSetReader {
   ~PartialResultSetResume() override = default;
 
   void TryCancel() override;
-  bool Read(absl::optional<std::string> const& resume_token,
+  bool Read(std::optional<std::string> const& resume_token,
             UnownedPartialResultSet& result) override;
   Status Finish() override;
 
@@ -62,7 +62,7 @@ class PartialResultSetResume : public PartialResultSetReader {
   std::unique_ptr<spanner::RetryPolicy> retry_policy_prototype_;
   std::unique_ptr<spanner::BackoffPolicy> backoff_policy_prototype_;
   std::unique_ptr<PartialResultSetReader> child_;
-  absl::optional<Status> last_status_;
+  std::optional<Status> last_status_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

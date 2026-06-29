@@ -26,12 +26,12 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <array>
 #include <chrono>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -481,7 +481,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
                       Return(ByMove(RowStream(std::move(source))))));
   EXPECT_CALL(*conn, Commit)
       .WillOnce(DoAll(SaveArg<0>(&actual_commit_params),
-                      Return(CommitResult{*timestamp, absl::nullopt})));
+                      Return(CommitResult{*timestamp, std::nullopt})));
 
   Client client(conn);
   auto mutation = MakeDeleteMutation("table", KeySet::All());
@@ -668,7 +668,7 @@ TEST(ClientTest, CommitMutatorRerunTransientFailures) {
         return Status(StatusCode::kAborted, "Aborted transaction");
       })
       .WillOnce([&timestamp](Connection::CommitParams const&) {
-        return CommitResult{*timestamp, absl::nullopt};
+        return CommitResult{*timestamp, std::nullopt};
       });
 
   auto mutator = [](Transaction const&) -> StatusOr<Mutations> {
@@ -740,7 +740,7 @@ TEST(ClientTest, CommitMutations) {
   EXPECT_CALL(*conn, Commit)
       .WillOnce([&mutation, &timestamp](Connection::CommitParams const& cp) {
         EXPECT_EQ(cp.mutations, Mutations{mutation});
-        return CommitResult{*timestamp, absl::nullopt};
+        return CommitResult{*timestamp, std::nullopt};
       });
 
   Client client(conn);
@@ -886,7 +886,7 @@ TEST(ClientTest, CommitMutatorWithTags) {
       .WillOnce([&](Connection::CommitParams const& params) {
         EXPECT_EQ(params.options.transaction_tag(), transaction_tag);
         EXPECT_THAT(params.transaction, HasTag(transaction_tag));
-        return CommitResult{*timestamp, absl::nullopt};
+        return CommitResult{*timestamp, std::nullopt};
       });
 
   Client client(conn);
@@ -928,7 +928,7 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
             EXPECT_THAT(cp.transaction, HasSession(session_name));
             EXPECT_THAT(cp.transaction, HasBegin());
             SetTransactionId(cp.transaction, "last-transaction-id");
-            return CommitResult{*timestamp, absl::nullopt};
+            return CommitResult{*timestamp, std::nullopt};
           });
   // But only after some aborts, the first of which sets the session.
   EXPECT_CALL(*conn, Commit)
@@ -967,7 +967,7 @@ TEST(ClientTest, CommitMutatorSessionNotFound) {
   EXPECT_CALL(*conn, Commit)
       .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, HasSession("session-3"));
-        return CommitResult{*timestamp, absl::nullopt};
+        return CommitResult{*timestamp, std::nullopt};
       });
 
   int n = 0;
@@ -998,7 +998,7 @@ TEST(ClientTest, CommitSessionNotFound) {
       })
       .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, HasSession("session-2"));
-        return CommitResult{*timestamp, absl::nullopt};
+        return CommitResult{*timestamp, std::nullopt};
       });
 
   int n = 0;
@@ -1046,7 +1046,7 @@ TEST(ClientTest, MaxCommitDelay) {
       .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_EQ(cp.options.max_commit_delay(),
                   std::chrono::milliseconds(100));
-        return CommitResult{*timestamp, absl::nullopt};
+        return CommitResult{*timestamp, std::nullopt};
       });
 
   Client client(conn);
@@ -1074,7 +1074,7 @@ TEST(ClientTest, CommitAtLeastOnce) {
         EXPECT_FALSE(cp.options.request_priority().has_value());
         EXPECT_FALSE(cp.options.max_commit_delay().has_value());
         EXPECT_EQ(cp.options.transaction_tag(), transaction_tag);
-        return CommitResult{*timestamp, absl::nullopt};
+        return CommitResult{*timestamp, std::nullopt};
       });
 
   Client client(conn);

@@ -34,7 +34,7 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -80,7 +80,7 @@ class Connection {
     KeySet keys;
     std::vector<std::string> columns;
     ReadOptions read_options;
-    absl::optional<std::string> partition_token;
+    std::optional<std::string> partition_token;
     bool partition_data_boost = false;  // when partition_token
     DirectedReadOption::Type directed_read_option;
     OrderBy order_by;
@@ -99,7 +99,7 @@ class Connection {
     Transaction transaction;
     SqlStatement statement;
     QueryOptions query_options;
-    absl::optional<std::string> partition_token;
+    std::optional<std::string> partition_token;
     bool partition_data_boost = false;  // when partition_token
     DirectedReadOption::Type directed_read_option;
   };

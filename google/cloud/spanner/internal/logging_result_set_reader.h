@@ -18,8 +18,8 @@
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/spanner/version.h"
-#include "absl/types/optional.h"
 #include <memory>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -39,7 +39,7 @@ class LoggingResultSetReader : public PartialResultSetReader {
   ~LoggingResultSetReader() override = default;
 
   void TryCancel() override;
-  bool Read(absl::optional<std::string> const& resume_token,
+  bool Read(std::optional<std::string> const& resume_token,
             UnownedPartialResultSet& result) override;
   Status Finish() override;
 

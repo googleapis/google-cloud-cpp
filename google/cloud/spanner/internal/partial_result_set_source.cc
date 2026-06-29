@@ -18,7 +18,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "absl/container/fixed_array.h"
-#include "absl/types/optional.h"
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -84,7 +84,7 @@ PartialResultSetSource::PartialResultSetSource(
     std::unique_ptr<PartialResultSetReader> reader)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
-      values_(absl::make_optional(
+      values_(std::make_optional(
           google::protobuf::Arena::Create<
               google::protobuf::RepeatedPtrField<google::protobuf::Value>>(
               &arena_))) {
@@ -288,7 +288,7 @@ Status PartialResultSetSource::ReadFromStream() {
       }
     }
   } else if (n_rows != 0) {
-    resume_token_ = absl::nullopt;
+    resume_token_ = std::nullopt;
   }
 
   usable_rows_ = n_rows;
