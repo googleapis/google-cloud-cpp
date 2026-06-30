@@ -47,19 +47,19 @@ auto gcloud_user_agent_matcher = [] {
 
 TEST(Options, Defaults) {
   testing_util::ScopedEnvironment endpoint_env(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", std::nullopt);
   testing_util::ScopedEnvironment authority_env(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", std::nullopt);
   testing_util::ScopedEnvironment tracing_components_env(
-      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", std::nullopt);
   testing_util::ScopedEnvironment tracing_options_env(
-      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", std::nullopt);
   testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
-                                               absl::nullopt);
+                                               std::nullopt);
   testing_util::ScopedEnvironment user_project_env(
-      "GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
   testing_util::ScopedEnvironment route_to_leader_env(
-      "GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER", std::nullopt);
   auto opts = spanner_internal::DefaultOptions();
 
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
@@ -90,17 +90,17 @@ TEST(Options, Defaults) {
 
 TEST(Options, AdminDefaults) {
   testing_util::ScopedEnvironment endpoint_env(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", std::nullopt);
   testing_util::ScopedEnvironment authority_env(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", std::nullopt);
   testing_util::ScopedEnvironment tracing_components_env(
-      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", std::nullopt);
   testing_util::ScopedEnvironment tracing_options_env(
-      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", std::nullopt);
   testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
-                                               absl::nullopt);
+                                               std::nullopt);
   testing_util::ScopedEnvironment user_project_env(
-      "GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
   auto opts = spanner_internal::DefaultAdminOptions();
 
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
@@ -133,9 +133,9 @@ TEST(Options, EndpointFromEnv) {
   testing_util::ScopedEnvironment endpoint_env(
       "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "foo.bar.baz");
   testing_util::ScopedEnvironment authority_env(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", std::nullopt);
   testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
-                                               absl::nullopt);
+                                               std::nullopt);
   auto opts = spanner_internal::DefaultOptions();
   EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");
   EXPECT_EQ(opts.get<AuthorityOption>(), "spanner.googleapis.com");
@@ -145,7 +145,7 @@ TEST(Options, SpannerEmulatorHost) {
   testing_util::ScopedEnvironment endpoint_env(
       "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "no.thank.you");
   testing_util::ScopedEnvironment authority_env(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", std::nullopt);
   testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
                                                "foo.bar.baz");
   auto opts = spanner_internal::DefaultOptions();
@@ -197,7 +197,7 @@ TEST(Options, TracingOptionsFromEnv) {
 
 TEST(Options, UserProject) {
   auto env = testing_util::ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT",
-                                             absl::nullopt);
+                                             std::nullopt);
   auto opts = spanner_internal::DefaultOptions(
       Options{}.set<UserProjectOption>("opt-user-project"));
   EXPECT_THAT(opts.get<UserProjectOption>(), "opt-user-project");
@@ -224,7 +224,7 @@ TEST(Options, OverrideEndpoint) {
   testing_util::ScopedEnvironment authority_env(
       "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY", "baz.bar.foo");
   testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
-                                               absl::nullopt);
+                                               std::nullopt);
   auto opts = Options{}.set<EndpointOption>("no.thank.you");
   opts = spanner_internal::DefaultOptions(std::move(opts));
   EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");

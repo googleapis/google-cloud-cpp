@@ -19,9 +19,9 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
-#include "absl/types/optional.h"
 #include "google/spanner/v1/spanner.pb.h"
 #include <memory>
+#include <optional>
 #include <string>
 #include <unordered_map>
 
@@ -60,7 +60,7 @@ class ResultSourceInterface {
    * @see https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#resultsetmetadata
    *     for more information.
    */
-  virtual absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() = 0;
+  virtual std::optional<google::spanner::v1::ResultSetMetadata> Metadata() = 0;
 
   /**
    * Returns statistics about the result set, such as the number of rows, and
@@ -69,7 +69,7 @@ class ResultSourceInterface {
    * @see https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#resultsetstats
    *     for more information.
    */
-  virtual absl::optional<google::spanner::v1::ResultSetStats> Stats() const = 0;
+  virtual std::optional<google::spanner::v1::ResultSetStats> Stats() const = 0;
 };
 
 /**
@@ -125,7 +125,7 @@ class RowStream {
    *
    * @note Only available if a read-only transaction was used.
    */
-  absl::optional<Timestamp> ReadTimestamp() const;
+  std::optional<Timestamp> ReadTimestamp() const;
 
  private:
   std::unique_ptr<ResultSourceInterface> source_;
@@ -207,7 +207,7 @@ class ProfileQueryResult {
    *
    * @note Only available if a read-only transaction was used.
    */
-  absl::optional<Timestamp> ReadTimestamp() const;
+  std::optional<Timestamp> ReadTimestamp() const;
 
   /**
    * Returns a collection of key value pair statistics for the SQL statement
@@ -216,13 +216,13 @@ class ProfileQueryResult {
    * @note Only available when the statement is executed and all results have
    *     been read.
    */
-  absl::optional<std::unordered_map<std::string, std::string>> ExecutionStats()
+  std::optional<std::unordered_map<std::string, std::string>> ExecutionStats()
       const;
 
   /**
    * Returns the plan of execution for the SQL statement.
    */
-  absl::optional<spanner::ExecutionPlan> ExecutionPlan() const;
+  std::optional<spanner::ExecutionPlan> ExecutionPlan() const;
 
  private:
   std::unique_ptr<ResultSourceInterface> source_;
@@ -265,13 +265,13 @@ class ProfileDmlResult {
    *
    * @note Only available when the SQL statement is executed.
    */
-  absl::optional<std::unordered_map<std::string, std::string>> ExecutionStats()
+  std::optional<std::unordered_map<std::string, std::string>> ExecutionStats()
       const;
 
   /**
    * Returns the plan of execution for the SQL statement.
    */
-  absl::optional<spanner::ExecutionPlan> ExecutionPlan() const;
+  std::optional<spanner::ExecutionPlan> ExecutionPlan() const;
 
  private:
   std::unique_ptr<ResultSourceInterface> source_;

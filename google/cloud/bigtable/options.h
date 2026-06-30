@@ -177,24 +177,11 @@ struct QueryPlanRefreshFunctionRetryPolicyOption {
 };
 
 /**
- *  If set, a dynamic channel pool is created for each instance that requests
- *  are destined. Instances specified as part of this Option have dynamic
- *  channel pools created and primed as part of DataConnection construction. If
- *  no Instances are specified, then dynamic channel pool creation is deferred
- *  until the first request sent, increasing time to first byte latency.
- *
- * @note This option must be supplied to `MakeDataConnection()` in order to take
- * effect.
- */
-struct InstanceChannelAffinityOption {
-  using Type = std::vector<bigtable::InstanceResource>;
-};
-
-/**
- *  If the `InstanceChannelAffinityOption` is set, then all connections will be
- *  managed by a Dynamic Channel Pool. The `DynamicChannelPoolSizingPolicy` can
- *  be provided via the `DynamicChannelPoolSizingPolicyOption` and configures
- *  the behavior of the `DynamicChannelPool`.
+ * If `MakeDataConnection(std::vector<InstanceResource>, Options)` is called,
+ * then all connections will be managed by a Dynamic Channel Pool. The
+ * `DynamicChannelPoolSizingPolicy` can be provided via the
+ * `experimental::DynamicChannelPoolSizingPolicyOption` and configures the
+ * behavior of the `DynamicChannelPool`.
  */
 struct DynamicChannelPoolSizingPolicy {
   // Removing unused channels is not as performance critical as adding channels
@@ -313,9 +300,10 @@ struct MetricsPeriodOption {
 };
 
 using DataPolicyOptionList =
-    OptionList<DataRetryPolicyOption, DataBackoffPolicyOption,
+    OptionList<DataRetryPolicyOption, DataBackoffPolicyOption, DeadlineOption,
                IdempotentMutationPolicyOption, EnableMetricsOption,
-               MetricsPeriodOption>;
+               MetricsPeriodOption,
+               experimental::DynamicChannelPoolSizingPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

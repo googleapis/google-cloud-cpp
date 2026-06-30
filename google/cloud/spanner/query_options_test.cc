@@ -37,13 +37,13 @@ TEST(QueryOptionsTest, Values) {
   copy.set_request_priority(RequestPriority::kHigh);
   EXPECT_NE(copy, default_constructed);
 
-  copy.set_request_priority(absl::optional<RequestPriority>{});
+  copy.set_request_priority(std::optional<RequestPriority>{});
   EXPECT_EQ(copy, default_constructed);
 
   copy.set_request_tag("foo");
   EXPECT_NE(copy, default_constructed);
 
-  copy.set_request_tag(absl::optional<std::string>{});
+  copy.set_request_tag(std::optional<std::string>{});
   EXPECT_EQ(copy, default_constructed);
 }
 
@@ -62,7 +62,7 @@ TEST(QueryOptionsTest, OptimizerVersion) {
   EXPECT_NE(copy, default_constructed);
   EXPECT_EQ("foo", copy.optimizer_version().value());
 
-  copy.set_optimizer_version(absl::nullopt);
+  copy.set_optimizer_version(std::nullopt);
   EXPECT_EQ(copy, default_constructed);
 }
 
@@ -81,7 +81,7 @@ TEST(QueryOptionsTest, OptimizerStatisticsPackage) {
   EXPECT_NE(copy, default_constructed);
   EXPECT_EQ("foo", copy.optimizer_statistics_package().value());
 
-  copy.set_optimizer_statistics_package(absl::nullopt);
+  copy.set_optimizer_statistics_package(std::nullopt);
   EXPECT_EQ(copy, default_constructed);
 }
 

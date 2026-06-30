@@ -19,9 +19,9 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "absl/types/optional.h"
 #include <cstddef>
 #include <cstdint>
+#include <optional>
 #include <vector>
 
 namespace google {
@@ -44,7 +44,7 @@ struct CommitResult {
   Timestamp commit_timestamp;
 
   /// Additional statistics about the committed transaction.
-  absl::optional<CommitStats> commit_stats;
+  std::optional<CommitStats> commit_stats;
 };
 
 /**
