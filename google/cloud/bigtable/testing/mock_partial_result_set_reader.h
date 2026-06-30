@@ -29,7 +29,7 @@ class MockPartialResultSetReader
  public:
   MOCK_METHOD(void, TryCancel, (), (override));
   MOCK_METHOD(bool, Read,
-              (absl::optional<std::string> const& resume_token,
+              (std::optional<std::string> const& resume_token,
                bigtable_internal::UnownedPartialResultSet& result),
               (override));
   MOCK_METHOD(grpc::ClientContext const&, context, (), (const, override));

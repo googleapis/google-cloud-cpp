@@ -213,7 +213,7 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
 
   // Read the stream of responses.
   auto stream = stub.MutateRows(client_context, options, mutations);
-  absl::optional<Status> status;
+  std::optional<Status> status;
   while (true) {
     btproto::MutateRowsResponse response;
     status = stream->Read(&response);
