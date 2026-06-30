@@ -911,8 +911,7 @@ TEST(AsyncWriterConnectionTest, FinalizeExpectedChecksumMismatchImmediate) {
     return make_ready_future(Status{});
   });
   auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Finish)
-      .WillOnce(Return(storage::internal::HashValues{"ImIEBA==", ""}));
+  EXPECT_CALL(*hash, CurrentCrc32c).WillRepeatedly(Return(0x22620404));
 
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
       TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
@@ -934,6 +933,7 @@ TEST(AsyncWriterConnectionTest, FinalizeExpectedChecksumMatchImmediate) {
     return make_ready_future(absl::make_optional(MakeTestResponse()));
   });
   auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, CurrentCrc32c).WillRepeatedly(Return(0x22620404));
   EXPECT_CALL(*hash, Finish)
       .WillRepeatedly(Return(storage::internal::HashValues{"ImIEBA==", ""}));
 
@@ -959,6 +959,7 @@ TEST(AsyncWriterConnectionTest, FinalizeExpectedChecksumMismatchOnComplete) {
       });
   auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, CurrentCrc32c).WillRepeatedly(Return(0x22620404));
   EXPECT_CALL(*hash, Finish)
       .WillRepeatedly(Return(storage::internal::HashValues{"ImIEBA==", ""}));
 

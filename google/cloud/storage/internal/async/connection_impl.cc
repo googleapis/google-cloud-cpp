@@ -110,6 +110,35 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
   return storage::internal::CreateNullHashFunction();
 }
 
+std::shared_ptr<storage::internal::HashFunction> CreateAppendableHashFunction(
+    Options const& options) {
+  auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
+  if (options.has<storage::UseCrc32cValueOption>()) {
+    crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(
+        storage::internal::HashValues{
+            Crc32cFromProto(options.get<storage::UseCrc32cValueOption>()),
+            /*.md5=*/{}});
+  } else if (options.get<storage::EnableCrc32cValidationOption>()) {
+    crc32c = std::make_unique<storage::internal::Crc32cHashFunction>();
+  }
+
+  auto md5 = std::unique_ptr<storage::internal::HashFunction>();
+  if (options.has<storage::UseMD5ValueOption>()) {
+    md5 = std::make_unique<storage::internal::PrecomputedHashFunction>(
+        storage::internal::HashValues{
+            /*.crc32=*/{},
+            MD5FromProto(options.get<storage::UseMD5ValueOption>())});
+  }
+
+  if (crc32c && md5) {
+    return std::make_shared<storage::internal::CompositeFunction>(
+        std::move(crc32c), std::move(md5));
+  }
+  if (crc32c) return std::move(crc32c);
+  if (md5) return std::move(md5);
+  return storage::internal::CreateNullHashFunction();
+}
+
 StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
     google::cloud::internal::ImmutableOptions const& current,
     google::storage::v2::BidiWriteObjectRequest request,
@@ -125,27 +154,22 @@ StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
 
   if (rpc->first_response.has_resource()) {
     auto const& resource = rpc->first_response.resource();
+    hash = CreateAppendableHashFunction(*current);
     if (current->get<storage::EnableCrc32cValidationOption>() &&
         resource.has_checksums() && resource.checksums().has_crc32c()) {
-      hash = std::make_shared<
-          ::google::cloud::storage::internal::Crc32cHashFunction>(
-          resource.checksums().crc32c(), resource.size());
-    } else {
-      hash = CreateHashFunction(*current);
+      hash->RestoreCrc32c(resource.checksums().crc32c(), resource.size());
     }
     impl = std::make_unique<AsyncWriterConnectionImpl>(
         current, request, std::move(rpc->stream), hash, resource, false);
   } else {
     persisted_size = rpc->first_response.persisted_size();
+    hash = CreateAppendableHashFunction(*current);
     if (current->get<storage::EnableCrc32cValidationOption>() &&
         rpc->first_response.has_persisted_data_checksums() &&
         rpc->first_response.persisted_data_checksums().has_crc32c()) {
-      hash = std::make_shared<
-          ::google::cloud::storage::internal::Crc32cHashFunction>(
+      hash->RestoreCrc32c(
           rpc->first_response.persisted_data_checksums().crc32c(),
           persisted_size);
-    } else {
-      hash = CreateHashFunction(*current);
     }
     auto checksums = rpc->first_response.has_persisted_data_checksums()
                          ? absl::make_optional(
