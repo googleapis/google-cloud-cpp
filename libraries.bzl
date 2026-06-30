@@ -17,7 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
-    "pubsublite",
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [

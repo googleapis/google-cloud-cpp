@@ -31,9 +31,7 @@ set(GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES
     # cmake-format: sort
     "experimental-bigquery_rest" "mocks" "oauth2" "storage")
 
-set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
-    # cmake-format: sort
-    "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
+set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES # cmake-format: sort
 )
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
@@ -355,9 +353,6 @@ macro (google_cloud_cpp_enable_deps)
     endif ()
     if (contentwarehouse IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 documentai)
-    endif ()
-    if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 pubsub)
     endif ()
     if (pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 iam)
