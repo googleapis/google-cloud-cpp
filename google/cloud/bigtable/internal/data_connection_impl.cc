@@ -1006,8 +1006,8 @@ class QueryPlanRefreshingPartialResultSource
     return row;
   }
 
-  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
-    if (!source_.has_value()) return absl::nullopt;
+  std::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+    if (!source_.has_value() || !source_->ok()) return std::nullopt;
     return (**source_)->Metadata();
   }
 
