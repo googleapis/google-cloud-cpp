@@ -70,6 +70,11 @@ future<StatusOr<AsyncToken>> AsyncWriter::Write(AsyncToken token,
 }
 
 future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
+    AsyncToken token, WritePayload payload) {
+  return Finalize(std::move(token), std::move(payload), absl::nullopt);
+}
+
+future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
     AsyncToken token, WritePayload payload,
     absl::optional<Crc32cChecksumValue> const& expected_checksum) {
   if (!impl_) return StreamError<google::storage::v2::Object>(GCP_ERROR_INFO());
@@ -80,6 +85,11 @@ future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
 
   return impl_->Finalize(std::move(payload), expected_checksum)
       .then([impl = impl_](auto f) { return f.get(); });
+}
+
+future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
+    AsyncToken token) {
+  return Finalize(std::move(token), WritePayload{}, absl::nullopt);
 }
 
 future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
