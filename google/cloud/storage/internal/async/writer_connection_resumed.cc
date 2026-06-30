@@ -423,7 +423,7 @@ class AsyncWriterConnectionResumedState
         auto const y = upper->first;
         auto const crc_y = upper->second;
         hash_function_->RestoreCrc32c(crc_y, y);
-        if (y < persisted_size) {
+        if (y >= buffer_offset_ && y < persisted_size) {
           auto const slice_offset =
               static_cast<std::size_t>(y - buffer_offset_);
           auto const slice_len = static_cast<std::size_t>(persisted_size - y);
