@@ -319,9 +319,9 @@ class AsyncWriterConnectionResumedState
 
   void OnClose(Status result) {
     if (!result.ok()) return Resume(std::move(result));
-    auto checksums = impl_->PersistedChecksums();
+    std::unique_lock<std::mutex> lk(mu_);
+    auto checksums = Impl(lk)->PersistedChecksums();
     if (checksums && checksums->has_crc32c()) {
-      std::unique_lock<std::mutex> lk(mu_);
       auto it = crc32c_history_.find(buffer_offset_);
       if (it != crc32c_history_.end() && it->second != checksums->crc32c()) {
         SetError(std::move(lk), google::cloud::internal::DataLossError(
@@ -330,7 +330,7 @@ class AsyncWriterConnectionResumedState
         return;
       }
     }
-    SetClosed(std::unique_lock<std::mutex>(mu_), std::move(result));
+    SetClosed(std::move(lk), std::move(result));
   }
 
   void FlushStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
@@ -368,9 +368,9 @@ class AsyncWriterConnectionResumedState
         return;
       }
       auto const persisted_size = *query_res;
-      auto checksums = self->impl_->PersistedChecksums();
+      std::unique_lock<std::mutex> lk(self->mu_);
+      auto checksums = self->Impl(lk)->PersistedChecksums();
       if (checksums && checksums->has_crc32c()) {
-        std::unique_lock<std::mutex> lk(self->mu_);
         auto it = self->crc32c_history_.find(persisted_size);
         if (it != self->crc32c_history_.end() &&
             it->second != checksums->crc32c()) {
@@ -381,6 +381,7 @@ class AsyncWriterConnectionResumedState
           return;
         }
       }
+      lk.unlock();
       self->OnQuery(std::move(query_res));
       self->SetFlushed(std::unique_lock<std::mutex>(self->mu_),
                        std::move(result));
@@ -406,7 +407,7 @@ class AsyncWriterConnectionResumedState
   }
 
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
-    auto handle = impl_->WriteHandle();
+    auto handle = Impl(lk)->WriteHandle();
     if (handle) {
       latest_write_handle_ = *std::move(handle);
     }
@@ -580,14 +581,14 @@ class AsyncWriterConnectionResumedState
         checksums = first_res.persisted_data_checksums();
       }
     } else {
-      auto state = impl_->PersistedState();
+      auto state = Impl(lk)->PersistedState();
       if (absl::holds_alternative<google::storage::v2::Object>(state)) {
         finalized = true;
         finalized_object =
             absl::get<google::storage::v2::Object>(std::move(state));
       } else {
         persisted_offset = absl::get<std::int64_t>(state);
-        checksums = impl_->PersistedChecksums();
+        checksums = Impl(lk)->PersistedChecksums();
       }
     }
 
