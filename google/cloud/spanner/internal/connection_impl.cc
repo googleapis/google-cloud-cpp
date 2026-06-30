@@ -137,7 +137,7 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
   void TryCancel() override { context_->TryCancel(); }
 
-  bool Read(absl::optional<std::string> const&,
+  bool Read(std::optional<std::string> const&,
             UnownedPartialResultSet& response) override {
     auto opt_status = reader_->Read(&response.result);
     response.resumption = false;
@@ -171,7 +171,7 @@ google::spanner::v1::TransactionOptions PartitionedDmlTransactionOptions() {
 }
 
 google::spanner::v1::RequestOptions_Priority ProtoRequestPriority(
-    absl::optional<spanner::RequestPriority> const& request_priority) {
+    std::optional<spanner::RequestPriority> const& request_priority) {
   if (request_priority) {
     switch (*request_priority) {
       case spanner::RequestPriority::kLow:
@@ -186,7 +186,7 @@ google::spanner::v1::RequestOptions_Priority ProtoRequestPriority(
 }
 
 google::spanner::v1::ReadRequest_OrderBy ProtoOrderBy(
-    absl::optional<spanner::OrderBy> const& order_by) {
+    std::optional<spanner::OrderBy> const& order_by) {
   if (order_by) {
     switch (*order_by) {
       case spanner::OrderBy::kOrderByUnspecified:
@@ -201,7 +201,7 @@ google::spanner::v1::ReadRequest_OrderBy ProtoOrderBy(
 }
 
 google::spanner::v1::ReadRequest_LockHint ProtoLockHint(
-    absl::optional<spanner::LockHint> const& order_by) {
+    std::optional<spanner::LockHint> const& order_by) {
   if (order_by) {
     switch (*order_by) {
       case spanner::LockHint::kLockHintUnspecified:
@@ -247,10 +247,10 @@ class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
   ~StatusOnlyResultSetSource() override = default;
 
   StatusOr<spanner::Row> NextRow() override { return status_; }
-  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+  std::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
     return {};
   }
-  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
+  std::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return {};
   }
 
@@ -279,26 +279,26 @@ class DmlResultSetSource : public PartialResultSourceInterface {
 
   StatusOr<spanner::Row> NextRow() override { return {}; }
 
-  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+  std::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
     if (result_set_.has_metadata()) {
       return result_set_.metadata();
     }
     return {};
   }
 
-  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
+  std::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     if (result_set_.has_stats()) {
       return result_set_.stats();
     }
     return {};
   }
 
-  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
   PrecommitToken() const override {
     if (result_set_.has_precommit_token()) {
       return result_set_.precommit_token();
     }
-    return absl::nullopt;
+    return std::nullopt;
   }
 
  private:
@@ -357,9 +357,9 @@ spanner::BatchedCommitResult FromProto(
 }
 
 template <typename T>
-absl::optional<T> GetRandomElement(
+std::optional<T> GetRandomElement(
     google::protobuf::RepeatedPtrField<T> const& m) {
-  if (m.empty()) return absl::nullopt;
+  if (m.empty()) return std::nullopt;
   std::uniform_int_distribution<decltype(m.size())> d(0, m.size() - 1);
   auto rng = internal::MakeDefaultPRNG();
   auto index = d(rng);
@@ -556,7 +556,7 @@ std::shared_ptr<SpannerStub> ConnectionImpl::GetStubBasedOnSessionMode(
 StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
     SessionHolder& session, google::spanner::v1::TransactionOptions options,
     std::string request_tag, TransactionContext& ctx,
-    absl::optional<google::spanner::v1::Mutation> mutation, char const* func) {
+    std::optional<google::spanner::v1::Mutation> mutation, char const* func) {
   google::spanner::v1::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   *begin.mutable_options() = std::move(options);
@@ -597,7 +597,7 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
     SessionHolder& session, google::spanner::v1::TransactionOptions options,
     std::string request_tag, TransactionContext& ctx, char const* func) {
   return BeginTransaction(session, std::move(options), std::move(request_tag),
-                          ctx, absl::nullopt, func);
+                          ctx, std::nullopt, func);
 }
 
 spanner::RowStream ConnectionImpl::ReadImpl(
@@ -1191,7 +1191,7 @@ ConnectionImpl::ExecutePartitionedDmlImpl(
                              ctx.route_to_leader, ctx.tag),
       std::move(params.statement),
       std::move(params.query_options),
-      /*partition_token=*/absl::nullopt,
+      /*partition_token=*/std::nullopt,
       /*partition_data_boost=*/false,
       spanner::DirectedReadOption::Type{}};
   auto dml_result = CommonQueryImpl<StreamingPartitionedDmlResult>(
@@ -1245,7 +1245,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       break;
     }
     case google::spanner::v1::TransactionSelector::kBegin: {
-      absl::optional<google::spanner::v1::Mutation> mutation = absl::nullopt;
+      std::optional<google::spanner::v1::Mutation> mutation = std::nullopt;
       if (session->is_multiplexed()) {
         // Commit requests containing Mutations on multiplexed sessions require
         // a random mutation key in order for the service to generate a
@@ -1278,7 +1278,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   char const* calling_func = __func__;
   auto retry_loop_fn =
       [&, func = std::move(calling_func)](
-          absl::optional<
+          std::optional<
               google::spanner::v1::MultiplexedSessionPrecommitToken> const&
               token) {
         if (token.has_value()) {

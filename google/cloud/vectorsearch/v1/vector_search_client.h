@@ -509,7 +509,7 @@ class VectorSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vectorsearch.v1.DeleteCollectionRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L401}
-  /// [google.cloud.vectorsearch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L646}
+  /// [google.cloud.vectorsearch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L651}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::OperationMetadata>>
@@ -560,7 +560,7 @@ class VectorSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vectorsearch.v1.DeleteCollectionRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L401}
-  /// [google.cloud.vectorsearch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L646}
+  /// [google.cloud.vectorsearch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L651}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::OperationMetadata>>
@@ -624,8 +624,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L430}
-  /// [google.cloud.vectorsearch.v1.ListIndexesRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L602}
+  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L435}
+  /// [google.cloud.vectorsearch.v1.ListIndexesRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L607}
   ///
   // clang-format on
   StreamRange<google::cloud::vectorsearch::v1::Index> ListIndexes(
@@ -663,8 +663,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L430}
-  /// [google.cloud.vectorsearch.v1.ListIndexesRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L602}
+  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L435}
+  /// [google.cloud.vectorsearch.v1.ListIndexesRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L607}
   ///
   // clang-format on
   StreamRange<google::cloud::vectorsearch::v1::Index> ListIndexes(
@@ -689,8 +689,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.GetIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L635}
-  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L430}
+  /// [google.cloud.vectorsearch.v1.GetIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L640}
+  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L435}
   ///
   // clang-format on
   StatusOr<google::cloud::vectorsearch::v1::Index> GetIndex(
@@ -719,8 +719,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.GetIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L635}
-  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L430}
+  /// [google.cloud.vectorsearch.v1.GetIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L640}
+  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L435}
   ///
   // clang-format on
   StatusOr<google::cloud::vectorsearch::v1::Index> GetIndex(
@@ -760,8 +760,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.CreateIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L488}
-  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L430}
+  /// [google.cloud.vectorsearch.v1.CreateIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L493}
+  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L435}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::Index>> CreateIndex(
@@ -815,8 +815,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.CreateIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L488}
-  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L430}
+  /// [google.cloud.vectorsearch.v1.CreateIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L493}
+  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L435}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::Index>> CreateIndex(
@@ -891,8 +891,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L430}
-  /// [google.cloud.vectorsearch.v1.UpdateIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L529}
+  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L435}
+  /// [google.cloud.vectorsearch.v1.UpdateIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L534}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::Index>> UpdateIndex(
@@ -944,8 +944,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L430}
-  /// [google.cloud.vectorsearch.v1.UpdateIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L529}
+  /// [google.cloud.vectorsearch.v1.Index]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L435}
+  /// [google.cloud.vectorsearch.v1.UpdateIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L534}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::Index>> UpdateIndex(
@@ -1007,8 +1007,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.DeleteIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L571}
-  /// [google.cloud.vectorsearch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L646}
+  /// [google.cloud.vectorsearch.v1.DeleteIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L576}
+  /// [google.cloud.vectorsearch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L651}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::OperationMetadata>>
@@ -1059,8 +1059,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.DeleteIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L571}
-  /// [google.cloud.vectorsearch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L646}
+  /// [google.cloud.vectorsearch.v1.DeleteIndexRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L576}
+  /// [google.cloud.vectorsearch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L651}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::OperationMetadata>>
@@ -1127,8 +1127,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.ImportDataObjectsRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L678}
-  /// [google.cloud.vectorsearch.v1.ImportDataObjectsResponse]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L731}
+  /// [google.cloud.vectorsearch.v1.ImportDataObjectsRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L683}
+  /// [google.cloud.vectorsearch.v1.ImportDataObjectsResponse]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L736}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::ImportDataObjectsResponse>>
@@ -1195,8 +1195,8 @@ class VectorSearchServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vectorsearch.v1.ExportDataObjectsRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L738}
-  /// [google.cloud.vectorsearch.v1.ExportDataObjectsResponse]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L787}
+  /// [google.cloud.vectorsearch.v1.ExportDataObjectsRequest]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L743}
+  /// [google.cloud.vectorsearch.v1.ExportDataObjectsResponse]: @googleapis_reference_link{google/cloud/vectorsearch/v1/vectorsearch_service.proto#L824}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vectorsearch::v1::ExportDataObjectsResponse>>

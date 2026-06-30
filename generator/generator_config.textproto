@@ -22,6 +22,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Agent Registry
+service {
+  service_proto_path: "google/cloud/agentregistry/v1/agentregistry_service.proto"
+  product_path: "google/cloud/agentregistry/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Access Context Manager
 service {
   service_proto_path: "google/identity/accesscontextmanager/v1/access_context_manager.proto"

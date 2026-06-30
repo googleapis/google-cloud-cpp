@@ -90,6 +90,18 @@ Status DefaultRuleServiceStub::DeleteRule(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+DefaultRuleServiceStub::VerifyRuleText(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+  google::cloud::chronicle::v1::VerifyRuleTextResponse response;
+  auto status = grpc_stub_->VerifyRuleText(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
 DefaultRuleServiceStub::ListRuleRevisions(
     grpc::ClientContext& context, Options const&,

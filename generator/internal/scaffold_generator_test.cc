@@ -411,6 +411,7 @@ TEST_F(ScaffoldGenerator, QuickstartCMake) {
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
   EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
+  EXPECT_THAT(actual, HasSubstr("CMAKE_CXX_STANDARD 17"));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartMakefile) {
@@ -421,6 +422,7 @@ TEST_F(ScaffoldGenerator, QuickstartMakefile) {
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
   EXPECT_THAT(actual, HasSubstr("\t$(CXXLD) "));
+  EXPECT_THAT(actual, HasSubstr("CXXFLAGS=-std=c++17"));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
@@ -461,6 +463,8 @@ TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, HasSubstr("c++17"));
+  EXPECT_THAT(actual, Not(HasSubstr("c++14")));
 }
 
 }  // namespace

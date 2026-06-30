@@ -94,6 +94,19 @@ Status RuleServiceLogging::DeleteRule(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceLogging::VerifyRuleText(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+        return child_->VerifyRuleText(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
 RuleServiceLogging::ListRuleRevisions(
     grpc::ClientContext& context, Options const& options,

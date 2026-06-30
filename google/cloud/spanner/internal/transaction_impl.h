@@ -36,8 +36,8 @@ struct TransactionContext {
   bool route_to_leader;
   std::string const& tag;
   std::int64_t seqno;
-  absl::optional<std::shared_ptr<SpannerStub>> stub;
-  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  std::optional<std::shared_ptr<SpannerStub>> stub;
+  std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
       precommit_token;
 };
 
@@ -61,7 +61,7 @@ class TransactionImpl {
   TransactionImpl(
       SessionHolder session, google::spanner::v1::TransactionSelector selector,
       bool route_to_leader, std::string tag,
-      absl::optional<std::string> multiplexed_session_previous_transaction_id);
+      std::optional<std::string> multiplexed_session_previous_transaction_id);
 
   ~TransactionImpl();
 
@@ -91,8 +91,8 @@ class TransactionImpl {
                       StatusOr<google::spanner::v1::TransactionSelector>&,
                       TransactionContext&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
-    TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt,
-                           absl::nullopt};
+    TransactionContext ctx{route_to_leader_, tag_, 0, std::nullopt,
+                           std::nullopt};
     {
       std::unique_lock<std::mutex> lock(mu_);
       ctx.seqno = ++seqno_;  // what about overflow?
@@ -143,7 +143,7 @@ class TransactionImpl {
  private:
   void UpdatePrecommitToken(
       std::unique_lock<std::mutex> const&,
-      absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
           token);
 
   enum class State {
@@ -160,9 +160,9 @@ class TransactionImpl {
   bool route_to_leader_;
   std::string tag_;
   std::int64_t seqno_;
-  absl::optional<std::shared_ptr<SpannerStub>> stub_ = absl::nullopt;
-  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
-      precommit_token_ = absl::nullopt;
+  std::optional<std::shared_ptr<SpannerStub>> stub_ = std::nullopt;
+  std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+      precommit_token_ = std::nullopt;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

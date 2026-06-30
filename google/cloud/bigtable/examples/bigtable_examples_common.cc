@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/strings/str_join.h"
@@ -53,7 +54,9 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
-        google::cloud::bigtable::MakeDataConnection(),
+        google::cloud::bigtable::MakeDataConnection(
+            {google::cloud::bigtable::InstanceResource(
+                google::cloud::Project(argv[0]), argv[1])}),
         google::cloud::bigtable::TableResource(argv[0], argv[1], argv[2]));
     argv.erase(argv.begin(), argv.begin() + 3);
     function(table, argv);
@@ -118,7 +121,9 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
-        google::cloud::bigtable::MakeDataConnection(),
+        google::cloud::bigtable::MakeDataConnection(
+            {google::cloud::bigtable::InstanceResource(
+                google::cloud::Project(argv[0]), argv[1])}),
         google::cloud::bigtable::TableResource(argv[0], argv[1], argv[2]));
     google::cloud::CompletionQueue cq;
     std::thread t([&cq] { cq.Run(); });

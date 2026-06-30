@@ -121,8 +121,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1959}
-  /// [google.privacy.dlp.v2.InspectContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1999}
+  /// [google.privacy.dlp.v2.InspectContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2055}
+  /// [google.privacy.dlp.v2.InspectContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2095}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
@@ -163,8 +163,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.RedactImageRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1714}
-  /// [google.privacy.dlp.v2.RedactImageResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1804}
+  /// [google.privacy.dlp.v2.RedactImageRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1810}
+  /// [google.privacy.dlp.v2.RedactImageResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1900}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::RedactImageResponse> RedactImage(
@@ -202,8 +202,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1818}
-  /// [google.privacy.dlp.v2.DeidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1878}
+  /// [google.privacy.dlp.v2.DeidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1914}
+  /// [google.privacy.dlp.v2.DeidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1974}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
@@ -237,8 +237,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ReidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1887}
-  /// [google.privacy.dlp.v2.ReidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1950}
+  /// [google.privacy.dlp.v2.ReidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1983}
+  /// [google.privacy.dlp.v2.ReidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2046}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
@@ -271,8 +271,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2524}
-  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2546}
+  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2620}
+  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2642}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
@@ -304,8 +304,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2524}
-  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2546}
+  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2620}
+  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L2642}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
@@ -354,8 +354,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4610}
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4186}
+  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4705}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4281}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
@@ -390,8 +390,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4610}
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4186}
+  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4705}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4281}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
@@ -423,8 +423,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4186}
-  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4652}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4281}
+  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4747}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
@@ -458,8 +458,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4186}
-  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4652}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4281}
+  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4747}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
@@ -489,8 +489,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4671}
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4186}
+  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4766}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4281}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
@@ -522,8 +522,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4671}
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4186}
+  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4766}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4281}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
@@ -579,8 +579,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4186}
-  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4684}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4281}
+  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4779}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
@@ -621,8 +621,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4186}
-  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4684}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4281}
+  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4779}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
@@ -650,7 +650,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4750}
+  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4845}
   ///
   // clang-format on
   Status DeleteInspectTemplate(std::string const& name, Options opts = {});
@@ -679,7 +679,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4750}
+  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4845}
   ///
   // clang-format on
   Status DeleteInspectTemplate(
@@ -728,8 +728,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6875}
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4224}
+  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6970}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4319}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -765,8 +765,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6875}
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4224}
+  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6970}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4319}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -800,8 +800,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4224}
-  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6918}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4319}
+  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7013}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -836,8 +836,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4224}
-  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6918}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4319}
+  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7013}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -868,8 +868,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4224}
-  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6938}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4319}
+  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7033}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
@@ -901,8 +901,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4224}
-  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6938}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4319}
+  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7033}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
@@ -958,8 +958,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4224}
-  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6951}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4319}
+  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7046}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -1000,8 +1000,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4224}
-  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6951}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4319}
+  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7046}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
@@ -1031,7 +1031,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7018}
+  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7113}
   ///
   // clang-format on
   Status DeleteDeidentifyTemplate(std::string const& name, Options opts = {});
@@ -1060,7 +1060,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7018}
+  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7113}
   ///
   // clang-format on
   Status DeleteDeidentifyTemplate(
@@ -1105,8 +1105,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4763}
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4288}
+  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4858}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4383}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
@@ -1141,8 +1141,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4763}
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4288}
+  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4858}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4383}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
@@ -1173,8 +1173,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4288}
-  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4811}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4383}
+  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4906}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
@@ -1208,8 +1208,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4288}
-  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4811}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4383}
+  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4906}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
@@ -1237,8 +1237,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7300}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7379}
+  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7395}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7474}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
@@ -1269,8 +1269,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7300}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7379}
+  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7395}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7474}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
@@ -1300,8 +1300,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4827}
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4288}
+  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4922}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4383}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
@@ -1333,8 +1333,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4827}
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4288}
+  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4922}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4383}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
@@ -1386,8 +1386,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4288}
-  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5012}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4383}
+  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5107}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
@@ -1428,8 +1428,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4288}
-  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5012}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4383}
+  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5107}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
@@ -1456,7 +1456,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5107}
+  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5202}
   ///
   // clang-format on
   Status DeleteJobTrigger(std::string const& name, Options opts = {});
@@ -1485,7 +1485,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5107}
+  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5202}
   ///
   // clang-format on
   Status DeleteJobTrigger(
@@ -1516,8 +1516,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ActivateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4801}
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6667}
+  /// [google.privacy.dlp.v2.ActivateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4896}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6762}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
@@ -1557,8 +1557,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4837}
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5558}
+  /// [google.privacy.dlp.v2.CreateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4932}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5653}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
@@ -1589,8 +1589,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4837}
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5558}
+  /// [google.privacy.dlp.v2.CreateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4932}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5653}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> CreateDiscoveryConfig(
@@ -1618,8 +1618,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5558}
-  /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4871}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5653}
+  /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4966}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
@@ -1650,8 +1650,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5558}
-  /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4871}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5653}
+  /// [google.privacy.dlp.v2.UpdateDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4966}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> UpdateDiscoveryConfig(
@@ -1677,8 +1677,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5558}
-  /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4889}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5653}
+  /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4984}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
@@ -1707,8 +1707,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5558}
-  /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4889}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5653}
+  /// [google.privacy.dlp.v2.GetDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4984}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DiscoveryConfig> GetDiscoveryConfig(
@@ -1751,8 +1751,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5558}
-  /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4901}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5653}
+  /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4996}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DiscoveryConfig> ListDiscoveryConfigs(
@@ -1790,8 +1790,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5558}
-  /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4901}
+  /// [google.privacy.dlp.v2.DiscoveryConfig]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5653}
+  /// [google.privacy.dlp.v2.ListDiscoveryConfigsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4996}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DiscoveryConfig> ListDiscoveryConfigs(
@@ -1815,7 +1815,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4953}
+  /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5048}
   ///
   // clang-format on
   Status DeleteDiscoveryConfig(std::string const& name, Options opts = {});
@@ -1841,7 +1841,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4953}
+  /// [google.privacy.dlp.v2.DeleteDiscoveryConfigRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5048}
   ///
   // clang-format on
   Status DeleteDiscoveryConfig(
@@ -1891,8 +1891,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4967}
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6667}
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5062}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6762}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
@@ -1944,8 +1944,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4967}
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6667}
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5062}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6762}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
@@ -1985,8 +1985,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4967}
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6667}
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5062}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6762}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
@@ -2040,8 +2040,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6667}
-  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6754}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6762}
+  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6849}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
@@ -2084,8 +2084,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6667}
-  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6754}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6762}
+  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6849}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
@@ -2114,8 +2114,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6667}
-  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6745}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6762}
+  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6840}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(std::string const& name,
@@ -2149,8 +2149,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6667}
-  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6745}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6762}
+  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6840}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(
@@ -2180,7 +2180,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6866}
+  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6961}
   ///
   // clang-format on
   Status DeleteDlpJob(std::string const& name, Options opts = {});
@@ -2213,7 +2213,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6866}
+  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6961}
   ///
   // clang-format on
   Status DeleteDlpJob(
@@ -2248,7 +2248,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CancelDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6848}
+  /// [google.privacy.dlp.v2.CancelDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6943}
   ///
   // clang-format on
   Status CancelDlpJob(
@@ -2296,8 +2296,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7148}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7127}
+  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7243}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7222}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
@@ -2331,8 +2331,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7148}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7127}
+  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7243}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7222}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
@@ -2367,8 +2367,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7127}
-  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7190}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7222}
+  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7285}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
@@ -2403,8 +2403,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7127}
-  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7190}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7222}
+  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7285}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
@@ -2434,8 +2434,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7211}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7127}
+  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7306}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7222}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
@@ -2467,8 +2467,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7211}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7127}
+  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7306}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7222}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
@@ -2520,8 +2520,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7224}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7127}
+  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7319}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7222}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
@@ -2562,8 +2562,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7224}
-  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7127}
+  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7319}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7222}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
@@ -2591,7 +2591,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7287}
+  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7382}
   ///
   // clang-format on
   Status DeleteStoredInfoType(std::string const& name, Options opts = {});
@@ -2620,7 +2620,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7287}
+  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7382}
   ///
   // clang-format on
   Status DeleteStoredInfoType(
@@ -2654,8 +2654,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListProjectDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7550}
-  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7834}
+  /// [google.privacy.dlp.v2.ListProjectDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7645}
+  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7929}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
@@ -2693,8 +2693,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListProjectDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7550}
-  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7834}
+  /// [google.privacy.dlp.v2.ListProjectDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7645}
+  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7929}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
@@ -2731,8 +2731,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListTableDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7625}
-  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7908}
+  /// [google.privacy.dlp.v2.ListTableDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7720}
+  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8003}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::TableDataProfile> ListTableDataProfiles(
@@ -2770,8 +2770,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ListTableDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7625}
-  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7908}
+  /// [google.privacy.dlp.v2.ListTableDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7720}
+  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8003}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::TableDataProfile> ListTableDataProfiles(
@@ -2807,8 +2807,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8114}
-  /// [google.privacy.dlp.v2.ListColumnDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7713}
+  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8209}
+  /// [google.privacy.dlp.v2.ListColumnDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7808}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
@@ -2846,8 +2846,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8114}
-  /// [google.privacy.dlp.v2.ListColumnDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7713}
+  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8209}
+  /// [google.privacy.dlp.v2.ListColumnDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7808}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
@@ -2874,8 +2874,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetProjectDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8513}
-  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7834}
+  /// [google.privacy.dlp.v2.GetProjectDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8608}
+  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7929}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
@@ -2904,8 +2904,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetProjectDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8513}
-  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7834}
+  /// [google.privacy.dlp.v2.GetProjectDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8608}
+  /// [google.privacy.dlp.v2.ProjectDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7929}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
@@ -2941,8 +2941,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.FileStoreDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8279}
-  /// [google.privacy.dlp.v2.ListFileStoreDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8538}
+  /// [google.privacy.dlp.v2.FileStoreDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8374}
+  /// [google.privacy.dlp.v2.ListFileStoreDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8633}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
@@ -2980,8 +2980,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.FileStoreDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8279}
-  /// [google.privacy.dlp.v2.ListFileStoreDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8538}
+  /// [google.privacy.dlp.v2.FileStoreDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8374}
+  /// [google.privacy.dlp.v2.ListFileStoreDataProfilesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8633}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
@@ -3008,8 +3008,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.FileStoreDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8279}
-  /// [google.privacy.dlp.v2.GetFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8525}
+  /// [google.privacy.dlp.v2.FileStoreDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8374}
+  /// [google.privacy.dlp.v2.GetFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8620}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
@@ -3038,8 +3038,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.FileStoreDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8279}
-  /// [google.privacy.dlp.v2.GetFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8525}
+  /// [google.privacy.dlp.v2.FileStoreDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8374}
+  /// [google.privacy.dlp.v2.GetFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8620}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
@@ -3064,7 +3064,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8632}
+  /// [google.privacy.dlp.v2.DeleteFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8727}
   ///
   // clang-format on
   Status DeleteFileStoreDataProfile(std::string const& name, Options opts = {});
@@ -3091,7 +3091,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8632}
+  /// [google.privacy.dlp.v2.DeleteFileStoreDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8727}
   ///
   // clang-format on
   Status DeleteFileStoreDataProfile(
@@ -3118,8 +3118,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8643}
-  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7908}
+  /// [google.privacy.dlp.v2.GetTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8738}
+  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8003}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
@@ -3148,8 +3148,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.GetTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8643}
-  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7908}
+  /// [google.privacy.dlp.v2.GetTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8738}
+  /// [google.privacy.dlp.v2.TableDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8003}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
@@ -3175,8 +3175,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8114}
-  /// [google.privacy.dlp.v2.GetColumnDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8655}
+  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8209}
+  /// [google.privacy.dlp.v2.GetColumnDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8750}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
@@ -3205,8 +3205,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8114}
-  /// [google.privacy.dlp.v2.GetColumnDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8655}
+  /// [google.privacy.dlp.v2.ColumnDataProfile]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8209}
+  /// [google.privacy.dlp.v2.GetColumnDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8750}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
@@ -3230,7 +3230,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8985}
+  /// [google.privacy.dlp.v2.DeleteTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L9080}
   ///
   // clang-format on
   Status DeleteTableDataProfile(std::string const& name, Options opts = {});
@@ -3257,7 +3257,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8985}
+  /// [google.privacy.dlp.v2.DeleteTableDataProfileRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L9080}
   ///
   // clang-format on
   Status DeleteTableDataProfile(
@@ -3285,8 +3285,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7313}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7379}
+  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7408}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7474}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
@@ -3317,8 +3317,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7313}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7379}
+  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7408}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L7474}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
@@ -3347,7 +3347,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.FinishDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6857}
+  /// [google.privacy.dlp.v2.FinishDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L6952}
   ///
   // clang-format on
   Status FinishDlpJob(
@@ -3381,8 +3381,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.CreateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8736}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.CreateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8831}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::Connection> CreateConnection(
@@ -3413,8 +3413,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.CreateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8736}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.CreateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8831}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::Connection> CreateConnection(
@@ -3440,8 +3440,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.GetConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8758}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.GetConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8853}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::Connection> GetConnection(
@@ -3470,8 +3470,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.GetConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8758}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.GetConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8853}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::Connection> GetConnection(
@@ -3508,8 +3508,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.ListConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8768}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.ListConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8863}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::Connection> ListConnections(
@@ -3548,8 +3548,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.ListConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8768}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.ListConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8863}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::Connection> ListConnections(
@@ -3585,8 +3585,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.SearchConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8793}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.SearchConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8888}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::Connection> SearchConnections(
@@ -3624,8 +3624,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.SearchConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8793}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.SearchConnectionsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8888}
   ///
   // clang-format on
   StreamRange<google::privacy::dlp::v2::Connection> SearchConnections(
@@ -3649,7 +3649,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8857}
+  /// [google.privacy.dlp.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8952}
   ///
   // clang-format on
   Status DeleteConnection(std::string const& name, Options opts = {});
@@ -3675,7 +3675,7 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8857}
+  /// [google.privacy.dlp.v2.DeleteConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8952}
   ///
   // clang-format on
   Status DeleteConnection(
@@ -3701,8 +3701,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8840}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8935}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
@@ -3731,8 +3731,8 @@ class DlpServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8868}
-  /// [google.privacy.dlp.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8840}
+  /// [google.privacy.dlp.v2.Connection]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8963}
+  /// [google.privacy.dlp.v2.UpdateConnectionRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L8935}
   ///
   // clang-format on
   StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(

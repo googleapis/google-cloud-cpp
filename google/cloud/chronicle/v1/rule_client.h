@@ -108,8 +108,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.CreateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L468}
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
+  /// [google.cloud.chronicle.v1.CreateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L479}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::Rule> CreateRule(
@@ -139,8 +139,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.CreateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L468}
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
+  /// [google.cloud.chronicle.v1.CreateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L479}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::Rule> CreateRule(
@@ -167,8 +167,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L483}
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
+  /// [google.cloud.chronicle.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L494}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::Rule> GetRule(std::string const& name,
@@ -197,8 +197,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L483}
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
+  /// [google.cloud.chronicle.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L494}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::Rule> GetRule(
@@ -234,8 +234,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListRulesRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L498}
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
+  /// [google.cloud.chronicle.v1.ListRulesRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L509}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::Rule> ListRules(
@@ -273,8 +273,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListRulesRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L498}
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
+  /// [google.cloud.chronicle.v1.ListRulesRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L509}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::Rule> ListRules(
@@ -305,8 +305,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
-  /// [google.cloud.chronicle.v1.UpdateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L543}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
+  /// [google.cloud.chronicle.v1.UpdateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L554}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::Rule> UpdateRule(
@@ -336,8 +336,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
-  /// [google.cloud.chronicle.v1.UpdateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L543}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
+  /// [google.cloud.chronicle.v1.UpdateRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L554}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::Rule> UpdateRule(
@@ -364,7 +364,7 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.DeleteRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L557}
+  /// [google.cloud.chronicle.v1.DeleteRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L568}
   ///
   // clang-format on
   Status DeleteRule(std::string const& name, Options opts = {});
@@ -390,11 +390,71 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.DeleteRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L557}
+  /// [google.cloud.chronicle.v1.DeleteRuleRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L568}
   ///
   // clang-format on
   Status DeleteRule(
       google::cloud::chronicle::v1::DeleteRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Verifies the given rule text.
+  ///
+  /// @param instance  Required. The name of the parent resource, which is the SecOps instance
+  ///  associated with the request. Format:
+  ///  `projects/{project}/locations/{location}/instances/{instance}`
+  /// @param rule_text  Required. The rule text to verify as a UTF-8 string.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.chronicle.v1.VerifyRuleTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.chronicle.v1.VerifyRuleTextRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L588}
+  /// [google.cloud.chronicle.v1.VerifyRuleTextResponse]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L604}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse> VerifyRuleText(
+      std::string const& instance, std::string const& rule_text,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Verifies the given rule text.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.chronicle.v1.VerifyRuleTextRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.chronicle.v1.VerifyRuleTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.chronicle.v1.VerifyRuleTextRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L588}
+  /// [google.cloud.chronicle.v1.VerifyRuleTextResponse]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L604}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse> VerifyRuleText(
+      google::cloud::chronicle::v1::VerifyRuleTextRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -426,8 +486,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListRuleRevisionsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L577}
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
+  /// [google.cloud.chronicle.v1.ListRuleRevisionsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L614}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::Rule> ListRuleRevisions(
@@ -465,8 +525,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListRuleRevisionsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L577}
-  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L210}
+  /// [google.cloud.chronicle.v1.ListRuleRevisionsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L614}
+  /// [google.cloud.chronicle.v1.Rule]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L221}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::Rule> ListRuleRevisions(
@@ -501,8 +561,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.CreateRetrohuntRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L615}
-  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
+  /// [google.cloud.chronicle.v1.CreateRetrohuntRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L652}
+  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L428}
   ///
   // clang-format on
   future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
@@ -556,8 +616,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.CreateRetrohuntRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L615}
-  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
+  /// [google.cloud.chronicle.v1.CreateRetrohuntRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L652}
+  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L428}
   ///
   // clang-format on
   future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
@@ -612,8 +672,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.GetRetrohuntRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L631}
-  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
+  /// [google.cloud.chronicle.v1.GetRetrohuntRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L668}
+  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L428}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::Retrohunt> GetRetrohunt(
@@ -642,8 +702,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.GetRetrohuntRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L631}
-  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
+  /// [google.cloud.chronicle.v1.GetRetrohuntRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L668}
+  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L428}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::Retrohunt> GetRetrohunt(
@@ -679,8 +739,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListRetrohuntsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L644}
-  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
+  /// [google.cloud.chronicle.v1.ListRetrohuntsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L681}
+  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L428}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::Retrohunt> ListRetrohunts(
@@ -718,8 +778,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListRetrohuntsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L644}
-  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L417}
+  /// [google.cloud.chronicle.v1.ListRetrohuntsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L681}
+  /// [google.cloud.chronicle.v1.Retrohunt]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L428}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::Retrohunt> ListRetrohunts(
@@ -746,8 +806,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.GetRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L685}
-  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
+  /// [google.cloud.chronicle.v1.GetRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L722}
+  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L341}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::RuleDeployment> GetRuleDeployment(
@@ -776,8 +836,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.GetRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L685}
-  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
+  /// [google.cloud.chronicle.v1.GetRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L722}
+  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L341}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::RuleDeployment> GetRuleDeployment(
@@ -814,8 +874,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListRuleDeploymentsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L698}
-  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
+  /// [google.cloud.chronicle.v1.ListRuleDeploymentsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L735}
+  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L341}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::RuleDeployment> ListRuleDeployments(
@@ -853,8 +913,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.ListRuleDeploymentsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L698}
-  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
+  /// [google.cloud.chronicle.v1.ListRuleDeploymentsRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L735}
+  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L341}
   ///
   // clang-format on
   StreamRange<google::cloud::chronicle::v1::RuleDeployment> ListRuleDeployments(
@@ -887,8 +947,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
-  /// [google.cloud.chronicle.v1.UpdateRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L740}
+  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L341}
+  /// [google.cloud.chronicle.v1.UpdateRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L777}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::RuleDeployment> UpdateRuleDeployment(
@@ -921,8 +981,8 @@ class RuleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L330}
-  /// [google.cloud.chronicle.v1.UpdateRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L740}
+  /// [google.cloud.chronicle.v1.RuleDeployment]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L341}
+  /// [google.cloud.chronicle.v1.UpdateRuleDeploymentRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/rule.proto#L777}
   ///
   // clang-format on
   StatusOr<google::cloud::chronicle::v1::RuleDeployment> UpdateRuleDeployment(

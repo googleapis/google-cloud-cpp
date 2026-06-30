@@ -90,6 +90,16 @@ Status RuleServiceMetadata::DeleteRule(
   return child_->DeleteRule(context, options, request);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceMetadata::VerifyRuleText(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->VerifyRuleText(context, options, request);
+}
+
 StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
 RuleServiceMetadata::ListRuleRevisions(
     grpc::ClientContext& context, Options const& options,

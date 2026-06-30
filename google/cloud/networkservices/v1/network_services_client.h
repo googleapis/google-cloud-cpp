@@ -93,7 +93,7 @@ class NetworkServicesClient {
   /// Lists EndpointPolicies in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the EndpointPolicies should
-  ///  be listed, specified in the format `projects/*/locations/global`.
+  ///  be listed, specified in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -169,7 +169,7 @@ class NetworkServicesClient {
   /// Gets details of a single EndpointPolicy.
   ///
   /// @param name  Required. A name of the EndpointPolicy to get. Must be in the format
-  ///  `projects/*/locations/global/endpointPolicies/*`.
+  ///  `projects/*/locations/*/endpointPolicies/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -228,7 +228,7 @@ class NetworkServicesClient {
   /// Creates a new EndpointPolicy in a given project and location.
   ///
   /// @param parent  Required. The parent resource of the EndpointPolicy. Must be in the
-  ///  format `projects/*/locations/global`.
+  ///  format `projects/*/locations/*`.
   /// @param endpoint_policy  Required. EndpointPolicy resource to be created.
   /// @param endpoint_policy_id  Required. Short name of the EndpointPolicy resource to be created.
   ///  E.g. "CustomECS".
@@ -478,7 +478,7 @@ class NetworkServicesClient {
   /// Deletes a single EndpointPolicy.
   ///
   /// @param name  Required. A name of the EndpointPolicy to delete. Must be in the format
-  ///  `projects/*/locations/global/endpointPolicies/*`.
+  ///  `projects/*/locations/*/endpointPolicies/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -620,8 +620,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListWasmPluginVersionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L409}
-  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L238}
+  /// [google.cloud.networkservices.v1.ListWasmPluginVersionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L466}
+  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L266}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>
@@ -660,8 +660,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListWasmPluginVersionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L409}
-  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L238}
+  /// [google.cloud.networkservices.v1.ListWasmPluginVersionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L466}
+  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L266}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>
@@ -689,8 +689,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L451}
-  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L238}
+  /// [google.cloud.networkservices.v1.GetWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L508}
+  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L266}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
@@ -719,8 +719,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L451}
-  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L238}
+  /// [google.cloud.networkservices.v1.GetWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L508}
+  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L266}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
@@ -760,8 +760,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L464}
-  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L238}
+  /// [google.cloud.networkservices.v1.CreateWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L521}
+  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
@@ -819,8 +819,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L464}
-  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L238}
+  /// [google.cloud.networkservices.v1.CreateWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L521}
+  /// [google.cloud.networkservices.v1.WasmPluginVersion]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
@@ -886,7 +886,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L485}
+  /// [google.cloud.networkservices.v1.DeleteWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L542}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -937,7 +937,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L485}
+  /// [google.cloud.networkservices.v1.DeleteWasmPluginVersionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L542}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1007,7 +1007,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListWasmPluginsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L303}
+  /// [google.cloud.networkservices.v1.ListWasmPluginsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L360}
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
@@ -1047,7 +1047,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListWasmPluginsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L303}
+  /// [google.cloud.networkservices.v1.ListWasmPluginsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L360}
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
@@ -1074,7 +1074,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L344}
+  /// [google.cloud.networkservices.v1.GetWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L401}
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
@@ -1104,7 +1104,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L344}
+  /// [google.cloud.networkservices.v1.GetWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L401}
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
@@ -1141,7 +1141,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L360}
+  /// [google.cloud.networkservices.v1.CreateWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L417}
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
@@ -1198,7 +1198,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L360}
+  /// [google.cloud.networkservices.v1.CreateWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L417}
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
@@ -1273,7 +1273,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.UpdateWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L378}
+  /// [google.cloud.networkservices.v1.UpdateWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L435}
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
@@ -1328,7 +1328,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.UpdateWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L378}
+  /// [google.cloud.networkservices.v1.UpdateWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L435}
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
@@ -1394,7 +1394,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L397}
+  /// [google.cloud.networkservices.v1.DeleteWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L454}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1445,7 +1445,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L397}
+  /// [google.cloud.networkservices.v1.DeleteWasmPluginRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L454}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1513,8 +1513,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
-  /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L241}
+  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L57}
+  /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L248}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
@@ -1552,8 +1552,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
-  /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L241}
+  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L57}
+  /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L248}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
@@ -1579,8 +1579,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
-  /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L275}
+  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L57}
+  /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L282}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::Gateway> GetGateway(
@@ -1609,8 +1609,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
-  /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L275}
+  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L57}
+  /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L282}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::Gateway> GetGateway(
@@ -1645,8 +1645,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L287}
-  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
+  /// [google.cloud.networkservices.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L294}
+  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L57}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> CreateGateway(
@@ -1700,8 +1700,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L287}
-  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
+  /// [google.cloud.networkservices.v1.CreateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L294}
+  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L57}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> CreateGateway(
@@ -1766,8 +1766,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
-  /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L305}
+  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L57}
+  /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
@@ -1819,8 +1819,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
-  /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L305}
+  /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L57}
+  /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
@@ -1881,7 +1881,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L319}
+  /// [google.cloud.networkservices.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L326}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1932,7 +1932,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L319}
+  /// [google.cloud.networkservices.v1.DeleteGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L326}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1975,7 +1975,7 @@ class NetworkServicesClient {
   /// Lists GrpcRoutes in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the GrpcRoutes should be
-  ///  listed, specified in the format `projects/*/locations/global`.
+  ///  listed, specified in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1998,8 +1998,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
-  /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L380}
+  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L39}
+  /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L377}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::GrpcRoute> ListGrpcRoutes(
@@ -2037,8 +2037,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
-  /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L380}
+  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L39}
+  /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L377}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::GrpcRoute> ListGrpcRoutes(
@@ -2050,7 +2050,7 @@ class NetworkServicesClient {
   /// Gets details of a single GrpcRoute.
   ///
   /// @param name  Required. A name of the GrpcRoute to get. Must be in the format
-  ///  `projects/*/locations/global/grpcRoutes/*`.
+  ///  `projects/*/locations/*/grpcRoutes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -2064,8 +2064,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L422}
-  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
+  /// [google.cloud.networkservices.v1.GetGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L419}
+  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::GrpcRoute> GetGrpcRoute(
@@ -2094,8 +2094,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L422}
-  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
+  /// [google.cloud.networkservices.v1.GetGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L419}
+  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::GrpcRoute> GetGrpcRoute(
@@ -2107,7 +2107,7 @@ class NetworkServicesClient {
   /// Creates a new GrpcRoute in a given project and location.
   ///
   /// @param parent  Required. The parent resource of the GrpcRoute. Must be in the
-  ///  format `projects/*/locations/global`.
+  ///  format `projects/*/locations/*`.
   /// @param grpc_route  Required. GrpcRoute resource to be created.
   /// @param grpc_route_id  Required. Short name of the GrpcRoute resource to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2130,8 +2130,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L434}
-  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
+  /// [google.cloud.networkservices.v1.CreateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L431}
+  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L39}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -2186,8 +2186,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L434}
-  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
+  /// [google.cloud.networkservices.v1.CreateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L431}
+  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L39}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -2254,8 +2254,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
-  /// [google.cloud.networkservices.v1.UpdateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L452}
+  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L39}
+  /// [google.cloud.networkservices.v1.UpdateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L449}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -2309,8 +2309,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
-  /// [google.cloud.networkservices.v1.UpdateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L452}
+  /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L39}
+  /// [google.cloud.networkservices.v1.UpdateGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L449}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -2352,7 +2352,7 @@ class NetworkServicesClient {
   /// Deletes a single GrpcRoute.
   ///
   /// @param name  Required. A name of the GrpcRoute to delete. Must be in the format
-  ///  `projects/*/locations/global/grpcRoutes/*`.
+  ///  `projects/*/locations/*/grpcRoutes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2373,7 +2373,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L466}
+  /// [google.cloud.networkservices.v1.DeleteGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L463}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -2424,7 +2424,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L466}
+  /// [google.cloud.networkservices.v1.DeleteGrpcRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L463}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -2467,7 +2467,7 @@ class NetworkServicesClient {
   /// Lists HttpRoute in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the HttpRoutes should be
-  ///  listed, specified in the format `projects/*/locations/global`.
+  ///  listed, specified in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -2490,8 +2490,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
-  /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L614}
+  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L36}
+  /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L615}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::HttpRoute> ListHttpRoutes(
@@ -2529,8 +2529,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
-  /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L614}
+  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L36}
+  /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L615}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::HttpRoute> ListHttpRoutes(
@@ -2542,7 +2542,7 @@ class NetworkServicesClient {
   /// Gets details of a single HttpRoute.
   ///
   /// @param name  Required. A name of the HttpRoute to get. Must be in the format
-  ///  `projects/*/locations/global/httpRoutes/*`.
+  ///  `projects/*/locations/*/httpRoutes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -2556,8 +2556,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L656}
-  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
+  /// [google.cloud.networkservices.v1.GetHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L660}
+  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::HttpRoute> GetHttpRoute(
@@ -2586,8 +2586,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L656}
-  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
+  /// [google.cloud.networkservices.v1.GetHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L660}
+  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::HttpRoute> GetHttpRoute(
@@ -2599,7 +2599,7 @@ class NetworkServicesClient {
   /// Creates a new HttpRoute in a given project and location.
   ///
   /// @param parent  Required. The parent resource of the HttpRoute. Must be in the
-  ///  format `projects/*/locations/global`.
+  ///  format `projects/*/locations/*`.
   /// @param http_route  Required. HttpRoute resource to be created.
   /// @param http_route_id  Required. Short name of the HttpRoute resource to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2622,8 +2622,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L668}
-  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
+  /// [google.cloud.networkservices.v1.CreateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L672}
+  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -2678,8 +2678,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L668}
-  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
+  /// [google.cloud.networkservices.v1.CreateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L672}
+  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -2746,8 +2746,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L686}
+  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L36}
+  /// [google.cloud.networkservices.v1.UpdateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L696}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -2801,8 +2801,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L686}
+  /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L36}
+  /// [google.cloud.networkservices.v1.UpdateHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L696}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -2844,7 +2844,7 @@ class NetworkServicesClient {
   /// Deletes a single HttpRoute.
   ///
   /// @param name  Required. A name of the HttpRoute to delete. Must be in the format
-  ///  `projects/*/locations/global/httpRoutes/*`.
+  ///  `projects/*/locations/*/httpRoutes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -2865,7 +2865,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L700}
+  /// [google.cloud.networkservices.v1.DeleteHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L710}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -2916,7 +2916,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L700}
+  /// [google.cloud.networkservices.v1.DeleteHttpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L710}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -2959,7 +2959,7 @@ class NetworkServicesClient {
   /// Lists TcpRoute in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the TcpRoutes should be
-  ///  listed, specified in the format `projects/*/locations/global`.
+  ///  listed, specified in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -3034,7 +3034,7 @@ class NetworkServicesClient {
   /// Gets details of a single TcpRoute.
   ///
   /// @param name  Required. A name of the TcpRoute to get. Must be in the format
-  ///  `projects/*/locations/global/tcpRoutes/*`.
+  ///  `projects/*/locations/*/tcpRoutes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -3091,7 +3091,7 @@ class NetworkServicesClient {
   /// Creates a new TcpRoute in a given project and location.
   ///
   /// @param parent  Required. The parent resource of the TcpRoute. Must be in the
-  ///  format `projects/*/locations/global`.
+  ///  format `projects/*/locations/*`.
   /// @param tcp_route  Required. TcpRoute resource to be created.
   /// @param tcp_route_id  Required. Short name of the TcpRoute resource to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -3329,7 +3329,7 @@ class NetworkServicesClient {
   /// Deletes a single TcpRoute.
   ///
   /// @param name  Required. A name of the TcpRoute to delete. Must be in the format
-  ///  `projects/*/locations/global/tcpRoutes/*`.
+  ///  `projects/*/locations/*/tcpRoutes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -3444,7 +3444,7 @@ class NetworkServicesClient {
   /// Lists TlsRoute in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the TlsRoutes should be
-  ///  listed, specified in the format `projects/*/locations/global`.
+  ///  listed, specified in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -3467,8 +3467,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListTlsRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L161}
-  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
+  /// [google.cloud.networkservices.v1.ListTlsRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L178}
+  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L39}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::TlsRoute> ListTlsRoutes(
@@ -3506,8 +3506,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListTlsRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L161}
-  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
+  /// [google.cloud.networkservices.v1.ListTlsRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L178}
+  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L39}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::TlsRoute> ListTlsRoutes(
@@ -3519,7 +3519,7 @@ class NetworkServicesClient {
   /// Gets details of a single TlsRoute.
   ///
   /// @param name  Required. A name of the TlsRoute to get. Must be in the format
-  ///  `projects/*/locations/global/tlsRoutes/*`.
+  ///  `projects/*/locations/*/tlsRoutes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -3533,8 +3533,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L203}
-  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
+  /// [google.cloud.networkservices.v1.GetTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L220}
+  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::TlsRoute> GetTlsRoute(
@@ -3563,8 +3563,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L203}
-  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
+  /// [google.cloud.networkservices.v1.GetTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L220}
+  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L39}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::TlsRoute> GetTlsRoute(
@@ -3576,7 +3576,7 @@ class NetworkServicesClient {
   /// Creates a new TlsRoute in a given project and location.
   ///
   /// @param parent  Required. The parent resource of the TlsRoute. Must be in the
-  ///  format `projects/*/locations/global`.
+  ///  format `projects/*/locations/*`.
   /// @param tls_route  Required. TlsRoute resource to be created.
   /// @param tls_route_id  Required. Short name of the TlsRoute resource to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -3599,8 +3599,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L215}
-  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
+  /// [google.cloud.networkservices.v1.CreateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L232}
+  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L39}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> CreateTlsRoute(
@@ -3654,8 +3654,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L215}
-  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
+  /// [google.cloud.networkservices.v1.CreateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L232}
+  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L39}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> CreateTlsRoute(
@@ -3720,8 +3720,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L233}
+  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L39}
+  /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
@@ -3773,8 +3773,8 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
-  /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L233}
+  /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L39}
+  /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
@@ -3814,7 +3814,7 @@ class NetworkServicesClient {
   /// Deletes a single TlsRoute.
   ///
   /// @param name  Required. A name of the TlsRoute to delete. Must be in the format
-  ///  `projects/*/locations/global/tlsRoutes/*`.
+  ///  `projects/*/locations/*/tlsRoutes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -3835,7 +3835,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L247}
+  /// [google.cloud.networkservices.v1.DeleteTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L264}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -3886,7 +3886,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L247}
+  /// [google.cloud.networkservices.v1.DeleteTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L264}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -4430,7 +4430,7 @@ class NetworkServicesClient {
   /// Lists Meshes in a given project and location.
   ///
   /// @param parent  Required. The project and location from which the Meshes should be
-  ///  listed, specified in the format `projects/*/locations/global`.
+  ///  listed, specified in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -4453,7 +4453,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListMeshesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L84}
+  /// [google.cloud.networkservices.v1.ListMeshesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L86}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
@@ -4492,7 +4492,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.ListMeshesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L84}
+  /// [google.cloud.networkservices.v1.ListMeshesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L86}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
@@ -4505,7 +4505,7 @@ class NetworkServicesClient {
   /// Gets details of a single Mesh.
   ///
   /// @param name  Required. A name of the Mesh to get. Must be in the format
-  ///  `projects/*/locations/global/meshes/*`.
+  ///  `projects/*/locations/*/meshes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -4519,7 +4519,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L125}
+  /// [google.cloud.networkservices.v1.GetMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L127}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
@@ -4549,7 +4549,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L125}
+  /// [google.cloud.networkservices.v1.GetMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L127}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
@@ -4562,7 +4562,7 @@ class NetworkServicesClient {
   /// Creates a new Mesh in a given project and location.
   ///
   /// @param parent  Required. The parent resource of the Mesh. Must be in the
-  ///  format `projects/*/locations/global`.
+  ///  format `projects/*/locations/*`.
   /// @param mesh  Required. Mesh resource to be created.
   /// @param mesh_id  Required. Short name of the Mesh resource to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -4585,7 +4585,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L137}
+  /// [google.cloud.networkservices.v1.CreateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L139}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
@@ -4640,7 +4640,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L137}
+  /// [google.cloud.networkservices.v1.CreateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L139}
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
@@ -4707,7 +4707,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
-  /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L155}
+  /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L157}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
@@ -4760,7 +4760,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
-  /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L155}
+  /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L157}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
@@ -4800,7 +4800,7 @@ class NetworkServicesClient {
   /// Deletes a single Mesh.
   ///
   /// @param name  Required. A name of the Mesh to delete. Must be in the format
-  ///  `projects/*/locations/global/meshes/*`.
+  ///  `projects/*/locations/*/meshes/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -4821,7 +4821,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L169}
+  /// [google.cloud.networkservices.v1.DeleteMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L171}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -4873,7 +4873,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L169}
+  /// [google.cloud.networkservices.v1.DeleteMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L171}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -5692,6 +5692,505 @@ class NetworkServicesClient {
   ListMeshRouteViews(
       google::cloud::networkservices::v1::ListMeshRouteViewsRequest request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AgentGateways in a given project and location.
+  ///
+  /// @param parent  Required. The project and location from which the AgentGateways should be
+  ///  listed, specified in the format `projects/*/locations/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkservices.v1.AgentGateway], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
+  /// [google.cloud.networkservices.v1.ListAgentGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L202}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkservices::v1::AgentGateway>
+  ListAgentGateways(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists AgentGateways in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.ListAgentGatewaysRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.networkservices.v1.AgentGateway], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
+  /// [google.cloud.networkservices.v1.ListAgentGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L202}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::networkservices::v1::AgentGateway>
+  ListAgentGateways(
+      google::cloud::networkservices::v1::ListAgentGatewaysRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single AgentGateway.
+  ///
+  /// @param name  Required. A name of the AgentGateway to get. Must be in the format
+  ///  `projects/*/locations/*/agentGateways/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkservices.v1.AgentGateway])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
+  /// [google.cloud.networkservices.v1.GetAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L243}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkservices::v1::AgentGateway> GetAgentGateway(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a single AgentGateway.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.GetAgentGatewayRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.networkservices.v1.AgentGateway])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
+  /// [google.cloud.networkservices.v1.GetAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L243}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::networkservices::v1::AgentGateway> GetAgentGateway(
+      google::cloud::networkservices::v1::GetAgentGatewayRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AgentGateway in a given project and location.
+  ///
+  /// @param parent  Required. The parent resource of the AgentGateway. Must be in the
+  ///  format `projects/*/locations/*`.
+  /// @param agent_gateway  Required. AgentGateway resource to be created.
+  /// @param agent_gateway_id  Required. Short name of the AgentGateway resource to be created.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.AgentGateway] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
+  /// [google.cloud.networkservices.v1.CreateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L255}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  CreateAgentGateway(
+      std::string const& parent,
+      google::cloud::networkservices::v1::AgentGateway const& agent_gateway,
+      std::string const& agent_gateway_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAgentGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAgentGateway(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::AgentGateway const& agent_gateway,
+      std::string const& agent_gateway_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new AgentGateway in a given project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.CreateAgentGatewayRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.AgentGateway] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
+  /// [google.cloud.networkservices.v1.CreateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L255}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  CreateAgentGateway(
+      google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAgentGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAgentGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAgentGateway
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  CreateAgentGateway(google::longrunning::Operation const& operation,
+                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single AgentGateway.
+  ///
+  /// @param agent_gateway  Required. Updated AgentGateway resource.
+  /// @param update_mask  Optional. Field mask is used to specify the fields to be overwritten in the
+  ///  AgentGateway resource by the update.
+  ///  The fields specified in the update_mask are relative to the resource, not
+  ///  the full request. A field will be overwritten if it is in the mask. If the
+  ///  user does not provide a mask then all fields will be overwritten.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.AgentGateway] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
+  /// [google.cloud.networkservices.v1.UpdateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L273}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  UpdateAgentGateway(
+      google::cloud::networkservices::v1::AgentGateway const& agent_gateway,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAgentGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAgentGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::AgentGateway const& agent_gateway,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates the parameters of a single AgentGateway.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.UpdateAgentGatewayRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.AgentGateway] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
+  /// [google.cloud.networkservices.v1.UpdateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L273}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  UpdateAgentGateway(
+      google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAgentGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAgentGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAgentGateway
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  UpdateAgentGateway(google::longrunning::Operation const& operation,
+                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single AgentGateway.
+  ///
+  /// @param name  Required. A name of the AgentGateway to delete. Must be in the format
+  ///  `projects/*/locations/*/agentGateways/*`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.DeleteAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L287}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAgentGateway(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAgentGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAgentGateway(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single AgentGateway.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkservices.v1.DeleteAgentGatewayRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkservices.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkservices.v1.DeleteAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L287}
+  /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAgentGateway(
+      google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAgentGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAgentGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAgentGateway
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAgentGateway(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///

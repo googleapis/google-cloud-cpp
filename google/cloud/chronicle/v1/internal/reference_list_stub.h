@@ -62,6 +62,12 @@ class ReferenceListServiceStub {
       google::cloud::chronicle::v1::UpdateReferenceListRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+  VerifyReferenceList(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::VerifyReferenceListRequest const&
+          request) = 0;
+
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
@@ -109,6 +115,12 @@ class DefaultReferenceListServiceStub : public ReferenceListServiceStub {
   StatusOr<google::cloud::chronicle::v1::ReferenceList> UpdateReferenceList(
       grpc::ClientContext& context, Options const& options,
       google::cloud::chronicle::v1::UpdateReferenceListRequest const& request)
+      override;
+
+  StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+  VerifyReferenceList(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::VerifyReferenceListRequest const& request)
       override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(

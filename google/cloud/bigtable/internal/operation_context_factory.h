@@ -88,16 +88,16 @@ class SimpleOperationContextFactory : public OperationContextFactory {
 
 class MetricsOperationContextFactory : public OperationContextFactory {
  public:
-  explicit MetricsOperationContextFactory(std::string client_uid,
-                                          Options options = {});
+  MetricsOperationContextFactory(
+      std::string client_uid,
+      std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+      Options options = {});
 
   // Used for injecting a MockMetricsServiceConnection for testing.
   MetricsOperationContextFactory(
       std::string client_uid,
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
-      std::shared_ptr<OperationContext::Clock> clock =
-          std::make_shared<OperationContext::Clock>(),
-      Options options = {});
+      std::shared_ptr<OperationContext::Clock> clock, Options options = {});
 
   // This constructs an instance only suitable for testing. The provided metric
   // is copied into every RPC metric vector, preventing normal Metric

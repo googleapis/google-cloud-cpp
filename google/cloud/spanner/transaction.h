@@ -18,10 +18,10 @@
 #include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
-#include "absl/types/optional.h"
 #include "google/spanner/v1/transaction.pb.h"
 #include <chrono>
 #include <memory>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -132,7 +132,7 @@ class Transaction {
     explicit ReadWriteOptions(ReadLockMode read_lock_mode);
 
     // A tag used for collecting statistics about the transaction.
-    ReadWriteOptions& WithTag(absl::optional<std::string> tag);
+    ReadWriteOptions& WithTag(std::optional<std::string> tag);
 
     // Sets the isolation level for the transaction. This controls how the
     // transaction interacts with other concurrent transactions, primarily
@@ -143,8 +143,8 @@ class Transaction {
    private:
     friend Transaction;
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts_;
-    absl::optional<std::string> tag_;
-    absl::optional<IsolationLevel> isolation_level_;
+    std::optional<std::string> tag_;
+    std::optional<IsolationLevel> isolation_level_;
   };
 
   /**

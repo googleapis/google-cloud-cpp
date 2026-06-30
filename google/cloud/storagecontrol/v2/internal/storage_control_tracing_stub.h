@@ -204,6 +204,37 @@ class StorageControlTracingStub : public StorageControlStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::storage::control::v2::IntelligenceFinding>
+  GetIntelligenceFinding(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetIntelligenceFindingRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::ListIntelligenceFindingsResponse>
+  ListIntelligenceFindings(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ListIntelligenceFindingsRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::SummarizeIntelligenceFindingsResponse>
+  SummarizeIntelligenceFindings(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::SummarizeIntelligenceFindingsRequest const&
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+  GetIntelligenceFindingRevision(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+          request) override;
+
+  StatusOr<
+      google::storage::control::v2::ListIntelligenceFindingRevisionsResponse>
+  ListIntelligenceFindingRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::
+          ListIntelligenceFindingRevisionsRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

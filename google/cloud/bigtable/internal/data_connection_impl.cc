@@ -31,6 +31,8 @@
 #include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/algorithm.h"
@@ -39,6 +41,10 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/monitoring/v3/metric_connection.h"
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/universe_domain_options.h"
 #include <memory>
 #include <string>
 
@@ -195,6 +201,17 @@ std::string_view InstanceNameFromTableName(std::string_view table_name) {
   return table_name.substr(0, pos);
 }
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+Options MetricsExporterConnectionOptions(Options options) {
+  // We start with a copy of the client options to preserve credentials and
+  // universe domain, but we must unset Bigtable-specific endpoints/authorities
+  // to allow default Monitoring defaults.
+  options.unset<EndpointOption>();
+  options.unset<AuthorityOption>();
+  return options;
+}
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -227,6 +244,8 @@ DataConnectionImpl::DataConnectionImpl(
       options_(MergeOptions(std::move(options), DataConnection::options())) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   if (options_.get<bigtable::EnableMetricsOption>()) {
+    metric_service_connection_ = monitoring_v3::MakeMetricServiceConnection(
+        MetricsExporterConnectionOptions(options_));
     // The client_uid is eventually used in conjunction with other data labels
     // to identify metric data points. This pseudorandom string is used to aid
     // in disambiguation.
@@ -234,8 +253,8 @@ DataConnectionImpl::DataConnectionImpl(
     std::string client_uid =
         internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
     operation_context_factory_ =
-        std::make_unique<MetricsOperationContextFactory>(std::move(client_uid),
-                                                         options_);
+        std::make_unique<MetricsOperationContextFactory>(
+            std::move(client_uid), metric_service_connection_, options_);
   } else {
     operation_context_factory_ =
         std::make_unique<SimpleOperationContextFactory>();
@@ -243,7 +262,7 @@ DataConnectionImpl::DataConnectionImpl(
 #else
   operation_context_factory_ =
       std::make_unique<SimpleOperationContextFactory>();
-#endif
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 }
 
 DataConnectionImpl::DataConnectionImpl(

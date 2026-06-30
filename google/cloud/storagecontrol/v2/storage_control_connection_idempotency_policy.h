@@ -124,6 +124,25 @@ class StorageControlConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency GetIntelligenceFinding(
+      google::storage::control::v2::GetIntelligenceFindingRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListIntelligenceFindings(
+      google::storage::control::v2::ListIntelligenceFindingsRequest request);
+
+  virtual google::cloud::Idempotency SummarizeIntelligenceFindings(
+      google::storage::control::v2::SummarizeIntelligenceFindingsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetIntelligenceFindingRevision(
+      google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListIntelligenceFindingRevisions(
+      google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
+          request);
 };
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>

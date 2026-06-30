@@ -325,6 +325,40 @@ class MockStorageControlConnection
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::storage::control::v2::IntelligenceFinding>,
+      GetIntelligenceFinding,
+      (google::storage::control::v2::GetIntelligenceFindingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::storage::control::v2::IntelligenceFinding>),
+      ListIntelligenceFindings,
+      (google::storage::control::v2::ListIntelligenceFindingsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::storage::control::v2::FindingSummary>),
+      SummarizeIntelligenceFindings,
+      (google::storage::control::v2::SummarizeIntelligenceFindingsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::storage::control::v2::IntelligenceFindingRevision>,
+      GetIntelligenceFindingRevision,
+      (google::storage::control::v2::
+           GetIntelligenceFindingRevisionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::storage::control::v2::IntelligenceFindingRevision>),
+      ListIntelligenceFindingRevisions,
+      (google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

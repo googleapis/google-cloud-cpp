@@ -182,7 +182,8 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTable) {
   create_request.set_parent(instance_name);
   create_request.set_table_id(table_id);
   ASSERT_STATUS_OK(table_admin_->CreateTable(create_request));
-  bigtable::Table table(MakeDataConnection(),
+  bigtable::Table table(MakeDataConnection({InstanceResource(
+                            Project(project_id()), instance_id())}),
                         TableResource(project_id(), instance_id(), table_id));
 
   // List tables
@@ -306,8 +307,9 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
-  auto table = Table(MakeDataConnection(),
-                     TableResource(project_id(), id, random_table_id));
+  auto table =
+      Table(MakeDataConnection({InstanceResource(Project(project_id()), id)}),
+            TableResource(project_id(), id, random_table_id));
   // Insert some cells into the table.
   std::string const row_key1 = "check-consistency-row1";
   std::string const row_key2 = "check-consistency-row2";
@@ -379,7 +381,8 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   request.set_parent(instance_name);
   request.set_table_id(table_id);
   ASSERT_STATUS_OK(table_admin->CreateTable(request));
-  bigtable::Table table(MakeDataConnection(),
+  bigtable::Table table(MakeDataConnection({InstanceResource(
+                            Project(project_id()), instance_id())}),
                         TableResource(project_id(), instance_id(), table_id));
 
   // List tables

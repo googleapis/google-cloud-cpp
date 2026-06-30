@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/results.h"
-#include "absl/types/optional.h"
 #include "google/spanner/v1/result_set.pb.h"
 #include <memory>
+#include <optional>
 #include <string>
 #include <unordered_map>
 
@@ -25,10 +25,10 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-absl::optional<Timestamp> GetReadTimestamp(
+std::optional<Timestamp> GetReadTimestamp(
     std::unique_ptr<ResultSourceInterface> const& source) {
   auto metadata = source->Metadata();
-  absl::optional<Timestamp> timestamp;
+  std::optional<Timestamp> timestamp;
   if (metadata.has_value() && metadata->has_transaction() &&
       metadata->transaction().has_read_timestamp()) {
     auto ts = MakeTimestamp(metadata->transaction().read_timestamp());
@@ -43,7 +43,7 @@ std::int64_t GetRowsModified(
   return stats ? stats->row_count_exact() : 0;
 }
 
-absl::optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
+std::optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
     std::unique_ptr<ResultSourceInterface> const& source) {
   auto stats = source->Stats();
   if (stats && stats->has_query_stats()) {
@@ -57,7 +57,7 @@ absl::optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
   return {};
 }
 
-absl::optional<spanner::ExecutionPlan> GetExecutionPlan(
+std::optional<spanner::ExecutionPlan> GetExecutionPlan(
     std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
   auto stats = source->Stats();
   if (stats && stats->has_query_plan()) {
@@ -71,7 +71,7 @@ std::int64_t RowStream::RowsModified() const {
   return GetRowsModified(source_);
 }
 
-absl::optional<Timestamp> RowStream::ReadTimestamp() const {
+std::optional<Timestamp> RowStream::ReadTimestamp() const {
   return GetReadTimestamp(source_);
 }
 
@@ -79,16 +79,16 @@ std::int64_t DmlResult::RowsModified() const {
   return GetRowsModified(source_);
 }
 
-absl::optional<Timestamp> ProfileQueryResult::ReadTimestamp() const {
+std::optional<Timestamp> ProfileQueryResult::ReadTimestamp() const {
   return GetReadTimestamp(source_);
 }
 
-absl::optional<std::unordered_map<std::string, std::string>>
+std::optional<std::unordered_map<std::string, std::string>>
 ProfileQueryResult::ExecutionStats() const {
   return GetExecutionStats(source_);
 }
 
-absl::optional<spanner::ExecutionPlan> ProfileQueryResult::ExecutionPlan()
+std::optional<spanner::ExecutionPlan> ProfileQueryResult::ExecutionPlan()
     const {
   return GetExecutionPlan(source_);
 }
@@ -97,12 +97,12 @@ std::int64_t ProfileDmlResult::RowsModified() const {
   return GetRowsModified(source_);
 }
 
-absl::optional<std::unordered_map<std::string, std::string>>
+std::optional<std::unordered_map<std::string, std::string>>
 ProfileDmlResult::ExecutionStats() const {
   return GetExecutionStats(source_);
 }
 
-absl::optional<spanner::ExecutionPlan> ProfileDmlResult::ExecutionPlan() const {
+std::optional<spanner::ExecutionPlan> ProfileDmlResult::ExecutionPlan() const {
   return GetExecutionPlan(source_);
 }
 

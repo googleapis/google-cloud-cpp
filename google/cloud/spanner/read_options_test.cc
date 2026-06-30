@@ -57,12 +57,12 @@ TEST(ReadOptionsTest, OptionsRoundTrip) {
     for (std::int64_t limit : {0, 42}) {
       ro.limit = limit;
       for (auto const& request_priority :
-           {absl::optional<RequestPriority>(absl::nullopt),
-            absl::optional<RequestPriority>(RequestPriority::kLow)}) {
+           {std::optional<RequestPriority>(std::nullopt),
+            std::optional<RequestPriority>(RequestPriority::kLow)}) {
         ro.request_priority = request_priority;
         for (auto const& request_tag :
-             {absl::optional<std::string>(absl::nullopt),
-              absl::optional<std::string>("tag")}) {
+             {std::optional<std::string>(std::nullopt),
+              std::optional<std::string>("tag")}) {
           ro.request_tag = request_tag;
           EXPECT_EQ(ro, ToReadOptions(ToOptions(ro)));
         }

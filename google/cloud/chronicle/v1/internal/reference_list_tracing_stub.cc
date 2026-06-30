@@ -81,6 +81,18 @@ ReferenceListServiceTracingStub::UpdateReferenceList(
       context, *span, child_->UpdateReferenceList(context, options, request));
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+ReferenceListServiceTracingStub::VerifyReferenceList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "VerifyReferenceList");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->VerifyReferenceList(context, options, request));
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 ReferenceListServiceTracingStub::ListOperations(
     grpc::ClientContext& context, Options const& options,

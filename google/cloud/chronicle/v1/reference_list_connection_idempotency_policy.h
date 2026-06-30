@@ -50,6 +50,9 @@ class ReferenceListServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateReferenceList(
       google::cloud::chronicle::v1::UpdateReferenceListRequest const& request);
 
+  virtual google::cloud::Idempotency VerifyReferenceList(
+      google::cloud::chronicle::v1::VerifyReferenceListRequest const& request);
+
   virtual google::cloud::Idempotency ListOperations(
       google::longrunning::ListOperationsRequest request);
 

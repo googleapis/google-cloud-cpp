@@ -1446,6 +1446,141 @@ NetworkServicesLogging::ListMeshRouteViews(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::networkservices::v1::ListAgentGatewaysResponse>
+NetworkServicesLogging::ListAgentGateways(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::ListAgentGatewaysRequest const&
+                 request) {
+        return child_->ListAgentGateways(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesLogging::GetAgentGateway(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::GetAgentGatewayRequest const&
+                 request) {
+        return child_->GetAgentGateway(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncCreateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+              request) {
+        return child_->AsyncCreateAgentGateway(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::CreateAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+              request) {
+        return child_->CreateAgentGateway(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncUpdateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+              request) {
+        return child_->AsyncUpdateAgentGateway(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::UpdateAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+              request) {
+        return child_->UpdateAgentGateway(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetworkServicesLogging::AsyncDeleteAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+              request) {
+        return child_->AsyncDeleteAgentGateway(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesLogging::DeleteAgentGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+              request) {
+        return child_->DeleteAgentGateway(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetworkServicesLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

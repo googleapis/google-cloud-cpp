@@ -52,6 +52,9 @@ class RuleServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteRule(
       google::cloud::chronicle::v1::DeleteRuleRequest const& request);
 
+  virtual google::cloud::Idempotency VerifyRuleText(
+      google::cloud::chronicle::v1::VerifyRuleTextRequest const& request);
+
   virtual google::cloud::Idempotency ListRuleRevisions(
       google::cloud::chronicle::v1::ListRuleRevisionsRequest request);
 

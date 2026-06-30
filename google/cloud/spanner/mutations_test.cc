@@ -20,11 +20,11 @@
 #include "google/cloud/spanner/numeric.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <cstdint>
 #include <limits>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -116,8 +116,8 @@ TEST(MutationsTest, InsertFloat32) {
 TEST(MutationsTest, InsertComplex) {
   auto builder = InsertMutationBuilder("table-name", {"col1", "col2", "col3"})
                      .AddRow({Value(42), Value("foo"), Value(false)})
-                     .EmplaceRow(absl::optional<std::int64_t>(), "bar",
-                                 absl::optional<bool>{});
+                     .EmplaceRow(std::optional<std::int64_t>(), "bar",
+                                 std::optional<bool>{});
   Mutation insert = builder.Build();
   Mutation moved = std::move(builder).Build();
   EXPECT_EQ(insert, moved);
@@ -177,7 +177,7 @@ TEST(MutationsTest, UpdateComplex) {
   auto builder = UpdateMutationBuilder("table-name", {"col_a", "col_b"})
                      .AddRow({Value(std::vector<std::string>{}), Value(7.0)})
                      .EmplaceRow(std::vector<std::string>{"a", "b"},
-                                 absl::optional<double>{});
+                                 std::optional<double>{});
   Mutation update = builder.Build();
   Mutation moved = std::move(builder).Build();
   EXPECT_EQ(update, moved);

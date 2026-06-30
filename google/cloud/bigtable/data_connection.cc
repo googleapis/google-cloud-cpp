@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
@@ -174,6 +175,13 @@ bigtable::RowStream DataConnection::ExecuteQuery(bigtable::ExecuteQueryParams) {
           Status(StatusCode::kUnimplemented, "not implemented")));
 }
 
+std::shared_ptr<DataConnection> MakeDataConnection(
+    std::vector<InstanceResource> instances, Options options) {
+  options.set<bigtable_internal::InstanceChannelAffinityOption>(
+      std::move(instances));
+  return MakeDataConnection(std::move(options));
+}
+
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   google::cloud::internal::CheckExpectedOptions<
       AppProfileIdOption, CommonOptionList, GrpcOptionList,
@@ -188,7 +196,7 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
   std::shared_ptr<DataConnection> conn;
 
-  if (options.has<experimental::InstanceChannelAffinityOption>()) {
+  if (options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
     auto stub_creation_fn =
         [auth, cq = background->cq(), options](
             std::string_view instance_name,
@@ -198,7 +206,7 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
         };
 
     auto affinity_stubs = bigtable_internal::CreateBigtableAffinityStubs(
-        options.get<experimental::InstanceChannelAffinityOption>(),
+        options.get<bigtable_internal::InstanceChannelAffinityOption>(),
         stub_creation_fn);
     conn = std::make_shared<bigtable_internal::DataConnectionImpl>(
         std::move(background),
