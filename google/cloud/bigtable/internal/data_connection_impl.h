@@ -33,6 +33,11 @@
 
 namespace google {
 namespace cloud {
+namespace monitoring_v3 {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class MetricServiceConnection;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace monitoring_v3
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -142,6 +147,8 @@ class DataConnectionImpl : public bigtable::DataConnection {
 
   std::unique_ptr<BackgroundThreads> background_;
   std::unique_ptr<StubManager> stub_manager_;
+  std::shared_ptr<::google::cloud::monitoring_v3::MetricServiceConnection>
+      metric_service_connection_;
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;
