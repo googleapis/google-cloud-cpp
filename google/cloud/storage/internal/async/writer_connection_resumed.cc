@@ -15,8 +15,8 @@
 #include "google/cloud/storage/internal/async/writer_connection_resumed.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
-#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
@@ -324,10 +324,9 @@ class AsyncWriterConnectionResumedState
       std::unique_lock<std::mutex> lk(mu_);
       auto it = crc32c_history_.find(buffer_offset_);
       if (it != crc32c_history_.end() && it->second != checksums->crc32c()) {
-        SetError(std::move(lk),
-                 google::cloud::internal::DataLossError(
-                     "client/server checksum mismatch at Close",
-                     GCP_ERROR_INFO()));
+        SetError(std::move(lk), google::cloud::internal::DataLossError(
+                                    "client/server checksum mismatch at Close",
+                                    GCP_ERROR_INFO()));
         return;
       }
     }
@@ -437,8 +436,7 @@ class AsyncWriterConnectionResumedState
           if (y < persisted_size) {
             auto const slice_offset =
                 static_cast<std::size_t>(y - buffer_offset_);
-            auto const slice_len =
-                static_cast<std::size_t>(persisted_size - y);
+            auto const slice_len = static_cast<std::size_t>(persisted_size - y);
             if (slice_offset + slice_len <= resend_buffer_.size()) {
               auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
               (void)hash_function_->Update(y, slice, Crc32c(slice));
