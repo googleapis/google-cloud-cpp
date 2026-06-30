@@ -1206,16 +1206,19 @@ TEST(WriterConnectionResumed, FinalizeExpectedChecksumMismatch) {
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
   auto first_response = google::storage::v2::BidiWriteObjectResponse{};
 
-  EXPECT_CALL(*mock, PersistedState).WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
   auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, CurrentCrc32c).WillRepeatedly(Return(100));
-  EXPECT_CALL(*hash, Finish).WillOnce(Return(storage::internal::HashValues{"ImIEBA==", ""}));
+  EXPECT_CALL(*hash, Finish)
+      .WillOnce(Return(storage::internal::HashValues{"ImIEBA==", ""}));
   MockFactory mock_factory;
 
   auto connection = MakeWriterConnectionResumed(
       mock_factory.AsStdFunction(), std::move(mock), initial_request, hash,
       first_response, Options{});
-  auto finalize = connection->Finalize({}, storage::Crc32cChecksumValue("AAAAAA=="));
+  auto finalize =
+      connection->Finalize({}, storage::Crc32cChecksumValue("AAAAAA=="));
   EXPECT_THAT(finalize.get(), StatusIs(StatusCode::kDataLoss));
 }
 
@@ -1225,7 +1228,8 @@ TEST(WriterConnectionResumed, RollbackChecksumOnResume) {
   auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
   auto first_response = google::storage::v2::BidiWriteObjectResponse{};
 
-  EXPECT_CALL(*mock, PersistedState).WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
   EXPECT_CALL(*mock, Flush).WillRepeatedly([&](auto const&) {
     return sequencer.PushBack("Flush").then([](auto f) {
       if (!f.get()) return TransientError();
@@ -1255,9 +1259,10 @@ TEST(WriterConnectionResumed, RollbackChecksumOnResume) {
   EXPECT_CALL(mock_factory, Call(_)).WillOnce([&](auto const&) {
     WriteObject::WriteResult result;
     result.stream = std::move(mock_stream);
-    return sequencer.PushBack("Factory").then([r = std::move(result)](auto) mutable {
-      return StatusOr<WriteObject::WriteResult>(std::move(r));
-    });
+    return sequencer.PushBack("Factory").then(
+        [r = std::move(result)](auto) mutable {
+          return StatusOr<WriteObject::WriteResult>(std::move(r));
+        });
   });
 
   EXPECT_CALL(*mock_stream_ptr, Write).WillRepeatedly([&](auto const&, auto) {
