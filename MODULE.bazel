@@ -35,7 +35,7 @@ bazel_dep(name = "nlohmann_json", version = "3.12.0.bcr.1")
 bazel_dep(name = "curl", version = "8.8.0.bcr.3")
 bazel_dep(name = "opentelemetry-cpp", version = "1.24.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
-bazel_dep(name = "rules_python", version = "1.9.1")
+bazel_dep(name = "rules_python", version = "2.1.0")
 bazel_dep(name = "rules_apple", version = "4.3.3")
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 
