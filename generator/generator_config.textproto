@@ -3366,51 +3366,6 @@ service {
   endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
 }
 
-# Pub/Sub Lite
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2021"
-  gen_async_rpcs: ["GetTopicPartitions"]
-  retryable_status_codes: ["kInternal", "kUnavailable"]
-  omit_repo_metadata: true
-}
-
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/cursor.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2022"
-  omit_client: true
-  omit_connection: true
-  omit_repo_metadata: true
-}
-
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/publisher.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2022"
-  omit_client: true
-  omit_connection: true
-  omit_repo_metadata: true
-}
-
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/subscriber.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2022"
-  omit_client: true
-  omit_connection: true
-  omit_repo_metadata: true
-}
-
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/topic_stats.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kInternal", "kUnavailable"]
-  omit_repo_metadata: true
-}
-
 # Rapid Migration Assessment
 service {
   service_proto_path: "google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto"

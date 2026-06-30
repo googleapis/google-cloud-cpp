@@ -166,7 +166,7 @@ function integration::bazel_args() {
 #   mapfile -t integration_args < <(integration::bazel_args)
 #   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 #
-# Runs Pub/Sub integration tests (including Pub/Sub Lite if BAZEL_TARGETS is default).
+# Runs Pub/Sub integration tests.
 function integration::bazel_pubsub_with_emulators() {
   local EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
   if [[ $# == 0 ]]; then
@@ -192,7 +192,7 @@ function integration::bazel_pubsub_with_emulators() {
   io::log_h2 "Running Pub/Sub production integration tests"
   bazel "${verb}" "${args[@]}" \
     --test_tag_filters="${production_tests_tag_filters}" \
-    "google/cloud/pubsublite/..."
+    "google/cloud/pubsub/..."
 }
 
 # Runs Storage integration tests.
