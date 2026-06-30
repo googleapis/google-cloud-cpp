@@ -116,18 +116,19 @@ class AsyncWriter {
   future<StatusOr<AsyncToken>> Write(AsyncToken token, WritePayload payload);
 
   /// Finalize the upload with the existing data.
+  future<StatusOr<google::storage::v2::Object>> Finalize(AsyncToken token);
   future<StatusOr<google::storage::v2::Object>> Finalize(
       AsyncToken token,
-      absl::optional<Crc32cChecksumValue> const& expected_checksum =
-          absl::nullopt);
+      absl::optional<Crc32cChecksumValue> const& expected_checksum);
 
   /**
    * Upload @p payload and then finalize the upload.
    */
+  future<StatusOr<google::storage::v2::Object>> Finalize(AsyncToken token,
+                                                         WritePayload payload);
   future<StatusOr<google::storage::v2::Object>> Finalize(
       AsyncToken token, WritePayload payload,
-      absl::optional<Crc32cChecksumValue> const& expected_checksum =
-          absl::nullopt);
+      absl::optional<Crc32cChecksumValue> const& expected_checksum);
 
   /**
    * Flush any buffered data to the service.
