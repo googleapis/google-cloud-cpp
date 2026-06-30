@@ -322,7 +322,12 @@ class AsyncWriterConnectionResumedState
     std::unique_lock<std::mutex> lk(mu_);
     auto checksums = Impl(lk)->PersistedChecksums();
     if (checksums && checksums->has_crc32c()) {
-      auto it = crc32c_history_.find(buffer_offset_);
+      auto const state = Impl(lk)->PersistedState();
+      auto const persisted_size =
+          absl::holds_alternative<google::storage::v2::Object>(state)
+              ? absl::get<google::storage::v2::Object>(state).size()
+              : absl::get<std::int64_t>(state);
+      auto it = crc32c_history_.find(persisted_size);
       if (it != crc32c_history_.end() && it->second != checksums->crc32c()) {
         SetError(std::move(lk), google::cloud::internal::DataLossError(
                                     "client/server checksum mismatch at Close",
@@ -406,6 +411,38 @@ class AsyncWriterConnectionResumedState
     return tmp;
   }
 
+  void RestoreChecksumState(std::int64_t persisted_size) {
+    if (!hash_function_ || !hash_function_->CurrentCrc32c().has_value()) return;
+    auto it = crc32c_history_.find(persisted_size);
+    if (it != crc32c_history_.end()) {
+      hash_function_->RestoreCrc32c(it->second, persisted_size);
+    } else if (!crc32c_history_.empty()) {
+      auto upper = crc32c_history_.upper_bound(persisted_size);
+      if (upper != crc32c_history_.begin()) {
+        --upper;
+        auto const y = upper->first;
+        auto const crc_y = upper->second;
+        hash_function_->RestoreCrc32c(crc_y, y);
+        if (y < persisted_size) {
+          auto const slice_offset =
+              static_cast<std::size_t>(y - buffer_offset_);
+          auto const slice_len = static_cast<std::size_t>(persisted_size - y);
+          if (slice_offset + slice_len <= resend_buffer_.size()) {
+            auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
+            (void)hash_function_->Update(y, slice, Crc32c(slice));
+          }
+        }
+        if (auto current = hash_function_->CurrentCrc32c()) {
+          crc32c_history_[persisted_size] = *current;
+        }
+      }
+    }
+    auto purge_it = crc32c_history_.upper_bound(persisted_size);
+    crc32c_history_.erase(purge_it, crc32c_history_.end());
+    crc32c_history_.erase(crc32c_history_.begin(),
+                          crc32c_history_.lower_bound(persisted_size));
+  }
+
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
     auto handle = Impl(lk)->WriteHandle();
     if (handle) {
@@ -423,36 +460,7 @@ class AsyncWriterConnectionResumedState
                       MakeFastForwardError(buffer_offset_, persisted_size,
                                            GCP_ERROR_INFO()));
     }
-    if (hash_function_ && hash_function_->CurrentCrc32c().has_value()) {
-      auto it = crc32c_history_.find(persisted_size);
-      if (it != crc32c_history_.end()) {
-        hash_function_->RestoreCrc32c(it->second, persisted_size);
-      } else if (!crc32c_history_.empty()) {
-        auto upper = crc32c_history_.upper_bound(persisted_size);
-        if (upper != crc32c_history_.begin()) {
-          --upper;
-          auto const y = upper->first;
-          auto const crc_y = upper->second;
-          hash_function_->RestoreCrc32c(crc_y, y);
-          if (y < persisted_size) {
-            auto const slice_offset =
-                static_cast<std::size_t>(y - buffer_offset_);
-            auto const slice_len = static_cast<std::size_t>(persisted_size - y);
-            if (slice_offset + slice_len <= resend_buffer_.size()) {
-              auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
-              (void)hash_function_->Update(y, slice, Crc32c(slice));
-            }
-          }
-          if (auto current = hash_function_->CurrentCrc32c()) {
-            crc32c_history_[persisted_size] = *current;
-          }
-        }
-      }
-      auto purge_it = crc32c_history_.upper_bound(persisted_size);
-      crc32c_history_.erase(purge_it, crc32c_history_.end());
-      crc32c_history_.erase(crc32c_history_.begin(),
-                            crc32c_history_.lower_bound(persisted_size));
-    }
+    RestoreChecksumState(persisted_size);
     resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
     buffer_offset_ = persisted_size;
     if (state_ == State::kResuming) {
