@@ -1,3 +1,6 @@
+permissions:
+  contents: read
+
 name: "CodeQL"
 
 on:
@@ -22,19 +25,22 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          persist-credentials: false
       - name: Checkout vcpkg
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           path: "build/vcpkg"
           repository: "microsoft/vcpkg"
           fetch-depth: 0
+          persist-credentials: false
       - name: Checkout pinned vcpkg version
         run: >
           git -C build/vcpkg checkout -q $(<ci/etc/vcpkg-version.txt)
       - name: cache-vcpkg
         id: cache-vcpkg
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: |
             ~/.cache/vcpkg
@@ -66,7 +72,7 @@ jobs:
             --clean-after-build
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@dd903d2e4f5405488e5ef1422510ee31c8b32357 # v3
         with:
           languages: ${{ matrix.language }}
 
@@ -86,4 +92,4 @@ jobs:
           cmake --build build/output
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@dd903d2e4f5405488e5ef1422510ee31c8b32357 # v3

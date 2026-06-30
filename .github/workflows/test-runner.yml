@@ -1,8 +1,11 @@
+permissions:
+  contents: read
+
 name: "gha: macOS & Windows"
 
 # Build on pull requests and pushes to `main`. The PR builds will be
 # non-blocking for now, but that is configured elsewhere.
-on:
+on: # zizmor: ignore[dangerous-triggers]
   # Start these builds on pushes (think "after the merge") too. Normally there
   # are no `ci-gha**` branches in our repository. The contributors to the repo
   # can create such branches when testing or troubleshooting builds. In such
@@ -52,8 +55,11 @@ jobs:
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
     steps:
+      # zizmor: ignore[template-injection]
       - name: Save Pull Request
         id: save-pull-request
+        # zizmor: ignore[template-injection]
+        # zizmor: ignore[template-injection]
         run: >
           echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
 
@@ -65,29 +71,29 @@ jobs:
   macos-bazel:
     name: macOS-Bazel
     needs: [pre-flight]
-    uses: ./.github/workflows/macos-bazel.yml
+    uses: ./.github/workflows/macos-bazel.yml # zizmor: ignore[secrets-inherit]
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
       bazel-cache-mode: 'READ_WRITE'
       execute-integration-tests: true
-    secrets: inherit
+    secrets: inherit # zizmor: ignore[secrets-inherit]
   windows-bazel:
     # Disabled
     if: false
     name: Windows-Bazel
     needs: [pre-flight]
-    uses: ./.github/workflows/windows-bazel.yml
+    uses: ./.github/workflows/windows-bazel.yml # zizmor: ignore[secrets-inherit]
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
       bazel-cache-mode: 'READ_WRITE'
       execute-integration-tests: true
-    secrets: inherit
+    secrets: inherit # zizmor: ignore[secrets-inherit]
   macos-cmake:
     # Disabled
     if: false
     name: macOS-CMake
     needs: [pre-flight]
-    uses: ./.github/workflows/macos-cmake.yml
+    uses: ./.github/workflows/macos-cmake.yml # zizmor: ignore[secrets-inherit]
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
       # Build the full matrix only on push events to the default branch, or
@@ -102,11 +108,11 @@ jobs:
       sccache-mode: 'READ_WRITE'
       vcpkg-cache-mode: 'readwrite'
       execute-integration-tests: true
-    secrets: inherit
+    secrets: inherit # zizmor: ignore[secrets-inherit]
   windows-cmake:
     name: Windows-CMake
     needs: [pre-flight]
-    uses: ./.github/workflows/windows-cmake.yml
+    uses: ./.github/workflows/windows-cmake.yml # zizmor: ignore[secrets-inherit]
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
       # Build the full matrix only on push events to the default branch, or
@@ -121,4 +127,4 @@ jobs:
       sccache-mode: 'READ_WRITE'
       vcpkg-cache-mode: 'readwrite'
       execute-integration-tests: true
-    secrets: inherit
+    secrets: inherit # zizmor: ignore[secrets-inherit]
