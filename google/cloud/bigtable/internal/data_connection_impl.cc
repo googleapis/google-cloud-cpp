@@ -198,6 +198,17 @@ std::string_view InstanceNameFromTableName(std::string_view table_name) {
   return table_name.substr(0, pos);
 }
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+Options MetricsExporterConnectionOptions(Options options) {
+  // We start with a copy of the client options to preserve credentials and
+  // universe domain, but we must unset Bigtable-specific endpoints/authorities
+  // to allow default Monitoring defaults.
+  options.unset<EndpointOption>();
+  options.unset<AuthorityOption>();
+  return options;
+}
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -219,17 +230,6 @@ bigtable::Row TransformReadModifyWriteRowResponse(
 
   return bigtable::Row(std::move(*row.mutable_key()), std::move(cells));
 }
-
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-Options MetricsExporterConnectionOptions(Options options) {
-  // We start with a copy of the client options to preserve credentials and
-  // universe domain, but we must unset Bigtable-specific endpoints/authorities
-  // to allow default Monitoring defaults.
-  options.unset<EndpointOption>();
-  options.unset<AuthorityOption>();
-  return options;
-}
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
@@ -259,7 +259,7 @@ DataConnectionImpl::DataConnectionImpl(
 #else
   operation_context_factory_ =
       std::make_unique<SimpleOperationContextFactory>();
-#endif
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 }
 
 DataConnectionImpl::DataConnectionImpl(

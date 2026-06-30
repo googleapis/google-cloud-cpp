@@ -25,7 +25,9 @@
 #include "google/cloud/bigtable/prepared_query.h"
 #include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/background_threads.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/monitoring/v3/metric_connection.h"
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -143,8 +145,10 @@ class DataConnectionImpl : public bigtable::DataConnection {
 
   std::unique_ptr<BackgroundThreads> background_;
   std::unique_ptr<StubManager> stub_manager_;
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   std::shared_ptr<::google::cloud::monitoring_v3::MetricServiceConnection>
       metric_service_connection_;
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;
