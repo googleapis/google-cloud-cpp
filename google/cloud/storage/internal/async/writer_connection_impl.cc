@@ -16,9 +16,11 @@
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/partial_upload.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
+#include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
+#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -26,6 +28,12 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+std::string FormatCrc32c(absl::optional<std::uint32_t> crc) {
+  if (!crc) return {};
+  return storage::internal::Base64Encode(
+      google::cloud::internal::EncodeBigEndian(*crc));
+}
 
 auto HandleFinishAfterError(std::string msg) {
   return [m = std::move(msg)](future<Status> f) {
