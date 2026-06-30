@@ -134,8 +134,8 @@ std::shared_ptr<storage::internal::HashFunction> CreateAppendableHashFunction(
     return std::make_shared<storage::internal::CompositeFunction>(
         std::move(crc32c), std::move(md5));
   }
-  if (crc32c) return std::move(crc32c);
-  if (md5) return std::move(md5);
+  if (crc32c) return crc32c;
+  if (md5) return md5;
   return storage::internal::CreateNullHashFunction();
 }
 
