@@ -24,7 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void PartialResultSetResume::TryCancel() { reader_->TryCancel(); }
 
 bool PartialResultSetResume::Read(
-    absl::optional<std::string> const& resume_token,
+    std::optional<std::string> const& resume_token,
     UnownedPartialResultSet& result) {
   bool resumption = false;
   do {

@@ -573,7 +573,7 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   // by default. We should unset this variable and create a fresh client in
   // order to have a conclusive test.
   testing_util::ScopedEnvironment env = {"GOOGLE_CLOUD_CPP_ENABLE_TRACING",
-                                         absl::nullopt};
+                                         std::nullopt};
   testing_util::ScopedLog log;
   auto const table_id = testing::TableTestEnvironment::table_id();
 
@@ -1119,7 +1119,7 @@ TEST_F(DataIntegrationTest, QueryWithNulls) {
   auto bound_query = prepared_query->BindParameters({});
   auto row_stream = client.ExecuteQuery(std::move(bound_query));
 
-  using RowType = std::tuple<std::string, absl::optional<std::string>>;
+  using RowType = std::tuple<std::string, std::optional<std::string>>;
   std::vector<RowType> actual_rows;
   for (auto& row : StreamOf<RowType>(row_stream)) {
     ASSERT_STATUS_OK(row);
@@ -1129,9 +1129,9 @@ TEST_F(DataIntegrationTest, QueryWithNulls) {
   EXPECT_THAT(
       actual_rows,
       UnorderedElementsAre(
-          std::make_tuple(row_key1, absl::optional<std::string>(value1)),
-          std::make_tuple(row_key2, absl::optional<std::string>(absl::nullopt)),
-          std::make_tuple(row_key3, absl::optional<std::string>(value3))));
+          std::make_tuple(row_key1, std::optional<std::string>(value1)),
+          std::make_tuple(row_key2, std::optional<std::string>(std::nullopt)),
+          std::make_tuple(row_key3, std::optional<std::string>(value3))));
 }
 
 }  // namespace

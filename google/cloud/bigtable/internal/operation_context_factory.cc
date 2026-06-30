@@ -158,9 +158,11 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
 }
 
 MetricsOperationContextFactory::MetricsOperationContextFactory(
-    std::string client_uid, Options options)
+    std::string client_uid,
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+    Options options)
     : MetricsOperationContextFactory(
-          std::move(client_uid), nullptr,
+          std::move(client_uid), std::move(conn),
           std::make_shared<OperationContext::Clock>(), std::move(options)) {}
 
 MetricsOperationContextFactory::MetricsOperationContextFactory(
