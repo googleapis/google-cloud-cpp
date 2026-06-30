@@ -41,6 +41,9 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/monitoring/v3/metric_connection.h"
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/universe_domain_options.h"
 #include <memory>
 #include <string>
