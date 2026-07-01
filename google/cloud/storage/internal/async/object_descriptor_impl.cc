@@ -26,7 +26,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/rpc/status.pb.h"
-#include <limits>
 #include <memory>
 #include <utility>
 
@@ -40,12 +39,14 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
     std::shared_ptr<OpenStream> stream, Options options,
-    std::function<bool()> transport_ok)
+    std::function<bool()> transport_ok,
+    std::shared_ptr<storage::internal::FeatureTracker> feature_tracker)
     : resume_policy_prototype_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)),
-      transport_ok_(std::move(transport_ok)) {
+      transport_ok_(std::move(transport_ok)),
+      feature_tracker_(std::move(feature_tracker)) {
   stream_manager_ = std::make_unique<StreamManager>(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
       std::make_shared<ReadStream>(std::move(stream),
@@ -98,6 +99,10 @@ void ObjectDescriptorImpl::AssurePendingStreamQueued(
   auto request = google::storage::v2::BidiReadObjectRequest{};
 
   *request.mutable_read_object_spec() = read_object_spec_;
+  if (feature_tracker_ && stream_manager_ && stream_manager_->Size() >= 2) {
+    feature_tracker_->RegisterFeature(
+        storage::internal::TrackedFeature::kMultiStreamInMRD);
+  }
   pending_stream_ = make_stream_(std::move(request));
 }
 
@@ -166,29 +171,8 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   auto hash_function = CreateHashFunction(is_full_read);
   auto hash_validator = CreateHashValidator(is_full_read);
 
-  // Calculate the download limit (number of bytes to read) based on GCS range
-  // read options:
-  // 1. If `p.start < 0`, this is a tail read (ReadLast). The limit is the
-  // absolute value of `p.start`.
-  //    We handle the overflow edge case where `p.start` is the minimum signed
-  //    value.
-  // 2. If `p.start >= 0` and `p.length > 0`, this is a standard range request
-  // (ReadRange). The limit is `p.length`.
-  // 3. Otherwise, the limit is not set (unlimited / read to end).
-  absl::optional<std::int64_t> limit;
-  if (p.start < 0) {
-    if (p.start == (std::numeric_limits<std::int64_t>::min)()) {
-      limit = (std::numeric_limits<std::int64_t>::max)();
-    } else {
-      limit = -p.start;
-    }
-  } else if (p.length > 0) {
-    limit = p.length;
-  }
-
-  auto range = std::make_shared<ReadRange>(
-      p.start, limit, hash_function, std::move(hash_validator),
-      read_object_spec_.bucket(), read_object_spec_.object());
+  auto range = std::make_shared<ReadRange>(p.start, p.length, hash_function,
+                                           std::move(hash_validator));
 
   std::unique_lock<std::mutex> lk(mu_);
   if (stream_manager_->Empty()) {
@@ -351,12 +335,6 @@ void ObjectDescriptorImpl::OnRead(
         std::move(*response->mutable_read_handle());
   }
   auto copy = it->active_ranges;
-  bool is_transcoded = false;
-  absl::optional<std::int64_t> object_size;
-  if (metadata_.has_value()) {
-    is_transcoded = metadata_->content_encoding() == "gzip";
-    object_size = metadata_->size();
-  }
   // Release the lock while notifying the ranges. The notifications may trigger
   // application code, and that code may callback on this class.
   lk.unlock();
@@ -366,7 +344,7 @@ void ObjectDescriptorImpl::OnRead(
     if (l == copy.end()) continue;
     // TODO(#15104) - Consider returning if the range is done, and then
     // skipping CleanupDoneRanges().
-    l->second->OnRead(std::move(range_data), is_transcoded, object_size);
+    l->second->OnRead(std::move(range_data));
   }
   lk.lock();
   stream_manager_->CleanupDoneRanges(it);

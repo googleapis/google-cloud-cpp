@@ -95,6 +95,8 @@ add_library(
     internal/default_object_acl_requests.h
     internal/empty_response.cc
     internal/empty_response.h
+    internal/feature_tracker.cc
+    internal/feature_tracker.h
     internal/generate_message_boundary.cc
     internal/generate_message_boundary.h
     internal/generic_object_request.h
@@ -437,6 +439,7 @@ if (BUILD_TESTING)
         internal/const_buffer_test.cc
         internal/crc32c_test.cc
         internal/default_object_acl_requests_test.cc
+        internal/feature_tracker_test.cc
         internal/generate_message_boundary_test.cc
         internal/generic_request_test.cc
         internal/hash_function_impl_test.cc

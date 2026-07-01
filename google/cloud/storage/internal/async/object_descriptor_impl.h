@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/async/resume_policy.h"
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/async/multi_stream_manager.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader.h"
 #include "google/cloud/storage/internal/async/open_stream.h"
@@ -57,11 +58,13 @@ class ObjectDescriptorImpl
     : public storage::ObjectDescriptorConnection,
       public std::enable_shared_from_this<ObjectDescriptorImpl> {
  public:
-  ObjectDescriptorImpl(std::unique_ptr<storage::ResumePolicy> resume_policy,
-                       OpenStreamFactory make_stream,
-                       google::storage::v2::BidiReadObjectSpec read_object_spec,
-                       std::shared_ptr<OpenStream> stream, Options options = {},
-                       std::function<bool()> transport_ok = {});
+  ObjectDescriptorImpl(
+      std::unique_ptr<storage::ResumePolicy> resume_policy,
+      OpenStreamFactory make_stream,
+      google::storage::v2::BidiReadObjectSpec read_object_spec,
+      std::shared_ptr<OpenStream> stream, Options options = {},
+      std::function<bool()> transport_ok = {},
+      std::shared_ptr<storage::internal::FeatureTracker> feature_tracker = {});
   ~ObjectDescriptorImpl() override;
 
   // Start the read loop.
@@ -132,6 +135,7 @@ class ObjectDescriptorImpl
       pending_stream_;
   bool cancelled_ = false;
   std::function<bool()> transport_ok_;
+  std::shared_ptr<storage::internal::FeatureTracker> feature_tracker_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
