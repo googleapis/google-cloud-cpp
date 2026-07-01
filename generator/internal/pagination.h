@@ -38,7 +38,7 @@ bool IsPaginated(google::protobuf::MethodDescriptor const& method);
 struct PaginationInfo {
   std::string range_output_field_name;
   google::protobuf::Descriptor const* range_output_type;
-  absl::optional<google::protobuf::FieldDescriptor const*>
+  std::optional<google::protobuf::FieldDescriptor const*>
       range_output_map_key_type;
 };
 
