@@ -49,7 +49,7 @@ TEST(OptionsTest, SetEmulatorEnvOverrides) {
 }
 
 TEST(OptionsTest, UnsetEmulatorEnv) {
-  ScopedEnvironment emulator("PUBSUB_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("PUBSUB_EMULATOR_HOST", std::nullopt);
   auto opts = DefaultCommonOptions(
       Options{}
           .set<EndpointOption>("used-endpoint")
@@ -129,14 +129,14 @@ TEST(OptionsTest, SetOtelLinkLimitEnvOverrides) {
 }
 
 TEST(OptionsTest, UnsetOtelLinkLimitEnv) {
-  ScopedEnvironment env("OTEL_SPAN_LINK_COUNT_LIMIT", absl::nullopt);
+  ScopedEnvironment env("OTEL_SPAN_LINK_COUNT_LIMIT", std::nullopt);
   auto opts =
       DefaultPublisherOptions(Options{}.set<pubsub::MaxOtelLinkCountOption>(1));
   EXPECT_EQ(1U, opts.get<pubsub::MaxOtelLinkCountOption>());
 }
 
 TEST(OptionsTest, UnsetOtelLinkLimitEnvNoUserOption) {
-  ScopedEnvironment env("OTEL_SPAN_LINK_COUNT_LIMIT", absl::nullopt);
+  ScopedEnvironment env("OTEL_SPAN_LINK_COUNT_LIMIT", std::nullopt);
   auto opts = DefaultPublisherOptions(Options{});
   EXPECT_EQ(128U, opts.get<pubsub::MaxOtelLinkCountOption>());
 }

@@ -327,7 +327,7 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
         stream_->Read().then(
             [weak,
              rs](future<
-                 absl::optional<google::pubsub::v1::StreamingPullResponse>>
+                 std::optional<google::pubsub::v1::StreamingPullResponse>>
                      f) {
               if (auto s = weak.lock())
                 s->OnInitialRead(std::move(rs), f.get());
@@ -340,7 +340,7 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
 
 void StreamingSubscriptionBatchSource::OnInitialRead(
     RetryLoopState rs,
-    absl::optional<google::pubsub::v1::StreamingPullResponse> response) {
+    std::optional<google::pubsub::v1::StreamingPullResponse> response) {
   shutdown_manager_->FinishedOperation("InitialRead");
   if (!response.has_value()) {
     OnInitialError(std::move(rs));
@@ -427,14 +427,14 @@ void StreamingSubscriptionBatchSource::ReadLoop() {
   lk.unlock();
   auto weak = WeakFromThis();
   using ResponseType =
-      absl::optional<google::pubsub::v1::StreamingPullResponse>;
+      std::optional<google::pubsub::v1::StreamingPullResponse>;
   stream->Read().then([weak, stream](future<ResponseType> f) {
     if (auto self = weak.lock()) self->OnRead(f.get());
   });
 }
 
 void StreamingSubscriptionBatchSource::OnRead(
-    absl::optional<google::pubsub::v1::StreamingPullResponse> response) {
+    std::optional<google::pubsub::v1::StreamingPullResponse> response) {
   auto weak = WeakFromThis();
   std::unique_lock<std::mutex> lk(mu_);
   pending_read_ = false;

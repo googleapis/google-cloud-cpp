@@ -85,8 +85,8 @@ class FakeStream {
       return AddAction("Read").then([](future<bool> g) {
         auto ok = g.get();
         using Response = ::google::pubsub::v1::StreamingPullResponse;
-        if (!ok) return absl::optional<Response>{};
-        return absl::make_optional(Response{});
+        if (!ok) return std::optional<Response>{};
+        return std::make_optional(Response{});
       });
     };
     auto finish_response = [this] {
@@ -238,7 +238,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
             };
         auto read_response = [cq]() mutable {
           return cq.MakeRelativeTimer(us(10)).then(
-              [](F) { return absl::optional<Response>{}; });
+              [](F) { return std::optional<Response>{}; });
         };
         auto finish_response = [cq, transient]() mutable {
           return cq.MakeRelativeTimer(us(10)).then(
@@ -303,7 +303,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
             };
         auto read_response = [cq]() mutable {
           return cq.MakeRelativeTimer(us(10)).then(
-              [](F) { return absl::optional<Response>{}; });
+              [](F) { return std::optional<Response>{}; });
         };
         auto finish_response = [cq, transient]() mutable {
           return cq.MakeRelativeTimer(us(10)).then(
@@ -459,12 +459,12 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
             response.add_received_messages()->set_ack_id(
                 "ack-" + std::to_string(start + i));
           }
-          return absl::make_optional(std::move(response));
+          return std::make_optional(std::move(response));
         });
       };
       auto read_failure = [cq]() mutable {
         return cq.MakeRelativeTimer(us(10)).then(
-            [](F) { return absl::optional<Response>{}; });
+            [](F) { return std::optional<Response>{}; });
       };
       auto finish_response = [cq]() mutable {
         return cq.MakeRelativeTimer(us(10)).then([](F) mutable {
@@ -641,11 +641,11 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeExactlyOnceStream(
     return aseq.PushBack("Read").then([](future<bool> g) {
       auto ok = g.get();
       using Response = ::google::pubsub::v1::StreamingPullResponse;
-      if (!ok) return absl::optional<Response>{};
+      if (!ok) return std::optional<Response>{};
       Response response;
       response.mutable_subscription_properties()
           ->set_exactly_once_delivery_enabled(true);
-      return absl::make_optional(std::move(response));
+      return std::make_optional(std::move(response));
     });
   };
   auto finish_response = [&aseq, finish_status] {
@@ -832,8 +832,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
     };
     auto read_response = [&] {
       return async.PushBack("Read").then([](future<bool> f) {
-        if (f.get()) return absl::make_optional(Response{});
-        return absl::optional<Response>{};
+        if (f.get()) return std::make_optional(Response{});
+        return std::optional<Response>{};
       });
     };
     auto cancel = [&] { async.PushBack("Cancel"); };
@@ -912,21 +912,21 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
         auto read_response_with_eos = [&] {
           return aseq.PushBack("Read").then([](future<bool> g) {
             using Response = ::google::pubsub::v1::StreamingPullResponse;
-            if (!g.get()) return absl::optional<Response>{};
+            if (!g.get()) return std::optional<Response>{};
             Response response;
             response.mutable_subscription_properties()
                 ->set_exactly_once_delivery_enabled(true);
-            return absl::make_optional(std::move(response));
+            return std::make_optional(std::move(response));
           });
         };
         auto read_response_without_eos = [&] {
           return aseq.PushBack("Read").then([](future<bool> g) {
             using Response = ::google::pubsub::v1::StreamingPullResponse;
-            if (!g.get()) return absl::optional<Response>{};
+            if (!g.get()) return std::optional<Response>{};
             Response response;
             response.mutable_subscription_properties()
                 ->set_exactly_once_delivery_enabled(false);
-            return absl::make_optional(std::move(response));
+            return std::make_optional(std::move(response));
           });
         };
         auto finish_response = [&] {
@@ -1222,7 +1222,7 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeUnusedStream(
       response.mutable_subscription_properties()
           ->set_exactly_once_delivery_enabled(true);
     }
-    return make_ready_future(absl::make_optional(std::move(response)));
+    return make_ready_future(std::make_optional(std::move(response)));
   };
   auto finish_response = []() { return make_ready_future(Status{}); };
 

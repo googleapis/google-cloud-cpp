@@ -140,13 +140,13 @@ void ScheduleCallbacks(int64_t ack_count, bool enable_open_telemetry) {
             ++count;
           }
           return cq.MakeRelativeTimer(us(10)).then([response](TimerFuture) {
-            return absl::make_optional(response);
+            return std::make_optional(response);
           });
         });
         EXPECT_CALL(*stream, Cancel).Times(1);
         EXPECT_CALL(*stream, Read).WillRepeatedly([&] {
           return cq.MakeRelativeTimer(us(10)).then([](TimerFuture) {
-            return absl::optional<google::pubsub::v1::StreamingPullResponse>{};
+            return std::optional<google::pubsub::v1::StreamingPullResponse>{};
           });
         });
         EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -295,12 +295,12 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
             ++count;
           }
           return cq.MakeRelativeTimer(us(10)).then(
-              [response](auto) { return absl::make_optional(response); });
+              [response](auto) { return std::make_optional(response); });
         });
         EXPECT_CALL(*stream, Cancel).Times(1);
         EXPECT_CALL(*stream, Read).WillRepeatedly([&] {
           return cq.MakeRelativeTimer(us(10)).then([](auto) {
-            return absl::optional<google::pubsub::v1::StreamingPullResponse>{};
+            return std::optional<google::pubsub::v1::StreamingPullResponse>{};
           });
         });
         EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -872,8 +872,8 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
     };
     auto read_response = [&] {
       return on_read.PushBack("Read").then([](future<bool> f) {
-        if (f.get()) return absl::make_optional(Response{});
-        return absl::optional<Response>{};
+        if (f.get()) return std::make_optional(Response{});
+        return std::optional<Response>{};
       });
     };
     auto finish_response = [&] {
