@@ -168,10 +168,7 @@ AsyncWriterConnectionImpl::Finalize(
     }
   }
 
-  auto action = request_.has_append_object_spec() ||
-                        request_.write_object_spec().appendable()
-                    ? PartialUpload::kFinalize
-                    : PartialUpload::kFinalizeWithChecksum;
+  auto action = PartialUpload::kFinalizeWithChecksum;
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
                                   std::move(p), std::move(action));
   return coro->Start().then(
