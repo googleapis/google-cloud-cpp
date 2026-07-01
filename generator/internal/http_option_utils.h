@@ -18,9 +18,9 @@
 #include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
-#include "absl/types/optional.h"
 #include "google/api/http.pb.h"
 #include <google/protobuf/descriptor.h>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -74,7 +74,7 @@ struct QueryParameterInfo {
  * bool, and string native protobuf data types, as well as, protobuf "Well Known
  * Types" that wrap those data types.
  */
-absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
+std::optional<QueryParameterInfo> DetermineQueryParameterInfo(
     google::protobuf::FieldDescriptor const& field);
 
 /**
@@ -111,7 +111,7 @@ std::string FormatRequestResource(google::protobuf::Descriptor const& request,
 /**
  * Parses the url pattern of the method and returns its API version.
  */
-absl::optional<std::string> FormatApiVersionFromUrlPattern(
+std::optional<std::string> FormatApiVersionFromUrlPattern(
     std::string const& url_pattern);
 
 }  // namespace generator_internal
