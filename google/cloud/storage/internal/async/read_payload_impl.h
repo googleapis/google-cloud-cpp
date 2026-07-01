@@ -20,7 +20,7 @@
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
-#include "absl/types/optional.h"
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -60,7 +60,7 @@ struct ReadPayloadImpl {
   }
 
   /// Get the object hashes (by move) from the payload.
-  static absl::optional<storage::internal::HashValues> GetObjectHashes(
+  static std::optional<storage::internal::HashValues> GetObjectHashes(
       storage::ReadPayload& payload) {
     return std::move(payload.object_hash_values_);
   }

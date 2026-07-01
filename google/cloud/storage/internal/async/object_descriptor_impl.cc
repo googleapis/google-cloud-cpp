@@ -86,7 +86,7 @@ void ObjectDescriptorImpl::Cancel() {
   if (pending_stream_.valid()) pending_stream_.cancel();
 }
 
-absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
+std::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
     const {
   std::unique_lock<std::mutex> lk(mu_);
   return metadata_;
@@ -175,7 +175,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   // 2. If `p.start >= 0` and `p.length > 0`, this is a standard range request
   // (ReadRange). The limit is `p.length`.
   // 3. Otherwise, the limit is not set (unlimited / read to end).
-  absl::optional<std::int64_t> limit;
+  std::optional<std::int64_t> limit;
   if (p.start < 0) {
     if (p.start == (std::numeric_limits<std::int64_t>::min)()) {
       limit = (std::numeric_limits<std::int64_t>::max)();
@@ -338,7 +338,7 @@ void ObjectDescriptorImpl::DoRead(std::unique_lock<std::mutex> lk,
 
 void ObjectDescriptorImpl::OnRead(
     StreamIterator it,
-    absl::optional<google::storage::v2::BidiReadObjectResponse> response) {
+    std::optional<google::storage::v2::BidiReadObjectResponse> response) {
   std::unique_lock<std::mutex> lk(mu_);
   it->stream->read_pending = false;
 
@@ -352,7 +352,7 @@ void ObjectDescriptorImpl::OnRead(
   }
   auto copy = it->active_ranges;
   bool is_transcoded = false;
-  absl::optional<std::int64_t> object_size;
+  std::optional<std::int64_t> object_size;
   if (metadata_.has_value()) {
     is_transcoded = metadata_->content_encoding() == "gzip";
     object_size = metadata_->size();

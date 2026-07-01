@@ -99,7 +99,7 @@ TEST(ObjectDescriptorImpl, LifecycleNoRead) {
   auto stream = std::make_unique<MockStream>();
   EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
     return sequencer.PushBack("Read[1]").then(
-        [](auto) { return absl::optional<Response>{}; });
+        [](auto) { return std::optional<Response>{}; });
   });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -141,7 +141,7 @@ TEST(ObjectDescriptorImpl, LifecycleCancelRacesWithFinish) {
   auto stream = std::make_unique<MockStream>();
   EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
     return sequencer.PushBack("Read[1]").then(
-        [](auto) { return absl::optional<Response>{}; });
+        [](auto) { return std::optional<Response>{}; });
   });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -225,12 +225,12 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -341,12 +341,12 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
           // Simulate a response with 3 out of order messages.
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillRepeatedly([&]() {
         return sequencer.PushBack("Read[2]").then(
-            [&](auto) { return absl::optional<Response>{}; });
+            [&](auto) { return std::optional<Response>{}; });
       });
 
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
@@ -481,19 +481,19 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&]() {
         return sequencer.PushBack("Read[2]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse2, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillRepeatedly([&]() {
         return sequencer.PushBack("Read[3]").then(
-            [&](auto) { return absl::optional<Response>{}; });
+            [&](auto) { return std::optional<Response>{}; });
       });
 
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
@@ -604,7 +604,7 @@ TEST(ObjectDescriptorImpl, AllRangesFailOnUnrecoverableError) {
 
   EXPECT_CALL(*stream, Read).WillOnce([&]() {
     return sequencer.PushBack("Read[1]").then(
-        [](auto) { return absl::optional<Response>{}; });
+        [](auto) { return std::optional<Response>{}; });
   });
 
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
@@ -719,12 +719,12 @@ auto InitialStream(AsyncSequencer<bool>& sequencer) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
 
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
@@ -930,7 +930,7 @@ TEST(ObjectDescriptorImpl, PendingFinish) {
 
     EXPECT_CALL(*stream, Read).WillOnce([&]() {
       return sequencer.PushBack("Read[1]").then(
-          [](auto) { return absl::optional<Response>{}; });
+          [](auto) { return std::optional<Response>{}; });
     });
 
     EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
@@ -1018,7 +1018,7 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
 
     EXPECT_CALL(*stream, Read).WillOnce([&]() {
       return sequencer.PushBack("Read[1]").then(
-          [](auto) { return absl::optional<Response>{}; });
+          [](auto) { return std::optional<Response>{}; });
     });
 
     EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
@@ -1180,7 +1180,7 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
 
   EXPECT_CALL(*stream, Read).WillOnce([&]() {
     return sequencer.PushBack("Read[1]").then(
-        [](auto) { return absl::optional<Response>{}; });
+        [](auto) { return std::optional<Response>{}; });
   });
 
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
@@ -1275,7 +1275,7 @@ TEST(ObjectDescriptorImpl, ProactiveStreamCreation) {
   auto stream = std::make_unique<MockStream>();
   EXPECT_CALL(*stream, Read).WillOnce([&] {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::optional<Response>(); });
+        [](auto) { return std::optional<Response>(); });
   });
   EXPECT_CALL(*stream, Finish).WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*stream, Cancel).Times(AtMost(1));  // Always called by OpenStream
@@ -1321,7 +1321,7 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamCreatesNewWhenAllBusy) {
           [](Request const&, auto) { return make_ready_future(true); });
   // Keep stream1 busy but return ready futures.
   EXPECT_CALL(*stream1, Read).WillRepeatedly([] {
-    return make_ready_future(absl::optional<Response>{});
+    return make_ready_future(std::optional<Response>{});
   });
   EXPECT_CALL(*stream1, Finish).WillOnce([] {
     return make_ready_future(Status{});
@@ -1334,7 +1334,7 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamCreatesNewWhenAllBusy) {
       .Times(::testing::AtMost(1))
       .WillRepeatedly([](...) { return make_ready_future(true); });
   EXPECT_CALL(*stream2, Read).WillRepeatedly([] {
-    return make_ready_future(absl::optional<Response>{});
+    return make_ready_future(std::optional<Response>{});
   });
   EXPECT_CALL(*stream2, Finish).WillRepeatedly([] {
     return make_ready_future(Status{});
@@ -1391,12 +1391,12 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesIdleStreamAlreadyLast) {
           r->set_range_end(true);
           r->mutable_read_range()->set_read_id(0);
           r->mutable_read_range()->set_read_offset(0);
-          return absl::make_optional(std::move(resp));
+          return std::make_optional(std::move(resp));
         });
       })
       .WillOnce([&] {  // From OnRead() loop
         return sequencer.PushBack("Read[1.2]").then([](auto) {
-          return absl::make_optional(Response{});
+          return std::make_optional(Response{});
         });
       })
       .WillOnce([] {  // Complete read_id=1
@@ -1405,10 +1405,10 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesIdleStreamAlreadyLast) {
         r->set_range_end(true);
         r->mutable_read_range()->set_read_id(1);
         r->mutable_read_range()->set_read_offset(0);
-        return make_ready_future(absl::make_optional(std::move(resp)));
+        return make_ready_future(std::make_optional(std::move(resp)));
       })
       .WillRepeatedly(
-          [] { return make_ready_future(absl::optional<Response>{}); });
+          [] { return make_ready_future(std::optional<Response>{}); });
 
   // Finish() will be called by the OpenStream destructor.
   EXPECT_CALL(*stream1, Finish).WillOnce(Return(make_ready_future(Status{})));
@@ -1462,7 +1462,7 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
   EXPECT_CALL(*stream1, Read)
       .WillOnce([&] {  // From Start()
         return sequencer.PushBack("Read[1.1]").then([](auto) {
-          return absl::make_optional(Response{});
+          return std::make_optional(Response{});
         });
       })
       .WillOnce([] {  // From OnRead() loop
@@ -1471,13 +1471,13 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
         r->set_range_end(true);
         r->mutable_read_range()->set_read_id(1);
         r->mutable_read_range()->set_read_offset(0);
-        return make_ready_future(absl::make_optional(std::move(response)));
+        return make_ready_future(std::make_optional(std::move(response)));
       })
       .WillOnce([] {  // From OnRead() loop after reader1 done
-        return make_ready_future(absl::make_optional(Response{}));
+        return make_ready_future(std::make_optional(Response{}));
       })
       .WillRepeatedly(
-          [] { return make_ready_future(absl::optional<Response>{}); });
+          [] { return make_ready_future(std::optional<Response>{}); });
   EXPECT_CALL(*stream1, Finish).WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*stream1, Cancel).Times(AtMost(1));
 
@@ -1499,11 +1499,11 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
           r->set_range_end(true);
           r->mutable_read_range()->set_read_id(2);
           r->mutable_read_range()->set_read_offset(100);
-          return absl::make_optional(std::move(resp));
+          return std::make_optional(std::move(resp));
         });
       })
       .WillRepeatedly(
-          [] { return make_ready_future(absl::optional<Response>{}); });
+          [] { return make_ready_future(std::optional<Response>{}); });
   EXPECT_CALL(*stream2, Finish).WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*stream2, Cancel).Times(AtMost(1));
 
@@ -1515,7 +1515,7 @@ TEST(ObjectDescriptorImpl, MakeSubsequentStreamReusesAndMovesIdleStream) {
     return make_ready_future(true);
   });
   EXPECT_CALL(*stream3, Read).WillRepeatedly([] {
-    return make_ready_future(absl::optional<Response>{});
+    return make_ready_future(std::optional<Response>{});
   });
   // stream3 sits in pending_stream_ and is destroyed when the test ends.
   // It is never "started", so Finish() is never called.
@@ -1616,11 +1616,11 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
   EXPECT_CALL(*stream1, Read)
       .WillOnce([&] {
         return sequencer.PushBack("Read[1]").then(
-            [](auto) { return absl::make_optional(Response{}); });
+            [](auto) { return std::make_optional(Response{}); });
       })
       .WillRepeatedly([&] {
         return sequencer.PushBack("Read[Loop]").then([](auto) {
-          return absl::optional<Response>{};
+          return std::optional<Response>{};
         });
       });
 
@@ -1641,7 +1641,7 @@ TEST(ObjectDescriptorImpl, OnResumeSuccessful) {
   // The resumed stream to starts reading immediately.
   EXPECT_CALL(*stream2, Read).WillRepeatedly([&] {
     return sequencer.PushBack("Read[2]").then(
-        [](auto) { return absl::make_optional(Response{}); });
+        [](auto) { return std::make_optional(Response{}); });
   });
   EXPECT_CALL(*stream2, Finish).WillOnce(Return(make_ready_future(Status{})));
   EXPECT_CALL(*stream2, Cancel).Times(AtMost(1));
@@ -1717,7 +1717,7 @@ TEST(ObjectDescriptorImpl, ReadFailsWhenAllStreamsAreDead) {
   // Initial Read returns empty (EOF) to trigger Finish
   EXPECT_CALL(*stream, Read).WillOnce([&] {
     return sequencer.PushBack("Read[1]").then(
-        [](auto) { return absl::optional<Response>{}; });
+        [](auto) { return std::optional<Response>{}; });
   });
 
   EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -1911,12 +1911,12 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationSuccess) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2018,12 +2018,12 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchCrc32c) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2126,12 +2126,12 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchMd5) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2234,12 +2234,12 @@ TEST(ObjectDescriptorImpl, PartialReadChecksumValidationBypassed) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(

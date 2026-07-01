@@ -88,8 +88,8 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   auto compose = client.ComposeObject(
       bucket_name,
       {
-          ComposeSourceObject{object_name, absl::nullopt, absl::nullopt},
-          ComposeSourceObject{object_name, absl::nullopt, absl::nullopt},
+          ComposeSourceObject{object_name, std::nullopt, std::nullopt},
+          ComposeSourceObject{object_name, std::nullopt, std::nullopt},
       },
       compose_name);
   ASSERT_STATUS_OK(compose);

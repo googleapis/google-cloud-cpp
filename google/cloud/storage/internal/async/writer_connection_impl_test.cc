@@ -275,8 +275,8 @@ TEST(AsyncWriterConnectionTest, FinalizeEmpty) {
       });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(MakeTestResponse());
+      if (!f.get()) return std::optional<Response>();
+      return std::make_optional(MakeTestResponse());
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -375,8 +375,8 @@ TEST(AsyncWriterConnectionTest, QueryFinalFails) {
   });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(MakeTestResponse());
+      if (!f.get()) return std::optional<Response>();
+      return std::make_optional(MakeTestResponse());
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -413,8 +413,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalFailsWithoutError) {
   });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(MakeTestResponse());
+      if (!f.get()) return std::optional<Response>();
+      return std::make_optional(MakeTestResponse());
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -451,8 +451,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalMissingResource) {
   });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(Response{});
+      if (!f.get()) return std::optional<Response>();
+      return std::make_optional(Response{});
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -497,10 +497,10 @@ TEST(AsyncWriterConnectionTest, FlushEmpty) {
       });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
+      if (!f.get()) return std::optional<Response>();
       auto response = Response{};
       response.set_persisted_size(16384);
-      return absl::make_optional(std::move(response));
+      return std::make_optional(std::move(response));
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -597,7 +597,7 @@ TEST(AsyncWriterConnectionTest, QueryFails) {
   EXPECT_CALL(*mock, Cancel).Times(1);
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::optional<Response>(); });
+        [](auto) { return std::optional<Response>(); });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
@@ -627,7 +627,7 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFailsWithoutError) {
   EXPECT_CALL(*mock, Cancel).Times(1);
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::optional<Response>(); });
+        [](auto) { return std::optional<Response>(); });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
@@ -657,7 +657,7 @@ TEST(AsyncWriterConnectionTest, QueryFailsWithRedirect) {
   EXPECT_CALL(*mock, Cancel).Times(1);
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::optional<Response>(); });
+        [](auto) { return std::optional<Response>(); });
   });
 
   google::rpc::Status rpc_status;
@@ -709,8 +709,8 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
       });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(MakeTestResponse());
+      if (!f.get()) return std::optional<Response>();
+      return std::make_optional(MakeTestResponse());
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
@@ -805,7 +805,7 @@ TEST(AsyncWriterConnectionTest, QueryUpdatesHandle) {
     Response resp;
     resp.mutable_write_handle()->set_handle("queried-handle");
     resp.set_persisted_size(42);
-    return make_ready_future(absl::make_optional(std::move(resp)));
+    return make_ready_future(std::make_optional(std::move(resp)));
   });
 
   EXPECT_CALL(*mock, Cancel).Times(1);

@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_CORS_ENTRY_H
 
 #include "google/cloud/storage/version.h"
-#include "absl/types/optional.h"
 #include <cstdint>
 #include <iosfwd>
+#include <optional>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -46,7 +46,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *     on how to set and troubleshoot CORS settings.
  */
 struct CorsEntry {
-  absl::optional<std::int64_t> max_age_seconds;
+  std::optional<std::int64_t> max_age_seconds;
   std::vector<std::string> method;
   std::vector<std::string> origin;
   std::vector<std::string> response_header;

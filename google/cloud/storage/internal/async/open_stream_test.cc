@@ -92,7 +92,7 @@ TEST(OpenStream, CleanShutdown) {
   });
   EXPECT_CALL(*mock, Read).WillOnce([&sequencer] {
     return sequencer.PushBack("Read").then(
-        [](auto) { return ReadType(absl::nullopt); });
+        [](auto) { return ReadType(std::nullopt); });
   });
   EXPECT_CALL(*mock, Cancel).Times(1);
   EXPECT_CALL(*mock, Finish).WillOnce([&sequencer] {

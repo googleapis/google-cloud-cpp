@@ -26,9 +26,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-absl::optional<std::vector<std::string>> ParseStringListCondition(
+std::optional<std::vector<std::string>> ParseStringListCondition(
     nlohmann::json const& condition, char const* name) {
-  if (!condition.contains(name)) return absl::nullopt;
+  if (!condition.contains(name)) return std::nullopt;
   std::vector<std::string> matches;
   for (auto const& kv : condition[name].items()) {
     matches.emplace_back(kv.value().get<std::string>());
@@ -36,7 +36,7 @@ absl::optional<std::vector<std::string>> ParseStringListCondition(
   return matches;
 }
 
-Status ParseIntCondition(absl::optional<std::int32_t>& field,
+Status ParseIntCondition(std::optional<std::int32_t>& field,
                          nlohmann::json const& condition, char const* name) {
   if (!condition.contains(name)) return Status{};
   auto value = internal::ParseIntField(condition, name);
@@ -45,7 +45,7 @@ Status ParseIntCondition(absl::optional<std::int32_t>& field,
   return Status{};
 }
 
-Status ParseBoolCondition(absl::optional<bool>& field,
+Status ParseBoolCondition(std::optional<bool>& field,
                           nlohmann::json const& condition, char const* name) {
   if (!condition.contains(name)) return Status{};
   auto value = internal::ParseBoolField(condition, name);
@@ -54,7 +54,7 @@ Status ParseBoolCondition(absl::optional<bool>& field,
   return Status{};
 }
 
-Status ParseDateCondition(absl::optional<absl::CivilDay>& field,
+Status ParseDateCondition(std::optional<absl::CivilDay>& field,
                           nlohmann::json const& condition, char const* name) {
   if (!condition.contains(name)) return Status{};
   auto const date = condition.value(name, "");

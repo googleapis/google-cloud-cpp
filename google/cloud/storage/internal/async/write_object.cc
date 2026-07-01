@@ -54,7 +54,7 @@ void WriteObject::OnWrite(bool ok) {
 }
 
 void WriteObject::OnRead(
-    absl::optional<google::storage::v2::BidiWriteObjectResponse> response) {
+    std::optional<google::storage::v2::BidiWriteObjectResponse> response) {
   if (!response) return DoFinish();
   promise_.set_value(WriteResult{std::move(rpc_), std::move(*response)});
 }

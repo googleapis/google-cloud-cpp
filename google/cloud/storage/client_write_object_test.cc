@@ -62,10 +62,10 @@ TEST_F(WriteObjectTest, WriteObject) {
   EXPECT_CALL(*mock_, QueryResumableUpload).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock_, QueryResumableUpload)
       .WillOnce(Return(
-          internal::QueryResumableUploadResponse{absl::nullopt, expected}));
+          internal::QueryResumableUploadResponse{std::nullopt, expected}));
   EXPECT_CALL(*mock_, UploadChunk)
       .WillRepeatedly(Return(
-          internal::QueryResumableUploadResponse{absl::nullopt, expected}));
+          internal::QueryResumableUploadResponse{std::nullopt, expected}));
 
   auto client = ClientForMock();
   auto stream = client.WriteObject("test-bucket-name", "test-object-name");
@@ -93,10 +93,10 @@ TEST_F(WriteObjectTest, WriteObjectAutoFinalize) {
   EXPECT_CALL(*mock_, QueryResumableUpload).WillOnce(Return(TransientError()));
   EXPECT_CALL(*mock_, QueryResumableUpload)
       .WillOnce(Return(
-          internal::QueryResumableUploadResponse{absl::nullopt, expected}));
+          internal::QueryResumableUploadResponse{std::nullopt, expected}));
   EXPECT_CALL(*mock_, UploadChunk)
       .WillRepeatedly(Return(
-          internal::QueryResumableUploadResponse{absl::nullopt, expected}));
+          internal::QueryResumableUploadResponse{std::nullopt, expected}));
 
   auto client = ClientForMock();
   {
@@ -204,7 +204,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
   EXPECT_CALL(*mock_, QueryResumableUpload)
       .WillOnce([&](internal::QueryResumableUploadRequest const& request) {
         EXPECT_EQ("test-only-upload-id", request.upload_session_url());
-        return internal::QueryResumableUploadResponse{quantum, absl::nullopt};
+        return internal::QueryResumableUploadResponse{quantum, std::nullopt};
       });
 
   EXPECT_CALL(*mock_, UploadChunk)

@@ -138,10 +138,10 @@ StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
   } else {
     persisted_size = rpc->first_response.persisted_size();
     hash = CreateHashFunction(*current);
-    auto checksums = rpc->first_response.has_persisted_data_checksums()
-                         ? absl::make_optional(
-                               rpc->first_response.persisted_data_checksums())
-                         : absl::nullopt;
+    auto checksums =
+        rpc->first_response.has_persisted_data_checksums()
+            ? std::make_optional(rpc->first_response.persisted_data_checksums())
+            : std::nullopt;
     impl = std::make_unique<AsyncWriterConnectionImpl>(
         current, request, std::move(rpc->stream), hash, persisted_size, false,
         checksums);
@@ -317,7 +317,7 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
           CreateHashFunction(*current));
   auto hash_validator = CreateHashValidator(p.request, *current);
 
-  absl::optional<std::int64_t> requested_length;
+  std::optional<std::int64_t> requested_length;
   if (p.request.read_limit() > 0) {
     requested_length = p.request.read_limit();
   }
@@ -452,7 +452,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   return pending.then(
       [current, request = std::move(p.request), persisted_size,
        fa = std::move(factory)](auto f) mutable
-      -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         return MakeAppendableWriter(current, std::move(request), persisted_size,
                                     std::move(fa), f.get());
       });
@@ -494,7 +494,7 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
   return StartUnbufferedUpload(std::move(p))
       .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
-            -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         auto factory = [upload_id = (*w)->UploadId(),
@@ -528,14 +528,15 @@ AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
   };
 
   auto f = make_unbuffered();
-  return f.then([current = std::move(current),
-                 make_unbuffered = std::move(make_unbuffered)](auto f) mutable
-                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-    auto w = f.get();
-    if (!w) return std::move(w).status();
-    return MakeWriterConnectionBuffered(std::move(make_unbuffered),
-                                        *std::move(w), *current);
-  });
+  return f.then(
+      [current = std::move(current),
+       make_unbuffered = std::move(make_unbuffered)](auto f) mutable
+          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        return MakeWriterConnectionBuffered(std::move(make_unbuffered),
+                                            *std::move(w), *current);
+      });
 }
 
 future<StatusOr<google::storage::v2::Object>>

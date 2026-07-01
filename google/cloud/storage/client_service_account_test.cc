@@ -77,7 +77,7 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
 }
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccountNoProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, options())
       .WillRepeatedly(
@@ -91,7 +91,7 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountNoProject) {
 
 TEST_F(ServiceAccountTest,
        GetProjectServiceAccountProjectFromConnectionOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   auto expected_request = []() {
     return Property(&internal::GetProjectServiceAccountRequest::project_id,
@@ -163,7 +163,7 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountProjectFromOverride) {
 }
 
 TEST_F(ServiceAccountTest, ListHmacKeysNoProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, options())
       .WillRepeatedly(
@@ -177,7 +177,7 @@ TEST_F(ServiceAccountTest, ListHmacKeysNoProject) {
 }
 
 TEST_F(ServiceAccountTest, ListHmacKeysProjectFromConnectionOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   auto expected_request = []() {
     return Property(&internal::ListHmacKeysRequest::project_id,
@@ -256,7 +256,7 @@ TEST_F(ServiceAccountTest, ListHmacKeysProjectFromOverride) {
 }
 
 TEST_F(ServiceAccountTest, CreateHmacKeyNoProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, options())
       .WillRepeatedly(
@@ -269,7 +269,7 @@ TEST_F(ServiceAccountTest, CreateHmacKeyNoProject) {
 }
 
 TEST_F(ServiceAccountTest, CreateHmacKeyProjectFromConnectionOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   auto expected_request = []() {
     return Property(&internal::CreateHmacKeyRequest::project_id,
@@ -368,7 +368,7 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyNoProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, options())
       .WillRepeatedly(
@@ -381,7 +381,7 @@ TEST_F(ServiceAccountTest, DeleteHmacKeyNoProject) {
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyProjectFromConnectionOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   auto expected_request = []() {
     return Property(&internal::DeleteHmacKeyRequest::project_id,
@@ -470,7 +470,7 @@ TEST_F(ServiceAccountTest, DeleteHmacKey) {
 }
 
 TEST_F(ServiceAccountTest, GetHmacKeyNoProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, options())
       .WillRepeatedly(
@@ -483,7 +483,7 @@ TEST_F(ServiceAccountTest, GetHmacKeyNoProject) {
 }
 
 TEST_F(ServiceAccountTest, GetHmacKeyProjectFromConnectionOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   auto expected_request = []() {
     return Property(&internal::GetHmacKeyRequest::project_id,
@@ -578,7 +578,7 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
 }
 
 TEST_F(ServiceAccountTest, UpdateHmacKeyNoProject) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   EXPECT_CALL(*mock, options())
       .WillRepeatedly(
@@ -592,7 +592,7 @@ TEST_F(ServiceAccountTest, UpdateHmacKeyNoProject) {
 }
 
 TEST_F(ServiceAccountTest, UpdateHmacKeyProjectFromConnectionOptions) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto mock = std::make_shared<testing::MockClient>();
   auto expected_request = []() {
     return Property(&internal::UpdateHmacKeyRequest::project_id,

@@ -229,30 +229,30 @@ std::string FormatTimestamp(std::chrono::system_clock::time_point tp) {
   return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
 }
 
-absl::optional<std::string> GetLabel(std::vector<std::string> const& labels,
-                                     std::string const& prefix) {
+std::optional<std::string> GetLabel(std::vector<std::string> const& labels,
+                                    std::string const& prefix) {
   for (auto const& label : labels) {
     if (absl::StartsWith(label, prefix)) {
       return std::string{absl::StripPrefix(label, prefix)};
     }
   }
-  return absl::nullopt;
+  return std::nullopt;
 }
 
-absl::optional<std::string> GetLabel(std::string const& labels,
-                                     std::string const& prefix) {
+std::optional<std::string> GetLabel(std::string const& labels,
+                                    std::string const& prefix) {
   return GetLabel(absl::StrSplit(labels, ','), prefix);
 }
 
-absl::optional<std::string> Zone(std::string const& labels) {
+std::optional<std::string> Zone(std::string const& labels) {
   return GetLabel(labels, "zone:");
 }
 
-absl::optional<std::string> Job(std::string const& labels) {
+std::optional<std::string> Job(std::string const& labels) {
   return GetLabel(labels, "job:");
 }
 
-absl::optional<std::string> Task(std::string const& labels) {
+std::optional<std::string> Task(std::string const& labels) {
   return GetLabel(labels, "task:");
 }
 
@@ -260,18 +260,18 @@ using ::google::cloud::rest_internal::ReadAll;
 using ::google::cloud::rest_internal::RestClient;
 using ::google::cloud::rest_internal::RestRequest;
 
-absl::optional<std::string> GetMetadata(RestClient& metadata_server,
-                                        std::string const& path) {
+std::optional<std::string> GetMetadata(RestClient& metadata_server,
+                                       std::string const& path) {
   RestRequest request(path);
   request.AddHeader("Metadata-Flavor", "Google");
   rest_internal::RestContext context;
   auto response_status = metadata_server.Get(context, request);
-  if (!response_status) return absl::nullopt;
+  if (!response_status) return std::nullopt;
   auto response = *std::move(response_status);
   auto const status_code = response->StatusCode();
   auto contents = ReadAll(std::move(*response).ExtractPayload());
-  if (status_code != rest_internal::HttpStatusCode::kOk) return absl::nullopt;
-  if (!contents) return absl::nullopt;
+  if (status_code != rest_internal::HttpStatusCode::kOk) return std::nullopt;
+  if (!contents) return std::nullopt;
   // A lot of metadata attributes have the full resource name (e.e.,
   // projects/.../zones/..), we just want the last portion.
   std::vector<absl::string_view> split = absl::StrSplit(*contents, '/');

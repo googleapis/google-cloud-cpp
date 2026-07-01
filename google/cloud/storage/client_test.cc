@@ -180,7 +180,7 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 /// @test Verify the constructor creates the right set of StorageConnection
 /// decorations.
 TEST_F(ClientTest, DefaultDecoratorsRestClient) {
-  ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
 
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
@@ -198,9 +198,9 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
 /// @test Verify the constructor creates the right set of StorageConnection
 /// decorations.
 TEST_F(ClientTest, LoggingDecoratorsRestClient) {
-  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
   ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
-                           absl::nullopt);
+                           std::nullopt);
 
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
@@ -219,9 +219,9 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 
 TEST_F(ClientTest, OTelEnableTracing) {
-  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
   ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
-                           absl::nullopt);
+                           std::nullopt);
 
   // Create a client. Use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
@@ -239,9 +239,9 @@ TEST_F(ClientTest, OTelEnableTracing) {
 }
 
 TEST_F(ClientTest, OTelDisableTracing) {
-  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
   ScopedEnvironment legacy("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
-                           absl::nullopt);
+                           std::nullopt);
 
   // Create a client. Use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
@@ -395,16 +395,14 @@ TEST_F(ClientTest, CAPathOption) {
 }
 
 TEST_F(ClientTest, LoggingWithoutEnv) {
-  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
-                               absl::nullopt);
-  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING", std::nullopt);
+  ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
   auto const options = internal::DefaultOptions();
   EXPECT_FALSE(options.has<LoggingComponentsOption>());
 }
 
 TEST_F(ClientTest, LoggingWithEnv) {
-  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
-                               absl::nullopt);
+  ScopedEnvironment env_common("GOOGLE_CLOUD_CPP_ENABLE_TRACING", std::nullopt);
   ScopedEnvironment env("CLOUD_STORAGE_ENABLE_TRACING", "rpc,http");
   auto const options = internal::DefaultOptions();
   EXPECT_THAT(options.get<LoggingComponentsOption>(),
@@ -412,8 +410,7 @@ TEST_F(ClientTest, LoggingWithEnv) {
 }
 
 TEST_F(ClientTest, TracingWithoutEnv) {
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
-                        absl::nullopt);
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", std::nullopt);
   auto options = internal::DefaultOptions();
   EXPECT_FALSE(options.get<OpenTelemetryTracingOption>());
 
@@ -430,7 +427,7 @@ TEST_F(ClientTest, TracingWithEnv) {
 }
 
 TEST_F(ClientTest, ProjectIdWithoutEnv) {
-  ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", absl::nullopt);
+  ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto const options = internal::DefaultOptions();
   EXPECT_FALSE(options.has<ProjectIdOption>());
 }

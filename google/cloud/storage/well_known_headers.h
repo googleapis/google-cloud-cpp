@@ -18,11 +18,11 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
-#include "absl/types/optional.h"
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
 #include <limits>
+#include <optional>
 #include <random>
 #include <string>
 
@@ -52,7 +52,7 @@ class WellKnownHeader {
   }
 
  private:
-  absl::optional<T> value_;
+  std::optional<T> value_;
 };
 
 template <typename H, typename T>

@@ -17,8 +17,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <optional>
 #include <string>
 
 namespace google {

@@ -51,7 +51,7 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
     std::int64_t persisted_size, bool first_request,
-    absl::optional<google::storage::v2::ObjectChecksums>
+    std::optional<google::storage::v2::ObjectChecksums>
         persisted_data_checksums)
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
@@ -68,8 +68,7 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
           std::move(hash_function), PersistedStateType(metadata),
-          /*offset=*/metadata.size(), std::move(first_request), absl::nullopt) {
-}
+          /*offset=*/metadata.size(), std::move(first_request), std::nullopt) {}
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
@@ -77,7 +76,7 @@ AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     std::unique_ptr<StreamingRpc> impl,
     std::shared_ptr<storage::internal::HashFunction> hash_function,
     PersistedStateType persisted_state, std::int64_t offset, bool first_request,
-    absl::optional<google::storage::v2::ObjectChecksums>
+    std::optional<google::storage::v2::ObjectChecksums>
         persisted_data_checksums)
     : options_(std::move(options)),
       impl_(std::move(impl)),
@@ -279,7 +278,7 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
-    absl::optional<google::storage::v2::BidiWriteObjectResponse> response) {
+    std::optional<google::storage::v2::BidiWriteObjectResponse> response) {
   if (!response.has_value()) {
     return Finish()
         .then(HandleFinishAfterError(
