@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_stub_factory.h"
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -46,6 +47,7 @@ using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::NotNull;
+using ::testing::Pair;
 using ::testing::Return;
 
 // The point of these tests is to verify that the `CreateStorageStub` factory
@@ -313,6 +315,37 @@ TEST_F(StorageStubFactory, TracingDisabled) {
   (void)stub->DeleteBucket(context, Options{}, {});
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+}
+
+TEST_F(StorageStubFactory, FeatureTrackerInStorageMetadata) {
+  auto tracker = std::make_shared<storage::internal::FeatureTracker>();
+  tracker->RegisterFeature(storage::internal::TrackedFeature::kPCU);
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([&](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockStorageStub>();
+        EXPECT_CALL(*mock, DeleteBucket)
+            .WillOnce([&](grpc::ClientContext& context, Options const&,
+                          google::storage::v2::DeleteBucketRequest const&) {
+              ValidateMetadataFixture fixture;
+              auto metadata = fixture.GetMetadata(context);
+              EXPECT_THAT(metadata,
+                          Contains(Pair(storage::internal::kFeatureTrackerHeaderName,
+                                        tracker->HeaderValue())));
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool;
+  auto stub = CreateTestStub(
+      pool.cq(), factory.AsStdFunction(),
+      Options{}
+          .set<GrpcNumChannelsOption>(1)
+          .set<storage::internal::FeatureTrackerOption>(tracker));
+  grpc::ClientContext context;
+  (void)stub->DeleteBucket(context, Options{}, {});
 }
 
 }  // namespace

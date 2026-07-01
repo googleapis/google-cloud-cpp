@@ -140,6 +140,21 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersGrpcOptions) {
       storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
 }
 
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFeatureTracker) {
+  auto tracker = std::make_shared<storage::internal::FeatureTracker>();
+  tracker->RegisterFeature(storage::internal::TrackedFeature::kPCU);
+  auto const options =
+      Options{}.set<storage::internal::FeatureTrackerOption>(tracker);
+
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(
+      ctx, options,
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object"));
+  auto metadata = GetMetadata(ctx);
+  EXPECT_THAT(metadata, Contains(Pair(storage::internal::kFeatureTrackerHeaderName,
+                                      tracker->HeaderValue())));
+}
+
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {
   storage::internal::InsertObjectMediaRequest req("test-bucket", "test-object",
                                                   "content");
