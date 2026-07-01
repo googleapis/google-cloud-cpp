@@ -36,7 +36,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-absl::optional<std::string> IncludePathForWellKnownProtobufType(
+std::optional<std::string> IncludePathForWellKnownProtobufType(
     google::protobuf::FieldDescriptor const& parameter) {
   // This hash is not intended to be comprehensive. Problematic types and their
   // includes should be added as needed.

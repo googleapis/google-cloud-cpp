@@ -21,9 +21,9 @@
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
-#include "absl/types/optional.h"
 #include "google/protobuf/descriptor.pb.h"
 #include <cassert>
+#include <optional>
 #include <set>
 
 namespace google {
@@ -33,13 +33,13 @@ namespace {
 
 auto constexpr kInitialFieldNumber = 1;
 
-absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
+std::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
   std::string type = j.value("type", "");
   if (type == "string") return "string";
   if (type == "boolean") return "bool";
   if (type == "integer") return j.value("format", "int32");
   if (type == "number") return j.value("format", "float");
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 }  // namespace
