@@ -154,6 +154,12 @@ AsyncClient::ResumeAppendableObjectUpload(BucketName const& bucket_name,
   append_object_spec.set_object(std::move(object_name));
   append_object_spec.set_generation(generation);
 
+  return ResumeAppendableObjectUpload(std::move(request), std::move(opts));
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::ResumeAppendableObjectUpload(
+    google::storage::v2::BidiWriteObjectRequest request, Options opts) {
   return connection_
       ->ResumeAppendableObjectUpload(
           {std::move(request), google::cloud::internal::MergeOptions(

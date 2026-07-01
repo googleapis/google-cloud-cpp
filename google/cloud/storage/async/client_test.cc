@@ -1398,6 +1398,55 @@ TEST(AsyncClient, ResumeRewrite2) {
 }
 
 }  // namespace
+
+TEST(AsyncClient, ResumeAppendableObjectUpload2) {
+  auto constexpr kExpectedRequest = R"pb(
+    append_object_spec {
+      bucket: "projects/_/buckets/test-bucket",
+      object: "test-object",
+      generation: 42
+    }
+    flush: true
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, ResumeAppendableObjectUpload)
+      .WillOnce([&](AsyncConnection::AppendableUploadParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::BidiWriteObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        auto writer = std::make_unique<MockAsyncWriterConnection>();
+        EXPECT_CALL(*writer, PersistedState)
+            .WillRepeatedly(Return(TestProtoObject()));
+
+        return make_ready_future(make_status_or(
+            std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
+      });
+
+  auto client = AsyncClient(mock);
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto wt = client
+                .ResumeAppendableObjectUpload(
+                    std::move(request), Options{}
+                                            .set<TestOption<1>>("O1-function")
+                                            .set<TestOption<2>>("O2-function"))
+                .get();
+  ASSERT_STATUS_OK(wt);
+  AsyncWriter w;
+  AsyncToken t;
+  std::tie(w, t) = *std::move(wt);
+  EXPECT_TRUE(t.valid());
+  EXPECT_THAT(w.PersistedState(), VariantWith<google::storage::v2::Object>(
+                                      IsProtoEqual(TestProtoObject())));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
