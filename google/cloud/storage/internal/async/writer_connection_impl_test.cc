@@ -694,7 +694,7 @@ TEST(AsyncWriterConnectionTest, QueryFailsWithRedirect) {
   EXPECT_THAT(query.get(), StatusIs(StatusCode::kAborted));
 }
 
-TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
+TEST(AsyncWriterConnectionTest, FinalizeAppendableWithChecksum) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel).Times(1);
@@ -704,7 +704,7 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
         EXPECT_TRUE(wopt.is_last_message());
         EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
                   "test-only-algo");
-        EXPECT_FALSE(request.has_object_checksums());
+        EXPECT_TRUE(request.has_object_checksums());
         return sequencer.PushBack("Write");
       });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
@@ -721,7 +721,7 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
   });
   auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(0);
+  EXPECT_CALL(*hash, Finish).Times(1);
 
   auto request = MakeRequest();
   request.mutable_write_object_spec()->set_appendable(true);
