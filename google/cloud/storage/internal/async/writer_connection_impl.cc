@@ -174,7 +174,7 @@ AsyncWriterConnectionImpl::Finalize(
   return coro->Start().then(
       [coro, size, expected_checksum, this](auto f) mutable {
         coro.reset();  // breaks the cycle between the completion queue and coro
-        auto res = f.get();
+        StatusOr<bool> res = f.get();
         if (res.ok() && *res && expected_checksum.has_value()) {
           auto const actual = FormatCrc32c(hash_function_->CurrentCrc32c());
           if (!actual.empty() && expected_checksum->value() != actual) {

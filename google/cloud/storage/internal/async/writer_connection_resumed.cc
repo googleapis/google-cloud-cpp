@@ -327,6 +327,7 @@ class AsyncWriterConnectionResumedState
           absl::holds_alternative<google::storage::v2::Object>(state)
               ? absl::get<google::storage::v2::Object>(state).size()
               : absl::get<std::int64_t>(state);
+      RestoreChecksumState(persisted_size);
       auto it = crc32c_history_.find(persisted_size);
       if (it != crc32c_history_.end() && it->second != checksums->crc32c()) {
         SetError(std::move(lk), google::cloud::internal::DataLossError(
@@ -365,7 +366,7 @@ class AsyncWriterConnectionResumedState
     impl->Query().then([result, w = WeakFromThis()](auto f) {
       auto self = w.lock();
       if (!self) return;
-      auto query_res = f.get();
+      StatusOr<std::int64_t> query_res = f.get();
       if (!query_res.ok()) {
         self->OnQuery(std::move(query_res));
         self->SetFlushed(std::unique_lock<std::mutex>(self->mu_),
@@ -376,6 +377,7 @@ class AsyncWriterConnectionResumedState
       std::unique_lock<std::mutex> lk(self->mu_);
       auto checksums = self->Impl(lk)->PersistedChecksums();
       if (checksums && checksums->has_crc32c()) {
+        self->RestoreChecksumState(persisted_size);
         auto it = self->crc32c_history_.find(persisted_size);
         if (it != self->crc32c_history_.end() &&
             it->second != checksums->crc32c()) {
@@ -413,34 +415,40 @@ class AsyncWriterConnectionResumedState
 
   void RestoreChecksumState(std::int64_t persisted_size) {
     if (!hash_function_ || !hash_function_->CurrentCrc32c().has_value()) return;
-    auto it = crc32c_history_.find(persisted_size);
-    if (it != crc32c_history_.end()) {
-      hash_function_->RestoreCrc32c(it->second, persisted_size);
-    } else if (!crc32c_history_.empty()) {
-      auto upper = crc32c_history_.upper_bound(persisted_size);
-      if (upper != crc32c_history_.begin()) {
-        --upper;
-        auto const y = upper->first;
-        auto const crc_y = upper->second;
-        hash_function_->RestoreCrc32c(crc_y, y);
-        if (y >= buffer_offset_ && y < persisted_size) {
-          auto const slice_offset =
-              static_cast<std::size_t>(y - buffer_offset_);
-          auto const slice_len = static_cast<std::size_t>(persisted_size - y);
-          if (slice_offset + slice_len <= resend_buffer_.size()) {
-            auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
-            (void)hash_function_->Update(y, slice, Crc32c(slice));
-          }
-        }
-        if (auto current = hash_function_->CurrentCrc32c()) {
-          crc32c_history_[persisted_size] = *current;
+    if (persisted_size < buffer_offset_) return;
+    // We use std::map because during active streaming writes without
+    // intermediate Query() or Flush() calls, crc32c_history_ accumulates
+    // multiple checkpoints (one per write chunk). Once a query confirms
+    // persisted_size, we purge obsolete checkpoints below and above that offset
+    // to conserve memory.
+    auto lb = crc32c_history_.lower_bound(persisted_size);
+    if (lb != crc32c_history_.end() && lb->first == persisted_size) {
+      hash_function_->RestoreCrc32c(lb->second, persisted_size);
+    } else if (lb != crc32c_history_.begin()) {
+      auto prev = std::prev(lb);
+      auto const y = prev->first;
+      auto const crc_y = prev->second;
+      hash_function_->RestoreCrc32c(crc_y, y);
+      if (y >= buffer_offset_ && y < persisted_size) {
+        auto const slice_offset = static_cast<std::size_t>(y - buffer_offset_);
+        auto const slice_len = static_cast<std::size_t>(persisted_size - y);
+        if (slice_offset + slice_len <= resend_buffer_.size()) {
+          auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
+          (void)hash_function_->Update(y, slice, Crc32c(slice));
         }
       }
+      if (auto current = hash_function_->CurrentCrc32c()) {
+        lb = crc32c_history_.emplace_hint(lb, persisted_size, *current);
+      }
     }
-    auto purge_it = crc32c_history_.upper_bound(persisted_size);
-    crc32c_history_.erase(purge_it, crc32c_history_.end());
-    crc32c_history_.erase(crc32c_history_.begin(),
-                          crc32c_history_.lower_bound(persisted_size));
+    // Purge obsolete historical checkpoints before and after persisted_size.
+    if (lb != crc32c_history_.end()) {
+      crc32c_history_.erase(crc32c_history_.begin(), lb);
+      auto next = std::next(lb);
+      if (next != crc32c_history_.end()) {
+        crc32c_history_.erase(next, crc32c_history_.end());
+      }
+    }
   }
 
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
