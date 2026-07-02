@@ -503,11 +503,6 @@ void PatchObjectContentType(google::cloud::storage::Client client,
 void ComposeObject(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
   using ::google::cloud::storage::examples::Usage;
-  if (argv.size() < 4) {
-    throw Usage{
-        "compose-object <destination-object-name> "
-        "<delete-source-objects (true/false)> <object> [object...]"};
-  }
   auto it = argv.cbegin();
   auto bucket_name = *it++;
   auto destination_object_name = *it++;
