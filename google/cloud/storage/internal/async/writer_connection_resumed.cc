@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/async/writer_connection_resumed.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
+#include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
@@ -23,6 +24,7 @@
 #include "absl/strings/cord.h"
 #include <cstdint>
 #include <deque>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <vector>
@@ -85,6 +87,11 @@ class AsyncWriterConnectionResumedState
     } else {
       buffer_offset_ = absl::get<std::int64_t>(state);
     }
+    if (hash_function_) {
+      if (auto crc = hash_function_->CurrentCrc32c()) {
+        crc32c_history_[buffer_offset_] = *crc;
+      }
+    }
     if (first_response_.has_write_handle()) {
       latest_write_handle_ = first_response_.write_handle();
     } else if (initial_request_.has_append_object_spec() &&
@@ -116,6 +123,11 @@ class AsyncWriterConnectionResumedState
     return Impl(std::unique_lock<std::mutex>(mu_))->PersistedState();
   }
 
+  absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums()
+      const {
+    return Impl(std::unique_lock<std::mutex>(mu_))->PersistedChecksums();
+  }
+
   future<Status> Write(storage::WritePayload const& p) {
     std::unique_lock<std::mutex> lk(mu_);
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
@@ -124,7 +136,15 @@ class AsyncWriterConnectionResumedState
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload const& p) {
+    return Finalize(p, absl::nullopt);
+  }
+  future<StatusOr<google::storage::v2::Object>> Finalize(
+      storage::WritePayload const& p,
+      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum) {
     std::unique_lock<std::mutex> lk(mu_);
+    if (expected_checksum.has_value()) {
+      expected_checksum_ = expected_checksum;
+    }
     resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
     finalize_ = true;
     HandleNewData(std::move(lk));
@@ -255,13 +275,24 @@ class AsyncWriterConnectionResumedState
       // If another thread initiated FinalizeStep concurrently, just return.
       return;
     }
+    if (expected_checksum_.has_value() && hash_function_) {
+      auto const actual = hash_function_->Finish().crc32c;
+      if (!actual.empty() && expected_checksum_->value() != actual) {
+        SetError(std::move(lk),
+                 google::cloud::internal::DataLossError(
+                     "client checksum mismatch: expected " +
+                         expected_checksum_->value() + " got " + actual,
+                     GCP_ERROR_INFO()));
+        return;
+      }
+    }
     // Mark that we are starting the finalization process.
     state_ = State::kWriting;
     finalizing_ = true;
     auto impl = Impl(lk);
     lk.unlock();
     // Finalize with an empty payload.
-    (void)impl->Finalize(storage::WritePayload{})
+    (void)impl->Finalize(storage::WritePayload{}, expected_checksum_)
         .then([w = WeakFromThis()](auto f) {
           if (auto self = w.lock()) return self->OnFinalize(f.get());
         });
@@ -288,7 +319,24 @@ class AsyncWriterConnectionResumedState
 
   void OnClose(Status result) {
     if (!result.ok()) return Resume(std::move(result));
-    SetClosed(std::unique_lock<std::mutex>(mu_), std::move(result));
+    std::unique_lock<std::mutex> lk(mu_);
+    auto checksums = Impl(lk)->PersistedChecksums();
+    if (checksums && checksums->has_crc32c()) {
+      auto const state = Impl(lk)->PersistedState();
+      auto const persisted_size =
+          absl::holds_alternative<google::storage::v2::Object>(state)
+              ? absl::get<google::storage::v2::Object>(state).size()
+              : absl::get<std::int64_t>(state);
+      RestoreChecksumState(persisted_size);
+      auto it = crc32c_history_.find(persisted_size);
+      if (it != crc32c_history_.end() && it->second != checksums->crc32c()) {
+        SetError(std::move(lk), google::cloud::internal::DataLossError(
+                                    "client/server checksum mismatch at Close",
+                                    GCP_ERROR_INFO()));
+        return;
+      }
+    }
+    SetClosed(std::move(lk), std::move(result));
   }
 
   void FlushStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
@@ -308,12 +356,40 @@ class AsyncWriterConnectionResumedState
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
+    if (hash_function_) {
+      if (auto crc = hash_function_->CurrentCrc32c()) {
+        crc32c_history_[buffer_offset_ + write_offset_] = *crc;
+      }
+    }
     auto impl = Impl(lk);
     lk.unlock();
     impl->Query().then([result, w = WeakFromThis()](auto f) {
       auto self = w.lock();
       if (!self) return;
-      self->OnQuery(f.get());
+      StatusOr<std::int64_t> query_res = f.get();
+      if (!query_res.ok()) {
+        self->OnQuery(std::move(query_res));
+        self->SetFlushed(std::unique_lock<std::mutex>(self->mu_),
+                         std::move(result));
+        return;
+      }
+      auto const persisted_size = *query_res;
+      std::unique_lock<std::mutex> lk(self->mu_);
+      auto checksums = self->Impl(lk)->PersistedChecksums();
+      if (checksums && checksums->has_crc32c()) {
+        self->RestoreChecksumState(persisted_size);
+        auto it = self->crc32c_history_.find(persisted_size);
+        if (it != self->crc32c_history_.end() &&
+            it->second != checksums->crc32c()) {
+          self->SetError(std::move(lk),
+                         google::cloud::internal::DataLossError(
+                             "client/server checksum mismatch at Flush",
+                             GCP_ERROR_INFO()));
+          return;
+        }
+      }
+      lk.unlock();
+      self->OnQuery(std::move(query_res));
       self->SetFlushed(std::unique_lock<std::mutex>(self->mu_),
                        std::move(result));
     });
@@ -337,8 +413,46 @@ class AsyncWriterConnectionResumedState
     return tmp;
   }
 
+  void RestoreChecksumState(std::int64_t persisted_size) {
+    if (!hash_function_ || !hash_function_->CurrentCrc32c().has_value()) return;
+    if (persisted_size < buffer_offset_) return;
+    // We use std::map because during active streaming writes without
+    // intermediate Query() or Flush() calls, crc32c_history_ accumulates
+    // multiple checkpoints (one per write chunk). Once a query confirms
+    // persisted_size, we purge obsolete checkpoints below and above that offset
+    // to conserve memory.
+    auto lb = crc32c_history_.lower_bound(persisted_size);
+    if (lb != crc32c_history_.end() && lb->first == persisted_size) {
+      hash_function_->RestoreCrc32c(lb->second, persisted_size);
+    } else if (lb != crc32c_history_.begin()) {
+      auto prev = std::prev(lb);
+      auto const y = prev->first;
+      auto const crc_y = prev->second;
+      hash_function_->RestoreCrc32c(crc_y, y);
+      if (y >= buffer_offset_ && y < persisted_size) {
+        auto const slice_offset = static_cast<std::size_t>(y - buffer_offset_);
+        auto const slice_len = static_cast<std::size_t>(persisted_size - y);
+        if (slice_offset + slice_len <= resend_buffer_.size()) {
+          auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
+          (void)hash_function_->Update(y, slice, Crc32c(slice));
+        }
+      }
+      if (auto current = hash_function_->CurrentCrc32c()) {
+        lb = crc32c_history_.emplace_hint(lb, persisted_size, *current);
+      }
+    }
+    // Purge obsolete historical checkpoints before and after persisted_size.
+    if (lb != crc32c_history_.end()) {
+      crc32c_history_.erase(crc32c_history_.begin(), lb);
+      auto next = std::next(lb);
+      if (next != crc32c_history_.end()) {
+        crc32c_history_.erase(next, crc32c_history_.end());
+      }
+    }
+  }
+
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
-    auto handle = impl_->WriteHandle();
+    auto handle = Impl(lk)->WriteHandle();
     if (handle) {
       latest_write_handle_ = *std::move(handle);
     }
@@ -354,6 +468,7 @@ class AsyncWriterConnectionResumedState
                       MakeFastForwardError(buffer_offset_, persisted_size,
                                            GCP_ERROR_INFO()));
     }
+    RestoreChecksumState(persisted_size);
     resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
     buffer_offset_ = persisted_size;
     if (state_ == State::kResuming) {
@@ -397,6 +512,9 @@ class AsyncWriterConnectionResumedState
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
+    if (auto crc = hash_function_->CurrentCrc32c()) {
+      crc32c_history_[buffer_offset_ + write_offset_] = *crc;
+    }
     state_ = State::kIdle;
     return StartWriting(std::move(lk));
   }
@@ -479,14 +597,14 @@ class AsyncWriterConnectionResumedState
         checksums = first_res.persisted_data_checksums();
       }
     } else {
-      auto state = impl_->PersistedState();
+      auto state = Impl(lk)->PersistedState();
       if (absl::holds_alternative<google::storage::v2::Object>(state)) {
         finalized = true;
         finalized_object =
             absl::get<google::storage::v2::Object>(std::move(state));
       } else {
         persisted_offset = absl::get<std::int64_t>(state);
-        checksums = impl_->PersistedChecksums();
+        checksums = Impl(lk)->PersistedChecksums();
       }
     }
 
@@ -508,15 +626,8 @@ class AsyncWriterConnectionResumedState
     }
 
     // Recreate the underlying stream if still active.
-    auto hash = hash_function_;
-    if (checksums && checksums->has_crc32c()) {
-      hash = std::make_shared<
-          ::google::cloud::storage::internal::Crc32cHashFunction>(
-          checksums->crc32c(), persisted_offset);
-    }
-
     impl_ = std::make_unique<AsyncWriterConnectionImpl>(
-        options_, initial_request_, std::move(res->stream), std::move(hash),
+        options_, initial_request_, std::move(res->stream), hash_function_,
         persisted_offset, false, checksums);
     // OnQuery will restart the WriteLoop if necessary.
     OnQuery(std::move(lk), persisted_offset);
@@ -699,6 +810,8 @@ class AsyncWriterConnectionResumedState
   // Retrieve the future in the constructor, as some operations reset
   // finalized_.
   future<StatusOr<google::storage::v2::Object>> finalized_future_;
+  absl::optional<storage::Crc32cChecksumValue> expected_checksum_;
+  std::map<std::int64_t, std::uint32_t> crc32c_history_;
 
   // The result of calling `Close()`. Note that only one such call is ever
   // made.
@@ -836,13 +949,24 @@ class AsyncWriterConnectionResumed : public storage::AsyncWriterConnection {
     return state_->PersistedState();
   }
 
+  absl::optional<google::storage::v2::ObjectChecksums> PersistedChecksums()
+      const override {
+    return state_->PersistedChecksums();
+  }
+
   future<Status> Write(storage::WritePayload p) override {
     return state_->Write(std::move(p));
   }
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload p) override {
-    return state_->Finalize(std::move(p));
+    return state_->Finalize(std::move(p), absl::nullopt);
+  }
+  future<StatusOr<google::storage::v2::Object>> Finalize(
+      storage::WritePayload p,
+      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum)
+      override {
+    return state_->Finalize(std::move(p), expected_checksum);
   }
 
   future<Status> Flush(storage::WritePayload p) override {

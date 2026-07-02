@@ -33,6 +33,9 @@ class MockHashFunction : public storage::internal::HashFunction {
               (override));
   MOCK_METHOD(Status, Update, (std::int64_t, absl::Cord const&, std::uint32_t),
               (override));
+  MOCK_METHOD(absl::optional<std::uint32_t>, CurrentCrc32c, (),
+              (const, override));
+  MOCK_METHOD(void, RestoreCrc32c, (std::uint32_t, std::int64_t), (override));
   MOCK_METHOD(storage::internal::HashValues, Finish, (), (override));
 };
 

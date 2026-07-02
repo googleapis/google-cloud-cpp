@@ -16,9 +16,11 @@
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/partial_upload.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
+#include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
+#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -26,6 +28,12 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+std::string FormatCrc32c(absl::optional<std::uint32_t> crc) {
+  if (!crc) return {};
+  return storage::internal::Base64Encode(
+      google::cloud::internal::EncodeBigEndian(*crc));
+}
 
 auto HandleFinishAfterError(std::string msg) {
   return [m = std::move(msg)](future<Status> f) {
@@ -140,27 +148,45 @@ future<Status> AsyncWriterConnectionImpl::Write(storage::WritePayload payload) {
 }
 
 future<StatusOr<google::storage::v2::Object>>
-AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
+AsyncWriterConnectionImpl::Finalize(
+    storage::WritePayload payload,
+    absl::optional<storage::Crc32cChecksumValue> const& expected_checksum) {
   auto write = MakeRequest();
   write.set_finish_write(true);
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto action = PartialUpload::kFinalizeWithChecksum;
-  if (request_.has_append_object_spec() ||
-      request_.write_object_spec().appendable()) {
-    if (!absl::holds_alternative<google::storage::v2::Object>(
-            persisted_state_) &&
-        !persisted_data_checksums_.has_value()) {
-      action = PartialUpload::kFinalize;
+
+  if (p.empty() && expected_checksum.has_value()) {
+    auto const actual = FormatCrc32c(hash_function_->CurrentCrc32c());
+    if (!actual.empty() && expected_checksum->value() != actual) {
+      return make_ready_future(StatusOr<google::storage::v2::Object>(
+          google::cloud::internal::DataLossError(
+              "client checksum mismatch: expected " +
+                  expected_checksum->value() + " got " + actual,
+              GCP_ERROR_INFO())));
     }
   }
+
+  auto action = PartialUpload::kFinalizeWithChecksum;
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
                                   std::move(p), std::move(action));
-  return coro->Start().then([coro, size, this](auto f) mutable {
-    coro.reset();  // breaks the cycle between the completion queue and coro
-    return OnFinalUpload(size, f.get());
-  });
+  return coro->Start().then(
+      [coro, size, expected_checksum, this](auto f) mutable {
+        coro.reset();  // breaks the cycle between the completion queue and coro
+        StatusOr<bool> res = f.get();
+        if (res.ok() && *res && expected_checksum.has_value()) {
+          auto const actual = FormatCrc32c(hash_function_->CurrentCrc32c());
+          if (!actual.empty() && expected_checksum->value() != actual) {
+            return make_ready_future(StatusOr<google::storage::v2::Object>(
+                google::cloud::internal::DataLossError(
+                    "client checksum mismatch: expected " +
+                        expected_checksum->value() + " got " + actual,
+                    GCP_ERROR_INFO())));
+          }
+        }
+        return OnFinalUpload(size, std::move(res));
+      });
 }
 
 future<Status> AsyncWriterConnectionImpl::Flush(storage::WritePayload payload) {

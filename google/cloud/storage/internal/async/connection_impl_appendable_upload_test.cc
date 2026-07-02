@@ -698,8 +698,6 @@ TEST_F(AsyncConnectionImplAppendableTest,
                     grpc::WriteOptions wopt) {
         EXPECT_TRUE(request.finish_write());
         EXPECT_TRUE(wopt.is_last_message());
-        // Here we expect full checksums to be set because we had the resource
-        // in takeover.
         EXPECT_TRUE(request.has_object_checksums());
         auto expected_crc =
             google::cloud::storage_internal::ExtendCrc32c(12345, "some data");
@@ -712,7 +710,6 @@ TEST_F(AsyncConnectionImplAppendableTest,
   });
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
-  // Enable CRC32C validation in options
   auto options = TestOptions().set<storage::EnableCrc32cValidationOption>(true);
   auto connection = MakeTestConnection(pool.cq(), mock, options);
 
@@ -739,14 +736,12 @@ TEST_F(AsyncConnectionImplAppendableTest,
   ASSERT_STATUS_OK(r);
   auto writer = *std::move(r);
 
-  // Write some data.
   auto w1 = writer->Write(storage::WritePayload("some data"));
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write(data)");
   next.first.set_value(true);
   EXPECT_STATUS_OK(w1.get());
 
-  // Finalize the upload.
   auto w2 = writer->Finalize({});
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write(Finalize)");
@@ -828,7 +823,9 @@ TEST_F(AsyncConnectionImplAppendableTest,
         EXPECT_TRUE(request.finish_write());
         EXPECT_TRUE(wopt.is_last_message());
         EXPECT_TRUE(request.has_object_checksums());
-        EXPECT_EQ(request.object_checksums().crc32c(), 2901820631);
+        auto expected_crc = google::cloud::storage_internal::ExtendCrc32c(
+            kPersistedCrc, "some data");
+        EXPECT_EQ(request.object_checksums().crc32c(), expected_crc);
         return sequencer.PushBack("Write(Finalize)");
       });
 

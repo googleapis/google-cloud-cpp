@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/token.h"
 #include "google/cloud/storage/async/write_payload.h"
 #include "google/cloud/storage/async/writer_connection.h"
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -116,12 +117,18 @@ class AsyncWriter {
 
   /// Finalize the upload with the existing data.
   future<StatusOr<google::storage::v2::Object>> Finalize(AsyncToken token);
+  future<StatusOr<google::storage::v2::Object>> Finalize(
+      AsyncToken token,
+      absl::optional<Crc32cChecksumValue> const& expected_checksum);
 
   /**
    * Upload @p payload and then finalize the upload.
    */
   future<StatusOr<google::storage::v2::Object>> Finalize(AsyncToken token,
                                                          WritePayload payload);
+  future<StatusOr<google::storage::v2::Object>> Finalize(
+      AsyncToken token, WritePayload payload,
+      absl::optional<Crc32cChecksumValue> const& expected_checksum);
 
   /**
    * Flush any buffered data to the service.
