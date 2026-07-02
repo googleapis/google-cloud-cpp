@@ -502,9 +502,14 @@ void PatchObjectContentType(google::cloud::storage::Client client,
 
 void ComposeObject(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
+  using ::google::cloud::storage::examples::Usage;
   auto it = argv.cbegin();
   auto bucket_name = *it++;
   auto destination_object_name = *it++;
+  if (*it != "true" && *it != "false") {
+    throw Usage{"delete-source-objects must be either 'true' or 'false'"};
+  }
+  auto const delete_source_objects = *it++ == "true";
   std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
   do {
     // NOLINTNEXTLINE(modernize-use-emplace) - brace initialization
@@ -516,18 +521,23 @@ void ComposeObject(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& destination_object_name,
-     std::vector<gcs::ComposeSourceObject> const& compose_objects) {
+     std::vector<gcs::ComposeSourceObject> const& compose_objects,
+     bool delete_source_objects) {
     StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
-        bucket_name, compose_objects, destination_object_name);
+        bucket_name, compose_objects, destination_object_name,
+        gcs::DeleteSourceObjects(delete_source_objects));
     if (!composed_object) throw std::move(composed_object).status();
 
     std::cout << "Composed new object " << composed_object->name()
               << " in bucket " << composed_object->bucket()
               << "\nFull metadata: " << *composed_object << "\n";
+    if (delete_source_objects) {
+      std::cout << "The source objects were deleted.\n";
+    }
   }
   //! [compose object] [END storage_compose_file]
   (std::move(client), bucket_name, destination_object_name,
-   std::move(compose_objects));
+   std::move(compose_objects), delete_source_objects);
 }
 
 void ComposeObjectFromMany(google::cloud::storage::Client client,
@@ -735,9 +745,23 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ComposeObject() example" << std::endl;
   auto const composed_object_name =
       examples::MakeRandomObjectName(generator, "composed-object-");
-  ComposeObject(client,
-                {bucket_name, composed_object_name, object_name, object_name});
+  ComposeObject(client, {bucket_name, composed_object_name, "false",
+                         object_name, object_name});
   DeleteObject(client, {bucket_name, composed_object_name});
+
+  std::cout << "\nRunning ComposeObject() with deleteSourceObjects=true example"
+            << std::endl;
+  auto const temp_source_1 =
+      examples::MakeRandomObjectName(generator, "temp-source-1-");
+  auto const temp_source_2 =
+      examples::MakeRandomObjectName(generator, "temp-source-2-");
+  InsertObject(client, {bucket_name, temp_source_1, "content1"});
+  InsertObject(client, {bucket_name, temp_source_2, "content2"});
+  auto const composed_deleted_sources_object_name =
+      examples::MakeRandomObjectName(generator, "composed-deleted-sources-");
+  ComposeObject(client, {bucket_name, composed_deleted_sources_object_name,
+                         "true", temp_source_1, temp_source_2});
+  DeleteObject(client, {bucket_name, composed_deleted_sources_object_name});
 
   std::cout << "\nRunning ComposeObjectFromMany() example" << std::endl;
   ComposeObjectFromMany(
@@ -839,9 +863,11 @@ int main(int argc, char* argv[]) {
                  PatchObjectDeleteMetadata),
       make_entry("update-object-metadata", {"<object-name>", "<content-type>"},
                  PatchObjectContentType),
-      make_entry("compose-object",
-                 {"<destination-object-name>", "<object>", "[object...]"},
-                 ComposeObject),
+      make_entry(
+          "compose-object",
+          {"<destination-object-name>", "<delete-source-objects (true/false)>",
+           "<object>", "[object...]"},
+          ComposeObject),
       make_entry("compose-object-from-many",
                  {"<destination-object-name>", "<object>", "[object...]"},
                  ComposeObjectFromMany),
