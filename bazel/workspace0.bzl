@@ -209,14 +209,14 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.74.1.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.82.0.tar.gz",
         ],
         repo_mapping = {
             "@com_google_absl": "@abseil-cpp",
             "@com_github_grpc_grpc": "@grpc",
         },
-        sha256 = "7bf97c11cf3808d650a3a025bbf9c5f922c844a590826285067765dfd055d228",
-        strip_prefix = "grpc-1.74.1",
+        sha256 = "d6851f59b9c4edb3218d2659a3abf1138e5bb4d2871c9e89c9330ed71756ed0b",
+        strip_prefix = "grpc-1.82.0",
     )
 
     native.bind(
