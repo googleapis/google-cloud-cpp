@@ -601,6 +601,10 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
   if (!status.ok()) return OnTransferError(context, std::move(status));
   handle_.SetSocketCallback(socket_options_);
   if (!status.ok()) return OnTransferError(context, std::move(status));
+  status = handle_.SetOption(CURLOPT_SSL_EC_CURVES, "X25519MLKEM768:X25519:P-256:P-384");
+  if (!status.ok()) {
+    GCP_LOG(INFO) << "CURLOPT_SSL_EC_CURVES failed: " << status;
+  }
   status = handle_.SetOption(CURLOPT_NOSIGNAL, 1);
   if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
