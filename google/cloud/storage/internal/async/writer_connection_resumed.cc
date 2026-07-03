@@ -327,7 +327,11 @@ class AsyncWriterConnectionResumedState
           absl::holds_alternative<google::storage::v2::Object>(state)
               ? absl::get<google::storage::v2::Object>(state).size()
               : absl::get<std::int64_t>(state);
-      RestoreChecksumState(persisted_size);
+      // If persisted_size does not align with a recorded chunk boundary,
+      // EnsureCrc32cHistory rolls back to the nearest prior checkpoint in
+      // crc32c_history_ and fast-forwards using resend_buffer_ to compute and
+      // store the exact client CRC32C at persisted_size.
+      EnsureCrc32cHistory(persisted_size);
       auto it = crc32c_history_.find(persisted_size);
       if (it != crc32c_history_.end() && it->second != checksums->crc32c()) {
         SetError(std::move(lk), google::cloud::internal::DataLossError(
@@ -377,7 +381,11 @@ class AsyncWriterConnectionResumedState
       std::unique_lock<std::mutex> lk(self->mu_);
       auto checksums = self->Impl(lk)->PersistedChecksums();
       if (checksums && checksums->has_crc32c()) {
-        self->RestoreChecksumState(persisted_size);
+        // If persisted_size does not align with a recorded chunk boundary,
+        // EnsureCrc32cHistory rolls back to the nearest prior checkpoint in
+        // crc32c_history_ and fast-forwards using resend_buffer_ to compute and
+        // store the exact client CRC32C at persisted_size.
+        self->EnsureCrc32cHistory(persisted_size);
         auto it = self->crc32c_history_.find(persisted_size);
         if (it != self->crc32c_history_.end() &&
             it->second != checksums->crc32c()) {
@@ -413,41 +421,42 @@ class AsyncWriterConnectionResumedState
     return tmp;
   }
 
-  void RestoreChecksumState(std::int64_t persisted_size) {
-    if (!hash_function_ || !hash_function_->CurrentCrc32c().has_value()) return;
+  void EnsureCrc32cHistory(std::int64_t persisted_size) {
+    if (!hash_function_) return;
     if (persisted_size < buffer_offset_) return;
-    // We use std::map because during active streaming writes without
-    // intermediate Query() or Flush() calls, crc32c_history_ accumulates
-    // multiple checkpoints (one per write chunk). Once a query confirms
-    // persisted_size, we purge obsolete checkpoints below and above that offset
-    // to conserve memory.
     auto lb = crc32c_history_.lower_bound(persisted_size);
-    if (lb != crc32c_history_.end() && lb->first == persisted_size) {
-      hash_function_->RestoreCrc32c(lb->second, persisted_size);
-    } else if (lb != crc32c_history_.begin()) {
-      auto prev = std::prev(lb);
-      auto const y = prev->first;
-      auto const crc_y = prev->second;
-      hash_function_->RestoreCrc32c(crc_y, y);
-      if (y >= buffer_offset_ && y < persisted_size) {
-        auto const slice_offset = static_cast<std::size_t>(y - buffer_offset_);
-        auto const slice_len = static_cast<std::size_t>(persisted_size - y);
-        if (slice_offset + slice_len <= resend_buffer_.size()) {
-          auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
-          (void)hash_function_->Update(y, slice, Crc32c(slice));
-        }
-      }
-      if (auto current = hash_function_->CurrentCrc32c()) {
-        lb = crc32c_history_.emplace_hint(lb, persisted_size, *current);
-      }
+    if (lb != crc32c_history_.end() && lb->first == persisted_size) return;
+    if (lb == crc32c_history_.begin()) return;
+    auto prev = std::prev(lb);
+    auto const y = prev->first;
+    auto const crc_y = prev->second;
+    if (y < buffer_offset_) return;
+    auto const slice_offset = static_cast<std::size_t>(y - buffer_offset_);
+    auto const slice_len = static_cast<std::size_t>(persisted_size - y);
+    if (slice_offset + slice_len > resend_buffer_.size()) return;
+    auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
+    auto current = google::cloud::storage_internal::ExtendCrc32c(crc_y, slice);
+    crc32c_history_.emplace_hint(lb, persisted_size, current);
+  }
+
+  void RestoreChecksumState(std::int64_t persisted_size) {
+    if (!hash_function_) return;
+    EnsureCrc32cHistory(persisted_size);
+    auto it = crc32c_history_.find(persisted_size);
+    if (it != crc32c_history_.end()) {
+      hash_function_->RestoreCrc32c(it->second, persisted_size);
     }
-    // Purge obsolete historical checkpoints before and after persisted_size.
-    if (lb != crc32c_history_.end()) {
-      crc32c_history_.erase(crc32c_history_.begin(), lb);
-      auto next = std::next(lb);
-      if (next != crc32c_history_.end()) {
-        crc32c_history_.erase(next, crc32c_history_.end());
-      }
+    // Purge obsolete historical checkpoints strictly before persisted_size.
+    crc32c_history_.erase(crc32c_history_.begin(),
+                          crc32c_history_.lower_bound(persisted_size));
+    // We remove checkpoints above persisted_size to prevent any possibility of
+    // stale CRCs persisting if chunking boundaries or buffer slices shift
+    // across retry attempts. When the stream resumes from persisted_size, any
+    // unacknowledged data in resend_buffer_ is re-transmitted and re-hashed on
+    // the fly, repopulating crc32c_history_ with fresh checkpoints.
+    auto upper = crc32c_history_.upper_bound(persisted_size);
+    if (upper != crc32c_history_.end()) {
+      crc32c_history_.erase(upper, crc32c_history_.end());
     }
   }
 
