@@ -328,6 +328,17 @@ jobs:
       env:
         STEPS_PY311_OUTPUTS_PYTHON_PATH: ${{ steps.py311.outputs.python-path }}
         STEPS_DYNAMIC_OUTPUTS_FEATURES: ${{ steps.dynamic.outputs.features }}
+    - name: Dump vcpkg buildtrees logs on failure
+      if: failure()
+      shell: bash
+      run: |
+        if [[ -d "${TEMP}/.build/vcpkg/buildtrees" ]]; then
+          find "${TEMP}/.build/vcpkg/buildtrees" -name "*.log" -type f -print0 | while IFS= read -r -d '' log; do
+            echo "========= Contents of ${log} ========="
+            cat "${log}" || true
+            echo "========= End of ${log} ========="
+          done
+        fi
     - name: Post Build Disk Space
       shell: bash
       run: df -m
