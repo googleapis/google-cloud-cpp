@@ -1396,7 +1396,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const temp_source_2 =
       examples::MakeRandomObjectName(generator, "temp-source-2-");
   InsertObject(client, {bucket_name, temp_source_1});
+  scheduled_for_delete.push_back(temp_source_1);
   InsertObject(client, {bucket_name, temp_source_2});
+  scheduled_for_delete.push_back(temp_source_2);
   auto const to_delete_2 = object_name;
   ComposeObjectRequest(
       client, {bucket_name, object_name, "true", temp_source_1, temp_source_2});
