@@ -17,6 +17,7 @@
 
 #include "google/cloud/background_threads.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/generic_background_threads_impl.h"
 #include "google/cloud/version.h"
 #include <thread>
 #include <vector>
@@ -40,19 +41,9 @@ class CustomerSuppliedBackgroundThreads : public BackgroundThreads {
 };
 
 /// Create a background thread to perform background operations.
-class AutomaticallyCreatedBackgroundThreads : public BackgroundThreads {
- public:
-  explicit AutomaticallyCreatedBackgroundThreads(std::size_t thread_count = 1U);
-  ~AutomaticallyCreatedBackgroundThreads() override;
-
-  CompletionQueue cq() const override { return cq_; }
-  void Shutdown();
-  std::size_t pool_size() const { return pool_.size(); }
-
- private:
-  CompletionQueue cq_;
-  std::vector<std::thread> pool_;
-};
+using AutomaticallyCreatedBackgroundThreads =
+    AutomaticallyCreatedBackgroundThreadsImpl<CompletionQueue,
+                                              BackgroundThreads>;
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
