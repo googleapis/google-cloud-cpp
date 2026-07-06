@@ -34,7 +34,6 @@ instrumented_patterns=(
   "/google/cloud/testing_util:"
   "/google/cloud/bigtable[/:]"
   "/google/cloud/pubsub[/:]"
-  "/google/cloud/pubsublite[/:]"
   "/google/cloud/spanner[/:]"
   "/google/cloud/storage[/:]"
   "/google/cloud/bigquery[/:]"

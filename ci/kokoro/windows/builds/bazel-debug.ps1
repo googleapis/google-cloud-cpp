@@ -46,7 +46,6 @@ $targets = @(
     "//google/cloud/bigtable/...",
     "//google/cloud/iam/...",
     "//google/cloud/pubsub/...",
-    "//google/cloud/pubsublite/...",
     "//google/cloud/spanner/...",
     "//google/cloud/storage/..."
 )
