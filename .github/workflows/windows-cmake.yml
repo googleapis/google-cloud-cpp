@@ -29,8 +29,8 @@ permissions:
 
 jobs:
   cmake:
-    name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
-    runs-on: windows-2022
+    name: cmake + ${{ matrix.os }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: 'read'
     strategy:
@@ -38,7 +38,7 @@ jobs:
       fail-fast: false
       matrix:
         exclude-from-full-trick: [ true ]
-        msvc: [ msvc-2022 ]
+        os: [ windows-2022, windows-2025 ]
         build_type: [ Release ]
         arch: [ x64 ]
         shard: [ Core1, Core2, Core3, Core4, Core5, Shard1 ]
@@ -333,9 +333,9 @@ jobs:
       run: df -m
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache
-      SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.arch}}/${{ matrix.build_type }}
+      SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.os }}/${{ matrix.arch}}/${{ matrix.build_type }}
       SCCACHE_GCS_RW_MODE: ${{ inputs.sccache-mode }}
       SCCACHE_IGNORE_SERVER_IO_ERROR: 1
-      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-community-gha-cache/vcpkg-cache/${{ matrix.msvc }},${{ inputs.vcpkg-cache-mode }}
+      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-community-gha-cache/vcpkg-cache/${{ matrix.os }},${{ inputs.vcpkg-cache-mode }}
       VCPKG_TRIPLET: ${{ matrix.arch }}-windows
       GHA_TEST_BUCKET: "gcs-grpc-team-cloud-cpp-testing-bucket"
