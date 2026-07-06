@@ -30,7 +30,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.msvc }} + ${{ matrix.arch }} + ${{ matrix.build_type }} + ${{ matrix.shard }}
-    runs-on: windows-2025
+    runs-on: windows-2022
     permissions:
       contents: 'read'
     strategy:
