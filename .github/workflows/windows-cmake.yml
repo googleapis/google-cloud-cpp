@@ -333,10 +333,25 @@ jobs:
       shell: bash
       run: |
         if [[ -d "${TEMP}/.build/vcpkg/buildtrees" ]]; then
-          find "${TEMP}/.build/vcpkg/buildtrees" -name "*.log" -type f -print0 | while IFS= read -r -d '' log; do
-            echo "========= Contents of ${log} ========="
-            cat "${log}" || true
-            echo "========= End of ${log} ========="
+          search_dirs=()
+          [[ -d "c:/b" ]] && search_dirs+=("c:/b")
+          [[ -d "${TEMP}/.build/vcpkg" ]] && search_dirs+=("${TEMP}/.build/vcpkg")
+          for dir in "${TEMP}/.build/vcpkg/buildtrees"/*; do
+            [[ -d "${dir}" ]] || continue
+            port="$(basename "${dir}")"
+            [[ "${port}" == "detect_compiler" || "${port}" == "0" ]] && continue
+            installed=""
+            if [[ ${#search_dirs[@]} -gt 0 ]]; then
+              installed="$(find "${search_dirs[@]}" -maxdepth 8 -type d -path "*/share/${port}" 2>/dev/null || true)"
+            fi
+            if [[ -z "${installed}" ]]; then
+              echo "========= Failed dependency: ${port} ========="
+              find "${dir}" -name "*.log" -type f -print0 | while IFS= read -r -d '' log; do
+                echo "--- Contents of ${log} ---"
+                cat "${log}" || true
+                echo "--- End of ${log} ---"
+              done
+            fi
           done
         fi
     - name: Post Build Disk Space
