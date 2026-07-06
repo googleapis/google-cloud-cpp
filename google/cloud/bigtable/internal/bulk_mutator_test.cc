@@ -164,7 +164,7 @@ TEST_F(BulkMutatorTest, Simple) {
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse(
                   {{0, grpc::StatusCode::OK}, {1, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -218,7 +218,7 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::UNAVAILABLE},
                                  {1, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -233,7 +233,7 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -290,7 +290,7 @@ TEST_F(BulkMutatorTest, PermanentFailure) {
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::UNAVAILABLE},
                                  {1, grpc::StatusCode::OUT_OF_RANGE}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -305,7 +305,7 @@ TEST_F(BulkMutatorTest, PermanentFailure) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -364,7 +364,7 @@ TEST_F(BulkMutatorTest, PartialStream) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -380,7 +380,7 @@ TEST_F(BulkMutatorTest, PartialStream) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -431,7 +431,7 @@ TEST_F(BulkMutatorTest, RetryOnlyIdempotent) {
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::UNAVAILABLE},
                                  {1, grpc::StatusCode::UNAVAILABLE}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -448,7 +448,7 @@ TEST_F(BulkMutatorTest, RetryOnlyIdempotent) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -505,7 +505,7 @@ TEST_F(BulkMutatorTest, RetryInfoHeeded) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -580,7 +580,7 @@ TEST_F(BulkMutatorTest, UnconfirmedAreFailed) {
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse(
                   {{0, grpc::StatusCode::OK}, {2, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status(StatusCode::kPermissionDenied, "fail")));
         return stream;
@@ -646,7 +646,7 @@ TEST_F(BulkMutatorTest, MutationStatusReportedOnOkStream) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::UNAVAILABLE}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -686,7 +686,7 @@ TEST_F(BulkMutatorTest, ReportEitherRetryableMutationFailOrStreamFail) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::UNAVAILABLE}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status(StatusCode::kDataLoss, "stream fail")));
         return stream;
@@ -728,7 +728,7 @@ TEST_F(BulkMutatorTest, ReportOnlyLatestMutationStatus) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeResponse({{0, grpc::StatusCode::ABORTED}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
         return stream;
@@ -780,11 +780,11 @@ TEST_F(BulkMutatorTest, Throttling) {
               EXPECT_CALL(*stream, Read)
                   .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
                     *r = MakeResponse({{0, grpc::StatusCode::OK}});
-                    return absl::nullopt;
+                    return std::nullopt;
                   })
                   .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
                     *r = MakeResponse({{1, grpc::StatusCode::OK}});
-                    return absl::nullopt;
+                    return std::nullopt;
                   })
                   .WillOnce(Return(Status()));
               return stream;

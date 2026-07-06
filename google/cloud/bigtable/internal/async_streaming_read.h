@@ -63,7 +63,7 @@ class AsyncStreamingReadImpl
   void Read() {
     auto self = this->shared_from_this();
     auto read = stream_->Read();
-    read.then([self](future<absl::optional<Response>> f) {
+    read.then([self](future<std::optional<Response>> f) {
       auto r = f.get();
       // Read did not yield a response, finish stream.
       if (!r.has_value()) return self->Finish();
@@ -79,7 +79,7 @@ class AsyncStreamingReadImpl
   void Discard() {
     auto self = this->shared_from_this();
     auto read = stream_->Read();
-    read.then([self](future<absl::optional<Response>> f) {
+    read.then([self](future<std::optional<Response>> f) {
       auto r = f.get();
       // Read did not yield a response, finish stream.
       if (!r.has_value()) return self->Finish();

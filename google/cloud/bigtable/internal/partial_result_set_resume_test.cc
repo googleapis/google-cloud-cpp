@@ -77,7 +77,7 @@ auto constexpr kResultMetadataText = R"pb(
 
 void MakeResponse(google::bigtable::v2::PartialResultSet& response,
                   std::vector<std::string> const& values,
-                  absl::optional<std::string> resume_token, bool reset) {
+                  std::optional<std::string> resume_token, bool reset) {
   google::bigtable::v2::ProtoRows proto_rows;
   for (auto const& v : values) {
     proto_rows.add_values()->set_string_value(v);
@@ -105,7 +105,7 @@ void MakeResponse(google::bigtable::v2::PartialResultSet& response,
 // populate result
 auto ReadAction(google::bigtable::v2::PartialResultSet& response_proto,
                 bool resumption_val) {
-  return [&response_proto, resumption_val](absl::optional<std::string> const&,
+  return [&response_proto, resumption_val](std::optional<std::string> const&,
                                            UnownedPartialResultSet& result) {
     result.result = response_proto;
     result.resumption = resumption_val;
@@ -319,8 +319,8 @@ TEST(PartialResultSetResume, ResumptionStart) {
   google::bigtable::v2::PartialResultSet r12;
   google::bigtable::v2::PartialResultSet r34;
   google::bigtable::v2::PartialResultSet r56;
-  MakeResponse(r12, {"value-1", "value-2"}, absl::nullopt, true);
-  MakeResponse(r34, {"value-3", "value-4"}, absl::nullopt, false);
+  MakeResponse(r12, {"value-1", "value-2"}, std::nullopt, true);
+  MakeResponse(r34, {"value-3", "value-4"}, std::nullopt, false);
   MakeResponse(r56, {"value-5", "value-6"}, "end-of-stream", false);
   response.push_back(r12);
   response.push_back(r34);
@@ -391,7 +391,7 @@ TEST(PartialResultSetResume, ResumptionMidway) {
   google::bigtable::v2::PartialResultSet r12;
   google::bigtable::v2::PartialResultSet r34;
   google::bigtable::v2::PartialResultSet r56;
-  MakeResponse(r12, {"value-1", "value-2"}, absl::nullopt, true);
+  MakeResponse(r12, {"value-1", "value-2"}, std::nullopt, true);
   MakeResponse(r34, {"value-3", "value-4"}, "resume-after-4", false);
   MakeResponse(r56, {"value-5", "value-6"}, "end-of-stream", false);
   response.push_back(r12);

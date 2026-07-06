@@ -30,9 +30,9 @@
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <memory>
+#include <optional>
 #include <queue>
 #include <string>
 #include <utility>
@@ -157,13 +157,13 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   /**
    * The promise to the underlying stream to either continue reading or cancel.
    *
-   * If the `absl::optional` is empty, it means that either the whole scan is
+   * If the `std::optional` is empty, it means that either the whole scan is
    * finished or the underlying layers are already trying to fetch more data.
    *
-   * If the `absl::optional` is not empty, the lower layers are waiting for this
+   * If the `std::optional` is not empty, the lower layers are waiting for this
    * to be satisfied before they start fetching more data.
    */
-  absl::optional<promise<bool>> continue_reading_;
+  std::optional<promise<bool>> continue_reading_;
   /// The final status of the operation.
   bool whole_op_finished_ = false;
   /**

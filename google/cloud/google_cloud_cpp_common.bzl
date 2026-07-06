@@ -55,6 +55,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/future_fwd.h",
     "internal/future_impl.h",
     "internal/future_then_impl.h",
+    "internal/generic_background_threads_impl.h",
     "internal/getenv.h",
     "internal/group_options.h",
     "internal/invocation_id_generator.h",

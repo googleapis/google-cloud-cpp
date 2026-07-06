@@ -84,7 +84,7 @@ Matcher<v2::MutateRowsRequest::Entry> MatchEntry(std::string const& row_key) {
 }
 
 // Individual entry pairs are: {index, StatusCode}
-absl::optional<v2::MutateRowsResponse> MakeResponse(
+std::optional<v2::MutateRowsResponse> MakeResponse(
     std::vector<std::pair<int, grpc::StatusCode>> const& entries) {
   v2::MutateRowsResponse resp;
   for (auto entry : entries) {
@@ -227,8 +227,7 @@ TEST_F(AsyncBulkApplyTest, Success) {
                   MakeResponse({{1, grpc::StatusCode::OK}}));
             })
             .WillOnce([] {
-              return make_ready_future(
-                  absl::optional<v2::MutateRowsResponse>{});
+              return make_ready_future(std::optional<v2::MutateRowsResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -299,8 +298,7 @@ TEST_F(AsyncBulkApplyTest, PartialStreamIsRetried) {
                   MakeResponse({{0, grpc::StatusCode::OK}}));
             })
             .WillOnce([] {
-              return make_ready_future(
-                  absl::optional<v2::MutateRowsResponse>{});
+              return make_ready_future(std::optional<v2::MutateRowsResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -323,8 +321,7 @@ TEST_F(AsyncBulkApplyTest, PartialStreamIsRetried) {
                   MakeResponse({{0, grpc::StatusCode::OK}}));
             })
             .WillOnce([] {
-              return make_ready_future(
-                  absl::optional<v2::MutateRowsResponse>{});
+              return make_ready_future(std::optional<v2::MutateRowsResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -403,8 +400,7 @@ TEST_F(AsyncBulkApplyTest, IdempotentMutationPolicy) {
                                 {3, grpc::StatusCode::UNAVAILABLE}}));
             })
             .WillOnce([] {
-              return make_ready_future(
-                  absl::optional<v2::MutateRowsResponse>{});
+              return make_ready_future(std::optional<v2::MutateRowsResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -428,8 +424,7 @@ TEST_F(AsyncBulkApplyTest, IdempotentMutationPolicy) {
                   MakeResponse({{0, grpc::StatusCode::OK}}));
             })
             .WillOnce([] {
-              return make_ready_future(
-                  absl::optional<v2::MutateRowsResponse>{});
+              return make_ready_future(std::optional<v2::MutateRowsResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -559,7 +554,7 @@ TEST_F(AsyncBulkApplyTest, RetryInfoHeeded) {
             .WillOnce(Return(ByMove(
                 make_ready_future(MakeResponse({{0, grpc::StatusCode::OK}})))))
             .WillOnce(Return(ByMove(
-                make_ready_future(absl::optional<v2::MutateRowsResponse>()))));
+                make_ready_future(std::optional<v2::MutateRowsResponse>()))));
         EXPECT_CALL(*stream, Finish)
             .WillOnce(Return(make_ready_future(Status())));
         return stream;
@@ -687,7 +682,7 @@ TEST_F(AsyncBulkApplyTest, TimerError) {
 
 TEST_F(AsyncBulkApplyTest, CancelAfterSuccess) {
   bigtable::BulkMutation mut(IdempotentMutation("r0"));
-  promise<absl::optional<v2::MutateRowsResponse>> p;
+  promise<std::optional<v2::MutateRowsResponse>> p;
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto mock_metric = std::make_unique<MockMetric>();
@@ -754,7 +749,7 @@ TEST_F(AsyncBulkApplyTest, CancelAfterSuccess) {
   actual.cancel();
   // Proceed with the rest of the stream. In this test, there are no more
   // responses to be read. The client call should succeed.
-  p.set_value(absl::optional<v2::MutateRowsResponse>{});
+  p.set_value(std::optional<v2::MutateRowsResponse>{});
   CheckFailedMutations(actual.get(), {});
 }
 
@@ -763,7 +758,7 @@ TEST_F(AsyncBulkApplyTest, CancelMidStream) {
       {Status(StatusCode::kCancelled, "User cancelled"), 2}};
   bigtable::BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"),
                              IdempotentMutation("r2"));
-  promise<absl::optional<v2::MutateRowsResponse>> p;
+  promise<std::optional<v2::MutateRowsResponse>> p;
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto mock_metric = std::make_unique<MockMetric>();
@@ -806,7 +801,7 @@ TEST_F(AsyncBulkApplyTest, CancelMidStream) {
             .WillOnce([&p] { return p.get_future(); });
         EXPECT_CALL(*stream, Cancel);
         EXPECT_CALL(*stream, Read).WillOnce([] {
-          return make_ready_future(absl::optional<v2::MutateRowsResponse>{});
+          return make_ready_future(std::optional<v2::MutateRowsResponse>{});
         });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(
@@ -924,8 +919,7 @@ TEST_F(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
                   MakeResponse({{0, grpc::StatusCode::UNAVAILABLE}}));
             })
             .WillOnce([] {
-              return make_ready_future(
-                  absl::optional<v2::MutateRowsResponse>{});
+              return make_ready_future(std::optional<v2::MutateRowsResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status());
@@ -993,7 +987,7 @@ TEST_F(AsyncBulkApplyTest, Throttling) {
         });
         EXPECT_CALL(*limiter, Update);
         EXPECT_CALL(*stream, Read).WillOnce([] {
-          return make_ready_future(absl::optional<v2::MutateRowsResponse>{});
+          return make_ready_future(std::optional<v2::MutateRowsResponse>{});
         });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status());
@@ -1029,8 +1023,7 @@ TEST_F(AsyncBulkApplyTest, ThrottlingBeforeEachRetry) {
                   MakeResponse({{0, grpc::StatusCode::UNAVAILABLE}}));
             })
             .WillOnce([] {
-              return make_ready_future(
-                  absl::optional<v2::MutateRowsResponse>{});
+              return make_ready_future(std::optional<v2::MutateRowsResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status());

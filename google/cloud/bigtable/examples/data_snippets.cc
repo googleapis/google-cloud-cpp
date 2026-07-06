@@ -817,7 +817,7 @@ void PrepareAndExecuteQuery(google::cloud::bigtable::Client client,
 
     auto results = client.ExecuteQuery(std::move(bound_query));
 
-    using RowType = std::tuple<cbt::Bytes, absl::optional<std::string>>;
+    using RowType = std::tuple<cbt::Bytes, std::optional<std::string>>;
     for (auto& row : cbt::StreamOf<RowType>(results)) {
       if (!row.ok()) throw std::move(row.status());
       auto v = std::get<1>(*row);

@@ -101,18 +101,18 @@ bool IsConnectivityError(google::cloud::Status const& status,
          !HasServerTiming(client_context);
 }
 
-absl::optional<google::bigtable::v2::ResponseParams>
+std::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context) {
   auto metadata = client_context.GetServerTrailingMetadata();
   auto iter = metadata.find("x-goog-ext-425905942-bin");
-  if (iter == metadata.end()) return absl::nullopt;
+  if (iter == metadata.end()) return std::nullopt;
   google::bigtable::v2::ResponseParams p;
   // The value for this key should always be the same in a response, so we
   // return the first value we find.
   std::string value{iter->second.data(), iter->second.size()};
   if (p.ParseFromString(value)) return p;
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
@@ -142,12 +142,12 @@ std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
   return std::nullopt;
 }
 
-absl::optional<double> GetServerLatencyFromInitialMetadata(
+std::optional<double> GetServerLatencyFromInitialMetadata(
     grpc::ClientContext const& client_context) {
   auto const& initial_metadata = client_context.GetServerInitialMetadata();
   auto it = initial_metadata.find("server-timing");
   if (it == initial_metadata.end()) {
-    return absl::nullopt;
+    return std::nullopt;
   }
 
   absl::string_view value(it->second.data(), it->second.length());
@@ -171,13 +171,13 @@ absl::optional<double> GetServerLatencyFromInitialMetadata(
           if (result.ec == std::errc()) {
             return dur_value;
           }
-          return absl::nullopt;
+          return std::nullopt;
         }
       }
     }
   }
 
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 Metric::~Metric() = default;

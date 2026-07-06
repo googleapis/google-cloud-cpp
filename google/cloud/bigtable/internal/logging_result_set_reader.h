@@ -18,8 +18,8 @@
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/tracing_options.h"
-#include "absl/types/optional.h"
 #include <memory>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -39,7 +39,7 @@ class LoggingResultSetReader : public PartialResultSetReader {
   ~LoggingResultSetReader() override = default;
 
   void TryCancel() override;
-  bool Read(absl::optional<std::string> const& resume_token,
+  bool Read(std::optional<std::string> const& resume_token,
             UnownedPartialResultSet& result) override;
   grpc::ClientContext const& context() const override;
   Status Finish() override;

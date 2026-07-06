@@ -70,14 +70,14 @@ LabelMap IntoLabelMap(
 bool HasServerTiming(grpc::ClientContext const& client_context);
 bool IsConnectivityError(google::cloud::Status const& status,
                          grpc::ClientContext const& client_context);
-absl::optional<google::bigtable::v2::ResponseParams>
+std::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
     grpc::ClientContext const& client_context);
 // Retrieve the peer info from server headers or trailers. Returns nullopt if
 // not found or decoding or parsing fails.
 std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
     grpc::ClientContext const& client_context);
-absl::optional<double> GetServerLatencyFromInitialMetadata(
+std::optional<double> GetServerLatencyFromInitialMetadata(
     grpc::ClientContext const& client_context);
 
 struct PreCallParams {
@@ -240,7 +240,7 @@ class FirstResponseLatency : public Metric {
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       first_response_latencies_;
   OperationContext::Clock::time_point operation_start_;
-  absl::optional<LatencyDuration> first_response_latency_;
+  std::optional<LatencyDuration> first_response_latency_;
 };
 
 class ServerLatency : public Metric {

@@ -35,11 +35,12 @@ jobs:
     - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       with:
         ref: ${{ inputs.checkout-ref || github.sha }}
+        persist-credentials: false
     # Use BYOID identity and run the integration test
     - id: byoid-auth
       if: '!github.event.pull_request.head.repo.fork'
       name: 'Authenticate to GCP'
-      uses: 'google-github-actions/auth@v3'
+      uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
       with:
         create_credentials_file: true
         workload_identity_provider: 'projects/49427430084/locations/global/workloadIdentityPools/github-wif-pool/providers/github-wif-provider'

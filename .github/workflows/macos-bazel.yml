@@ -37,10 +37,11 @@ jobs:
           targets:
           - //google/cloud/storage/...
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
       with:
         ref: ${{ inputs.checkout-ref }}
-    - uses: google-github-actions/auth@v2
+        persist-credentials: false
+    - uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
       if: ${{ inputs.bazel-cache-mode == 'READ_WRITE' }}
       with:
         create_credentials_file: true
@@ -48,8 +49,10 @@ jobs:
     - name: Install bash >= 5.x
       run: brew install bash
     - name: Pre Tests Disk Space
+      # zizmor: ignore[template-injection]
       run: df -m
     - name: Build google-cloud-cpp
+      # zizmor: ignore[template-injection]
       run: |
         export BAZEL_REMOTE_CACHE_RW_MODE=${{ inputs.bazel-cache-mode }}
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}

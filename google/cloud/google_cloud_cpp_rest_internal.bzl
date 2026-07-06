@@ -128,7 +128,6 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/rest_lro_helpers.cc",
     "internal/rest_opentelemetry.cc",
     "internal/rest_parse_json_error.cc",
-    "internal/rest_pure_background_threads_impl.cc",
     "internal/rest_pure_completion_queue_impl.cc",
     "internal/rest_request.cc",
     "internal/rest_response.cc",
