@@ -442,21 +442,25 @@ class AsyncWriterConnectionResumedState
   void RestoreChecksumState(std::int64_t persisted_size) {
     if (!hash_function_) return;
     EnsureCrc32cHistory(persisted_size);
-    auto it = crc32c_history_.find(persisted_size);
-    if (it != crc32c_history_.end()) {
-      hash_function_->RestoreCrc32c(it->second, persisted_size);
+    if (state_ == State::kResuming) {
+      auto it = crc32c_history_.find(persisted_size);
+      if (it != crc32c_history_.end()) {
+        hash_function_->RestoreCrc32c(it->second, persisted_size);
+      }
     }
     // Purge obsolete historical checkpoints strictly before persisted_size.
     crc32c_history_.erase(crc32c_history_.begin(),
                           crc32c_history_.lower_bound(persisted_size));
     // We remove checkpoints above persisted_size to prevent any possibility of
     // stale CRCs persisting if chunking boundaries or buffer slices shift
-    // across retry attempts. When the stream resumes from persisted_size, any
-    // unacknowledged data in resend_buffer_ is re-transmitted and re-hashed on
-    // the fly, repopulating crc32c_history_ with fresh checkpoints.
-    auto upper = crc32c_history_.upper_bound(persisted_size);
-    if (upper != crc32c_history_.end()) {
-      crc32c_history_.erase(upper, crc32c_history_.end());
+    // across retry attempts. This is only done when resuming, as a resume will
+    // re-transmit and re-hash unacknowledged data on the fly. If we are just
+    // flushing, future checkpoints are still valid for in-flight data.
+    if (state_ == State::kResuming) {
+      auto upper = crc32c_history_.upper_bound(persisted_size);
+      if (upper != crc32c_history_.end()) {
+        crc32c_history_.erase(upper, crc32c_history_.end());
+      }
     }
   }
 
