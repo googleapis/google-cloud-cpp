@@ -69,6 +69,7 @@ jobs:
       with:
         ref: ${{ inputs.checkout-ref }}
         persist-credentials: false
+        allow-unsafe-pr-checkout: true
     - uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
       if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
       with:
