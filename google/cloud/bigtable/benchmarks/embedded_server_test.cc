@@ -76,7 +76,9 @@ TEST(EmbeddedServer, TableApply) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>(server->address());
 
-  Table table(MakeDataConnection(options),
+  Table table(MakeDataConnection(
+                  {InstanceResource(Project("fake-project"), "fake-instance")},
+                  std::move(options)),
               TableResource("fake-project", "fake-instance", "fake-table"));
 
   SingleRowMutation mutation("row1",
@@ -101,7 +103,9 @@ TEST(EmbeddedServer, TableBulkApply) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>(server->address());
 
-  Table table(MakeDataConnection(options),
+  Table table(MakeDataConnection(
+                  {InstanceResource(Project("fake-project"), "fake-instance")},
+                  std::move(options)),
               TableResource("fake-project", "fake-instance", "fake-table"));
 
   BulkMutation bulk;
@@ -128,7 +132,9 @@ TEST(EmbeddedServer, ReadRows1) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>(server->address());
 
-  Table table(MakeDataConnection(options),
+  Table table(MakeDataConnection(
+                  {InstanceResource(Project("fake-project"), "fake-instance")},
+                  std::move(options)),
               TableResource("fake-project", "fake-instance", "fake-table"));
 
   EXPECT_EQ(0, server->read_rows_count());
@@ -150,7 +156,9 @@ TEST(EmbeddedServer, ReadRows100) {
           .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
           .set<EndpointOption>(server->address());
 
-  Table table(MakeDataConnection(options),
+  Table table(MakeDataConnection(
+                  {InstanceResource(Project("fake-project"), "fake-instance")},
+                  std::move(options)),
               TableResource("fake-project", "fake-instance", "fake-table"));
 
   EXPECT_EQ(0, server->read_rows_count());

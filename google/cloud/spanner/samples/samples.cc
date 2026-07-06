@@ -42,11 +42,11 @@
 #include "absl/strings/string_view.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
-#include "absl/types/optional.h"
 #include "protos/google/cloud/spanner/testing/singer.pb.h"
 #include <chrono>
 #include <iomanip>
 #include <iterator>
+#include <optional>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -487,7 +487,7 @@ void AddDatabaseReader(google::cloud::spanner_admin::InstanceAdminClient client,
   auto result = client.SetIamPolicy(
       in.FullName(),
       [&new_reader](google::iam::v1::Policy current)
-          -> absl::optional<google::iam::v1::Policy> {
+          -> std::optional<google::iam::v1::Policy> {
         // Find (or create) the binding for "roles/spanner.databaseReader".
         auto& binding = [&current]() -> google::iam::v1::Binding& {
           auto role_pos = std::find_if(
@@ -544,7 +544,7 @@ void RemoveDatabaseReader(
   auto result = client.SetIamPolicy(
       in.FullName(),
       [&reader](google::iam::v1::Policy current)
-          -> absl::optional<google::iam::v1::Policy> {
+          -> std::optional<google::iam::v1::Policy> {
         // Find the binding for "roles/spanner.databaseReader".
         auto role_pos =
             std::find_if(current.mutable_bindings()->begin(),
@@ -2507,8 +2507,8 @@ void QueryWithArrayParameter(google::cloud::spanner::Client client) {
       " UNNEST(v.AvailableDates) as AvailableDate "
       " WHERE AvailableDate in UNNEST(@available_dates)",
       {{"available_dates", spanner::Value(example_array)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
-                             absl::optional<absl::CivilDay>>;
+  using RowType = std::tuple<std::int64_t, std::optional<std::string>,
+                             std::optional<absl::CivilDay>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -2528,8 +2528,8 @@ void QueryWithBoolParameter(google::cloud::spanner::Client client) {
       "SELECT VenueId, VenueName, OutdoorVenue FROM Venues"
       " WHERE OutdoorVenue = @outdoor_venue",
       {{"outdoor_venue", spanner::Value(example_bool)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
-                             absl::optional<bool>>;
+  using RowType =
+      std::tuple<std::int64_t, std::optional<std::string>, std::optional<bool>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -2549,7 +2549,7 @@ void QueryWithBytesParameter(google::cloud::spanner::Client client) {
       "SELECT VenueId, VenueName FROM Venues"
       " WHERE VenueInfo = @venue_info",
       {{"venue_info", spanner::Value(example_bytes)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>>;
+  using RowType = std::tuple<std::int64_t, std::optional<std::string>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -2568,8 +2568,8 @@ void QueryWithDateParameter(google::cloud::spanner::Client client) {
       "SELECT VenueId, VenueName, LastContactDate FROM Venues"
       " WHERE LastContactDate < @last_contact_date",
       {{"last_contact_date", spanner::Value(example_date)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
-                             absl::optional<absl::CivilDay>>;
+  using RowType = std::tuple<std::int64_t, std::optional<std::string>,
+                             std::optional<absl::CivilDay>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -2589,8 +2589,8 @@ void QueryWithFloatParameter(google::cloud::spanner::Client client) {
       "SELECT VenueId, VenueName, PopularityScore FROM Venues"
       " WHERE PopularityScore > @popularity_score",
       {{"popularity_score", spanner::Value(example_float)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
-                             absl::optional<double>>;
+  using RowType = std::tuple<std::int64_t, std::optional<std::string>,
+                             std::optional<double>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -2610,8 +2610,8 @@ void QueryWithIntParameter(google::cloud::spanner::Client client) {
       "SELECT VenueId, VenueName, Capacity FROM Venues"
       " WHERE Capacity >= @capacity",
       {{"capacity", spanner::Value(example_int)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
-                             absl::optional<std::int64_t>>;
+  using RowType = std::tuple<std::int64_t, std::optional<std::string>,
+                             std::optional<std::int64_t>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -2631,7 +2631,7 @@ void QueryWithStringParameter(google::cloud::spanner::Client client) {
       "SELECT VenueId, VenueName FROM Venues"
       " WHERE VenueName = @venue_name",
       {{"venue_name", spanner::Value(example_string)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>>;
+  using RowType = std::tuple<std::int64_t, std::optional<std::string>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -2651,8 +2651,8 @@ void QueryWithTimestampParameter(
       "SELECT VenueId, VenueName, LastUpdateTime FROM Venues"
       " WHERE LastUpdateTime <= @last_update_time",
       {{"last_update_time", spanner::Value(example_timestamp)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
-                             absl::optional<spanner::Timestamp>>;
+  using RowType = std::tuple<std::int64_t, std::optional<std::string>,
+                             std::optional<spanner::Timestamp>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -2896,8 +2896,8 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
       "  FROM Albums"
       " ORDER BY LastUpdateTime DESC");
   using RowType =
-      std::tuple<std::int64_t, std::int64_t, absl::optional<std::int64_t>,
-                 absl::optional<spanner::Timestamp>>;
+      std::tuple<std::int64_t, std::int64_t, std::optional<std::int64_t>,
+                 std::optional<spanner::Timestamp>>;
 
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
@@ -2985,7 +2985,7 @@ void QueryWithJsonParameter(google::cloud::spanner::Client client) {
       " WHERE JSON_VALUE(VenueDetails, '$.rating') ="
       "       JSON_VALUE(@details, '$.rating')",
       {{"details", spanner::Value(std::move(rating9_details))}});
-  using RowType = std::tuple<std::int64_t, absl::optional<spanner::Json>>;
+  using RowType = std::tuple<std::int64_t, std::optional<spanner::Json>>;
 
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
@@ -3048,7 +3048,7 @@ void QueryWithNumericParameter(google::cloud::spanner::Client client) {
       "  FROM Venues"
       " WHERE Revenue < @revenue",
       {{"revenue", spanner::Value(std::move(revenue))}});
-  using RowType = std::tuple<std::int64_t, absl::optional<spanner::Numeric>>;
+  using RowType = std::tuple<std::int64_t, std::optional<spanner::Numeric>>;
 
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
@@ -3285,7 +3285,7 @@ void QueryNewColumn(google::cloud::spanner::Client client) {
   spanner::SqlStatement select(
       "SELECT SingerId, AlbumId, MarketingBudget FROM Albums");
   using RowType =
-      std::tuple<std::int64_t, std::int64_t, absl::optional<std::int64_t>>;
+      std::tuple<std::int64_t, std::int64_t, std::optional<std::int64_t>>;
 
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
@@ -3337,7 +3337,7 @@ void QueryUsingIndex(google::cloud::spanner::Client client) {
       {{"start_title", spanner::Value("Aardvark")},
        {"end_title", spanner::Value("Goo")}});
   using RowType =
-      std::tuple<std::int64_t, std::string, absl::optional<std::int64_t>>;
+      std::tuple<std::int64_t, std::string, std::optional<std::int64_t>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -3409,7 +3409,7 @@ void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
                   google::cloud::Options{}.set<spanner::ReadIndexNameOption>(
                       "AlbumsByAlbumTitle2"));
   using RowType =
-      std::tuple<std::int64_t, std::string, absl::optional<std::int64_t>>;
+      std::tuple<std::int64_t, std::string, std::optional<std::int64_t>>;
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
     std::cout << "AlbumId: " << std::get<0>(*row) << "\t";
@@ -3949,7 +3949,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
                         std::int64_t singer_id) -> StatusOr<std::int64_t> {
     auto key = spanner::KeySet().AddKey(spanner::MakeKey(album_id, singer_id));
     auto rows = client.Read(std::move(txn), "Albums", key, {"MarketingBudget"});
-    using RowType = std::tuple<absl::optional<std::int64_t>>;
+    using RowType = std::tuple<std::optional<std::int64_t>>;
     auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
     if (!row) return std::move(row).status();
     auto const budget = std::get<0>(*row);
@@ -4190,7 +4190,7 @@ void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
               WHERE SingerId = 1 AND AlbumId = 1
               THEN RETURN MarketingBudget
         )""");
-        using RowType = std::tuple<absl::optional<std::int64_t>>;
+        using RowType = std::tuple<std::optional<std::int64_t>>;
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
         // Note: This mutator might be re-run, or its effects discarded, so
         // changing non-transactional state (e.g., by producing output) is,
@@ -4417,8 +4417,8 @@ void UpdateDataWithProtoMessageColumn(google::cloud::spanner::Client client) {
               "Singers", {"SingerId", "SingerInfo", "SingerInfoArray"})
               .EmplaceRow(2, singer_info,
                           std::vector<SingerInfoMessage>{singer_info})
-              .EmplaceRow(3, absl::optional<SingerInfoMessage>(),
-                          absl::optional<std::vector<SingerInfoMessage>>())
+              .EmplaceRow(3, std::optional<SingerInfoMessage>(),
+                          std::optional<std::vector<SingerInfoMessage>>())
               .Build()}});
   for (auto& commit_result : commit_results) {
     if (!commit_result) throw std::move(commit_result).status();
@@ -4473,8 +4473,8 @@ void QueryWithProtoMessageParameter(google::cloud::spanner::Client client) {
       {{"nationality", google::cloud::spanner::Value("British")}});
   using SingerInfoMessage = google::cloud::spanner::ProtoMessage<
       google::cloud::spanner::testing::SingerInfo>;
-  using RowType = std::tuple<std::int64_t, absl::optional<SingerInfoMessage>,
-                             absl::optional<std::vector<SingerInfoMessage>>>;
+  using RowType = std::tuple<std::int64_t, std::optional<SingerInfoMessage>,
+                             std::optional<std::vector<SingerInfoMessage>>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -4516,8 +4516,8 @@ void UpdateDataWithProtoEnumColumn(google::cloud::spanner::Client client) {
           google::cloud::spanner::InsertOrUpdateMutationBuilder(
               "Singers", {"SingerId", "SingerGenre", "SingerGenreArray"})
               .EmplaceRow(2, singer_genre, std::vector<GenreEnum>{singer_genre})
-              .EmplaceRow(3, absl::optional<GenreEnum>(),
-                          absl::optional<std::vector<GenreEnum>>())
+              .EmplaceRow(3, std::optional<GenreEnum>(),
+                          std::optional<std::vector<GenreEnum>>())
               .Build()}});
   for (auto& commit_result : commit_results) {
     if (!commit_result) throw std::move(commit_result).status();
@@ -4568,8 +4568,8 @@ void QueryWithProtoEnumParameter(google::cloud::spanner::Client client) {
       "SELECT SingerId, SingerGenre, SingerGenreArray FROM Singers"
       " WHERE SingerGenre = @singer_genre",
       {{"singer_genre", google::cloud::spanner::Value(singer_genre)}});
-  using RowType = std::tuple<std::int64_t, absl::optional<GenreEnum>,
-                             absl::optional<std::vector<GenreEnum>>>;
+  using RowType = std::tuple<std::int64_t, std::optional<GenreEnum>,
+                             std::optional<std::vector<GenreEnum>>>;
   auto rows = client.ExecuteQuery(std::move(select));
   for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();

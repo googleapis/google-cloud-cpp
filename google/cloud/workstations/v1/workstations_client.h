@@ -106,8 +106,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L916}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1364}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
@@ -136,8 +136,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L916}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1364}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
@@ -173,8 +173,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L927}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1375}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationCluster>
@@ -212,8 +212,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L927}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1375}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationCluster>
@@ -248,8 +248,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L958}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1410}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -306,8 +306,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L958}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1410}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -373,8 +373,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L980}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1432}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -430,8 +430,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L980}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1432}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -495,8 +495,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1001}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1453}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -546,8 +546,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1001}
-  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L282}
+  /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1453}
+  /// [google.cloud.workstations.v1.WorkstationCluster]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -604,8 +604,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1025}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1477}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -634,8 +634,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1025}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1477}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -671,8 +671,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1036}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1488}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
@@ -710,8 +710,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1036}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1488}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
@@ -747,8 +747,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1067}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1523}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
@@ -787,8 +787,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1067}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1523}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
@@ -802,7 +802,7 @@ class WorkstationsClient {
   /// Creates a new workstation configuration.
   ///
   /// @param parent  Required. Parent resource name.
-  /// @param workstation_config  Required. Config to create.
+  /// @param workstation_config  Required. Workstation configuration to create.
   /// @param workstation_config_id  Required. ID to use for the workstation configuration.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -824,8 +824,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1098}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1554}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -882,8 +882,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1098}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1554}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -926,7 +926,7 @@ class WorkstationsClient {
   ///
   /// Updates an existing workstation configuration.
   ///
-  /// @param workstation_config  Required. Config to update.
+  /// @param workstation_config  Required. Workstation configuration to update.
   /// @param update_mask  Required. Mask specifying which fields in the workstation configuration
   ///  should be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -949,8 +949,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1120}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1576}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -1006,8 +1006,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1120}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1576}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -1071,8 +1071,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1141}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1597}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -1122,8 +1122,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1141}
-  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L398}
+  /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1597}
+  /// [google.cloud.workstations.v1.WorkstationConfig]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L453}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -1180,8 +1180,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.GetWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1165}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.GetWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1621}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
@@ -1210,8 +1210,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.GetWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1165}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.GetWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1621}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
@@ -1245,8 +1245,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1176}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.ListWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1632}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::Workstation> ListWorkstations(
@@ -1284,8 +1284,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1176}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.ListWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1632}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::Workstation> ListWorkstations(
@@ -1320,8 +1320,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1207}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1667}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::Workstation>
@@ -1360,8 +1360,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1207}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1667}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   StreamRange<google::cloud::workstations::v1::Workstation>
@@ -1374,7 +1374,11 @@ class WorkstationsClient {
   /// Creates a new workstation.
   ///
   /// @param parent  Required. Parent resource name.
-  /// @param workstation  Required. Workstation to create.
+  /// @param workstation  Required. Workstation to create. If source_workstation is specified, the
+  ///  user must have `workstations.workstations.use` permission on the source
+  ///  workstation, and the Cloud Workstations Service Agent for the project where
+  ///  you are creating the new workstation must have compute.disks.createSnapshot
+  ///  and compute.snapshots.useReadOnly on the source project.
   /// @param workstation_id  Required. ID to use for the workstation.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1396,8 +1400,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.CreateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1238}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.CreateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1698}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1452,8 +1456,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.CreateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1238}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.CreateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1698}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1495,8 +1499,8 @@ class WorkstationsClient {
   /// Updates an existing workstation.
   ///
   /// @param workstation  Required. Workstation to update.
-  /// @param update_mask  Required. Mask specifying which fields in the workstation configuration
-  ///  should be updated.
+  /// @param update_mask  Required. Mask specifying which fields in the workstation should be
+  ///  updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1517,8 +1521,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.UpdateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1259}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.UpdateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1723}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1572,8 +1576,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.UpdateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1259}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.UpdateWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1723}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1635,8 +1639,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.DeleteWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1279}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.DeleteWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1742}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1686,8 +1690,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.DeleteWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1279}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.DeleteWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1742}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1749,8 +1753,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.StartWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1298}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.StartWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1761}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1800,8 +1804,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.StartWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1298}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.StartWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1761}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1863,8 +1867,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.StopWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1317}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.StopWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1784}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1914,8 +1918,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.StopWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1317}
-  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L831}
+  /// [google.cloud.workstations.v1.StopWorkstationRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1784}
+  /// [google.cloud.workstations.v1.Workstation]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -1956,6 +1960,8 @@ class WorkstationsClient {
   ///
   /// Returns a short-lived credential that can be used to send authenticated and
   /// authorized traffic to a workstation.
+  /// Once generated this token cannot be revoked and is good for the lifetime
+  /// of the token.
   ///
   /// @param workstation  Required. Name of the workstation for which the access token should be
   ///  generated.
@@ -1972,8 +1978,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1336}
-  /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1362}
+  /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1803}
+  /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1836}
   ///
   // clang-format on
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
@@ -1983,6 +1989,8 @@ class WorkstationsClient {
   ///
   /// Returns a short-lived credential that can be used to send authenticated and
   /// authorized traffic to a workstation.
+  /// Once generated this token cannot be revoked and is good for the lifetime
+  /// of the token.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2003,8 +2011,8 @@ class WorkstationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1336}
-  /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1362}
+  /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1803}
+  /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1836}
   ///
   // clang-format on
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>

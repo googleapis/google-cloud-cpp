@@ -1,3 +1,4 @@
+@googleapis//google/cloud/networkservices/v1:agent_gateway.proto
 @googleapis//google/cloud/networkservices/v1:common.proto
 @googleapis//google/cloud/networkservices/v1:dep.proto
 @googleapis//google/cloud/networkservices/v1:endpoint_policy.proto

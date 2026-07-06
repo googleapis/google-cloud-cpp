@@ -180,6 +180,31 @@ class StorageControlTracingConnection
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::storage::control::v2::IntelligenceFinding>
+  GetIntelligenceFinding(
+      google::storage::control::v2::GetIntelligenceFindingRequest const&
+          request) override;
+
+  StreamRange<google::storage::control::v2::IntelligenceFinding>
+  ListIntelligenceFindings(
+      google::storage::control::v2::ListIntelligenceFindingsRequest request)
+      override;
+
+  StreamRange<google::storage::control::v2::FindingSummary>
+  SummarizeIntelligenceFindings(
+      google::storage::control::v2::SummarizeIntelligenceFindingsRequest
+          request) override;
+
+  StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+  GetIntelligenceFindingRevision(
+      google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+          request) override;
+
+  StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
+  ListIntelligenceFindingRevisions(
+      google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
+          request) override;
+
  private:
   std::shared_ptr<storagecontrol_v2::StorageControlConnection> child_;
 };

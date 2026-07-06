@@ -64,6 +64,11 @@ class ReferenceListServiceConnectionImpl
       google::cloud::chronicle::v1::UpdateReferenceListRequest const& request)
       override;
 
+  StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+  VerifyReferenceList(
+      google::cloud::chronicle::v1::VerifyReferenceListRequest const& request)
+      override;
+
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
 

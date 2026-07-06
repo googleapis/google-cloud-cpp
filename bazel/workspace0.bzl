@@ -136,10 +136,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/ef19b7b7a73f19f33ab86c5b3603e9590025acd7.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/b6f9ff05aaec18070232a1ab36da98e684bc7909.tar.gz",
         ],
-        sha256 = "31c37576b66942a3afa23b985833936e903cfd7975af50f8958119047ab44847",
-        strip_prefix = "googleapis-ef19b7b7a73f19f33ab86c5b3603e9590025acd7",
+        sha256 = "91788c6f956a0a409abe89a304c123cff73cb0ebb46b494e56d7ac9ece86f8cf",
+        strip_prefix = "googleapis-b6f9ff05aaec18070232a1ab36da98e684bc7909",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         patches = [
@@ -196,10 +196,10 @@ def gl_cpp_workspace0(name = None):
     maybe(
         http_archive,
         name = "io_bazel_rules_go",
-        sha256 = "d93ef02f1e72c82d8bb3d5169519b36167b33cf68c252525e3b9d3d5dd143de7",
+        sha256 = "763f4a3f6b03469fdb00a77a333dd0b5546d3ee1fa29db373128c08fee73e0e8",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.61.1/rules_go-v0.61.1.zip",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.61.1/rules_go-v0.61.1.zip",
         ],
         patch_args = ["-p1"],
     )

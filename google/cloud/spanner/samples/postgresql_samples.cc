@@ -137,7 +137,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
     auto key = google::cloud::spanner::KeySet().AddKey(
         google::cloud::spanner::MakeKey(album_id, singer_id));
     auto rows = client.Read(std::move(txn), "Albums", key, {"MarketingBudget"});
-    using RowType = std::tuple<absl::optional<std::int64_t>>;
+    using RowType = std::tuple<std::optional<std::int64_t>>;
     auto row = google::cloud::spanner::GetSingularRow(
         google::cloud::spanner::StreamOf<RowType>(rows));
     if (!row) return std::move(row).status();
@@ -232,7 +232,7 @@ void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
               WHERE SingerId = 1 AND AlbumId = 1
               RETURNING MarketingBudget
         )""");
-        using RowType = std::tuple<absl::optional<std::int64_t>>;
+        using RowType = std::tuple<std::optional<std::int64_t>>;
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
         for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
           if (!row) return std::move(row).status();
@@ -479,7 +479,7 @@ void OrderNulls(google::cloud::spanner::Client client) {
   if (!commit) throw std::move(commit).status();
   std::cout << "Insertion of NULL LastName was successful.\n";
 
-  using RowType = std::tuple<absl::optional<std::string>>;
+  using RowType = std::tuple<std::optional<std::string>>;
   for (std::string option : {"", " DESC", " NULLS FIRST", " NULLS LAST"}) {
     auto sql = google::cloud::spanner::SqlStatement(
         R"""(SELECT "LastName" FROM Singers ORDER BY "LastName")""" + option);
@@ -635,9 +635,9 @@ void InformationSchema(
           WHERE table_schema = 'public'
   )""");
   using RowType =
-      std::tuple<absl::optional<std::string>, std::string, std::string,
-                 absl::optional<std::string>, absl::optional<std::string>,
-                 absl::optional<std::string>>;
+      std::tuple<std::optional<std::string>, std::string, std::string,
+                 std::optional<std::string>, std::optional<std::string>,
+                 std::optional<std::string>>;
   auto rows = client.ExecuteQuery(std::move(sql));
   for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -741,8 +741,8 @@ void NumericDataType(google::cloud::spanner::Client client) {
   auto sql = google::cloud::spanner::SqlStatement(R"""(
       SELECT Name, Revenue FROM Venues
   )""");
-  using RowType = std::tuple<std::string,
-                             absl::optional<google::cloud::spanner::PgNumeric>>;
+  using RowType =
+      std::tuple<std::string, std::optional<google::cloud::spanner::PgNumeric>>;
   auto rows = client.ExecuteQuery(std::move(sql));
   for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();
@@ -840,7 +840,7 @@ void JsonbQueryWithParameter(google::cloud::spanner::Client client) {
       "  WHERE CAST(VenueDetails ->> 'rating' AS INTEGER) > $1",
       {{"p1", google::cloud::spanner::Value(2)}});
   using RowType =
-      std::tuple<std::int64_t, absl::optional<google::cloud::spanner::JsonB>>;
+      std::tuple<std::int64_t, std::optional<google::cloud::spanner::JsonB>>;
   auto rows = client.ExecuteQuery(std::move(sql));
   for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::move(row).status();

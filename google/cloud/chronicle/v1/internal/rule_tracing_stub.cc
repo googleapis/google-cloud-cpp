@@ -89,6 +89,18 @@ Status RuleServiceTracingStub::DeleteRule(
                            child_->DeleteRule(context, options, request));
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceTracingStub::VerifyRuleText(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "VerifyRuleText");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->VerifyRuleText(context, options, request));
+}
+
 StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
 RuleServiceTracingStub::ListRuleRevisions(
     grpc::ClientContext& context, Options const& options,

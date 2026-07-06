@@ -29,10 +29,10 @@ class StatusOnlyResultSetSource : public ResultSourceInterface {
       : status_(std::move(status)) {}
 
   StatusOr<Row> NextRow() override { return status_; }
-  absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+  std::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
     return {};
   }
-  absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
+  std::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return {};
   }
 

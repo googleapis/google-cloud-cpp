@@ -55,6 +55,11 @@ class OracleDatabaseConnectionIdempotencyPolicy {
       google::cloud::oracledatabase::v1::
           DeleteCloudExadataInfrastructureRequest const& request);
 
+  virtual google::cloud::Idempotency
+  ConfigureExascaleCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          ConfigureExascaleCloudExadataInfrastructureRequest const& request);
+
   virtual google::cloud::Idempotency ListCloudVmClusters(
       google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request);
 
@@ -242,12 +247,88 @@ class OracleDatabaseConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteDbSystem(
       google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request);
 
+  virtual google::cloud::Idempotency ListGoldengateDeployments(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetGoldengateDeployment(
+      google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateGoldengateDeployment(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateDeploymentRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteGoldengateDeployment(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateDeploymentRequest const& request);
+
+  virtual google::cloud::Idempotency StopGoldengateDeployment(
+      google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+          request);
+
+  virtual google::cloud::Idempotency StartGoldengateDeployment(
+      google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListGoldengateConnections(
+      google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetGoldengateConnection(
+      google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateGoldengateConnection(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteGoldengateConnection(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionRequest const& request);
+
+  virtual google::cloud::Idempotency ListGoldengateDeploymentVersions(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsRequest
+          request);
+
+  virtual google::cloud::Idempotency ListGoldengateDeploymentTypes(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesRequest
+          request);
+
+  virtual google::cloud::Idempotency ListGoldengateDeploymentEnvironments(
+      google::cloud::oracledatabase::v1::
+          ListGoldengateDeploymentEnvironmentsRequest request);
+
+  virtual google::cloud::Idempotency ListGoldengateConnectionTypes(
+      google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesRequest
+          request);
+
   virtual google::cloud::Idempotency ListDbVersions(
       google::cloud::oracledatabase::v1::ListDbVersionsRequest request);
 
   virtual google::cloud::Idempotency ListDatabaseCharacterSets(
       google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
           request);
+
+  virtual google::cloud::Idempotency ListGoldengateConnectionAssignments(
+      google::cloud::oracledatabase::v1::
+          ListGoldengateConnectionAssignmentsRequest request);
+
+  virtual google::cloud::Idempotency GetGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          GetGoldengateConnectionAssignmentRequest const& request);
+
+  virtual google::cloud::Idempotency CreateGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionAssignmentRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionAssignmentRequest const& request);
+
+  virtual google::cloud::Idempotency TestGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          TestGoldengateConnectionAssignmentRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

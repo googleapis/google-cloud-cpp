@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
+#include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -72,24 +74,6 @@ TEST(MakeDataConnection, TracingEnabled) {
               Contains(SpanNamed("bigtable::Table::Apply")));
 }
 
-TEST(MakeDataConnection, InstanceChannelAffinityOption) {
-  InstanceResource instance_a{Project("my-project"), "instance-a"};
-  InstanceResource instance_b{Project("my-project"), "instance-b"};
-  auto conn =
-      MakeDataConnection(TestOptions()
-                             .set<AppProfileIdOption>("user-supplied")
-                             .set<experimental::InstanceChannelAffinityOption>(
-                                 {instance_a, instance_b}));
-  auto options = conn->options();
-  EXPECT_TRUE(options.has<DataBackoffPolicyOption>())
-      << "Options are not defaulted in MakeDataConnection()";
-  EXPECT_EQ(options.get<AppProfileIdOption>(), "user-supplied")
-      << "User supplied Options are overridden in MakeDataConnection()";
-  ASSERT_TRUE(options.has<experimental::InstanceChannelAffinityOption>());
-  EXPECT_THAT(options.get<experimental::InstanceChannelAffinityOption>().size(),
-              Eq(2));
-}
-
 TEST(MakeDataConnection, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
@@ -98,6 +82,23 @@ TEST(MakeDataConnection, TracingDisabled) {
   (void)conn->Apply("table-name", SingleRowMutation("row"));
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+}
+
+TEST(MakeDataConnection, WithInstances) {
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  InstanceResource instance_b{Project("my-project"), "instance-b"};
+  auto conn = MakeDataConnection(
+      {instance_a, instance_b},
+      TestOptions().set<AppProfileIdOption>("user-supplied"));
+  auto options = conn->options();
+  EXPECT_TRUE(options.has<DataBackoffPolicyOption>())
+      << "Options are not defaulted in MakeDataConnection()";
+  EXPECT_EQ(options.get<AppProfileIdOption>(), "user-supplied")
+      << "User supplied Options are overridden in MakeDataConnection()";
+  ASSERT_TRUE(options.has<bigtable_internal::InstanceChannelAffinityOption>());
+  EXPECT_THAT(
+      options.get<bigtable_internal::InstanceChannelAffinityOption>().size(),
+      Eq(2));
 }
 
 }  // namespace

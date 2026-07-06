@@ -26,7 +26,7 @@ using ::google::cloud::internal::DebugString;
 void LoggingResultSetReader::TryCancel() { impl_->TryCancel(); }
 
 bool LoggingResultSetReader::Read(
-    absl::optional<std::string> const& resume_token,
+    std::optional<std::string> const& resume_token,
     UnownedPartialResultSet& result) {
   if (resume_token) {
     GCP_LOG(DEBUG) << __func__ << "() << resume_token=\""

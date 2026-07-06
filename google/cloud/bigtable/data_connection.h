@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CONNECTION_H
 
 #include "google/cloud/bigtable/filters.h"
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
@@ -33,6 +34,7 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -168,9 +170,13 @@ class DataConnection {
  * Returns a `DataConnection` object that can be used for interacting with
  * the Cloud Bigtable Data API.
  *
+ * Calling this function with a list of target @p instances automatically
+ * enables dynamic channel pooling for those instances, allowing the connection
+ * pools to scale dynamically based on outstanding RPC load.
+ *
  * The returned connection object should not be used directly; instead it
- * should be given to a `Table` instance, and methods should be invoked on
- * `Table`.
+ * should be given to a `Table` or `Client` object, and methods should be
+ * invoked there.
  *
  * The optional @p opts argument may be used to configure aspects of the
  * returned `DataConnection`. Expected options are any of the following options
@@ -186,9 +192,27 @@ class DataConnection {
  *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
  *     options will be logged.
  *
+ * @param instances The target instances to connect to. Specifying target
+ *     instances enables dynamic channel pooling and other connection-level
+ *     optimizations.
  * @param options (optional) Configure the `DataConnection` created by this
  *     function.
  */
+std::shared_ptr<DataConnection> MakeDataConnection(
+    std::vector<InstanceResource> instances, Options options = {});
+
+/**
+ * Returns a `DataConnection` object that can be used for interacting with
+ * the Cloud Bigtable Data API.
+ *
+ * @deprecated Use the MakeDataConnection overload that accepts a vector of
+ *     instances.
+ *
+ * @param options (optional) Configure the `DataConnection` created by this
+ *     function.
+ */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "Use the MakeDataConnection overload that accepts a vector of instances.")
 std::shared_ptr<DataConnection> MakeDataConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

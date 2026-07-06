@@ -61,7 +61,7 @@ struct StringOption {
 // all `PartialResultSetReader` calls happen within a matching span.
 StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>
 CreatePartialResultSetSource(
-    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::optional<google::bigtable::v2::ResultSetMetadata> metadata,
     std::shared_ptr<OperationContext> operation_context,
     std::unique_ptr<PartialResultSetReader> reader, Options opts = {}) {
   internal::OptionsSpan span(internal::MergeOptions(
@@ -154,7 +154,7 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
   auto grpc_reader =
       std::make_unique<bigtable_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_, _))
-      .WillOnce([](absl::optional<std::string> const&,
+      .WillOnce([](std::optional<std::string> const&,
                    UnownedPartialResultSet&) { return false; });
   EXPECT_CALL(*grpc_reader, Finish())
       .WillOnce(ResultMock(Status(StatusCode::kInvalidArgument, "invalid")));
@@ -162,7 +162,7 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
 
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto reader = CreatePartialResultSetSource(
-      absl::nullopt, std::move(operation_context), std::move(grpc_reader));
+      std::nullopt, std::move(operation_context), std::move(grpc_reader));
   EXPECT_THAT(reader, StatusIs(StatusCode::kInvalidArgument, "invalid"));
 }
 
@@ -201,7 +201,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   auto grpc_reader =
       std::make_unique<bigtable_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_, _))
-      .WillOnce([&response](absl::optional<std::string> const&,
+      .WillOnce([&response](std::optional<std::string> const&,
                             UnownedPartialResultSet& result) {
         result.result = response;
         return true;
@@ -292,7 +292,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   auto grpc_reader =
       std::make_unique<bigtable_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_, _))
-      .WillOnce([&response](absl::optional<std::string> const&,
+      .WillOnce([&response](std::optional<std::string> const&,
                             UnownedPartialResultSet& result) {
         result.result = response;
         return true;
@@ -355,7 +355,7 @@ TEST(PartialResultSetSourceTest, ChecksumMismatch) {
   auto grpc_reader =
       std::make_unique<bigtable_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_, _))
-      .WillOnce([&response](absl::optional<std::string> const&,
+      .WillOnce([&response](std::optional<std::string> const&,
                             UnownedPartialResultSet& result) {
         result.result = response;
         return true;
@@ -461,17 +461,17 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
   auto grpc_reader =
       std::make_unique<bigtable_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_, _))
-      .WillOnce([&responses](absl::optional<std::string> const&,
+      .WillOnce([&responses](std::optional<std::string> const&,
                              UnownedPartialResultSet& result) {
         result.result = responses[0];
         return true;
       })
-      .WillOnce([&responses](absl::optional<std::string> const&,
+      .WillOnce([&responses](std::optional<std::string> const&,
                              UnownedPartialResultSet& result) {
         result.result = responses[1];
         return true;
       })
-      .WillOnce([&responses](absl::optional<std::string> const&,
+      .WillOnce([&responses](std::optional<std::string> const&,
                              UnownedPartialResultSet& result) {
         result.result = responses[2];
         return true;
@@ -585,17 +585,17 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
   auto grpc_reader =
       std::make_unique<bigtable_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_, _))
-      .WillOnce([&responses](absl::optional<std::string> const&,
+      .WillOnce([&responses](std::optional<std::string> const&,
                              UnownedPartialResultSet& result) {
         result.result = responses[0];
         return true;
       })
-      .WillOnce([&responses](absl::optional<std::string> const&,
+      .WillOnce([&responses](std::optional<std::string> const&,
                              UnownedPartialResultSet& result) {
         result.result = responses[1];
         return true;
       })
-      .WillOnce([&responses](absl::optional<std::string> const&,
+      .WillOnce([&responses](std::optional<std::string> const&,
                              UnownedPartialResultSet& result) {
         result.result = responses[2];
         return true;

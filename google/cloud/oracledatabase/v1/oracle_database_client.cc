@@ -175,6 +175,57 @@ OracleDatabaseClient::DeleteCloudExadataInfrastructure(
   return connection_->DeleteCloudExadataInfrastructure(operation);
 }
 
+future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+OracleDatabaseClient::ConfigureExascaleCloudExadataInfrastructure(
+    std::string const& name, std::int32_t total_storage_size_gb, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::
+      ConfigureExascaleCloudExadataInfrastructureRequest request;
+  request.set_name(name);
+  request.set_total_storage_size_gb(total_storage_size_gb);
+  return connection_->ConfigureExascaleCloudExadataInfrastructure(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::ConfigureExascaleCloudExadataInfrastructure(
+    NoAwaitTag, std::string const& name, std::int32_t total_storage_size_gb,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::
+      ConfigureExascaleCloudExadataInfrastructureRequest request;
+  request.set_name(name);
+  request.set_total_storage_size_gb(total_storage_size_gb);
+  return connection_->ConfigureExascaleCloudExadataInfrastructure(NoAwaitTag{},
+                                                                  request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+OracleDatabaseClient::ConfigureExascaleCloudExadataInfrastructure(
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureExascaleCloudExadataInfrastructure(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::ConfigureExascaleCloudExadataInfrastructure(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureExascaleCloudExadataInfrastructure(NoAwaitTag{},
+                                                                  request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+OracleDatabaseClient::ConfigureExascaleCloudExadataInfrastructure(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureExascaleCloudExadataInfrastructure(operation);
+}
+
 StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
 OracleDatabaseClient::ListCloudVmClusters(std::string const& parent,
                                           Options opts) {
@@ -1760,6 +1811,440 @@ OracleDatabaseClient::DeleteDbSystem(
   return connection_->DeleteDbSystem(operation);
 }
 
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseClient::ListGoldengateDeployments(std::string const& parent,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest request;
+  request.set_parent(parent);
+  return connection_->ListGoldengateDeployments(request);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseClient::ListGoldengateDeployments(
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGoldengateDeployments(std::move(request));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseClient::GetGoldengateDeployment(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest request;
+  request.set_name(name);
+  return connection_->GetGoldengateDeployment(request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseClient::GetGoldengateDeployment(
+    google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGoldengateDeployment(request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::CreateGoldengateDeployment(
+    std::string const& parent,
+    google::cloud::oracledatabase::v1::GoldengateDeployment const&
+        goldengate_deployment,
+    std::string const& goldengate_deployment_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest request;
+  request.set_parent(parent);
+  *request.mutable_goldengate_deployment() = goldengate_deployment;
+  request.set_goldengate_deployment_id(goldengate_deployment_id);
+  return connection_->CreateGoldengateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::CreateGoldengateDeployment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::oracledatabase::v1::GoldengateDeployment const&
+        goldengate_deployment,
+    std::string const& goldengate_deployment_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest request;
+  request.set_parent(parent);
+  *request.mutable_goldengate_deployment() = goldengate_deployment;
+  request.set_goldengate_deployment_id(goldengate_deployment_id);
+  return connection_->CreateGoldengateDeployment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::CreateGoldengateDeployment(
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::CreateGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateDeployment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::CreateGoldengateDeployment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateDeployment(operation);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateDeployment(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest request;
+  request.set_name(name);
+  return connection_->DeleteGoldengateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::DeleteGoldengateDeployment(NoAwaitTag,
+                                                 std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest request;
+  request.set_name(name);
+  return connection_->DeleteGoldengateDeployment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateDeployment(
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::DeleteGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateDeployment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateDeployment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateDeployment(operation);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::StopGoldengateDeployment(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest request;
+  request.set_name(name);
+  return connection_->StopGoldengateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::StopGoldengateDeployment(NoAwaitTag,
+                                               std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest request;
+  request.set_name(name);
+  return connection_->StopGoldengateDeployment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::StopGoldengateDeployment(
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopGoldengateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::StopGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopGoldengateDeployment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::StopGoldengateDeployment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopGoldengateDeployment(operation);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::StartGoldengateDeployment(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest request;
+  request.set_name(name);
+  return connection_->StartGoldengateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::StartGoldengateDeployment(NoAwaitTag,
+                                                std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest request;
+  request.set_name(name);
+  return connection_->StartGoldengateDeployment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::StartGoldengateDeployment(
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartGoldengateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::StartGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartGoldengateDeployment(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseClient::StartGoldengateDeployment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartGoldengateDeployment(operation);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseClient::ListGoldengateConnections(std::string const& parent,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListGoldengateConnections(request);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseClient::ListGoldengateConnections(
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGoldengateConnections(std::move(request));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseClient::GetGoldengateConnection(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest request;
+  request.set_name(name);
+  return connection_->GetGoldengateConnection(request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseClient::GetGoldengateConnection(
+    google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGoldengateConnection(request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+OracleDatabaseClient::CreateGoldengateConnection(
+    std::string const& parent,
+    google::cloud::oracledatabase::v1::GoldengateConnection const&
+        goldengate_connection,
+    std::string const& goldengate_connection_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest request;
+  request.set_parent(parent);
+  *request.mutable_goldengate_connection() = goldengate_connection;
+  request.set_goldengate_connection_id(goldengate_connection_id);
+  return connection_->CreateGoldengateConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::CreateGoldengateConnection(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::oracledatabase::v1::GoldengateConnection const&
+        goldengate_connection,
+    std::string const& goldengate_connection_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest request;
+  request.set_parent(parent);
+  *request.mutable_goldengate_connection() = goldengate_connection;
+  request.set_goldengate_connection_id(goldengate_connection_id);
+  return connection_->CreateGoldengateConnection(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+OracleDatabaseClient::CreateGoldengateConnection(
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::CreateGoldengateConnection(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateConnection(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+OracleDatabaseClient::CreateGoldengateConnection(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateConnection(operation);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateConnection(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest request;
+  request.set_name(name);
+  return connection_->DeleteGoldengateConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::DeleteGoldengateConnection(NoAwaitTag,
+                                                 std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest request;
+  request.set_name(name);
+  return connection_->DeleteGoldengateConnection(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateConnection(
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::DeleteGoldengateConnection(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateConnection(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateConnection(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateConnection(operation);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>
+OracleDatabaseClient::ListGoldengateDeploymentVersions(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListGoldengateDeploymentVersions(request);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>
+OracleDatabaseClient::ListGoldengateDeploymentVersions(
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGoldengateDeploymentVersions(std::move(request));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentType>
+OracleDatabaseClient::ListGoldengateDeploymentTypes(std::string const& parent,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListGoldengateDeploymentTypes(request);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentType>
+OracleDatabaseClient::ListGoldengateDeploymentTypes(
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGoldengateDeploymentTypes(std::move(request));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>
+OracleDatabaseClient::ListGoldengateDeploymentEnvironments(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::ListGoldengateDeploymentEnvironmentsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListGoldengateDeploymentEnvironments(request);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>
+OracleDatabaseClient::ListGoldengateDeploymentEnvironments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentEnvironmentsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGoldengateDeploymentEnvironments(std::move(request));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionType>
+OracleDatabaseClient::ListGoldengateConnectionTypes(std::string const& parent,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListGoldengateConnectionTypes(request);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionType>
+OracleDatabaseClient::ListGoldengateConnectionTypes(
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGoldengateConnectionTypes(std::move(request));
+}
+
 StreamRange<google::cloud::oracledatabase::v1::DbVersion>
 OracleDatabaseClient::ListDbVersions(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -1791,6 +2276,178 @@ OracleDatabaseClient::ListDatabaseCharacterSets(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatabaseCharacterSets(std::move(request));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseClient::ListGoldengateConnectionAssignments(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::ListGoldengateConnectionAssignmentsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListGoldengateConnectionAssignments(request);
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseClient::ListGoldengateConnectionAssignments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionAssignmentsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListGoldengateConnectionAssignments(std::move(request));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseClient::GetGoldengateConnectionAssignment(std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::GetGoldengateConnectionAssignmentRequest
+      request;
+  request.set_name(name);
+  return connection_->GetGoldengateConnectionAssignment(request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseClient::GetGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        GetGoldengateConnectionAssignmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGoldengateConnectionAssignment(request);
+}
+
+future<
+    StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+OracleDatabaseClient::CreateGoldengateConnectionAssignment(
+    std::string const& parent,
+    google::cloud::oracledatabase::v1::GoldengateConnectionAssignment const&
+        goldengate_connection_assignment,
+    std::string const& goldengate_connection_assignment_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::CreateGoldengateConnectionAssignmentRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_goldengate_connection_assignment() =
+      goldengate_connection_assignment;
+  request.set_goldengate_connection_assignment_id(
+      goldengate_connection_assignment_id);
+  return connection_->CreateGoldengateConnectionAssignment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::CreateGoldengateConnectionAssignment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::oracledatabase::v1::GoldengateConnectionAssignment const&
+        goldengate_connection_assignment,
+    std::string const& goldengate_connection_assignment_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::CreateGoldengateConnectionAssignmentRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_goldengate_connection_assignment() =
+      goldengate_connection_assignment;
+  request.set_goldengate_connection_assignment_id(
+      goldengate_connection_assignment_id);
+  return connection_->CreateGoldengateConnectionAssignment(NoAwaitTag{},
+                                                           request);
+}
+
+future<
+    StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+OracleDatabaseClient::CreateGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateConnectionAssignment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::CreateGoldengateConnectionAssignment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateConnectionAssignment(NoAwaitTag{},
+                                                           request);
+}
+
+future<
+    StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+OracleDatabaseClient::CreateGoldengateConnectionAssignment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGoldengateConnectionAssignment(operation);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateConnectionAssignment(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::DeleteGoldengateConnectionAssignmentRequest
+      request;
+  request.set_name(name);
+  return connection_->DeleteGoldengateConnectionAssignment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::DeleteGoldengateConnectionAssignment(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::DeleteGoldengateConnectionAssignmentRequest
+      request;
+  request.set_name(name);
+  return connection_->DeleteGoldengateConnectionAssignment(NoAwaitTag{},
+                                                           request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateConnectionAssignment(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::DeleteGoldengateConnectionAssignment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateConnectionAssignment(NoAwaitTag{},
+                                                           request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseClient::DeleteGoldengateConnectionAssignment(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGoldengateConnectionAssignment(operation);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             TestGoldengateConnectionAssignmentResponse>
+OracleDatabaseClient::TestGoldengateConnectionAssignment(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::TestGoldengateConnectionAssignmentRequest
+      request;
+  request.set_name(name);
+  return connection_->TestGoldengateConnectionAssignment(request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             TestGoldengateConnectionAssignmentResponse>
+OracleDatabaseClient::TestGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        TestGoldengateConnectionAssignmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestGoldengateConnectionAssignment(request);
 }
 
 StreamRange<google::cloud::location::Location>

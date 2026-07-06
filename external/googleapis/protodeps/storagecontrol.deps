@@ -13,3 +13,4 @@
 @googleapis//google/longrunning:operations_proto
 @googleapis//google/rpc:status_proto
 @googleapis//google/type:expr_proto
+@googleapis//google/type:interval_proto

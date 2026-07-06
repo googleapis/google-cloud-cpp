@@ -20,8 +20,8 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
-#include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
+#include <optional>
 #include <string>
 
 namespace google {

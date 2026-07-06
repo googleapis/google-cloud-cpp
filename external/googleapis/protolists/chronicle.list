@@ -10,3 +10,4 @@
 @googleapis//google/cloud/chronicle/v1:native_dashboard.proto
 @googleapis//google/cloud/chronicle/v1:reference_list.proto
 @googleapis//google/cloud/chronicle/v1:rule.proto
+@googleapis//google/cloud/chronicle/v1:rule_execution_error.proto

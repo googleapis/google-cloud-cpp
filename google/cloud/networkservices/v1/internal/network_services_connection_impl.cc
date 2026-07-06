@@ -3763,6 +3763,347 @@ NetworkServicesConnectionImpl::ListMeshRouteViews(
       });
 }
 
+StreamRange<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesConnectionImpl::ListAgentGateways(
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAgentGateways(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::networkservices::v1::AgentGateway>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::networkservices::v1::ListAgentGatewaysRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::networkservices::v1::
+                       ListAgentGatewaysRequest const& request) {
+              return stub->ListAgentGateways(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::networkservices::v1::ListAgentGatewaysResponse r) {
+        std::vector<google::cloud::networkservices::v1::AgentGateway> result(
+            r.agent_gateways().size());
+        auto& messages = *r.mutable_agent_gateways();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesConnectionImpl::GetAgentGateway(
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAgentGateway(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkservices::v1::GetAgentGatewayRequest const&
+                 request) {
+        return stub_->GetAgentGateway(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesConnectionImpl::CreateAgentGateway(
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAgentGateway(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::networkservices::v1::AgentGateway>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+              request) {
+        return stub->AsyncCreateAgentGateway(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkservices::v1::AgentGateway>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnectionImpl::CreateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAgentGateway(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+              request) {
+        return stub_->CreateAgentGateway(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesConnectionImpl::CreateAgentGateway(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::networkservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::networkservices::v1::AgentGateway>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAgentGateway",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::networkservices::v1::AgentGateway>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkservices::v1::AgentGateway>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesConnectionImpl::UpdateAgentGateway(
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAgentGateway(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::networkservices::v1::AgentGateway>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+              request) {
+        return stub->AsyncUpdateAgentGateway(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkservices::v1::AgentGateway>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnectionImpl::UpdateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAgentGateway(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+              request) {
+        return stub_->UpdateAgentGateway(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesConnectionImpl::UpdateAgentGateway(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::networkservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::networkservices::v1::AgentGateway>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAgentGateway",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::networkservices::v1::AgentGateway>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkservices::v1::AgentGateway>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnectionImpl::DeleteAgentGateway(
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAgentGateway(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::networkservices::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+              request) {
+        return stub->AsyncDeleteAgentGateway(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::networkservices::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnectionImpl::DeleteAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAgentGateway(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+              request) {
+        return stub_->DeleteAgentGateway(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnectionImpl::DeleteAgentGateway(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::networkservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAgentGateway",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::networkservices::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::networkservices::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 NetworkServicesConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

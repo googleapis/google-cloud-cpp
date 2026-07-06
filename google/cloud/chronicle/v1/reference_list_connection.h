@@ -202,6 +202,10 @@ class ReferenceListServiceConnection {
   UpdateReferenceList(
       google::cloud::chronicle::v1::UpdateReferenceListRequest const& request);
 
+  virtual StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+  VerifyReferenceList(
+      google::cloud::chronicle::v1::VerifyReferenceListRequest const& request);
+
   virtual StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request);
 

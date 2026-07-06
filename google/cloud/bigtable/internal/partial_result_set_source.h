@@ -23,7 +23,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include "google/bigtable/v2/bigtable.pb.h"
 #include "google/protobuf/struct.pb.h"
 #include <google/protobuf/arena.h>
@@ -31,6 +30,7 @@
 #include <cstddef>
 #include <deque>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -43,7 +43,7 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> Create(
-      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+      std::optional<google::bigtable::v2::ResultSetMetadata> metadata,
       std::shared_ptr<OperationContext> operation_context,
       std::unique_ptr<PartialResultSetReader> reader);
 
@@ -51,13 +51,13 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
 
   StatusOr<bigtable::QueryRow> NextRow() override;
 
-  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+  std::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
     return metadata_;
   }
 
  private:
   explicit PartialResultSetSource(
-      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+      std::optional<google::bigtable::v2::ResultSetMetadata> metadata,
       std::shared_ptr<OperationContext> operation_context,
       std::unique_ptr<PartialResultSetReader> reader);
 
@@ -74,7 +74,7 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
   std::shared_ptr<OperationContext> operation_context_;
   // The ResultSetMetadata is received in the first response. It is received
   // from ExecuteQueryResponse
-  absl::optional<google::bigtable::v2::ResultSetMetadata> metadata_;
+  std::optional<google::bigtable::v2::ResultSetMetadata> metadata_;
 
   std::shared_ptr<std::vector<std::string>> columns_;
   std::deque<bigtable::QueryRow> rows_;
@@ -103,7 +103,7 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
   // `partial_rows` is sent. If the client retries the ExecuteQueryRequest with
   // the sentinel `resume_token`, the server will emit it again without any
   // data in `partial_rows`, then return OK.
-  absl::optional<std::string> resume_token_ = "";
+  std::optional<std::string> resume_token_ = "";
 
   Status last_status_;
   // The state of our PartialResultSetReader.
@@ -129,7 +129,7 @@ class StatusOnlyResultSetSource : public bigtable::ResultSourceInterface {
       : status_(std::move(status)) {}
 
   StatusOr<bigtable::QueryRow> NextRow() override { return status_; }
-  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+  std::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
     return {};
   }
 

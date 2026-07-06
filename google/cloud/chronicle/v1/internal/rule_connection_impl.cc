@@ -152,6 +152,21 @@ Status RuleServiceConnectionImpl::DeleteRule(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceConnectionImpl::VerifyRuleText(
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->VerifyRuleText(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+        return stub_->VerifyRuleText(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::chronicle::v1::Rule>
 RuleServiceConnectionImpl::ListRuleRevisions(
     google::cloud::chronicle::v1::ListRuleRevisionsRequest request) {

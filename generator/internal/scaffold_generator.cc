@@ -1022,6 +1022,9 @@ void GenerateQuickstartCMake(
 cmake_minimum_required(VERSION 3.22...3.31)
 project(google-cloud-cpp-$library$-quickstart CXX)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 find_package(google_cloud_cpp_$library$ REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
@@ -1062,7 +1065,7 @@ void GenerateQuickstartMakefile(
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
 # our tests, but applications would typically make them configurable parameters.
 CXX=g++
-CXXFLAGS=
+CXXFLAGS=-std=c++17
 CXXLD=$$(CXX)
 BIN=.
 
@@ -1147,14 +1150,13 @@ void GenerateQuickstartBazelrc(
 # Use host-OS-specific config lines from bazelrc files.
 build --enable_platform_specific_config=true
 
-# The project requires C++ >= 14. By default Bazel adds `-std=c++0x` which
-# disables C++14 features, even if the compilers defaults to C++ >= 14
-build:linux --cxxopt=-std=c++14
-build:macos --cxxopt=-std=c++14
-# Protobuf and gRPC require (or soon will require) C++14 to compile the "host"
+# The project requires C++ >= 17.
+build:linux --cxxopt=-std=c++17
+build:macos --cxxopt=-std=c++17
+# Protobuf and gRPC require (or soon will require) C++17 to compile the "host"
 # targets, such as protoc and the grpc plugin.
-build:linux --host_cxxopt=-std=c++14
-build:macos --host_cxxopt=-std=c++14
+build:linux --host_cxxopt=-std=c++17
+build:macos --host_cxxopt=-std=c++17
 
 # Do not create the convenience links. They are inconvenient when the build
 # runs inside a docker image or if one builds a quickstart and then builds

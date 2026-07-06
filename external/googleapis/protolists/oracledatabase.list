@@ -16,6 +16,13 @@
 @googleapis//google/cloud/oracledatabase/v1:exadb_vm_cluster.proto
 @googleapis//google/cloud/oracledatabase/v1:exascale_db_storage_vault.proto
 @googleapis//google/cloud/oracledatabase/v1:gi_version.proto
+@googleapis//google/cloud/oracledatabase/v1:goldengate_connection.proto
+@googleapis//google/cloud/oracledatabase/v1:goldengate_connection_assignment.proto
+@googleapis//google/cloud/oracledatabase/v1:goldengate_connection_type.proto
+@googleapis//google/cloud/oracledatabase/v1:goldengate_deployment.proto
+@googleapis//google/cloud/oracledatabase/v1:goldengate_deployment_environment.proto
+@googleapis//google/cloud/oracledatabase/v1:goldengate_deployment_type.proto
+@googleapis//google/cloud/oracledatabase/v1:goldengate_deployment_version.proto
 @googleapis//google/cloud/oracledatabase/v1:location_metadata.proto
 @googleapis//google/cloud/oracledatabase/v1:minor_version.proto
 @googleapis//google/cloud/oracledatabase/v1:odb_network.proto
