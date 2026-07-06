@@ -445,6 +445,11 @@ class AsyncWriterConnectionResumedState
     if (state_ == State::kResuming) {
       auto it = crc32c_history_.find(persisted_size);
       if (it != crc32c_history_.end()) {
+        // Note: MD5HashFunction cannot be rewound. However, it is never used in
+        // resumable/appendable uploads that resume from a non-zero offset.
+        // MakeAppendableWriter uses CreateAppendableHashFunction (which skips
+        // MD5) and standard resumable uploads use CreateNullHashFunction.
+        // Thus, calling Update after this rewind will never throw an MD5 error.
         hash_function_->RestoreCrc32c(it->second, persisted_size);
       }
     }
