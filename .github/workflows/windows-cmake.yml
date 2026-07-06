@@ -90,12 +90,12 @@ jobs:
         core2_features=(spanner universe_domain)
         core3_features=(storage universe_domain)
         core4_features=(storage_grpc universe_domain)
-        core5_features=(pubsub pubsublite universe_domain)
+        core5_features=(pubsub universe_domain)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
         # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
-        #    egrep -v "(bigtable/|internal/|pubsub/|pubsublite/|spanner/|storage/)" |
+        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/)" |
         #    cut -f -3 -d/| sort | uniq -c | sort -n |
         #    awk '{ s += $1; print s, $0}'
         #
