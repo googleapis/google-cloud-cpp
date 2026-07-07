@@ -52,26 +52,14 @@ bigtable::Row TransformReadModifyWriteRowResponse(
 
 class DataConnectionImpl : public bigtable::DataConnection {
  public:
-  ~DataConnectionImpl() override = default;
+  ~DataConnectionImpl() override;
 
-  DataConnectionImpl(std::unique_ptr<BackgroundThreads> background,
-                     std::unique_ptr<StubManager> stub_manager,
-                     std::shared_ptr<MutateRowsLimiter> limiter,
-                     Options options);
-
-  // This constructor is used for testing.
   DataConnectionImpl(
       std::unique_ptr<BackgroundThreads> background,
       std::unique_ptr<StubManager> stub_manager,
       std::unique_ptr<OperationContextFactory> operation_context_factory,
       std::shared_ptr<MutateRowsLimiter> limiter, Options options);
 
-  DataConnectionImpl(std::unique_ptr<BackgroundThreads> background,
-                     std::shared_ptr<BigtableStub> stub,
-                     std::shared_ptr<MutateRowsLimiter> limiter,
-                     Options options);
-
-  // This constructor is used for testing.
   DataConnectionImpl(
       std::unique_ptr<BackgroundThreads> background,
       std::shared_ptr<BigtableStub> stub,
