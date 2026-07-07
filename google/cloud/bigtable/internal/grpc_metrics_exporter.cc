@@ -74,23 +74,26 @@ void GrpcMetricsExporterRegistry::Clear() {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 std::vector<double> MakeLatencyHistogramBoundaries() {
-  using dseconds = std::chrono::duration<double, std::ratio<1>>;
-  std::vector<double> boundaries;
-  auto boundary = std::chrono::milliseconds(0);
-  auto increment = std::chrono::milliseconds(2);
-  for (int i = 0; i != 50; ++i) {
-    boundaries.push_back(
-        std::chrono::duration_cast<dseconds>(boundary).count());
-    boundary += increment;
-  }
-  increment = std::chrono::milliseconds(10);
-  for (int i = 0; i != 150 && boundary <= std::chrono::minutes(5); ++i) {
-    boundaries.push_back(
-        std::chrono::duration_cast<dseconds>(boundary).count());
-    if (i != 0 && i % 10 == 0) increment *= 2;
-    boundary += increment;
-  }
-  return boundaries;
+  static auto const kBoundaries = [] {
+    using dseconds = std::chrono::duration<double, std::ratio<1>>;
+    std::vector<double> boundaries;
+    auto boundary = std::chrono::milliseconds(0);
+    auto increment = std::chrono::milliseconds(2);
+    for (int i = 0; i != 50; ++i) {
+      boundaries.push_back(
+          std::chrono::duration_cast<dseconds>(boundary).count());
+      boundary += increment;
+    }
+    increment = std::chrono::milliseconds(10);
+    for (int i = 0; i != 150 && boundary <= std::chrono::minutes(5); ++i) {
+      boundaries.push_back(
+          std::chrono::duration_cast<dseconds>(boundary).count());
+      if (i != 0 && i % 10 == 0) increment *= 2;
+      boundary += increment;
+    }
+    return boundaries;
+  }();
+  return kBoundaries;
 }
 
 namespace {
@@ -196,18 +199,18 @@ MonitoredResourceResult MakeMonitoredResource(
   resource.set_type("bigtable.googleapis.com/Client");
   auto& labels = *resource.mutable_labels();
   auto const& attributes = pda.attributes.GetAttributes();
-  auto get_attr = [&](std::string const& key,
-                      std::string const& fallback = "") {
+  auto get_attr = [&](std::string const& key) {
     auto it = attributes.find(key);
-    if (it == attributes.end()) return fallback;
+    if (it == attributes.end()) return std::string{};
     return opentelemetry::nostd::get<std::string>(it->second);
   };
-  labels["project_id"] = get_attr("project_id");
+  auto project_id = get_attr("project_id");
+  labels["project_id"] = project_id;
   labels["instance"] = get_attr("instance");
   labels["app_profile"] = options.get<bigtable::AppProfileIdOption>();
   labels["client_name"] = "cpp.Bigtable/" + bigtable::version_string();
   labels["uuid"] = client_uid;
-  return MonitoredResourceResult{labels["project_id"], std::move(resource)};
+  return MonitoredResourceResult{std::move(project_id), std::move(resource)};
 }
 
 GrpcMetricsExporter::GrpcMetricsExporter(

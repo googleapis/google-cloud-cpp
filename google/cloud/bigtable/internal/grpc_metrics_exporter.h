@@ -46,8 +46,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class GrpcMetricsExporterRegistry {
  public:
-  GrpcMetricsExporterRegistry() = default;
-
   static GrpcMetricsExporterRegistry& Singleton();
 
   // Returns true if authority is newly registered, false if it was already
@@ -57,6 +55,8 @@ class GrpcMetricsExporterRegistry {
   void Clear();
 
  private:
+  GrpcMetricsExporterRegistry() = default;
+
   std::set<std::string> known_authority_;
   std::mutex mu_;
 };
