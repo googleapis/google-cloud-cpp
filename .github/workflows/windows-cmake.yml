@@ -334,23 +334,28 @@ jobs:
       run: |
         if [[ -d "${TEMP}/.build/vcpkg/buildtrees" ]]; then
           search_dirs=()
-          [[ -d "c:/b" ]] && search_dirs+=("c:/b")
-          [[ -d "${TEMP}/.build/vcpkg" ]] && search_dirs+=("${TEMP}/.build/vcpkg")
+          for prefix in "c:/b/vcpkg_installed" "c:/b/"*/vcpkg_installed "${TEMP}/.build/vcpkg/installed"; do
+            [[ -d "${prefix}" ]] && search_dirs+=("${prefix}")
+          done
           for dir in "${TEMP}/.build/vcpkg/buildtrees"/*; do
             [[ -d "${dir}" ]] || continue
             port="$(basename "${dir}")"
             [[ "${port}" == "detect_compiler" || "${port}" == "0" ]] && continue
             installed=""
             if [[ ${#search_dirs[@]} -gt 0 ]]; then
-              installed="$(find "${search_dirs[@]}" -maxdepth 8 -type d -path "*/share/${port}" 2>/dev/null || true)"
+              installed="$(find "${search_dirs[@]}" -maxdepth 5 -type d -path "*/share/${port}" 2>/dev/null || true)"
             fi
             if [[ -z "${installed}" ]]; then
-              echo "========= Failed dependency: ${port} ========="
-              find "${dir}" -name "*.log" -type f -print0 | while IFS= read -r -d '' log; do
-                echo "--- Contents of ${log} ---"
-                cat "${log}" || true
-                echo "--- End of ${log} ---"
-              done
+              mapfile -t logs < <(find "${dir}" -name "*.log" -type f 2>/dev/null || true)
+              if [[ ${#logs[@]} -gt 0 ]]; then
+                echo "========= Failed dependency: ${port} ========="
+                for log in "${logs[@]}"; do
+                  [[ -f "${log}" ]] || continue
+                  echo "--- Contents of ${log} ---"
+                  cat "${log}" || true
+                  echo "--- End of ${log} ---"
+                done
+              fi
             fi
           done
         fi
