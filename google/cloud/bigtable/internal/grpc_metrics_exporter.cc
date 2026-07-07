@@ -73,8 +73,6 @@ void GrpcMetricsExporterRegistry::Clear() {
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-namespace {
-
 std::vector<double> MakeLatencyHistogramBoundaries() {
   using dseconds = std::chrono::duration<double, std::ratio<1>>;
   std::vector<double> boundaries;
@@ -94,6 +92,8 @@ std::vector<double> MakeLatencyHistogramBoundaries() {
   }
   return boundaries;
 }
+
+namespace {
 
 void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
                       std::vector<double> boundaries, std::string const& name,
@@ -151,6 +151,8 @@ void AddHistogramView(opentelemetry::sdk::metrics::MeterProvider& provider,
         // && OPENTELEMETRY_VERSION_MINOR >= 23)
 }
 
+}  // namespace
+
 std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
     std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter> exporter,
     opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions
@@ -186,8 +188,6 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
   return std::shared_ptr<opentelemetry::metrics::MeterProvider>(
       std::move(provider));
 }
-
-}  // namespace
 
 MonitoredResourceResult MakeMonitoredResource(
     opentelemetry::sdk::metrics::PointDataAttributes const& pda,
