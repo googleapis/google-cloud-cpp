@@ -65,6 +65,7 @@ cc_library(
     ] + select({
         ":metrics_enabled": [
             "//:opentelemetry",
+            "@grpc//:grpcpp_otel_plugin",
             "@opentelemetry-cpp//api",
             "@opentelemetry-cpp//sdk/src/metrics",
         ],

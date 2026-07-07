@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #include "google/cloud/bigtable/internal/logging_result_set_reader.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
@@ -258,6 +259,10 @@ DataConnectionImpl::DataConnectionImpl(
     auto gen = internal::MakeDefaultPRNG();
     std::string client_uid =
         internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+    if (options_.has<bigtable_internal::InstanceChannelAffinityOption>()) {
+      grpc_metrics_exporter_ = std::make_unique<GrpcMetricsExporter>(
+          metric_service_connection_, options_, client_uid);
+    }
     operation_context_factory_ =
         std::make_unique<MetricsOperationContextFactory>(
             std::move(client_uid), metric_service_connection_, options_);
@@ -270,6 +275,8 @@ DataConnectionImpl::DataConnectionImpl(
       std::make_unique<SimpleOperationContextFactory>();
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 }
+
+DataConnectionImpl::~DataConnectionImpl() = default;
 
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,

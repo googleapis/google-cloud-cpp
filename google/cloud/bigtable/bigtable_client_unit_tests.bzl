@@ -55,6 +55,7 @@ bigtable_client_unit_tests = [
     "internal/defaults_test.cc",
     "internal/dynamic_channel_pool_test.cc",
     "internal/google_bytes_traits_test.cc",
+    "internal/grpc_metrics_exporter_test.cc",
     "internal/logging_result_set_reader_test.cc",
     "internal/metrics_test.cc",
     "internal/mutate_rows_limiter_test.cc",

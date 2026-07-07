@@ -41,6 +41,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class GrpcMetricsExporter;
+
 // TODO(#16216): Remove this option in favor of addind a member variable to
 // store the instances.
 struct InstanceChannelAffinityOption {
@@ -52,7 +54,7 @@ bigtable::Row TransformReadModifyWriteRowResponse(
 
 class DataConnectionImpl : public bigtable::DataConnection {
  public:
-  ~DataConnectionImpl() override = default;
+  ~DataConnectionImpl() override;
 
   DataConnectionImpl(std::unique_ptr<BackgroundThreads> background,
                      std::unique_ptr<StubManager> stub_manager,
@@ -149,6 +151,7 @@ class DataConnectionImpl : public bigtable::DataConnection {
   std::unique_ptr<StubManager> stub_manager_;
   std::shared_ptr<::google::cloud::monitoring_v3::MetricServiceConnection>
       metric_service_connection_;
+  std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter_;
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;
