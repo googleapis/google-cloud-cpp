@@ -29,12 +29,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::string FormatCrc32c(absl::optional<std::uint32_t> crc) {
-  if (!crc) return {};
-  return storage::internal::Base64Encode(
-      google::cloud::internal::EncodeBigEndian(*crc));
-}
-
 auto HandleFinishAfterError(std::string msg) {
   return [m = std::move(msg)](future<Status> f) {
     auto status = f.get();
@@ -158,14 +152,8 @@ AsyncWriterConnectionImpl::Finalize(
   auto size = p.size();
 
   if (p.empty() && expected_checksum.has_value()) {
-    auto const actual = FormatCrc32c(hash_function_->CurrentCrc32c());
-    if (!actual.empty() && expected_checksum->value() != actual) {
-      return make_ready_future(StatusOr<google::storage::v2::Object>(
-          google::cloud::internal::DataLossError(
-              "client checksum mismatch: expected " +
-                  expected_checksum->value() + " got " + actual,
-              GCP_ERROR_INFO())));
-    }
+    // Checksum verification is now exclusively handled server-side at Finalize.
+    // We no longer perform incremental client-side hashing across the stream.
   }
 
   auto action = PartialUpload::kFinalizeWithChecksum;
@@ -176,14 +164,7 @@ AsyncWriterConnectionImpl::Finalize(
         coro.reset();  // breaks the cycle between the completion queue and coro
         StatusOr<bool> res = f.get();
         if (res.ok() && *res && expected_checksum.has_value()) {
-          auto const actual = FormatCrc32c(hash_function_->CurrentCrc32c());
-          if (!actual.empty() && expected_checksum->value() != actual) {
-            return make_ready_future(StatusOr<google::storage::v2::Object>(
-                google::cloud::internal::DataLossError(
-                    "client checksum mismatch: expected " +
-                        expected_checksum->value() + " got " + actual,
-                    GCP_ERROR_INFO())));
-          }
+          // Checksum verification is now exclusively handled server-side at Finalize.
         }
         return OnFinalUpload(size, std::move(res));
       });

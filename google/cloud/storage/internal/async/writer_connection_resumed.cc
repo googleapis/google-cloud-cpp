@@ -270,17 +270,6 @@ class AsyncWriterConnectionResumedState
       // If another thread initiated FinalizeStep concurrently, just return.
       return;
     }
-    if (expected_checksum_.has_value() && hash_function_) {
-      auto const actual = hash_function_->Finish().crc32c;
-      if (!actual.empty() && expected_checksum_->value() != actual) {
-        SetError(std::move(lk),
-                 google::cloud::internal::DataLossError(
-                     "client checksum mismatch: expected " +
-                         expected_checksum_->value() + " got " + actual,
-                     GCP_ERROR_INFO()));
-        return;
-      }
-    }
     // Mark that we are starting the finalization process.
     state_ = State::kWriting;
     finalizing_ = true;
