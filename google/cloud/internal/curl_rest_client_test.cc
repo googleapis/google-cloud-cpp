@@ -14,6 +14,10 @@
 
 #include "google/cloud/internal/curl_rest_client.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/curl_handle_factory.h"
+#include "google/cloud/internal/curl_wrappers.h"
+#include "google/cloud/testing_util/scoped_log.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -63,6 +67,27 @@ TEST(CurlRestClientStandaloneFunctions, HostHeader) {
     auto const actual = CurlRestClient::HostHeader(options, test.endpoint);
     EXPECT_EQ(test.expected, std::string(actual));
   }
+}
+
+TEST(CurlRestClientTest, PqcCurvesLogging) {
+  testing_util::ScopedLog log;
+  auto factory = GetDefaultCurlHandleFactory();
+  auto client =
+      CurlRestClient("https://endpoint.googleapis.com", factory, Options{});
+  auto const log_lines = log.ExtractLines();
+#if CURL_AT_LEAST_VERSION(7, 73, 0)
+  for (auto const& line : log_lines) {
+    if (absl::StrContains(line, "Could not set CURLOPT_SSL_EC_CURVES")) {
+      EXPECT_THAT(line,
+                  testing::HasSubstr("Could not set CURLOPT_SSL_EC_CURVES: "));
+    }
+  }
+#else
+  EXPECT_THAT(
+      log_lines,
+      testing::Contains(testing::HasSubstr(
+          "Could not set CURLOPT_SSL_EC_CURVES: libcurl 7.73.0 or later")));
+#endif
 }
 
 }  // namespace

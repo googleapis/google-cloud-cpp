@@ -15,14 +15,17 @@
 #include "google/cloud/internal/curl_rest_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_rest_response.h"
+#include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/tracing_rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
+#include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
@@ -115,6 +118,21 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
   if (options_.has<UnifiedCredentialsOption>()) {
     credentials_ = MapCredentials(*options_.get<UnifiedCredentialsOption>());
   }
+#if CURL_AT_LEAST_VERSION(7, 73, 0)
+  auto handle = CurlHandle::MakeFromPool(*handle_factory_);
+  auto status = handle.SetOption(CURLOPT_SSL_EC_CURVES,
+                                 "X25519MLKEM768:X25519:P-256:P-384");
+  if (!status.ok()) {
+    GCP_LOG(INFO) << "Could not set CURLOPT_SSL_EC_CURVES: "
+                  << status.message();
+  }
+  CurlHandle::ReturnToPool(*handle_factory_, std::move(handle));
+#else
+  GCP_LOG(INFO)
+      << "Could not set CURLOPT_SSL_EC_CURVES: libcurl 7.73.0 or later is"
+         " required (compiled with "
+      << LIBCURL_VERSION << ")";
+#endif
 }
 
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
