@@ -17,7 +17,6 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -44,18 +43,26 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   // own tests.
   if (UsingGrpc()) GTEST_SKIP();
 
-  auto options =
-      Options{}.set<google::cloud::OpenTelemetryTracingOption>(false);
+  // With the advent of Regional Access Boundaries, connecting to non-regional
+  // endpoints requires background calls to IAM. These background calls use
+  // additional file descriptors which causes this test to fail when using the
+  // default endpoint.
+  auto regional_bucket = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION");
+  if (!regional_bucket.has_value()) GTEST_SKIP();
+  bucket_name_ = *regional_bucket;
+  // The regional_bucket was created in the us-west2 region.
+  auto options = Options{}.set<RestEndpointOption>(
+      "https://storage.us-west2.rep.googleapis.com");
+  auto client = MakeIntegrationTestClient(options);
+
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
-  {
-    auto client = MakeIntegrationTestClient(options);
-    StatusOr<ObjectMetadata> meta = client.InsertObject(
-        bucket_name_, object_name, expected, IfGenerationMatch(0));
-    ASSERT_STATUS_OK(meta);
-    ScheduleForDelete(*meta);
-  }
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
+      bucket_name_, object_name, expected, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
 
   // Track the number of open files to ensure every client creates the same
   // number of file descriptors and none are leaked.

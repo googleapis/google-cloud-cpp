@@ -67,7 +67,7 @@ TEST(TracingClientTest, Options) {
 TEST(TracingClientTest, CustomAsyncRunner) {
   TracingConnection::ResetCacheForTesting();
   bool invoked = false;
-  auto runner = [&invoked](std::function<void()> f) {
+  auto runner = [&invoked](std::function<void()> const& f) {
     invoked = true;
     f();
   };

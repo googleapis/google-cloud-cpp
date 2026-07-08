@@ -18,7 +18,6 @@
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_pure_background_threads_impl.h"
-#include <algorithm>
 #include <memory>
 #include <string>
 #include <utility>
