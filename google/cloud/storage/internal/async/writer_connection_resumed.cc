@@ -320,26 +320,6 @@ class AsyncWriterConnectionResumedState
   void OnClose(Status result) {
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
-    auto checksums = Impl(lk)->PersistedChecksums();
-    if (checksums && checksums->has_crc32c()) {
-      auto const state = Impl(lk)->PersistedState();
-      auto const persisted_size =
-          absl::holds_alternative<google::storage::v2::Object>(state)
-              ? absl::get<google::storage::v2::Object>(state).size()
-              : absl::get<std::int64_t>(state);
-      // If persisted_size does not align with a recorded chunk boundary,
-      // EnsureCrc32cHistory rolls back to the nearest prior checkpoint in
-      // crc32c_history_ and fast-forwards using resend_buffer_ to compute and
-      // store the exact client CRC32C at persisted_size.
-      EnsureCrc32cHistory(persisted_size);
-      auto it = crc32c_history_.find(persisted_size);
-      if (it != crc32c_history_.end() && it->second != checksums->crc32c()) {
-        SetError(std::move(lk), google::cloud::internal::DataLossError(
-                                    "client/server checksum mismatch at Close",
-                                    GCP_ERROR_INFO()));
-        return;
-      }
-    }
     SetClosed(std::move(lk), std::move(result));
   }
 
@@ -377,25 +357,7 @@ class AsyncWriterConnectionResumedState
                          std::move(result));
         return;
       }
-      auto const persisted_size = *query_res;
       std::unique_lock<std::mutex> lk(self->mu_);
-      auto checksums = self->Impl(lk)->PersistedChecksums();
-      if (checksums && checksums->has_crc32c()) {
-        // If persisted_size does not align with a recorded chunk boundary,
-        // EnsureCrc32cHistory rolls back to the nearest prior checkpoint in
-        // crc32c_history_ and fast-forwards using resend_buffer_ to compute and
-        // store the exact client CRC32C at persisted_size.
-        self->EnsureCrc32cHistory(persisted_size);
-        auto it = self->crc32c_history_.find(persisted_size);
-        if (it != self->crc32c_history_.end() &&
-            it->second != checksums->crc32c()) {
-          self->SetError(std::move(lk),
-                         google::cloud::internal::DataLossError(
-                             "client/server checksum mismatch at Flush",
-                             GCP_ERROR_INFO()));
-          return;
-        }
-      }
       lk.unlock();
       self->OnQuery(std::move(query_res));
       self->SetFlushed(std::unique_lock<std::mutex>(self->mu_),
