@@ -381,6 +381,20 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
 
+#if CURL_AT_LEAST_VERSION(7, 73, 0)
+  auto ec_curves_status = handle_.SetOption(
+      CURLOPT_SSL_EC_CURVES, "X25519MLKEM768:X25519:P-256:P-384");
+  if (!ec_curves_status.ok()) {
+    GCP_LOG(INFO) << "Could not set CURLOPT_SSL_EC_CURVES: "
+                  << ec_curves_status.message();
+  }
+#else
+  GCP_LOG(INFO)
+      << "Could not set CURLOPT_SSL_EC_CURVES: libcurl 7.73.0 or later is"
+         " required (compiled with "
+      << LIBCURL_VERSION << ")";
+#endif
+
   if (client_ssl_cert_.has_value()) {
 #if CURL_AT_LEAST_VERSION(7, 71, 0)
     status = handle_.SetOption(CURLOPT_SSL_VERIFYPEER, 1L);

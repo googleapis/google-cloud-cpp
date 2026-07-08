@@ -15,6 +15,8 @@
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/rest_options.h"
+#include "google/cloud/testing_util/scoped_log.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <vector>
 
@@ -390,6 +392,27 @@ TEST_F(CurlImplTest, MergeAndWriteHeadersDoNotMergeContentLength) {
   impl.MergeAndWriteHeaders(write_fn);
   HttpHeader expected("content-length", "42");
   EXPECT_THAT(headers_written, ElementsAre(std::string(expected)));
+}
+
+TEST_F(CurlImplTest, MakeRequestPqcCurves) {
+  testing_util::ScopedLog log;
+  RestContext context;
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  (void)impl.MakeRequest(CurlImpl::HttpMethod::kGet, context, {});
+  auto const log_lines = log.ExtractLines();
+#if CURL_AT_LEAST_VERSION(7, 73, 0)
+  for (auto const& line : log_lines) {
+    if (absl::StrContains(line, "Could not set CURLOPT_SSL_EC_CURVES")) {
+      EXPECT_THAT(line,
+                  testing::HasSubstr("Could not set CURLOPT_SSL_EC_CURVES: "));
+    }
+  }
+#else
+  EXPECT_THAT(
+      log_lines,
+      testing::Contains(testing::HasSubstr(
+          "Could not set CURLOPT_SSL_EC_CURVES: libcurl 7.73.0 or later")));
+#endif
 }
 
 }  // namespace
