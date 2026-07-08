@@ -17,6 +17,7 @@ set -euo pipefail
 
 declare -A -r LIBRARIES=(
   ["accessapproval"]="@googleapis//google/cloud/accessapproval/v1:accessapproval_cc_grpc"
+  ["agentregistry"]="@googleapis//google/cloud/agentregistry/v1:agentregistry_cc_grpc"
   ["accesscontextmanager"]="$(
     printf ",%s" \
       "@googleapis//google/identity/accesscontextmanager/type:type_cc_grpc" \
@@ -257,7 +258,6 @@ declare -A -r LIBRARIES=(
   ["profiler"]="@googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc"
   ["publicca"]="@googleapis//google/cloud/security/publicca/v1:publicca_cc_grpc"
   ["pubsub"]="@googleapis//google/pubsub/v1:pubsub_cc_grpc"
-  ["pubsublite"]="@googleapis//google/cloud/pubsublite/v1:pubsublite_cc_grpc"
   ["rapidmigrationassessment"]="@googleapis//google/cloud/rapidmigrationassessment/v1:rapidmigrationassessment_cc_grpc"
   ["recaptchaenterprise"]="@googleapis//google/cloud/recaptchaenterprise/v1:recaptchaenterprise_cc_grpc"
   ["recommender"]="$(

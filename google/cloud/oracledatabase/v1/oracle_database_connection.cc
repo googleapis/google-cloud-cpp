@@ -103,6 +103,31 @@ OracleDatabaseConnection::DeleteCloudExadataInfrastructure(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+OracleDatabaseConnection::ConfigureExascaleCloudExadataInfrastructure(
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::ConfigureExascaleCloudExadataInfrastructure(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    ConfigureExascaleCloudExadataInfrastructureRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+OracleDatabaseConnection::ConfigureExascaleCloudExadataInfrastructure(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
 OracleDatabaseConnection::ListCloudVmClusters(
     google::cloud::oracledatabase::v1::
@@ -877,6 +902,215 @@ OracleDatabaseConnection::DeleteDbSystem(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseConnection::ListGoldengateDeployments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseConnection::GetGoldengateDeployment(
+    google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseConnection::CreateGoldengateDeployment(
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateDeploymentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateGoldengateDeployment(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    CreateGoldengateDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseConnection::CreateGoldengateDeployment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteGoldengateDeployment(
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateDeploymentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteGoldengateDeployment(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    DeleteGoldengateDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteGoldengateDeployment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseConnection::StopGoldengateDeployment(
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::StopGoldengateDeployment(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseConnection::StopGoldengateDeployment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseConnection::StartGoldengateDeployment(
+    google::cloud::oracledatabase::v1::
+        StartGoldengateDeploymentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::StartGoldengateDeployment(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    StartGoldengateDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+OracleDatabaseConnection::StartGoldengateDeployment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseConnection::ListGoldengateConnections(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseConnection::GetGoldengateConnection(
+    google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+OracleDatabaseConnection::CreateGoldengateConnection(
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateGoldengateConnection(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    CreateGoldengateConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+OracleDatabaseConnection::CreateGoldengateConnection(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteGoldengateConnection(
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteGoldengateConnection(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    DeleteGoldengateConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteGoldengateConnection(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>
+OracleDatabaseConnection::ListGoldengateDeploymentVersions(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>>();
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentType>
+OracleDatabaseConnection::ListGoldengateDeploymentTypes(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentType>>();
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>
+OracleDatabaseConnection::ListGoldengateDeploymentEnvironments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>>();
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionType>
+OracleDatabaseConnection::ListGoldengateConnectionTypes(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::oracledatabase::v1::GoldengateConnectionType>>();
+}
+
 StreamRange<google::cloud::oracledatabase::v1::DbVersion>
 OracleDatabaseConnection::ListDbVersions(
     google::cloud::oracledatabase::v1::
@@ -891,6 +1125,81 @@ OracleDatabaseConnection::ListDatabaseCharacterSets(
         ListDatabaseCharacterSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::oracledatabase::v1::DatabaseCharacterSet>>();
+}
+
+StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseConnection::ListGoldengateConnectionAssignments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>();
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseConnection::GetGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        GetGoldengateConnectionAssignmentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<
+    StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+OracleDatabaseConnection::CreateGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::CreateGoldengateConnectionAssignment(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    CreateGoldengateConnectionAssignmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+OracleDatabaseConnection::CreateGoldengateConnectionAssignment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::DeleteGoldengateConnectionAssignment(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    DeleteGoldengateConnectionAssignmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+OracleDatabaseConnection::DeleteGoldengateConnectionAssignment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             TestGoldengateConnectionAssignmentResponse>
+OracleDatabaseConnection::TestGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        TestGoldengateConnectionAssignmentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::location::Location>

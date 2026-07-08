@@ -199,6 +199,37 @@ Idempotency StorageControlConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::GetIntelligenceFinding(
+    google::storage::control::v2::GetIntelligenceFindingRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::ListIntelligenceFindings(
+    google::storage::control::v2::ListIntelligenceFindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::SummarizeIntelligenceFindings(
+    google::storage::control::v2::
+        SummarizeIntelligenceFindingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::GetIntelligenceFindingRevision(
+    google::storage::control::v2::
+        GetIntelligenceFindingRevisionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+StorageControlConnectionIdempotencyPolicy::ListIntelligenceFindingRevisions(
+    google::storage::control::v2::
+        ListIntelligenceFindingRevisionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
 MakeDefaultStorageControlConnectionIdempotencyPolicy() {
   return std::make_unique<StorageControlConnectionIdempotencyPolicy>();

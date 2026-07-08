@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/table_resource.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -27,7 +28,9 @@ namespace {
 
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::testing_util::IsOk;
+using ::testing::Contains;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::MockFunction;
 using ::testing::StartsWith;
 
@@ -87,6 +90,7 @@ TEST(StubManagerTest, AffinityToExistingInstance) {
 }
 
 TEST(StubManagerTest, AffinityToMissingInstance) {
+  testing_util::ScopedLog log;
   bigtable::InstanceResource instance_a(Project("my-project"), "a");
   bigtable::TableResource table_a(instance_a, "my-table");
   auto mock_stub_a = std::make_shared<MockBigtableStub>();
@@ -119,6 +123,9 @@ TEST(StubManagerTest, AffinityToMissingInstance) {
   request.set_table_name(expected_table_name);
   auto result = stub->MutateRow(context, {}, request);
   EXPECT_THAT(result, IsOk());
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(HasSubstr(
+                  "Dynamic connection resolution adding new channel pool")));
 }
 
 }  // namespace

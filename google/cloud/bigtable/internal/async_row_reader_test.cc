@@ -70,7 +70,7 @@ Status TransientError() {
 //
 // We use `commit_row == true` to return a full row, and `commit_row == false`
 // to return a partial row.
-absl::optional<v2::ReadRowsResponse> MakeResponse(
+std::optional<v2::ReadRowsResponse> MakeResponse(
     std::vector<std::pair<std::string, bool>> rows) {
   v2::ReadRowsResponse resp;
   for (auto& row : rows) {
@@ -85,7 +85,7 @@ absl::optional<v2::ReadRowsResponse> MakeResponse(
   return resp;
 }
 
-absl::optional<v2::ReadRowsResponse> EndOfStream() { return absl::nullopt; }
+std::optional<v2::ReadRowsResponse> EndOfStream() { return std::nullopt; }
 
 class AsyncRowReaderTest : public ::testing::Test {
  protected:
@@ -975,7 +975,7 @@ TEST_F(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
             .WillOnce([] {
               v2::ReadRowsResponse r;
               r.set_last_scanned_row_key("r2");
-              return make_ready_future(absl::make_optional(r));
+              return make_ready_future(std::make_optional(r));
             })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
@@ -1610,7 +1610,7 @@ TEST_F(AsyncRowReaderTest, ReverseScanResumption) {
             .WillOnce([] {
               v2::ReadRowsResponse r;
               r.set_last_scanned_row_key("r2");
-              return make_ready_future(absl::make_optional(r));
+              return make_ready_future(std::make_optional(r));
             })
             .WillOnce([] { return make_ready_future(EndOfStream()); });
         EXPECT_CALL(*stream, Finish).WillOnce([] {

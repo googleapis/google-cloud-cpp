@@ -1926,6 +1926,184 @@ NetworkServicesClient::ListMeshRouteViews(
   return connection_->ListMeshRouteViews(std::move(request));
 }
 
+StreamRange<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesClient::ListAgentGateways(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::ListAgentGatewaysRequest request;
+  request.set_parent(parent);
+  return connection_->ListAgentGateways(request);
+}
+
+StreamRange<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesClient::ListAgentGateways(
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAgentGateways(std::move(request));
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesClient::GetAgentGateway(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::GetAgentGatewayRequest request;
+  request.set_name(name);
+  return connection_->GetAgentGateway(request);
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+NetworkServicesClient::GetAgentGateway(
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAgentGateway(request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesClient::CreateAgentGateway(
+    std::string const& parent,
+    google::cloud::networkservices::v1::AgentGateway const& agent_gateway,
+    std::string const& agent_gateway_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateAgentGatewayRequest request;
+  request.set_parent(parent);
+  *request.mutable_agent_gateway() = agent_gateway;
+  request.set_agent_gateway_id(agent_gateway_id);
+  return connection_->CreateAgentGateway(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::CreateAgentGateway(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::networkservices::v1::AgentGateway const& agent_gateway,
+    std::string const& agent_gateway_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::CreateAgentGatewayRequest request;
+  request.set_parent(parent);
+  *request.mutable_agent_gateway() = agent_gateway;
+  request.set_agent_gateway_id(agent_gateway_id);
+  return connection_->CreateAgentGateway(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesClient::CreateAgentGateway(
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAgentGateway(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::CreateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAgentGateway(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesClient::CreateAgentGateway(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAgentGateway(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesClient::UpdateAgentGateway(
+    google::cloud::networkservices::v1::AgentGateway const& agent_gateway,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateAgentGatewayRequest request;
+  *request.mutable_agent_gateway() = agent_gateway;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAgentGateway(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::UpdateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::AgentGateway const& agent_gateway,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::UpdateAgentGatewayRequest request;
+  *request.mutable_agent_gateway() = agent_gateway;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAgentGateway(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesClient::UpdateAgentGateway(
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAgentGateway(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::UpdateAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAgentGateway(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+NetworkServicesClient::UpdateAgentGateway(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAgentGateway(operation);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteAgentGateway(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteAgentGatewayRequest request;
+  request.set_name(name);
+  return connection_->DeleteAgentGateway(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::DeleteAgentGateway(NoAwaitTag, std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkservices::v1::DeleteAgentGatewayRequest request;
+  request.set_name(name);
+  return connection_->DeleteAgentGateway(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteAgentGateway(
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAgentGateway(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesClient::DeleteAgentGateway(
+    NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAgentGateway(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesClient::DeleteAgentGateway(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAgentGateway(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 NetworkServicesClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

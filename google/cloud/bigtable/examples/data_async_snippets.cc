@@ -350,7 +350,8 @@ void RunAll(std::vector<std::string> const& argv) {
   if (!schema) throw std::move(schema).status();
 
   using ::google::cloud::Options;
-  cbt::Table table(cbt::MakeDataConnection(),
+  cbt::Table table(cbt::MakeDataConnection({cbt::InstanceResource(
+                       google::cloud::Project(project_id), instance_id)}),
                    cbt::TableResource(project_id, instance_id, table_id),
                    Options{}.set<cbt::IdempotentMutationPolicyOption>(
                        cbt::AlwaysRetryMutationPolicy().clone()));

@@ -23,6 +23,7 @@ name: msan-ci
 substitutions:
   _BUILD_NAME: msan
   _DISTRO: fedora-msan
+  _INTEGRATION_LIBRARIES: all_bar_storage
   _TRIGGER_TYPE: ci
 tags:
 - ci

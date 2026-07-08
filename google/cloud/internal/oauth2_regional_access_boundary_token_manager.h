@@ -64,13 +64,16 @@ class RegionalAccessBoundaryTokenManager
     static bool IsPermanentFailure(Status const&);
   };
 
+  ~RegionalAccessBoundaryTokenManager() override;
+
   static std::shared_ptr<RegionalAccessBoundaryTokenManager> Create(
       std::shared_ptr<Credentials> child, HttpClientFactory client_factory,
-      Options options);
+      rest_internal::RestPureCompletionQueue cq, Options options);
 
   static std::shared_ptr<RegionalAccessBoundaryTokenManager> Create(
       std::shared_ptr<Credentials> child,
-      std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options);
+      std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
+      rest_internal::RestPureCompletionQueue cq, Options options);
 
   static std::chrono::seconds TtlGracePeriod();
   static std::chrono::seconds TokenTtl();
@@ -112,8 +115,11 @@ class RegionalAccessBoundaryTokenManager
     if (IsTokenValid(lock, tp)) {
       // Check to see if we're near expiry and if so, start refresh process.
       if (tp > (expire_time_ - TtlGracePeriod())) RefreshToken(lock, request);
-      return rest_internal::HttpHeader{"x-allowed-locations",
-                                       allowed_locations_.encoded_locations};
+      if (!allowed_locations_.IsUnbounded()) {
+        return rest_internal::HttpHeader{"x-allowed-locations",
+                                         allowed_locations_.encoded_locations};
+      }
+      return rest_internal::HttpHeader{};
     }
     RefreshToken(lock, request);
     // Don't wait for a valid token, just return an empty header.
@@ -123,7 +129,8 @@ class RegionalAccessBoundaryTokenManager
   // Used for testing.
   static std::shared_ptr<RegionalAccessBoundaryTokenManager> Create(
       std::shared_ptr<Credentials> child,
-      std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options,
+      std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
+      rest_internal::RestPureCompletionQueue cq, Options options,
       std::function<std::unique_ptr<BackoffPolicy>()>
           failed_lookup_backoff_policy_fn,
       std::shared_ptr<Clock> clock = std::make_shared<Clock>(),
@@ -156,8 +163,7 @@ class RegionalAccessBoundaryTokenManager
   RegionalAccessBoundaryTokenManager(
       std::shared_ptr<Credentials> child,
       std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
-      std::unique_ptr<rest_internal::RestPureBackgroundThreads> background,
-      Options options,
+      rest_internal::RestPureCompletionQueue cq, Options options,
       std::function<std::unique_ptr<BackoffPolicy>()>
           failed_lookup_backoff_policy_fn,
       std::shared_ptr<Clock> clock = std::make_shared<Clock>(),
@@ -178,12 +184,21 @@ class RegionalAccessBoundaryTokenManager
     promise<Status> pending_refresh;
     pending_refresh_ = pending_refresh.get_future();
     auto constexpr kLocation = __func__;
+#ifdef _WIN32
+    auto pending_refresh_fn = [p = std::move(pending_refresh),
+                               weak = weak_from_this(), request,
+                               stub = iam_stub_,
+                               retry_policy = retry_policy_->clone(),
+                               backoff_policy = backoff_policy_->clone(),
+                               options = options_, kLocation]() mutable {
+#else
     auto pending_refresh_fn = [p = std::move(pending_refresh),
                                weak = weak_from_this(), request,
                                stub = iam_stub_,
                                retry_policy = retry_policy_->clone(),
                                backoff_policy = backoff_policy_->clone(),
                                options = options_]() mutable {
+#endif
       auto refresh_attempt_fn = [stub](rest_internal::RestContext&,
                                        Options const&, Request const& request) {
         return stub->AllowedLocations(request);
@@ -213,21 +228,20 @@ class RegionalAccessBoundaryTokenManager
           self->failed_lookup_backoff_policy_ =
               self->failed_lookup_backoff_policy_fn_();
         }
-        self->failed_lookup_cooldown_ =
-            self->background_->cq().MakeRelativeTimer(
-                self->failed_lookup_backoff_policy_->OnCompletion());
+        self->failed_lookup_cooldown_ = self->cq_.MakeRelativeTimer(
+            self->failed_lookup_backoff_policy_->OnCompletion());
         p.set_value(allowed_locations.status());
       }
       self->refresh_in_progress_ = false;
     };
 
     refresh_in_progress_ = true;
-    background_->cq().RunAsync(std::move(pending_refresh_fn));
+    cq_.RunAsync(std::move(pending_refresh_fn));
   }
 
   mutable std::mutex mu_;
   std::shared_ptr<Credentials> child_;
-  std::unique_ptr<rest_internal::RestPureBackgroundThreads> background_;
+  rest_internal::RestPureCompletionQueue cq_;
   Options options_;
   std::shared_ptr<Clock> clock_;
   std::unique_ptr<RefreshTokenRetryPolicy> retry_policy_;

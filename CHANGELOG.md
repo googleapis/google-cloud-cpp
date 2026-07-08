@@ -7,7 +7,34 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.6.0 - TBD
+## v3.7.0 - TBD
+
+### Removed Libraries
+
+- The `pubsublite` client library has been removed because the Pub/Sub Lite service has been turned down.
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Agent Registry API](/google/cloud/agentregistry/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- Explicit instance declaration is now encouraged during client initialization via a new overload of `MakeDataConnection` that takes a `std::vector<InstanceResource>`. Specifying the target instances at client startup enables optimizing connection pooling (pre-warming/priming channels) and telemetry. The experimental `InstanceChannelAffinityOption` has been removed; the new `MakeDataConnection` overload should be used instead.
+
+  ```cpp
+  #include "google/cloud/bigtable/data_connection.h"
+
+  namespace cbt = ::google::cloud::bigtable;
+
+  auto connection = cbt::MakeDataConnection(
+      {cbt::InstanceResource(google::cloud::Project("my-project"), "my-instance")},
+      google::cloud::Options{});
+  ```
+
+## v3.6.0 - 2026-06
 
 ### New Libraries
 
@@ -26,6 +53,30 @@ the APIs in these libraries are stable, and are ready for production use.
   are now supported for REST endpoints. Support for gRPC endpoints will be
   available in a future release.
 
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): avoid premature flush completion and concurrent writes in AsyncWriterConnectionBuffered ([#16169](https://github.com/googleapis/google-cloud-cpp/pull/16169))
+- feat(storage): implement GCS overrun logging and resume prevention ([#16150](https://github.com/googleapis/google-cloud-cpp/pull/16150))
+- fix(storage): add Close() support to AsyncWriterConnectionBuffered ([#16145](https://github.com/googleapis/google-cloud-cpp/pull/16145))
+- fix(storage): Set the idempotency token for async rewrites ([#16114](https://github.com/googleapis/google-cloud-cpp/pull/16114))
+- fix(storage): Add telemetry tracing support for async stream Close() ([#16118](https://github.com/googleapis/google-cloud-cpp/pull/16118))
+- feat(storage): Add full object read checksum validation for Open ([#16120](https://github.com/googleapis/google-cloud-cpp/pull/16120))
+- fix(storage): use server-reported size and crc on stream reconnect to avoid duplicate writes ([#16115](https://github.com/googleapis/google-cloud-cpp/pull/16115))
+- fix(storage): Implement clean half-close stream teardown for appendable uploads ([#16112](https://github.com/googleapis/google-cloud-cpp/pull/16112))
+- feat(storage): Add full object checksum validation for appendable uploads ([#16110](https://github.com/googleapis/google-cloud-cpp/pull/16110))
+- feat(storage): Add read chunkwise checksum validation for sync grpc read ([#16107](https://github.com/googleapis/google-cloud-cpp/pull/16107))
+- fix(storage): Resolve potential race condition in AsyncWriterConnectionImpl ([#16099](https://github.com/googleapis/google-cloud-cpp/pull/16099))
+- feat(storage): Add delete object source field in ComposeObject API ([#16094](https://github.com/googleapis/google-cloud-cpp/pull/16094))
+- feat(storage): Extend idempotency token use to all async mutation operations ([#16100](https://github.com/googleapis/google-cloud-cpp/pull/16100))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix: remove deprecated ATOMIC_VAR_INIT usage ([#16127](https://github.com/googleapis/google-cloud-cpp/pull/16127))
+- fix(testing_util): link opentelemetry-cpp SDK as PUBLIC ([#16101](https://github.com/googleapis/google-cloud-cpp/pull/16101))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-05-25T07:03:03-07:00](https://github.com/googleapis/googleapis/tree/ef19b7b7a73f19f33ab86c5b3603e9590025acd7)
 
 ## v3.5.0 - 2026-05
 

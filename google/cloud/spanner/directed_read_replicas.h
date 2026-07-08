@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_DIRECTED_READ_REPLICAS_H
 
 #include "google/cloud/spanner/version.h"
-#include "absl/types/optional.h"
 #include <initializer_list>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -53,19 +53,19 @@ class ReplicaSelection {
   // Replicas in the location, of any available type, will be used to
   // process the request.
   explicit ReplicaSelection(std::string location)
-      : location_(std::move(location)), type_(absl::nullopt) {}
+      : location_(std::move(location)), type_(std::nullopt) {}
 
   // Replicas of the given type, in the nearest available location, will
   // be used to process the request.
   explicit ReplicaSelection(ReplicaType type)
-      : location_(absl::nullopt), type_(type) {}
+      : location_(std::nullopt), type_(type) {}
 
-  absl::optional<std::string> const& location() const { return location_; }
-  absl::optional<ReplicaType> const& type() const { return type_; }
+  std::optional<std::string> const& location() const { return location_; }
+  std::optional<ReplicaType> const& type() const { return type_; }
 
  private:
-  absl::optional<std::string> location_;
-  absl::optional<ReplicaType> type_;
+  std::optional<std::string> location_;
+  std::optional<ReplicaType> type_;
 };
 
 inline bool operator==(ReplicaSelection const& a, ReplicaSelection const& b) {

@@ -66,6 +66,12 @@ Status RuleServiceConnection::DeleteRule(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceConnection::VerifyRuleText(
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::chronicle::v1::Rule>
 RuleServiceConnection::ListRuleRevisions(
     google::cloud::chronicle::v1::

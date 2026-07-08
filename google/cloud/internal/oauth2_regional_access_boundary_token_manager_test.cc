@@ -104,28 +104,38 @@ class RegionalAccessBoundaryTokenManagerTest : public ::testing::Test {
   RegionalAccessBoundaryTokenManagerTest()
       : mock_credentials_(std::make_shared<MockCredentials>()),
         mock_iam_stub_(std::make_shared<MockMinimalIamCredentialsRest>()),
-        fake_clock_(std::make_shared<testing_util::FakeSystemClock>()) {}
+        fake_clock_(std::make_shared<testing_util::FakeSystemClock>()),
+        background_(std::make_unique<
+                    rest_internal::
+                        AutomaticallyCreatedRestPureBackgroundThreads>()) {}
 
   std::shared_ptr<MockCredentials> mock_credentials_;
   std::shared_ptr<MockMinimalIamCredentialsRest> mock_iam_stub_;
   std::shared_ptr<testing_util::FakeSystemClock> fake_clock_;
+  std::unique_ptr<rest_internal::RestPureBackgroundThreads> background_;
 };
 
 TEST_F(RegionalAccessBoundaryTokenManagerTest,
        GetAllowedLocationsHeaderNonApplicableEndpoints) {
-  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
-                                                            mock_iam_stub_, {});
+  auto manager = RegionalAccessBoundaryTokenManager::Create(
+      mock_credentials_, mock_iam_stub_, background_->cq(), {});
 
   ServiceAccountAllowedLocationsRequest request;
   auto header = manager->GetAllowedLocationsHeader(
       request, std::chrono::system_clock::now(), "service.rep.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
-
+  auto header_mtls = manager->GetAllowedLocationsHeader(
+      request, std::chrono::system_clock::now(),
+      "service.rep.mtls.googleapis.com");
+  EXPECT_THAT(header_mtls, IsOkAndHolds(IsEmpty()));
   auto header_sandbox = manager->GetAllowedLocationsHeader(
       request, std::chrono::system_clock::now(),
       "service.rep.sandbox.googleapis.com");
   EXPECT_THAT(header_sandbox, IsOkAndHolds(IsEmpty()));
-
+  auto header_mtls_sandbox = manager->GetAllowedLocationsHeader(
+      request, std::chrono::system_clock::now(),
+      "service.rep.mtls.sandbox.googleapis.com");
+  EXPECT_THAT(header_mtls_sandbox, IsOkAndHolds(IsEmpty()));
   auto header_non_gdu = manager->GetAllowedLocationsHeader(
       request, std::chrono::system_clock::now(), "service.bar.com");
   EXPECT_THAT(header_non_gdu, IsOkAndHolds(IsEmpty()));
@@ -145,8 +155,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   allowed_locations.encoded_locations = "encoded-location";
 
   auto manager = RegionalAccessBoundaryTokenManager::Create(
-      mock_credentials_, mock_iam_stub_, {}, backoff_fn.AsStdFunction(),
-      fake_clock_, allowed_locations);
+      mock_credentials_, mock_iam_stub_, background_->cq(), {},
+      backoff_fn.AsStdFunction(), fake_clock_, allowed_locations);
 
   fake_clock_->AdvanceTime(std::chrono::seconds(1));
 
@@ -192,6 +202,30 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
 }
 
 TEST_F(RegionalAccessBoundaryTokenManagerTest,
+       GetAllowedLocationsHeaderValidTokenUnbounded) {
+  fake_clock_->SetTime(std::chrono::system_clock::now());
+  MockFunction<std::unique_ptr<BackoffPolicy>()> backoff_fn;
+  EXPECT_CALL(backoff_fn, Call).Times(0);
+
+  EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
+      .WillRepeatedly(Return(WorkforceIdentityAllowedLocationsRequest{}));
+
+  AllowedLocationsResponse allowed_locations;
+  allowed_locations.locations = {""};
+  allowed_locations.encoded_locations = "0x0";
+
+  auto manager = RegionalAccessBoundaryTokenManager::Create(
+      mock_credentials_, mock_iam_stub_, background_->cq(), {},
+      backoff_fn.AsStdFunction(), fake_clock_, allowed_locations);
+
+  fake_clock_->AdvanceTime(std::chrono::seconds(1));
+
+  auto header =
+      manager->AllowedLocations(fake_clock_->Now(), "service.googleapis.com");
+  EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
+}
+
+TEST_F(RegionalAccessBoundaryTokenManagerTest,
        GetAllowedLocationsHeaderNoInitialValidTokenWithRetry) {
   EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
       .WillRepeatedly(Return(WorkloadIdentityAllowedLocationsRequest{}));
@@ -209,8 +243,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
         return response;
       });
 
-  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
-                                                            mock_iam_stub_, {});
+  auto manager = RegionalAccessBoundaryTokenManager::Create(
+      mock_credentials_, mock_iam_stub_, background_->cq(), {});
 
   auto header = manager->AllowedLocations(std::chrono::system_clock::now(),
                                           "service.googleapis.com");
@@ -256,7 +290,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   });
 
   auto manager = RegionalAccessBoundaryTokenManager::Create(
-      mock_credentials_, mock_iam_stub_, {}, backoff_fn.AsStdFunction());
+      mock_credentials_, mock_iam_stub_, background_->cq(), {},
+      backoff_fn.AsStdFunction());
 
   auto header = manager->AllowedLocations(std::chrono::system_clock::now(),
                                           "service.googleapis.com");
@@ -311,8 +346,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
       AllowedLocations(A<WorkloadIdentityAllowedLocationsRequest const&>()))
       .Times(0);
 
-  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
-                                                            mock_iam_stub_, {});
+  auto manager = RegionalAccessBoundaryTokenManager::Create(
+      mock_credentials_, mock_iam_stub_, background_->cq(), {});
   auto header = manager->AllowedLocations(std::chrono::system_clock::now(),
                                           "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
@@ -358,8 +393,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest, DecoratorMethodPassThrough) {
       .WillOnce(
           Return(Credentials::AllowedLocationsRequestType{std::monostate{}}));
 
-  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
-                                                            mock_iam_stub_, {});
+  auto manager = RegionalAccessBoundaryTokenManager::Create(
+      mock_credentials_, mock_iam_stub_, background_->cq(), {});
 
   (void)manager->SignBlob("sa", "string");
   (void)manager->AccountEmail();

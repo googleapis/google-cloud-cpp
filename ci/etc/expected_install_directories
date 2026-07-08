@@ -32,6 +32,10 @@
 ./include/google/cloud/advisorynotifications/v1
 ./include/google/cloud/advisorynotifications/v1/internal
 ./include/google/cloud/advisorynotifications/v1/mocks
+./include/google/cloud/agentregistry
+./include/google/cloud/agentregistry/v1
+./include/google/cloud/agentregistry/v1/internal
+./include/google/cloud/agentregistry/v1/mocks
 ./include/google/cloud/aiplatform
 ./include/google/cloud/aiplatform/v1
 ./include/google/cloud/aiplatform/v1/internal
@@ -1008,10 +1012,6 @@
 ./include/google/cloud/pubsub/admin/mocks
 ./include/google/cloud/pubsub/internal
 ./include/google/cloud/pubsub/mocks
-./include/google/cloud/pubsublite
-./include/google/cloud/pubsublite/internal
-./include/google/cloud/pubsublite/mocks
-./include/google/cloud/pubsublite/v1
 ./include/google/cloud/rapidmigrationassessment
 ./include/google/cloud/rapidmigrationassessment/v1
 ./include/google/cloud/rapidmigrationassessment/v1/internal
@@ -1304,6 +1304,8 @@
 ./lib64/cmake/google_cloud_cpp_accesscontextmanager_mocks
 ./lib64/cmake/google_cloud_cpp_advisorynotifications
 ./lib64/cmake/google_cloud_cpp_advisorynotifications_mocks
+./lib64/cmake/google_cloud_cpp_agentregistry
+./lib64/cmake/google_cloud_cpp_agentregistry_mocks
 ./lib64/cmake/google_cloud_cpp_aiplatform
 ./lib64/cmake/google_cloud_cpp_aiplatform_mocks
 ./lib64/cmake/google_cloud_cpp_alloydb
@@ -1519,8 +1521,6 @@
 ./lib64/cmake/google_cloud_cpp_publicca_mocks
 ./lib64/cmake/google_cloud_cpp_pubsub
 ./lib64/cmake/google_cloud_cpp_pubsub_mocks
-./lib64/cmake/google_cloud_cpp_pubsublite
-./lib64/cmake/google_cloud_cpp_pubsublite_mocks
 ./lib64/cmake/google_cloud_cpp_rapidmigrationassessment
 ./lib64/cmake/google_cloud_cpp_rapidmigrationassessment_mocks
 ./lib64/cmake/google_cloud_cpp_recaptchaenterprise

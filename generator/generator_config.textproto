@@ -22,6 +22,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Agent Registry
+service {
+  service_proto_path: "google/cloud/agentregistry/v1/agentregistry_service.proto"
+  product_path: "google/cloud/agentregistry/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Access Context Manager
 service {
   service_proto_path: "google/identity/accesscontextmanager/v1/access_context_manager.proto"
@@ -3356,51 +3364,6 @@ service {
   retryable_status_codes: ["kUnavailable"]
   emulator_endpoint_env_var: "PUBSUB_EMULATOR_HOST"
   endpoint_location_style: LOCATION_OPTIONALLY_DEPENDENT
-}
-
-# Pub/Sub Lite
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/admin.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2021"
-  gen_async_rpcs: ["GetTopicPartitions"]
-  retryable_status_codes: ["kInternal", "kUnavailable"]
-  omit_repo_metadata: true
-}
-
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/cursor.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2022"
-  omit_client: true
-  omit_connection: true
-  omit_repo_metadata: true
-}
-
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/publisher.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2022"
-  omit_client: true
-  omit_connection: true
-  omit_repo_metadata: true
-}
-
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/subscriber.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2022"
-  omit_client: true
-  omit_connection: true
-  omit_repo_metadata: true
-}
-
-service {
-  service_proto_path: "google/cloud/pubsublite/v1/topic_stats.proto"
-  product_path: "google/cloud/pubsublite"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kInternal", "kUnavailable"]
-  omit_repo_metadata: true
 }
 
 # Rapid Migration Assessment

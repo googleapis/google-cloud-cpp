@@ -18,10 +18,10 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include "google/spanner/v1/spanner.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -59,7 +59,7 @@ class PartialResultSetReader {
  public:
   virtual ~PartialResultSetReader() = default;
   virtual void TryCancel() = 0;
-  virtual bool Read(absl::optional<std::string> const& resume_token,
+  virtual bool Read(std::optional<std::string> const& resume_token,
                     UnownedPartialResultSet& result) = 0;
   virtual Status Finish() = 0;
 };

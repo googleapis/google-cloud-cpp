@@ -35,6 +35,10 @@ class BigtableRandomTwoLeastUsed : public BigtableStub {
 
   ~BigtableRandomTwoLeastUsed() override = default;
 
+  std::shared_ptr<DynamicChannelPool<BigtableStub>> const& pool() const {
+    return pool_;
+  }
+
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>
   ReadRows(std::shared_ptr<grpc::ClientContext> context, Options const& options,

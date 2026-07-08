@@ -51,8 +51,7 @@ class ResultSourceInterface {
    * @see https://github.com/googleapis/googleapis/blob/master/google/bigtable/v2/data.proto
    *     for more information.
    */
-  virtual absl::optional<google::bigtable::v2::ResultSetMetadata>
-  Metadata() = 0;
+  virtual std::optional<google::bigtable::v2::ResultSetMetadata> Metadata() = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

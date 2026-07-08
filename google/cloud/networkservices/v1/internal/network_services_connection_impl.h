@@ -582,6 +582,53 @@ class NetworkServicesConnectionImpl
       google::cloud::networkservices::v1::ListMeshRouteViewsRequest request)
       override;
 
+  StreamRange<google::cloud::networkservices::v1::AgentGateway>
+  ListAgentGateways(google::cloud::networkservices::v1::ListAgentGatewaysRequest
+                        request) override;
+
+  StatusOr<google::cloud::networkservices::v1::AgentGateway> GetAgentGateway(
+      google::cloud::networkservices::v1::GetAgentGatewayRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  CreateAgentGateway(
+      google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAgentGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  CreateAgentGateway(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  UpdateAgentGateway(
+      google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAgentGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
+  UpdateAgentGateway(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAgentGateway(
+      google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAgentGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteAgentGateway(google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

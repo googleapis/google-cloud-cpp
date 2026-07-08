@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
@@ -44,12 +45,32 @@ class ReadRange {
  public:
   using ReadResponse = storage::AsyncReaderConnection::ReadResponse;
 
-  ReadRange(std::int64_t offset, std::int64_t length,
-            std::shared_ptr<storage::internal::HashFunction> hash_function =
-                storage::internal::CreateNullHashFunction())
+  ReadRange(std::int64_t offset, absl::optional<std::int64_t> requested_length,
+            std::shared_ptr<storage::internal::HashFunction> hash_function,
+            std::unique_ptr<storage::internal::HashValidator> hash_validator,
+            std::string bucket_name, std::string object_name)
       : offset_(offset),
-        length_(length),
-        hash_function_(std::move(hash_function)) {}
+        requested_length_(requested_length),
+        length_(requested_length.value_or(0)),
+        bucket_name_(std::move(bucket_name)),
+        object_name_(std::move(object_name)),
+        hash_function_(std::move(hash_function)),
+        hash_validator_(std::move(hash_validator)) {}
+
+  ReadRange(std::int64_t offset, absl::optional<std::int64_t> requested_length,
+            std::shared_ptr<storage::internal::HashFunction> hash_function =
+                storage::internal::CreateNullHashFunction(),
+            std::unique_ptr<storage::internal::HashValidator> hash_validator =
+                storage::internal::CreateNullHashValidator())
+      : ReadRange(offset, requested_length, std::move(hash_function),
+                  std::move(hash_validator), {}, {}) {}
+
+  ReadRange(std::int64_t offset, absl::optional<std::int64_t> requested_length,
+            std::string bucket_name, std::string object_name)
+      : ReadRange(offset, requested_length,
+                  storage::internal::CreateNullHashFunction(),
+                  storage::internal::CreateNullHashValidator(),
+                  std::move(bucket_name), std::move(object_name)) {}
 
   bool IsDone() const;
 
@@ -59,18 +80,29 @@ class ReadRange {
   future<ReadResponse> Read();
   void OnFinish(Status status);
 
-  void OnRead(google::storage::v2::ObjectRangeData data);
+  void OnRead(google::storage::v2::ObjectRangeData data,
+              bool is_transcoded = false,
+              absl::optional<std::int64_t> object_size = absl::nullopt);
 
  private:
   void Notify(std::unique_lock<std::mutex> lk, storage::ReadPayload p);
+  void CheckOverrun();
 
   mutable std::mutex mu_;
   std::int64_t offset_;
+  absl::optional<std::int64_t> requested_length_;
   std::int64_t length_;
+  std::string bucket_name_;
+  std::string object_name_;
+  std::int64_t received_bytes_ = 0;
+  bool is_transcoded_ = false;
+  bool logged_warning_ = false;
+  absl::optional<std::int64_t> object_size_;
   absl::optional<storage::ReadPayload> payload_;
   absl::optional<Status> status_;
   absl::optional<promise<ReadResponse>> wait_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
+  std::unique_ptr<storage::internal::HashValidator> hash_validator_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

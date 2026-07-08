@@ -201,6 +201,8 @@ int main(int argc, char* argv[]) {
 
   auto table = cbt::Table(
       cbt::MakeDataConnection(
+          {cbt::InstanceResource(google::cloud::Project(options->project_id),
+                                 options->instance_id)},
           Options{}.set<google::cloud::GrpcBackgroundThreadPoolSizeOption>(
               options->max_batches)),
       cbt::TableResource(options->project_id, options->instance_id, *table_id));

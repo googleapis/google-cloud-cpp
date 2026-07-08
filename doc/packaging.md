@@ -279,7 +279,7 @@ export PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/loca
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -375,7 +375,7 @@ use GCC 8 or higher to compile `google-cloud-cpp`.
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y automake cmake curl \
-        gcc9 gcc9-c++ git gzip libtool make patch tar wget
+        gcc gcc-c++ git gzip libtool make patch tar wget
 ```
 
 Install some of the dependencies for `google-cloud-cpp`.
@@ -398,7 +398,7 @@ export PATH=/usr/local/bin:${PATH}
 ```
 
 Use the following environment variables to configure the compiler used by CMake.
-export CC=gcc-9 export CXX=g++-9
+export CC=gcc export CXX=g++
 
 #### Abseil
 
@@ -421,7 +421,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -473,7 +473,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2025-11-05.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=ON \
@@ -487,7 +487,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.71.1.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -594,7 +594,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -644,7 +644,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2025-11-05.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=ON \
@@ -740,7 +740,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -907,7 +907,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -959,7 +959,7 @@ sudo ldconfig
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2025-11-05.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=ON \
@@ -1032,7 +1032,7 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 #### Install CMake v3.22
 
 mkdir -p $HOME/Downloads/cmake && cd $HOME/Downloads/cmake curl -fsSL
-https://github.com/Kitware/cmake/archive/v3.22.3.tar.gz | \
+https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
 tar -xzf - --strip-components=1 && \
 ./bootstrap && make -j ${NCPU:-4} && sudo make install
 
@@ -1072,7 +1072,7 @@ to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -1093,7 +1093,7 @@ planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2025-11-05.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=ON \
@@ -1249,7 +1249,7 @@ install Protobuf (and any downstream packages) from source.
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -1271,7 +1271,7 @@ planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2025-11-05.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=ON \

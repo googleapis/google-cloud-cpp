@@ -117,6 +117,38 @@ OracleDatabaseAuth::DeleteCloudExadataInfrastructure(
   return child_->DeleteCloudExadataInfrastructure(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncConfigureExascaleCloudExadataInfrastructure(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncConfigureExascaleCloudExadataInfrastructure(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::ConfigureExascaleCloudExadataInfrastructure(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ConfigureExascaleCloudExadataInfrastructure(context, options,
+                                                             request);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
 OracleDatabaseAuth::ListCloudVmClusters(
     grpc::ClientContext& context, Options const& options,
@@ -1094,6 +1126,277 @@ StatusOr<google::longrunning::Operation> OracleDatabaseAuth::DeleteDbSystem(
   return child_->DeleteDbSystem(context, options, request);
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListGoldengateDeploymentsResponse>
+OracleDatabaseAuth::ListGoldengateDeployments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGoldengateDeployments(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseAuth::GetGoldengateDeployment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGoldengateDeployment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncCreateGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateGoldengateDeployment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::CreateGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGoldengateDeployment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncDeleteGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteGoldengateDeployment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::DeleteGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGoldengateDeployment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncStopGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncStopGoldengateDeployment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::StopGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopGoldengateDeployment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncStartGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncStartGoldengateDeployment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::StartGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartGoldengateDeployment(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListGoldengateConnectionsResponse>
+OracleDatabaseAuth::ListGoldengateConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGoldengateConnections(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseAuth::GetGoldengateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGoldengateConnection(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncCreateGoldengateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateGoldengateConnection(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::CreateGoldengateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGoldengateConnection(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncDeleteGoldengateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteGoldengateConnection(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::DeleteGoldengateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGoldengateConnection(context, options, request);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsResponse>
+OracleDatabaseAuth::ListGoldengateDeploymentVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentVersionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGoldengateDeploymentVersions(context, options, request);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesResponse>
+OracleDatabaseAuth::ListGoldengateDeploymentTypes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentTypesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGoldengateDeploymentTypes(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             ListGoldengateDeploymentEnvironmentsResponse>
+OracleDatabaseAuth::ListGoldengateDeploymentEnvironments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentEnvironmentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGoldengateDeploymentEnvironments(context, options,
+                                                      request);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesResponse>
+OracleDatabaseAuth::ListGoldengateConnectionTypes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionTypesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGoldengateConnectionTypes(context, options, request);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListDbVersionsResponse>
 OracleDatabaseAuth::ListDbVersions(
     grpc::ClientContext& context, Options const& options,
@@ -1111,6 +1414,102 @@ OracleDatabaseAuth::ListDatabaseCharacterSets(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDatabaseCharacterSets(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             ListGoldengateConnectionAssignmentsResponse>
+OracleDatabaseAuth::ListGoldengateConnectionAssignments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionAssignmentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGoldengateConnectionAssignments(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseAuth::GetGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GetGoldengateConnectionAssignmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGoldengateConnectionAssignment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncCreateGoldengateConnectionAssignment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateGoldengateConnectionAssignment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::CreateGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGoldengateConnectionAssignment(context, options,
+                                                      request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncDeleteGoldengateConnectionAssignment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteGoldengateConnectionAssignment(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::DeleteGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGoldengateConnectionAssignment(context, options,
+                                                      request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             TestGoldengateConnectionAssignmentResponse>
+OracleDatabaseAuth::TestGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        TestGoldengateConnectionAssignmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestGoldengateConnectionAssignment(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

@@ -18,6 +18,9 @@
 cmake_minimum_required(VERSION 3.22...3.31)
 project(google-cloud-cpp-channel-quickstart CXX)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 find_package(google_cloud_cpp_channel REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library

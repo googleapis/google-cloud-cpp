@@ -145,7 +145,10 @@ void ReadKeysSet(std::vector<std::string> argv) {
   }
 
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataConnection(),
+      google::cloud::bigtable::MakeDataConnection({
+          google::cloud::bigtable::InstanceResource(
+              google::cloud::Project(argv[0]), argv[1]),
+      }),
       google::cloud::bigtable::TableResource(argv[0], argv[1], argv[2]));
   argv.erase(argv.begin(), argv.begin() + 3);
 
@@ -391,7 +394,8 @@ void RunAll(std::vector<std::string> const& argv) {
                                   table_id, std::move(t));
   if (!schema) throw std::move(schema).status();
 
-  cbt::Table table(cbt::MakeDataConnection(),
+  cbt::Table table(cbt::MakeDataConnection({cbt::InstanceResource(
+                       google::cloud::Project(project_id), instance_id)}),
                    cbt::TableResource(project_id, instance_id, table_id));
 
   std::cout << "Preparing data for read examples" << std::endl;

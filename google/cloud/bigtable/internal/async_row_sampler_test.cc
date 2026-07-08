@@ -72,12 +72,12 @@ struct RowKeySampleVectors {
   std::vector<std::int64_t> offset_bytes;
 };
 
-absl::optional<v2::SampleRowKeysResponse> MakeResponse(std::string row_key,
-                                                       std::int64_t offset) {
+std::optional<v2::SampleRowKeysResponse> MakeResponse(std::string row_key,
+                                                      std::int64_t offset) {
   v2::SampleRowKeysResponse r;
   r.set_row_key(std::move(row_key));
   r.set_offset_bytes(offset);
-  return absl::make_optional(r);
+  return std::make_optional(r);
 };
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -163,7 +163,7 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
                 [] { return make_ready_future(MakeResponse("test2", 22)); })
             .WillOnce([] {
               return make_ready_future(
-                  absl::optional<v2::SampleRowKeysResponse>{});
+                  std::optional<v2::SampleRowKeysResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -229,7 +229,7 @@ TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
                 [] { return make_ready_future(MakeResponse("forgotten", 11)); })
             .WillOnce([] {
               return make_ready_future(
-                  absl::optional<v2::SampleRowKeysResponse>{});
+                  std::optional<v2::SampleRowKeysResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(
@@ -251,7 +251,7 @@ TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
                 [] { return make_ready_future(MakeResponse("returned", 22)); })
             .WillOnce([] {
               return make_ready_future(
-                  absl::optional<v2::SampleRowKeysResponse>{});
+                  std::optional<v2::SampleRowKeysResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -396,7 +396,7 @@ TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
                 [] { return make_ready_future(MakeResponse("returned", 22)); })
             .WillOnce([] {
               return make_ready_future(
-                  absl::optional<v2::SampleRowKeysResponse>{});
+                  std::optional<v2::SampleRowKeysResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -521,7 +521,7 @@ TEST_F(AsyncSampleRowKeysTest, TimerError) {
 }
 
 TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
-  promise<absl::optional<v2::SampleRowKeysResponse>> p;
+  promise<std::optional<v2::SampleRowKeysResponse>> p;
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto mock_metric = std::make_unique<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
@@ -582,7 +582,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
   fut.cancel();
   // Proceed with the rest of the stream. In this test, there are no more
   // responses to be read. The client call should succeed.
-  p.set_value(absl::optional<v2::SampleRowKeysResponse>{});
+  p.set_value(std::optional<v2::SampleRowKeysResponse>{});
   auto sor = fut.get();
   ASSERT_STATUS_OK(sor);
   auto samples = RowKeySampleVectors(*sor);
@@ -591,7 +591,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
 }
 
 TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
-  promise<absl::optional<v2::SampleRowKeysResponse>> p;
+  promise<std::optional<v2::SampleRowKeysResponse>> p;
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto mock_metric = std::make_unique<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
@@ -636,7 +636,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
                 [] { return make_ready_future(MakeResponse("discarded", 33)); })
             .WillOnce([] {
               return make_ready_future(
-                  absl::optional<v2::SampleRowKeysResponse>{});
+                  std::optional<v2::SampleRowKeysResponse>{});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(

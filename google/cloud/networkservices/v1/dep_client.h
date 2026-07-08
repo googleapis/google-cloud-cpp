@@ -115,8 +115,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L502}
-  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L584}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L593}
+  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L675}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -154,8 +154,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L502}
-  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L584}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L593}
+  /// [google.cloud.networkservices.v1.ListLbTrafficExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L675}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -184,8 +184,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L622}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L502}
+  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L713}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L593}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -214,8 +214,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L622}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L502}
+  /// [google.cloud.networkservices.v1.GetLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L713}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L593}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
@@ -254,8 +254,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L635}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L502}
+  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L726}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L593}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -313,8 +313,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L635}
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L502}
+  /// [google.cloud.networkservices.v1.CreateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L726}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L593}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -383,8 +383,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L502}
-  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L672}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L593}
+  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L763}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -440,8 +440,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L502}
-  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L672}
+  /// [google.cloud.networkservices.v1.LbTrafficExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L593}
+  /// [google.cloud.networkservices.v1.UpdateLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L763}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -507,7 +507,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L704}
+  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L795}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -558,7 +558,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L704}
+  /// [google.cloud.networkservices.v1.DeleteLbTrafficExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L795}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -627,8 +627,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L735}
-  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L817}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L826}
+  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L908}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -666,8 +666,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L735}
-  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L817}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L826}
+  /// [google.cloud.networkservices.v1.ListLbRouteExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L908}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -695,8 +695,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L855}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L735}
+  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L946}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L826}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
@@ -725,8 +725,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L855}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L735}
+  /// [google.cloud.networkservices.v1.GetLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L946}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L826}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
@@ -764,8 +764,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L868}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L735}
+  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L959}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L826}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -822,8 +822,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L868}
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L735}
+  /// [google.cloud.networkservices.v1.CreateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L959}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L826}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -892,8 +892,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L735}
-  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L905}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L826}
+  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L996}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -949,8 +949,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L735}
-  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L905}
+  /// [google.cloud.networkservices.v1.LbRouteExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L826}
+  /// [google.cloud.networkservices.v1.UpdateLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L996}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -1016,7 +1016,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L937}
+  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1028}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1067,7 +1067,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L937}
+  /// [google.cloud.networkservices.v1.DeleteLbRouteExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1028}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1136,8 +1136,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L969}
-  /// [google.cloud.networkservices.v1.ListLbEdgeExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1026}
+  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1060}
+  /// [google.cloud.networkservices.v1.ListLbEdgeExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1117}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>
@@ -1175,8 +1175,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L969}
-  /// [google.cloud.networkservices.v1.ListLbEdgeExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1026}
+  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1060}
+  /// [google.cloud.networkservices.v1.ListLbEdgeExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1117}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::LbEdgeExtension>
@@ -1204,8 +1204,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1064}
-  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L969}
+  /// [google.cloud.networkservices.v1.GetLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1155}
+  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1060}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
@@ -1234,8 +1234,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.GetLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1064}
-  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L969}
+  /// [google.cloud.networkservices.v1.GetLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1155}
+  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1060}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>
@@ -1272,8 +1272,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1077}
-  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L969}
+  /// [google.cloud.networkservices.v1.CreateLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1168}
+  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1060}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
@@ -1330,8 +1330,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1077}
-  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L969}
+  /// [google.cloud.networkservices.v1.CreateLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1168}
+  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1060}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
@@ -1400,8 +1400,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L969}
-  /// [google.cloud.networkservices.v1.UpdateLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1113}
+  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1060}
+  /// [google.cloud.networkservices.v1.UpdateLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
@@ -1457,8 +1457,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L969}
-  /// [google.cloud.networkservices.v1.UpdateLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1113}
+  /// [google.cloud.networkservices.v1.LbEdgeExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1060}
+  /// [google.cloud.networkservices.v1.UpdateLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1204}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbEdgeExtension>>
@@ -1524,7 +1524,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1145}
+  /// [google.cloud.networkservices.v1.DeleteLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1236}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1575,7 +1575,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1145}
+  /// [google.cloud.networkservices.v1.DeleteLbEdgeExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1236}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -1644,8 +1644,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1176}
-  /// [google.cloud.networkservices.v1.ListAuthzExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1277}
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1267}
+  /// [google.cloud.networkservices.v1.ListAuthzExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1384}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::AuthzExtension>
@@ -1683,8 +1683,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1176}
-  /// [google.cloud.networkservices.v1.ListAuthzExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1277}
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1267}
+  /// [google.cloud.networkservices.v1.ListAuthzExtensionsRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1384}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::AuthzExtension>
@@ -1712,8 +1712,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1176}
-  /// [google.cloud.networkservices.v1.GetAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1315}
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1267}
+  /// [google.cloud.networkservices.v1.GetAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1422}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::AuthzExtension>
@@ -1742,8 +1742,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1176}
-  /// [google.cloud.networkservices.v1.GetAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1315}
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1267}
+  /// [google.cloud.networkservices.v1.GetAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1422}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::AuthzExtension>
@@ -1782,8 +1782,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1176}
-  /// [google.cloud.networkservices.v1.CreateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1328}
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1267}
+  /// [google.cloud.networkservices.v1.CreateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1435}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
@@ -1839,8 +1839,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1176}
-  /// [google.cloud.networkservices.v1.CreateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1328}
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1267}
+  /// [google.cloud.networkservices.v1.CreateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1435}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
@@ -1910,8 +1910,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1176}
-  /// [google.cloud.networkservices.v1.UpdateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1364}
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1267}
+  /// [google.cloud.networkservices.v1.UpdateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1471}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
@@ -1966,8 +1966,8 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1176}
-  /// [google.cloud.networkservices.v1.UpdateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1364}
+  /// [google.cloud.networkservices.v1.AuthzExtension]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1267}
+  /// [google.cloud.networkservices.v1.UpdateAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1471}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
@@ -2033,7 +2033,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1395}
+  /// [google.cloud.networkservices.v1.DeleteAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1502}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -2084,7 +2084,7 @@ class DepServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1395}
+  /// [google.cloud.networkservices.v1.DeleteAuthzExtensionRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/dep.proto#L1502}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on

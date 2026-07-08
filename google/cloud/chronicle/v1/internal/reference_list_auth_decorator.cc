@@ -70,6 +70,15 @@ ReferenceListServiceAuth::UpdateReferenceList(
   return child_->UpdateReferenceList(context, options, request);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+ReferenceListServiceAuth::VerifyReferenceList(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->VerifyReferenceList(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 ReferenceListServiceAuth::ListOperations(
     grpc::ClientContext& context, Options const& options,

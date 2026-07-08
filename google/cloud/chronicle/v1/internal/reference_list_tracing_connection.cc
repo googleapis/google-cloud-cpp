@@ -70,6 +70,15 @@ ReferenceListServiceTracingConnection::UpdateReferenceList(
   return internal::EndSpan(*span, child_->UpdateReferenceList(request));
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+ReferenceListServiceTracingConnection::VerifyReferenceList(
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::VerifyReferenceList");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->VerifyReferenceList(request));
+}
+
 StreamRange<google::longrunning::Operation>
 ReferenceListServiceTracingConnection::ListOperations(
     google::longrunning::ListOperationsRequest request) {

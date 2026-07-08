@@ -16,26 +16,26 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "3.6.0-rc",  # Updated by CMake
+    version = "3.7.0-rc",  # Updated by CMake
     compatibility_level = 3,  # Updated by CMake
 )
 
-bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
-bazel_dep(name = "rules_cc", version = "0.2.14")
+bazel_dep(name = "rules_cc", version = "0.2.17")
 bazel_dep(name = "abseil-cpp", version = "20250814.2")
 
 # For backwards compatibility with WORKSPACE.
 # The name "com_google_protobuf" is internally used by @bazel_tools,
 # a native repository we cannot override.
 # See https://github.com/googleapis/google-cloud-cpp/issues/15393
-bazel_dep(name = "protobuf", version = "33.1", repo_name = "com_google_protobuf")
+bazel_dep(name = "protobuf", version = "33.6", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.20251124.0")
 bazel_dep(name = "nlohmann_json", version = "3.12.0.bcr.1")
 bazel_dep(name = "curl", version = "8.8.0.bcr.3")
 bazel_dep(name = "opentelemetry-cpp", version = "1.24.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
-bazel_dep(name = "rules_python", version = "1.6.3")
+bazel_dep(name = "rules_python", version = "2.2.0")
 bazel_dep(name = "rules_apple", version = "4.3.3")
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 
@@ -52,7 +52,7 @@ python.toolchain(
     python_version = "3.11",
 )
 
-bazel_dep(name = "grpc", version = "1.76.0.bcr.1")
-bazel_dep(name = "googleapis", version = "0.0.0-20260525-ef19b7b7")
+bazel_dep(name = "grpc", version = "1.81.0")
+bazel_dep(name = "googleapis", version = "0.0.0-20260623-b6f9ff05")
 bazel_dep(name = "googleapis-cc", version = "1.1.5")
 bazel_dep(name = "googleapis-grpc-cc", version = "1.1.5")

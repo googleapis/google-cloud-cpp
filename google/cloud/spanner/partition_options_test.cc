@@ -49,13 +49,13 @@ TEST(PartitionOptionsTest, Proto) {
 
 TEST(PartitionOptionsTest, OptionsRoundTrip) {
   for (auto const& po : {
-           PartitionOptions{absl::nullopt, absl::nullopt, false},
-           PartitionOptions{42, absl::nullopt, false},
-           PartitionOptions{absl::nullopt, 42, false},
+           PartitionOptions{std::nullopt, std::nullopt, false},
+           PartitionOptions{42, std::nullopt, false},
+           PartitionOptions{std::nullopt, 42, false},
            PartitionOptions{32, 64, false},
-           PartitionOptions{absl::nullopt, absl::nullopt, true},
-           PartitionOptions{42, absl::nullopt, true},
-           PartitionOptions{absl::nullopt, 42, true},
+           PartitionOptions{std::nullopt, std::nullopt, true},
+           PartitionOptions{42, std::nullopt, true},
+           PartitionOptions{std::nullopt, 42, true},
            PartitionOptions{32, 64, true},
        }) {
     EXPECT_EQ(po, ToPartitionOptions(ToOptions(po)));

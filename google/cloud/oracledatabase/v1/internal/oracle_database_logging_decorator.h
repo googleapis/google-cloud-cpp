@@ -81,6 +81,22 @@ class OracleDatabaseLogging : public OracleDatabaseStub {
       google::cloud::oracledatabase::v1::
           DeleteCloudExadataInfrastructureRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncConfigureExascaleCloudExadataInfrastructure(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::
+          ConfigureExascaleCloudExadataInfrastructureRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation>
+  ConfigureExascaleCloudExadataInfrastructure(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          ConfigureExascaleCloudExadataInfrastructureRequest const& request)
+      override;
+
   StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
   ListCloudVmClusters(
       grpc::ClientContext& context, Options const& options,
@@ -534,6 +550,136 @@ class OracleDatabaseLogging : public OracleDatabaseStub {
       google::cloud::oracledatabase::v1::DeleteDbSystemRequest const& request)
       override;
 
+  StatusOr<google::cloud::oracledatabase::v1::ListGoldengateDeploymentsResponse>
+  ListGoldengateDeployments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+  GetGoldengateDeployment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGoldengateDeployment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateDeploymentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateGoldengateDeployment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateDeploymentRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGoldengateDeployment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateDeploymentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGoldengateDeployment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateDeploymentRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncStopGoldengateDeployment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StopGoldengateDeployment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncStartGoldengateDeployment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StartGoldengateDeployment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+          request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::ListGoldengateConnectionsResponse>
+  ListGoldengateConnections(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+  GetGoldengateConnection(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGoldengateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateGoldengateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGoldengateConnection(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGoldengateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionRequest const& request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::
+               ListGoldengateDeploymentVersionsResponse>
+  ListGoldengateDeploymentVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListGoldengateDeploymentVersionsRequest const& request) override;
+
+  StatusOr<
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesResponse>
+  ListGoldengateDeploymentTypes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListGoldengateDeploymentTypesRequest const& request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::
+               ListGoldengateDeploymentEnvironmentsResponse>
+  ListGoldengateDeploymentEnvironments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListGoldengateDeploymentEnvironmentsRequest const& request) override;
+
+  StatusOr<
+      google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesResponse>
+  ListGoldengateConnectionTypes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListGoldengateConnectionTypesRequest const& request) override;
+
   StatusOr<google::cloud::oracledatabase::v1::ListDbVersionsResponse>
   ListDbVersions(grpc::ClientContext& context, Options const& options,
                  google::cloud::oracledatabase::v1::ListDbVersionsRequest const&
@@ -544,6 +690,52 @@ class OracleDatabaseLogging : public OracleDatabaseStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest const&
           request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::
+               ListGoldengateConnectionAssignmentsResponse>
+  ListGoldengateConnectionAssignments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListGoldengateConnectionAssignmentsRequest const& request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+  GetGoldengateConnectionAssignment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          GetGoldengateConnectionAssignmentRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateGoldengateConnectionAssignment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionAssignmentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateGoldengateConnectionAssignment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionAssignmentRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteGoldengateConnectionAssignment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionAssignmentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGoldengateConnectionAssignment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionAssignmentRequest const& request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::
+               TestGoldengateConnectionAssignmentResponse>
+  TestGoldengateConnectionAssignment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          TestGoldengateConnectionAssignmentRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

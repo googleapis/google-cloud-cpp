@@ -62,6 +62,13 @@ OracleDatabaseConnectionIdempotencyPolicy::DeleteCloudExadataInfrastructure(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::
+    ConfigureExascaleCloudExadataInfrastructure(
+        google::cloud::oracledatabase::v1::
+            ConfigureExascaleCloudExadataInfrastructureRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListCloudVmClusters(
     google::cloud::oracledatabase::v1::ListCloudVmClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -351,6 +358,98 @@ Idempotency OracleDatabaseConnectionIdempotencyPolicy::DeleteDbSystem(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListGoldengateDeployments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetGoldengateDeployment(
+    google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::CreateGoldengateDeployment(
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::DeleteGoldengateDeployment(
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::StopGoldengateDeployment(
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::StartGoldengateDeployment(
+    google::cloud::oracledatabase::v1::
+        StartGoldengateDeploymentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListGoldengateConnections(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::GetGoldengateConnection(
+    google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::CreateGoldengateConnection(
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::DeleteGoldengateConnection(
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListGoldengateDeploymentVersions(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListGoldengateDeploymentTypes(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentTypesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListGoldengateDeploymentEnvironments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentEnvironmentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListGoldengateConnectionTypes(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionTypesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListDbVersions(
     google::cloud::oracledatabase::v1::ListDbVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -361,6 +460,41 @@ OracleDatabaseConnectionIdempotencyPolicy::ListDatabaseCharacterSets(
     google::cloud::oracledatabase::v1::
         ListDatabaseCharacterSetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::ListGoldengateConnectionAssignments(
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionAssignmentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::GetGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        GetGoldengateConnectionAssignmentRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::CreateGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::DeleteGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::TestGoldengateConnectionAssignment(
+    google::cloud::oracledatabase::v1::
+        TestGoldengateConnectionAssignmentRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListLocations(

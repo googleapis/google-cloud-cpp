@@ -61,9 +61,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "platforms",
         urls = [
-            "https://github.com/bazelbuild/platforms/releases/download/1.0.0/platforms-1.0.0.tar.gz",
+            "https://github.com/bazelbuild/platforms/releases/download/1.1.0/platforms-1.1.0.tar.gz",
         ],
-        sha256 = "3384eb1c30762704fbe38e440204e114154086c8fc8a8c2e3e28441028c019a8",
+        sha256 = "dbad4a23abcca6171e47b79edc53bd6a41067a3b75f9e8b104656b459ff25046",
     )
 
     # Load rules_cc, used by googletest
@@ -125,10 +125,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "googletest",
         urls = [
-            "https://github.com/google/googletest/archive/v1.16.0.tar.gz",
+            "https://github.com/google/googletest/archive/v1.17.0.tar.gz",
         ],
-        sha256 = "78c676fc63881529bf97bf9d45948d905a66833fbfa5318ea2cd7478cb98f399",
-        strip_prefix = "googletest-1.16.0",
+        sha256 = "65fab701d9829d38cb77c14acdc431d2108bfdbf8979e40eb8ae567edf10b27c",
+        strip_prefix = "googletest-1.17.0",
     )
 
     # Load the googleapis dependency.
@@ -136,10 +136,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/ef19b7b7a73f19f33ab86c5b3603e9590025acd7.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/b6f9ff05aaec18070232a1ab36da98e684bc7909.tar.gz",
         ],
-        sha256 = "31c37576b66942a3afa23b985833936e903cfd7975af50f8958119047ab44847",
-        strip_prefix = "googleapis-ef19b7b7a73f19f33ab86c5b3603e9590025acd7",
+        sha256 = "91788c6f956a0a409abe89a304c123cff73cb0ebb46b494e56d7ac9ece86f8cf",
+        strip_prefix = "googleapis-b6f9ff05aaec18070232a1ab36da98e684bc7909",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         patches = [
@@ -196,10 +196,10 @@ def gl_cpp_workspace0(name = None):
     maybe(
         http_archive,
         name = "io_bazel_rules_go",
-        sha256 = "d93ef02f1e72c82d8bb3d5169519b36167b33cf68c252525e3b9d3d5dd143de7",
+        sha256 = "763f4a3f6b03469fdb00a77a333dd0b5546d3ee1fa29db373128c08fee73e0e8",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
-            "https://github.com/bazelbuild/rules_go/releases/download/v0.49.0/rules_go-v0.49.0.zip",
+            "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.61.1/rules_go-v0.61.1.zip",
+            "https://github.com/bazelbuild/rules_go/releases/download/v0.61.1/rules_go-v0.61.1.zip",
         ],
         patch_args = ["-p1"],
     )

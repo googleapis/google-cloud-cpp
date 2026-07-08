@@ -150,6 +150,52 @@ class MockOracleDatabaseConnection
       DeleteCloudExadataInfrastructure,
       (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ConfigureExascaleCloudExadataInfrastructure(Matcher<google::cloud::oracledatabase::v1::ConfigureExascaleCloudExadataInfrastructureRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>,
+      ConfigureExascaleCloudExadataInfrastructure,
+      (google::cloud::oracledatabase::v1::
+           ConfigureExascaleCloudExadataInfrastructureRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ConfigureExascaleCloudExadataInfrastructure(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      ConfigureExascaleCloudExadataInfrastructure,
+      (NoAwaitTag,
+       google::cloud::oracledatabase::v1::
+           ConfigureExascaleCloudExadataInfrastructureRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ConfigureExascaleCloudExadataInfrastructure(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>,
+      ConfigureExascaleCloudExadataInfrastructure,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>),
       ListCloudVmClusters,
@@ -1297,6 +1343,323 @@ class MockOracleDatabaseConnection
       (override));
 
   MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>),
+      ListGoldengateDeployments,
+      (google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>,
+      GetGoldengateDeployment,
+      (google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGoldengateDeployment(Matcher<google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>,
+      CreateGoldengateDeployment,
+      (google::cloud::oracledatabase::v1::
+           CreateGoldengateDeploymentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateGoldengateDeployment(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              CreateGoldengateDeployment,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::
+                   CreateGoldengateDeploymentRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGoldengateDeployment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>,
+      CreateGoldengateDeployment,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGoldengateDeployment(Matcher<google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteGoldengateDeployment,
+      (google::cloud::oracledatabase::v1::
+           DeleteGoldengateDeploymentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteGoldengateDeployment(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              DeleteGoldengateDeployment,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::
+                   DeleteGoldengateDeploymentRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGoldengateDeployment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteGoldengateDeployment,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopGoldengateDeployment(Matcher<google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>,
+      StopGoldengateDeployment,
+      (google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StopGoldengateDeployment(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StopGoldengateDeployment,
+      (NoAwaitTag,
+       google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopGoldengateDeployment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>,
+      StopGoldengateDeployment,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartGoldengateDeployment(Matcher<google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>,
+      StartGoldengateDeployment,
+      (google::cloud::oracledatabase::v1::
+           StartGoldengateDeploymentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StartGoldengateDeployment(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartGoldengateDeployment,
+              (NoAwaitTag, google::cloud::oracledatabase::v1::
+                               StartGoldengateDeploymentRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartGoldengateDeployment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>,
+      StartGoldengateDeployment,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>),
+      ListGoldengateConnections,
+      (google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>,
+      GetGoldengateConnection,
+      (google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGoldengateConnection(Matcher<google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>,
+      CreateGoldengateConnection,
+      (google::cloud::oracledatabase::v1::
+           CreateGoldengateConnectionRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateGoldengateConnection(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              CreateGoldengateConnection,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::
+                   CreateGoldengateConnectionRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGoldengateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>,
+      CreateGoldengateConnection,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGoldengateConnection(Matcher<google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteGoldengateConnection,
+      (google::cloud::oracledatabase::v1::
+           DeleteGoldengateConnectionRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteGoldengateConnection(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              DeleteGoldengateConnection,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::
+                   DeleteGoldengateConnectionRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGoldengateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteGoldengateConnection,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>),
+      ListGoldengateDeploymentVersions,
+      (google::cloud::oracledatabase::v1::
+           ListGoldengateDeploymentVersionsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::oracledatabase::v1::GoldengateDeploymentType>),
+      ListGoldengateDeploymentTypes,
+      (google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>),
+      ListGoldengateDeploymentEnvironments,
+      (google::cloud::oracledatabase::v1::
+           ListGoldengateDeploymentEnvironmentsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::oracledatabase::v1::GoldengateConnectionType>),
+      ListGoldengateConnectionTypes,
+      (google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::oracledatabase::v1::DbVersion>),
       ListDbVersions,
       (google::cloud::oracledatabase::v1::ListDbVersionsRequest request),
@@ -1308,6 +1671,117 @@ class MockOracleDatabaseConnection
       (google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
            request),
       (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>),
+      ListGoldengateConnectionAssignments,
+      (google::cloud::oracledatabase::v1::
+           ListGoldengateConnectionAssignmentsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>,
+      GetGoldengateConnectionAssignment,
+      (google::cloud::oracledatabase::v1::
+           GetGoldengateConnectionAssignmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGoldengateConnectionAssignment(Matcher<google::cloud::oracledatabase::v1::CreateGoldengateConnectionAssignmentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>,
+      CreateGoldengateConnectionAssignment,
+      (google::cloud::oracledatabase::v1::
+           CreateGoldengateConnectionAssignmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateGoldengateConnectionAssignment(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              CreateGoldengateConnectionAssignment,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::
+                   CreateGoldengateConnectionAssignmentRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGoldengateConnectionAssignment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>,
+      CreateGoldengateConnectionAssignment,
+      (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGoldengateConnectionAssignment(Matcher<google::cloud::oracledatabase::v1::DeleteGoldengateConnectionAssignmentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteGoldengateConnectionAssignment,
+      (google::cloud::oracledatabase::v1::
+           DeleteGoldengateConnectionAssignmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteGoldengateConnectionAssignment(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              DeleteGoldengateConnectionAssignment,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::
+                   DeleteGoldengateConnectionAssignmentRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGoldengateConnectionAssignment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteGoldengateConnectionAssignment,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::oracledatabase::v1::
+                           TestGoldengateConnectionAssignmentResponse>,
+              TestGoldengateConnectionAssignment,
+              (google::cloud::oracledatabase::v1::
+                   TestGoldengateConnectionAssignmentRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),

@@ -29,7 +29,6 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
-#include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
@@ -39,6 +38,7 @@
 #include <chrono>
 #include <future>
 #include <memory>
+#include <optional>
 #include <string>
 #include <thread>
 #include <vector>
@@ -289,9 +289,9 @@ google::spanner::v1::Transaction MakeTestTransaction(
 // `commit_stats`.
 google::spanner::v1::CommitResponse MakeCommitResponse(
     spanner::Timestamp commit_timestamp,
-    absl::optional<spanner::CommitStats> commit_stats = absl::nullopt,
-    absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
-        precommit_token = absl::nullopt) {
+    std::optional<spanner::CommitStats> commit_stats = std::nullopt,
+    std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+        precommit_token = std::nullopt) {
   google::spanner::v1::CommitResponse response;
   *response.mutable_commit_timestamp() =
       commit_timestamp.get<protobuf::Timestamp>().value();
@@ -349,7 +349,7 @@ template <typename ResponseType>
 class MockStreamingReadRpc : public internal::StreamingReadRpc<ResponseType> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read, (ResponseType*), (override));
+  MOCK_METHOD(std::optional<Status>, Read, (ResponseType*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
@@ -363,8 +363,8 @@ std::unique_ptr<MockStreamingReadRpc<ResponseType>> MakeReader(
   for (auto& response : responses) {
     EXPECT_CALL(*reader, Read)
         .InSequence(s)
-        .WillOnce(DoAll(SetArgPointee<0>(std::move(response)),
-                        Return(absl::nullopt)));
+        .WillOnce(
+            DoAll(SetArgPointee<0>(std::move(response)), Return(std::nullopt)));
   }
   EXPECT_CALL(*reader, Read).InSequence(s).WillOnce(Return(std::move(status)));
   return reader;
@@ -560,7 +560,7 @@ TEST(ConnectionImplTest, ReadDirectedRead) {
        spanner::KeySet::All(),
        {"UserId", "UserName"},
        spanner::ReadOptions{},
-       /*partition_token=*/absl::nullopt,
+       /*partition_token=*/std::nullopt,
        /*partition_data_boost=*/false,
        spanner::IncludeReplicas(
            {spanner::ReplicaSelection("us-east4"),
@@ -890,12 +890,12 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
        spanner::SqlStatement("SELECT * FROM Table")});
 
   using RowType =
-      std::tuple<std::int64_t, std::string, absl::optional<spanner::Numeric>>;
+      std::tuple<std::int64_t, std::string, std::optional<spanner::Numeric>>;
   auto stream = spanner::StreamOf<RowType>(rows);
   auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
   EXPECT_THAT(
       actual,
-      ElementsAre(IsOkAndHolds(RowType(12, "Steve", absl::nullopt)),
+      ElementsAre(IsOkAndHolds(RowType(12, "Steve", std::nullopt)),
                   IsOkAndHolds(RowType(
                       42, "Ann", spanner::MakeNumeric(12345678, -2).value()))));
 }
@@ -931,7 +931,7 @@ TEST(ConnectionImplTest, ExecuteQueryDirectedRead) {
   auto rows = conn->ExecuteQuery(
       {txn, spanner::SqlStatement("SELECT * FROM Table"),
        spanner::QueryOptions{},
-       /*partition_token=*/absl::nullopt,
+       /*partition_token=*/std::nullopt,
        /*partition_data_boost=*/false,
        spanner::ExcludeReplicas(
            {spanner::ReplicaSelection(spanner::ReplicaType::kReadWrite),
@@ -975,14 +975,14 @@ TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
        spanner::SqlStatement("SELECT * FROM Table")});
 
   using RowType =
-      std::tuple<spanner::PgNumeric, absl::optional<spanner::PgNumeric>>;
+      std::tuple<spanner::PgNumeric, std::optional<spanner::PgNumeric>>;
   auto stream = spanner::StreamOf<RowType>(rows);
   auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
   EXPECT_THAT(
       actual,
       ElementsAre(
           IsOkAndHolds(RowType(spanner::MakePgNumeric(42).value(),  //
-                               absl::nullopt)),
+                               std::nullopt)),
           IsOkAndHolds(RowType(spanner::MakePgNumeric("NaN").value(),
                                spanner::MakePgNumeric(42, -2).value()))));
 }
@@ -1020,13 +1020,13 @@ TEST(ConnectionImplTest, ExecuteQueryJsonBResult) {
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
 
-  using RowType = std::tuple<spanner::JsonB, absl::optional<spanner::JsonB>>;
+  using RowType = std::tuple<spanner::JsonB, std::optional<spanner::JsonB>>;
   auto stream = spanner::StreamOf<RowType>(rows);
   auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
   EXPECT_THAT(
       actual,
       ElementsAre(
-          IsOkAndHolds(RowType(spanner::JsonB("42"), absl::nullopt)),
+          IsOkAndHolds(RowType(spanner::JsonB("42"), std::nullopt)),
           IsOkAndHolds(RowType(spanner::JsonB("[null, null]"),
                                spanner::JsonB(R"({"a": 1, "b": 2})")))));
 }
@@ -1147,13 +1147,13 @@ TEST(ConnectionImplTest, ExecuteQueryPgOidResult) {
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
 
-  using RowType = std::tuple<spanner::PgOid, absl::optional<spanner::PgOid>>;
+  using RowType = std::tuple<spanner::PgOid, std::optional<spanner::PgOid>>;
   auto stream = spanner::StreamOf<RowType>(rows);
   auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
   EXPECT_THAT(
       actual,
       ElementsAre(
-          IsOkAndHolds(RowType(spanner::PgOid(42), absl::nullopt)),
+          IsOkAndHolds(RowType(spanner::PgOid(42), std::nullopt)),
           IsOkAndHolds(RowType(spanner::PgOid(0), spanner::PgOid(999)))));
 }
 
@@ -1308,7 +1308,7 @@ TEST(ConnectionImplTest, QueryOptions) {
     read_options.request_priority = tc.options.request_priority();
     read_options.request_tag = tc.options.request_tag();
     auto read_params = spanner::Connection::ReadParams{
-        txn, "table", spanner::KeySet::All(), {}, read_options, absl::nullopt};
+        txn, "table", spanner::KeySet::All(), {}, read_options, std::nullopt};
     auto commit_params = spanner::Connection::CommitParams{
         txn, spanner::Mutations{},
         spanner::CommitOptions{}
@@ -1327,7 +1327,7 @@ TEST(ConnectionImplTest, QueryOptions) {
     PartialResultSet response;
     ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &response));
     EXPECT_CALL(*stream, Read)
-        .WillOnce(DoAll(SetArgPointee<0>(response), Return(absl::nullopt)));
+        .WillOnce(DoAll(SetArgPointee<0>(response), Return(std::nullopt)));
     {
       InSequence seq;
 
@@ -3430,7 +3430,7 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
                             spanner::KeySet::All(),
                             {"UserId", "UserName"},
                             read_options},
-                           {absl::nullopt, absl::nullopt, data_boost}});
+                           {std::nullopt, std::nullopt, data_boost}});
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(txn,
               HasSessionAndTransaction("multiplexed", "CAFEDEAD", false, ""));
@@ -3571,7 +3571,7 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
   StatusOr<std::vector<spanner::QueryPartition>> result = conn->PartitionQuery(
       {MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
        sql_statement,
-       {absl::nullopt, absl::nullopt, data_boost}});
+       {std::nullopt, std::nullopt, data_boost}});
   ASSERT_STATUS_OK(result);
 
   std::vector<spanner::QueryPartition> expected_query_partitions = {
@@ -3981,7 +3981,7 @@ TEST(ConnectionImplTest, ReadRequestOrderByParameterNoOrder) {
                                       spanner::KeySet::All(),
                                       {"col"},
                                       read_options,
-                                      absl::nullopt,
+                                      std::nullopt,
                                       false,
                                       spanner::DirectedReadOption::Type{},
                                       spanner::OrderBy::kOrderByNoOrder};
@@ -4052,7 +4052,7 @@ TEST(ConnectionImplTest, ReadRequestLockHintShared) {
                                       spanner::KeySet::All(),
                                       {"col"},
                                       read_options,
-                                      absl::nullopt,
+                                      std::nullopt,
                                       false,
                                       spanner::DirectedReadOption::Type{},
                                       spanner::OrderBy::kOrderByUnspecified,
