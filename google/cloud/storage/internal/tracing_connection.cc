@@ -17,10 +17,7 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/options.h"
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-#include "google/cloud/grpc_options.h"
-#endif
+#include "google/cloud/internal/rest_pure_background_threads_impl.h"
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -32,24 +29,18 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace {
-std::size_t DefaultThreadPoolSize(Options const& options) {
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  auto pool_size = options.get<GrpcBackgroundThreadPoolSizeOption>();
-  if (pool_size == 0) return 1U;
-  return pool_size;
-#else
-  (void)options;
-  return 1U;
-#endif
+TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl,
+                                     AsyncRunner runner)
+    : impl_(std::move(impl)), runner_(std::move(runner)) {
+  if (!runner_) {
+    auto threads =
+        std::make_shared<google::cloud::rest_internal::
+                             AutomaticallyCreatedRestPureBackgroundThreads>(1U);
+    runner_ = [threads](std::function<void()> f) {
+      threads->cq().RunAsync(std::move(f));
+    };
+  }
 }
-}  // namespace
-
-TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl)
-    : impl_(std::move(impl)),
-      background_threads_(
-          std::make_unique<AutomaticallyCreatedStorageBackgroundThreads>(
-              DefaultThreadPoolSize(impl_->options()))) {}
 
 TracingConnection::~TracingConnection() = default;
 
@@ -75,7 +66,7 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
   }
 
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  background_threads_->cq().RunAsync([this, bucket_name, current_options]() {
+  runner_([this, bucket_name, current_options]() {
     google::cloud::internal::OptionsSpan span(current_options);
     storage::internal::GetBucketMetadataRequest request(bucket_name);
     auto result = impl_->GetBucketMetadata(request);
@@ -710,8 +701,10 @@ std::vector<std::string> TracingConnection::InspectStackStructure() const {
 }
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
-    std::shared_ptr<storage::internal::StorageConnection> impl) {
-  return std::make_shared<TracingConnection>(std::move(impl));
+    std::shared_ptr<storage::internal::StorageConnection> impl,
+    TracingConnection::AsyncRunner runner) {
+  return std::make_shared<TracingConnection>(std::move(impl),
+                                             std::move(runner));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

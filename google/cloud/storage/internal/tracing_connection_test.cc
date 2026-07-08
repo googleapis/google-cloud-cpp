@@ -64,6 +64,32 @@ TEST(TracingClientTest, Options) {
   EXPECT_EQ(42, options.get<TestOption>());
 }
 
+TEST(TracingClientTest, CustomAsyncRunner) {
+  TracingConnection::ResetCacheForTesting();
+  bool invoked = false;
+  auto runner = [&invoked](std::function<void()> f) {
+    invoked = true;
+    f();
+  };
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(testing::Return(
+          Options{}.set<storage_experimental::OTelSpanEnrichmentOption>(true)));
+  EXPECT_CALL(*mock, GetBucketMetadata).WillOnce([](auto const&) {
+    storage::BucketMetadata metadata;
+    metadata.set_name("test-bucket");
+    return metadata;
+  });
+  EXPECT_CALL(*mock, DeleteBucket)
+      .WillOnce(
+          testing::Return(make_status_or(storage::internal::EmptyResponse{})));
+
+  auto under_test = TracingConnection(mock, runner);
+  (void)under_test.DeleteBucket(
+      storage::internal::DeleteBucketRequest("test-bucket"));
+  EXPECT_TRUE(invoked);
+}
+
 TEST(TracingClientTest, ListBuckets) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
