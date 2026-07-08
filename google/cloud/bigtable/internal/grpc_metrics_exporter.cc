@@ -13,24 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
-#include <chrono>
-#include <cstdint>
-#include <memory>
-#include <set>
-#include <string>
-#include <utility>
-#include <vector>
-
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-#include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include <grpcpp/ext/otel_plugin.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/version.h>
@@ -49,7 +41,14 @@
 #include <opentelemetry/sdk/metrics/view/meter_selector.h>
 #include <opentelemetry/sdk/metrics/view/view.h>
 #include <opentelemetry/sdk/resource/resource.h>
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include <chrono>
+#include <cstdint>
+#include <memory>
+#include <set>
+#include <string>
+#include <utility>
+#include <vector>
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
 namespace google {
 namespace cloud {
@@ -71,7 +70,7 @@ void GrpcMetricsExporterRegistry::Clear() {
   known_authority_.clear();
 }
 
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
 std::vector<double> MakeLatencyHistogramBoundaries() {
   static auto const kBoundaries = [] {
@@ -214,7 +213,7 @@ MonitoredResourceResult MakeMonitoredResource(
 }
 
 GrpcMetricsExporter::GrpcMetricsExporter(
-    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
     Options const& options, std::string const& client_uid) {
   auto authority = options.get<AuthorityOption>();
   if (!GrpcMetricsExporterRegistry::Singleton().Register(authority)) return;
@@ -234,7 +233,7 @@ GrpcMetricsExporter::GrpcMetricsExporter(
       };
 
   auto exporter = otel_internal::MakeMonitoringExporter(
-      dynamic_resource_fn, resource_filter_fn, std::move(conn), options);
+      dynamic_resource_fn, resource_filter_fn, conn, options);
 
   auto reader_options =
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
@@ -276,13 +275,13 @@ GrpcMetricsExporter::GrpcMetricsExporter(
   }
 }
 
-#else  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#else  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
 GrpcMetricsExporter::GrpcMetricsExporter(
-    std::shared_ptr<monitoring_v3::MetricServiceConnection>, Options const&,
-    std::string const&) {}
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> const&,
+    Options const&, std::string const&) {}
 
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

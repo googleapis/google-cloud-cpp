@@ -259,10 +259,12 @@ DataConnectionImpl::DataConnectionImpl(
     auto gen = internal::MakeDefaultPRNG();
     std::string client_uid =
         internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
     if (options_.has<bigtable_internal::InstanceChannelAffinityOption>()) {
       grpc_metrics_exporter_ = std::make_unique<GrpcMetricsExporter>(
           metric_service_connection_, options_, client_uid);
     }
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
     operation_context_factory_ =
         std::make_unique<MetricsOperationContextFactory>(
             std::move(client_uid), metric_service_connection_, options_);

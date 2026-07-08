@@ -43,7 +43,10 @@ cc_library(
     srcs = google_cloud_cpp_bigtable_srcs,
     hdrs = google_cloud_cpp_bigtable_hdrs,
     local_defines = select({
-        ":metrics_enabled": ["GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS"],
+        ":metrics_enabled": [
+            "GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS",
+            "GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS",
+        ],
         "//conditions:default": [],
     }),
     visibility = [
@@ -122,6 +125,7 @@ cc_library(
     local_defines = select({
         ":metrics_enabled": [
             "GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS",
+            "GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS",
             "GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT",
         ],
         "//conditions:default": ["GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT"],

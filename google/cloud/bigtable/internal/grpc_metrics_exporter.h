@@ -21,9 +21,8 @@
 #include <mutex>
 #include <set>
 #include <string>
-#include <utility>
 
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 #include "google/cloud/monitoring/v3/metric_connection.h"
 #include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/metrics/meter_provider.h>
@@ -31,7 +30,7 @@
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <vector>
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
 namespace google {
 namespace cloud {
@@ -61,7 +60,7 @@ class GrpcMetricsExporterRegistry {
   std::mutex mu_;
 };
 
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 struct MonitoredResourceResult {
   std::string project_id;
   google::api::MonitoredResource resource;
@@ -77,18 +76,18 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
     std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter> exporter,
     opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions
         reader_options);
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
 class GrpcMetricsExporter {
  public:
   GrpcMetricsExporter(
-      std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+      std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
       Options const& options, std::string const& client_uid);
 
  private:
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
