@@ -87,11 +87,6 @@ class AsyncWriterConnectionResumedState
     } else {
       buffer_offset_ = absl::get<std::int64_t>(state);
     }
-    if (hash_function_) {
-      if (auto crc = hash_function_->CurrentCrc32c()) {
-        crc32c_history_[buffer_offset_] = *crc;
-      }
-    }
     if (first_response_.has_write_handle()) {
       latest_write_handle_ = first_response_.write_handle();
     } else if (initial_request_.has_append_object_spec() &&
@@ -340,11 +335,6 @@ class AsyncWriterConnectionResumedState
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
-    if (hash_function_) {
-      if (auto crc = hash_function_->CurrentCrc32c()) {
-        crc32c_history_[buffer_offset_ + write_offset_] = *crc;
-      }
-    }
     auto impl = Impl(lk);
     lk.unlock();
     impl->Query().then([result, w = WeakFromThis()](auto f) {
@@ -383,54 +373,6 @@ class AsyncWriterConnectionResumedState
     return tmp;
   }
 
-  void EnsureCrc32cHistory(std::int64_t persisted_size) {
-    if (!hash_function_) return;
-    if (persisted_size < buffer_offset_) return;
-    auto lb = crc32c_history_.lower_bound(persisted_size);
-    if (lb != crc32c_history_.end() && lb->first == persisted_size) return;
-    if (lb == crc32c_history_.begin()) return;
-    auto prev = std::prev(lb);
-    auto const y = prev->first;
-    auto const crc_y = prev->second;
-    if (y < buffer_offset_) return;
-    auto const slice_offset = static_cast<std::size_t>(y - buffer_offset_);
-    auto const slice_len = static_cast<std::size_t>(persisted_size - y);
-    if (slice_offset + slice_len > resend_buffer_.size()) return;
-    auto slice = resend_buffer_.Subcord(slice_offset, slice_len);
-    auto current = google::cloud::storage_internal::ExtendCrc32c(crc_y, slice);
-    crc32c_history_.emplace_hint(lb, persisted_size, current);
-  }
-
-  void RestoreChecksumState(std::int64_t persisted_size) {
-    if (!hash_function_) return;
-    EnsureCrc32cHistory(persisted_size);
-    if (state_ == State::kResuming) {
-      auto it = crc32c_history_.find(persisted_size);
-      if (it != crc32c_history_.end()) {
-        // Note: MD5HashFunction cannot be rewound. However, it is never used in
-        // resumable/appendable uploads that resume from a non-zero offset.
-        // MakeAppendableWriter uses CreateAppendableHashFunction (which skips
-        // MD5) and standard resumable uploads use CreateNullHashFunction.
-        // Thus, calling Update after this rewind will never throw an MD5 error.
-        hash_function_->RestoreCrc32c(it->second, persisted_size);
-      }
-    }
-    // Purge obsolete historical checkpoints strictly before persisted_size.
-    crc32c_history_.erase(crc32c_history_.begin(),
-                          crc32c_history_.lower_bound(persisted_size));
-    // We remove checkpoints above persisted_size to prevent any possibility of
-    // stale CRCs persisting if chunking boundaries or buffer slices shift
-    // across retry attempts. This is only done when resuming, as a resume will
-    // re-transmit and re-hash unacknowledged data on the fly. If we are just
-    // flushing, future checkpoints are still valid for in-flight data.
-    if (state_ == State::kResuming) {
-      auto upper = crc32c_history_.upper_bound(persisted_size);
-      if (upper != crc32c_history_.end()) {
-        crc32c_history_.erase(upper, crc32c_history_.end());
-      }
-    }
-  }
-
   void OnQuery(std::unique_lock<std::mutex> lk, std::int64_t persisted_size) {
     auto handle = Impl(lk)->WriteHandle();
     if (handle) {
@@ -448,7 +390,6 @@ class AsyncWriterConnectionResumedState
                       MakeFastForwardError(buffer_offset_, persisted_size,
                                            GCP_ERROR_INFO()));
     }
-    RestoreChecksumState(persisted_size);
     resend_buffer_.RemovePrefix(static_cast<std::size_t>(n));
     buffer_offset_ = persisted_size;
     if (state_ == State::kResuming) {
@@ -492,9 +433,6 @@ class AsyncWriterConnectionResumedState
     if (!result.ok()) return Resume(std::move(result));
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
-    if (auto crc = hash_function_->CurrentCrc32c()) {
-      crc32c_history_[buffer_offset_ + write_offset_] = *crc;
-    }
     state_ = State::kIdle;
     return StartWriting(std::move(lk));
   }
@@ -790,9 +728,7 @@ class AsyncWriterConnectionResumedState
   // Retrieve the future in the constructor, as some operations reset
   // finalized_.
   future<StatusOr<google::storage::v2::Object>> finalized_future_;
-  absl::optional<storage::Crc32cChecksumValue> expected_checksum_;
-  std::map<std::int64_t, std::uint32_t> crc32c_history_;
-
+    absl::optional<storage::Crc32cChecksumValue> expected_checksum_;
   // The result of calling `Close()`. Note that only one such call is ever
   // made.
   promise<Status> closed_;

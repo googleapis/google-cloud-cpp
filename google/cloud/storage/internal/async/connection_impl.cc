@@ -118,8 +118,6 @@ std::shared_ptr<storage::internal::HashFunction> CreateAppendableHashFunction(
         storage::internal::HashValues{
             Crc32cFromProto(options.get<storage::UseCrc32cValueOption>()),
             /*.md5=*/{}});
-  } else if (options.get<storage::EnableCrc32cValidationOption>()) {
-    crc32c = std::make_unique<storage::internal::Crc32cHashFunction>();
   }
 
   auto md5 = std::unique_ptr<storage::internal::HashFunction>();
