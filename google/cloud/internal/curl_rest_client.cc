@@ -125,6 +125,7 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
   if (!status.ok()) {
     GCP_LOG(INFO) << "Could not set CURLOPT_SSL_EC_CURVES: "
                   << status.message();
+    pqc_curves_enabled_ = false;
   }
   CurlHandle::ReturnToPool(*handle_factory_, std::move(handle));
 #else
@@ -132,6 +133,7 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
       << "Could not set CURLOPT_SSL_EC_CURVES: libcurl 7.73.0 or later is"
          " required (compiled with "
       << LIBCURL_VERSION << ")";
+  pqc_curves_enabled_ = false;
 #endif
 }
 
@@ -141,6 +143,7 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   auto handle = CurlHandle::MakeFromPool(*handle_factory_);
   auto impl =
       std::make_unique<CurlImpl>(std::move(handle), handle_factory_, options);
+  impl->EnablePqcCurves(pqc_curves_enabled_);
   if (credentials_) {
     auto auth_headers = credentials_->AuthenticationHeaders(
         std::chrono::system_clock::now(), endpoint_address_);

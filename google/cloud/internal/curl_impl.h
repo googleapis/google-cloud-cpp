@@ -84,6 +84,7 @@ class CurlImpl {
 
   void SetHeader(HttpHeader header);
   void SetHeaders(HttpHeaders const& headers);
+  void EnablePqcCurves(bool enabled) { pqc_curves_enabled_ = enabled; }
 
   std::string MakeEscapedString(std::string const& s);
 
@@ -141,6 +142,7 @@ class CurlImpl {
 
   bool logging_enabled_;
   bool follow_location_;
+  bool pqc_curves_enabled_ = true;
   CurlHandle::SocketOptions socket_options_;
   std::string user_agent_;
   std::string http_version_;

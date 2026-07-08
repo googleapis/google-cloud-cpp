@@ -382,8 +382,10 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   }
 
 #if CURL_AT_LEAST_VERSION(7, 73, 0)
-  handle_.SetOptionUnchecked(CURLOPT_SSL_EC_CURVES,
-                             "X25519MLKEM768:X25519:P-256:P-384");
+  if (pqc_curves_enabled_) {
+    handle_.SetOptionUnchecked(CURLOPT_SSL_EC_CURVES,
+                               "X25519MLKEM768:X25519:P-256:P-384");
+  }
 #endif
 
   if (client_ssl_cert_.has_value()) {

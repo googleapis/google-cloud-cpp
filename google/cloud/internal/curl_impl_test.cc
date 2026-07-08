@@ -406,6 +406,19 @@ TEST_F(CurlImplTest, MakeRequestPqcCurvesNoLog) {
   }
 }
 
+TEST_F(CurlImplTest, EnablePqcCurvesFalse) {
+  testing_util::ScopedLog log;
+  RestContext context;
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  impl.EnablePqcCurves(false);
+  (void)impl.MakeRequest(CurlImpl::HttpMethod::kGet, context, {});
+  auto const log_lines = log.ExtractLines();
+  for (auto const& line : log_lines) {
+    EXPECT_THAT(line, testing::Not(testing::HasSubstr(
+                          "Could not set CURLOPT_SSL_EC_CURVES")));
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
