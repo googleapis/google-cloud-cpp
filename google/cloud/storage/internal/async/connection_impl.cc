@@ -110,47 +110,6 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
   return storage::internal::CreateNullHashFunction();
 }
 
-StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
-    google::cloud::internal::ImmutableOptions const& current,
-    google::storage::v2::BidiWriteObjectRequest request,
-    std::int64_t persisted_size,
-    std::function<future<StatusOr<WriteObject::WriteResult>>(
-        google::storage::v2::BidiWriteObjectRequest)>
-        factory,
-    StatusOr<WriteObject::WriteResult> rpc) {
-  if (!rpc) return std::move(rpc).status();
-
-  std::shared_ptr<storage::internal::HashFunction> hash;
-  std::unique_ptr<AsyncWriterConnectionImpl> impl;
-
-  if (rpc->first_response.has_resource()) {
-    auto const& resource = rpc->first_response.resource();
-    if (current->get<storage::EnableCrc32cValidationOption>() &&
-        resource.has_checksums() && resource.checksums().has_crc32c()) {
-      hash = std::make_shared<
-          ::google::cloud::storage::internal::Crc32cHashFunction>(
-          resource.checksums().crc32c(), resource.size());
-    } else {
-      hash = CreateHashFunction(*current);
-    }
-    impl = std::make_unique<AsyncWriterConnectionImpl>(
-        current, request, std::move(rpc->stream), hash, resource, false);
-  } else {
-    persisted_size = rpc->first_response.persisted_size();
-    hash = CreateHashFunction(*current);
-    auto checksums = rpc->first_response.has_persisted_data_checksums()
-                         ? absl::make_optional(
-                               rpc->first_response.persisted_data_checksums())
-                         : absl::nullopt;
-    impl = std::make_unique<AsyncWriterConnectionImpl>(
-        current, request, std::move(rpc->stream), hash, persisted_size, false,
-        checksums);
-  }
-  return MakeWriterConnectionResumed(std::move(factory), std::move(impl),
-                                     std::move(request), std::move(hash),
-                                     rpc->first_response, *current);
-}
-
 std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
     google::storage::v2::ReadObjectRequest const& request,
     Options const& options) {
@@ -364,6 +323,8 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = p.request;
   std::int64_t persisted_size = 0;
+  std::shared_ptr<storage::internal::HashFunction> hash_function =
+      CreateHashFunction(*current);
   auto retry =
       std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
   auto backoff =
@@ -451,10 +412,24 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto pending = factory(std::move(request));
   return pending.then(
       [current, request = std::move(p.request), persisted_size,
-       fa = std::move(factory)](auto f) mutable
+       hash = std::move(hash_function), fa = std::move(factory)](auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-        return MakeAppendableWriter(current, std::move(request), persisted_size,
-                                    std::move(fa), f.get());
+        auto rpc = f.get();
+        if (!rpc) return std::move(rpc).status();
+        std::unique_ptr<AsyncWriterConnectionImpl> impl;
+        if (rpc->first_response.has_resource()) {
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash,
+              rpc->first_response.resource(), false);
+        } else {
+          persisted_size = rpc->first_response.persisted_size();
+          impl = std::make_unique<AsyncWriterConnectionImpl>(
+              current, request, std::move(rpc->stream), hash, persisted_size,
+              false);
+        }
+        return MakeWriterConnectionResumed(std::move(fa), std::move(impl),
+                                           std::move(request), std::move(hash),
+                                           rpc->first_response, *current);
       });
 }
 
