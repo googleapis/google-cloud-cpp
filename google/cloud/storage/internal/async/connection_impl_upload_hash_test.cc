@@ -114,8 +114,6 @@ auto constexpr kQuickFoxCrc32cChecksum = 0x22620404;
 auto constexpr kQuickFoxMD5Hash = "9e107d9d372bb6826bd81d3542a419d6";
 auto constexpr kQuickFox = "The quick brown fox jumps over the lazy dog";
 
-
-
 INSTANTIATE_TEST_SUITE_P(
     PreComputed, AsyncConnectionImplUploadHashTest,
     ::testing::Values(
