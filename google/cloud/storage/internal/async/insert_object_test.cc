@@ -164,8 +164,7 @@ TEST(InsertObject, SuccessEmpty) {
   auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
   google::storage::v2::WriteObjectRequest request;
   auto call =
-      InsertObject::Call(std::move(rpc), std::move(hash), request, absl::Cord(),
-                         internal::MakeImmutableOptions(TestOptions()));
+      InsertObject::Call(std::move(rpc), request, absl::Cord(), internal::MakeImmutableOptions(TestOptions()));
 
   auto result = call->Start();
 
@@ -229,7 +228,7 @@ TEST(InsertObject, SuccessChunkAligned) {
   Request request;
   request.mutable_write_object_spec()->mutable_resource()->set_storage_class(
       "STANDARD");
-  auto call = InsertObject::Call(std::move(rpc), std::move(hash), request,
+  auto call = InsertObject::Call(std::move(rpc), request,
                                  absl::Cord(buffer),
                                  internal::MakeImmutableOptions(TestOptions()));
 
@@ -309,7 +308,7 @@ TEST(InsertObject, SuccessChunkPartial) {
   Request request;
   request.mutable_write_object_spec()->mutable_resource()->set_storage_class(
       "STANDARD");
-  auto call = InsertObject::Call(std::move(rpc), std::move(hash), request,
+  auto call = InsertObject::Call(std::move(rpc), request,
                                  absl::Cord(buffer),
                                  internal::MakeImmutableOptions(TestOptions()));
 
@@ -355,8 +354,7 @@ TEST(InsertObject, ErrorStart) {
   request.mutable_write_object_spec()->mutable_resource()->set_storage_class(
       "STANDARD");
   auto call =
-      InsertObject::Call(std::move(rpc), std::move(hash), request, absl::Cord(),
-                         internal::MakeImmutableOptions(TestOptions()));
+      InsertObject::Call(std::move(rpc), request, absl::Cord(), internal::MakeImmutableOptions(TestOptions()));
 
   auto result = call->Start();
 
@@ -393,7 +391,7 @@ TEST(InsertObject, ErrorOnWrite) {
   auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
   google::storage::v2::WriteObjectRequest request;
   auto call = InsertObject::Call(
-      std::move(rpc), std::move(hash), request,
+      std::move(rpc), request,
       absl::Cord(RandomData(generator, 2 * kExpectedChunkSize)),
       internal::MakeImmutableOptions(TestOptions()));
 
@@ -439,8 +437,7 @@ TEST(InsertObject, ErrorOnChecksums) {
       storage::internal::HashValues{"invalid", ""});
   google::storage::v2::WriteObjectRequest request;
   auto call =
-      InsertObject::Call(std::move(rpc), std::move(hash), request, absl::Cord(),
-                         internal::MakeImmutableOptions(TestOptions()));
+      InsertObject::Call(std::move(rpc), request, absl::Cord(), internal::MakeImmutableOptions(TestOptions()));
 
   auto result = call->Start();
 

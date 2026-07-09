@@ -40,7 +40,6 @@ std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionResumed(
     WriterResultFactory factory,
     std::unique_ptr<storage::AsyncWriterConnection> impl,
     google::storage::v2::BidiWriteObjectRequest initial_request,
-    std::shared_ptr<storage::internal::HashFunction> hash_function,
     google::storage::v2::BidiWriteObjectResponse const& first_response,
     Options const& options);
 

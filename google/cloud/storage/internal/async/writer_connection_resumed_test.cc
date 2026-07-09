@@ -90,8 +90,7 @@ TEST(WriteConnectionResumed, FinalizeEmpty) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
   EXPECT_EQ(connection->UploadId(), "test-upload-id");
   EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
@@ -119,8 +118,7 @@ TEST(WriteConnectionResumed, FinalizedOnConstruction) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
   EXPECT_EQ(connection->UploadId(), "test-upload-id");
   EXPECT_THAT(
       connection->PersistedState(),
@@ -154,8 +152,7 @@ TEST(WriteConnectionResumed, Cancel) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto write = connection->Write(TestPayload(64 * 1024));
   ASSERT_FALSE(write.is_ready());
@@ -192,8 +189,7 @@ TEST(WriterConnectionResumed, FlushEmpty) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
   EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
   auto flush = connection->Flush({});
@@ -241,8 +237,7 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
   EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
   auto write = connection->Write(payload);
@@ -303,8 +298,7 @@ TEST(WriteConnectionResumed, ResumeUsesWriteObjectSpecFromInitialRequest) {
       });
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   // This will call FlushStep -> mock->Flush()
   auto write = connection->Write(TestPayload(1));
@@ -371,8 +365,7 @@ TEST(WriteConnectionResumed, ResumeUsesAppendObjectSpecFromInitialRequest) {
       });
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   // This will call FlushStep -> mock->Flush()
   auto write = connection->Write(TestPayload(1));
@@ -435,8 +428,7 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   // Start a flush which will call impl->Flush() and block.
   auto flush_future = connection->Flush({});
@@ -522,7 +514,7 @@ TEST(WriteConnectionResumed, WriteHandleAssignmentAfterResume) {
         });
 
     auto conn = MakeWriterConnectionResumed(mock_factory.AsStdFunction(),
-                                            std::move(mock), req, nullptr, resp,
+                                            std::move(mock), req, resp,
                                             Options{});
     auto write = conn->Write(TestPayload(1));
     sequencer.PopFrontWithName().first.set_value(false);
@@ -589,8 +581,7 @@ TEST(WriterConnectionResumed, OnQueryUpdatesWriteHandle) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto current_handle = connection->WriteHandle();
   ASSERT_TRUE(current_handle.has_value());
@@ -706,8 +697,7 @@ TEST(WriterConnectionResumed, ResetWriteOffsetOnResume) {
   EXPECT_CALL(*mock_stream_ptr, Cancel).WillRepeatedly(Return());
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, mock_hash,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto write = connection->Write(payload);
 
@@ -819,8 +809,7 @@ TEST(WriterConnectionResumed, ResumeUsesSizeFromFirstResponse) {
   EXPECT_CALL(*mock_stream_ptr, Cancel).WillRepeatedly(Return());
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, mock_hash,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto write = connection->Write(payload);
 
@@ -935,8 +924,7 @@ TEST(WriterConnectionResumed, ResumeUsesChecksumsFromFirstResponse) {
   EXPECT_CALL(*mock_stream_ptr, Cancel).WillRepeatedly(Return());
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, mock_hash,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto write = connection->Write(payload);
 
@@ -986,8 +974,7 @@ TEST(WriterConnectionResumed, CloseEmpty) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
   EXPECT_EQ(connection->UploadId(), "test-upload-id");
   EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
 
@@ -1012,8 +999,7 @@ TEST(WriterConnectionResumed, DuplicateCloseFails) {
 
   MockFactory mock_factory;
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto close1 = connection->Close({});
   auto close2 = connection->Close({});
@@ -1054,8 +1040,7 @@ TEST(WriterConnectionResumed, CloseWithPayload) {
   EXPECT_CALL(mock_factory, Call).Times(0);
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto close = connection->Close(TestPayload(8 * 1024));
   ASSERT_FALSE(close.is_ready());
@@ -1097,8 +1082,7 @@ TEST(WriterConnectionResumed, CloseFailsAndResumeFails) {
   });
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto close = connection->Close({});
   ASSERT_FALSE(close.is_ready());
@@ -1140,8 +1124,7 @@ TEST(WriterConnectionResumed, CloseFailsAndResumeSucceedsButNotClosed) {
   });
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto close = connection->Close({});
   ASSERT_FALSE(close.is_ready());
@@ -1183,8 +1166,7 @@ TEST(WriterConnectionResumed, CloseFailsAndResumeSucceedsAndFinalized) {
   });
 
   auto connection = MakeWriterConnectionResumed(
-      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
-      first_response, Options{});
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, first_response, Options{});
 
   auto close = connection->Close({});
   ASSERT_FALSE(close.is_ready());

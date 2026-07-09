@@ -16,7 +16,7 @@
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
-#include "google/cloud/storage/internal/hash_function.h"
+
 #include <type_traits>
 
 namespace google {
@@ -42,18 +42,15 @@ void PartialUpload::Write() {
   auto const n = std::min(data_.size(), kMax);
   auto next = data_.Subcord(0, n);
   data_.RemovePrefix(n);
-  auto const crc32c = Crc32c(next);
-  hash_function_->Update(request_.write_offset(), next, crc32c);
   auto& data = *request_.mutable_checksummed_data();
   SetContent(data, std::move(next));
-  data.set_crc32c(crc32c);
 
   auto wopt = grpc::WriteOptions{};
   auto const last_message = data_.empty();
   if (last_message) {
     if (action_ == LastMessageAction::kFinalizeWithChecksum) {
-      auto status = Finalize(request_, wopt, *hash_function_);
-      if (!status.ok()) return WriteError(std::move(status));
+      request_.set_finish_write(true);
+      wopt.set_last_message();
     } else if (action_ == LastMessageAction::kFinalize) {
       request_.set_finish_write(true);
       wopt.set_last_message();

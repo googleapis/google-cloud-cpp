@@ -49,18 +49,15 @@ void InsertObject::Write() {
   auto const n = std::min(data_.size(), kMax);
   auto next = data_.Subcord(0, n);
   data_.RemovePrefix(n);
-  auto const crc32c = Crc32c(next);
-  hash_function_->Update(request_.write_offset(), next, crc32c);
   auto& data = *request_.mutable_checksummed_data();
   SetContent(data, std::move(next));
-  data.set_crc32c(crc32c);
 
   auto wopt = grpc::WriteOptions{};
   auto const last_message = data_.empty();
   request_.set_finish_write(last_message);
   if (last_message) {
-    auto status = Finalize(request_, wopt, *hash_function_);
-    if (!status.ok()) return OnError(std::move(status));
+    request_.set_finish_write(true);
+    wopt.set_last_message();
   }
   (void)rpc_->Write(request_, std::move(wopt))
       .then([n, w = WeakFromThis()](auto f) {

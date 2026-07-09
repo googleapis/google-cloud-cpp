@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_INSERT_OBJECT_H
 
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
-#include "google/cloud/storage/internal/hash_function.h"
+
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_streaming_write_rpc.h"
 #include "google/cloud/options.h"
@@ -92,23 +92,20 @@ class InsertObject : public std::enable_shared_from_this<InsertObject> {
 
   static std::shared_ptr<InsertObject> Call(
       std::unique_ptr<StreamingWriteRpc> rpc,
-      std::unique_ptr<storage::internal::HashFunction> hash_function,
       google::storage::v2::WriteObjectRequest request, absl::Cord data,
       google::cloud::internal::ImmutableOptions options) {
-    return std::shared_ptr<InsertObject>(new InsertObject(
-        std::move(rpc), std::move(hash_function), std::move(request),
-        std::move(data), std::move(options)));
+    return std::shared_ptr<InsertObject>(
+        new InsertObject(std::move(rpc), std::move(request),
+                         std::move(data), std::move(options)));
   }
 
   future<StatusOr<google::storage::v2::Object>> Start();
 
  private:
   InsertObject(std::unique_ptr<StreamingWriteRpc> rpc,
-               std::unique_ptr<storage::internal::HashFunction> hash_function,
                google::storage::v2::WriteObjectRequest request, absl::Cord data,
                google::cloud::internal::ImmutableOptions options)
       : rpc_(std::move(rpc)),
-        hash_function_(std::move(hash_function)),
         request_(std::move(request)),
         data_(std::move(data)),
         options_(std::move(options)) {}
@@ -122,7 +119,6 @@ class InsertObject : public std::enable_shared_from_this<InsertObject> {
   std::weak_ptr<InsertObject> WeakFromThis() { return shared_from_this(); }
 
   std::unique_ptr<StreamingWriteRpc> rpc_;
-  std::unique_ptr<storage::internal::HashFunction> hash_function_;
   google::storage::v2::WriteObjectRequest request_;
   absl::Cord data_;
   google::cloud::internal::ImmutableOptions options_;

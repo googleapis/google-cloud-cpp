@@ -41,7 +41,6 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
-      std::shared_ptr<storage::internal::HashFunction> hash_function,
       std::int64_t persisted_size, bool first_request = true,
       absl::optional<google::storage::v2::ObjectChecksums>
           persisted_data_checksums = absl::nullopt);
@@ -49,7 +48,6 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
-      std::shared_ptr<storage::internal::HashFunction> hash_function,
       google::storage::v2::Object metadata, bool first_request = true);
   ~AsyncWriterConnectionImpl() override;
 
@@ -84,11 +82,10 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
  private:
   using PersistedStateType =
       absl::variant<std::int64_t, google::storage::v2::Object>;
-  AsyncWriterConnectionImpl(
+  explicit AsyncWriterConnectionImpl(
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::BidiWriteObjectRequest request,
       std::unique_ptr<StreamingRpc> impl,
-      std::shared_ptr<storage::internal::HashFunction> hash_function,
       PersistedStateType persisted_state, std::int64_t offset,
       bool first_request = true,
       absl::optional<google::storage::v2::ObjectChecksums>
@@ -108,7 +105,6 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   google::cloud::internal::ImmutableOptions options_;
   std::shared_ptr<StreamingRpc> impl_;
   google::storage::v2::BidiWriteObjectRequest request_;
-  std::shared_ptr<storage::internal::HashFunction> hash_function_;
   PersistedStateType persisted_state_;
   std::int64_t offset_ = 0;
   bool first_request_;

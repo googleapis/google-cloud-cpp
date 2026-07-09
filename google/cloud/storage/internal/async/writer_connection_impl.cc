@@ -51,41 +51,37 @@ auto HandleFinishAfterError(Status s) {
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
     google::storage::v2::BidiWriteObjectRequest request,
-    std::unique_ptr<StreamingRpc> impl,
-    std::shared_ptr<storage::internal::HashFunction> hash_function,
-    std::int64_t persisted_size, bool first_request,
+    std::unique_ptr<StreamingRpc> impl, std::int64_t persisted_size,
+    bool first_request,
     absl::optional<google::storage::v2::ObjectChecksums>
         persisted_data_checksums)
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
-          std::move(hash_function), PersistedStateType(persisted_size),
+          PersistedStateType(persisted_size),
           /*offset=*/persisted_size, std::move(first_request),
           std::move(persisted_data_checksums)) {}
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
     google::storage::v2::BidiWriteObjectRequest request,
-    std::unique_ptr<StreamingRpc> impl,
-    std::shared_ptr<storage::internal::HashFunction> hash_function,
-    google::storage::v2::Object metadata, bool first_request)
+    std::unique_ptr<StreamingRpc> impl, google::storage::v2::Object metadata,
+    bool first_request)
     : AsyncWriterConnectionImpl(
           std::move(options), std::move(request), std::move(impl),
-          std::move(hash_function), PersistedStateType(metadata),
+          PersistedStateType(metadata),
           /*offset=*/metadata.size(), std::move(first_request), absl::nullopt) {
 }
 
 AsyncWriterConnectionImpl::AsyncWriterConnectionImpl(
     google::cloud::internal::ImmutableOptions options,
     google::storage::v2::BidiWriteObjectRequest request,
-    std::unique_ptr<StreamingRpc> impl,
-    std::shared_ptr<storage::internal::HashFunction> hash_function,
-    PersistedStateType persisted_state, std::int64_t offset, bool first_request,
+    std::unique_ptr<StreamingRpc> impl, PersistedStateType persisted_state,
+    std::int64_t offset, bool first_request,
     absl::optional<google::storage::v2::ObjectChecksums>
         persisted_data_checksums)
     : options_(std::move(options)),
       impl_(std::move(impl)),
       request_(std::move(request)),
-      hash_function_(std::move(hash_function)),
       persisted_state_(std::move(persisted_state)),
       offset_(offset),
       first_request_(std::move(first_request)),
@@ -133,7 +129,7 @@ future<Status> AsyncWriterConnectionImpl::Write(storage::WritePayload payload) {
   auto write = MakeRequest();
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
+  auto coro = PartialUpload::Call(impl_, std::move(write),
                                   std::move(p), PartialUpload::kNone);
 
   return coro->Start().then([coro, size, this](auto f) mutable {
@@ -160,7 +156,7 @@ AsyncWriterConnectionImpl::Finalize(
   }
 
   auto action = PartialUpload::kFinalizeWithChecksum;
-  auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
+  auto coro = PartialUpload::Call(impl_, std::move(write),
                                   std::move(p), std::move(action));
   return coro->Start().then(
       [coro, size, expected_checksum, this](auto f) mutable {
@@ -178,7 +174,7 @@ future<Status> AsyncWriterConnectionImpl::Flush(storage::WritePayload payload) {
   auto write = MakeRequest();
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
+  auto coro = PartialUpload::Call(impl_, std::move(write),
                                   std::move(p), PartialUpload::kFlush);
 
   return coro->Start().then([coro, size, this](auto f) mutable {
@@ -191,7 +187,7 @@ future<Status> AsyncWriterConnectionImpl::Close(storage::WritePayload payload) {
   auto write = MakeRequest();
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
+  auto coro = PartialUpload::Call(impl_, std::move(write),
                                   std::move(p), PartialUpload::kFlushAndClose);
 
   return coro->Start().then([coro, size, this](auto f) mutable {

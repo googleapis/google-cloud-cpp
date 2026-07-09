@@ -93,12 +93,8 @@ TEST(AsyncWriterConnectionTest, Basic) {
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(RpcMetadata{{{"hk0", "v0"}, {"hk1", "v1"}},
                                    {{"tk0", "v0"}, {"tk1", "v1"}}}));
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  AsyncWriterConnectionImpl tested(TestOptions(), MakeRequest(),
-                                   std::move(mock), hash, 1024);
+  AsyncWriterConnectionImpl tested(TestOptions(), MakeRequest(), std::move(mock), 1024);
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
   EXPECT_THAT(tested.PersistedState(), VariantWith<std::int64_t>(1024));
 
@@ -115,12 +111,9 @@ TEST(AsyncWriterConnectionTest, ResumeFinalized) {
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status{});
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
   AsyncWriterConnectionImpl tested(TestOptions(), MakeRequest(),
-                                   std::move(mock), hash, MakeTestObject());
+                                   std::move(mock), MakeTestObject());
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
   EXPECT_THAT(tested.PersistedState(), VariantWith<google::storage::v2::Object>(
                                            IsProtoEqual(MakeTestObject())));
@@ -132,12 +125,8 @@ TEST(AsyncWriterConnectionTest, Cancel) {
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status{});
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  AsyncWriterConnectionImpl tested(TestOptions(), MakeRequest(),
-                                   std::move(mock), hash, 1024);
+  AsyncWriterConnectionImpl tested(TestOptions(), MakeRequest(), std::move(mock), 1024);
   tested.Cancel();
   EXPECT_EQ(tested.UploadId(), "test-upload-id");
   EXPECT_THAT(tested.PersistedState(), VariantWith<std::int64_t>(1024));
@@ -170,13 +159,9 @@ TEST(AsyncWriterConnectionTest, WriteSimple) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _))
-      .Times(kWriteCount * kChunkCount);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, offset);
+      TestOptions(), MakeRequest(), std::move(mock), offset);
 
   for (int i = 0; i != kWriteCount; ++i) {
     auto response =
@@ -211,12 +196,8 @@ TEST(AsyncWriterConnectionTest, WriteError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 0);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 0);
 
   auto response = tested->Write(WritePayload(std::string(kChunk, 'A')));
   auto next = sequencer.PopFrontWithName();
@@ -244,12 +225,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedWriteFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 0);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 0);
 
   auto response = tested->Write(WritePayload(std::string(kChunk, 'A')));
   auto next = sequencer.PopFrontWithName();
@@ -285,12 +262,8 @@ TEST(AsyncWriterConnectionTest, FinalizeEmpty) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -321,12 +294,8 @@ TEST(AsyncWriterConnectionTest, FinalizeFails) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -350,12 +319,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedFinalizeFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -385,12 +350,8 @@ TEST(AsyncWriterConnectionTest, QueryFinalFails) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -423,12 +384,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -461,12 +418,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFinalMissingResource) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 0);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 0);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -509,12 +462,8 @@ TEST(AsyncWriterConnectionTest, FlushEmpty) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto flush = tested->Flush(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -546,12 +495,8 @@ TEST(AsyncWriterConnectionTest, FlushFails) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -575,12 +520,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedFlushFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -605,12 +546,8 @@ TEST(AsyncWriterConnectionTest, QueryFails) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto query = tested->Query();
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Read");
@@ -635,12 +572,8 @@ TEST(AsyncWriterConnectionTest, UnexpectedQueryFailsWithoutError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(0);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto query = tested->Query();
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Read");
@@ -680,10 +613,8 @@ TEST(AsyncWriterConnectionTest, QueryFailsWithRedirect) {
       return s;
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto query = tested->Query();
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Read");
@@ -719,14 +650,11 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableWithChecksum) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(1);
 
   auto request = MakeRequest();
   request.mutable_write_object_spec()->set_appendable(true);
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), std::move(request), std::move(mock), hash, 1024);
+      TestOptions(), std::move(request), std::move(mock), 1024);
   auto response = tested->Finalize(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -764,10 +692,6 @@ TEST(AsyncWriterConnectionTest, ResumeWithHandle) {
     return make_ready_future(Status{});
   });
 
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(0);
-
   google::storage::v2::BidiWriteObjectRequest req;
   req.mutable_append_object_spec()->set_bucket("bucket");
   req.mutable_append_object_spec()->set_object("object");
@@ -775,7 +699,7 @@ TEST(AsyncWriterConnectionTest, ResumeWithHandle) {
       "test-handle");
 
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), req, std::move(mock), hash, 0);
+      TestOptions(), req, std::move(mock), 0);
 
   auto result = tested->Write(WritePayload("payload"));
   auto next = sequencer.PopFrontWithName();
@@ -813,15 +737,12 @@ TEST(AsyncWriterConnectionTest, QueryUpdatesHandle) {
     return make_ready_future(Status{});
   });
 
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-
   google::storage::v2::BidiWriteObjectRequest req;
   req.mutable_append_object_spec()->set_bucket("bucket");
   req.mutable_append_object_spec()->set_object("object");
 
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), req, std::move(mock), hash, 0);
+      TestOptions(), req, std::move(mock), 0);
 
   // Query should update the internal handle.
   EXPECT_THAT(tested->Query().get(), IsOkAndHolds(42));
@@ -856,12 +777,8 @@ TEST(AsyncWriterConnectionTest, CloseEmpty) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto close = tested->Close(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
@@ -888,12 +805,8 @@ TEST(AsyncWriterConnectionTest, CloseError) {
       return PermanentError();
     });
   });
-  auto hash = std::make_shared<MockHashFunction>();
-  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish).Times(0);
 
-  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
-      TestOptions(), MakeRequest(), std::move(mock), hash, 1024);
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(TestOptions(), MakeRequest(), std::move(mock), 1024);
   auto response = tested->Close(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");

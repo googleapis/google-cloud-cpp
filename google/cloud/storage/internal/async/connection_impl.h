@@ -133,10 +133,9 @@ class AsyncConnectionImpl
 
   future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
   UnbufferedUploadImpl(
-      internal::ImmutableOptions current,
+      google::cloud::internal::ImmutableOptions current,
       std::function<void(grpc::ClientContext&)> configure_context,
       google::storage::v2::BidiWriteObjectRequest request,
-      std::shared_ptr<storage::internal::HashFunction> hash_function,
       std::int64_t persisted_size);
 
   future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>

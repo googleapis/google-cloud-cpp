@@ -79,32 +79,6 @@ inline std::unique_ptr<storage::AsyncIdempotencyPolicy> idempotency_policy(
   return options.get<storage::AsyncIdempotencyPolicyOption>()();
 }
 
-std::unique_ptr<storage::internal::HashFunction> CreateWriterHashFunction(
-    Options const& options) {
-  auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
-  if (options.has<storage::UseCrc32cValueOption>()) {
-    crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(
-        storage::internal::HashValues{
-            Crc32cFromProto(options.get<storage::UseCrc32cValueOption>()),
-            /*.md5=*/{}});
-  }
-
-  auto md5 = std::unique_ptr<storage::internal::HashFunction>();
-  if (options.has<storage::UseMD5ValueOption>()) {
-    md5 = std::make_unique<storage::internal::PrecomputedHashFunction>(
-        storage::internal::HashValues{
-            /*.crc32=*/{},
-            MD5FromProto(options.get<storage::UseMD5ValueOption>())});
-  }
-
-  if (crc32c && md5) {
-    return std::make_unique<storage::internal::CompositeFunction>(
-        std::move(crc32c), std::move(md5));
-  }
-  if (crc32c) return crc32c;
-  if (md5) return md5;
-  return storage::internal::CreateNullHashFunction();
-}
 
 std::unique_ptr<storage::internal::HashFunction> CreateReaderHashFunction(
     Options const& options) {
@@ -147,27 +121,24 @@ StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
     StatusOr<WriteObject::WriteResult> rpc) {
   if (!rpc) return std::move(rpc).status();
 
-  std::shared_ptr<storage::internal::HashFunction> hash;
   std::unique_ptr<AsyncWriterConnectionImpl> impl;
 
   if (rpc->first_response.has_resource()) {
     auto const& resource = rpc->first_response.resource();
-    hash = CreateWriterHashFunction(*current);
     impl = std::make_unique<AsyncWriterConnectionImpl>(
-        current, request, std::move(rpc->stream), hash, resource, false);
+        current, request, std::move(rpc->stream), resource, false);
   } else {
     persisted_size = rpc->first_response.persisted_size();
-    hash = CreateWriterHashFunction(*current);
     auto checksums = rpc->first_response.has_persisted_data_checksums()
                          ? absl::make_optional(
                                rpc->first_response.persisted_data_checksums())
                          : absl::nullopt;
     impl = std::make_unique<AsyncWriterConnectionImpl>(
-        current, request, std::move(rpc->stream), hash, persisted_size, false,
+        current, request, std::move(rpc->stream), persisted_size, false,
         checksums);
   }
   return MakeWriterConnectionResumed(std::move(factory), std::move(impl),
-                                     std::move(request), std::move(hash),
+                                     std::move(request),
                                      rpc->first_response, *current);
 }
 
@@ -228,14 +199,13 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
         options->get<storage::TransferStallMinimumRateOption>(),
         google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
 
-    auto hash_function = CreateWriterHashFunction(*options);
     ApplyRoutingHeaders(*context, request.write_object_spec());
     AddIdempotencyToken(*context, id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), options);
     rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
                                                 std::move(rpc));
     auto running = InsertObject::Call(
-        std::move(rpc), std::move(hash_function), request,
+        std::move(rpc), request,
         WritePayloadImpl::GetImpl(payload), std::move(options));
     return running->Start().then([running](auto f) mutable {
       running.reset();  // extend the life of the co-routine until it co-returns
@@ -750,7 +720,6 @@ AsyncConnectionImpl::StartUnbufferedUploadImpl(
         StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             std::move(response).status()));
   }
-  auto hash_function = CreateWriterHashFunction(*current);
   auto configure =
       [current, upload = response->upload_id()](grpc::ClientContext& context) {
         ApplyResumableUploadRoutingHeader(context, upload);
@@ -762,7 +731,7 @@ AsyncConnectionImpl::StartUnbufferedUploadImpl(
       std::move(*request.mutable_common_object_request_params());
 
   return UnbufferedUploadImpl(std::move(current), std::move(configure),
-                              std::move(proto), std::move(hash_function), 0);
+                              std::move(proto), 0);
 }
 
 future<StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>>
@@ -783,13 +752,6 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
                 std::move(*response->mutable_resource()))));
   }
 
-  // In most cases computing a hash for a resumed upload is not feasible. We
-  // lack the data to initialize the hash functions. The one exception is when
-  // the upload resumes from the beginning of the file.
-  auto hash_function = storage::internal::CreateNullHashFunction();
-  if (response->persisted_size() == 0) {
-    hash_function = CreateWriterHashFunction(*current);
-  }
   auto configure =
       [current, upload_id = query.upload_id()](grpc::ClientContext& context) {
         internal::ConfigureContext(context, *current);
@@ -800,7 +762,7 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
   *proto.mutable_common_object_request_params() =
       std::move(*query.mutable_common_object_request_params());
   return UnbufferedUploadImpl(std::move(current), std::move(configure),
-                              std::move(proto), std::move(hash_function),
+                              std::move(proto),
                               response->persisted_size());
 }
 
@@ -809,7 +771,6 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     internal::ImmutableOptions current,
     std::function<void(grpc::ClientContext&)> configure_context,
     google::storage::v2::BidiWriteObjectRequest request,
-    std::shared_ptr<storage::internal::HashFunction> hash_function,
     std::int64_t persisted_size) {
   using StreamingRpc = AsyncWriterConnectionImpl::StreamingRpc;
   using StreamingRpcTimeout =
@@ -846,14 +807,13 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     });
   };
 
-  auto transform = [current, request = std::move(request), persisted_size,
-                    hash = std::move(hash_function)](auto f) mutable
+  auto transform = [current, request = std::move(request), persisted_size](auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
     auto rpc = f.get();
     if (!rpc) return std::move(rpc).status();
     return std::unique_ptr<storage::AsyncWriterConnection>(
         std::make_unique<AsyncWriterConnectionImpl>(
-            current, std::move(request), *std::move(rpc), std::move(hash),
+            current, std::move(request), *std::move(rpc),
             persisted_size, true));
   };
 

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_PARTIAL_UPLOAD_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_PARTIAL_UPLOAD_H
 
-#include "google/cloud/storage/internal/hash_function.h"
+
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
@@ -100,26 +100,23 @@ class PartialUpload : public std::enable_shared_from_this<PartialUpload> {
 
   static std::shared_ptr<PartialUpload> Call(
       std::shared_ptr<StreamingWriteRpc> rpc,
-      std::shared_ptr<storage::internal::HashFunction> hash_function,
       google::storage::v2::BidiWriteObjectRequest request, absl::Cord data,
       LastMessageAction action) {
     return std::shared_ptr<PartialUpload>(
-        new PartialUpload(std::move(rpc), std::move(hash_function),
-                          std::move(request), std::move(data), action));
+        new PartialUpload(std::move(rpc), std::move(request),
+                          std::move(data), std::move(action)));
   }
 
   future<StatusOr<bool>> Start();
 
  private:
   PartialUpload(std::shared_ptr<StreamingWriteRpc> rpc,
-                std::shared_ptr<storage::internal::HashFunction> hash_function,
                 google::storage::v2::BidiWriteObjectRequest request,
                 absl::Cord data, LastMessageAction action)
       : rpc_(std::move(rpc)),
-        hash_function_(std::move(hash_function)),
         request_(std::move(request)),
         data_(std::move(data)),
-        action_(action) {}
+        action_(std::move(action)) {}
 
   void Write();
   void OnWrite(std::size_t n, bool ok);
@@ -128,7 +125,6 @@ class PartialUpload : public std::enable_shared_from_this<PartialUpload> {
   std::weak_ptr<PartialUpload> WeakFromThis() { return shared_from_this(); }
 
   std::shared_ptr<StreamingWriteRpc> rpc_;
-  std::shared_ptr<storage::internal::HashFunction> hash_function_;
   google::storage::v2::BidiWriteObjectRequest request_;
   absl::Cord data_;
   LastMessageAction action_;

@@ -67,14 +67,12 @@ class AsyncWriterConnectionResumedState
       WriterResultFactory factory,
       std::unique_ptr<storage::AsyncWriterConnection> impl,
       google::storage::v2::BidiWriteObjectRequest initial_request,
-      std::shared_ptr<storage::internal::HashFunction> hash_function,
       google::storage::v2::BidiWriteObjectResponse const& first_response,
       Options const& options, std::size_t buffer_size_lwm,
       std::size_t buffer_size_hwm)
       : factory_(std::move(factory)),
         impl_(std::move(impl)),
         initial_request_(std::move(initial_request)),
-        hash_function_(std::move(hash_function)),
         first_response_(std::move(first_response)),
         buffer_size_lwm_(buffer_size_lwm),
         buffer_size_hwm_(buffer_size_hwm) {
@@ -534,7 +532,7 @@ class AsyncWriterConnectionResumedState
 
     // Recreate the underlying stream if still active.
     impl_ = std::make_unique<AsyncWriterConnectionImpl>(
-        options_, initial_request_, std::move(res->stream), hash_function_,
+        options_, initial_request_, std::move(res->stream),
         persisted_offset, false, checksums);
     // OnQuery will restart the WriteLoop if necessary.
     OnQuery(std::move(lk), persisted_offset);
@@ -697,8 +695,6 @@ class AsyncWriterConnectionResumedState
   // The initial request.
   google::storage::v2::BidiWriteObjectRequest initial_request_;
 
-  std::shared_ptr<storage::internal::HashFunction> hash_function_;
-
   google::cloud::internal::ImmutableOptions options_;
 
   google::storage::v2::BidiWriteObjectResponse first_response_;
@@ -831,12 +827,11 @@ class AsyncWriterConnectionResumed : public storage::AsyncWriterConnection {
       WriterResultFactory factory,
       std::unique_ptr<storage::AsyncWriterConnection> impl,
       google::storage::v2::BidiWriteObjectRequest initial_request,
-      std::shared_ptr<storage::internal::HashFunction> hash_function,
       google::storage::v2::BidiWriteObjectResponse const& first_response,
       Options const& options)
       : state_(std::make_shared<AsyncWriterConnectionResumedState>(
             std::move(factory), std::move(impl), std::move(initial_request),
-            std::move(hash_function), first_response, options,
+            first_response, options,
             options.get<storage::BufferedUploadLwmOption>(),
             options.get<storage::BufferedUploadHwmOption>())) {}
 
@@ -898,12 +893,11 @@ std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionResumed(
     WriterResultFactory factory,
     std::unique_ptr<storage::AsyncWriterConnection> impl,
     google::storage::v2::BidiWriteObjectRequest initial_request,
-    std::shared_ptr<storage::internal::HashFunction> hash_function,
     google::storage::v2::BidiWriteObjectResponse const& first_response,
     Options const& options) {
   return absl::make_unique<AsyncWriterConnectionResumed>(
       std::move(factory), std::move(impl), std::move(initial_request),
-      std::move(hash_function), std::move(first_response), std::move(options));
+      std::move(first_response), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
