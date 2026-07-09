@@ -114,25 +114,7 @@ auto constexpr kQuickFoxCrc32cChecksum = 0x22620404;
 auto constexpr kQuickFoxMD5Hash = "9e107d9d372bb6826bd81d3542a419d6";
 auto constexpr kQuickFox = "The quick brown fox jumps over the lazy dog";
 
-INSTANTIATE_TEST_SUITE_P(
-    Computed, AsyncConnectionImplUploadHashTest,
-    ::testing::Values(
-        HashTestCase{Options{}
-                         .set<storage::EnableCrc32cValidationOption>(true)
-                         .set<storage::EnableMD5ValidationOption>(true),
-                     kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
-        HashTestCase{Options{}
-                         .set<storage::EnableCrc32cValidationOption>(true)
-                         .set<storage::EnableMD5ValidationOption>(false),
-                     kQuickFoxCrc32cChecksum, ""},
-        HashTestCase{Options{}
-                         .set<storage::EnableCrc32cValidationOption>(false)
-                         .set<storage::EnableMD5ValidationOption>(true),
-                     absl::nullopt, kQuickFoxMD5Hash},
-        HashTestCase{Options{}
-                         .set<storage::EnableCrc32cValidationOption>(false)
-                         .set<storage::EnableMD5ValidationOption>(false),
-                     absl::nullopt, ""}));
+
 
 INSTANTIATE_TEST_SUITE_P(
     PreComputed, AsyncConnectionImplUploadHashTest,

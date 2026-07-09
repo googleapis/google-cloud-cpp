@@ -79,7 +79,7 @@ inline std::unique_ptr<storage::AsyncIdempotencyPolicy> idempotency_policy(
   return options.get<storage::AsyncIdempotencyPolicyOption>()();
 }
 
-std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
+std::unique_ptr<storage::internal::HashFunction> CreateWriterHashFunction(
     Options const& options) {
   auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
   if (options.has<storage::UseCrc32cValueOption>()) {
@@ -106,6 +106,37 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
   return storage::internal::CreateNullHashFunction();
 }
 
+std::unique_ptr<storage::internal::HashFunction> CreateReaderHashFunction(
+    Options const& options) {
+  auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
+  if (options.has<storage::UseCrc32cValueOption>()) {
+    crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(
+        storage::internal::HashValues{
+            Crc32cFromProto(options.get<storage::UseCrc32cValueOption>()),
+            /*.md5=*/{}});
+  } else if (options.get<storage::EnableCrc32cValidationOption>()) {
+    crc32c = std::make_unique<storage::internal::Crc32cHashFunction>();
+  }
+
+  auto md5 = std::unique_ptr<storage::internal::HashFunction>();
+  if (options.has<storage::UseMD5ValueOption>()) {
+    md5 = std::make_unique<storage::internal::PrecomputedHashFunction>(
+        storage::internal::HashValues{
+            /*.crc32=*/{},
+            MD5FromProto(options.get<storage::UseMD5ValueOption>())});
+  } else if (options.get<storage::EnableMD5ValidationOption>()) {
+    md5 = storage::internal::MD5HashFunction::Create();
+  }
+
+  if (crc32c && md5) {
+    return std::make_unique<storage::internal::CompositeFunction>(
+        std::move(crc32c), std::move(md5));
+  }
+  if (crc32c) return crc32c;
+  if (md5) return md5;
+  return storage::internal::CreateNullHashFunction();
+}
+
 StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
     google::cloud::internal::ImmutableOptions const& current,
     google::storage::v2::BidiWriteObjectRequest request,
@@ -121,12 +152,12 @@ StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
 
   if (rpc->first_response.has_resource()) {
     auto const& resource = rpc->first_response.resource();
-    hash = CreateHashFunction(*current);
+    hash = CreateWriterHashFunction(*current);
     impl = std::make_unique<AsyncWriterConnectionImpl>(
         current, request, std::move(rpc->stream), hash, resource, false);
   } else {
     persisted_size = rpc->first_response.persisted_size();
-    hash = CreateHashFunction(*current);
+    hash = CreateWriterHashFunction(*current);
     auto checksums = rpc->first_response.has_persisted_data_checksums()
                          ? absl::make_optional(
                                rpc->first_response.persisted_data_checksums())
@@ -197,7 +228,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
         options->get<storage::TransferStallMinimumRateOption>(),
         google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
 
-    auto hash_function = CreateHashFunction(*options);
+    auto hash_function = CreateWriterHashFunction(*options);
     ApplyRoutingHeaders(*context, request.write_object_spec());
     AddIdempotencyToken(*context, id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), options);
@@ -303,7 +334,7 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   // this function.
   auto hash_function =
       std::make_shared<storage::internal::Crc32cMessageHashFunction>(
-          CreateHashFunction(*current));
+          CreateReaderHashFunction(*current));
   auto hash_validator = CreateHashValidator(p.request, *current);
 
   absl::optional<std::int64_t> requested_length;
@@ -719,7 +750,7 @@ AsyncConnectionImpl::StartUnbufferedUploadImpl(
         StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             std::move(response).status()));
   }
-  auto hash_function = CreateHashFunction(*current);
+  auto hash_function = CreateWriterHashFunction(*current);
   auto configure =
       [current, upload = response->upload_id()](grpc::ClientContext& context) {
         ApplyResumableUploadRoutingHeader(context, upload);
@@ -757,7 +788,7 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
   // the upload resumes from the beginning of the file.
   auto hash_function = storage::internal::CreateNullHashFunction();
   if (response->persisted_size() == 0) {
-    hash_function = CreateHashFunction(*current);
+    hash_function = CreateWriterHashFunction(*current);
   }
   auto configure =
       [current, upload_id = query.upload_id()](grpc::ClientContext& context) {
