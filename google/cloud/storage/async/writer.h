@@ -115,7 +115,14 @@ class AsyncWriter {
   /// Upload @p payload returning a new token to continue the upload.
   future<StatusOr<AsyncToken>> Write(AsyncToken token, WritePayload payload);
 
-  /// Finalize the upload with the existing data.
+  /**
+   * Finalize the upload with the existing data.
+   *
+   * @warning For appendable uploads, the SDK does not incrementally compute
+   * full-object hashes. You *must* calculate and inject your own expected
+   * checksum here to get end-to-end data integrity. If you omit it, the object
+   * will finalize without full-object verification.
+   */
   future<StatusOr<google::storage::v2::Object>> Finalize(AsyncToken token);
   future<StatusOr<google::storage::v2::Object>> Finalize(
       AsyncToken token,
@@ -123,6 +130,11 @@ class AsyncWriter {
 
   /**
    * Upload @p payload and then finalize the upload.
+   *
+   * @warning For appendable uploads, the SDK does not incrementally compute
+   * full-object hashes. You *must* calculate and inject your own expected
+   * checksum here to get end-to-end data integrity. If you omit it, the object
+   * will finalize without full-object verification.
    */
   future<StatusOr<google::storage::v2::Object>> Finalize(AsyncToken token,
                                                          WritePayload payload);

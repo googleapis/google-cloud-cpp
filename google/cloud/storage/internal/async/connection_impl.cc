@@ -106,7 +106,6 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
   return storage::internal::CreateNullHashFunction();
 }
 
-
 StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> MakeAppendableWriter(
     google::cloud::internal::ImmutableOptions const& current,
     google::storage::v2::BidiWriteObjectRequest request,

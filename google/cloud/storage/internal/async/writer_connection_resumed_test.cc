@@ -41,8 +41,7 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
-using ::testing::An;
-using ::testing::AnyNumber;
+
 using ::testing::Eq;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -1200,8 +1199,6 @@ TEST(WriterConnectionResumed, CloseFailsAndResumeSucceedsAndFinalized) {
 
   EXPECT_STATUS_OK(close.get());
 }
-
-
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

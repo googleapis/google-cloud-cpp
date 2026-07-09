@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
@@ -151,9 +152,11 @@ AsyncWriterConnectionImpl::Finalize(
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
 
-  if (p.empty() && expected_checksum.has_value()) {
-    // Checksum verification is now exclusively handled server-side at Finalize.
-    // We no longer perform incremental client-side hashing across the stream.
+  if (expected_checksum.has_value()) {
+    auto as_proto = storage_internal::Crc32cToProto(expected_checksum->value());
+    if (as_proto.ok()) {
+      write.mutable_object_checksums()->set_crc32c(*as_proto);
+    }
   }
 
   auto action = PartialUpload::kFinalizeWithChecksum;
@@ -164,7 +167,8 @@ AsyncWriterConnectionImpl::Finalize(
         coro.reset();  // breaks the cycle between the completion queue and coro
         StatusOr<bool> res = f.get();
         if (res.ok() && *res && expected_checksum.has_value()) {
-          // Checksum verification is now exclusively handled server-side at Finalize.
+          // Checksum verification is now exclusively handled server-side at
+          // Finalize.
         }
         return OnFinalUpload(size, std::move(res));
       });

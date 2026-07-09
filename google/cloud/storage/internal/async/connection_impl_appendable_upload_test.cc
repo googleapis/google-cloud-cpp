@@ -18,8 +18,12 @@
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/write_object.h"
+#include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
+#include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc/stub.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/common_options.h"
@@ -631,7 +635,92 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirectNoHandle) {
   next.first.set_value(true);
 }
 
+TEST_F(AsyncConnectionImplAppendableTest,
+       AppendableUploadFinalizeWithExpectedChecksum) {
+  auto constexpr kRequestText = R"pb(
+    write_object_spec {
+      resource {
+        bucket: "projects/_/buckets/test-bucket"
+        name: "test-object"
+        content_type: "text/plain"
+      }
+    }
+  )pb";
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
 
+  EXPECT_CALL(*mock, AsyncBidiWriteObject).WillOnce([&] {
+    auto stream = MakeCommonAppendStream(sequencer, 0);
+    EXPECT_CALL(*stream, Write)
+        .WillOnce(
+            [&](google::storage::v2::BidiWriteObjectRequest const& request,
+                grpc::WriteOptions wopt) {
+              EXPECT_TRUE(request.state_lookup());
+              EXPECT_FALSE(wopt.is_last_message());
+              return sequencer.PushBack("Write(StateLookup)");
+            })
+        .WillOnce(
+            [&](google::storage::v2::BidiWriteObjectRequest const& request,
+                grpc::WriteOptions) {
+              EXPECT_FALSE(request.finish_write());
+              return sequencer.PushBack("Write(data)");
+            })
+        .WillOnce(
+            [&](google::storage::v2::BidiWriteObjectRequest const& request,
+                grpc::WriteOptions) {
+              EXPECT_TRUE(request.finish_write());
+              EXPECT_TRUE(request.has_object_checksums());
+              EXPECT_EQ(request.object_checksums().crc32c(), 12345);
+              return sequencer.PushBack("Write(Finalize)");
+            });
+    return stream;
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(kRequestText, &request));
+  auto pending = connection->StartAppendableObjectUpload(
+      {std::move(request), connection->options()});
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(StateLookup)");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(PersistedSize)");
+  next.first.set_value(true);
+
+  auto writer = pending.get().value();
+  auto w1 = writer->Write(storage::WritePayload{std::string(100, 'A')});
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(data)");
+  next.first.set_value(true);
+  EXPECT_STATUS_OK(w1.get());
+
+  auto w2 = writer->Finalize(
+      storage::WritePayload{},
+      storage::Crc32cChecksumValue(storage_internal::Crc32cFromProto(12345)));
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write(Finalize)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(FinalObject)");
+  next.first.set_value(true);
+
+  auto response = w2.get();
+  ASSERT_STATUS_OK(response);
+
+  writer.reset();
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -717,7 +717,7 @@ class AsyncWriterConnectionResumedState
   // Retrieve the future in the constructor, as some operations reset
   // finalized_.
   future<StatusOr<google::storage::v2::Object>> finalized_future_;
-    absl::optional<storage::Crc32cChecksumValue> expected_checksum_;
+  absl::optional<storage::Crc32cChecksumValue> expected_checksum_;
   // The result of calling `Close()`. Note that only one such call is ever
   // made.
   promise<Status> closed_;

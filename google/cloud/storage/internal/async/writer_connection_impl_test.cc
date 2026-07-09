@@ -904,8 +904,6 @@ TEST(AsyncWriterConnectionTest, CloseError) {
   EXPECT_THAT(response.get(), StatusIs(PermanentError().code()));
 }
 
-
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

@@ -80,12 +80,6 @@ class HashFunction {
   virtual Status Update(std::int64_t offset, absl::Cord const& buffer,
                         std::uint32_t buffer_crc) = 0;
 
-  virtual absl::optional<std::uint32_t> CurrentCrc32c() const {
-    return absl::nullopt;
-  }
-  virtual void RestoreCrc32c(std::uint32_t /*crc32c*/,
-                             std::int64_t /*offset*/) {}
-
   /**
    * Compute the final hash values.
    */
