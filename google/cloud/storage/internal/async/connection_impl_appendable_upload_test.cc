@@ -626,8 +626,6 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirectNoHandle) {
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 }
-
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
