@@ -410,8 +410,8 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
 
   auto pending = factory(std::move(request));
   return pending.then(
-      [current, request = std::move(p.request),
-       hash = std::move(hash_function), fa = std::move(factory)](auto f) mutable
+      [current, request = std::move(p.request), hash = std::move(hash_function),
+       fa = std::move(factory)](auto f) mutable
       -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
