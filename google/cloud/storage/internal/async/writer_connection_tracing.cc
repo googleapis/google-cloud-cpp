@@ -91,7 +91,7 @@ class AsyncWriterConnectionTracing : public storage::AsyncWriterConnection {
 
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload p,
-      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum)
+      absl::optional<storage::Crc32cChecksumValue> expected_checksum)
       override {
     internal::OTelScope scope(span_);
     auto size = static_cast<std::uint64_t>(p.size());

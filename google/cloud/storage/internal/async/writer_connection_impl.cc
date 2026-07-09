@@ -145,7 +145,7 @@ future<Status> AsyncWriterConnectionImpl::Write(storage::WritePayload payload) {
 future<StatusOr<google::storage::v2::Object>>
 AsyncWriterConnectionImpl::Finalize(
     storage::WritePayload payload,
-    absl::optional<storage::Crc32cChecksumValue> const& expected_checksum) {
+    absl::optional<storage::Crc32cChecksumValue> expected_checksum) {
   auto write = MakeRequest();
   write.set_finish_write(true);
 

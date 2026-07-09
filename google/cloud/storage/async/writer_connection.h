@@ -115,7 +115,7 @@ class AsyncWriterConnection {
       WritePayload) = 0;
   virtual future<StatusOr<google::storage::v2::Object>> Finalize(
       WritePayload p,
-      absl::optional<Crc32cChecksumValue> const& /*expected_checksum*/) {
+      absl::optional<Crc32cChecksumValue> /*expected_checksum*/) {
     return Finalize(std::move(p));
   }
 

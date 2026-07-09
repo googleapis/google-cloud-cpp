@@ -135,7 +135,7 @@ class AsyncWriterConnectionResumedState
   }
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload const& p,
-      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum) {
+      absl::optional<storage::Crc32cChecksumValue> expected_checksum) {
     std::unique_lock<std::mutex> lk(mu_);
     if (expected_checksum.has_value()) {
       expected_checksum_ = expected_checksum;
@@ -869,7 +869,7 @@ class AsyncWriterConnectionResumed : public storage::AsyncWriterConnection {
   }
   future<StatusOr<google::storage::v2::Object>> Finalize(
       storage::WritePayload p,
-      absl::optional<storage::Crc32cChecksumValue> const& expected_checksum)
+      absl::optional<storage::Crc32cChecksumValue> expected_checksum)
       override {
     return state_->Finalize(std::move(p), expected_checksum);
   }

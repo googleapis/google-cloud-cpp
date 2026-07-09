@@ -76,7 +76,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
 
 future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
     AsyncToken token, WritePayload payload,
-    absl::optional<Crc32cChecksumValue> const& expected_checksum) {
+    absl::optional<Crc32cChecksumValue> expected_checksum) {
   if (!impl_) return StreamError<google::storage::v2::Object>(GCP_ERROR_INFO());
   auto t = storage_internal::MakeAsyncToken(impl_.get());
   if (token != t) {
@@ -94,7 +94,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
 
 future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
     AsyncToken token,
-    absl::optional<Crc32cChecksumValue> const& expected_checksum) {
+    absl::optional<Crc32cChecksumValue> expected_checksum) {
   return Finalize(std::move(token), WritePayload{}, expected_checksum);
 }
 
