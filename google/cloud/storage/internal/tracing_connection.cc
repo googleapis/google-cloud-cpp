@@ -30,18 +30,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl,
                                      AsyncRunner runner)
-    : impl_(std::move(impl)), runner_(std::move(runner)) {
-  if (!runner_) {
-    auto threads =
-        std::make_shared<google::cloud::rest_internal::
-                             AutomaticallyCreatedRestPureBackgroundThreads>(1U);
-    runner_ = [threads](std::function<void()> f) {
-      threads->cq().RunAsync(std::move(f));
-    };
-  }
-}
+    : impl_(std::move(impl)), runner_(std::move(runner)) {}
 
 TracingConnection::~TracingConnection() = default;
+
+TracingConnection::AsyncRunner const& TracingConnection::runner() {
+  absl::call_once(once_flag_, [this] {
+    if (!runner_) {
+      auto threads =
+          std::make_shared<google::cloud::rest_internal::
+                               AutomaticallyCreatedRestPureBackgroundThreads>(
+              1U);
+      runner_ = [threads](std::function<void()> f) {
+        threads->cq().RunAsync(std::move(f));
+      };
+    }
+  });
+  return runner_;
+}
 
 BucketMetadataCache& TracingConnection::cache() {
   static BucketMetadataCache instance(10000);
@@ -65,7 +71,7 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
   }
 
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  runner_([this, bucket_name, current_options]() {
+  runner()([this, bucket_name, current_options]() {
     google::cloud::internal::OptionsSpan span(current_options);
     storage::internal::GetBucketMetadataRequest request(bucket_name);
     auto result = impl_->GetBucketMetadata(request);

@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/version.h"
+#include "absl/base/call_once.h"
 #include <functional>
 #include <memory>
 #include <string>
@@ -206,8 +207,11 @@ class TracingConnection : public storage::internal::StorageConnection {
 
   static BucketMetadataCache& cache();
 
+  AsyncRunner const& runner();
+
   std::shared_ptr<StorageConnection> impl_;
   AsyncRunner runner_;
+  absl::once_flag once_flag_;
 };
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(

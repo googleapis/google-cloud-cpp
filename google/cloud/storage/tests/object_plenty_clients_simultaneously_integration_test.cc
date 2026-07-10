@@ -47,6 +47,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
 
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
+
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.

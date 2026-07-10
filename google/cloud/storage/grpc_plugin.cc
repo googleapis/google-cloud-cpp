@@ -38,10 +38,8 @@ google::cloud::storage::Client MakeGrpcClient(Options opts) {
   auto stub = std::make_unique<storage_internal::GrpcStub>(opts);
   storage_internal::TracingConnection::AsyncRunner runner;
   if (google::cloud::internal::TracingEnabled(opts)) {
-    auto threads = std::shared_ptr<google::cloud::BackgroundThreads>(
-        google::cloud::internal::MakeBackgroundThreadsFactory(opts)());
-    runner = [threads](std::function<void()> f) {
-      threads->cq().RunAsync(std::move(f));
+    runner = [cq = stub->cq()](std::function<void()> f) mutable {
+      cq.RunAsync(std::move(f));
     };
   }
   return storage::internal::ClientImplDetails::CreateWithoutDecorations(

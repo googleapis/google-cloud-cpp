@@ -54,8 +54,8 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   // The regional_bucket was created in the us-west2 region.
   auto options = Options{}.set<RestEndpointOption>(
       "https://storage.us-west2.rep.googleapis.com");
-  auto client = MakeIntegrationTestClient(options);
 
+  auto client = MakeIntegrationTestClient(options);
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 

@@ -58,12 +58,6 @@ using AutomaticallyCreatedRestPureBackgroundThreads =
         RestPureCompletionQueue, RestPureBackgroundThreads,
         RestPureQueueTraits>;
 
-/// Background threads that run on a RestPureCompletionQueue.
-using AutomaticallyCreatedRestPureBackgroundThreads =
-    google::cloud::internal::AutomaticallyCreatedBackgroundThreadsImpl<
-        RestPureCompletionQueue, RestPureBackgroundThreads,
-        RestPureQueueTraits>;
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
