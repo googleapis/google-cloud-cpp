@@ -150,6 +150,7 @@ TEST(ExternalAccountIntegrationTest, ExternalAccountCredentials) {
 }
 
 TEST(ExternalAccountIntegrationTest, RABExternalAccountCredentials) {
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
   auto contents = GetExternalAccountCredentialsContents();
   if (contents.empty()) GTEST_SKIP();
 
@@ -173,6 +174,9 @@ TEST(ExternalAccountIntegrationTest, RABExternalAccountCredentials) {
   EXPECT_THAT(headers,
               IsOkAndHolds(::testing::Contains(NonEmptyHttpHeaderNameIs(
                   std::string{"x-allowed-locations"}))));
+#else
+  GTEST_SKIP();
+#endif
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
