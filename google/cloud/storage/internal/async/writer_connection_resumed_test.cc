@@ -1198,6 +1198,78 @@ TEST(WriterConnectionResumed, CloseFailsAndResumeSucceedsAndFinalized) {
   EXPECT_STATUS_OK(close.get());
 }
 
+TEST(WriterConnectionResumed, CloseAfterFinalizeFails) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Finalize).WillOnce([](auto) {
+    return make_ready_future(make_status_or(google::storage::v2::Object{}));
+  });
+
+  MockFactory mock_factory;
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  auto finalize = connection->Finalize({});
+  auto close = connection->Close({});
+
+  EXPECT_STATUS_OK(finalize.get());
+  EXPECT_THAT(close.get(), StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(WriterConnectionResumed, FinalizeAfterCloseFails) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Close).WillOnce([](auto) {
+    return make_ready_future(Status{});
+  });
+
+  MockFactory mock_factory;
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  auto close = connection->Close({});
+  auto finalize = connection->Finalize({});
+
+  EXPECT_STATUS_OK(close.get());
+  EXPECT_THAT(finalize.get(), StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(WriterConnectionResumed, DuplicateFinalizeFails) {
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Finalize).WillOnce([](auto) {
+    return make_ready_future(make_status_or(google::storage::v2::Object{}));
+  });
+
+  MockFactory mock_factory;
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  auto finalize1 = connection->Finalize({});
+  auto finalize2 = connection->Finalize({});
+
+  EXPECT_STATUS_OK(finalize1.get());
+  EXPECT_THAT(finalize2.get(), StatusIs(StatusCode::kFailedPrecondition));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
