@@ -281,12 +281,11 @@ TEST(SubscriptionLeaseManagementTest, ExpiredMessage) {
 }
 
 /// @test Regression test for the self-deadlock in StartRefreshTimer: the lease
-/// refresh-timer continuation must be dispatched via `CompletionQueue::RunAsync`
-/// rather than run inline in the timer callback. Running it inline re-entered
-/// the already-held `mu_` and self-deadlocked the subscription. Here we verify
-/// that firing the timer only *schedules* the refresh (a RunAsync task); the
-/// lease extension runs on a subsequent completion, never synchronously inside
-/// the timer callback.
+/// refresh-timer continuation must be dispatched via `RunAsync` rather than run
+/// inline in the timer callback. Running it inline re-entered the already-held
+/// `mu_` and self-deadlocked the subscription. Here we verify that firing the
+/// timer only *schedules* the refresh (a RunAsync task); the lease extension
+/// runs on a subsequent completion, never synchronously in the timer callback.
 TEST(SubscriptionLeaseManagementTest,
      RefreshTimerContinuationDispatchedViaRunAsync) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
