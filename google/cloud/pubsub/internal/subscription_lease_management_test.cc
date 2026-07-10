@@ -280,6 +280,73 @@ TEST(SubscriptionLeaseManagementTest, ExpiredMessage) {
   EXPECT_THAT(done.get(), IsOk());
 }
 
+/// @test Regression test for the self-deadlock in StartRefreshTimer: the lease
+/// refresh-timer continuation must be dispatched via `CompletionQueue::RunAsync`
+/// rather than run inline in the timer callback. Running it inline re-entered
+/// the already-held `mu_` and self-deadlocked the subscription. Here we verify
+/// that firing the timer only *schedules* the refresh (a RunAsync task); the
+/// lease extension runs on a subsequent completion, never synchronously inside
+/// the timer callback.
+TEST(SubscriptionLeaseManagementTest,
+     RefreshTimerContinuationDispatchedViaRunAsync) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
+    batch_callback = std::move(cb);
+  });
+
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
+
+  int extend_calls = 0;
+  EXPECT_CALL(*mock, ExtendLeases)
+      .WillRepeatedly([&](std::vector<std::string> const&,
+                          std::chrono::seconds) {
+        ++extend_calls;
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, BulkNack).WillRepeatedly([](std::vector<std::string>
+                                                     const&) {
+    return make_ready_future(Status{});
+  });
+  EXPECT_CALL(*mock, Shutdown).Times(1);
+
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(fake_cq);
+
+  auto shutdown_manager = std::make_shared<SessionShutdownManager>();
+  auto uut = SubscriptionLeaseManagement::Create(
+      cq, shutdown_manager, mock, std::chrono::seconds(345),
+      std::chrono::seconds(600));
+
+  auto done = shutdown_manager->Start({});
+  uut->Start(mock_batch_callback);
+  batch_callback->callback(
+      BatchCallback::StreamingPullResponse{GenerateMessages("0-", 1)});
+  ASSERT_EQ(1U, fake_cq->size());  // the refresh timer is pending
+
+  // Fire the timer. With the fix, the timer callback only *schedules*
+  // OnRefreshTimer via RunAsync; it must NOT extend leases inline (doing so
+  // re-enters the held mutex and deadlocks).
+  fake_cq->SimulateCompletion(true);
+  EXPECT_EQ(0, extend_calls)
+      << "lease refresh ran inline in the timer callback (deadlock path)";
+  EXPECT_EQ(1U, fake_cq->size());  // a RunAsync task is now pending
+
+  // Draining the RunAsync task runs OnRefreshTimer -> ExtendLeases.
+  fake_cq->SimulateCompletion(true);
+  EXPECT_EQ(1, extend_calls);
+
+  // Drain any remaining scheduled work so shutdown can complete.
+  shutdown_manager->MarkAsShutdown(__func__, Status{});
+  uut->Shutdown();
+  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+    fake_cq->SimulateCompletion(false);
+  }
+  EXPECT_THAT(done.get(), IsOk());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
