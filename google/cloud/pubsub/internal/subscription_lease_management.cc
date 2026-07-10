@@ -144,9 +144,25 @@ void SubscriptionLeaseManagement::StartRefreshTimer(
   shutdown_manager_->StartOperation(__func__, "OnRefreshTimer", [&] {
     using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
     if (refresh_timer_.valid()) refresh_timer_.cancel();
-    refresh_timer_ =
-        cq_.MakeDeadlineTimer(deadline).then([weak](TimerFuture tp) {
-          if (auto self = weak.lock()) self->OnRefreshTimer(!tp.get());
+    // The caller holds mu_ (the unnamed unique_lock parameter) for the full
+    // duration of this function.  If the timer future is already satisfied
+    // when .then() attaches its continuation -- a deadline in the past
+    // (RefreshMessageLeases can compute extensions as small as 1s, and
+    // kAckDeadlineSlack then puts the deadline before now), or a CQ thread
+    // winning the satisfaction race -- the continuation runs INLINE on this
+    // thread, re-enters OnRefreshTimer -> RefreshMessageLeases, and
+    // self-deadlocks re-acquiring the non-recursive mu_.  Every other path
+    // (AckMessage, OnRead, Shutdown) then blocks behind mu_ and the
+    // subscription freezes until the process restarts.  Dispatch the
+    // continuation through the CompletionQueue so OnRefreshTimer always runs
+    // on a CQ thread with no locks held.
+    auto cq = cq_;
+    refresh_timer_ = cq_.MakeDeadlineTimer(deadline).then(
+        [weak, cq](TimerFuture tp) mutable {
+          auto const cancelled = !tp.get();
+          cq.RunAsync([weak, cancelled] {
+            if (auto self = weak.lock()) self->OnRefreshTimer(cancelled);
+          });
         });
   });
 }
