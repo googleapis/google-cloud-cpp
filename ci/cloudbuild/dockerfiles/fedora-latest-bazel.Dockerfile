@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:40
+FROM fedora:44
 ARG NCPU=4
 ARG ARCH=amd64
 
