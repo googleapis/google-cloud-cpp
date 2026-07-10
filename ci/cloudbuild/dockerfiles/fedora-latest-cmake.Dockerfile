@@ -165,7 +165,7 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.81.0.tar.gz | \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_STANDARD=17 \
-      -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations" \
+      -DCMAKE_CXX_FLAGS="-fpermissive" \
       -DBUILD_SHARED_LIBS=ON \
       -DgRPC_INSTALL=ON \
       -DgRPC_BUILD_TESTS=OFF \
