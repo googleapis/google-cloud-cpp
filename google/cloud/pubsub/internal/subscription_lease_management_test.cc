@@ -109,19 +109,21 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1");
   fake_cq->SimulateCompletion(true);
-  fake_cq->SimulateCompletion(true);  // drain the deferred OnRefreshTimer
+  // RunAsync, drain the deferred OnRefreshTimer
+  fake_cq->SimulateCompletion(true);
   ASSERT_EQ(1U, fake_cq->size());
 
   // Ack one more message and trigger the new timer.
   uut->NackMessage("ack-0-2");
   fake_cq->SimulateCompletion(true);
-  fake_cq->SimulateCompletion(true);  // drain the deferred OnRefreshTimer
+  // RunAsync, drain the deferred OnRefreshTimer
+  fake_cq->SimulateCompletion(true);
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
 
-  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
     fake_cq->SimulateCompletion(true);
   }
   EXPECT_THAT(done.get(), IsOk());
@@ -157,7 +159,7 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
           Status(StatusCode::kPermissionDenied, "uh-oh"))});
   ASSERT_EQ(1U, fake_cq->size());
 
-  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
     fake_cq->SimulateCompletion(true);
   }
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kPermissionDenied));
@@ -223,12 +225,13 @@ TEST(SubscriptionLeaseManagementTest, UsesDeadlineExtension) {
 
   // Ignore message and then fire the timer. This will extend the deadline.
   fake_cq->SimulateCompletion(true);
-  fake_cq->SimulateCompletion(true);  // drain the deferred OnRefreshTimer
+  // RunAsync, drain the deferred OnRefreshTimer
+  fake_cq->SimulateCompletion(true);
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
-  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
     fake_cq->SimulateCompletion(true);
   }
   EXPECT_THAT(done.get(), IsOk());
@@ -276,13 +279,14 @@ TEST(SubscriptionLeaseManagementTest, ExpiredMessage) {
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1");
   fake_cq->SimulateCompletion(true);
-  fake_cq->SimulateCompletion(true);  // drain the deferred OnRefreshTimer
+  // RunAsync, drain the deferred OnRefreshTimer
+  fake_cq->SimulateCompletion(true);
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
 
-  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
     fake_cq->SimulateCompletion(true);
   }
   EXPECT_THAT(done.get(), IsOk());
@@ -308,15 +312,15 @@ TEST(SubscriptionLeaseManagementTest,
 
   int extend_calls = 0;
   EXPECT_CALL(*mock, ExtendLeases)
-      .WillRepeatedly([&](std::vector<std::string> const&,
-                          std::chrono::seconds) {
-        ++extend_calls;
+      .WillRepeatedly(
+          [&](std::vector<std::string> const&, std::chrono::seconds) {
+            ++extend_calls;
+            return make_ready_future(Status{});
+          });
+  EXPECT_CALL(*mock, BulkNack)
+      .WillRepeatedly([](std::vector<std::string> const&) {
         return make_ready_future(Status{});
       });
-  EXPECT_CALL(*mock, BulkNack).WillRepeatedly([](std::vector<std::string>
-                                                     const&) {
-    return make_ready_future(Status{});
-  });
   EXPECT_CALL(*mock, Shutdown).Times(1);
 
   auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
@@ -350,7 +354,7 @@ TEST(SubscriptionLeaseManagementTest,
   // deferred refresh operation finishes and the session shutdown completes.
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
-  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
     fake_cq->SimulateCompletion(true);
   }
   EXPECT_THAT(done.get(), IsOk());
