@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/async/writer_connection_resumed.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
-#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
@@ -476,7 +475,6 @@ class AsyncWriterConnectionResumedState
 
     // Resume attempt succeeded. Check if finalized.
     std::int64_t persisted_offset = 0;
-    absl::optional<google::storage::v2::ObjectChecksums> checksums;
     bool finalized = false;
     google::storage::v2::Object finalized_object;
 
@@ -486,14 +484,8 @@ class AsyncWriterConnectionResumedState
       finalized_object = first_res.resource();
     } else if (first_res.has_resource()) {
       persisted_offset = first_res.resource().size();
-      if (first_res.resource().has_checksums()) {
-        checksums = first_res.resource().checksums();
-      }
     } else if (first_res.has_persisted_size()) {
       persisted_offset = first_res.persisted_size();
-      if (first_res.has_persisted_data_checksums()) {
-        checksums = first_res.persisted_data_checksums();
-      }
     } else {
       auto state = impl_->PersistedState();
       if (absl::holds_alternative<google::storage::v2::Object>(state)) {
@@ -502,7 +494,6 @@ class AsyncWriterConnectionResumedState
             absl::get<google::storage::v2::Object>(std::move(state));
       } else {
         persisted_offset = absl::get<std::int64_t>(state);
-        checksums = impl_->PersistedChecksums();
       }
     }
 
@@ -523,17 +514,9 @@ class AsyncWriterConnectionResumedState
       return SetError(std::move(lk), std::move(original_status));
     }
 
-    // Recreate the underlying stream if still active.
-    auto hash = hash_function_;
-    if (checksums && checksums->has_crc32c()) {
-      hash = std::make_shared<
-          ::google::cloud::storage::internal::Crc32cHashFunction>(
-          checksums->crc32c(), persisted_offset);
-    }
-
     impl_ = std::make_unique<AsyncWriterConnectionImpl>(
-        options_, initial_request_, std::move(res->stream), std::move(hash),
-        persisted_offset, false, checksums);
+        options_, initial_request_, std::move(res->stream), hash_function_,
+        persisted_offset, false);
     // OnQuery will restart the WriteLoop if necessary.
     OnQuery(std::move(lk), persisted_offset);
   }
