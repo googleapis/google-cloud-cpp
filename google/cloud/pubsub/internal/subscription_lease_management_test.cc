@@ -109,18 +109,21 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1");
   fake_cq->SimulateCompletion(true);
+  fake_cq->SimulateCompletion(true);  // drain the deferred OnRefreshTimer
   ASSERT_EQ(1U, fake_cq->size());
 
   // Ack one more message and trigger the new timer.
   uut->NackMessage("ack-0-2");
   fake_cq->SimulateCompletion(true);
+  fake_cq->SimulateCompletion(true);  // drain the deferred OnRefreshTimer
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
 
-  fake_cq->SimulateCompletion(false);
-  ASSERT_EQ(0U, fake_cq->size());
+  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
   EXPECT_THAT(done.get(), IsOk());
 }
 
@@ -154,8 +157,9 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
           Status(StatusCode::kPermissionDenied, "uh-oh"))});
   ASSERT_EQ(1U, fake_cq->size());
 
-  fake_cq->SimulateCompletion(false);
-  ASSERT_EQ(0U, fake_cq->size());
+  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -219,12 +223,14 @@ TEST(SubscriptionLeaseManagementTest, UsesDeadlineExtension) {
 
   // Ignore message and then fire the timer. This will extend the deadline.
   fake_cq->SimulateCompletion(true);
+  fake_cq->SimulateCompletion(true);  // drain the deferred OnRefreshTimer
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
-  fake_cq->SimulateCompletion(false);
-  ASSERT_EQ(0U, fake_cq->size());
+  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
   EXPECT_THAT(done.get(), IsOk());
 }
 
@@ -270,13 +276,15 @@ TEST(SubscriptionLeaseManagementTest, ExpiredMessage) {
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1");
   fake_cq->SimulateCompletion(true);
+  fake_cq->SimulateCompletion(true);  // drain the deferred OnRefreshTimer
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
 
-  fake_cq->SimulateCompletion(false);
-  ASSERT_EQ(0U, fake_cq->size());
+  for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
   EXPECT_THAT(done.get(), IsOk());
 }
 
@@ -337,11 +345,13 @@ TEST(SubscriptionLeaseManagementTest,
   fake_cq->SimulateCompletion(true);
   EXPECT_EQ(1, extend_calls);
 
-  // Drain any remaining scheduled work so shutdown can complete.
+  // The fix defers OnRefreshTimer to RunAsync, which the fake CQ only executes
+  // on SimulateCompletion(true) (false drops the task). Drain with true so the
+  // deferred refresh operation finishes and the session shutdown completes.
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
   for (int i = 0; i != 16 && fake_cq->size() != 0; ++i) {
-    fake_cq->SimulateCompletion(false);
+    fake_cq->SimulateCompletion(true);
   }
   EXPECT_THAT(done.get(), IsOk());
 }
