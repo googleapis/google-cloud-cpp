@@ -25,8 +25,8 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain_options.h"
-#include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <optional>
 #include <thread>
 
 namespace google {
@@ -45,13 +45,12 @@ using secs = std::chrono::seconds;
 using mins = std::chrono::minutes;
 
 TEST(OptionsTest, Defaults) {
-  ScopedEnvironment user_project("GOOGLE_CLOUD_CPP_USER_PROJECT",
-                                 absl::nullopt);
+  ScopedEnvironment user_project("GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
   ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING",
-                            absl::nullopt);
-  ScopedEnvironment emulator_host("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+                            std::nullopt);
+  ScopedEnvironment emulator_host("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment instance_emulator_host(
-      "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", absl::nullopt);
+      "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", std::nullopt);
 
   auto opts = DefaultOptions();
   EXPECT_EQ("bigtable.googleapis.com",
@@ -241,7 +240,7 @@ TEST(OptionsTest, DefaultDataOptionsPolicies) {
 }
 
 TEST(OptionsTest, DataUserProjectOption) {
-  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  auto env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", std::nullopt);
   auto options =
       DefaultDataOptions(Options{}.set<UserProjectOption>("test-project"));
   EXPECT_EQ(options.get<UserProjectOption>(), "test-project");
@@ -498,10 +497,10 @@ TEST(EndpointEnvTest, UserCredentialsOverrideEmulatorEnv) {
 }
 
 TEST(EndpointEnvTest, CloudDirectPathEnabled) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
                                 "storage,bigtable");
-  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", absl::nullopt);
+  ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", std::nullopt);
 
   auto opts = DefaultOptions();
   EXPECT_EQ("google-c2p:///bigtable.googleapis.com",
@@ -519,9 +518,9 @@ TEST(EndpointEnvTest, CloudDirectPathEnabled) {
 }
 
 TEST(EndpointEnvTest, BigtableDirectPathEnabled) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-                                absl::nullopt);
+                                std::nullopt);
   ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "true");
 
   auto opts = DefaultOptions();
@@ -540,7 +539,7 @@ TEST(EndpointEnvTest, BigtableDirectPathEnabled) {
 }
 
 TEST(EndpointEnvTest, CloudDirectPathNoMatch) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
                                 "bigtable-not,almost-bigtable");
 
@@ -550,7 +549,7 @@ TEST(EndpointEnvTest, CloudDirectPathNoMatch) {
 }
 
 TEST(EndpointEnvTest, BigtableDirectPathFalse) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "false");
 
   auto opts = DefaultDataOptions(Options{});
@@ -559,7 +558,7 @@ TEST(EndpointEnvTest, BigtableDirectPathFalse) {
 }
 
 TEST(EndpointEnvTest, CloudDirectPathOverridesUserEndpoints) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
 
   auto opts = DefaultDataOptions(
@@ -570,7 +569,7 @@ TEST(EndpointEnvTest, CloudDirectPathOverridesUserEndpoints) {
 }
 
 TEST(EndpointEnvTest, BigtableDirectPathOverridesUserEndpoints) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   ScopedEnvironment cbt_direct_path("CBT_ENABLE_DIRECTPATH", "true");
 
   auto opts = DefaultDataOptions(
@@ -597,7 +596,7 @@ TEST(EndpointEnvTest, EmulatorOverridesBigtableDirectPath) {
 }
 
 TEST(ConnectionRefreshRange, BothUnset) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   auto opts = DefaultOptions();
 
   // See `kDefaultMinRefreshPeriod`
@@ -607,7 +606,7 @@ TEST(ConnectionRefreshRange, BothUnset) {
 }
 
 TEST(ConnectionRefreshRange, MinSetAboveMaxDefault) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   auto opts =
       DefaultOptions(Options{}.set<MinConnectionRefreshOption>(mins(10)));
 
@@ -616,7 +615,7 @@ TEST(ConnectionRefreshRange, MinSetAboveMaxDefault) {
 }
 
 TEST(ConnectionRefreshRange, MaxSetBelowMinDefault) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   auto opts =
       DefaultOptions(Options{}.set<MaxConnectionRefreshOption>(secs(1)));
 
@@ -625,7 +624,7 @@ TEST(ConnectionRefreshRange, MaxSetBelowMinDefault) {
 }
 
 TEST(ConnectionRefreshRange, BothSetValid) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   auto opts = DefaultOptions(Options{}
                                  .set<MinConnectionRefreshOption>(secs(30))
                                  .set<MaxConnectionRefreshOption>(mins(2)));
@@ -635,7 +634,7 @@ TEST(ConnectionRefreshRange, BothSetValid) {
 }
 
 TEST(ConnectionRefreshRange, BothSetInvalidUsesMax) {
-  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", std::nullopt);
   auto opts = DefaultOptions(Options{}
                                  .set<MinConnectionRefreshOption>(mins(2))
                                  .set<MaxConnectionRefreshOption>(secs(30)));

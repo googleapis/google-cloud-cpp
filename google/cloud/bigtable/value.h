@@ -91,7 +91,7 @@ class Parameter;
  * Callers may create instances by passing any of the supported values
  * (shown in the table above) to the constructor. "Null" values are created
  * using the `MakeNullValue<T>()` factory function or by passing an empty
- * `absl::optional<T>` to the Value constructor.
+ * `std::optional<T>` to the Value constructor.
  *
  * @par Bigtable Arrays
  *
@@ -207,7 +207,7 @@ class Value {
    * a null instance with the specified type `T`.
    */
   template <typename T>
-  explicit Value(absl::optional<T> opt)
+  explicit Value(std::optional<T> opt)
       : Value(PrivateConstructor{}, std::move(opt)) {}
 
   /**
@@ -320,11 +320,11 @@ class Value {
                                    int depth = 1);
 
  private:
-  // Metafunction that returns true if `T` is an `absl::optional<U>`
+  // Metafunction that returns true if `T` is an `std::optional<U>`
   template <typename T>
   struct IsOptional : std::false_type {};
   template <typename T>
-  struct IsOptional<absl::optional<T>> : std::true_type {};
+  struct IsOptional<std::optional<T>> : std::true_type {};
 
   // Metafunction that returns true if `T` is a std::vector<U>
   template <typename T>
@@ -352,7 +352,7 @@ class Value {
   static bool TypeProtoIs(Timestamp const&, google::bigtable::v2::Type const&);
   static bool TypeProtoIs(absl::CivilDay, google::bigtable::v2::Type const&);
   template <typename T>
-  static bool TypeProtoIs(absl::optional<T>,
+  static bool TypeProtoIs(std::optional<T>,
                           google::bigtable::v2::Type const& type) {
     return TypeProtoIs(T{}, type);
   }
@@ -410,7 +410,7 @@ class Value {
   static google::bigtable::v2::Type MakeTypeProto(int);
   static google::bigtable::v2::Type MakeTypeProto(char const*);
   template <typename T>
-  static google::bigtable::v2::Type MakeTypeProto(absl::optional<T> const&) {
+  static google::bigtable::v2::Type MakeTypeProto(std::optional<T> const&) {
     return MakeTypeProto(T{});
   }
   template <typename T>
@@ -481,7 +481,7 @@ class Value {
   static google::bigtable::v2::Value MakeValueProto(int i);
   static google::bigtable::v2::Value MakeValueProto(char const* s);
   template <typename T>
-  static google::bigtable::v2::Value MakeValueProto(absl::optional<T> opt) {
+  static google::bigtable::v2::Value MakeValueProto(std::optional<T> opt) {
     if (opt.has_value()) return MakeValueProto(*std::move(opt));
     google::bigtable::v2::Value v;
     v.clear_kind();
@@ -566,14 +566,14 @@ class Value {
                                            google::bigtable::v2::Type const&);
 
   template <typename T, typename PV>
-  static StatusOr<absl::optional<T>> GetValue(
-      absl::optional<T> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
+  static StatusOr<std::optional<T>> GetValue(
+      std::optional<T> const&, PV&& pv, google::bigtable::v2::Type const& pt) {
     if (pv.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET) {
-      return absl::optional<T>{};
+      return std::optional<T>{};
     }
     auto value = GetValue(T{}, std::forward<PV>(pv), pt);
     if (!value) return std::move(value).status();
-    return absl::optional<T>{*std::move(value)};
+    return std::optional<T>{*std::move(value)};
   }
   template <typename T, typename PV>
   static StatusOr<std::vector<T>> GetValue(
@@ -730,13 +730,13 @@ class Value {
 /**
  * Factory to construct a "null" Value of the specified type `T`.
  *
- * This is equivalent to passing an `absl::optional<T>` without a value to
+ * This is equivalent to passing an `std::optional<T>` without a value to
  * the constructor, though this factory may be easier to invoke and result
  * in clearer code at the call site.
  */
 template <typename T>
 Value MakeNullValue() {
-  return Value(absl::optional<T>{});
+  return Value(std::optional<T>{});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

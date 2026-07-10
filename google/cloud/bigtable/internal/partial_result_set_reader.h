@@ -54,7 +54,7 @@ class PartialResultSetReader {
  public:
   virtual ~PartialResultSetReader() = default;
   virtual void TryCancel() = 0;
-  virtual bool Read(absl::optional<std::string> const& resume_token,
+  virtual bool Read(std::optional<std::string> const& resume_token,
                     UnownedPartialResultSet& result) = 0;
   virtual grpc::ClientContext const& context() const = 0;
   virtual Status Finish() = 0;

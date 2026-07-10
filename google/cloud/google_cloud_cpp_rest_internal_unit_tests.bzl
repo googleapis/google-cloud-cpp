@@ -61,6 +61,7 @@ google_cloud_cpp_rest_internal_unit_tests = [
     "internal/rest_lro_helpers_test.cc",
     "internal/rest_opentelemetry_test.cc",
     "internal/rest_parse_json_error_test.cc",
+    "internal/rest_pure_background_threads_impl_test.cc",
     "internal/rest_request_test.cc",
     "internal/rest_response_test.cc",
     "internal/rest_retry_loop_test.cc",

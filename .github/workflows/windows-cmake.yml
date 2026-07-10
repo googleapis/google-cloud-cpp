@@ -65,19 +65,21 @@ jobs:
         - shard: Core4
           build_type: Debug
     steps:
-    - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       with:
         ref: ${{ inputs.checkout-ref }}
-    - uses: google-github-actions/auth@v2
+        persist-credentials: false
+        allow-unsafe-pr-checkout: true
+    - uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
       if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
       id: py311
       with:
         python-version: '3.14'
-    - uses: google-github-actions/setup-gcloud@v2
+    - uses: google-github-actions/setup-gcloud@e427ad8a34f8676edf47cf7d7925499adf3eb74f # v2
       env:
         CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
     - name: Dynamic Configuration
@@ -89,12 +91,12 @@ jobs:
         core2_features=(spanner universe_domain)
         core3_features=(storage universe_domain)
         core4_features=(storage_grpc universe_domain)
-        core5_features=(pubsub pubsublite universe_domain)
+        core5_features=(pubsub universe_domain)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
         # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
-        #    egrep -v "(bigtable/|internal/|pubsub/|pubsublite/|spanner/|storage/)" |
+        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/)" |
         #    cut -f -3 -d/| sort | uniq -c | sort -n |
         #    awk '{ s += $1; print s, $0}'
         #
