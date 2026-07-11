@@ -14,9 +14,11 @@
 
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/internal/async/write_object.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
+#include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -728,6 +730,123 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableNoChecksum) {
   auto tested = std::make_unique<AsyncWriterConnectionImpl>(
       TestOptions(), std::move(request), std::move(mock), hash, 1024);
   auto response = tested->Finalize(WritePayload{});
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read");
+  next.first.set_value(true);
+  auto object = response.get();
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
+      << "=" << object->DebugString();
+
+  tested = {};
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+TEST(AsyncWriterConnectionTest, FinalizeAppendableWithExpectedChecksum) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
+                  "test-only-algo");
+        EXPECT_TRUE(request.has_object_checksums());
+        EXPECT_EQ(request.object_checksums().crc32c(),
+                  123456);  // wait, it might be an int in proto
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read).WillOnce([&]() {
+    return sequencer.PushBack("Read").then([](auto f) {
+      if (!f.get()) return absl::optional<Response>();
+      return absl::make_optional(MakeTestResponse());
+    });
+  });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  EXPECT_CALL(*hash, Finish)
+      .WillOnce(Return(storage::internal::HashValues{
+          storage_internal::Crc32cFromProto(123456), {}}));
+
+  auto request = MakeRequest();
+  request.mutable_write_object_spec()->set_appendable(true);
+
+  auto options = internal::MakeImmutableOptions(
+      Options{}.set<storage::UseCrc32cValueOption>(123456));
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      options, std::move(request), std::move(mock), hash, 1024);
+  auto response = tested->Finalize(WritePayload{});
+
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read");
+  next.first.set_value(true);
+  auto object = response.get();
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(MakeTestObject())))
+      << "=" << object->DebugString();
+
+  tested = {};
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+TEST(AsyncWriterConnectionTest,
+     FinalizeAppendableWithExpectedChecksumFromCurrentOptions) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_TRUE(wopt.is_last_message());
+        EXPECT_EQ(request.common_object_request_params().encryption_algorithm(),
+                  "test-only-algo");
+        EXPECT_TRUE(request.has_object_checksums());
+        EXPECT_EQ(request.object_checksums().crc32c(), 654321);
+        return sequencer.PushBack("Write");
+      });
+  EXPECT_CALL(*mock, Read).WillOnce([&]() {
+    return sequencer.PushBack("Read").then([](auto f) {
+      if (!f.get()) return absl::optional<Response>();
+      return absl::make_optional(MakeTestResponse());
+    });
+  });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+  auto hash = std::make_shared<MockHashFunction>();
+  EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
+  // It shouldn't call Finish() because we use kFinalize!
+  EXPECT_CALL(*hash, Finish).Times(0);
+
+  auto request = MakeRequest();
+  request.mutable_write_object_spec()->set_appendable(true);
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), std::move(request), std::move(mock), hash, 1024);
+
+  internal::OptionsSpan span(
+      Options{}.set<storage::UseCrc32cValueOption>(654321));
+  auto response = tested->Finalize(WritePayload{});
+
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
   next.first.set_value(true);
