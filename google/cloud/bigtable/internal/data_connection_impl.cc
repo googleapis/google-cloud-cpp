@@ -1026,7 +1026,7 @@ class QueryPlanRefreshingPartialResultSource
   }
 
   std::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
-    if (!source_.has_value()) return std::nullopt;
+    if (!source_.has_value() || !source_->ok()) return std::nullopt;
     return (**source_)->Metadata();
   }
 
