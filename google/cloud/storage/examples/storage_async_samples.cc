@@ -750,8 +750,8 @@ void CreateAndWriteAppendableObjectWithChecksum(
 
     // Set the expected CRC32C checksum in the current options scope
     // just before calling Finalize().
-    // Note: 548262564U is the pre-computed CRC32C checksum for the string "Some data\n".
-    // If the data changes, this checksum must be updated to match.
+    // Note: 548262564U is the pre-computed CRC32C checksum for the string "Some
+    // data\n". If the data changes, this checksum must be updated to match.
     google::cloud::internal::OptionsSpan span(
         google::cloud::Options{}.set<gcs::UseCrc32cValueOption>(548262564U));
     co_return (co_await writer.Finalize(std::move(token))).value();
