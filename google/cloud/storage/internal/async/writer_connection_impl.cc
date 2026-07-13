@@ -144,30 +144,21 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
   auto is_append = request_.has_append_object_spec() ||
                    request_.write_object_spec().appendable();
   auto current_options = google::cloud::internal::CurrentOptions();
-  
+  auto merged = google::cloud::internal::MergeOptions(
+      current_options, options_ ? *options_ : google::cloud::Options{});
+
   // Default to letting the internal hash function compute and send the checksum.
   auto action = PartialUpload::kFinalizeWithChecksum;
 
-  if (current_options.has<google::cloud::storage::UseCrc32cValueOption>()) {
-    // The user provided a final CRC via OptionsSpan. We manually inject it into the
-    // request. We use `kFinalize` so the internal hash function doesn't overwrite it.
-    write.mutable_object_checksums()->set_crc32c(
-        current_options.get<google::cloud::storage::UseCrc32cValueOption>());
-    action = PartialUpload::kFinalize;
-  } else if (current_options.has<google::cloud::storage::UseMD5ValueOption>()) {
-    auto as_proto = storage_internal::MD5ToProto(
-        current_options.get<google::cloud::storage::UseMD5ValueOption>());
-    if (as_proto) {
-      write.mutable_object_checksums()->set_md5_hash(*as_proto);
-      action = PartialUpload::kFinalize;
-    }
-  } else if (is_append) {
-    if (options_->has<google::cloud::storage::UseCrc32cValueOption>()) {
+  if (is_append || current_options.has<google::cloud::storage::UseCrc32cValueOption>() ||
+      current_options.has<google::cloud::storage::UseMD5ValueOption>()) {
+    if (merged.has<google::cloud::storage::UseCrc32cValueOption>()) {
       write.mutable_object_checksums()->set_crc32c(
-          options_->get<google::cloud::storage::UseCrc32cValueOption>());
-    } else if (options_->has<google::cloud::storage::UseMD5ValueOption>()) {
+          merged.get<google::cloud::storage::UseCrc32cValueOption>());
+    }
+    if (merged.has<google::cloud::storage::UseMD5ValueOption>()) {
       auto as_proto = storage_internal::MD5ToProto(
-          options_->get<google::cloud::storage::UseMD5ValueOption>());
+          merged.get<google::cloud::storage::UseMD5ValueOption>());
       if (as_proto) {
         write.mutable_object_checksums()->set_md5_hash(*as_proto);
       }
@@ -175,6 +166,8 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
     // For appendable uploads, the internal hash function only sees the chunks uploaded
     // in this stream, not the full object. We use `kFinalize` to avoid sending this
     // partial hash, which would otherwise fail validation.
+    // If the user specified a manual expected checksum in `current_options`, we must
+    // also use `kFinalize` so the internal hash function doesn't overwrite it.
     action = PartialUpload::kFinalize;
   }
 

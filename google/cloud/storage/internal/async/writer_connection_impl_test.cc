@@ -758,7 +758,7 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableWithExpectedChecksum) {
                   "test-only-algo");
         EXPECT_TRUE(request.has_object_checksums());
         EXPECT_EQ(request.object_checksums().crc32c(),
-                  123456);  // wait, it might be an int in proto
+                  123456);
         return sequencer.PushBack("Write");
       });
   EXPECT_CALL(*mock, Read).WillOnce([&]() {
