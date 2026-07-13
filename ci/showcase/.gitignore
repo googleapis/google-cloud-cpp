@@ -1,0 +1,7 @@
+# Ignore downloaded gapic-showcase tarball contents when running locally.
+googleapis/gapic-showcase/
+# Ignore dynamically generated C++ library files when running locally.
+google/showcase/
+# Ignore compiled binaries and certificates when running locally.
+bin/
+showcase.pem

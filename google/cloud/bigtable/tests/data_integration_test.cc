@@ -569,6 +569,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
 }
 
 TEST_F(DataIntegrationTest, TableApplyWithLogging) {
+  testing_util::ScopedEnvironment pqc = {"GOOGLE_CLOUD_CPP_DISABLE_PQC", ""};
   // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
   // by default. We should unset this variable and create a fresh client in
   // order to have a conclusive test.
