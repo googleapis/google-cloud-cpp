@@ -26,9 +26,9 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-absl::optional<std::vector<std::string>> MergeStringListConditions(
-    absl::optional<std::vector<std::string>> result,
-    absl::optional<std::vector<std::string>> const& rhs) {
+std::optional<std::vector<std::string>> MergeStringListConditions(
+    std::optional<std::vector<std::string>> result,
+    std::optional<std::vector<std::string>> const& rhs) {
   if (!rhs.has_value()) return result;
   if (!result.has_value()) return rhs;
 

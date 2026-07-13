@@ -20,9 +20,9 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <map>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -200,7 +200,7 @@ class PolicyDocumentV4Request {
   SigningAccountDelegates signing_account_delegates_;
   std::string signing_email_;
   std::vector<std::pair<std::string, std::string>> extension_fields_;
-  absl::optional<std::string> bucket_bound_domain_;
+  std::optional<std::string> bucket_bound_domain_;
   std::string scheme_;
   bool virtual_host_name_{false};
   std::string endpoint_authority_;

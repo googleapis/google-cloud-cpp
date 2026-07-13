@@ -40,9 +40,9 @@ Options TestOptions() {
 TEST(GrpcPluginTest, DefaultCreatesGrpc) {
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
-      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
   auto config =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", std::nullopt);
   auto client = MakeGrpcClient(TestOptions());
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
@@ -53,9 +53,9 @@ TEST(GrpcPluginTest, DefaultCreatesGrpc) {
 TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
   // Explicitly disable logging, which may be enabled by our CI builds.
   auto logging =
-      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", std::nullopt);
   auto config =
-      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", std::nullopt);
   auto client = MakeGrpcClient(TestOptions());
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());

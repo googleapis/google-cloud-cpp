@@ -43,7 +43,7 @@ class AsyncObjectDescriptorConnectionTracing
 
   Options options() const override { return impl_->options(); }
 
-  absl::optional<google::storage::v2::Object> metadata() const override {
+  std::optional<google::storage::v2::Object> metadata() const override {
     return impl_->metadata();
   }
   bool IsOpen() const override { return impl_->IsOpen(); }

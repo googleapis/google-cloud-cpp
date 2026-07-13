@@ -190,7 +190,7 @@ void CreateBucketWithHNS(google::cloud::storage::Client client,
         gcs::BucketMetadata()
             .set_hierarchical_namespace(gcs::BucketHierarchicalNamespace{true})
             .set_iam_configuration(gcs::BucketIamConfiguration{
-                gcs::UniformBucketLevelAccess{true, {}}, absl::nullopt}));
+                gcs::UniformBucketLevelAccess{true, {}}, std::nullopt}));
     if (!metadata) throw std::move(metadata).status();
 
     std::cout << "Bucket " << metadata->name() << " created."

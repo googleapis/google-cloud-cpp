@@ -105,7 +105,7 @@ class AsyncWriterConnectionResumedState
     return UploadId(std::unique_lock<std::mutex>(mu_));
   }
 
-  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle() const {
+  std::optional<google::storage::v2::BidiWriteHandle> WriteHandle() const {
     std::unique_lock<std::mutex> lk(mu_);
     return latest_write_handle_;
   }
@@ -769,7 +769,7 @@ class AsyncWriterConnectionResumedState
   bool closed_promise_completed_ = false;
 
   // Track the latest write handle seen in responses.
-  absl::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
+  std::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 
   // Tracks if the `Finalize()` method has been called.
   // This is distinct from `finalize_` (which tracks if a finalize operation is
@@ -838,7 +838,7 @@ class AsyncWriterConnectionResumed : public storage::AsyncWriterConnection {
 
   std::string UploadId() const override { return state_->UploadId(); }
 
-  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+  std::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
       const override {
     return state_->WriteHandle();
   }

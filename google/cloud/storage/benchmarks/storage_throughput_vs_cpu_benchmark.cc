@@ -338,12 +338,12 @@ void RunThread(ThroughputOptions const& options, int thread_id,
       options.read_buffer_quantum);
 
   auto read_range_generator = [&](auto& g, std::int64_t object_size)
-      -> absl::optional<std::pair<std::int64_t, std::int64_t>> {
+      -> std::optional<std::pair<std::int64_t, std::int64_t>> {
     if (!options.minimum_read_size.has_value() ||
         !options.maximum_read_size.has_value() ||
         !options.minimum_read_offset.has_value() ||
         !options.maximum_read_offset.has_value()) {
-      return absl::nullopt;
+      return std::nullopt;
     }
     auto read_offset_generator = quantized_range_generator(
         *options.minimum_read_offset, *options.maximum_read_offset,
@@ -357,7 +357,7 @@ void RunThread(ThroughputOptions const& options, int thread_id,
     // the command-line. To make more full reads happen set the read range size
     // to be larger than the object sizes. The larger this read range size is,
     // the higher the proportion of full range reads.
-    if (offset == 0 && size == object_size) return absl::nullopt;
+    if (offset == 0 && size == object_size) return std::nullopt;
     // The REST API has a quirk: reading the last 0 bytes returns all the bytes.
     // Just read the *first* 0 bytes in that case. Note that `size == 0` is
     // implied by the initialization to `min(object_size - offset, ...)`.
@@ -386,11 +386,11 @@ void RunThread(ThroughputOptions const& options, int thread_id,
     auto const range = read_range_generator(generator, object_size);
 
     auto& uploader = uploaders[uploader_generator(generator)];
-    auto upload_result = uploader->Run(
-        options.bucket, object_name,
-        gcs_bm::ThroughputExperimentConfig{
-            gcs_bm::kOpWrite, object_size, write_buffer_size, enable_crc,
-            enable_md5, /*read_range=*/absl::nullopt});
+    auto upload_result =
+        uploader->Run(options.bucket, object_name,
+                      gcs_bm::ThroughputExperimentConfig{
+                          gcs_bm::kOpWrite, object_size, write_buffer_size, 
+                          enable_crc, enable_md5, /*read_range=*/std::nullopt});
     auto status = upload_result.status;
     handler(options, std::move(upload_result));
 

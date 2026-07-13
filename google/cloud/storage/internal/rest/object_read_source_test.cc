@@ -175,7 +175,7 @@ struct HeaderHashTest {
   std::string name;
   std::multimap<std::string, std::string> headers;
   HashValues expected_hashes;
-  absl::optional<std::int64_t> expected_generation;
+  std::optional<std::int64_t> expected_generation;
 };
 
 class RestObjectReadSourceHeadersTest
@@ -207,7 +207,7 @@ TEST_P(RestObjectReadSourceHeadersTest, ReadResultHeaders) {
   auto result = read_source.Read(buf.data(), buf.size());
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->response.status_code, Eq(HttpStatusCode::kOk));
-  EXPECT_THAT(result->transformation, Eq(absl::nullopt));
+  EXPECT_THAT(result->transformation, Eq(std::nullopt));
   EXPECT_THAT(result->bytes_received, Eq(payload.size()));
   EXPECT_THAT(std::string(buf.data(), result->bytes_received), Eq(payload));
   auto param = GetParam();
@@ -218,24 +218,24 @@ TEST_P(RestObjectReadSourceHeadersTest, ReadResultHeaders) {
 
 INSTANTIATE_TEST_SUITE_P(
     ReadResultHeaderProcessing, RestObjectReadSourceHeadersTest,
-    testing::Values(HeaderHashTest{"empty", {}, {}, absl::nullopt},
+    testing::Values(HeaderHashTest{"empty", {}, {}, std::nullopt},
                     HeaderHashTest{"irrelevant_headers",
                                    {{"x-generation", "123"},
                                     {"x-goog-stuff", "thing"},
                                     {"x-hashes", "crc32c=123"}},
                                    {},
-                                   absl::nullopt},
+                                   std::nullopt},
                     HeaderHashTest{
                         "generation", {{"x-goog-generation", "123"}}, {}, 123},
                     HeaderHashTest{"hashes",
                                    {{"x-goog-hash", "md5=123, crc32c=abc"}},
                                    {"abc", "123"},
-                                   absl::nullopt},
+                                   std::nullopt},
                     HeaderHashTest{"split_hashes",
                                    {{"x-goog-hash", "md5=123"},
                                     {"x-goog-hash", "crc32c=abc"}},
                                    {"abc", "123"},
-                                   absl::nullopt},
+                                   std::nullopt},
                     HeaderHashTest{"hashes_and_generation",
                                    {{"x-goog-hash", "md5=123, crc32c=abc"},
                                     {"x-goog-generation", "456"}},

@@ -425,7 +425,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
   auto token = authorization.substr(std::strlen(kPrefix));
 
   testing_util::ScopedEnvironment grpc_roots_pem(
-      "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH", absl::nullopt);
+      "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH", std::nullopt);
 
   auto client =
       MakeTestClient(CustomTrustStoreOptions().set<UnifiedCredentialsOption>(

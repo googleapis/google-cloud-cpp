@@ -47,7 +47,7 @@ future<bool> OpenStream::Write(
 }
 
 future<OpenStream::ReadType> OpenStream::Read() {
-  if (cancel_) return make_ready_future(ReadType(absl::nullopt));
+  if (cancel_) return make_ready_future(ReadType(std::nullopt));
   pending_read_.store(true);
   return rpc_->Read().then([s = shared_from_this()](auto f) mutable {
     auto self = std::move(s);

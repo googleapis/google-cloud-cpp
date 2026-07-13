@@ -24,12 +24,12 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <optional>
 #include <unordered_map>
 
 namespace google {
@@ -74,7 +74,7 @@ class ObjectDescriptorImpl
 
   // Return the object metadata. This is only available after the first `Read()`
   // returns.
-  absl::optional<google::storage::v2::Object> metadata() const override;
+  std::optional<google::storage::v2::Object> metadata() const override;
 
   // Start a new ranged read.
   std::unique_ptr<storage::AsyncReaderConnection> Read(ReadParams p) override;
@@ -103,7 +103,7 @@ class ObjectDescriptorImpl
   void DoRead(std::unique_lock<std::mutex> lk, StreamIterator it);
   void OnRead(
       StreamIterator it,
-      absl::optional<google::storage::v2::BidiReadObjectResponse> response);
+      std::optional<google::storage::v2::BidiReadObjectResponse> response);
   void DoFinish(std::unique_lock<std::mutex> lk, StreamIterator it);
   void OnFinish(StreamIterator it, Status const& status);
   void Resume(StreamIterator it, google::rpc::Status const& proto_status);
@@ -121,7 +121,7 @@ class ObjectDescriptorImpl
 
   mutable std::mutex mu_;
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
-  absl::optional<google::storage::v2::Object> metadata_;
+  std::optional<google::storage::v2::Object> metadata_;
   std::int64_t read_id_generator_ = 0;
 
   Options options_;

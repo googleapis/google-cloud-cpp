@@ -17,9 +17,9 @@
 
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/version.h"
-#include "absl/types/optional.h"
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <string>
 #include <utility>
 
@@ -97,7 +97,7 @@ class MD5HashFunction : public HashFunction {
 
  private:
   std::int64_t minimum_offset_ = 0;
-  absl::optional<HashValues> hashes_;
+  std::optional<HashValues> hashes_;
 };
 
 /**

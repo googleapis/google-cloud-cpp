@@ -154,9 +154,9 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([&]() {
               return sequencer.PushBack("Read").then(
-                  [=](auto f) -> absl::optional<
+                  [=](auto f) -> std::optional<
                                   google::storage::v2::BidiReadObjectResponse> {
-                    if (!f.get()) return absl::nullopt;
+                    if (!f.get()) return std::nullopt;
                     auto constexpr kHandleText = R"pb(
                       handle: "handle-12345"
                     )pb";
@@ -171,9 +171,9 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
             })
             .WillOnce([&sequencer]() {
               return sequencer.PushBack("Read[N]").then(
-                  [](auto f) -> absl::optional<
+                  [](auto f) -> std::optional<
                                  google::storage::v2::BidiReadObjectResponse> {
-                    if (!f.get()) return absl::nullopt;
+                    if (!f.get()) return std::nullopt;
                     return google::storage::v2::BidiReadObjectResponse{};
                   });
             });
@@ -285,7 +285,7 @@ TEST(AsyncConnectionImplTest, HandleRedirectErrors) {
         });
     EXPECT_CALL(*stream, Read).WillOnce([&] {
       return sequencer.PushBack("Read").then([](auto) {
-        return absl::optional<google::storage::v2::BidiReadObjectResponse>();
+        return std::optional<google::storage::v2::BidiReadObjectResponse>();
       });
     });
     EXPECT_CALL(*stream, Finish).WillOnce([&] {

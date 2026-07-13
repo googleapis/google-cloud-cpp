@@ -129,12 +129,12 @@ class AsyncWriterConnection {
   virtual RpcMetadata GetRequestMetadata() = 0;
 
   /// Returns the latest write handle, if any.
-  virtual absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+  virtual std::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
       const = 0;
   /// Returns the latest persisted data checksums, if any.
-  virtual absl::optional<google::storage::v2::ObjectChecksums>
+  virtual std::optional<google::storage::v2::ObjectChecksums>
   PersistedChecksums() const {
-    return absl::nullopt;
+    return std::nullopt;
   }
 };
 

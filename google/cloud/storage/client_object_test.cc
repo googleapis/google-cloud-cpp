@@ -290,7 +290,7 @@ TEST_F(ObjectTest, UploadFileResumable) {
           Return(internal::CreateResumableUploadResponse{"test-upload-id"}));
   EXPECT_CALL(*mock_, UploadChunk)
       .WillOnce(Return(make_status_or(
-          internal::QueryResumableUploadResponse{absl::nullopt, expected})));
+          internal::QueryResumableUploadResponse{std::nullopt, expected})));
 
   TempFile temp(contents);
   auto client = ClientForMock();
