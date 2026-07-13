@@ -20,9 +20,9 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 #include "absl/time/time.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <map>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -55,7 +55,7 @@ class DebugFormatter {
                         std::chrono::system_clock::time_point value);
   DebugFormatter& Field(
       absl::string_view field_name,
-      absl::optional<std::chrono::system_clock::time_point> value);
+      std::optional<std::chrono::system_clock::time_point> value);
   DebugFormatter& Field(absl::string_view field_name,
                         std::vector<std::string> const& value);
   DebugFormatter& Field(absl::string_view field_name,
@@ -83,7 +83,7 @@ class DebugFormatter {
 
   template <typename T>
   DebugFormatter& Field(absl::string_view field_name,
-                        absl::optional<T> const& value) {
+                        std::optional<T> const& value) {
     if (value) {
       absl::StrAppend(&str_, value->DebugString(field_name, options_, indent_));
     }

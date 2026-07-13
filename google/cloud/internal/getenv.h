@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H
 
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
+#include <optional>
 #include <string>
 
 namespace google {
@@ -25,12 +25,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * Return the value of an environment variable, or an unset `absl::optional`.
+ * Return the value of an environment variable, or an unset `std::optional`.
  *
  * On Windows `std::getenv()` is not thread safe. We must write a wrapper to
  * portably get the value of the environment variables.
  */
-absl::optional<std::string> GetEnv(char const* variable);
+std::optional<std::string> GetEnv(char const* variable);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

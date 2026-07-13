@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONAL_H
 
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -25,10 +25,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Alias template for google::cloud::optional.
  *
- * @deprecated this alias is deprecated; use `absl::optional<T>` directly.
+ * @deprecated this alias is deprecated; use `std::optional<T>` directly.
  */
 template <typename T>
-using optional = absl::optional<T>;
+using optional = std::optional<T>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

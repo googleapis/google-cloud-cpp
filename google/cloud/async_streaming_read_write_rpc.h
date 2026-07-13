@@ -19,8 +19,8 @@
 #include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <grpcpp/support/async_stream.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -77,7 +77,7 @@ class AsyncStreamingReadWriteRpc {
    * other `Write()` calls) complete and then call `Finish()` to find the status
    * of the streaming RPC.
    */
-  virtual future<absl::optional<Response>> Read() = 0;
+  virtual future<std::optional<Response>> Read() = 0;
 
   /**
    * Write one request to the streaming RPC.

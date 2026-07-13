@@ -21,8 +21,8 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <chrono>
+#include <optional>
 #include <string>
 #include <variant>
 #include <vector>
@@ -49,12 +49,12 @@ struct ServiceAccountCredentialsInfo {
   std::string private_key;
   std::string token_uri;
   // If no set is supplied, a default set of scopes will be used.
-  absl::optional<std::set<std::string>> scopes;
+  std::optional<std::set<std::string>> scopes;
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount.
-  absl::optional<std::string> subject;
+  std::optional<std::string> subject;
   bool enable_self_signed_jwt;
-  absl::optional<std::string> universe_domain;
-  absl::optional<std::string> project_id;
+  std::optional<std::string> universe_domain;
+  std::optional<std::string> project_id;
 };
 
 /// Indicates whether or not to use a self-signed JWT or issue a request to
@@ -280,7 +280,7 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
    *     does not match the email for the credential's account.
    */
   StatusOr<std::vector<std::uint8_t>> SignBlob(
-      absl::optional<std::string> const& signing_account,
+      std::optional<std::string> const& signing_account,
       std::string const& blob) const override;
 
   std::string AccountEmail() const override { return info_.client_email; }

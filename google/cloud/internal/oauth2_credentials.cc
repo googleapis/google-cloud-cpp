@@ -41,7 +41,7 @@ Credentials::AuthenticationHeaders(std::chrono::system_clock::time_point tp,
 }
 
 StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
-    absl::optional<std::string> const&, std::string const&) const {
+    std::optional<std::string> const&, std::string const&) const {
   return internal::UnimplementedError(
       "The current credentials cannot sign blobs locally", GCP_ERROR_INFO());
 }

@@ -105,7 +105,7 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
     return Options{}.set<UserProjectOption>(value);
   };
   auto check_read_span = [](std::string const& expected) {
-    return [expected](future<absl::optional<FakeResponse>> f) {
+    return [expected](future<std::optional<FakeResponse>> f) {
       EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), expected);
       return f.get();
     };

@@ -54,7 +54,7 @@ std::array<char const*, kSeverityCount> constexpr kSeverityNames{
     "ERROR", "CRITICAL", "ALERT", "FATAL",
 };
 
-absl::optional<std::size_t> ParseSize(std::string const& str) {
+std::optional<std::size_t> ParseSize(std::string const& str) {
   std::size_t econv = -1;
   auto const val = std::stol(str, &econv);
   if (econv != str.size()) return {};
@@ -64,7 +64,7 @@ absl::optional<std::size_t> ParseSize(std::string const& str) {
 
 }  // namespace
 
-absl::optional<Severity> ParseSeverity(std::string const& name) {
+std::optional<Severity> ParseSeverity(std::string const& name) {
   int i = 0;
   for (auto const* n : kSeverityNames) {
     if (name == n) return static_cast<Severity>(i);

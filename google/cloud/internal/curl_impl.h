@@ -27,13 +27,13 @@
 #include "google/cloud/ssl_certificate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "absl/types/span.h"
 #include <array>
 #include <chrono>
 #include <cstdint>
 #include <map>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -149,13 +149,13 @@ class CurlImpl {
   std::chrono::seconds download_stall_timeout_;
   std::uint32_t download_stall_minimum_rate_;
 
-  absl::optional<std::string> proxy_;
-  absl::optional<std::string> proxy_username_;
-  absl::optional<std::string> proxy_password_;
+  std::optional<std::string> proxy_;
+  std::optional<std::string> proxy_username_;
+  std::optional<std::string> proxy_password_;
 
-  absl::optional<experimental::SslCertificate> client_ssl_cert_ = absl::nullopt;
+  std::optional<experimental::SslCertificate> client_ssl_cert_ = std::nullopt;
 
-  absl::optional<std::string> interface_;
+  std::optional<std::string> interface_;
 
   CurlReceivedHeaders received_headers_;
   std::string url_;
@@ -198,16 +198,16 @@ class CurlImpl {
 };
 
 /// Compute the CURLOPT_PROXY setting from @p options.
-absl::optional<std::string> CurlOptProxy(Options const& options);
+std::optional<std::string> CurlOptProxy(Options const& options);
 
 /// Compute the CURLOPT_PROXYUSERNAME setting from @p options.
-absl::optional<std::string> CurlOptProxyUsername(Options const& options);
+std::optional<std::string> CurlOptProxyUsername(Options const& options);
 
 /// Compute the CURLOPT_PROXYPASSWORD setting from @p options.
-absl::optional<std::string> CurlOptProxyPassword(Options const& options);
+std::optional<std::string> CurlOptProxyPassword(Options const& options);
 
 /// Compute the CURLOPT_INTERFACE setting from @p options.
-absl::optional<std::string> CurlOptInterface(Options const& options);
+std::optional<std::string> CurlOptInterface(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

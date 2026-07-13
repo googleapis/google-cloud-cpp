@@ -21,10 +21,10 @@
 #include "google/cloud/rpc_metadata.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
 #include <memory>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -54,7 +54,7 @@ class StreamingReadRpc {
 
   /// Populates the next element and returns nullopt, or the final RPC status in
   /// the optional.
-  virtual absl::optional<Status> Read(ResponseType* response) = 0;
+  virtual std::optional<Status> Read(ResponseType* response) = 0;
 
   /**
    * Return the request metadata.
@@ -93,8 +93,8 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
 
   void Cancel() override { context_->TryCancel(); }
 
-  absl::optional<Status> Read(ResponseType* response) override {
-    if (stream_->Read(response)) return absl::nullopt;
+  std::optional<Status> Read(ResponseType* response) override {
+    if (stream_->Read(response)) return std::nullopt;
     return Finish();
   }
 
@@ -134,7 +134,7 @@ class StreamingReadRpcError : public StreamingReadRpc<ResponseType> {
 
   void Cancel() override {}
 
-  absl::optional<Status> Read(ResponseType* /*response*/) override {
+  std::optional<Status> Read(ResponseType* /*response*/) override {
     return status_;
   }
 

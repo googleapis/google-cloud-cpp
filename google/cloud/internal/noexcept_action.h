@@ -17,7 +17,7 @@
 
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
-#include "absl/types/optional.h"
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -36,17 +36,17 @@ bool NoExceptAction(absl::FunctionRef<void()> action) noexcept;
  * Execute an action that can throw in a noexcept context.
  *
  * Returns the result of the action, if it was successful (i.e. it did not
- * throw). Returns absl::nullopt if the action throws.
+ * throw). Returns std::nullopt if the action throws.
  */
 template <typename T>
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-absl::optional<T> NoExceptAction(absl::FunctionRef<T()> action) noexcept try {
+std::optional<T> NoExceptAction(absl::FunctionRef<T()> action) noexcept try {
   return action();
 } catch (...) {
-  return absl::nullopt;
+  return std::nullopt;
 }
 #else
-absl::optional<T> NoExceptAction(absl::FunctionRef<T()> action) noexcept {
+std::optional<T> NoExceptAction(absl::FunctionRef<T()> action) noexcept {
   // If this crashes, it would have crashed anyway.
   return action();
 }

@@ -20,9 +20,9 @@
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
-#include "absl/types/optional.h"
 #include <deque>
 #include <mutex>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -55,8 +55,8 @@ class CurlHandleFactory {
 
   // For testing and debug only, we do not need anything more elaborate as this
   // class is in `internal::`.
-  virtual absl::optional<std::string> cainfo() const = 0;
-  virtual absl::optional<std::string> capath() const = 0;
+  virtual std::optional<std::string> cainfo() const = 0;
+  virtual std::optional<std::string> capath() const = 0;
   virtual std::vector<absl::string_view> const& ca_certs() const = 0;
   virtual experimental::SslCtxCallback ssl_ctx_callback() const = 0;
 
@@ -93,8 +93,8 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
     return last_client_ip_address_;
   }
 
-  absl::optional<std::string> cainfo() const override { return cainfo_; }
-  absl::optional<std::string> capath() const override { return capath_; }
+  std::optional<std::string> cainfo() const override { return cainfo_; }
+  std::optional<std::string> capath() const override { return capath_; }
   std::vector<absl::string_view> const& ca_certs() const override {
     return ca_certs_;
   }
@@ -107,8 +107,8 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
 
   mutable std::mutex mu_;
   std::string last_client_ip_address_;
-  absl::optional<std::string> cainfo_;
-  absl::optional<std::string> capath_;
+  std::optional<std::string> cainfo_;
+  std::optional<std::string> capath_;
   std::vector<absl::string_view> ca_certs_;
   experimental::SslCtxCallback ssl_ctx_callback_;
 };
@@ -148,8 +148,8 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
     return multi_handles_.size();
   }
 
-  absl::optional<std::string> cainfo() const override { return cainfo_; }
-  absl::optional<std::string> capath() const override { return capath_; }
+  std::optional<std::string> cainfo() const override { return cainfo_; }
+  std::optional<std::string> capath() const override { return capath_; }
   std::vector<absl::string_view> const& ca_certs() const override {
     return ca_certs_;
   }
@@ -162,8 +162,8 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   // These are constant after initialization and thus need no locking.
   std::size_t const maximum_size_;
 
-  absl::optional<std::string> cainfo_;
-  absl::optional<std::string> capath_;
+  std::optional<std::string> cainfo_;
+  std::optional<std::string> capath_;
   std::vector<absl::string_view> ca_certs_;
   experimental::SslCtxCallback ssl_ctx_callback_;
 

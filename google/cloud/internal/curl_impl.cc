@@ -870,31 +870,31 @@ void CurlImpl::OnTransferDone() {
   factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
 }
 
-absl::optional<std::string> CurlOptProxy(Options const& options) {
-  if (!options.has<ProxyOption>()) return absl::nullopt;
+std::optional<std::string> CurlOptProxy(Options const& options) {
+  if (!options.has<ProxyOption>()) return std::nullopt;
   auto const& cfg = options.get<ProxyOption>();
-  if (cfg.hostname().empty()) return absl::nullopt;
+  if (cfg.hostname().empty()) return std::nullopt;
   if (cfg.port().empty()) {
     return absl::StrCat(cfg.scheme(), "://", cfg.hostname());
   }
   return absl::StrCat(cfg.scheme(), "://", cfg.hostname(), ":", cfg.port());
 }
 
-absl::optional<std::string> CurlOptProxyUsername(Options const& options) {
+std::optional<std::string> CurlOptProxyUsername(Options const& options) {
   auto const& cfg = options.get<ProxyOption>();
-  if (cfg.username().empty()) return absl::nullopt;
+  if (cfg.username().empty()) return std::nullopt;
   return cfg.username();
 }
 
-absl::optional<std::string> CurlOptProxyPassword(Options const& options) {
+std::optional<std::string> CurlOptProxyPassword(Options const& options) {
   auto const& cfg = options.get<ProxyOption>();
-  if (cfg.password().empty()) return absl::nullopt;
+  if (cfg.password().empty()) return std::nullopt;
   return cfg.password();
 }
 
-absl::optional<std::string> CurlOptInterface(Options const& options) {
+std::optional<std::string> CurlOptInterface(Options const& options) {
   auto const& cfg = options.get<Interface>();
-  if (cfg.empty()) return absl::nullopt;
+  if (cfg.empty()) return std::nullopt;
   return cfg;
 }
 

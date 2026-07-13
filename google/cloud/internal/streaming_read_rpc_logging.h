@@ -22,10 +22,10 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/str_cat.h"
-#include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
 #include <memory>
+#include <optional>
 #include <sstream>
 #include <string>
 
@@ -54,7 +54,7 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
     reader_->Cancel();
     GCP_LOG(DEBUG) << prefix << "() >> (void)";
   }
-  absl::optional<Status> Read(ResponseType* response) override {
+  std::optional<Status> Read(ResponseType* response) override {
     auto const prefix = std::string(__func__) + "(" + request_id_ + ")";
     GCP_LOG(DEBUG) << prefix << "() << (void)";
     auto result = reader_->Read(response);

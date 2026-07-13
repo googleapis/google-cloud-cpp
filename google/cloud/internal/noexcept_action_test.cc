@@ -42,7 +42,7 @@ TEST(NoExceptActionVoid, ActionThatDoesNotThrow) {
 TEST(NoExceptActionNonVoid, ActionThatThrows) {
   auto action = []() -> int { ThrowRuntimeError("fail"); };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_EQ(NoExceptAction<int>(action), absl::nullopt);
+  EXPECT_EQ(NoExceptAction<int>(action), std::nullopt);
 #else
   EXPECT_DEATH_IF_SUPPORTED(NoExceptAction(action), "fail");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

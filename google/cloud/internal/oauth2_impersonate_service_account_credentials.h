@@ -30,7 +30,7 @@ struct ImpersonatedServiceAccountCredentialsInfo {
   std::string service_account;
   std::vector<std::string> delegates;
   std::vector<std::string> scopes;
-  absl::optional<std::string> quota_project_id;
+  std::optional<std::string> quota_project_id;
   std::string source_credentials;
 };
 

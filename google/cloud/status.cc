@@ -96,12 +96,12 @@ class Status::Impl {
   StatusCode code() const { return code_; }
   std::string const& message() const { return message_; }
   ErrorInfo const& error_info() const { return error_info_; }
-  absl::optional<internal::RetryInfo> const& retry_info() const {
+  std::optional<internal::RetryInfo> const& retry_info() const {
     return retry_info_;
   }
   // Allows mutable access to payload, which is needed in the
   // `internal::SetRetryInfo()` function.
-  absl::optional<internal::RetryInfo>& retry_info() { return retry_info_; }
+  std::optional<internal::RetryInfo>& retry_info() { return retry_info_; }
   PayloadType const& payload() const { return payload_; }
 
   // Allows mutable access to payload, which is needed in the
@@ -120,7 +120,7 @@ class Status::Impl {
   StatusCode code_;
   std::string message_;
   ErrorInfo error_info_;
-  absl::optional<internal::RetryInfo> retry_info_;
+  std::optional<internal::RetryInfo> retry_info_;
   PayloadType payload_;
 };
 
@@ -188,13 +188,13 @@ void AddMetadata(ErrorInfo& ei, std::string const& key, std::string value) {
   ei.metadata_[key] = std::move(value);
 }
 
-void SetRetryInfo(Status& status, absl::optional<RetryInfo> retry_info) {
+void SetRetryInfo(Status& status, std::optional<RetryInfo> retry_info) {
   if (!status.impl_) return;
   status.impl_->retry_info() = std::move(retry_info);
 }
 
-absl::optional<RetryInfo> GetRetryInfo(Status const& status) {
-  if (!status.impl_) return absl::nullopt;
+std::optional<RetryInfo> GetRetryInfo(Status const& status) {
+  if (!status.impl_) return std::nullopt;
   return status.impl_->retry_info();
 }
 
@@ -207,12 +207,12 @@ void SetPayload(Status& s, std::string key, std::string payload) {
 }
 
 // Returns the payload associated with the given `key`, if available.
-absl::optional<std::string> GetPayload(Status const& s,
+std::optional<std::string> GetPayload(Status const& s,
                                        std::string const& key) {
-  if (!s.impl_) return absl::nullopt;
+  if (!s.impl_) return std::nullopt;
   auto const& payload = s.impl_->payload();
   auto it = payload.find(key);
-  if (it == payload.end()) return absl::nullopt;
+  if (it == payload.end()) return std::nullopt;
   return it->second;
 }
 

@@ -45,7 +45,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
  public:
   ~MockStreamingReadRpc() override = default;
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read, (ResponseType*), (override));
+  MOCK_METHOD(std::optional<Status>, Read, (ResponseType*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
@@ -101,9 +101,9 @@ TEST(StreamingReadRpcTracingTest, Read) {
 
   auto mock = std::make_unique<MockStreamingReadRpc<int>>();
   EXPECT_CALL(*mock, Read)
-      .WillOnce(DoAll(SetArgPointee<0>(100), Return(absl::nullopt)))
-      .WillOnce(DoAll(SetArgPointee<0>(200), Return(absl::nullopt)))
-      .WillOnce(DoAll(SetArgPointee<0>(300), Return(absl::nullopt)))
+      .WillOnce(DoAll(SetArgPointee<0>(100), Return(std::nullopt)))
+      .WillOnce(DoAll(SetArgPointee<0>(200), Return(std::nullopt)))
+      .WillOnce(DoAll(SetArgPointee<0>(300), Return(std::nullopt)))
       .WillOnce(Return(Status()));
 
   auto span = MakeSpan("span");
