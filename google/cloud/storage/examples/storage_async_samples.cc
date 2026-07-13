@@ -751,7 +751,7 @@ void CreateAndWriteAppendableObjectWithChecksum(
     // Set the expected CRC32C checksum in the current options scope
     // just before calling Finalize().
     google::cloud::internal::OptionsSpan span(
-        google::cloud::Options{}.set<gcs::UseCrc32cValueOption>(1848151177U));
+        google::cloud::Options{}.set<gcs::UseCrc32cValueOption>(548262564U));
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
   // [END storage_create_and_write_appendable_object_with_checksum]

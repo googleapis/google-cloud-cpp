@@ -775,9 +775,7 @@ TEST(AsyncWriterConnectionTest, FinalizeAppendableWithExpectedChecksum) {
   });
   auto hash = std::make_shared<MockHashFunction>();
   EXPECT_CALL(*hash, Update(_, An<absl::Cord const&>(), _)).Times(1);
-  EXPECT_CALL(*hash, Finish)
-      .WillOnce(Return(storage::internal::HashValues{
-          storage_internal::Crc32cFromProto(123456), {}}));
+  EXPECT_CALL(*hash, Finish).Times(0);
 
   auto request = MakeRequest();
   request.mutable_write_object_spec()->set_appendable(true);

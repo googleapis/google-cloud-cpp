@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/async/options.h"
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -153,10 +154,27 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
     write.mutable_object_checksums()->set_crc32c(
         current_options.get<google::cloud::storage::UseCrc32cValueOption>());
     action = PartialUpload::kFinalize;
-  } else if (is_append && !options_->has<google::cloud::storage::UseCrc32cValueOption>()) {
+  } else if (current_options.has<google::cloud::storage::UseMD5ValueOption>()) {
+    auto as_proto = storage_internal::MD5ToProto(
+        current_options.get<google::cloud::storage::UseMD5ValueOption>());
+    if (as_proto) {
+      write.mutable_object_checksums()->set_md5_hash(*as_proto);
+      action = PartialUpload::kFinalize;
+    }
+  } else if (is_append) {
+    if (options_->has<google::cloud::storage::UseCrc32cValueOption>()) {
+      write.mutable_object_checksums()->set_crc32c(
+          options_->get<google::cloud::storage::UseCrc32cValueOption>());
+    } else if (options_->has<google::cloud::storage::UseMD5ValueOption>()) {
+      auto as_proto = storage_internal::MD5ToProto(
+          options_->get<google::cloud::storage::UseMD5ValueOption>());
+      if (as_proto) {
+        write.mutable_object_checksums()->set_md5_hash(*as_proto);
+      }
+    }
     // For appendable uploads, the internal hash function only sees the chunks uploaded
     // in this stream, not the full object. We use `kFinalize` to avoid sending this
-    // partial CRC, which would otherwise fail validation.
+    // partial hash, which would otherwise fail validation.
     action = PartialUpload::kFinalize;
   }
 
