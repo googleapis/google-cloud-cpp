@@ -77,6 +77,15 @@ Status RuleServiceTracingConnection::DeleteRule(
   return internal::EndSpan(*span, child_->DeleteRule(request));
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse>
+RuleServiceTracingConnection::VerifyRuleText(
+    google::cloud::chronicle::v1::VerifyRuleTextRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::VerifyRuleText");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->VerifyRuleText(request));
+}
+
 StreamRange<google::cloud::chronicle::v1::Rule>
 RuleServiceTracingConnection::ListRuleRevisions(
     google::cloud::chronicle::v1::ListRuleRevisionsRequest request) {

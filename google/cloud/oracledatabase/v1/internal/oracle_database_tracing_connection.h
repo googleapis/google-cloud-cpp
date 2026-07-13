@@ -78,6 +78,25 @@ class OracleDatabaseTracingConnection
   DeleteCloudExadataInfrastructure(
       google::longrunning::Operation const& operation) override;
 
+  future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  ConfigureExascaleCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          ConfigureExascaleCloudExadataInfrastructureRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation>
+  ConfigureExascaleCloudExadataInfrastructure(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          ConfigureExascaleCloudExadataInfrastructureRequest const& request)
+      override;
+
+  future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  ConfigureExascaleCloudExadataInfrastructure(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
   ListCloudVmClusters(
       google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request)
@@ -519,6 +538,131 @@ class OracleDatabaseTracingConnection
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
   DeleteDbSystem(google::longrunning::Operation const& operation) override;
 
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeployment>
+  ListGoldengateDeployments(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest
+          request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+  GetGoldengateDeployment(
+      google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  CreateGoldengateDeployment(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateDeploymentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateGoldengateDeployment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateDeploymentRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  CreateGoldengateDeployment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateDeployment(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateDeploymentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGoldengateDeployment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateDeploymentRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateDeployment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StopGoldengateDeployment(
+      google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StopGoldengateDeployment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StopGoldengateDeployment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StartGoldengateDeployment(
+      google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> StartGoldengateDeployment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>>
+  StartGoldengateDeployment(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnection>
+  ListGoldengateConnections(
+      google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest
+          request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+  GetGoldengateConnection(
+      google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+  CreateGoldengateConnection(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateGoldengateConnection(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>>
+  CreateGoldengateConnection(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnection(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGoldengateConnection(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnection(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentVersion>
+  ListGoldengateDeploymentVersions(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsRequest
+          request) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateDeploymentType>
+  ListGoldengateDeploymentTypes(
+      google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesRequest
+          request) override;
+
+  StreamRange<
+      google::cloud::oracledatabase::v1::GoldengateDeploymentEnvironment>
+  ListGoldengateDeploymentEnvironments(
+      google::cloud::oracledatabase::v1::
+          ListGoldengateDeploymentEnvironmentsRequest request) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionType>
+  ListGoldengateConnectionTypes(
+      google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesRequest
+          request) override;
+
   StreamRange<google::cloud::oracledatabase::v1::DbVersion> ListDbVersions(
       google::cloud::oracledatabase::v1::ListDbVersionsRequest request)
       override;
@@ -527,6 +671,52 @@ class OracleDatabaseTracingConnection
   ListDatabaseCharacterSets(
       google::cloud::oracledatabase::v1::ListDatabaseCharacterSetsRequest
           request) override;
+
+  StreamRange<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+  ListGoldengateConnectionAssignments(
+      google::cloud::oracledatabase::v1::
+          ListGoldengateConnectionAssignmentsRequest request) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+  GetGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          GetGoldengateConnectionAssignmentRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+  CreateGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionAssignmentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateGoldengateConnectionAssignment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateGoldengateConnectionAssignmentRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>>
+  CreateGoldengateConnectionAssignment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionAssignmentRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGoldengateConnectionAssignment(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteGoldengateConnectionAssignmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
+  DeleteGoldengateConnectionAssignment(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::oracledatabase::v1::
+               TestGoldengateConnectionAssignmentResponse>
+  TestGoldengateConnectionAssignment(
+      google::cloud::oracledatabase::v1::
+          TestGoldengateConnectionAssignmentRequest const& request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

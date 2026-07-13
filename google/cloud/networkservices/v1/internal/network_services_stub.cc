@@ -1384,6 +1384,133 @@ DefaultNetworkServicesStub::ListMeshRouteViews(
   return response;
 }
 
+StatusOr<google::cloud::networkservices::v1::ListAgentGatewaysResponse>
+DefaultNetworkServicesStub::ListAgentGateways(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::ListAgentGatewaysRequest const&
+        request) {
+  google::cloud::networkservices::v1::ListAgentGatewaysResponse response;
+  auto status = grpc_stub_->ListAgentGateways(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::networkservices::v1::AgentGateway>
+DefaultNetworkServicesStub::GetAgentGateway(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkservices::v1::GetAgentGatewayRequest const& request) {
+  google::cloud::networkservices::v1::AgentGateway response;
+  auto status = grpc_stub_->GetAgentGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncCreateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::CreateAgentGatewayRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAgentGateway(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::CreateAgentGateway(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::CreateAgentGatewayRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAgentGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncUpdateAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::UpdateAgentGatewayRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAgentGateway(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::UpdateAgentGateway(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::UpdateAgentGatewayRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAgentGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetworkServicesStub::AsyncDeleteAgentGateway(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkservices::v1::DeleteAgentGatewayRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteAgentGateway(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkServicesStub::DeleteAgentGateway(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::DeleteAgentGatewayRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAgentGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultNetworkServicesStub::ListLocations(
     grpc::ClientContext& context, Options const&,

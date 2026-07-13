@@ -61,6 +61,8 @@ function bazel::common_args() {
     "--keep_going"
     "--experimental_convenience_symlinks=ignore"
     "--cache_test_results=$(should_cache_test_results)"
+    # TODO(#16079): Remove macro definition when GA.
+    "--copt=-DGOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB"
   )
   if [[ -n "${BAZEL_REMOTE_CACHE:-}" ]]; then
     args+=("--remote_cache=${BAZEL_REMOTE_CACHE}")

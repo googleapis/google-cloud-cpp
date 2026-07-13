@@ -31,6 +31,8 @@
 #include "google/cloud/bigtable/result_source_interface.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/algorithm.h"
@@ -39,6 +41,10 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/monitoring/v3/metric_connection.h"
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/universe_domain_options.h"
 #include <memory>
 #include <string>
 
@@ -134,11 +140,11 @@ class DefaultPartialResultSetReader
 
   void TryCancel() override { context_->TryCancel(); }
 
-  bool Read(absl::optional<std::string> const&,
+  bool Read(std::optional<std::string> const&,
             bigtable_internal::UnownedPartialResultSet& result_set) override {
     while (true) {
       google::bigtable::v2::ExecuteQueryResponse response;
-      absl::optional<google::cloud::Status> status = reader_->Read(&response);
+      std::optional<google::cloud::Status> status = reader_->Read(&response);
 
       if (status.has_value()) {
         // Stream has ended or an error occurred.
@@ -195,6 +201,17 @@ std::string_view InstanceNameFromTableName(std::string_view table_name) {
   return table_name.substr(0, pos);
 }
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+Options MetricsExporterConnectionOptions(Options options) {
+  // We start with a copy of the client options to preserve credentials and
+  // universe domain, but we must unset Bigtable-specific endpoints/authorities
+  // to allow default Monitoring defaults.
+  options.unset<EndpointOption>();
+  options.unset<AuthorityOption>();
+  return options;
+}
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -227,6 +244,8 @@ DataConnectionImpl::DataConnectionImpl(
       options_(MergeOptions(std::move(options), DataConnection::options())) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   if (options_.get<bigtable::EnableMetricsOption>()) {
+    metric_service_connection_ = monitoring_v3::MakeMetricServiceConnection(
+        MetricsExporterConnectionOptions(options_));
     // The client_uid is eventually used in conjunction with other data labels
     // to identify metric data points. This pseudorandom string is used to aid
     // in disambiguation.
@@ -234,8 +253,8 @@ DataConnectionImpl::DataConnectionImpl(
     std::string client_uid =
         internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
     operation_context_factory_ =
-        std::make_unique<MetricsOperationContextFactory>(std::move(client_uid),
-                                                         options_);
+        std::make_unique<MetricsOperationContextFactory>(
+            std::move(client_uid), metric_service_connection_, options_);
   } else {
     operation_context_factory_ =
         std::make_unique<SimpleOperationContextFactory>();
@@ -243,7 +262,7 @@ DataConnectionImpl::DataConnectionImpl(
 #else
   operation_context_factory_ =
       std::make_unique<SimpleOperationContextFactory>();
-#endif
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 }
 
 DataConnectionImpl::DataConnectionImpl(
@@ -571,7 +590,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
     operation_context->PreCall(*context);
     auto stream = stub->SampleRowKeys(context, Options{}, request);
 
-    absl::optional<Status> status;
+    std::optional<Status> status;
     while (true) {
       google::bigtable::v2::SampleRowKeysResponse r;
       status = stream->Read(&r);
@@ -991,7 +1010,7 @@ class QueryPlanRefreshingPartialResultSource
   StatusOr<bigtable::QueryRow> NextRow() override {
     StatusOr<bigtable::QueryRow> row;
     do {
-      if (!query_plan_valid_) source_ = absl::nullopt;
+      if (!query_plan_valid_) source_ = std::nullopt;
       if (!source_.has_value() || !source_->ok()) {
         UpdateSource();
       }
@@ -1006,8 +1025,8 @@ class QueryPlanRefreshingPartialResultSource
     return row;
   }
 
-  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
-    if (!source_.has_value()) return absl::nullopt;
+  std::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+    if (!source_.has_value() || !source_->ok()) return std::nullopt;
     return (**source_)->Metadata();
   }
 
@@ -1085,7 +1104,7 @@ class QueryPlanRefreshingPartialResultSource
   std::unique_ptr<BackoffPolicy> query_plan_backoff_policy_;
   internal::ImmutableOptions options_;
 
-  absl::optional<StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>>
+  std::optional<StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>>
       source_;
   StatusOr<google::bigtable::v2::PrepareQueryResponse> query_plan_data_;
   bool query_plan_valid_ = false;

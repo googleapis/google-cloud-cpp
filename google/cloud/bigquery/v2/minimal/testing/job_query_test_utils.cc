@@ -58,7 +58,7 @@ QueryRequest MakeQueryRequest() {
       .set_create_session(true)
       .set_max_results(10)
       .set_maximum_bytes_billed(100000)
-      .set_timeout(std::chrono ::milliseconds(10));
+      .set_timeout(std::chrono::milliseconds(10));
 
   std::vector<ConnectionProperty> props;
   props.push_back(MakeConnectionProperty());

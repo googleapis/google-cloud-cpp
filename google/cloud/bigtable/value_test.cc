@@ -89,8 +89,8 @@ void TestBasicSemantics(T init) {
   Value const null = MakeNullValue<T>();
 
   EXPECT_THAT(null.get<T>(), Not(IsOk()));
-  ASSERT_STATUS_OK(null.get<absl::optional<T>>());
-  EXPECT_EQ(absl::optional<T>{}, *null.get<absl::optional<T>>());
+  ASSERT_STATUS_OK(null.get<std::optional<T>>());
+  EXPECT_EQ(std::optional<T>{}, *null.get<std::optional<T>>());
 
   Value copy_null = null;
   EXPECT_EQ(copy_null, null);
@@ -105,11 +105,11 @@ void TestBasicSemantics(T init) {
   auto const null_protos = bigtable_internal::ToProto(null);
   EXPECT_THAT(null_protos.first, IsProtoEqual(protos.first));
 
-  Value const not_null{absl::optional<T>(init)};
+  Value const not_null{std::optional<T>(init)};
   ASSERT_STATUS_OK(not_null.get<T>());
   EXPECT_EQ(init, *not_null.get<T>());
-  ASSERT_STATUS_OK(not_null.get<absl::optional<T>>());
-  EXPECT_EQ(init, **not_null.get<absl::optional<T>>());
+  ASSERT_STATUS_OK(not_null.get<std::optional<T>>());
+  EXPECT_EQ(init, **not_null.get<std::optional<T>>());
 }
 
 TEST(Value, BasicSemantics) {
@@ -117,7 +117,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: bool " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<bool>(5, x));
-    std::vector<absl::optional<bool>> v(5, x);
+    std::vector<std::optional<bool>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -128,7 +128,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: std::int64_t " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::int64_t>(5, x));
-    std::vector<absl::optional<std::int64_t>> v(5, x);
+    std::vector<std::optional<std::int64_t>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -137,7 +137,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: double " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<double>(5, x));
-    std::vector<absl::optional<double>> v(5, x);
+    std::vector<std::optional<double>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -146,7 +146,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: float " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<float>(5, x));
-    std::vector<absl::optional<float>> v(5, x);
+    std::vector<std::optional<float>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -156,7 +156,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: std::string " + std::string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::string>(5, x));
-    std::vector<absl::optional<std::string>> v(5, x);
+    std::vector<std::optional<std::string>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -165,7 +165,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: Bytes " + x.get<std::string>());
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<Bytes>(5, x));
-    std::vector<absl::optional<Bytes>> v(5, x);
+    std::vector<std::optional<Bytes>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -176,7 +176,7 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(ts);
     std::vector<Timestamp> v(5, ts);
     TestBasicSemantics(v);
-    std::vector<absl::optional<Timestamp>> ov(5, ts);
+    std::vector<std::optional<Timestamp>> ov(5, ts);
     ov.resize(10);
     TestBasicSemantics(ov);
   }
@@ -192,7 +192,7 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: absl::CivilDay " + absl::FormatCivilTime(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<absl::CivilDay>(5, x));
-    std::vector<absl::optional<absl::CivilDay>> v(5, x);
+    std::vector<std::optional<absl::CivilDay>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -306,7 +306,7 @@ template <
                      absl::Cord>::value>::type* = nullptr,
     typename std::enable_if_t<
         absl::disjunction<std::is_same<T, std::string>,
-                          std::is_same<T, absl::optional<std::string>>>::value,
+                          std::is_same<T, std::optional<std::string>>>::value,
         int> = 0>
 
 StatusOr<T> MovedFromString(Value const&) {
@@ -389,7 +389,7 @@ TEST(Value, RvalueGetString) {
 // on some platform, we could probably delete this, unless we can think of a
 // better way to test move semantics.
 TEST(Value, RvalueGetOptionalString) {
-  using Type = absl::optional<std::string>;
+  using Type = std::optional<std::string>;
   Type const data = std::string(128, 'x');
   Value v(data);
 
@@ -678,9 +678,9 @@ TEST(Value, BigtableStruct) {
   EXPECT_STATUS_OK(v1.get<T2>());
   EXPECT_STATUS_OK(v2.get<T1>());
 
-  Value v_null(absl::optional<T1>{});
-  EXPECT_FALSE(v_null.get<absl::optional<T1>>()->has_value());
-  EXPECT_FALSE(v_null.get<absl::optional<T2>>()->has_value());
+  Value v_null(std::optional<T1>{});
+  EXPECT_FALSE(v_null.get<std::optional<T1>>()->has_value());
+  EXPECT_FALSE(v_null.get<std::optional<T2>>()->has_value());
 
   EXPECT_NE(v1, v_null);
   EXPECT_NE(v2, v_null);
@@ -709,7 +709,7 @@ TEST(Value, BigtableStruct) {
 
   EXPECT_THAT(v5.get<T5>(), IsOkAndHolds(empty));
 
-  auto deeply_nested = tuple<tuple<std::vector<absl::optional<bool>>>>{};
+  auto deeply_nested = tuple<tuple<std::vector<std::optional<bool>>>>{};
   using T6 = decltype(deeply_nested);
   Value v6(deeply_nested);
   EXPECT_STATUS_OK(v6.get<T6>());
@@ -722,7 +722,7 @@ TEST(Value, BigtableStruct) {
 
 TEST(Value, BigtableStructWithNull) {
   auto v1 = Value(std::make_tuple(123, true));
-  auto v2 = Value(std::make_tuple(123, absl::optional<bool>{}));
+  auto v2 = Value(std::make_tuple(123, std::optional<bool>{}));
 
   auto protos1 = bigtable_internal::ToProto(v1);
   auto protos2 = bigtable_internal::ToProto(v2);
@@ -769,9 +769,9 @@ TEST(Value, BigtableMap) {
   EXPECT_STATUS_OK(v1.get<T2>());
   EXPECT_STATUS_OK(v2.get<T1>());
 
-  Value v_null(absl::optional<T1>{});
-  EXPECT_FALSE(v_null.get<absl::optional<T1>>()->has_value());
-  EXPECT_FALSE(v_null.get<absl::optional<T2>>()->has_value());
+  Value v_null(std::optional<T1>{});
+  EXPECT_FALSE(v_null.get<std::optional<T1>>()->has_value());
+  EXPECT_FALSE(v_null.get<std::optional<T2>>()->has_value());
 
   EXPECT_NE(v1, v_null);
   EXPECT_NE(v2, v_null);
@@ -1345,25 +1345,25 @@ TEST(Value, GetBadDate) {
 }
 
 TEST(Value, GetBadOptional) {
-  Value v(absl::optional<double>{});
+  Value v(std::optional<double>{});
   ClearProtoKind(v);
-  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+  EXPECT_THAT(v.get<std::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+  EXPECT_THAT(v.get<std::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+  EXPECT_THAT(v.get<std::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, std::vector<int64_t>{1, 2});
-  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+  EXPECT_THAT(v.get<std::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, std::make_tuple(1, 2));
-  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+  EXPECT_THAT(v.get<std::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(
       v, std::unordered_map<std::string, int64_t>{{"foo", 12}, {"bar", 34}});
-  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
+  EXPECT_THAT(v.get<std::optional<double>>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadArray) {
@@ -1522,8 +1522,8 @@ TEST(Value, MapsWithValuesOutputStream) {
        OsModes::normal},
 
       // Tests maps with null elements
-      {Value(std::unordered_map<std::string, absl::optional<double>>{
-           {"foo", 2.0}, {"bar", absl::optional<double>()}}),
+      {Value(std::unordered_map<std::string, std::optional<double>>{
+           {"foo", 2.0}, {"bar", std::optional<double>()}}),
        {R"({"bar" : NULL})", R"({"foo" : 2})"},
        OsModes::normal},
 
@@ -1608,7 +1608,7 @@ TEST(Value, OutputStream) {
        OsModes::normal},
 
       // Tests arrays with null elements
-      {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
+      {Value(std::vector<std::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
        OsModes::normal},
 
       // Tests null arrays
@@ -1646,14 +1646,14 @@ TEST(Value, OutputStream) {
        "((([a, b, c])))", OsModes::hex},
 
       // Tests struct with null members
-      {Value(std::make_tuple(absl::optional<bool>{})), "(NULL)",
+      {Value(std::make_tuple(std::optional<bool>{})), "(NULL)",
        OsModes::normal},
-      {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 123)",
+      {Value(std::make_tuple(std::optional<bool>{}, 123)), "(NULL, 123)",
        OsModes::normal},
-      {Value(std::make_tuple(absl::optional<bool>{}, 123)), "(NULL, 7b)",
+      {Value(std::make_tuple(std::optional<bool>{}, 123)), "(NULL, 7b)",
        OsModes::hex},
-      {Value(std::make_tuple(absl::optional<bool>{},
-                             absl::optional<std::int64_t>{})),
+      {Value(std::make_tuple(std::optional<bool>{},
+                             std::optional<std::int64_t>{})),
        "(NULL, NULL)", OsModes::normal},
 
       // Tests null structs

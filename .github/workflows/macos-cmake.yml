@@ -59,19 +59,21 @@ jobs:
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
     steps:
-    - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       with:
         ref: ${{ inputs.checkout-ref }}
-    - uses: google-github-actions/auth@v2
+        persist-credentials: false
+        allow-unsafe-pr-checkout: true
+    - uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
       if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
       id: py311
       with:
         python-version: '3.14'
-    - uses: google-github-actions/setup-gcloud@v2
+    - uses: google-github-actions/setup-gcloud@e427ad8a34f8676edf47cf7d7925499adf3eb74f # v2
       env:
         CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
     - name: Dynamic Configuration
@@ -89,13 +91,12 @@ jobs:
         )
         core3_features=(
           pubsub
-          pubsublite
         )
         # These are the libraries with the most "clients". To build the list
         # run something like this and find the midpoint:
         #
         # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
-        #    egrep -v "(bigtable/|internal/|pubsub/|pubsublite/|spanner/|storage/|testing_util/)" |
+        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/|testing_util/)" |
         #    cut -f -3 -d/| sort | uniq -c | sort -n |
         #    awk '{ s += $1; print s, $0}'
         #
@@ -291,16 +292,20 @@ jobs:
         mv sccache /Users/runner/.cargo/bin/sccache
     - name: Download and Install vcpkg
       working-directory: "${{runner.temp}}"
+      env:
+        VCPKG_VERSION: ${{ steps.dynamic.outputs.vcpkg-version }}
       run: |
         mkdir -p vcpkg
-        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
+        curl -fsSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_VERSION}.tar.gz" |
             tar -C vcpkg --strip-components=1 -zxf -
         vcpkg/bootstrap-vcpkg.sh -disableMetrics
     - name: Build google-cloud-cpp
+      env:
+        FEATURES: ${{ steps.dynamic.outputs.features }}
       run: |
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
-        /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
+        /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${FEATURES}
     - name: Post Tests Disk Space
       run: df -m
     env:

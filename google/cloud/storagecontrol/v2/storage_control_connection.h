@@ -330,6 +330,30 @@ class StorageControlConnection {
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceFinding>
+  GetIntelligenceFinding(
+      google::storage::control::v2::GetIntelligenceFindingRequest const&
+          request);
+
+  virtual StreamRange<google::storage::control::v2::IntelligenceFinding>
+  ListIntelligenceFindings(
+      google::storage::control::v2::ListIntelligenceFindingsRequest request);
+
+  virtual StreamRange<google::storage::control::v2::FindingSummary>
+  SummarizeIntelligenceFindings(
+      google::storage::control::v2::SummarizeIntelligenceFindingsRequest
+          request);
+
+  virtual StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+  GetIntelligenceFindingRevision(
+      google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+          request);
+
+  virtual StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
+  ListIntelligenceFindingRevisions(
+      google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
+          request);
 };
 
 /**

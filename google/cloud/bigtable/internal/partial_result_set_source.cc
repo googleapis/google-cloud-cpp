@@ -19,7 +19,7 @@
 #include "google/cloud/log.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/str_cat.h"
-#include "absl/types/optional.h"
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -43,7 +43,7 @@ std::string AsString(T const& s) {
 
 StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>>
 PartialResultSetSource::Create(
-    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::optional<google::bigtable::v2::ResultSetMetadata> metadata,
     std::shared_ptr<OperationContext> operation_context,
     std::unique_ptr<PartialResultSetReader> reader) {
   std::unique_ptr<PartialResultSetSource> source(new PartialResultSetSource(
@@ -59,7 +59,7 @@ PartialResultSetSource::Create(
 }
 
 PartialResultSetSource::PartialResultSetSource(
-    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::optional<google::bigtable::v2::ResultSetMetadata> metadata,
     std::shared_ptr<OperationContext> operation_context,
     std::unique_ptr<PartialResultSetReader> reader)
     : options_(internal::CurrentOptions()),

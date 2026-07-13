@@ -224,7 +224,7 @@ ExponentialBackoffPolicy TestBackoffPolicy() {
 
 void MakeResponse(google::bigtable::v2::PartialResultSet& response,
                   std::vector<std::string> const& values,
-                  absl::optional<std::string> resume_token, bool reset) {
+                  std::optional<std::string> resume_token, bool reset) {
   google::bigtable::v2::ProtoRows proto_rows;
   for (auto const& v : values) {
     proto_rows.add_values()->set_string_value(v);
@@ -918,7 +918,7 @@ TEST_F(DataConnectionTest, BulkApplySuccess) {
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeBulkApplyResponse(
                   {{0, grpc::StatusCode::OK}, {1, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -968,7 +968,7 @@ TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
                    {1, grpc::StatusCode::UNAVAILABLE},
                    {2, grpc::StatusCode::PERMISSION_DENIED},
                    {3, grpc::StatusCode::UNAVAILABLE}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -983,7 +983,7 @@ TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -1024,7 +1024,7 @@ TEST_F(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -1038,7 +1038,7 @@ TEST_F(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -1147,7 +1147,7 @@ TEST_F(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
               *r = MakeBulkApplyResponse(
                   {{0, grpc::StatusCode::OK},
                    {1, grpc::StatusCode::PERMISSION_DENIED}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -1182,7 +1182,7 @@ TEST_F(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
                 .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
                   *r = MakeBulkApplyResponse(
                       {{0, grpc::StatusCode::UNAVAILABLE}});
-                  return absl::nullopt;
+                  return std::nullopt;
                 })
                 .WillOnce(Return(Status()));
             return stream;
@@ -1219,7 +1219,7 @@ TEST_F(DataConnectionTest, BulkApplyRetryInfoHeeded) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
               *r = MakeBulkApplyResponse({{0, grpc::StatusCode::OK}});
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -1495,7 +1495,7 @@ TEST_F(DataConnectionTest, ReadRowSuccess) {
               chunk.mutable_qualifier()->set_value("cq");
               chunk.set_commit_row(true);
               *r = resp;
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status()));
         return stream;
@@ -2089,11 +2089,11 @@ TEST_F(DataConnectionTest, SampleRowsSuccess) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::SampleRowKeysResponse* r) {
               *r = MakeSampleRowsResponse("test1", 11);
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce([](google::bigtable::v2::SampleRowKeysResponse* r) {
               *r = MakeSampleRowsResponse("test2", 22);
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status{}));
         return stream;
@@ -2137,7 +2137,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::SampleRowKeysResponse* r) {
               *r = MakeSampleRowsResponse("discarded", 11);
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(TransientError()));
         return stream;
@@ -2149,7 +2149,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](google::bigtable::v2::SampleRowKeysResponse* r) {
               *r = MakeSampleRowsResponse("returned", 22);
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status{}));
         return stream;
@@ -2716,7 +2716,7 @@ TEST_F(DataConnectionTest, AsyncReadRowEmpty) {
           return make_ready_future(true);
         });
         EXPECT_CALL(*stream, Read).WillOnce([] {
-          return make_ready_future<absl::optional<v2::ReadRowsResponse>>({});
+          return make_ready_future<std::optional<v2::ReadRowsResponse>>({});
         });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -2769,11 +2769,10 @@ TEST_F(DataConnectionTest, AsyncReadRowSuccess) {
               c.mutable_family_name()->set_value("cf");
               c.mutable_qualifier()->set_value("cq");
               c.set_commit_row(true);
-              return make_ready_future(absl::make_optional(r));
+              return make_ready_future(std::make_optional(r));
             })
             .WillOnce([] {
-              return make_ready_future<absl::optional<v2::ReadRowsResponse>>(
-                  {});
+              return make_ready_future<std::optional<v2::ReadRowsResponse>>({});
             });
         EXPECT_CALL(*stream, Finish).WillOnce([] {
           return make_ready_future(Status{});
@@ -3086,14 +3085,14 @@ TEST_F(DataConnectionTest, ExecuteQuerySuccessWithTransientErrors) {
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
-              MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
+              MakeResponse(*r->mutable_results(), {"r1", "v1"}, std::nullopt,
                            false);
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
               MakeResponse(*r->mutable_results(), {"r2", "v2"},
                            "sentinel-token", false);
-              return absl::nullopt;
+              return std::nullopt;
             })
             // End of stream
             .WillOnce(Return(google::cloud::Status()));
@@ -3336,14 +3335,14 @@ TEST_F(DataConnectionTest, ExecuteQuerySuccessWithQueryPlanRefresh) {
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
-              MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
+              MakeResponse(*r->mutable_results(), {"r1", "v1"}, std::nullopt,
                            false);
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
               MakeResponse(*r->mutable_results(), {"r2", "v2"},
                            "sentinel-token", false);
-              return absl::nullopt;
+              return std::nullopt;
             })
             // End of stream
             .WillOnce(Return(google::cloud::Status()));
@@ -3503,14 +3502,14 @@ TEST_F(DataConnectionTest, PrepareAndExecuteQuerySuccessWithQueryPlanRefresh) {
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](ExecuteQueryResponse* r) {
-              MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
+              MakeResponse(*r->mutable_results(), {"r1", "v1"}, std::nullopt,
                            false);
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce([&](ExecuteQueryResponse* r) {
               MakeResponse(*r->mutable_results(), {"r2", "v2"},
                            "sentinel-token", false);
-              return absl::nullopt;
+              return std::nullopt;
             })
             // End of stream
             .WillOnce(Return(google::cloud::Status()));
@@ -3669,14 +3668,14 @@ TEST_F(DataConnectionTest,
         auto stream = std::make_unique<MockExecuteQueryStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](ExecuteQueryResponse* r) {
-              MakeResponse(*r->mutable_results(), {"r1", "v1"}, absl::nullopt,
+              MakeResponse(*r->mutable_results(), {"r1", "v1"}, std::nullopt,
                            false);
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce([&](ExecuteQueryResponse* r) {
               MakeResponse(*r->mutable_results(), {"r2", "v2"},
                            "sentinel-token", false);
-              return absl::nullopt;
+              return std::nullopt;
             })
             // End of stream
             .WillOnce(Return(google::cloud::Status()));
@@ -3760,7 +3759,7 @@ TEST_F(DataConnectionTest, ExecuteQueryFailureWithSchemaChange) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([&](google::bigtable::v2::ExecuteQueryResponse* r) {
               *r = eq_response;
-              return absl::nullopt;
+              return std::nullopt;
             });
         return stream;
       });

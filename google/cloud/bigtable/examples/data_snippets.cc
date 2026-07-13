@@ -60,7 +60,8 @@ void ApplyRelaxedIdempotency(google::cloud::bigtable::Table const& table,
   namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id, std::string const& row_key) {
-    cbt::Table table(cbt::MakeDataConnection(),
+    cbt::Table table(cbt::MakeDataConnection({cbt::InstanceResource(
+                         google::cloud::Project(project_id), instance_id)}),
                      cbt::TableResource(project_id, instance_id, table_id),
                      Options{}.set<cbt::IdempotentMutationPolicyOption>(
                          cbt::AlwaysRetryMutationPolicy().clone()));
@@ -83,7 +84,8 @@ void ApplyCustomRetry(google::cloud::bigtable::Table const& table,
   namespace cbt = ::google::cloud::bigtable;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& table_id, std::string const& row_key) {
-    cbt::Table table(cbt::MakeDataConnection(),
+    cbt::Table table(cbt::MakeDataConnection({cbt::InstanceResource(
+                         google::cloud::Project(project_id), instance_id)}),
                      cbt::TableResource(project_id, instance_id, table_id),
                      Options{}.set<cbt::DataRetryPolicyOption>(
                          cbt::DataLimitedErrorCountRetryPolicy(7).clone()));
@@ -348,7 +350,10 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
   }
   //! [connect data]
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataConnection(),
+      google::cloud::bigtable::MakeDataConnection({
+          google::cloud::bigtable::InstanceResource(
+              google::cloud::Project(project_id), instance_id),
+      }),
       google::cloud::bigtable::TableResource(project_id, instance_id,
                                              table_id));
   //! [connect data]
@@ -408,7 +413,10 @@ void MutateDeleteRowsCommand(std::vector<std::string> const& argv) {
   auto const table_id = *it++;
   std::vector<std::string> rows(it, argv.cend());
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataConnection(),
+      google::cloud::bigtable::MakeDataConnection({
+          google::cloud::bigtable::InstanceResource(
+              google::cloud::Project(project_id), instance_id),
+      }),
       google::cloud::bigtable::TableResource(project_id, instance_id,
                                              table_id));
   MutateDeleteRows(table, std::move(rows));
@@ -477,7 +485,10 @@ void MutateInsertUpdateRowsCommand(std::vector<std::string> const& argv) {
   auto const table_id = *it++;
   std::vector<std::string> rows(it, argv.cend());
   google::cloud::bigtable::Table table(
-      google::cloud::bigtable::MakeDataConnection(),
+      google::cloud::bigtable::MakeDataConnection({
+          google::cloud::bigtable::InstanceResource(
+              google::cloud::Project(project_id), instance_id),
+      }),
       google::cloud::bigtable::TableResource(project_id, instance_id,
                                              table_id));
   MutateInsertUpdateRows(table, std::move(rows));
@@ -708,8 +719,11 @@ void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
      std::string const& table_id) {
     auto constexpr kPoolSize = 10;
     auto options = gc::Options{}.set<gc::GrpcNumChannelsOption>(kPoolSize);
-    cbt::Table table(cbt::MakeDataConnection(options),
-                     cbt::TableResource(project_id, instance_id, table_id));
+    cbt::Table table(
+        cbt::MakeDataConnection(
+            {cbt::InstanceResource(gc::Project(project_id), instance_id)},
+            std::move(options)),
+        cbt::TableResource(project_id, instance_id, table_id));
     std::cout << "Connected with channel pool size of " << kPoolSize << "\n";
   }
   // [END bigtable_configure_connection_pool]
@@ -732,7 +746,8 @@ void RunMutateExamples(
   if (!schema) throw std::move(schema).status();
 
   using ::google::cloud::Options;
-  cbt::Table table(cbt::MakeDataConnection(),
+  cbt::Table table(cbt::MakeDataConnection({cbt::InstanceResource(
+                       google::cloud::Project(project_id), instance_id)}),
                    cbt::TableResource(project_id, instance_id, table_id),
                    Options{}.set<cbt::IdempotentMutationPolicyOption>(
                        cbt::AlwaysRetryMutationPolicy().clone()));
@@ -763,7 +778,8 @@ void RunWriteExamples(
   if (!schema) throw std::move(schema).status();
 
   using ::google::cloud::Options;
-  cbt::Table table(cbt::MakeDataConnection(),
+  cbt::Table table(cbt::MakeDataConnection({cbt::InstanceResource(
+                       google::cloud::Project(project_id), instance_id)}),
                    cbt::TableResource(project_id, instance_id, table_id),
                    Options{}.set<cbt::IdempotentMutationPolicyOption>(
                        cbt::AlwaysRetryMutationPolicy().clone()));
@@ -801,7 +817,7 @@ void PrepareAndExecuteQuery(google::cloud::bigtable::Client client,
 
     auto results = client.ExecuteQuery(std::move(bound_query));
 
-    using RowType = std::tuple<cbt::Bytes, absl::optional<std::string>>;
+    using RowType = std::tuple<cbt::Bytes, std::optional<std::string>>;
     for (auto& row : cbt::StreamOf<RowType>(results)) {
       if (!row.ok()) throw std::move(row.status());
       auto v = std::get<1>(*row);
@@ -829,7 +845,8 @@ void RunDataExamples(
   if (!schema) throw std::move(schema).status();
 
   using ::google::cloud::Options;
-  cbt::Table table(cbt::MakeDataConnection(),
+  cbt::Table table(cbt::MakeDataConnection({cbt::InstanceResource(
+                       google::cloud::Project(project_id), instance_id)}),
                    cbt::TableResource(project_id, instance_id, table_id),
                    Options{}.set<cbt::IdempotentMutationPolicyOption>(
                        cbt::AlwaysRetryMutationPolicy().clone()));
@@ -914,7 +931,8 @@ void RunDataExamples(
   ReadModifyWrite(table, {"read-modify-write"});
 
   if (!google::cloud::bigtable::examples::UsingEmulator()) {
-    auto client = cbt::Client(cbt::MakeDataConnection());
+    auto client = cbt::Client(cbt::MakeDataConnection({cbt::InstanceResource(
+        google::cloud::Project(project_id), instance_id)}));
     std::cout << "Running PrepareAndExecuteQuery() example" << std::endl;
     PrepareAndExecuteQuery(client, {project_id, instance_id, table_id});
   }

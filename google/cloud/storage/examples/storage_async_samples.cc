@@ -1094,11 +1094,17 @@ void ComposeObject(google::cloud::storage::AsyncClient& client,
 
 void ComposeObjectRequest(google::cloud::storage::AsyncClient& client,
                           std::vector<std::string> const& argv) {
+  using ::google::cloud::storage::examples::Usage;
+  if (argv.at(2) != "true" && argv.at(2) != "false") {
+    throw Usage{"delete-source-objects must be either 'true' or 'false'"};
+  }
+  auto const delete_source_objects = argv.at(2) == "true";
+
   //! [compose-object-request]
   namespace g = google::cloud;
   namespace gcs = g::storage;
   [](gcs::AsyncClient& client, std::string bucket_name, std::string object_name,
-     std::string name1, std::string name2) {
+     bool delete_source_objects, std::string name1, std::string name2) {
     google::storage::v2::ComposeObjectRequest request;
     request.mutable_destination()->set_bucket(
         gcs::BucketName(std::move(bucket_name)).FullName());
@@ -1107,6 +1113,7 @@ void ComposeObjectRequest(google::cloud::storage::AsyncClient& client,
     request.set_if_generation_match(0);
     request.add_source_objects()->set_name(std::move(name1));
     request.add_source_objects()->set_name(std::move(name2));
+    request.set_delete_source_objects(delete_source_objects);
 
     client.ComposeObject(std::move(request))
         .then([](auto f) {
@@ -1118,7 +1125,8 @@ void ComposeObjectRequest(google::cloud::storage::AsyncClient& client,
         .get();
   }
   //! [compose-object-request]
-  (client, argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  (client, argv.at(0), argv.at(1), delete_source_objects, argv.at(3),
+   argv.at(4));
 }
 
 // We would like to call this function `DeleteObject()`, but that conflicts with
@@ -1376,12 +1384,30 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "Running ComposeObjectRequest() example" << std::endl;
   auto const to_delete = object_name;
-  ComposeObjectRequest(client, {bucket_name, object_name, o1, o2});
+  ComposeObjectRequest(client, {bucket_name, object_name, "false", o1, o2});
+  scheduled_for_delete.push_back(std::move(object_name));
+  object_name = examples::MakeRandomObjectName(generator, "object-");
+
+  std::cout
+      << "Running ComposeObjectRequest() with deleteSourceObjects=true example"
+      << std::endl;
+  auto const temp_source_1 =
+      examples::MakeRandomObjectName(generator, "temp-source-1-");
+  auto const temp_source_2 =
+      examples::MakeRandomObjectName(generator, "temp-source-2-");
+  InsertObject(client, {bucket_name, temp_source_1});
+  scheduled_for_delete.push_back(temp_source_1);
+  InsertObject(client, {bucket_name, temp_source_2});
+  scheduled_for_delete.push_back(temp_source_2);
+  auto const to_delete_2 = object_name;
+  ComposeObjectRequest(
+      client, {bucket_name, object_name, "true", temp_source_1, temp_source_2});
   scheduled_for_delete.push_back(std::move(object_name));
   object_name = examples::MakeRandomObjectName(generator, "object-");
 
   std::cout << "Running DeleteObject() example" << std::endl;
   AsyncDeleteObject(client, {bucket_name, to_delete});
+  AsyncDeleteObject(client, {bucket_name, to_delete_2});
   scheduled_for_delete.push_back(std::move(object_name));
   object_name = examples::MakeRandomObjectName(generator, "object-");
 
@@ -1461,8 +1487,10 @@ int main(int argc, char* argv[]) try {
       make_entry("read-object-range", {}, ReadObjectRange),
       make_entry("read-object-with-options", {"<generation>"},
                  ReadObjectWithOptions),
-      make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
-      make_entry("compose-object-request", {"<o1> <o2>"}, ComposeObjectRequest),
+      make_entry("compose-object", {"<o1>", "<o2>"}, ComposeObject),
+      make_entry("compose-object-request",
+                 {"<delete-source-objects (true/false)>", "<o1>", "<o2>"},
+                 ComposeObjectRequest),
       make_entry("delete-object", {}, AsyncDeleteObject),
 
       make_entry("start-buffered-upload", {}, StartBufferedUpload),

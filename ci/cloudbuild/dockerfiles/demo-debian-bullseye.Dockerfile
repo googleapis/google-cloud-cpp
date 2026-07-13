@@ -29,7 +29,7 @@ RUN apt-get update && \
 
 # #### Install CMake v3.22
 WORKDIR /var/tmp/build/cmake
-RUN curl -fsSL https://github.com/Kitware/cmake/archive/v3.22.3.tar.gz | \
+RUN curl -fsSL https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./bootstrap && make -j ${NCPU:-4} && make install
 
@@ -68,7 +68,7 @@ RUN apt-get update && \
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -89,7 +89,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz 
 
 # ```bash
 WORKDIR /var/tmp/build/re2
-RUN curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2025-11-05.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Debug \
         -DBUILD_SHARED_LIBS=ON \

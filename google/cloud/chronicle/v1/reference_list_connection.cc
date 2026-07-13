@@ -64,6 +64,12 @@ ReferenceListServiceConnection::UpdateReferenceList(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+ReferenceListServiceConnection::VerifyReferenceList(
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::longrunning::Operation>
 ReferenceListServiceConnection::ListOperations(
     google::longrunning::

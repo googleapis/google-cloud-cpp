@@ -275,6 +275,43 @@ StorageControlConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlConnection::GetIntelligenceFinding(
+    google::storage::control::v2::GetIntelligenceFindingRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFinding>
+StorageControlConnection::ListIntelligenceFindings(
+    google::storage::control::v2::
+        ListIntelligenceFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storage::control::v2::IntelligenceFinding>>();
+}
+
+StreamRange<google::storage::control::v2::FindingSummary>
+StorageControlConnection::SummarizeIntelligenceFindings(
+    google::storage::control::v2::
+        SummarizeIntelligenceFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storage::control::v2::FindingSummary>>();
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlConnection::GetIntelligenceFindingRevision(
+    google::storage::control::v2::
+        GetIntelligenceFindingRevisionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlConnection::ListIntelligenceFindingRevisions(
+    google::storage::control::v2::
+        ListIntelligenceFindingRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storage::control::v2::IntelligenceFindingRevision>>();
+}
+
 std::shared_ptr<StorageControlConnection> MakeStorageControlConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

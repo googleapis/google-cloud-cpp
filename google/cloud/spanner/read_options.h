@@ -19,8 +19,8 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/options.h"
-#include "absl/types/optional.h"
 #include <cstdint>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -59,12 +59,12 @@ struct ReadOptions {
   /**
    * Priority for the read request.
    */
-  absl::optional<RequestPriority> request_priority;
+  std::optional<RequestPriority> request_priority;
 
   /**
    * Tag for the read request.
    */
-  absl::optional<std::string> request_tag;
+  std::optional<std::string> request_tag;
 };
 
 inline bool operator==(ReadOptions const& lhs, ReadOptions const& rhs) {

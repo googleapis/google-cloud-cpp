@@ -167,7 +167,7 @@ class MockMutateRowsStream : public google::cloud::internal::StreamingReadRpc<
                                  google::bigtable::v2::MutateRowsResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read,
+  MOCK_METHOD(std::optional<Status>, Read,
               (google::bigtable::v2::MutateRowsResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
@@ -177,7 +177,7 @@ class MockReadRowsStream : public google::cloud::internal::StreamingReadRpc<
                                google::bigtable::v2::ReadRowsResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read,
+  MOCK_METHOD(std::optional<Status>, Read,
               (google::bigtable::v2::ReadRowsResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
@@ -188,7 +188,7 @@ class MockSampleRowKeysStream
           google::bigtable::v2::SampleRowKeysResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read,
+  MOCK_METHOD(std::optional<Status>, Read,
               (google::bigtable::v2::SampleRowKeysResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));
@@ -198,7 +198,7 @@ class MockExecuteQueryStream : public google::cloud::internal::StreamingReadRpc<
                                    google::bigtable::v2::ExecuteQueryResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read,
+  MOCK_METHOD(std::optional<Status>, Read,
               (google::bigtable::v2::ExecuteQueryResponse*), (override));
   MOCK_METHOD(google::cloud::RpcMetadata, GetRequestMetadata, (),
               (const, override));

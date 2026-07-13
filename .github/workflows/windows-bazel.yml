@@ -40,10 +40,12 @@ jobs:
           targets:
           - //google/cloud/storage/...
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       with:
         ref: ${{ inputs.checkout-ref }}
-    - uses: google-github-actions/auth@v2
+        persist-credentials: false
+        allow-unsafe-pr-checkout: true
+    - uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
       if: ${{ inputs.bazel-cache-mode == 'READ_WRITE' }}
       with:
         create_credentials_file: true

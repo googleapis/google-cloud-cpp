@@ -25,7 +25,7 @@ TransactionImpl::TransactionImpl(
     google::spanner::v1::TransactionSelector selector, bool route_to_leader,
     std::string tag)
     : TransactionImpl(/*session=*/{}, std::move(selector), route_to_leader,
-                      std::move(tag), absl::nullopt) {}
+                      std::move(tag), std::nullopt) {}
 
 TransactionImpl::TransactionImpl(
     TransactionImpl const& impl,
@@ -35,13 +35,13 @@ TransactionImpl::TransactionImpl(
                       std::move(tag),
                       (impl.session_ && impl.session_->is_multiplexed() &&
                        impl.selector_->has_id())
-                          ? absl::optional<std::string>(impl.selector_->id())
-                          : absl::nullopt) {}
+                          ? std::optional<std::string>(impl.selector_->id())
+                          : std::nullopt) {}
 
 TransactionImpl::TransactionImpl(
     SessionHolder session, google::spanner::v1::TransactionSelector selector,
     bool route_to_leader, std::string tag,
-    absl::optional<std::string> multiplexed_session_previous_transaction_id)
+    std::optional<std::string> multiplexed_session_previous_transaction_id)
     : session_(std::move(session)),
       selector_(std::move(selector)),
       route_to_leader_(route_to_leader),
@@ -62,7 +62,7 @@ TransactionImpl::TransactionImpl(
 
 void TransactionImpl::UpdatePrecommitToken(
     std::unique_lock<std::mutex> const&,
-    absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+    std::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
         token) {
   if (token.has_value() && (!precommit_token_.has_value() ||
                             token->seq_num() > precommit_token_->seq_num())) {

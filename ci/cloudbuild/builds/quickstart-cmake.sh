@@ -51,6 +51,8 @@ readonly SED_ARGS=(
   -e '/^gkeconnect/d'
   # TODO:(#15015) Remove the next line when resourcesettings is removed from vcpkg
   -e '/^resourcesettings/d'
+  # TODO(#15652) Remove when pubsublite is removed from vcpkg
+  -e '/^pubsublite/d'
 )
 mapfile -t features < <(
   env -C "${vcpkg_dir}" ./vcpkg search google-cloud-cpp |

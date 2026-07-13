@@ -18,9 +18,9 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/options.h"
-#include "absl/types/optional.h"
 #include "google/spanner/v1/spanner.pb.h"
 #include <cstdint>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -52,7 +52,7 @@ struct PartitionOptions {
    * actual size of each partition may be smaller or larger than this size
    * request.
    */
-  absl::optional<std::int64_t> partition_size_bytes;
+  std::optional<std::int64_t> partition_size_bytes;
 
   /**
    * The desired maximum number of partitions to return.
@@ -62,7 +62,7 @@ struct PartitionOptions {
    * currently 200,000. This is only a hint.  The actual number of partitions
    * returned may be smaller or larger than this maximum count request.
    */
-  absl::optional<std::int64_t> max_partitions;
+  std::optional<std::int64_t> max_partitions;
 
   /**
    * Use "data boost" in the returned partitions.

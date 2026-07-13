@@ -130,10 +130,13 @@ void Benchmark::DeleteTable() {
 Table Benchmark::MakeTable(Options connection_opts) const {
   auto connection_options = MergeOptions(std::move(connection_opts), opts_);
   auto table_opts = Options{}.set<AppProfileIdOption>(options_.app_profile_id);
-  return Table(MakeDataConnection(std::move(connection_options)),
-               TableResource(options_.project_id, options_.instance_id,
-                             options_.table_id),
-               std::move(table_opts));
+  return Table(
+      MakeDataConnection({InstanceResource(Project(options_.project_id),
+                                           options_.instance_id)},
+                         std::move(connection_options)),
+      TableResource(options_.project_id, options_.instance_id,
+                    options_.table_id),
+      std::move(table_opts));
 }
 
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {

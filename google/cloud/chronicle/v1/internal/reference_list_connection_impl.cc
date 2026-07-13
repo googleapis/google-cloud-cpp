@@ -142,6 +142,21 @@ ReferenceListServiceConnectionImpl::UpdateReferenceList(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+ReferenceListServiceConnectionImpl::VerifyReferenceList(
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->VerifyReferenceList(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::VerifyReferenceListRequest const&
+                 request) {
+        return stub_->VerifyReferenceList(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::longrunning::Operation>
 ReferenceListServiceConnectionImpl::ListOperations(
     google::longrunning::ListOperationsRequest request) {

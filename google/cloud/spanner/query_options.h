@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/options.h"
-#include "absl/types/optional.h"
+#include <optional>
 #include <string>
 
 namespace google {
@@ -66,7 +66,7 @@ class QueryOptions {
   explicit operator Options() const;
 
   /// Returns the optimizer version
-  absl::optional<std::string> const& optimizer_version() const {
+  std::optional<std::string> const& optimizer_version() const {
     return optimizer_version_;
   }
 
@@ -75,13 +75,13 @@ class QueryOptions {
    * the empty string will use the database default. Use the string "latest" to
    * use the latest available optimizer version.
    */
-  QueryOptions& set_optimizer_version(absl::optional<std::string> version) {
+  QueryOptions& set_optimizer_version(std::optional<std::string> version) {
     optimizer_version_ = std::move(version);
     return *this;
   }
 
   /// Returns the optimizer statistics package
-  absl::optional<std::string> const& optimizer_statistics_package() const {
+  std::optional<std::string> const& optimizer_statistics_package() const {
     return optimizer_statistics_package_;
   }
 
@@ -90,29 +90,27 @@ class QueryOptions {
    * the empty string will use the database default.
    */
   QueryOptions& set_optimizer_statistics_package(
-      absl::optional<std::string> stats_package) {
+      std::optional<std::string> stats_package) {
     optimizer_statistics_package_ = std::move(stats_package);
     return *this;
   }
 
   /// Returns the request priority.
-  absl::optional<RequestPriority> const& request_priority() const {
+  std::optional<RequestPriority> const& request_priority() const {
     return request_priority_;
   }
 
   /// Sets the request priority.
-  QueryOptions& set_request_priority(absl::optional<RequestPriority> priority) {
+  QueryOptions& set_request_priority(std::optional<RequestPriority> priority) {
     request_priority_ = std::move(priority);
     return *this;
   }
 
   /// Returns the request tag.
-  absl::optional<std::string> const& request_tag() const {
-    return request_tag_;
-  }
+  std::optional<std::string> const& request_tag() const { return request_tag_; }
 
   /// Sets the request tag.
-  QueryOptions& set_request_tag(absl::optional<std::string> tag) {
+  QueryOptions& set_request_tag(std::optional<std::string> tag) {
     request_tag_ = std::move(tag);
     return *this;
   }
@@ -129,10 +127,10 @@ class QueryOptions {
   }
 
  private:
-  absl::optional<std::string> optimizer_version_;
-  absl::optional<std::string> optimizer_statistics_package_;
-  absl::optional<RequestPriority> request_priority_;
-  absl::optional<std::string> request_tag_;
+  std::optional<std::string> optimizer_version_;
+  std::optional<std::string> optimizer_statistics_package_;
+  std::optional<RequestPriority> request_priority_;
+  std::optional<std::string> request_tag_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -77,7 +77,7 @@ MATCHER_P(IsValidAndEquals, expected,
 // populate result
 auto ReadAction(google::spanner::v1::PartialResultSet& response_proto,
                 bool resumption_val) {
-  return [&response_proto, resumption_val](absl::optional<std::string> const&,
+  return [&response_proto, resumption_val](std::optional<std::string> const&,
                                            UnownedPartialResultSet& result) {
     result.result = response_proto;
     result.resumption = resumption_val;

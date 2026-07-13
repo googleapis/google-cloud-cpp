@@ -62,6 +62,11 @@ class RuleServiceAuth : public RuleServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::chronicle::v1::DeleteRuleRequest const& request) override;
 
+  StatusOr<google::cloud::chronicle::v1::VerifyRuleTextResponse> VerifyRuleText(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::VerifyRuleTextRequest const& request)
+      override;
+
   StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
   ListRuleRevisions(
       grpc::ClientContext& context, Options const& options,

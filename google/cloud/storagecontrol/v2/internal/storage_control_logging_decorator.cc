@@ -460,6 +460,79 @@ StorageControlLogging::TestIamPermissions(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::control::v2::IntelligenceFinding>
+StorageControlLogging::GetIntelligenceFinding(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetIntelligenceFindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::GetIntelligenceFindingRequest const&
+                 request) {
+        return child_->GetIntelligenceFinding(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingsResponse>
+StorageControlLogging::ListIntelligenceFindings(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListIntelligenceFindingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::storage::control::v2::ListIntelligenceFindingsRequest const&
+              request) {
+        return child_->ListIntelligenceFindings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::SummarizeIntelligenceFindingsResponse>
+StorageControlLogging::SummarizeIntelligenceFindings(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::SummarizeIntelligenceFindingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 SummarizeIntelligenceFindingsRequest const& request) {
+        return child_->SummarizeIntelligenceFindings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::IntelligenceFindingRevision>
+StorageControlLogging::GetIntelligenceFindingRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetIntelligenceFindingRevisionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 GetIntelligenceFindingRevisionRequest const& request) {
+        return child_->GetIntelligenceFindingRevision(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::storage::control::v2::ListIntelligenceFindingRevisionsResponse>
+StorageControlLogging::ListIntelligenceFindingRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListIntelligenceFindingRevisionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::
+                 ListIntelligenceFindingRevisionsRequest const& request) {
+        return child_->ListIntelligenceFindingRevisions(context, options,
+                                                        request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

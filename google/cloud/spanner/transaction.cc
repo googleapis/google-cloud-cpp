@@ -36,7 +36,7 @@ google::protobuf::Duration ToProto(std::chrono::nanoseconds ns) {
 
 google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode
 ProtoReadLockMode(
-    absl::optional<Transaction::ReadLockMode> const& read_lock_mode) {
+    std::optional<Transaction::ReadLockMode> const& read_lock_mode) {
   if (!read_lock_mode) {
     return google::spanner::v1::TransactionOptions_ReadWrite_ReadLockMode::
         TransactionOptions_ReadWrite_ReadLockMode_READ_LOCK_MODE_UNSPECIFIED;
@@ -55,7 +55,7 @@ ProtoReadLockMode(
 }
 
 google::spanner::v1::TransactionOptions_IsolationLevel ProtoIsolationLevel(
-    absl::optional<Transaction::IsolationLevel> const& isolation_level) {
+    std::optional<Transaction::IsolationLevel> const& isolation_level) {
   if (!isolation_level) {
     return google::spanner::v1::TransactionOptions::ISOLATION_LEVEL_UNSPECIFIED;
   }
@@ -79,7 +79,7 @@ google::spanner::v1::TransactionOptions MakeOpts(
 
 google::spanner::v1::TransactionOptions MakeOpts(
     google::spanner::v1::TransactionOptions_ReadWrite rw_opts,
-    absl::optional<Transaction::IsolationLevel> isolation_level) {
+    std::optional<Transaction::IsolationLevel> isolation_level) {
   google::spanner::v1::TransactionOptions opts;
   *opts.mutable_read_write() = std::move(rw_opts);
   auto const& current = internal::CurrentOptions();
@@ -130,7 +130,7 @@ Transaction::ReadWriteOptions::ReadWriteOptions(ReadLockMode read_lock_mode) {
 }
 
 Transaction::ReadWriteOptions& Transaction::ReadWriteOptions::WithTag(
-    absl::optional<std::string> tag) {
+    std::optional<std::string> tag) {
   tag_ = std::move(tag);
   return *this;
 }
@@ -211,7 +211,7 @@ Transaction::Transaction(std::string session_id, std::string transaction_id,
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       spanner_internal::MakeDissociatedSessionHolder(std::move(session_id)),
       std::move(selector), route_to_leader, std::move(transaction_tag),
-      absl::nullopt);
+      std::nullopt);
 }
 
 Transaction::~Transaction() = default;

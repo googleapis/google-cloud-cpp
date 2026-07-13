@@ -106,6 +106,14 @@ ReferenceListServiceClient::UpdateReferenceList(
   return connection_->UpdateReferenceList(request);
 }
 
+StatusOr<google::cloud::chronicle::v1::VerifyReferenceListResponse>
+ReferenceListServiceClient::VerifyReferenceList(
+    google::cloud::chronicle::v1::VerifyReferenceListRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->VerifyReferenceList(request);
+}
+
 StreamRange<google::longrunning::Operation>
 ReferenceListServiceClient::ListOperations(std::string const& name,
                                            std::string const& filter,

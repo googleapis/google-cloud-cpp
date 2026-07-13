@@ -31,7 +31,6 @@ function features::always_build() {
     spanner
     storage
     pubsub
-    pubsublite
     # While these libraries are automatically generated, they contain
     # hand-crafted tests.
     bigquery

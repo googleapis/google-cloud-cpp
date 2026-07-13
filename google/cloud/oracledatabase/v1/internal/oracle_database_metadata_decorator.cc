@@ -115,6 +115,30 @@ OracleDatabaseMetadata::DeleteCloudExadataInfrastructure(
   return child_->DeleteCloudExadataInfrastructure(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncConfigureExascaleCloudExadataInfrastructure(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncConfigureExascaleCloudExadataInfrastructure(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::ConfigureExascaleCloudExadataInfrastructure(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        ConfigureExascaleCloudExadataInfrastructureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ConfigureExascaleCloudExadataInfrastructure(context, options,
+                                                             request);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
 OracleDatabaseMetadata::ListCloudVmClusters(
     grpc::ClientContext& context, Options const& options,
@@ -920,6 +944,229 @@ StatusOr<google::longrunning::Operation> OracleDatabaseMetadata::DeleteDbSystem(
   return child_->DeleteDbSystem(context, options, request);
 }
 
+StatusOr<google::cloud::oracledatabase::v1::ListGoldengateDeploymentsResponse>
+OracleDatabaseMetadata::ListGoldengateDeployments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGoldengateDeployments(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateDeployment>
+OracleDatabaseMetadata::GetGoldengateDeployment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetGoldengateDeployment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncCreateGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateGoldengateDeployment(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::CreateGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateGoldengateDeployment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncDeleteGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteGoldengateDeployment(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::DeleteGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteGoldengateDeployment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncStopGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStopGoldengateDeployment(cq, std::move(context),
+                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::StopGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StopGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StopGoldengateDeployment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncStartGoldengateDeployment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStartGoldengateDeployment(cq, std::move(context),
+                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::StartGoldengateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StartGoldengateDeploymentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartGoldengateDeployment(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::ListGoldengateConnectionsResponse>
+OracleDatabaseMetadata::ListGoldengateConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGoldengateConnections(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnection>
+OracleDatabaseMetadata::GetGoldengateConnection(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetGoldengateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetGoldengateConnection(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncCreateGoldengateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateGoldengateConnection(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::CreateGoldengateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateGoldengateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateGoldengateConnection(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncDeleteGoldengateConnection(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteGoldengateConnection(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::DeleteGoldengateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteGoldengateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteGoldengateConnection(context, options, request);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentVersionsResponse>
+OracleDatabaseMetadata::ListGoldengateDeploymentVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentVersionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGoldengateDeploymentVersions(context, options, request);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateDeploymentTypesResponse>
+OracleDatabaseMetadata::ListGoldengateDeploymentTypes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentTypesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGoldengateDeploymentTypes(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             ListGoldengateDeploymentEnvironmentsResponse>
+OracleDatabaseMetadata::ListGoldengateDeploymentEnvironments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateDeploymentEnvironmentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGoldengateDeploymentEnvironments(context, options,
+                                                      request);
+}
+
+StatusOr<
+    google::cloud::oracledatabase::v1::ListGoldengateConnectionTypesResponse>
+OracleDatabaseMetadata::ListGoldengateConnectionTypes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionTypesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGoldengateConnectionTypes(context, options, request);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListDbVersionsResponse>
 OracleDatabaseMetadata::ListDbVersions(
     grpc::ClientContext& context, Options const& options,
@@ -937,6 +1184,86 @@ OracleDatabaseMetadata::ListDatabaseCharacterSets(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDatabaseCharacterSets(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             ListGoldengateConnectionAssignmentsResponse>
+OracleDatabaseMetadata::ListGoldengateConnectionAssignments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListGoldengateConnectionAssignmentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGoldengateConnectionAssignments(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::GoldengateConnectionAssignment>
+OracleDatabaseMetadata::GetGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GetGoldengateConnectionAssignmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetGoldengateConnectionAssignment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncCreateGoldengateConnectionAssignment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateGoldengateConnectionAssignment(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::CreateGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        CreateGoldengateConnectionAssignmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateGoldengateConnectionAssignment(context, options,
+                                                      request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncDeleteGoldengateConnectionAssignment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteGoldengateConnectionAssignment(
+      cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::DeleteGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        DeleteGoldengateConnectionAssignmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteGoldengateConnectionAssignment(context, options,
+                                                      request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::
+             TestGoldengateConnectionAssignmentResponse>
+OracleDatabaseMetadata::TestGoldengateConnectionAssignment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        TestGoldengateConnectionAssignmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->TestGoldengateConnectionAssignment(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
