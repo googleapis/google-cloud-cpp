@@ -31,9 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
+#ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
 using ::google::cloud::testing_util::IsOkAndHolds;
-
-auto constexpr kEndpointThatUsesRAB = "storage.googleapis.com";
+#endif
 
 MATCHER_P(NonEmptyHttpHeaderNameIs, header_name, "has non-empty header named") {
   return header_name == arg.name() && !arg.EmptyValues();
@@ -151,6 +151,7 @@ TEST(ExternalAccountIntegrationTest, ExternalAccountCredentials) {
 
 TEST(ExternalAccountIntegrationTest, RABExternalAccountCredentials) {
 #ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
+  auto constexpr kEndpointThatUsesRAB = "storage.googleapis.com";
   auto contents = GetExternalAccountCredentialsContents();
   if (contents.empty()) GTEST_SKIP();
 
@@ -175,7 +176,7 @@ TEST(ExternalAccountIntegrationTest, RABExternalAccountCredentials) {
               IsOkAndHolds(::testing::Contains(NonEmptyHttpHeaderNameIs(
                   std::string{"x-allowed-locations"}))));
 #else
-  GTEST_SKIP();
+  GTEST_SKIP() << "RAB testing is not enabled";
 #endif
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
