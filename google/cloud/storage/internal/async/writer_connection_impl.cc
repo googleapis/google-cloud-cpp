@@ -18,6 +18,8 @@
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
+#include "google/cloud/storage/internal/grpc/object_request_parser.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -138,10 +140,26 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
-  auto action = request_.has_append_object_spec() ||
-                        request_.write_object_spec().appendable()
-                    ? PartialUpload::kFinalize
-                    : PartialUpload::kFinalizeWithChecksum;
+  auto is_append = request_.has_append_object_spec() ||
+                   request_.write_object_spec().appendable();
+  auto current_options = google::cloud::internal::CurrentOptions();
+  
+  // Default to letting the internal hash function compute and send the checksum.
+  auto action = PartialUpload::kFinalizeWithChecksum;
+
+  if (current_options.has<google::cloud::storage::UseCrc32cValueOption>()) {
+    // The user provided a final CRC via OptionsSpan. We manually inject it into the
+    // request. We use `kFinalize` so the internal hash function doesn't overwrite it.
+    write.mutable_object_checksums()->set_crc32c(
+        current_options.get<google::cloud::storage::UseCrc32cValueOption>());
+    action = PartialUpload::kFinalize;
+  } else if (is_append && !options_->has<google::cloud::storage::UseCrc32cValueOption>()) {
+    // For appendable uploads, the internal hash function only sees the chunks uploaded
+    // in this stream, not the full object. We use `kFinalize` to avoid sending this
+    // partial CRC, which would otherwise fail validation.
+    action = PartialUpload::kFinalize;
+  }
+
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
                                   std::move(p), std::move(action));
   return coro->Start().then([coro, size, this](auto f) mutable {
