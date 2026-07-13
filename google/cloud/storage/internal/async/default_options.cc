@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include <limits>
 
@@ -77,7 +78,8 @@ Options DefaultOptionsAsync(Options opts) {
           .set<storage::EnableCrc32cValidationOption>(true)
           .set<storage::MaximumRangeSizeOption>(128 * 1024 * 1024L)
           .set<storage::EnableMultiStreamOptimizationOption>(true));
-  return Adjust(DefaultOptionsGrpc(std::move(opts)));
+  return storage::internal::SetupFeatureTracker(
+      Adjust(DefaultOptionsGrpc(std::move(opts))));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
