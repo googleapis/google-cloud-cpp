@@ -850,6 +850,12 @@ TEST(AsyncWriterConnectionTest, CloseEmpty) {
                   "test-only-algo");
         return sequencer.PushBack("Write");
       });
+  EXPECT_CALL(*mock, Read).WillOnce([&] {
+    return sequencer.PushBack("Read").then([](auto f) {
+      if (!f.get()) return absl::optional<Response>();
+      return absl::make_optional(Response{});
+    });
+  });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {
     return sequencer.PushBack("Finish").then([](auto f) {
       if (f.get()) return Status{};
@@ -865,6 +871,10 @@ TEST(AsyncWriterConnectionTest, CloseEmpty) {
   auto close = tested->Close(WritePayload{});
   auto next = sequencer.PopFrontWithName();
   ASSERT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  ASSERT_THAT(next.second, "Read");
   next.first.set_value(true);
 
   next = sequencer.PopFrontWithName();

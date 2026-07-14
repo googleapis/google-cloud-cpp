@@ -225,7 +225,17 @@ future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
         HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
   }
   offset_ += upload_size;
-  return Finish().then([](auto f) { return f.get(); });
+  std::unique_lock<std::mutex> lk(mu_);
+  auto impl = impl_;
+  lk.unlock();
+  return impl->Read()
+      .then([this](auto f) { return OnQuery(f.get()); })
+      .then([this](auto g) {
+        auto status = g.get();
+        if (!status) return make_ready_future(std::move(status).status());
+        return Finish();
+      })
+      .then([](auto f) { return f.get(); });
 }
 
 future<StatusOr<google::storage::v2::Object>>
