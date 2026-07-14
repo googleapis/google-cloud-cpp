@@ -582,7 +582,8 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   auto make_table = [&](Options options) {
     options.set<EnableMetricsOption>(false);
     auto conn = MakeDataConnection(
-        {InstanceResource(Project(project_id()), instance_id())}, options);
+        {InstanceResource(Project(project_id()), instance_id())},
+        std::move(options));
     return Table(std::move(conn),
                  TableResource(project_id(), instance_id(), table_id));
   };
