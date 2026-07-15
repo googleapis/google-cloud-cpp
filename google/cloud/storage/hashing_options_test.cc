@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/hashing_options.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/options.h"
 #include <gmock/gmock.h>
 #include <string>
 
@@ -52,6 +54,21 @@ TEST(ComputeCrc32cChecksumTest, Simple) {
   // /bin/echo -n "The quick brown fox jumps over the lazy dog" > foo.txt &&
   // gcloud storage hash foo.txt
   EXPECT_EQ("ImIEBA==", actual);
+}
+
+TEST(ChecksumOptionsTest, SetAndGet) {
+  Options options;
+  EXPECT_FALSE(options.has<UploadChecksumValidationOption>());
+  EXPECT_FALSE(options.has<DownloadChecksumValidationOption>());
+
+  options.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5);
+  options.set<DownloadChecksumValidationOption>(ChecksumAlgorithm::kCrc32c);
+
+  EXPECT_TRUE(options.has<UploadChecksumValidationOption>());
+  EXPECT_EQ(ChecksumAlgorithm::kMD5, options.get<UploadChecksumValidationOption>());
+
+  EXPECT_TRUE(options.has<DownloadChecksumValidationOption>());
+  EXPECT_EQ(ChecksumAlgorithm::kCrc32c, options.get<DownloadChecksumValidationOption>());
 }
 
 }  // namespace

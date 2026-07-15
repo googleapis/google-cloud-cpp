@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/hash_values.h"
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "absl/strings/cord.h"
@@ -108,4 +109,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
+#include "google/cloud/internal/diagnostics_pop.inc"
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HASH_FUNCTION_H

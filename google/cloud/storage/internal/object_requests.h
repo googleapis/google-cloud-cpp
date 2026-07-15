@@ -22,6 +22,7 @@
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
@@ -645,4 +646,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
+#include "google/cloud/internal/diagnostics_pop.inc"
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H
