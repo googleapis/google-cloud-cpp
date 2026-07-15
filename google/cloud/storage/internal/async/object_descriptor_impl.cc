@@ -40,10 +40,14 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
     std::shared_ptr<OpenStream> stream, Options options,
-    std::function<bool()> transport_ok)
+    std::function<bool()> transport_ok,
+    absl::optional<storage::AsyncConnection::InitialReadRange> initial_read_range)
     : resume_policy_prototype_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
+      initial_read_range_(std::move(initial_read_range)),
+      initial_cache_consumed_(!initial_read_range_.has_value()),
+      read_id_generator_(initial_read_range_.has_value() ? 1 : 0),
       options_(std::move(options)),
       transport_ok_(std::move(transport_ok)) {
   stream_manager_ = std::make_unique<StreamManager>(
@@ -203,12 +207,26 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   }
 
   auto it = stream_manager_->GetLeastBusyStream();
-  auto const id = ++read_id_generator_;
+  bool is_cache_hit = false;
+  if (!initial_cache_consumed_ && initial_read_range_.has_value()) {
+    auto const& initial = *initial_read_range_;
+    // Ensure both offset and length match.
+    if (p.start == initial.offset && limit.value_or(0) == initial.length) {
+      is_cache_hit = true;
+    }
+    initial_cache_consumed_ = true;
+  }
+
+  auto const id = is_cache_hit ? 1 : ++read_id_generator_;
   it->active_ranges.emplace(id, range);
-  auto& read_range = *it->stream->next_request.add_read_ranges();
-  read_range.set_read_id(id);
-  read_range.set_read_offset(p.start);
-  read_range.set_read_length(p.length);
+
+  if (!is_cache_hit) {
+    auto& read_range = *it->stream->next_request.add_read_ranges();
+    read_range.set_read_id(id);
+    read_range.set_read_offset(p.start);
+    read_range.set_read_length(p.length);
+  }
+  
   Flush(std::move(lk), it);
 
   if (!internal::TracingEnabled(options_)) {

@@ -72,13 +72,14 @@ auto MakeTested(
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
     std::shared_ptr<OpenStream> stream,
-    std::function<bool()> transport_ok = [] { return true; }) {
+    std::function<bool()> transport_ok = [] { return true; },
+    absl::optional<storage::AsyncConnection::InitialReadRange> initial_read_range = absl::nullopt) {
   Options options;
   options.set<storage::EnableMultiStreamOptimizationOption>(true);
   return std::make_shared<ObjectDescriptorImpl>(
       std::move(resume_policy), std::move(make_stream),
       std::move(read_object_spec), std::move(stream), std::move(options),
-      std::move(transport_ok));
+      std::move(transport_ok), std::move(initial_read_range));
 }
 
 MATCHER_P(IsProtoEqualModuloRepeatedFieldOrdering, value,
@@ -275,6 +276,189 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
                       "The quick brown fox jumps over the lazy dog"}))));
   // Since the `range_end()` flag is set, we expect the stream to finish with
   // success.
+  EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read[2]");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+/// @test Verify that reading a pre-warmed cache range skips making a request.
+TEST(ObjectDescriptorImpl, ReadCacheHit) {
+  auto constexpr kResponse0 = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-12345" }
+  )pb";
+
+  auto constexpr kResponse1 = R"pb(
+    read_handle { handle: "handle-23456" }
+    object_data_ranges {
+      range_end: true
+      read_range { read_id: 1 read_offset: 20000 }
+      checksummed_data {
+        content: "The quick brown fox jumps over the lazy dog"
+      }
+    }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write).Times(0); // Cache hit means NO new request!
+  
+  EXPECT_CALL(*stream, Read)
+      .WillOnce([=, &sequencer]() {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
+          auto response = Response{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
+          return absl::make_optional(response);
+        });
+      })
+      .WillOnce([&sequencer]() {
+        return sequencer.PushBack("Read[2]").then(
+            [](auto) { return absl::optional<Response>{}; });
+      });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)),
+                           [] { return true; },
+                           storage::AsyncConnection::InitialReadRange{20000, 100});
+  auto response = Response{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
+  tested->Start(std::move(response));
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+
+  // Call ReadParams exactly matching the cache
+  auto s1 = tested->Read({20000, 100});
+  auto s1r1 = s1->Read();
+
+  read1.first.set_value(true);
+
+  EXPECT_THAT(s1r1.get(),
+              VariantWith<storage::ReadPayload>(ResultOf(
+                  "contents are",
+                  [](storage::ReadPayload const& p) { return p.contents(); },
+                  ElementsAre(absl::string_view{
+                      "The quick brown fox jumps over the lazy dog"}))));
+
+  EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read[2]");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+/// @test Verify that reading a cache miss spawns a request with ID 2.
+TEST(ObjectDescriptorImpl, ReadCacheMiss) {
+  auto constexpr kResponse0 = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-12345" }
+  )pb";
+
+  auto constexpr kRequest1 = R"pb(
+    read_ranges { read_id: 2 read_offset: 35000 read_length: 100 }
+  )pb";
+  auto constexpr kResponse1 = R"pb(
+    read_handle { handle: "handle-23456" }
+    object_data_ranges {
+      range_end: true
+      read_range { read_id: 2 read_offset: 35000 }
+      checksummed_data {
+        content: "Data for ID 2"
+      }
+    }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        auto expected = Request{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      });
+  
+  EXPECT_CALL(*stream, Read)
+      .WillOnce([=, &sequencer]() {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
+          auto response = Response{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
+          return absl::make_optional(response);
+        });
+      })
+      .WillOnce([&sequencer]() {
+        return sequencer.PushBack("Read[2]").then(
+            [](auto) { return absl::optional<Response>{}; });
+      });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
+                           google::storage::v2::BidiReadObjectSpec{},
+                           std::make_shared<OpenStream>(std::move(stream)),
+                           [] { return true; },
+                           storage::AsyncConnection::InitialReadRange{20000, 100});
+  auto response = Response{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
+  tested->Start(std::move(response));
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+
+  // Call ReadParams that MISSES the cache. (Requests offset 35000 instead of 20000).
+  auto s1 = tested->Read({35000, 100});
+  auto s1r1 = s1->Read();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write[1]");
+  next.first.set_value(true);
+  read1.first.set_value(true);
+
+  EXPECT_THAT(s1r1.get(),
+              VariantWith<storage::ReadPayload>(ResultOf(
+                  "contents are",
+                  [](storage::ReadPayload const& p) { return p.contents(); },
+                  ElementsAre(absl::string_view{"Data for ID 2"}))));
+
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
 
   next = sequencer.PopFrontWithName();

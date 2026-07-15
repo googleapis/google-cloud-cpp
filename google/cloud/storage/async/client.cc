@@ -61,8 +61,10 @@ future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
 future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
     google::storage::v2::BidiReadObjectSpec spec, Options opts) {
   return connection_
-      ->Open({std::move(spec), google::cloud::internal::MergeOptions(
-                                   std::move(opts), connection_->options())})
+      ->Open({std::move(spec),
+              google::cloud::internal::MergeOptions(std::move(opts),
+                                                    connection_->options()),
+              /*initial_read_range=*/absl::nullopt})
       .then([](auto f) -> StatusOr<ObjectDescriptor> {
         auto connection = f.get();
         if (!connection) return std::move(connection).status();

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OBJECT_DESCRIPTOR_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OBJECT_DESCRIPTOR_IMPL_H
 
+#include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/internal/async/multi_stream_manager.h"
@@ -57,11 +58,14 @@ class ObjectDescriptorImpl
     : public storage::ObjectDescriptorConnection,
       public std::enable_shared_from_this<ObjectDescriptorImpl> {
  public:
-  ObjectDescriptorImpl(std::unique_ptr<storage::ResumePolicy> resume_policy,
-                       OpenStreamFactory make_stream,
-                       google::storage::v2::BidiReadObjectSpec read_object_spec,
-                       std::shared_ptr<OpenStream> stream, Options options = {},
-                       std::function<bool()> transport_ok = {});
+  ObjectDescriptorImpl(
+      std::unique_ptr<storage::ResumePolicy> resume_policy,
+      OpenStreamFactory make_stream,
+      google::storage::v2::BidiReadObjectSpec read_object_spec,
+      std::shared_ptr<OpenStream> stream, Options options = {},
+      std::function<bool()> transport_ok = {},
+      absl::optional<storage::AsyncConnection::InitialReadRange>
+          initial_read_range = absl::nullopt);
   ~ObjectDescriptorImpl() override;
 
   // Start the read loop.
@@ -122,6 +126,9 @@ class ObjectDescriptorImpl
   mutable std::mutex mu_;
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
   absl::optional<google::storage::v2::Object> metadata_;
+  absl::optional<storage::AsyncConnection::InitialReadRange>
+      initial_read_range_;
+  bool initial_cache_consumed_ = false;
   std::int64_t read_id_generator_ = 0;
 
   Options options_;

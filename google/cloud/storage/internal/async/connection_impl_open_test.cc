@@ -214,7 +214,8 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
 
   auto request = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
-  auto pending = connection->Open({std::move(request), connection->options()});
+  auto pending = connection->Open(
+      {std::move(request), connection->options(), /*initial_read_range=*/absl::nullopt});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
@@ -310,7 +311,8 @@ TEST(AsyncConnectionImplTest, HandleRedirectErrors) {
 
   auto request = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest0, &request));
-  auto pending = connection->Open({std::move(request), connection->options()});
+  auto pending = connection->Open(
+      {std::move(request), connection->options(), /*initial_read_range=*/absl::nullopt});
 
   for (int i = 0; i != kRetryAttempts + 1; ++i) {
     auto next = sequencer.PopFrontWithName();
@@ -354,7 +356,8 @@ TEST(AsyncConnectionImplTest, StopOnPermanentError) {
 
   auto request = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
-  auto pending = connection->Open({std::move(request), connection->options()});
+  auto pending = connection->Open(
+      {std::move(request), connection->options(), /*initial_read_range=*/absl::nullopt});
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Start");
@@ -390,7 +393,8 @@ TEST(AsyncConnectionImplTest, TooManyTransienErrors) {
 
   auto request = google::storage::v2::BidiReadObjectSpec{};
   ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
-  auto pending = connection->Open({std::move(request), connection->options()});
+  auto pending = connection->Open(
+      {std::move(request), connection->options(), /*initial_read_range=*/absl::nullopt});
 
   for (int i = 0; i != kRetryAttempts + 1; ++i) {
     auto next = sequencer.PopFrontWithName();

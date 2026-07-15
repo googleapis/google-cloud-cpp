@@ -82,9 +82,15 @@ class AsyncConnection {
    * We use a single struct as the input parameter for this function to
    * prevent breaking any mocks when additional parameters are needed.
    */
+  struct InitialReadRange {
+    std::int64_t offset;
+    std::int64_t length;
+  };
+
   struct OpenParams {
     google::storage::v2::BidiReadObjectSpec read_spec;
     Options options;
+    absl::optional<InitialReadRange> initial_read_range;
   };
 
   /// Open an object to perform multiple reads.
