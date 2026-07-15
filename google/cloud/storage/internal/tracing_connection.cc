@@ -31,8 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl,
                                      AsyncRunner runner)
     : impl_(std::move(impl)),
-      runner_(std::move(runner)),
-      cache_(std::make_shared<BucketMetadataCache>(10000)) {}
+      cache_(std::make_shared<BucketMetadataCache>()),
+      runner_(std::move(runner)) {}
 
 TracingConnection::~TracingConnection() = default;
 
@@ -53,8 +53,6 @@ TracingConnection::AsyncRunner const& TracingConnection::runner() {
 
 BucketMetadataCache& TracingConnection::cache() const { return *cache_; }
 
-void TracingConnection::ResetCacheForTesting() { cache().Clear(); }
-
 Options TracingConnection::options() const { return impl_->options(); }
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
@@ -69,10 +67,10 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
     return;
   }
 
+  auto guard = ScopedFetch(cache_, bucket_name);
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  runner()([impl = impl_, cache = cache_, bucket_name, current_options]() {
-    ScopedFetch guard(cache.get(), bucket_name);
-
+  runner()([impl = impl_, cache = cache_, bucket_name, current_options,
+            guard]() {
     google::cloud::internal::OptionsSpan span(current_options);
     storage::internal::GetBucketMetadataRequest request(bucket_name);
     auto result = impl->GetBucketMetadata(request);

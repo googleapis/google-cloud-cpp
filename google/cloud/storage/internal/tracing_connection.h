@@ -36,8 +36,6 @@ class TracingConnection : public storage::internal::StorageConnection {
                              AsyncRunner runner = {});
   ~TracingConnection() override;
 
-  void ResetCacheForTesting();
-
   Options options() const override;
 
   StatusOr<storage::internal::ListBucketsResponse> ListBuckets(
@@ -209,9 +207,9 @@ class TracingConnection : public storage::internal::StorageConnection {
   AsyncRunner const& runner();
 
   std::shared_ptr<StorageConnection> impl_;
-  AsyncRunner runner_;
   std::shared_ptr<BucketMetadataCache> cache_;
   absl::once_flag once_flag_;
+  AsyncRunner runner_;
 };
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(

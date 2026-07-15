@@ -19,6 +19,7 @@
 #include "absl/types/optional.h"
 #include <cstddef>
 #include <list>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <unordered_map>
@@ -68,15 +69,23 @@ class BucketMetadataCache {
 
 class ScopedFetch {
  public:
-  ScopedFetch(BucketMetadataCache* cache, std::string bucket_name)
-      : cache_(cache), bucket_name_(std::move(bucket_name)) {}
-  ~ScopedFetch() {
-    if (cache_) cache_->EndFetch(bucket_name_);
-  }
+  ScopedFetch() = default;
+  ScopedFetch(std::shared_ptr<BucketMetadataCache> cache,
+              std::string bucket_name)
+      : state_(std::make_shared<State>(std::move(cache),
+                                       std::move(bucket_name))) {}
 
  private:
-  BucketMetadataCache* cache_;
-  std::string bucket_name_;
+  struct State {
+    State(std::shared_ptr<BucketMetadataCache> c, std::string b)
+        : cache(std::move(c)), bucket_name(std::move(b)) {}
+    ~State() {
+      if (cache) cache->EndFetch(bucket_name);
+    }
+    std::shared_ptr<BucketMetadataCache> cache;
+    std::string bucket_name;
+  };
+  std::shared_ptr<State> state_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
