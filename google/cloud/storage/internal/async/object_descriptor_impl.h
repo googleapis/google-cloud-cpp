@@ -62,10 +62,10 @@ class ObjectDescriptorImpl
       std::unique_ptr<storage::ResumePolicy> resume_policy,
       OpenStreamFactory make_stream,
       google::storage::v2::BidiReadObjectSpec read_object_spec,
-      std::shared_ptr<OpenStream> stream, Options options = {},
-      std::function<bool()> transport_ok = {},
+      std::shared_ptr<OpenStream> stream,
       absl::optional<storage::AsyncConnection::InitialReadRange>
-          initial_read_range = absl::nullopt);
+          initial_read_range,
+      Options options = {}, std::function<bool()> transport_ok = {});
   ~ObjectDescriptorImpl() override;
 
   // Start the read loop.

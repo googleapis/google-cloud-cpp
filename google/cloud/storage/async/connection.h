@@ -76,17 +76,21 @@ class AsyncConnection {
   virtual future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) = 0;
 
+  /// A parameter to specify the initial offset and length of an eagerly-started
+  /// read.
+  struct InitialReadRange {
+    /// The starting offset of the read.
+    std::int64_t offset;
+    /// The number of bytes to read.
+    std::int64_t length;
+  };
+
   /**
    * A thin wrapper around the `Open()` parameters.
    *
    * We use a single struct as the input parameter for this function to
    * prevent breaking any mocks when additional parameters are needed.
    */
-  struct InitialReadRange {
-    std::int64_t offset;
-    std::int64_t length;
-  };
-
   struct OpenParams {
     google::storage::v2::BidiReadObjectSpec read_spec;
     Options options;

@@ -39,15 +39,16 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     std::unique_ptr<storage::ResumePolicy> resume_policy,
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
-    std::shared_ptr<OpenStream> stream, Options options,
-    std::function<bool()> transport_ok,
-    absl::optional<storage::AsyncConnection::InitialReadRange> initial_read_range)
+    std::shared_ptr<OpenStream> stream,
+    absl::optional<storage::AsyncConnection::InitialReadRange> initial_read_range,
+    Options options,
+    std::function<bool()> transport_ok)
     : resume_policy_prototype_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
       initial_read_range_(std::move(initial_read_range)),
-      initial_cache_consumed_(!initial_read_range_.has_value()),
-      read_id_generator_(initial_read_range_.has_value() ? 1 : 0),
+      initial_cache_consumed_(!initial_read_range.has_value()),
+      read_id_generator_(initial_read_range.has_value() ? 1 : 0),
       options_(std::move(options)),
       transport_ok_(std::move(transport_ok)) {
   stream_manager_ = std::make_unique<StreamManager>(

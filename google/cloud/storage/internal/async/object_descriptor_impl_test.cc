@@ -72,14 +72,15 @@ auto MakeTested(
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
     std::shared_ptr<OpenStream> stream,
-    std::function<bool()> transport_ok = [] { return true; },
-    absl::optional<storage::AsyncConnection::InitialReadRange> initial_read_range = absl::nullopt) {
+    absl::optional<storage::AsyncConnection::InitialReadRange> initial_read_range = absl::nullopt,
+    std::function<bool()> transport_ok = [] { return true; }) {
   Options options;
   options.set<storage::EnableMultiStreamOptimizationOption>(true);
   return std::make_shared<ObjectDescriptorImpl>(
       std::move(resume_policy), std::move(make_stream),
-      std::move(read_object_spec), std::move(stream), std::move(options),
-      std::move(transport_ok), std::move(initial_read_range));
+      std::move(read_object_spec), std::move(stream),
+      std::move(initial_read_range), std::move(options),
+      std::move(transport_ok));
 }
 
 MATCHER_P(IsProtoEqualModuloRepeatedFieldOrdering, value,
@@ -311,7 +312,8 @@ TEST(ObjectDescriptorImpl, ReadCacheHit) {
 
   AsyncSequencer<bool> sequencer;
   auto stream = std::make_unique<MockStream>();
-  EXPECT_CALL(*stream, Write).Times(0); // Cache hit means NO new request!
+  // Cache hit means no new request.
+  EXPECT_CALL(*stream, Write).Times(0);
   
   EXPECT_CALL(*stream, Read)
       .WillOnce([=, &sequencer]() {
@@ -339,7 +341,6 @@ TEST(ObjectDescriptorImpl, ReadCacheHit) {
   auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
                            google::storage::v2::BidiReadObjectSpec{},
                            std::make_shared<OpenStream>(std::move(stream)),
-                           [] { return true; },
                            storage::AsyncConnection::InitialReadRange{20000, 100});
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
@@ -348,7 +349,7 @@ TEST(ObjectDescriptorImpl, ReadCacheHit) {
   auto read1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1.second, "Read[1]");
 
-  // Call ReadParams exactly matching the cache
+  // Call ReadParams exactly matching the cache.
   auto s1 = tested->Read({20000, 100});
   auto s1r1 = s1->Read();
 
@@ -435,7 +436,6 @@ TEST(ObjectDescriptorImpl, ReadCacheMiss) {
   auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
                            google::storage::v2::BidiReadObjectSpec{},
                            std::make_shared<OpenStream>(std::move(stream)),
-                           [] { return true; },
                            storage::AsyncConnection::InitialReadRange{20000, 100});
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
@@ -444,7 +444,7 @@ TEST(ObjectDescriptorImpl, ReadCacheMiss) {
   auto read1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1.second, "Read[1]");
 
-  // Call ReadParams that MISSES the cache. (Requests offset 35000 instead of 20000).
+  // Call ReadParams that misses the cache. (Requests offset 35000 instead of 20000).
   auto s1 = tested->Read({35000, 100});
   auto s1r1 = s1->Read();
 
@@ -1964,7 +1964,7 @@ TEST(ObjectDescriptorImpl, MultiStreamOptimizationDisabled) {
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),
       google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)), options);
+      std::make_shared<OpenStream>(std::move(stream)), /*initial_read_range=*/absl::nullopt, options);
 
   tested->MakeSubsequentStream();
 
@@ -2009,6 +2009,7 @@ TEST(ObjectDescriptorImpl, IsOpenFalseOnPermanentError) {
   auto tested = MakeTested(NoResume(), factory.AsStdFunction(),
                            google::storage::v2::BidiReadObjectSpec{},
                            std::make_shared<OpenStream>(std::move(stream)),
+                           /*initial_read_range=*/absl::nullopt,
                            transport_ok_callback);
 
   EXPECT_TRUE(tested->IsOpen());
@@ -2027,7 +2028,7 @@ TEST(ObjectDescriptorImpl, IsOpenFalseOnTransportFailure) {
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),
       google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)), Options{},
+      std::make_shared<OpenStream>(std::move(stream)), /*initial_read_range=*/absl::nullopt, Options{},
       std::move(transport_ok));
   EXPECT_FALSE(tested->IsOpen());
 }
@@ -2043,7 +2044,7 @@ TEST(ObjectDescriptorImpl, IsOpenTrueOnTransportSuccess) {
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),
       google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)), Options{},
+      std::make_shared<OpenStream>(std::move(stream)), /*initial_read_range=*/absl::nullopt, Options{},
       std::move(transport_ok));
   EXPECT_TRUE(tested->IsOpen());
 }
@@ -2120,7 +2121,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationSuccess) {
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),
       google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)), options);
+      std::make_shared<OpenStream>(std::move(stream)), /*initial_read_range=*/absl::nullopt, options);
 
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponseMetadata, &response));
@@ -2227,7 +2228,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchCrc32c) {
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),
       google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)), options);
+      std::make_shared<OpenStream>(std::move(stream)), /*initial_read_range=*/absl::nullopt, options);
 
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponseMetadata, &response));
@@ -2335,7 +2336,7 @@ TEST(ObjectDescriptorImpl, FullReadChecksumValidationMismatchMd5) {
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),
       google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)), options);
+      std::make_shared<OpenStream>(std::move(stream)), /*initial_read_range=*/absl::nullopt, options);
 
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponseMetadata, &response));
@@ -2443,7 +2444,7 @@ TEST(ObjectDescriptorImpl, PartialReadChecksumValidationBypassed) {
   auto tested = std::make_shared<ObjectDescriptorImpl>(
       NoResume(), factory.AsStdFunction(),
       google::storage::v2::BidiReadObjectSpec{},
-      std::make_shared<OpenStream>(std::move(stream)), options);
+      std::make_shared<OpenStream>(std::move(stream)), /*initial_read_range=*/absl::nullopt, options);
 
   auto response = Response{};
   EXPECT_TRUE(TextFormat::ParseFromString(kResponseMetadata, &response));

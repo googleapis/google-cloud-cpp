@@ -191,7 +191,7 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
 future<StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>>
 AsyncConnectionImpl::Open(OpenParams p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
-  *initial_request.mutable_read_object_spec() = std::move(p.read_spec);
+  *initial_request.mutable_read_object_spec() = p.read_spec;
   if (p.initial_read_range) {
     auto* range = initial_request.add_read_ranges();
     range->set_read_offset(p.initial_read_range->offset);
@@ -240,7 +240,7 @@ AsyncConnectionImpl::Open(OpenParams p) {
   using ReturnType = std::shared_ptr<storage::ObjectDescriptorConnection>;
   return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
                        rs = std::move(p.read_spec),
-                       options = std::move(p.options), eager = p.initial_read_range,
+                       options = std::move(p.options), initial_read_range = p.initial_read_range,
                        refresh = refresh_](auto f) mutable -> StatusOr<ReturnType> {
     auto result = f.get();
     if (!result) return std::move(result).status();
@@ -261,7 +261,7 @@ AsyncConnectionImpl::Open(OpenParams p) {
     };
     auto impl = std::make_shared<ObjectDescriptorImpl>(
         std::move(rp), std::move(fa), std::move(rs), std::move(result->stream),
-        std::move(options), std::move(transport_ok), eager);
+        initial_read_range, std::move(options), std::move(transport_ok));
     impl->Start(std::move(result->first_response));
     return ReturnType(impl);
   });
