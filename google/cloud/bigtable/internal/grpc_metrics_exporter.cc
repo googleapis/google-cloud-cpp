@@ -237,9 +237,13 @@ GrpcMetricsExporter::GrpcMetricsExporter(
 
   auto reader_options =
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
-  reader_options.export_timeout_millis = std::chrono::seconds(30);
+  // otel::PeriodicExportingMetricReader enforces that export_timeout_millis <
+  // export_interval_millis.
   reader_options.export_interval_millis =
       options.get<bigtable::MetricsPeriodOption>();
+  reader_options.export_timeout_millis =
+      (std::min)(std::chrono::milliseconds(std::chrono::seconds(30)),
+                 reader_options.export_interval_millis / 2);
 
   provider_ =
       MakeGrpcMeterProvider(std::move(exporter), std::move(reader_options));
