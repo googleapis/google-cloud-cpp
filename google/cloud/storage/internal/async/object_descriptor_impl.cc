@@ -223,8 +223,9 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
 
 std::shared_ptr<storage::internal::HashFunction>
 ObjectDescriptorImpl::CreateHashFunction(bool is_full_read) const {
-  auto const [enable_crc32c, enable_md5] =
-      GetDownloadChecksumSettings(options_);
+  auto const settings = GetDownloadChecksumSettings(options_);
+  auto const enable_crc32c = settings.enable_crc32c;
+  auto const enable_md5 = settings.enable_md5;
 
   if (enable_crc32c) {
     std::unique_ptr<storage::internal::HashFunction> child;
@@ -256,8 +257,9 @@ ObjectDescriptorImpl::CreateHashValidator(bool is_full_read) const {
     return storage::internal::CreateNullHashValidator();
   }
 
-  auto const [enable_crc32c, enable_md5] =
-      GetDownloadChecksumSettings(options_);
+  auto const settings = GetDownloadChecksumSettings(options_);
+  auto const enable_crc32c = settings.enable_crc32c;
+  auto const enable_md5 = settings.enable_md5;
 
   std::unique_ptr<storage::internal::HashValidator> hash_validator;
   if (enable_crc32c && enable_md5) {
