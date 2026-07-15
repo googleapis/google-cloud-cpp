@@ -158,6 +158,12 @@ class StorageAuth : public StorageStub {
       google::cloud::internal::ImmutableOptions options,
       google::storage::v2::ComposeObjectRequest const& request) override;
 
+  future<StatusOr<google::storage::v2::Bucket>> AsyncGetBucket(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::v2::GetBucketRequest const& request) override;
+
   future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

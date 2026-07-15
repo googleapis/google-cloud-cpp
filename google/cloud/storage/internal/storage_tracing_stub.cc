@@ -341,6 +341,19 @@ StorageTracingStub::AsyncComposeObject(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+future<StatusOr<google::storage::v2::Bucket>>
+StorageTracingStub::AsyncGetBucket(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::GetBucketRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "GetBucket");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncGetBucket(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 future<Status> StorageTracingStub::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

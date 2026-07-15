@@ -573,6 +573,28 @@ StorageMetadata::AsyncComposeObject(
                                     request);
 }
 
+future<StatusOr<google::storage::v2::Bucket>> StorageMetadata::AsyncGetBucket(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::GetBucketRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.name().empty()) {
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.name())));
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context, *options);
+  } else {
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncGetBucket(cq, std::move(context), std::move(options),
+                                request);
+}
+
 future<Status> StorageMetadata::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
