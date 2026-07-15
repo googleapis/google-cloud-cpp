@@ -30,7 +30,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TracingConnection::TracingConnection(std::shared_ptr<StorageConnection> impl,
                                      AsyncRunner runner)
-    : impl_(std::move(impl)), runner_(std::move(runner)) {}
+    : impl_(std::move(impl)),
+      runner_(std::move(runner)),
+      cache_(std::make_shared<BucketMetadataCache>(10000)) {}
 
 TracingConnection::~TracingConnection() = default;
 
@@ -49,10 +51,7 @@ TracingConnection::AsyncRunner const& TracingConnection::runner() {
   return runner_;
 }
 
-BucketMetadataCache& TracingConnection::cache() {
-  static BucketMetadataCache instance(10000);
-  return instance;
-}
+BucketMetadataCache& TracingConnection::cache() const { return *cache_; }
 
 void TracingConnection::ResetCacheForTesting() { cache().Clear(); }
 
@@ -71,18 +70,18 @@ void TracingConnection::MaybeTriggerBackgroundFetch(
   }
 
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  runner()([this, bucket_name, current_options]() {
+  runner()([impl = impl_, cache = cache_, bucket_name, current_options]() {
+    ScopedFetch guard(cache.get(), bucket_name);
+
     google::cloud::internal::OptionsSpan span(current_options);
     storage::internal::GetBucketMetadataRequest request(bucket_name);
-    auto result = impl_->GetBucketMetadata(request);
+    auto result = impl->GetBucketMetadata(request);
 
     if (result.ok()) {
-      cache().Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
+      cache->Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
     } else if (result.status().code() == StatusCode::kPermissionDenied) {
-      cache().Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
+      cache->Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
     }
-
-    cache().EndFetch(bucket_name);
   });
 }
 

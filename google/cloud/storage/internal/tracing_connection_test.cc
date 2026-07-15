@@ -65,7 +65,6 @@ TEST(TracingClientTest, Options) {
 }
 
 TEST(TracingClientTest, CustomAsyncRunner) {
-  TracingConnection::ResetCacheForTesting();
   bool invoked = false;
   auto runner = [&invoked](std::function<void()> const& f) {
     invoked = true;
@@ -217,7 +216,6 @@ TEST(TracingClientTest, GetBucketMetadataSuccess) {
 }
 
 TEST(TracingClientTest, BucketMetadataCacheSuccess) {
-  TracingConnection::ResetCacheForTesting();
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();
 
@@ -1713,7 +1711,6 @@ TEST(TracingClientTest, DeleteNotification) {
 }
 
 TEST(TracingClientTest, BucketMetadataMaybeInvalidateBucketLevelEvict) {
-  TracingConnection::ResetCacheForTesting();
   auto mock = std::make_shared<MockClient>();
 
   EXPECT_CALL(*mock, options)
@@ -1760,7 +1757,6 @@ TEST(TracingClientTest, BucketMetadataMaybeInvalidateBucketLevelEvict) {
 }
 
 TEST(TracingClientTest, BucketMetadataMaybeInvalidateObjectLevelNoEvict) {
-  TracingConnection::ResetCacheForTesting();
   auto mock = std::make_shared<MockClient>();
 
   EXPECT_CALL(*mock, options)

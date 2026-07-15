@@ -66,6 +66,19 @@ class BucketMetadataCache {
   std::unordered_set<std::string> in_flight_fetch_;
 };
 
+class ScopedFetch {
+ public:
+  ScopedFetch(BucketMetadataCache* cache, std::string bucket_name)
+      : cache_(cache), bucket_name_(std::move(bucket_name)) {}
+  ~ScopedFetch() {
+    if (cache_) cache_->EndFetch(bucket_name_);
+  }
+
+ private:
+  BucketMetadataCache* cache_;
+  std::string bucket_name_;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

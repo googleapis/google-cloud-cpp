@@ -36,7 +36,7 @@ class TracingConnection : public storage::internal::StorageConnection {
                              AsyncRunner runner = {});
   ~TracingConnection() override;
 
-  static void ResetCacheForTesting();
+  void ResetCacheForTesting();
 
   Options options() const override;
 
@@ -192,25 +192,25 @@ class TracingConnection : public storage::internal::StorageConnection {
                          BucketCacheEntry const& entry);
   void MaybeTriggerBackgroundFetch(std::string const& bucket_name);
 
-  static void MaybeInvalidate(Status const& status,
-                              std::string const& bucket_name) {
+  void MaybeInvalidate(Status const& status, std::string const& bucket_name) {
     if (!status.ok() && status.code() == StatusCode::kNotFound) {
       cache().Invalidate(bucket_name);
     }
   }
 
   template <typename T>
-  static void MaybeInvalidate(StatusOr<T> const& result,
-                              std::string const& bucket_name) {
+  void MaybeInvalidate(StatusOr<T> const& result,
+                       std::string const& bucket_name) {
     MaybeInvalidate(result.status(), bucket_name);
   }
 
-  static BucketMetadataCache& cache();
+  BucketMetadataCache& cache() const;
 
   AsyncRunner const& runner();
 
   std::shared_ptr<StorageConnection> impl_;
   AsyncRunner runner_;
+  std::shared_ptr<BucketMetadataCache> cache_;
   absl::once_flag once_flag_;
 };
 
