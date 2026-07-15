@@ -81,9 +81,9 @@ inline std::unique_ptr<storage::AsyncIdempotencyPolicy> idempotency_policy(
 }
 
 std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
-    Options const& options) {
+    Options const& options,
+    storage_internal::ChecksumSettings const& settings) {
   auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
-  auto const settings = GetUploadChecksumSettings(options);
   auto const enable_crc32c = settings.enable_crc32c;
   auto const enable_md5 = settings.enable_md5;
 
@@ -172,7 +172,8 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
         options->get<storage::TransferStallMinimumRateOption>(),
         google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
 
-    auto hash_function = CreateHashFunction(*options);
+    auto hash_function =
+        CreateHashFunction(*options, GetUploadChecksumSettings(*options));
     ApplyRoutingHeaders(*context, request.write_object_spec());
     AddIdempotencyToken(*context, id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), options);
@@ -276,9 +277,10 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   // Create the hash function and validator based on the original request. Note
   // that p.request will be moved-from, so we have to do it relatively early in
   // this function.
+  auto const settings = GetDownloadChecksumSettings(*current);
   auto hash_function =
       std::make_shared<storage::internal::Crc32cMessageHashFunction>(
-          CreateHashFunction(*current));
+          CreateHashFunction(*current, settings));
   auto hash_validator = CreateHashValidator(p.request, *current);
 
   std::optional<std::int64_t> requested_length;
@@ -328,7 +330,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = p.request;
   std::shared_ptr<storage::internal::HashFunction> hash_function =
-      CreateHashFunction(*current);
+      CreateHashFunction(*current, GetUploadChecksumSettings(*current));
   auto retry =
       std::shared_ptr<storage::AsyncRetryPolicy>(retry_policy(*current));
   auto backoff =
@@ -417,7 +419,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   return pending.then(
       [current, request = std::move(p.request), hash = std::move(hash_function),
        fa = std::move(factory)](auto f) mutable
-      -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
         std::unique_ptr<AsyncWriterConnectionImpl> impl;
@@ -472,7 +474,7 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
   return StartUnbufferedUpload(std::move(p))
       .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
-            -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         auto factory = [upload_id = (*w)->UploadId(),
@@ -506,14 +508,15 @@ AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
   };
 
   auto f = make_unbuffered();
-  return f.then([current = std::move(current),
-                 make_unbuffered = std::move(make_unbuffered)](auto f) mutable
-                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-    auto w = f.get();
-    if (!w) return std::move(w).status();
-    return MakeWriterConnectionBuffered(std::move(make_unbuffered),
-                                        *std::move(w), *current);
-  });
+  return f.then(
+      [current = std::move(current),
+       make_unbuffered = std::move(make_unbuffered)](auto f) mutable
+          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        return MakeWriterConnectionBuffered(std::move(make_unbuffered),
+                                            *std::move(w), *current);
+      });
 }
 
 future<StatusOr<google::storage::v2::Object>>
@@ -708,7 +711,8 @@ AsyncConnectionImpl::StartUnbufferedUploadImpl(
         StatusOr<std::unique_ptr<storage::AsyncWriterConnection>>(
             std::move(response).status()));
   }
-  auto hash_function = CreateHashFunction(*current);
+  auto hash_function =
+      CreateHashFunction(*current, GetUploadChecksumSettings(*current));
   auto configure =
       [current, upload = response->upload_id()](grpc::ClientContext& context) {
         ApplyResumableUploadRoutingHeader(context, upload);
@@ -746,7 +750,8 @@ AsyncConnectionImpl::ResumeUnbufferedUploadImpl(
   // the upload resumes from the beginning of the file.
   auto hash_function = storage::internal::CreateNullHashFunction();
   if (response->persisted_size() == 0) {
-    hash_function = CreateHashFunction(*current);
+    hash_function =
+        CreateHashFunction(*current, GetUploadChecksumSettings(*current));
   }
   auto configure =
       [current, upload_id = query.upload_id()](grpc::ClientContext& context) {
