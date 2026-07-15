@@ -82,7 +82,6 @@ void BucketMetadataCache::Clear() {
   std::unique_lock<std::mutex> lk(mu_);
   map_.clear();
   list_.clear();
-  in_flight_fetch_.clear();
 }
 
 bool BucketMetadataCache::StartFetch(std::string const& bucket_name) {
