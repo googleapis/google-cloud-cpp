@@ -34,7 +34,7 @@ namespace {
 // that we need to introduce additional in the future if we come across other
 // LRO defining conventions.
 // https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources
-absl::optional<std::string> DetermineLongRunningOperationService(
+std::optional<std::string> DetermineLongRunningOperationService(
     nlohmann::json const& method_json, std::vector<std::string> const& params,
     std::set<std::string> const& operation_services,
     std::string const& resource_name) {
@@ -56,7 +56,7 @@ absl::optional<std::string> DetermineLongRunningOperationService(
     }
     return "GlobalOrganizationOperations";
   }
-  return absl::nullopt;
+  return std::nullopt;
 }
 
 }  // namespace

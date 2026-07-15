@@ -148,7 +148,7 @@ class MockStreamingReadRpc
           ::google::test::admin::database::v1::Response> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD((absl::optional<Status>), Read,
+  MOCK_METHOD((std::optional<Status>), Read,
               (::google::test::admin::database::v1::Response*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
