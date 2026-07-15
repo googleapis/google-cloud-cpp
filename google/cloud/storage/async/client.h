@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/async/object_descriptor.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/rewriter.h"
 #include "google/cloud/storage/async/token.h"
@@ -92,6 +93,12 @@ class AsyncClient {
   /**
    * Get bucket metadata.
    *
+   * @par Example
+   * @snippet storage_async_samples.cc get-bucket
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
    * @param bucket_name the name of the bucket to get metadata for.
    * @param opts options controlling the behavior of this RPC.
    */
@@ -100,6 +107,12 @@ class AsyncClient {
 
   /**
    * Get bucket metadata using a raw request.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc get-bucket
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
    *
    * @param request the request contents.
    * @param opts options controlling the behavior of this RPC.

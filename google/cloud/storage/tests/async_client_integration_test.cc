@@ -146,6 +146,14 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
   EXPECT_THAT(head, StatusIs(StatusCode::kNotFound));
 }
 
+TEST_F(AsyncClientIntegrationTest, GetBucket) {
+  auto async = AsyncClient(TestOptions());
+
+  auto bucket = async.GetBucket(BucketName(bucket_name()), AlwaysRetry()).get();
+  ASSERT_STATUS_OK(bucket);
+  EXPECT_EQ(bucket->name(), BucketName(bucket_name()).FullName());
+}
+
 TEST_F(AsyncClientIntegrationTest, ComposeObject) {
   auto async = AsyncClient(TestOptions());
   auto o1 = MakeRandomObjectName();
@@ -678,6 +686,16 @@ TEST_F(AsyncClientIntegrationTest, DeleteObjectFailure) {
       async.DeleteObject(BucketName(bucket_name()), MakeRandomObjectName())
           .get();
   ASSERT_THAT(deleted, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, GetBucketFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto bucket =
+      async
+          .GetBucket(BucketName("projects/_/buckets/" + MakeRandomObjectName()))
+          .get();
+  ASSERT_THAT(bucket, Not(IsOk()));
 }
 
 TEST_F(AsyncClientIntegrationTest, StartRewriteFailure) {
