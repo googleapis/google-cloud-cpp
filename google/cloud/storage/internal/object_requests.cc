@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
@@ -218,9 +220,20 @@ InsertObjectMediaRequest::InsertObjectMediaRequest(std::string bucket_name,
 }
 
 void InsertObjectMediaRequest::reset_hash_function() {
+  DisableCrc32cChecksum disable_crc32c;
+  DisableMD5Hash disable_md5;
+  auto const& options = google::cloud::internal::CurrentOptions();
+  if (options.has<UploadChecksumValidationOption>()) {
+    auto const algo = options.get<UploadChecksumValidationOption>();
+    disable_md5 = DisableMD5Hash(algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = DisableCrc32cChecksum(algo != ChecksumAlgorithm::kCrc32c);
+  } else {
+    disable_md5 = GetOption<DisableMD5Hash>();
+    disable_crc32c = GetOption<DisableCrc32cChecksum>();
+  }
   hash_function_ = CreateHashFunction(
-      GetOption<Crc32cChecksumValue>(), GetOption<DisableCrc32cChecksum>(),
-      GetOption<MD5HashValue>(), GetOption<DisableMD5Hash>());
+      GetOption<Crc32cChecksumValue>(), disable_crc32c,
+      GetOption<MD5HashValue>(), disable_md5);
 }
 
 void InsertObjectMediaRequest::set_payload(absl::string_view payload) {

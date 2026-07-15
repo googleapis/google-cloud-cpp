@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
+#include "google/cloud/options.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_metadata.h"
 #include <memory>
@@ -52,19 +54,35 @@ std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
   if (request.RequiresRangeHeader()) return CreateNullHashValidator();
 
-  // `DisableMD5Hash`'s default value is `true`.
-  auto disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
-  auto disable_crc32c =
-      request.GetOption<DisableCrc32cChecksum>().value_or(false);
+  bool disable_md5 = false;
+  bool disable_crc32c = false;
+  auto const& options = google::cloud::internal::CurrentOptions();
+  if (options.has<DownloadChecksumValidationOption>()) {
+    auto const algo =
+        options.get<DownloadChecksumValidationOption>();
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
+  } else {
+    disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
+    disable_crc32c = request.GetOption<DisableCrc32cChecksum>().value_or(false);
+  }
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
     ResumableUploadRequest const& request) {
-  // `DisableMD5Hash`'s default value is `true`.
-  auto disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
-  auto disable_crc32c =
-      request.GetOption<DisableCrc32cChecksum>().value_or(false);
+  bool disable_md5 = false;
+  bool disable_crc32c = false;
+  auto const& options = google::cloud::internal::CurrentOptions();
+  if (options.has<UploadChecksumValidationOption>()) {
+    auto const algo =
+        options.get<UploadChecksumValidationOption>();
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
+  } else {
+    disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
+    disable_crc32c = request.GetOption<DisableCrc32cChecksum>().value_or(false);
+  }
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
