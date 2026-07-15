@@ -13,6 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/options.h"
+
+// TODO: Remove this when EnableMD5ValidationOption and
+// EnableCrc32cValidationOption are removed.
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
@@ -69,15 +80,21 @@ auto ExpectedObjectChecksums(HashTestCase const& tc) {
 
 std::ostream& operator<<(std::ostream& os, HashTestCase const& rhs) {
   os << "HashTestCase={options={";
-  os << std::boolalpha  //
-     << "enable_crc32c_validation="
-     << rhs.options.get<storage::EnableCrc32cValidationOption>();
+  os << std::boolalpha;  //
+  if (rhs.options.has<storage::UploadChecksumValidationOption>()) {
+    os << "upload_checksum="
+       << static_cast<int>(
+              rhs.options.get<storage::UploadChecksumValidationOption>());
+  } else {
+    os << "enable_crc32c_validation="
+       << rhs.options.get<storage::EnableCrc32cValidationOption>();
+    os << ", enable_md5_validation="
+       << rhs.options.get<storage::EnableMD5ValidationOption>();
+  }
   if (rhs.options.has<storage::UseCrc32cValueOption>()) {
     os << ", use_crc32_value="
        << rhs.options.get<storage::UseCrc32cValueOption>();
   }
-  os << ", enable_md5_validation="
-     << rhs.options.get<storage::EnableMD5ValidationOption>();
   if (rhs.options.has<storage::UseMD5ValueOption>()) {
     os << ", use_md5_value=" << rhs.options.get<storage::UseMD5ValueOption>();
   }
@@ -121,9 +138,8 @@ INSTANTIATE_TEST_SUITE_P(
                          .set<storage::EnableCrc32cValidationOption>(true)
                          .set<storage::EnableMD5ValidationOption>(true),
                      kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
-        HashTestCase{Options{}
-                         .set<storage::EnableCrc32cValidationOption>(true)
-                         .set<storage::EnableMD5ValidationOption>(false),
+        HashTestCase{Options{}.set<storage::UploadChecksumValidationOption>(
+                         storage::ChecksumAlgorithm::kCrc32c),
                      kQuickFoxCrc32cChecksum, ""},
         HashTestCase{Options{}
                          .set<storage::EnableCrc32cValidationOption>(false)
@@ -132,6 +148,12 @@ INSTANTIATE_TEST_SUITE_P(
         HashTestCase{Options{}
                          .set<storage::EnableCrc32cValidationOption>(false)
                          .set<storage::EnableMD5ValidationOption>(false),
+                     std::nullopt, ""},
+        HashTestCase{Options{}.set<storage::UploadChecksumValidationOption>(
+                         storage::ChecksumAlgorithm::kMD5),
+                     std::nullopt, kQuickFoxMD5Hash},
+        HashTestCase{Options{}.set<storage::UploadChecksumValidationOption>(
+                         storage::ChecksumAlgorithm::kNone),
                      std::nullopt, ""}));
 
 INSTANTIATE_TEST_SUITE_P(
@@ -139,26 +161,29 @@ INSTANTIATE_TEST_SUITE_P(
     ::testing::Values(
         HashTestCase{
             Options{}
-                .set<storage::EnableCrc32cValidationOption>(false)
-                .set<storage::EnableMD5ValidationOption>(false)
+                .set<storage::UploadChecksumValidationOption>(
+                    storage::ChecksumAlgorithm::kNone)
                 .set<storage::UseCrc32cValueOption>(kQuickFoxCrc32cChecksum)
                 .set<storage::UseMD5ValueOption>(BinaryMD5(kQuickFoxMD5Hash)),
             kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash},
         HashTestCase{
             Options{}
-                .set<storage::EnableCrc32cValidationOption>(false)
-                .set<storage::EnableMD5ValidationOption>(false)
+                .set<storage::UploadChecksumValidationOption>(
+                    storage::ChecksumAlgorithm::kNone)
                 .set<storage::UseCrc32cValueOption>(kQuickFoxCrc32cChecksum),
             kQuickFoxCrc32cChecksum, ""},
         HashTestCase{
             Options{}
-                .set<storage::EnableCrc32cValidationOption>(false)
-                .set<storage::EnableMD5ValidationOption>(false)
+                .set<storage::UploadChecksumValidationOption>(
+                    storage::ChecksumAlgorithm::kNone)
                 .set<storage::UseMD5ValueOption>(BinaryMD5(kQuickFoxMD5Hash)),
             std::nullopt, kQuickFoxMD5Hash},
         HashTestCase{Options{}
                          .set<storage::EnableCrc32cValidationOption>(false)
                          .set<storage::EnableMD5ValidationOption>(false),
+                     std::nullopt, ""},
+        HashTestCase{Options{}.set<storage::UploadChecksumValidationOption>(
+                         storage::ChecksumAlgorithm::kNone),
                      std::nullopt, ""}));
 
 TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {

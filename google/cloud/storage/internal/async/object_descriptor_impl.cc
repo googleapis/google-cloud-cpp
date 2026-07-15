@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/async/options.h"
+#include "google/cloud/storage/internal/async/checksum_helpers.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/multi_stream_manager.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
@@ -23,6 +24,7 @@
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/hash_values.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/rpc/status.pb.h"
@@ -221,9 +223,8 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
 
 std::shared_ptr<storage::internal::HashFunction>
 ObjectDescriptorImpl::CreateHashFunction(bool is_full_read) const {
-  auto const enable_crc32c =
-      options_.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+  auto const [enable_crc32c, enable_md5] =
+      GetDownloadChecksumSettings(options_);
 
   if (enable_crc32c) {
     std::unique_ptr<storage::internal::HashFunction> child;
@@ -255,9 +256,8 @@ ObjectDescriptorImpl::CreateHashValidator(bool is_full_read) const {
     return storage::internal::CreateNullHashValidator();
   }
 
-  auto const enable_crc32c =
-      options_.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+  auto const [enable_crc32c, enable_md5] =
+      GetDownloadChecksumSettings(options_);
 
   std::unique_ptr<storage::internal::HashValidator> hash_validator;
   if (enable_crc32c && enable_md5) {

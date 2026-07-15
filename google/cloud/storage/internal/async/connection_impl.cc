@@ -19,6 +19,7 @@
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/retry_policy.h"
+#include "google/cloud/storage/internal/async/checksum_helpers.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
@@ -82,12 +83,24 @@ inline std::unique_ptr<storage::AsyncIdempotencyPolicy> idempotency_policy(
 std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
     Options const& options) {
   auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
+  bool enable_crc32c = false;
+  bool enable_md5 = false;
+
+  if (options.has<storage::UploadChecksumValidationOption>()) {
+    auto const algo = options.get<storage::UploadChecksumValidationOption>();
+    enable_crc32c = (algo == storage::ChecksumAlgorithm::kCrc32c);
+    enable_md5 = (algo == storage::ChecksumAlgorithm::kMD5);
+  } else {
+    enable_crc32c = options.get<storage::EnableCrc32cValidationOption>();
+    enable_md5 = options.get<storage::EnableMD5ValidationOption>();
+  }
+
   if (options.has<storage::UseCrc32cValueOption>()) {
     crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(
         storage::internal::HashValues{
             Crc32cFromProto(options.get<storage::UseCrc32cValueOption>()),
             /*.md5=*/{}});
-  } else if (options.get<storage::EnableCrc32cValidationOption>()) {
+  } else if (enable_crc32c) {
     crc32c = std::make_unique<storage::internal::Crc32cHashFunction>();
   }
 
@@ -97,7 +110,7 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
         storage::internal::HashValues{
             /*.crc32=*/{},
             MD5FromProto(options.get<storage::UseMD5ValueOption>())});
-  } else if (options.get<storage::EnableMD5ValidationOption>()) {
+  } else if (enable_md5) {
     md5 = storage::internal::MD5HashFunction::Create();
   }
 
@@ -117,9 +130,7 @@ std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
       request.read_limit() != 0 || request.read_offset() != 0;
   if (is_ranged_read) return storage::internal::CreateNullHashValidator();
 
-  auto const enable_crc32c =
-      options.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options.get<storage::EnableMD5ValidationOption>();
+  auto const [enable_crc32c, enable_md5] = GetDownloadChecksumSettings(options);
 
   if (enable_crc32c && enable_md5) {
     return std::make_unique<storage::internal::CompositeValidator>(
@@ -412,7 +423,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p) {
   return pending.then(
       [current, request = std::move(p.request), hash = std::move(hash_function),
        fa = std::move(factory)](auto f) mutable
-      -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
         std::unique_ptr<AsyncWriterConnectionImpl> impl;
@@ -467,7 +478,7 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
   return StartUnbufferedUpload(std::move(p))
       .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
-            -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         auto factory = [upload_id = (*w)->UploadId(),
@@ -501,14 +512,15 @@ AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
   };
 
   auto f = make_unbuffered();
-  return f.then([current = std::move(current),
-                 make_unbuffered = std::move(make_unbuffered)](auto f) mutable
-                -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
-    auto w = f.get();
-    if (!w) return std::move(w).status();
-    return MakeWriterConnectionBuffered(std::move(make_unbuffered),
-                                        *std::move(w), *current);
-  });
+  return f.then(
+      [current = std::move(current),
+       make_unbuffered = std::move(make_unbuffered)](auto f) mutable
+          -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        return MakeWriterConnectionBuffered(std::move(make_unbuffered),
+                                            *std::move(w), *current);
+      });
 }
 
 future<StatusOr<google::storage::v2::Object>>

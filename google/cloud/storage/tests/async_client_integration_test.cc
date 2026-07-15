@@ -1006,11 +1006,12 @@ TEST_F(AsyncClientIntegrationTest, Open) {
 
 TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
   if (!UsingEmulator()) GTEST_SKIP();
-  auto async =
-      AsyncClient(TestOptions()
-                      .set<storage::MaximumRangeSizeOption>(1024)
-                      .set<storage::EnableCrc32cValidationOption>(false)
-                      .set<storage::EnableMD5ValidationOption>(false));
+  auto async = AsyncClient(TestOptions()
+                               .set<storage::MaximumRangeSizeOption>(1024)
+                               .set<storage::UploadChecksumValidationOption>(
+                                   storage::ChecksumAlgorithm::kNone)
+                               .set<storage::DownloadChecksumValidationOption>(
+                                   storage::ChecksumAlgorithm::kNone));
   auto client = MakeIntegrationTestClient(true, TestOptions());
   auto object_name = MakeRandomObjectName();
 
@@ -1065,8 +1066,10 @@ TEST_F(AsyncClientIntegrationTest, OpenExceedMaximumRange) {
 TEST_F(AsyncClientIntegrationTest, OpenWithChecksumValidation) {
   if (!UsingEmulator()) GTEST_SKIP();
   auto async = AsyncClient(TestOptions()
-                               .set<storage::EnableCrc32cValidationOption>(true)
-                               .set<storage::EnableMD5ValidationOption>(true));
+                               .set<storage::UploadChecksumValidationOption>(
+                                   storage::ChecksumAlgorithm::kCrc32c)
+                               .set<storage::DownloadChecksumValidationOption>(
+                                   storage::ChecksumAlgorithm::kCrc32c));
   auto client = MakeIntegrationTestClient(true, TestOptions());
   auto object_name = MakeRandomObjectName();
 

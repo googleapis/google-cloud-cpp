@@ -160,20 +160,18 @@ AsyncWriterConnectionImpl::Finalize(storage::WritePayload payload) {
           merged.get<google::cloud::storage::UseCrc32cValueOption>());
     }
     action = PartialUpload::kFinalize;
-  } else if (current_options
-                 .has<google::cloud::storage::UseCrc32cValueOption>() ||
-             current_options.has<google::cloud::storage::UseMD5ValueOption>()) {
-    // If the user specified a manual expected checksum dynamically at
-    // Finalize() via current_options, we manually inject it and use `kFinalize`
-    // so the internal hash function doesn't overwrite it with its own computed
-    // hash.
-    if (current_options.has<google::cloud::storage::UseCrc32cValueOption>()) {
+  } else if (merged.has<google::cloud::storage::UseCrc32cValueOption>() ||
+             merged.has<google::cloud::storage::UseMD5ValueOption>()) {
+    // If the user specified a manual expected checksum, we manually inject it
+    // and use `kFinalize` so the internal hash function doesn't overwrite it
+    // with its own computed hash.
+    if (merged.has<google::cloud::storage::UseCrc32cValueOption>()) {
       write.mutable_object_checksums()->set_crc32c(
-          current_options.get<google::cloud::storage::UseCrc32cValueOption>());
+          merged.get<google::cloud::storage::UseCrc32cValueOption>());
     }
-    if (current_options.has<google::cloud::storage::UseMD5ValueOption>()) {
+    if (merged.has<google::cloud::storage::UseMD5ValueOption>()) {
       write.mutable_object_checksums()->set_md5_hash(
-          current_options.get<google::cloud::storage::UseMD5ValueOption>());
+          merged.get<google::cloud::storage::UseMD5ValueOption>());
     }
     action = PartialUpload::kFinalize;
   }
