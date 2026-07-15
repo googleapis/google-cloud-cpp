@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
+#include "google/cloud/options.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include <memory>
 #include <utility>
@@ -61,9 +63,17 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     ReadObjectRangeRequest const& request) {
   if (request.RequiresRangeHeader()) return CreateNullHashFunction();
 
-  auto const disable_crc32c =
-      request.GetOption<DisableCrc32cChecksum>().value_or(false);
-  auto const disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
+  bool disable_md5 = false;
+  bool disable_crc32c = false;
+  auto const& options = google::cloud::internal::CurrentOptions();
+  if (options.has<DownloadChecksumValidationOption>()) {
+    auto const algo = options.get<DownloadChecksumValidationOption>();
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
+  } else {
+    disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
+    disable_crc32c = request.GetOption<DisableCrc32cChecksum>().value_or(false);
+  }
   if (disable_md5 && disable_crc32c) {
     return std::make_unique<NullHashFunction>();
   }
@@ -80,10 +90,21 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     // for previous values is lost.
     return CreateNullHashFunction();
   }
+  
+  DisableCrc32cChecksum disable_crc32c;
+  DisableMD5Hash disable_md5;
+  auto const& options = google::cloud::internal::CurrentOptions();
+  if (options.has<UploadChecksumValidationOption>()) {
+    auto const algo = options.get<UploadChecksumValidationOption>();
+    disable_md5 = DisableMD5Hash(algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = DisableCrc32cChecksum(algo != ChecksumAlgorithm::kCrc32c);
+  } else {
+    disable_md5 = request.GetOption<DisableMD5Hash>();
+    disable_crc32c = request.GetOption<DisableCrc32cChecksum>();
+  }
   return CreateHashFunction(request.GetOption<Crc32cChecksumValue>(),
-                            request.GetOption<DisableCrc32cChecksum>(),
-                            request.GetOption<MD5HashValue>(),
-                            request.GetOption<DisableMD5Hash>());
+                            disable_crc32c, request.GetOption<MD5HashValue>(),
+                            disable_md5);
 }
 
 }  // namespace internal
