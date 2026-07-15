@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_HASHING_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_HASHING_OPTIONS_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
 #include <string>
 
@@ -70,8 +72,14 @@ inline std::string ComputeMD5Hash(char const* payload) {
  *   for most applications.  Disabling CRC32C checksums while MD5 hashes remain
  *   disabled exposes your application to data corruption. We recommend that all
  *   uploads to GCS and downloads from GCS use CRC32C checksums.
+ *
+ * @deprecated Use `UploadChecksumValidationOption` and
+ * `DownloadChecksumValidationOption` instead.
  */
-struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
+struct [[deprecated(
+    "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
+    "instead")]] DisableMD5Hash
+    : public internal::ComplexOption<DisableMD5Hash, bool> {
   using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
@@ -134,8 +142,13 @@ inline std::string ComputeCrc32cChecksum(char const* payload) {
  *   for most applications.  Disabling CRC32C checksums while MD5 hashes remain
  *   disabled exposes your application to data corruption. We recommend that all
  *   uploads to GCS and downloads from GCS use CRC32C checksums.
+ *
+ * @deprecated Use `UploadChecksumValidationOption` and
+ * `DownloadChecksumValidationOption` instead.
  */
-struct DisableCrc32cChecksum
+struct [[deprecated(
+    "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
+    "instead")]] DisableCrc32cChecksum
     : public internal::ComplexOption<DisableCrc32cChecksum, bool> {
   using ComplexOption<DisableCrc32cChecksum, bool>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
@@ -149,4 +162,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
+#include "google/cloud/internal/diagnostics_pop.inc"
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_HASHING_OPTIONS_H

@@ -29,8 +29,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * checksum of an object during uploads and downloads.
  *
  * The option has no effect if the service does not return a CRC32C hash.
+ *
+ * @deprecated Use `UploadChecksumValidationOption` and
+ * `DownloadChecksumValidationOption` instead.
  */
-struct EnableCrc32cValidationOption {
+struct [[deprecated(
+    "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
+    "instead")]] EnableCrc32cValidationOption {
   using Type = bool;
 };
 
@@ -54,8 +59,13 @@ struct UseCrc32cValueOption {
  *
  * The option has no effect for partial downloads or any other circumstance
  * where the service does not return a MD5 hash.
+ *
+ * @deprecated Use `UploadChecksumValidationOption` and
+ * `DownloadChecksumValidationOption` instead.
  */
-struct EnableMD5ValidationOption {
+struct [[deprecated(
+    "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
+    "instead")]] EnableMD5ValidationOption {
   using Type = bool;
 };
 
