@@ -83,17 +83,9 @@ inline std::unique_ptr<storage::AsyncIdempotencyPolicy> idempotency_policy(
 std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
     Options const& options) {
   auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
-  bool enable_crc32c = false;
-  bool enable_md5 = false;
-
-  if (options.has<storage::UploadChecksumValidationOption>()) {
-    auto const algo = options.get<storage::UploadChecksumValidationOption>();
-    enable_crc32c = (algo == storage::ChecksumAlgorithm::kCrc32c);
-    enable_md5 = (algo == storage::ChecksumAlgorithm::kMD5);
-  } else {
-    enable_crc32c = options.get<storage::EnableCrc32cValidationOption>();
-    enable_md5 = options.get<storage::EnableMD5ValidationOption>();
-  }
+  auto const settings = GetUploadChecksumSettings(options);
+  auto const enable_crc32c = settings.enable_crc32c;
+  auto const enable_md5 = settings.enable_md5;
 
   if (options.has<storage::UseCrc32cValueOption>()) {
     crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(

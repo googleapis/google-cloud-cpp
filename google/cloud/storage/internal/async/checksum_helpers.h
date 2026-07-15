@@ -40,6 +40,16 @@ inline ChecksumSettings GetDownloadChecksumSettings(Options const& options) {
           options.get<storage::EnableMD5ValidationOption>()};
 }
 
+inline ChecksumSettings GetUploadChecksumSettings(Options const& options) {
+  if (options.has<storage::UploadChecksumValidationOption>()) {
+    auto const algo = options.get<storage::UploadChecksumValidationOption>();
+    return {algo == storage::ChecksumAlgorithm::kCrc32c,
+            algo == storage::ChecksumAlgorithm::kMD5};
+  }
+  return {options.get<storage::EnableCrc32cValidationOption>(),
+          options.get<storage::EnableMD5ValidationOption>()};
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
