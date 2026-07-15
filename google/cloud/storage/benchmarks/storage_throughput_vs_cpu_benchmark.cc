@@ -389,7 +389,7 @@ void RunThread(ThroughputOptions const& options, int thread_id,
     auto upload_result =
         uploader->Run(options.bucket, object_name,
                       gcs_bm::ThroughputExperimentConfig{
-                          gcs_bm::kOpWrite, object_size, write_buffer_size, 
+                          gcs_bm::kOpWrite, object_size, write_buffer_size,
                           enable_crc, enable_md5, /*read_range=*/std::nullopt});
     auto status = upload_result.status;
     handler(options, std::move(upload_result));
