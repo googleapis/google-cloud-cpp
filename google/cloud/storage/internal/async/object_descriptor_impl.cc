@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/async/options.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/multi_stream_manager.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
@@ -221,9 +222,16 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
 
 std::shared_ptr<storage::internal::HashFunction>
 ObjectDescriptorImpl::CreateHashFunction(bool is_full_read) const {
-  auto const enable_crc32c =
-      options_.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+  bool enable_crc32c = false;
+  bool enable_md5 = false;
+  if (options_.has<storage::DownloadChecksumValidationOption>()) {
+    auto const algo = options_.get<storage::DownloadChecksumValidationOption>();
+    enable_crc32c = (algo == storage::ChecksumAlgorithm::kCrc32c);
+    enable_md5 = (algo == storage::ChecksumAlgorithm::kMD5);
+  } else {
+    enable_crc32c = options_.get<storage::EnableCrc32cValidationOption>();
+    enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+  }
 
   if (enable_crc32c) {
     std::unique_ptr<storage::internal::HashFunction> child;
@@ -255,9 +263,16 @@ ObjectDescriptorImpl::CreateHashValidator(bool is_full_read) const {
     return storage::internal::CreateNullHashValidator();
   }
 
-  auto const enable_crc32c =
-      options_.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+  bool enable_crc32c = false;
+  bool enable_md5 = false;
+  if (options_.has<storage::DownloadChecksumValidationOption>()) {
+    auto const algo = options_.get<storage::DownloadChecksumValidationOption>();
+    enable_crc32c = (algo == storage::ChecksumAlgorithm::kCrc32c);
+    enable_md5 = (algo == storage::ChecksumAlgorithm::kMD5);
+  } else {
+    enable_crc32c = options_.get<storage::EnableCrc32cValidationOption>();
+    enable_md5 = options_.get<storage::EnableMD5ValidationOption>();
+  }
 
   std::unique_ptr<storage::internal::HashValidator> hash_validator;
   if (enable_crc32c && enable_md5) {

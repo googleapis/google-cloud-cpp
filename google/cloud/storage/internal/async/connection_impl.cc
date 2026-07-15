@@ -82,12 +82,24 @@ inline std::unique_ptr<storage::AsyncIdempotencyPolicy> idempotency_policy(
 std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
     Options const& options) {
   auto crc32c = std::unique_ptr<storage::internal::HashFunction>();
+  bool enable_crc32c = false;
+  bool enable_md5 = false;
+
+  if (options.has<storage::UploadChecksumValidationOption>()) {
+    auto const algo = options.get<storage::UploadChecksumValidationOption>();
+    enable_crc32c = (algo == storage::ChecksumAlgorithm::kCrc32c);
+    enable_md5 = (algo == storage::ChecksumAlgorithm::kMD5);
+  } else {
+    enable_crc32c = options.get<storage::EnableCrc32cValidationOption>();
+    enable_md5 = options.get<storage::EnableMD5ValidationOption>();
+  }
+
   if (options.has<storage::UseCrc32cValueOption>()) {
     crc32c = std::make_unique<storage::internal::PrecomputedHashFunction>(
         storage::internal::HashValues{
             Crc32cFromProto(options.get<storage::UseCrc32cValueOption>()),
             /*.md5=*/{}});
-  } else if (options.get<storage::EnableCrc32cValidationOption>()) {
+  } else if (enable_crc32c) {
     crc32c = std::make_unique<storage::internal::Crc32cHashFunction>();
   }
 
@@ -97,7 +109,7 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
         storage::internal::HashValues{
             /*.crc32=*/{},
             MD5FromProto(options.get<storage::UseMD5ValueOption>())});
-  } else if (options.get<storage::EnableMD5ValidationOption>()) {
+  } else if (enable_md5) {
     md5 = storage::internal::MD5HashFunction::Create();
   }
 
@@ -117,9 +129,17 @@ std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
       request.read_limit() != 0 || request.read_offset() != 0;
   if (is_ranged_read) return storage::internal::CreateNullHashValidator();
 
-  auto const enable_crc32c =
-      options.get<storage::EnableCrc32cValidationOption>();
-  auto const enable_md5 = options.get<storage::EnableMD5ValidationOption>();
+  bool enable_crc32c = false;
+  bool enable_md5 = false;
+
+  if (options.has<storage::DownloadChecksumValidationOption>()) {
+    auto const algo = options.get<storage::DownloadChecksumValidationOption>();
+    enable_crc32c = (algo == storage::ChecksumAlgorithm::kCrc32c);
+    enable_md5 = (algo == storage::ChecksumAlgorithm::kMD5);
+  } else {
+    enable_crc32c = options.get<storage::EnableCrc32cValidationOption>();
+    enable_md5 = options.get<storage::EnableMD5ValidationOption>();
+  }
 
   if (enable_crc32c && enable_md5) {
     return std::make_unique<storage::internal::CompositeValidator>(
