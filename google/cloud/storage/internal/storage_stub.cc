@@ -322,24 +322,6 @@ StatusOr<google::storage::v2::Object> DefaultStorageStub::MoveObject(
   return response;
 }
 
-future<StatusOr<google::storage::v2::Object>>
-DefaultStorageStub::AsyncComposeObject(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    google::cloud::internal::ImmutableOptions,
-    google::storage::v2::ComposeObjectRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::storage::v2::ComposeObjectRequest,
-                                    google::storage::v2::Object>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::storage::v2::ComposeObjectRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncComposeObject(context, request, cq);
-      },
-      request, std::move(context));
-}
-
 future<StatusOr<google::storage::v2::Bucket>>
 DefaultStorageStub::AsyncGetBucket(
     google::cloud::CompletionQueue& cq,
@@ -354,6 +336,24 @@ DefaultStorageStub::AsyncGetBucket(
              google::storage::v2::GetBucketRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncGetBucket(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::storage::v2::Object>>
+DefaultStorageStub::AsyncComposeObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::storage::v2::ComposeObjectRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::storage::v2::ComposeObjectRequest,
+                                    google::storage::v2::Object>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::storage::v2::ComposeObjectRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncComposeObject(context, request, cq);
       },
       request, std::move(context));
 }

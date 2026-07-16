@@ -198,6 +198,15 @@ StatusOr<google::storage::v2::Object> StorageRoundRobin::MoveObject(
   return Child()->MoveObject(context, options, request);
 }
 
+future<StatusOr<google::storage::v2::Bucket>> StorageRoundRobin::AsyncGetBucket(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::GetBucketRequest const& request) {
+  return Child()->AsyncGetBucket(cq, std::move(context), std::move(options),
+                                 request);
+}
+
 future<StatusOr<google::storage::v2::Object>>
 StorageRoundRobin::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
@@ -206,15 +215,6 @@ StorageRoundRobin::AsyncComposeObject(
     google::storage::v2::ComposeObjectRequest const& request) {
   return Child()->AsyncComposeObject(cq, std::move(context), std::move(options),
                                      request);
-}
-
-future<StatusOr<google::storage::v2::Bucket>> StorageRoundRobin::AsyncGetBucket(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::v2::GetBucketRequest const& request) {
-  return Child()->AsyncGetBucket(cq, std::move(context), std::move(options),
-                                 request);
 }
 
 future<Status> StorageRoundRobin::AsyncDeleteObject(

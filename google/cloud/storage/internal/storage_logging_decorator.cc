@@ -359,6 +359,23 @@ StatusOr<google::storage::v2::Object> StorageLogging::MoveObject(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::storage::v2::Bucket>> StorageLogging::AsyncGetBucket(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::GetBucketRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::storage::v2::GetBucketRequest const& request) {
+        return child_->AsyncGetBucket(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
 future<StatusOr<google::storage::v2::Object>>
 StorageLogging::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
@@ -372,23 +389,6 @@ StorageLogging::AsyncComposeObject(
              google::storage::v2::ComposeObjectRequest const& request) {
         return child_->AsyncComposeObject(cq, std::move(context),
                                           std::move(options), request);
-      },
-      cq, std::move(context), std::move(options), request, __func__,
-      tracing_options_);
-}
-
-future<StatusOr<google::storage::v2::Bucket>> StorageLogging::AsyncGetBucket(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::storage::v2::GetBucketRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::storage::v2::GetBucketRequest const& request) {
-        return child_->AsyncGetBucket(cq, std::move(context),
-                                      std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
