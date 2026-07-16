@@ -19,9 +19,11 @@
 #include "google/cloud/storage/internal/async/rewriter_connection_tracing.h"
 #include "google/cloud/storage/internal/async/writer_connection_tracing.h"
 #include "google/cloud/storage/internal/bucket_metadata_cache.h"
-#include "google/cloud/storage/internal/connection_factory.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
+#include "absl/strings/match.h"
+#include "google/storage/v2/storage.pb.h"
 #include <algorithm>
 #include <chrono>
 #include <future>
@@ -37,17 +39,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
+std::string NormalizeBucketName(std::string const& bucket) {
+  auto const prefix = std::string("projects/_/buckets/");
+  if (absl::StartsWith(bucket, prefix)) {
+    return bucket.substr(prefix.size());
+  }
+  return bucket;
+}
+
 class AsyncConnectionTracing : public storage::AsyncConnection {
  public:
   explicit AsyncConnectionTracing(
       std::shared_ptr<storage::AsyncConnection> impl)
-      : impl_(std::move(impl)), cache_(BucketMetadataCache::Singleton()) {}
+      : impl_(std::move(impl)),
+        cache_(std::make_shared<BucketMetadataCache>()) {}
 
-  ~AsyncConnectionTracing() override {
-    for (auto& f : bg_tasks_) {
-      if (f.valid()) f.wait();
-    }
-  }
+  ~AsyncConnectionTracing() override = default;
 
   Options options() const override { return impl_->options(); }
 
@@ -64,8 +71,16 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     EnrichSpan(*span, p.options,
                p.request.write_object_spec().resource().bucket());
     internal::OTelScope scope(span);
-    return internal::EndSpan(std::move(span),
-                             impl_->InsertObject(std::move(p)));
+    return impl_->InsertObject(std::move(p))
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+               span = std::move(span), this,
+               bucket_name =
+                   p.request.write_object_spec().resource().bucket()](auto f) {
+          auto result = f.get();
+          internal::DetachOTelContext(oc);
+          MaybeInvalidate(result, bucket_name);
+          return internal::EndSpan(*span, std::move(result));
+        });
   }
 
   future<StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>> Open(
@@ -75,12 +90,14 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     internal::OTelScope scope(span);
     return impl_->Open(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-               span = std::move(span)](auto f)
+               span = std::move(span), this,
+               bucket_name = p.read_spec.bucket()](auto f)
                   -> StatusOr<
                       std::shared_ptr<storage::ObjectDescriptorConnection>> {
           auto result = f.get();
           internal::DetachOTelContext(oc);
           if (!result) {
+            MaybeInvalidate(result, bucket_name);
             return internal::EndSpan(*span, std::move(result).status());
           }
           return MakeTracingObjectDescriptorConnection(std::move(span),
@@ -94,11 +111,15 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     EnrichSpan(*span, p.options, p.request.bucket());
     internal::OTelScope scope(span);
     auto wrap = [oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-                 span = std::move(span)](auto f)
+                 span = std::move(span), this,
+                 bucket_name = p.request.bucket()](auto f)
         -> StatusOr<std::unique_ptr<storage::AsyncReaderConnection>> {
       auto reader = f.get();
       internal::DetachOTelContext(oc);
-      if (!reader) return internal::EndSpan(*span, std::move(reader).status());
+      if (!reader) {
+        MaybeInvalidate(reader, bucket_name);
+        return internal::EndSpan(*span, std::move(reader).status());
+      }
       return MakeTracingReaderConnection(std::move(span), *std::move(reader));
     };
     return impl_->ReadObject(std::move(p)).then(std::move(wrap));
@@ -111,9 +132,11 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     internal::OTelScope scope(span);
     return impl_->ReadObjectRange(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-               span = std::move(span)](auto f) {
+               span = std::move(span), this,
+               bucket_name = p.request.bucket()](auto f) {
           auto result = f.get();
           internal::DetachOTelContext(oc);
+          MaybeInvalidate(result, bucket_name);
           return internal::EndSpan(*span, std::move(result));
         });
   }
@@ -127,11 +150,16 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     internal::OTelScope scope(span);
     return impl_->StartAppendableObjectUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-               span = std::move(span)](auto f)
+               span = std::move(span), this,
+               bucket_name =
+                   p.request.write_object_spec().resource().bucket()](auto f)
                   -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
-          if (!w) return internal::EndSpan(*span, std::move(w).status());
+          if (!w) {
+            MaybeInvalidate(w, bucket_name);
+            return internal::EndSpan(*span, std::move(w).status());
+          }
           return MakeTracingWriterConnection(span, *std::move(w));
         });
   }
@@ -145,11 +173,16 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     internal::OTelScope scope(span);
     return impl_->ResumeAppendableObjectUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-               span = std::move(span)](auto f)
+               span = std::move(span), this,
+               bucket_name =
+                   p.request.write_object_spec().resource().bucket()](auto f)
                   -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
-          if (!w) return internal::EndSpan(*span, std::move(w).status());
+          if (!w) {
+            MaybeInvalidate(w, bucket_name);
+            return internal::EndSpan(*span, std::move(w).status());
+          }
           return MakeTracingWriterConnection(span, *std::move(w));
         });
   }
@@ -163,11 +196,16 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     internal::OTelScope scope(span);
     return impl_->StartUnbufferedUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-               span = std::move(span)](auto f)
+               span = std::move(span), this,
+               bucket_name =
+                   p.request.write_object_spec().resource().bucket()](auto f)
                   -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
-          if (!w) return internal::EndSpan(*span, std::move(w).status());
+          if (!w) {
+            MaybeInvalidate(w, bucket_name);
+            return internal::EndSpan(*span, std::move(w).status());
+          }
           return MakeTracingWriterConnection(span, *std::move(w));
         });
   }
@@ -181,11 +219,16 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     internal::OTelScope scope(span);
     return impl_->StartBufferedUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
-               span = std::move(span)](auto f)
+               span = std::move(span), this,
+               bucket_name =
+                   p.request.write_object_spec().resource().bucket()](auto f)
                   -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
-          if (!w) return internal::EndSpan(*span, std::move(w).status());
+          if (!w) {
+            MaybeInvalidate(w, bucket_name);
+            return internal::EndSpan(*span, std::move(w).status());
+          }
           return MakeTracingWriterConnection(span, *std::move(w));
         });
   }
@@ -227,16 +270,30 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     auto span = internal::MakeSpan("storage::AsyncConnection::ComposeObject");
     EnrichSpan(*span, p.options, p.request.destination().bucket());
     internal::OTelScope scope(span);
-    return internal::EndSpan(std::move(span),
-                             impl_->ComposeObject(std::move(p)));
+    return impl_->ComposeObject(std::move(p))
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+               span = std::move(span), this,
+               bucket_name = p.request.destination().bucket()](auto f) {
+          auto result = f.get();
+          internal::DetachOTelContext(oc);
+          MaybeInvalidate(result, bucket_name);
+          return internal::EndSpan(*span, std::move(result));
+        });
   }
 
   future<Status> DeleteObject(DeleteObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::DeleteObject");
     EnrichSpan(*span, p.options, p.request.bucket());
     internal::OTelScope scope(span);
-    return internal::EndSpan(std::move(span),
-                             impl_->DeleteObject(std::move(p)));
+    return impl_->DeleteObject(std::move(p))
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+               span = std::move(span), this,
+               bucket_name = p.request.bucket()](auto f) {
+          auto result = f.get();
+          internal::DetachOTelContext(oc);
+          MaybeInvalidate(result, bucket_name);
+          return internal::EndSpan(*span, std::move(result));
+        });
   }
 
   std::shared_ptr<storage::AsyncRewriterConnection> RewriteObject(
@@ -246,58 +303,93 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
         impl_->RewriteObject(std::move(p)), enabled);
   }
 
+  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      GetBucketParams p) override {
+    auto span = internal::MakeSpan("storage::AsyncConnection::GetBucket");
+    internal::OTelScope scope(span);
+    auto const bucket_name = p.request.name();
+    return impl_->GetBucket(std::move(p))
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+               span = std::move(span), this,
+               bucket_name](future<StatusOr<google::storage::v2::Bucket>> f)
+                  -> StatusOr<google::storage::v2::Bucket> {
+          auto result = f.get();
+          internal::DetachOTelContext(oc);
+          if (result.ok()) {
+            std::string loc = result->location();
+            if (result->location_type() == "multi-region" ||
+                result->location_type() == "dual-region") {
+              loc = "global";
+            }
+            BucketCacheEntry entry{result->project() + "/buckets/" +
+                                       NormalizeBucketName(bucket_name),
+                                   std::move(loc)};
+            cache().Put(bucket_name, std::move(entry));
+          } else {
+            MaybeInvalidate(result, bucket_name);
+          }
+          return internal::EndSpan(*span, std::move(result));
+        });
+  }
+
  private:
-  void CleanupCompletedTasks() {
-    std::unique_lock<std::mutex> lk(mu_);
-    bg_tasks_.erase(
-        std::remove_if(bg_tasks_.begin(), bg_tasks_.end(),
-                       [](std::future<void> const& f) {
-                         return f.wait_for(std::chrono::seconds(0)) ==
-                                std::future_status::ready;
-                       }),
-        bg_tasks_.end());
+  BucketMetadataCache& cache() const { return *cache_; }
+
+  void MaybeInvalidate(Status const& status, std::string const& bucket_name) {
+    if (!status.ok() && status.code() == StatusCode::kNotFound) {
+      cache().Invalidate(bucket_name);
+    }
+  }
+
+  template <typename T>
+  void MaybeInvalidate(StatusOr<T> const& result,
+                       std::string const& bucket_name) {
+    MaybeInvalidate(result.status(), bucket_name);
   }
 
   void MaybeTriggerBackgroundFetch(Options const& options,
                                    std::string const& bucket_name) {
-    CleanupCompletedTasks();
-
-    if (!cache_.StartFetch(bucket_name)) {
+    if (!cache().StartFetch(bucket_name)) {
       return;
     }
 
-    std::shared_ptr<storage::internal::StorageConnection> conn;
-    {
-      std::lock_guard<std::mutex> lk(mu_);
-      if (!sync_conn_) {
-        sync_conn_ = MakeStorageConnection(impl_->options());
-      }
-      conn = sync_conn_;
-    }
+    auto guard = ScopedFetch(cache_, bucket_name);
+    google::storage::v2::GetBucketRequest request;
+    auto const normalized_bucket_name = NormalizeBucketName(bucket_name);
+    request.set_name("projects/_/buckets/" + normalized_bucket_name);
+    GetBucketParams params{std::move(request), options};
 
-    auto f =
-        std::async(std::launch::async, [bucket_name, options, conn, this]() {
-          google::cloud::internal::OptionsSpan span(options);
-          auto const normalized_bucket_name =
-              BucketMetadataCache::NormalizeBucketName(bucket_name);
-          storage::internal::GetBucketMetadataRequest request(
-              normalized_bucket_name);
-          auto metadata = conn->GetBucketMetadata(request);
-          auto entry = BucketCacheEntry::Create(bucket_name, metadata);
-          if (entry) {
-            cache_.Put(bucket_name, std::move(*entry));
+    impl_->GetBucket(std::move(params))
+        .then([cache = cache_, bucket_name, guard = std::move(guard)](
+                  future<StatusOr<google::storage::v2::Bucket>> f) {
+          auto metadata = f.get();
+          if (metadata.ok()) {
+            std::string loc = metadata->location();
+            if (metadata->location_type() == "multi-region" ||
+                metadata->location_type() == "dual-region") {
+              loc = "global";
+            }
+            BucketCacheEntry entry{metadata->project() + "/buckets/" +
+                                       NormalizeBucketName(bucket_name),
+                                   std::move(loc)};
+            cache->Put(bucket_name, std::move(entry));
+          } else if (metadata.status().code() ==
+                     StatusCode::kPermissionDenied) {
+            BucketCacheEntry entry{
+                "projects/_/buckets/" + NormalizeBucketName(bucket_name),
+                "global"};
+            cache->Put(bucket_name, std::move(entry));
           }
-          cache_.EndFetch(bucket_name);
         });
-
-    std::unique_lock<std::mutex> lk(mu_);
-    bg_tasks_.push_back(std::move(f));
   }
 
   void EnrichSpan(opentelemetry::trace::Span& span, Options const& options,
                   std::string const& bucket_name) {
     if (bucket_name.empty()) return;
-    auto entry = cache_.Get(bucket_name);
+    auto const enabled = options.get<
+        google::cloud::storage_experimental::OTelSpanEnrichmentOption>();
+    if (!enabled) return;
+    auto entry = cache().Get(bucket_name);
     if (entry.has_value()) {
       span.SetAttribute("gcp.resource.destination.id", entry->id);
       span.SetAttribute("gcp.resource.destination.location", entry->location);
@@ -307,10 +399,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
   }
 
   std::shared_ptr<storage::AsyncConnection> impl_;
-  BucketMetadataCache& cache_;
-  std::shared_ptr<storage::internal::StorageConnection> sync_conn_;
-  std::vector<std::future<void>> bg_tasks_;
-  std::mutex mu_;
+  std::shared_ptr<BucketMetadataCache> cache_;
 };
 
 }  // namespace
