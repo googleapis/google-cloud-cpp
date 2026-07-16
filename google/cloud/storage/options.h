@@ -317,6 +317,19 @@ struct IdempotencyPolicyOption {
   using Type = std::shared_ptr<IdempotencyPolicy>;
 };
 
+/**
+ * Enable adoption reporting of client-side optimizations and configuration
+ * choices.
+ *
+ * When this option is enabled (the default), the GCS client sends a bitmask in
+ * the `x-goog-storage-cpp-features` header.
+ *
+ * @ingroup storage-options
+ */
+struct EnableFeatureReportsOption {
+  using Type = bool;
+};
+
 /// The complete list of options accepted by `storage::Client`.
 using ClientOptionList = ::google::cloud::OptionList<
     RestEndpointOption, IamEndpointOption, ProjectIdOption, ProjectIdOption,
@@ -324,7 +337,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
-    IdempotencyPolicyOption, CARootsFilePathOption,
+    IdempotencyPolicyOption, CARootsFilePathOption, EnableFeatureReportsOption,
     storage_experimental::HttpVersionOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

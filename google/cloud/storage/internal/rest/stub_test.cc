@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/rest/stub.h"
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -1026,6 +1027,27 @@ TEST(RestStubTest, UploadChunkIntermediate) {
                          std::make_shared<NoOpHashFunction>()));
   EXPECT_THAT(status,
               StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
+TEST(RestStubTest, FeatureTrackerHeaderAppearsInRequest) {
+  auto tracker = std::make_shared<FeatureTracker>();
+  tracker->RegisterFeature(TrackedFeature::kPCU);
+  auto options = Options{}.set<FeatureTrackerOption>(tracker);
+
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(
+      *mock,
+      Get(An<RestContext&>(),
+          ResultOf(
+              "request includes feature tracker header",
+              [](RestRequest const& r) { return r.headers(); },
+              Contains(Pair(kFeatureTrackerHeaderName,
+                            ElementsAre(tracker->HeaderValue()))))))
+      .WillOnce(Return(PermanentError()));
+
+  auto tested = std::make_unique<RestStub>(options, mock, mock);
+  RestContext context;
+  tested->ListBuckets(context, options, ListBucketsRequest());
 }
 
 }  // namespace

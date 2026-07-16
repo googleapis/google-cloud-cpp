@@ -16,6 +16,7 @@
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/connection_factory.h"
+#include "google/cloud/storage/internal/feature_tracker.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_options.h"
@@ -624,8 +625,8 @@ Options DefaultOptions(Options opts) {
     rest_defaults.set<rest::CAPathOption>(o.get<internal::CAPathOption>());
   }
 
-  return google::cloud::internal::MergeOptions(std::move(o),
-                                               std::move(rest_defaults));
+  return internal::SetupFeatureTracker(google::cloud::internal::MergeOptions(
+      std::move(o), std::move(rest_defaults)));
 }
 
 Options DefaultOptionsWithCredentials(Options opts) {
