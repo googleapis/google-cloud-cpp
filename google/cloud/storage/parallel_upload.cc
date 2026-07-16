@@ -37,7 +37,7 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
                                ResumableUploadRequest const& request,
                                std::string upload_id,
                                std::uint64_t committed_size,
-                               absl::optional<ObjectMetadata> metadata,
+                               std::optional<ObjectMetadata> metadata,
                                std::size_t max_buffer_size)
       : ObjectWriteStreambuf(
             std::move(connection), request, std::move(upload_id),

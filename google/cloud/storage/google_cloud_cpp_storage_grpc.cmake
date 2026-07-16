@@ -231,7 +231,6 @@ target_link_libraries(
            google-cloud-cpp::common
            nlohmann_json::nlohmann_json
            gRPC::grpc++
-           absl::optional
            absl::strings
            absl::time
            Threads::Threads)

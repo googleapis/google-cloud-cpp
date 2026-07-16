@@ -23,13 +23,13 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/type_list.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/optional.h"
 #include <condition_variable>
 #include <cstddef>
 #include <fstream>
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <optional>
 #include <string>
 #include <tuple>
 #include <type_traits>
@@ -80,7 +80,7 @@ struct CreateParallelUploadShards;
  */
 template <typename T, typename Tuple, typename Enable = void>
 struct ExtractFirstOccurrenceOfTypeImpl {
-  absl::optional<T> operator()(Tuple const&) { return absl::optional<T>(); }
+  std::optional<T> operator()(Tuple const&) { return std::optional<T>(); }
 };
 
 template <typename T, typename... Options>
@@ -88,13 +88,13 @@ struct ExtractFirstOccurrenceOfTypeImpl<
     T, std::tuple<Options...>,
     std::enable_if_t<Among<std::decay_t<Options>...>::template TPred<
         std::decay_t<T>>::value>> {
-  absl::optional<T> operator()(std::tuple<Options...> const& tuple) {
+  std::optional<T> operator()(std::tuple<Options...> const& tuple) {
     return std::get<0>(StaticTupleFilter<Among<T>::template TPred>(tuple));
   }
 };
 
 template <typename T, typename Tuple>
-absl::optional<T> ExtractFirstOccurrenceOfType(Tuple const& tuple) {
+std::optional<T> ExtractFirstOccurrenceOfType(Tuple const& tuple) {
   return ExtractFirstOccurrenceOfTypeImpl<T, Tuple>()(tuple);
 }
 
@@ -212,7 +212,7 @@ class ParallelUploadStateImpl
   struct StreamInfo {
     std::string object_name;
     std::string resumable_session_id;
-    absl::optional<ComposeSourceObject> composition_arg;
+    std::optional<ComposeSourceObject> composition_arg;
     bool finished;
   };
 
@@ -229,7 +229,7 @@ class ParallelUploadStateImpl
   // Tracks how many streams are still written to.
   std::size_t num_unfinished_streams_ = 0;
   std::vector<StreamInfo> streams_;
-  absl::optional<StatusOr<ObjectMetadata>> res_;
+  std::optional<StatusOr<ObjectMetadata>> res_;
   Status cleanup_status_;
   std::string custom_data_;
   std::string resumable_session_id_;

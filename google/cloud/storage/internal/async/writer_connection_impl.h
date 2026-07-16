@@ -54,7 +54,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   void Cancel() override { return impl_->Cancel(); }
 
   std::string UploadId() const override;
-  absl::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
+  std::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
       const override {
     return latest_write_handle_;
   }
@@ -88,7 +88,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   future<StatusOr<google::storage::v2::Object>> OnFinalUpload(
       std::size_t upload_size, StatusOr<bool> success);
   future<StatusOr<std::int64_t>> OnQuery(
-      absl::optional<google::storage::v2::BidiWriteObjectResponse> response);
+      std::optional<google::storage::v2::BidiWriteObjectResponse> response);
   future<Status> Finish();
 
   google::cloud::internal::ImmutableOptions options_;
@@ -113,7 +113,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   google::cloud::future<void> finished_;
 
   // Track the latest write handle seen in responses.
-  absl::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
+  std::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 
   std::mutex mu_;
 };

@@ -15,9 +15,9 @@
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/storage/version.h"
-#include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
 #include <memory>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>

@@ -312,7 +312,7 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
-    absl::optional<google::storage::v2::BidiWriteObjectResponse> response) {
+    std::optional<google::storage::v2::BidiWriteObjectResponse> response) {
   if (!response.has_value()) {
     return Finish()
         .then(HandleFinishAfterError(

@@ -73,7 +73,7 @@ class PatchBuilder {
    * Add a boolean field to the patch.
    *
    * There is no `bool` value used to represent `null`, if you want to delete
-   * boolean fields use the `absl::optional<bool>` overload.
+   * boolean fields use the `std::optional<bool>` overload.
    */
   PatchBuilder& AddBoolField(char const* field_name, bool lhs, bool rhs);
 

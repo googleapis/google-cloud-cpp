@@ -88,7 +88,7 @@ std::unique_ptr<MockAsyncBidiWriteObjectStream> MakeCommonAppendStream(
             .then([persisted_size](auto) {
               auto response = google::storage::v2::BidiWriteObjectResponse{};
               response.set_persisted_size(persisted_size);
-              return absl::make_optional(std::move(response));
+              return std::make_optional(std::move(response));
             });
       })
       // The second `Read()` call, after the final write, returns the full
@@ -102,7 +102,7 @@ std::unique_ptr<MockAsyncBidiWriteObjectStream> MakeCommonAppendStream(
               response.mutable_resource()->set_name("test-object");
               // The final size should be greater than the persisted size.
               response.mutable_resource()->set_size(persisted_size + 1024);
-              return absl::make_optional(std::move(response));
+              return std::make_optional(std::move(response));
             });
       });
 

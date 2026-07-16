@@ -176,7 +176,7 @@ TEST(WriterConnectionResumed, FlushEmpty) {
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(absl::nullopt));
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
   EXPECT_CALL(*mock, Flush).WillRepeatedly([&](auto const& p) {
     EXPECT_TRUE(p.payload().empty());
     return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
@@ -214,7 +214,7 @@ TEST(WriteConnectionResumed, FlushNonEmpty) {
 
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(absl::nullopt));
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
   EXPECT_CALL(*mock, Flush)
       .WillOnce([&](auto const& p) {
         EXPECT_EQ(p.payload(), payload.payload());
@@ -408,7 +408,7 @@ TEST(WriteConnectionResumed, NoConcurrentWritesWhenFlushAndWriteRace) {
 
   EXPECT_CALL(*mock, PersistedState)
       .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(absl::nullopt));
+  EXPECT_CALL(*mock, WriteHandle).WillRepeatedly(Return(std::nullopt));
   EXPECT_CALL(*mock, Flush(_)).WillRepeatedly([&](auto) {
     return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
   });
@@ -690,12 +690,12 @@ TEST(WriterConnectionResumed, ResetWriteOffsetOnResume) {
   EXPECT_CALL(*mock_stream_ptr, Read)
       .WillOnce([&, read_response1]() {
         return sequencer.PushBack("StreamRead1").then([read_response1](auto) {
-          return absl::make_optional(read_response1);
+          return std::make_optional(read_response1);
         });
       })
       .WillOnce([&, read_response2]() {
         return sequencer.PushBack("StreamRead2").then([read_response2](auto) {
-          return absl::make_optional(read_response2);
+          return std::make_optional(read_response2);
         });
       });
 
@@ -803,12 +803,12 @@ TEST(WriterConnectionResumed, ResumeUsesSizeFromFirstResponse) {
   EXPECT_CALL(*mock_stream_ptr, Read)
       .WillOnce([&, read_response]() {
         return sequencer.PushBack("StreamRead1").then([read_response](auto) {
-          return absl::make_optional(read_response);
+          return std::make_optional(read_response);
         });
       })
       .WillOnce([&, read_response]() {
         return sequencer.PushBack("StreamRead2").then([read_response](auto) {
-          return absl::make_optional(read_response);
+          return std::make_optional(read_response);
         });
       });
 
@@ -919,12 +919,12 @@ TEST(WriterConnectionResumed, ResumeUsesChecksumsFromFirstResponse) {
   EXPECT_CALL(*mock_stream_ptr, Read)
       .WillOnce([&, read_response]() {
         return sequencer.PushBack("StreamRead1").then([read_response](auto) {
-          return absl::make_optional(read_response);
+          return std::make_optional(read_response);
         });
       })
       .WillOnce([&, read_response]() {
         return sequencer.PushBack("StreamRead2").then([read_response](auto) {
-          return absl::make_optional(read_response);
+          return std::make_optional(read_response);
         });
       });
 

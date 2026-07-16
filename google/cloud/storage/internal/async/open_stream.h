@@ -20,11 +20,11 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <atomic>
 #include <functional>
 #include <memory>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -58,7 +58,7 @@ class OpenStream : public std::enable_shared_from_this<OpenStream> {
   using StreamingRpc = google::cloud::AsyncStreamingReadWriteRpc<
       google::storage::v2::BidiReadObjectRequest,
       google::storage::v2::BidiReadObjectResponse>;
-  using ReadType = absl::optional<google::storage::v2::BidiReadObjectResponse>;
+  using ReadType = std::optional<google::storage::v2::BidiReadObjectResponse>;
 
   explicit OpenStream(std::unique_ptr<StreamingRpc> rpc);
 

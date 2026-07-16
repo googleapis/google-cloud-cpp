@@ -251,7 +251,7 @@ TEST(StorageConnectionImpl, UploadChunkTooManyFailures) {
   EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, UploadChunk).Times(3).WillRepeatedly(transient);
   EXPECT_CALL(*mock, QueryResumableUpload).WillRepeatedly([] {
-    return QueryResumableUploadResponse{absl::nullopt, absl::nullopt};
+    return QueryResumableUploadResponse{std::nullopt, std::nullopt};
   });
   auto client =
       StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());

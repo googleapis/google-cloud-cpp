@@ -21,11 +21,11 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <memory>
 #include <mutex>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -45,7 +45,7 @@ class ReadRange {
  public:
   using ReadResponse = storage::AsyncReaderConnection::ReadResponse;
 
-  ReadRange(std::int64_t offset, absl::optional<std::int64_t> requested_length,
+  ReadRange(std::int64_t offset, std::optional<std::int64_t> requested_length,
             std::shared_ptr<storage::internal::HashFunction> hash_function,
             std::unique_ptr<storage::internal::HashValidator> hash_validator,
             std::string bucket_name, std::string object_name)
@@ -57,7 +57,7 @@ class ReadRange {
         hash_function_(std::move(hash_function)),
         hash_validator_(std::move(hash_validator)) {}
 
-  ReadRange(std::int64_t offset, absl::optional<std::int64_t> requested_length,
+  ReadRange(std::int64_t offset, std::optional<std::int64_t> requested_length,
             std::shared_ptr<storage::internal::HashFunction> hash_function =
                 storage::internal::CreateNullHashFunction(),
             std::unique_ptr<storage::internal::HashValidator> hash_validator =
@@ -65,7 +65,7 @@ class ReadRange {
       : ReadRange(offset, requested_length, std::move(hash_function),
                   std::move(hash_validator), {}, {}) {}
 
-  ReadRange(std::int64_t offset, absl::optional<std::int64_t> requested_length,
+  ReadRange(std::int64_t offset, std::optional<std::int64_t> requested_length,
             std::string bucket_name, std::string object_name)
       : ReadRange(offset, requested_length,
                   storage::internal::CreateNullHashFunction(),
@@ -74,7 +74,7 @@ class ReadRange {
 
   bool IsDone() const;
 
-  absl::optional<google::storage::v2::ReadRange> RangeForResume(
+  std::optional<google::storage::v2::ReadRange> RangeForResume(
       std::int64_t read_id) const;
 
   future<ReadResponse> Read();
@@ -82,7 +82,7 @@ class ReadRange {
 
   void OnRead(google::storage::v2::ObjectRangeData data,
               bool is_transcoded = false,
-              absl::optional<std::int64_t> object_size = absl::nullopt);
+              std::optional<std::int64_t> object_size = std::nullopt);
 
  private:
   void Notify(std::unique_lock<std::mutex> lk, storage::ReadPayload p);
@@ -90,17 +90,17 @@ class ReadRange {
 
   mutable std::mutex mu_;
   std::int64_t offset_;
-  absl::optional<std::int64_t> requested_length_;
+  std::optional<std::int64_t> requested_length_;
   std::int64_t length_;
   std::string bucket_name_;
   std::string object_name_;
   std::int64_t received_bytes_ = 0;
   bool is_transcoded_ = false;
   bool logged_warning_ = false;
-  absl::optional<std::int64_t> object_size_;
-  absl::optional<storage::ReadPayload> payload_;
-  absl::optional<Status> status_;
-  absl::optional<promise<ReadResponse>> wait_;
+  std::optional<std::int64_t> object_size_;
+  std::optional<storage::ReadPayload> payload_;
+  std::optional<Status> status_;
+  std::optional<promise<ReadResponse>> wait_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
   std::unique_ptr<storage::internal::HashValidator> hash_validator_;
 };

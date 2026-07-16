@@ -173,11 +173,11 @@ TEST(GrpcObjectRequestParser, ComposeObjectRequestAllOptions) {
   storage::internal::ComposeObjectRequest req(
       "bucket-name",
       {
-          storage::ComposeSourceObject{"source-object-1", absl::nullopt,
-                                       absl::nullopt},
+          storage::ComposeSourceObject{"source-object-1", std::nullopt,
+                                       std::nullopt},
           storage::ComposeSourceObject{"source-object-2", 27, 28},
-          storage::ComposeSourceObject{"source-object-3", 37, absl::nullopt},
-          storage::ComposeSourceObject{"source-object-4", absl::nullopt, 48},
+          storage::ComposeSourceObject{"source-object-3", 37, std::nullopt},
+          storage::ComposeSourceObject{"source-object-4", std::nullopt, 48},
       },
       "object-name");
   req.set_multiple_options(

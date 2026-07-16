@@ -276,7 +276,7 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
           CreateHashFunction(*current));
   auto hash_validator = CreateHashValidator(p.request, *current);
 
-  absl::optional<std::int64_t> requested_length;
+  std::optional<std::int64_t> requested_length;
   if (p.request.read_limit() > 0) {
     requested_length = p.request.read_limit();
   }
