@@ -366,7 +366,7 @@ class Status {
       Status const&);
   friend void internal::SetPayload(Status&, std::string, std::string);
   friend std::optional<std::string> internal::GetPayload(Status const&,
-                                                          std::string const&);
+                                                         std::string const&);
 
   class Impl;
   // A null `impl_` is an OK status. Only non-OK Statuses allocate an Impl.

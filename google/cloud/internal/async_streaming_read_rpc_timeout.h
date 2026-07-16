@@ -115,7 +115,7 @@ class AsyncStreamingReadRpcTimeout : public AsyncStreamingReadRpc<Response> {
     }
 
     future<std::optional<Response>> OnRead(future<bool> watchdog,
-                                            std::optional<Response> read) {
+                                           std::optional<Response> read) {
       watchdog.cancel();
       return watchdog.then(
           [w = WeakFromThis(), read = std::move(read)](auto f) mutable {

@@ -259,7 +259,7 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 
 /// Helper function to extract the first instance of an integer channel argument
 std::optional<int> GetIntChannelArgument(grpc::ChannelArguments const& args,
-                                          std::string const& key);
+                                         std::string const& key);
 
 /// Helper function to extract the first instance of a string channel argument
 std::optional<std::string> GetStringChannelArgument(

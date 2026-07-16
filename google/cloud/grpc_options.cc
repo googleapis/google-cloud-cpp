@@ -119,7 +119,7 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
 }
 
 std::optional<int> GetIntChannelArgument(grpc::ChannelArguments const& args,
-                                          std::string const& key) {
+                                         std::string const& key) {
   auto c_args = args.c_channel_args();
   // Just do a linear search for the key; the data structure is not organized
   // in any other useful way.

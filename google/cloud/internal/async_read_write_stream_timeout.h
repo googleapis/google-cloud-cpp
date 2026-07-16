@@ -128,7 +128,7 @@ class AsyncStreamingReadWriteRpcTimeout
     }
 
     future<std::optional<Response>> OnRead(future<bool> watchdog,
-                                            std::optional<Response> response) {
+                                           std::optional<Response> response) {
       watchdog.cancel();
       return watchdog.then(
           [w = WeakFromThis(), r = std::move(response)](auto f) mutable {

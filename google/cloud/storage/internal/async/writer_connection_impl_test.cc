@@ -1086,8 +1086,8 @@ TEST(AsyncWriterConnectionTest, CloseEmpty) {
       });
   EXPECT_CALL(*mock, Read).WillOnce([&] {
     return sequencer.PushBack("Read").then([](auto f) {
-      if (!f.get()) return absl::optional<Response>();
-      return absl::make_optional(Response{});
+      if (!f.get()) return std::optional<Response>();
+      return std::make_optional(Response{});
     });
   });
   EXPECT_CALL(*mock, Finish).WillOnce([&] {

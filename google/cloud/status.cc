@@ -207,8 +207,7 @@ void SetPayload(Status& s, std::string key, std::string payload) {
 }
 
 // Returns the payload associated with the given `key`, if available.
-std::optional<std::string> GetPayload(Status const& s,
-                                       std::string const& key) {
+std::optional<std::string> GetPayload(Status const& s, std::string const& key) {
   if (!s.impl_) return std::nullopt;
   auto const& payload = s.impl_->payload();
   auto it = payload.find(key);
