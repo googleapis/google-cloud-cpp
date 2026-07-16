@@ -578,10 +578,12 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   auto const table_id = testing::TableTestEnvironment::table_id();
 
   // Make a `Table` with an implementation that depends on the test's value
-  // parameter.
-  auto make_table = [&](Options const& options) {
+  // parameter. Disable metrics to avoid log pollution.
+  auto make_table = [&](Options options) {
+    options.set<EnableMetricsOption>(false);
     auto conn = MakeDataConnection(
-        {InstanceResource(Project(project_id()), instance_id())}, options);
+        {InstanceResource(Project(project_id()), instance_id())},
+        std::move(options));
     return Table(std::move(conn),
                  TableResource(project_id(), instance_id(), table_id));
   };
