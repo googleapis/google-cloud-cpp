@@ -810,7 +810,7 @@ TEST_F(AsyncClientIntegrationTest, ResumeAppendableObjectUpload) {
     token = *std::move(p);
   }
 
-  writer.Close();
+  ASSERT_STATUS_OK(writer.Close().get());
 
   // Reset the existing writer and resume the upload.
   writer = AsyncWriter();
