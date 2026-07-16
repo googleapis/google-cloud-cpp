@@ -20,6 +20,7 @@
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/mocks/mock_async_rewriter_connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -44,8 +45,10 @@ using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::PromiseWithOTelContext;
+using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;

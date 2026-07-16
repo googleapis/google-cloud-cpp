@@ -22,7 +22,6 @@
 #include "absl/base/call_once.h"
 #include <functional>
 #include <memory>
-#include <mutex>
 #include <string>
 
 namespace google {
@@ -36,8 +35,6 @@ class TracingConnection : public storage::internal::StorageConnection {
   explicit TracingConnection(std::shared_ptr<StorageConnection> impl,
                              AsyncRunner runner = {});
   ~TracingConnection() override;
-
-  static void ResetCacheForTesting();
 
   Options options() const override;
 

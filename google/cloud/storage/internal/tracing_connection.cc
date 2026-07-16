@@ -53,29 +53,26 @@ TracingConnection::AsyncRunner const& TracingConnection::runner() {
 
 BucketMetadataCache& TracingConnection::cache() const { return *cache_; }
 
-TracingConnection::~TracingConnection() {
-  for (auto& f : bg_tasks_) {
-    if (f.valid()) f.wait();
-  }
+TracingConnection::~TracingConnection() = default;
+
+TracingConnection::AsyncRunner const& TracingConnection::runner() {
+  absl::call_once(once_flag_, [this] {
+    if (!runner_) {
+      auto threads =
+          std::make_shared<google::cloud::rest_internal::
+                               AutomaticallyCreatedRestPureBackgroundThreads>(
+              1U);
+      runner_ = [threads](std::function<void()> f) {
+        threads->cq().RunAsync(std::move(f));
+      };
+    }
+  });
+  return runner_;
 }
 
-BucketMetadataCache& TracingConnection::cache() {
-  return BucketMetadataCache::Singleton();
-}
-
-void TracingConnection::ResetCacheForTesting() { cache().Clear(); }
+BucketMetadataCache& TracingConnection::cache() const { return *cache_; }
 
 Options TracingConnection::options() const { return impl_->options(); }
-
-void TracingConnection::CleanupCompletedTasks() {
-  std::unique_lock<std::mutex> lk(mu_);
-  bg_tasks_.erase(std::remove_if(bg_tasks_.begin(), bg_tasks_.end(),
-                                 [](std::future<void> const& f) {
-                                   return f.wait_for(std::chrono::seconds(0)) ==
-                                          std::future_status::ready;
-                                 }),
-                  bg_tasks_.end());
-}
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    BucketCacheEntry const& entry) {
@@ -85,33 +82,32 @@ void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
 
 void TracingConnection::MaybeTriggerBackgroundFetch(
     std::string const& bucket_name) {
-  CleanupCompletedTasks();
-
   if (!cache().StartFetch(bucket_name)) {
     return;
   }
 
+  auto guard = ScopedFetch(cache_, bucket_name);
   auto current_options = google::cloud::internal::SaveCurrentOptions();
-  auto f =
-      std::async(std::launch::async, [this, bucket_name, current_options]() {
-        google::cloud::internal::OptionsSpan span(current_options);
-        storage::internal::GetBucketMetadataRequest request(bucket_name);
-        auto result = impl_->GetBucketMetadata(request);
+  runner()([impl = impl_, cache = cache_, bucket_name, current_options,
+            guard]() {
+    google::cloud::internal::OptionsSpan span(current_options);
+    storage::internal::GetBucketMetadataRequest request(bucket_name);
+    auto result = impl->GetBucketMetadata(request);
 
-        auto entry = BucketCacheEntry::Create(bucket_name, result);
-        if (entry) {
-          cache().Put(bucket_name, std::move(*entry));
-        }
-
-        cache().EndFetch(bucket_name);
-      });
-
-  bg_tasks_.push_back(std::move(f));
+    if (result.ok()) {
+      cache->Put(bucket_name, BucketCacheEntry::FromMetadata(*result));
+    } else if (result.status().code() == StatusCode::kPermissionDenied) {
+      cache->Put(bucket_name, {"projects/_/buckets/" + bucket_name, "global"});
+    }
+  });
 }
 
 void TracingConnection::EnrichSpan(opentelemetry::trace::Span& span,
                                    std::string const& bucket_name) {
   if (bucket_name.empty()) return;
+  auto const enabled =
+      options().get<storage_experimental::OTelSpanEnrichmentOption>();
+  if (!enabled) return;
   auto entry = cache().Get(bucket_name);
   if (entry.has_value()) {
     EnrichSpan(span, *entry);
