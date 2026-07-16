@@ -7,7 +7,9 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.7.0 - TBD
+## v3.8.0 - TBD
+
+## v3.7.0 - 2026-07
 
 ### Removed Libraries
 
@@ -33,6 +35,22 @@ the APIs in these libraries are stable, and are ready for production use.
       {cbt::InstanceResource(google::cloud::Project("my-project"), "my-instance")},
       google::cloud::Options{});
   ```
+
+- fix(bigtable): safely handle error states in metadata retrieval ([#16225](https://github.com/googleapis/google-cloud-cpp/pull/16225))
+- cleanup(bigtable)!: remove experimental InstanceChannelAffinityOption ([#16213](https://github.com/googleapis/google-cloud-cpp/pull/16213))
+- feat(bigtable): add explicit instance MakeDataConnection ([#16191](https://github.com/googleapis/google-cloud-cpp/pull/16191))
+- feat(bigtable): Add support for adding tags to an Instance in InstanceConfig ([#16014](https://github.com/googleapis/google-cloud-cpp/pull/16014))
+- fix(bigtable): DynamicChannelPoolSizingPolicyOption used correctly ([#16188](https://github.com/googleapis/google-cloud-cpp/pull/16188))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): Add full object checksum validation for appendable uploads finalize ([#16245](https://github.com/googleapis/google-cloud-cpp/pull/16245))
+- fix(storage): enforce mutual exclusion between Close() and Finalize() in async writers ([#16211](https://github.com/googleapis/google-cloud-cpp/pull/16211))
+- fix(storage): add Close() support to AsyncWriterConnectionResumed ([#16163](https://github.com/googleapis/google-cloud-cpp/pull/16163))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-06-23T06:02:24-07:00](https://github.com/googleapis/googleapis/tree/b6f9ff05aaec18070232a1ab36da98e684bc7909)
 
 ## v3.6.0 - 2026-06
 

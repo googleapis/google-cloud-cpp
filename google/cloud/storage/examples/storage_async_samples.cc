@@ -728,6 +728,42 @@ void CreateAndWriteAppendableObject(google::cloud::storage::AsyncClient& client,
   std::cout << "File successfully uploaded " << object.DebugString() << "\n";
 }
 
+void CreateAndWriteAppendableObjectWithChecksum(
+    google::cloud::storage::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [create-and-write-appendable-object-with-checksum]
+  // [START storage_create_and_write_appendable_object_with_checksum]
+  namespace gcs = google::cloud::storage;
+  auto coro = [](gcs::AsyncClient& client, std::string bucket_name,
+                 std::string object_name)
+      -> google::cloud::future<google::storage::v2::Object> {
+    auto [writer, token] =
+        (co_await client.StartAppendableObjectUpload(
+             gcs::BucketName(std::move(bucket_name)), std::move(object_name)))
+            .value();
+    std::cout << "Appendable upload started for object " << object_name << "\n";
+
+    token = (co_await writer.Write(std::move(token),
+                                   gcs::WritePayload("Some data\n")))
+                .value();
+    std::cout << "Wrote some data.\n";
+
+    // Set the expected CRC32C checksum in the current options scope
+    // just before calling Finalize().
+    // Note: 548262564U is the pre-computed CRC32C checksum for the string "Some
+    // data\n". If the data changes, this checksum must be updated to match.
+    google::cloud::internal::OptionsSpan span(
+        google::cloud::Options{}.set<gcs::UseCrc32cValueOption>(548262564U));
+    co_return (co_await writer.Finalize(std::move(token))).value();
+  };
+  // [END storage_create_and_write_appendable_object_with_checksum]
+  //! [create-and-write-appendable-object-with-checksum]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes..
+  auto const object = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "File successfully uploaded " << object.DebugString() << "\n";
+}
+
 void PauseAndResumeAppendableUpload(google::cloud::storage::AsyncClient& client,
                                     std::vector<std::string> const& argv) {
   //! [pause-and-resume-appendable-upload]
@@ -1033,6 +1069,12 @@ void CreateAndWriteAppendableObject(google::cloud::storage::AsyncClient&,
                                     std::vector<std::string> const&) {
   std::cerr << "AsyncClient::CreateAndWriteAppendableObject() example requires "
                "coroutines\n";
+}
+
+void CreateAndWriteAppendableObjectWithChecksum(
+    google::cloud::storage::AsyncClient&, std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::CreateAndWriteAppendableObjectWithChecksum() "
+               "example requires coroutines\n";
 }
 
 void PauseAndResumeAppendableUpload(google::cloud::storage::AsyncClient&,
@@ -1505,6 +1547,8 @@ int main(int argc, char* argv[]) try {
 
       make_entry("create-and-write-appendable-object", {},
                  CreateAndWriteAppendableObject),
+      make_entry("create-and-write-appendable-object-with-checksum", {},
+                 CreateAndWriteAppendableObjectWithChecksum),
       make_entry("pause-and-resume-appendable-upload", {},
                  PauseAndResumeAppendableUpload),
       make_entry("finalize-appendable-object-upload", {},

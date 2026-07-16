@@ -53,7 +53,7 @@ service Service {
   ASSERT_THAT(service, NotNull());
 
   auto const actual = FormatClassCommentsFromServiceComments(
-      *service, std::string{service->name()}, absl::nullopt);
+      *service, std::string{service->name()}, std::nullopt);
 
   // Verify it has exactly one trailing `///` comment.
   EXPECT_THAT(actual, AllOf(EndsWith("\n///"), Not(EndsWith("\n///\n///"))));
@@ -82,7 +82,7 @@ service Service {
   ASSERT_THAT(service, NotNull());
 
   auto const actual = FormatClassCommentsFromServiceComments(
-      *service, std::string{service->name()}, absl::nullopt);
+      *service, std::string{service->name()}, std::nullopt);
 
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(
@@ -119,7 +119,7 @@ message Resource {
   ASSERT_THAT(service, NotNull());
 
   auto const actual = FormatClassCommentsFromServiceComments(
-      *service, std::string{service->name()}, absl::nullopt);
+      *service, std::string{service->name()}, std::nullopt);
 
   // Verify the first reference is separated by an empty line and that it ends
   // with a single `///` comment.
@@ -165,7 +165,7 @@ service Service {
   ASSERT_THAT(service, NotNull());
 
   auto const actual = FormatClassCommentsFromServiceComments(
-      *service, std::string{service->name()}, absl::nullopt);
+      *service, std::string{service->name()}, std::nullopt);
   // Verify the relative link is converted to an absolute link.
   EXPECT_THAT(actual,
               AllOf(HasSubstr("[groups][google.monitoring.v3.Group]"),
@@ -196,7 +196,7 @@ service Service {
   ASSERT_THAT(service, NotNull());
 
   auto const actual = FormatClassCommentsFromServiceComments(
-      *service, "NewService", absl::nullopt);
+      *service, "NewService", std::nullopt);
   EXPECT_THAT(actual, AllOf(HasSubstr("NewService")));
 }
 
