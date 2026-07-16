@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/bucket_metadata_cache.h"
 #include "google/cloud/storage/bucket_metadata.h"
+#include "absl/strings/match.h"
 #include <mutex>
 #include <utility>
 
@@ -22,16 +23,28 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+BucketCacheEntry BucketCacheEntry::FromLocation(
+    std::string id, std::string location, std::string const& location_type) {
+  if (location_type == "multi-region" || location_type == "dual-region") {
+    location = "global";
+  }
+  return {std::move(id), std::move(location)};
+}
+
 BucketCacheEntry BucketCacheEntry::FromMetadata(
     storage::BucketMetadata const& m) {
-  std::string loc = m.location();
-  if (m.location_type() == "multi-region" ||
-      m.location_type() == "dual-region") {
-    loc = "global";
-  }
-  return {
+  return FromLocation(
       "projects/" + std::to_string(m.project_number()) + "/buckets/" + m.name(),
-      std::move(loc)};
+      m.location(), m.location_type());
+}
+
+std::string BucketMetadataCache::NormalizeBucketName(
+    std::string const& bucket) {
+  auto const prefix = std::string("projects/_/buckets/");
+  if (absl::StartsWith(bucket, prefix)) {
+    return bucket.substr(prefix.size());
+  }
+  return bucket;
 }
 
 void BucketMetadataCache::MoveToFront(std::list<std::string>::iterator it) {
