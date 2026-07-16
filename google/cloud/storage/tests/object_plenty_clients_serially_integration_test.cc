@@ -57,6 +57,7 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
 
   auto client = MakeIntegrationTestClient(options);
   auto object_name = MakeRandomObjectName();
+
   std::string expected = LoremIpsum();
 
   StatusOr<ObjectMetadata> meta = client.InsertObject(
