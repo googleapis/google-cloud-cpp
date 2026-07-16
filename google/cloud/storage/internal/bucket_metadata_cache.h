@@ -67,9 +67,12 @@ class BucketMetadataCache {
   std::unordered_set<std::string> in_flight_fetch_;
 };
 
+// Tracks an in-flight fetch and clears it when destroyed.
 class ScopedFetch {
  public:
   ScopedFetch() = default;
+  // Shared ownership of BucketMetadataCache keeps the cache alive during async
+  // callbacks and ensures ScopedFetch remains copyable for lambda captures.
   ScopedFetch(std::shared_ptr<BucketMetadataCache> cache,
               std::string bucket_name)
       : state_(std::make_shared<State>(std::move(cache),
