@@ -60,6 +60,7 @@ storage_client_unit_tests = [
     "internal/const_buffer_test.cc",
     "internal/crc32c_test.cc",
     "internal/default_object_acl_requests_test.cc",
+    "internal/feature_tracker_test.cc",
     "internal/generate_message_boundary_test.cc",
     "internal/generic_request_test.cc",
     "internal/hash_function_impl_test.cc",

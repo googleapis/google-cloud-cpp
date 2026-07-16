@@ -32,12 +32,15 @@ std::string RequestParams(
   return absl::StrCat("bucket=", read_spec.bucket());
 }
 
-OpenObject::OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
-                       std::shared_ptr<grpc::ClientContext> context,
-                       google::cloud::internal::ImmutableOptions options,
-                       google::storage::v2::BidiReadObjectRequest request)
-    : rpc_(std::make_shared<OpenStream>(CreateRpc(
-          stub, cq, std::move(context), std::move(options), request))),
+OpenObject::OpenObject(
+    storage_internal::StorageStub& stub, CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::BidiReadObjectRequest request,
+    std::shared_ptr<storage::internal::FeatureTracker> tracker)
+    : rpc_(std::make_shared<OpenStream>(
+          CreateRpc(stub, cq, std::move(context), std::move(options), request,
+                    tracker))),
       initial_request_(std::move(request)) {}
 
 future<StatusOr<OpenStreamResult>> OpenObject::Call() {
@@ -56,9 +59,17 @@ std::unique_ptr<OpenStream::StreamingRpc> OpenObject::CreateRpc(
     storage_internal::StorageStub& stub, CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::storage::v2::BidiReadObjectRequest const& request) {
+    google::storage::v2::BidiReadObjectRequest const& request,
+    std::shared_ptr<storage::internal::FeatureTracker> const& tracker) {
   auto p = RequestParams(request);
   if (!p.empty()) context->AddMetadata("x-goog-request-params", std::move(p));
+  if (tracker) {
+    auto v = tracker->HeaderValue();
+    if (!v.empty()) {
+      context->AddMetadata(storage::internal::kFeatureTrackerHeaderName,
+                           std::move(v));
+    }
+  }
   return stub.AsyncBidiReadObject(cq, std::move(context), std::move(options));
 }
 

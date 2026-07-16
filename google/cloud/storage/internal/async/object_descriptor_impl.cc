@@ -40,12 +40,14 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
     std::shared_ptr<OpenStream> stream, Options options,
-    std::function<bool()> transport_ok)
+    std::function<bool()> transport_ok,
+    std::shared_ptr<storage::internal::FeatureTracker> feature_tracker)
     : resume_policy_prototype_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)),
-      transport_ok_(std::move(transport_ok)) {
+      transport_ok_(std::move(transport_ok)),
+      feature_tracker_(std::move(feature_tracker)) {
   stream_manager_ = std::make_unique<StreamManager>(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
       std::make_shared<ReadStream>(std::move(stream),
@@ -98,6 +100,10 @@ void ObjectDescriptorImpl::AssurePendingStreamQueued(
   auto request = google::storage::v2::BidiReadObjectRequest{};
 
   *request.mutable_read_object_spec() = read_object_spec_;
+  if (feature_tracker_ && stream_manager_ && stream_manager_->Size() >= 2) {
+    feature_tracker_->RegisterFeature(
+        storage::internal::TrackedFeature::kMultiStreamInMRD);
+  }
   pending_stream_ = make_stream_(std::move(request));
 }
 
