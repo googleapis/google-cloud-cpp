@@ -67,12 +67,12 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> FakeAsyncStreamingPull(
   auto generator = std::make_shared<MessageGenerator>();
   auto read_response = [cq, generator]() mutable {
     return cq.MakeRelativeTimer(us(10)).then([generator](TimerFuture) {
-      return absl::make_optional(generator->Generate(10));
+      return std::make_optional(generator->Generate(10));
     });
   };
   auto canceled_response = [cq]() mutable {
     return cq.MakeRelativeTimer(us(10)).then(
-        [](TimerFuture) { return absl::optional<Response>{}; });
+        [](TimerFuture) { return std::optional<Response>{}; });
   };
   auto finish_response = [cq]() mutable {
     return cq.MakeRelativeTimer(us(10)).then(
