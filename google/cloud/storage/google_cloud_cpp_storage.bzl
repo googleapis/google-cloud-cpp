@@ -51,6 +51,7 @@ google_cloud_cpp_storage_hdrs = [
     "internal/bucket_acl_requests.h",
     "internal/bucket_metadata_parser.h",
     "internal/bucket_requests.h",
+    "internal/checksum_helpers.h",
     "internal/complex_option.h",
     "internal/compute_engine_util.h",
     "internal/connection_factory.h",

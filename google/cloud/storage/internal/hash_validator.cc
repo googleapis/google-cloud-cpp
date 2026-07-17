@@ -12,12 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/hash_validator.h"
+#include "google/cloud/storage/internal/checksum_helpers.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_validator_impl.h"
-#include "google/cloud/options.h"
-#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/options.h"
 #include <memory>
 #include <string>
 
@@ -54,35 +57,19 @@ std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
   if (request.RequiresRangeHeader()) return CreateNullHashValidator();
 
-  bool disable_md5 = false;
-  bool disable_crc32c = false;
-  auto const& options = google::cloud::internal::CurrentOptions();
-  if (options.has<DownloadChecksumValidationOption>()) {
-    auto const algo =
-        options.get<DownloadChecksumValidationOption>();
-    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
-    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
-  } else {
-    disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
-    disable_crc32c = request.GetOption<DisableCrc32cChecksum>().value_or(false);
-  }
+  auto const settings = GetDownloadChecksumSettings(
+      request, google::cloud::internal::CurrentOptions());
+  auto const disable_md5 = settings.md5;
+  auto const disable_crc32c = settings.crc32c;
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
     ResumableUploadRequest const& request) {
-  bool disable_md5 = false;
-  bool disable_crc32c = false;
-  auto const& options = google::cloud::internal::CurrentOptions();
-  if (options.has<UploadChecksumValidationOption>()) {
-    auto const algo =
-        options.get<UploadChecksumValidationOption>();
-    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
-    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
-  } else {
-    disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
-    disable_crc32c = request.GetOption<DisableCrc32cChecksum>().value_or(false);
-  }
+  auto const settings = GetUploadChecksumSettings(
+      request, google::cloud::internal::CurrentOptions());
+  auto const disable_md5 = settings.md5;
+  auto const disable_crc32c = settings.crc32c;
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
@@ -99,3 +86,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"
