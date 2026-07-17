@@ -35,6 +35,7 @@
 #include "google/cloud/internal/random.h"
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include <memory>
+#include <mutex>
 
 namespace google {
 namespace cloud {
@@ -213,8 +214,13 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
         google::cloud::internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
     if (options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
-      grpc_metrics_exporter = std::make_unique<bigtable_internal::GrpcMetricsExporter>(
-          metric_service_connection, options, client_uid);
+      static std::shared_ptr<bigtable_internal::GrpcMetricsExporter> global_exporter;
+      static std::once_flag once;
+      std::call_once(once, [&]() {
+        global_exporter = std::make_shared<bigtable_internal::GrpcMetricsExporter>(
+            metric_service_connection, options, client_uid);
+      });
+      grpc_metrics_exporter = nullptr;
     }
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
     operation_context_factory =

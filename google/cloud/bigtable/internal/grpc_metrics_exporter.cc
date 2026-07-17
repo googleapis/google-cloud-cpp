@@ -254,9 +254,8 @@ GrpcMetricsExporter::GrpcMetricsExporter(
       (std::min)(std::chrono::milliseconds(std::chrono::seconds(30)),
                  reader_options.export_interval_millis / 2);
 
-  static std::shared_ptr<opentelemetry::metrics::MeterProvider> global_provider =
+  provider_ =
       MakeGrpcMeterProvider(std::move(exporter), std::move(reader_options));
-  provider_ = global_provider;
 
   auto const metrics = std::vector<absl::string_view>{
       absl::string_view{"grpc.client.attempt.duration"},
