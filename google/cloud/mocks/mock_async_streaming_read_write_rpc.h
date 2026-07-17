@@ -14,11 +14,10 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MOCKS_MOCK_ASYNC_STREAMING_READ_WRITE_RPC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MOCKS_MOCK_ASYNC_STREAMING_READ_WRITE_RPC_H
-#include <optional>
-
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
