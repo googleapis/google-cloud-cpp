@@ -320,9 +320,11 @@ Options DefaultTableAdminOptions(Options opts) {
 Options MetricsExporterConnectionOptions(Options options) {
   options.unset<EndpointOption>();
   options.unset<AuthorityOption>();
-  auto collector = google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR");
+  auto collector = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR");
   if (collector.has_value()) {
-    options.set<google::cloud::UnifiedCredentialsOption>(google::cloud::MakeInsecureCredentials());
+    options.set<google::cloud::UnifiedCredentialsOption>(
+        google::cloud::MakeInsecureCredentials());
   }
   return options;
 }

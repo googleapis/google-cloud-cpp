@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/data_tracing_connection.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -201,32 +201,38 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   auto limiter =
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
 
-  std::shared_ptr<monitoring_v3::MetricServiceConnection> metric_service_connection;
+  std::shared_ptr<monitoring_v3::MetricServiceConnection>
+      metric_service_connection;
   std::unique_ptr<bigtable_internal::GrpcMetricsExporter> grpc_metrics_exporter;
-  std::unique_ptr<bigtable_internal::OperationContextFactory> operation_context_factory;
+  std::unique_ptr<bigtable_internal::OperationContextFactory>
+      operation_context_factory;
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   if (options.get<EnableMetricsOption>()) {
     metric_service_connection = monitoring_v3::MakeMetricServiceConnection(
         internal::MetricsExporterConnectionOptions(options));
     auto gen = google::cloud::internal::MakeDefaultPRNG();
-    std::string client_uid =
-        google::cloud::internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+    std::string client_uid = google::cloud::internal::Sample(
+        gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
     if (options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
       // gRPC OpenTelemetry plugin registration is process-global. We must only
       // instantiate and register the exporter once per process, and keep it
       // alive globally for the lifetime of the process. If we bind its lifetime
       // to a single connection instance, closing that connection will destroy
-      // the MeterProvider, shutting down the background export pipeline globally
-      // and breaking metrics for any subsequent connections in the same process.
-      static std::shared_ptr<bigtable_internal::GrpcMetricsExporter> global_exporter;
+      // the MeterProvider, shutting down the background export pipeline
+      // globally and breaking metrics for any subsequent connections in the
+      // same process.
+      static std::shared_ptr<bigtable_internal::GrpcMetricsExporter>
+          global_exporter;
       static std::once_flag once;
       std::call_once(once, [&]() {
-        global_exporter = std::make_shared<bigtable_internal::GrpcMetricsExporter>(
-            metric_service_connection, options, client_uid);
+        global_exporter =
+            std::make_shared<bigtable_internal::GrpcMetricsExporter>(
+                metric_service_connection, options, client_uid);
       });
-      // We pass nullptr to DataConnectionImpl because the global_exporter is static and kept alive globally.
+      // We pass nullptr to DataConnectionImpl because the global_exporter is
+      // static and kept alive globally.
       grpc_metrics_exporter = nullptr;
     }
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
@@ -260,8 +266,7 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
         std::move(background),
         std::make_unique<bigtable_internal::StubManager>(
             std::move(affinity_stubs), stub_creation_fn),
-        std::move(operation_context_factory),
-        std::move(grpc_metrics_exporter),
+        std::move(operation_context_factory), std::move(grpc_metrics_exporter),
         std::move(limiter), std::move(options));
   } else {
     auto stub = bigtable_internal::CreateBigtableStub(
@@ -269,8 +274,7 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
     conn = std::make_shared<bigtable_internal::DataConnectionImpl>(
         std::move(background),
         std::make_unique<bigtable_internal::StubManager>(std::move(stub)),
-        std::move(operation_context_factory),
-        std::move(grpc_metrics_exporter),
+        std::move(operation_context_factory), std::move(grpc_metrics_exporter),
         std::move(limiter), std::move(options));
   }
   if (google::cloud::internal::TracingEnabled(conn->options())) {

@@ -19,9 +19,9 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
-#include "absl/strings/match.h"
 #include "ci/otel_collector/otel_collector.h"
 #include <arpa/inet.h>
 #include <gmock/gmock.h>

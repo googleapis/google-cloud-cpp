@@ -243,8 +243,8 @@ DataConnectionImpl::DataConnectionImpl(
     : DataConnectionImpl(std::move(background),
                          std::make_unique<StubManager>(std::move(stub)),
                          std::move(operation_context_factory),
-                         std::move(grpc_metrics_exporter),
-                         std::move(limiter), std::move(options)) {}
+                         std::move(grpc_metrics_exporter), std::move(limiter),
+                         std::move(options)) {}
 
 Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {

@@ -83,7 +83,8 @@ void EmbeddedServerTestFixture::SetUp() {
   data_connection_ = std::make_shared<bigtable_internal::DataConnectionImpl>(
       std::make_unique<
           google::cloud::internal::AutomaticallyCreatedBackgroundThreads>(),
-      stub, std::make_unique<bigtable_internal::SimpleOperationContextFactory>(),
+      stub,
+      std::make_unique<bigtable_internal::SimpleOperationContextFactory>(),
       /*grpc_metrics_exporter=*/nullptr,
       std::make_shared<bigtable_internal::NoopMutateRowsLimiter>(),
       std::move(opts));
