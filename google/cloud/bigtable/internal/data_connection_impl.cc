@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
-#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #include "google/cloud/bigtable/internal/logging_result_set_reader.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
@@ -40,12 +39,8 @@
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-#include "google/cloud/monitoring/v3/metric_connection.h"
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/universe_domain_options.h"
 #include <memory>
 #include <string>
@@ -202,23 +197,6 @@ std::string_view InstanceNameFromTableName(std::string_view table_name) {
   if (pos == std::string_view::npos) return {};
   return table_name.substr(0, pos);
 }
-
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-Options MetricsExporterConnectionOptions(Options options) {
-  // We start with a copy of the client options to preserve credentials and
-  // universe domain, but we must unset Bigtable-specific endpoints/authorities
-  // to allow default Monitoring defaults.
-  options.unset<EndpointOption>();
-  options.unset<AuthorityOption>();
-  auto collector = internal::GetEnv("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR");
-  if (collector.has_value()) {
-    // Override credentials when using the otel_collector test server.
-    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
-  }
-  return options;
-}
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -244,69 +222,28 @@ bigtable::Row TransformReadModifyWriteRowResponse(
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::unique_ptr<StubManager> stub_manager,
+    std::unique_ptr<OperationContextFactory> operation_context_factory,
+    std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
     std::shared_ptr<MutateRowsLimiter> limiter, Options options)
     : background_(std::move(background)),
       stub_manager_(std::move(stub_manager)),
+      grpc_metrics_exporter_(std::move(grpc_metrics_exporter)),
+      operation_context_factory_(std::move(operation_context_factory)),
       limiter_(std::move(limiter)),
-      options_(MergeOptions(std::move(options), DataConnection::options())) {
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  if (options_.get<bigtable::EnableMetricsOption>()) {
-    metric_service_connection_ = monitoring_v3::MakeMetricServiceConnection(
-        MetricsExporterConnectionOptions(options_));
-    // The client_uid is eventually used in conjunction with other data labels
-    // to identify metric data points. This pseudorandom string is used to aid
-    // in disambiguation.
-    auto gen = internal::MakeDefaultPRNG();
-    std::string client_uid =
-        internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
-    if (options_.has<bigtable_internal::InstanceChannelAffinityOption>()) {
-      grpc_metrics_exporter_ = std::make_unique<GrpcMetricsExporter>(
-          metric_service_connection_, options_, client_uid);
-    }
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
-    operation_context_factory_ =
-        std::make_unique<MetricsOperationContextFactory>(
-            std::move(client_uid), metric_service_connection_, options_);
-  } else {
-    operation_context_factory_ =
-        std::make_unique<SimpleOperationContextFactory>();
-  }
-#else
-  operation_context_factory_ =
-      std::make_unique<SimpleOperationContextFactory>();
-#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-}
+      options_(MergeOptions(std::move(options), DataConnection::options())) {}
 
 DataConnectionImpl::~DataConnectionImpl() = default;
 
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<BigtableStub> stub,
-    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
-    : DataConnectionImpl(std::move(background),
-                         std::make_unique<StubManager>(std::move(stub)),
-                         std::move(limiter), std::move(options)) {}
-
-DataConnectionImpl::DataConnectionImpl(
-    std::unique_ptr<BackgroundThreads> background,
-    std::unique_ptr<StubManager> stub_manager,
     std::unique_ptr<OperationContextFactory> operation_context_factory,
-    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
-    : background_(std::move(background)),
-      stub_manager_(std::move(stub_manager)),
-      operation_context_factory_(std::move(operation_context_factory)),
-      limiter_(std::move(limiter)),
-      options_(MergeOptions(std::move(options), DataConnection::options())) {}
-
-DataConnectionImpl::DataConnectionImpl(
-    std::unique_ptr<BackgroundThreads> background,
-    std::shared_ptr<BigtableStub> stub,
-    std::unique_ptr<OperationContextFactory> operation_context_factory,
+    std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
     std::shared_ptr<MutateRowsLimiter> limiter, Options options)
     : DataConnectionImpl(std::move(background),
                          std::make_unique<StubManager>(std::move(stub)),
                          std::move(operation_context_factory),
+                         std::move(grpc_metrics_exporter),
                          std::move(limiter), std::move(options)) {}
 
 Status DataConnectionImpl::Apply(std::string const& table_name,

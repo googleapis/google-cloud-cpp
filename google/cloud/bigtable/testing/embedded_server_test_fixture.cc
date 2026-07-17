@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/retry_policy.h"
@@ -82,7 +83,9 @@ void EmbeddedServerTestFixture::SetUp() {
   data_connection_ = std::make_shared<bigtable_internal::DataConnectionImpl>(
       std::make_unique<
           google::cloud::internal::AutomaticallyCreatedBackgroundThreads>(),
-      stub, std::make_shared<bigtable_internal::NoopMutateRowsLimiter>(),
+      stub, std::make_unique<bigtable_internal::SimpleOperationContextFactory>(),
+      /*grpc_metrics_exporter=*/nullptr,
+      std::make_shared<bigtable_internal::NoopMutateRowsLimiter>(),
       std::move(opts));
 
   table_ = std::make_shared<bigtable::Table>(

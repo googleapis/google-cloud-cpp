@@ -263,6 +263,9 @@ GrpcMetricsExporter::GrpcMetricsExporter(
   auto scope_filter =
       [authority = std::move(authority)](
           grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
+        GCP_LOG(INFO) << "GrpcMetricsExporter: scope filter checking target=" << scope.target()
+                      << " default_authority=" << scope.default_authority()
+                      << " vs expected authority=" << authority;
         return scope.default_authority() == authority;
       };
   auto status =

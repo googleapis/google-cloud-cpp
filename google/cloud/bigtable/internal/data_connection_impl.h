@@ -56,28 +56,18 @@ class DataConnectionImpl : public bigtable::DataConnection {
  public:
   ~DataConnectionImpl() override;
 
-  DataConnectionImpl(std::unique_ptr<BackgroundThreads> background,
-                     std::unique_ptr<StubManager> stub_manager,
-                     std::shared_ptr<MutateRowsLimiter> limiter,
-                     Options options);
-
-  // This constructor is used for testing.
   DataConnectionImpl(
       std::unique_ptr<BackgroundThreads> background,
       std::unique_ptr<StubManager> stub_manager,
       std::unique_ptr<OperationContextFactory> operation_context_factory,
+      std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
       std::shared_ptr<MutateRowsLimiter> limiter, Options options);
 
-  DataConnectionImpl(std::unique_ptr<BackgroundThreads> background,
-                     std::shared_ptr<BigtableStub> stub,
-                     std::shared_ptr<MutateRowsLimiter> limiter,
-                     Options options);
-
-  // This constructor is used for testing.
   DataConnectionImpl(
       std::unique_ptr<BackgroundThreads> background,
       std::shared_ptr<BigtableStub> stub,
       std::unique_ptr<OperationContextFactory> operation_context_factory,
+      std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
       std::shared_ptr<MutateRowsLimiter> limiter, Options options);
 
   Options options() override { return options_; }

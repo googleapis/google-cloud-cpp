@@ -52,6 +52,10 @@ Options DefaultInstanceAdminOptions(Options opts);
 
 Options DefaultTableAdminOptions(Options opts);
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+Options MetricsExporterConnectionOptions(Options options);
+#endif
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

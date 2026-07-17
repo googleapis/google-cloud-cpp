@@ -265,6 +265,7 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
   bool found_grpc_metrics = false;
 
   for (auto const& req : recorded) {
+    std::cout << "req=" << req.DebugString() << std::endl;
     EXPECT_EQ(req.name(), absl::StrCat("projects/", project_id()));
 
     for (auto const& ts : req.time_series()) {
