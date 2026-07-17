@@ -279,11 +279,21 @@ GrpcMetricsExporter::GrpcMetricsExporter(
   }
 }
 
+GrpcMetricsExporter::~GrpcMetricsExporter() {
+  if (provider_) {
+    auto* p = static_cast<opentelemetry::sdk::metrics::MeterProvider*>(
+        provider_.get());
+    p->Shutdown();
+  }
+}
+
 #else  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
 GrpcMetricsExporter::GrpcMetricsExporter(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> const&,
     Options const&, std::string const&) {}
+
+GrpcMetricsExporter::~GrpcMetricsExporter() = default;
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 

@@ -83,6 +83,7 @@ class GrpcMetricsExporter {
   GrpcMetricsExporter(
       std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
       Options const& options, std::string const& client_uid);
+  ~GrpcMetricsExporter();
 
  private:
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS

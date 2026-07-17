@@ -15,20 +15,40 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include "ci/otel_collector/otel_collector.h"
+#include <arpa/inet.h>
 #include <gmock/gmock.h>
+#include <netinet/in.h>
 #include <chrono>
 #include <thread>
+#include <sys/socket.h>
+#include <unistd.h>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace testing {
 namespace {
+
+bool IsDirectPathReachable() {
+  int s = socket(AF_INET6, SOCK_STREAM, 0);
+  if (s < 0) return false;
+  sockaddr_in6 addr{};
+  addr.sin6_family = AF_INET6;
+  addr.sin6_port = htons(443);
+  inet_pton(AF_INET6, "2607:f8b0:4001:c2f::5f", &addr.sin6_addr);
+  timeval tv{1, 0};
+  setsockopt(s, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof(tv));
+  int res = connect(s, reinterpret_cast<sockaddr*>(&addr), sizeof(addr));
+  close(s);
+  return res == 0;
+}
 
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::ScopedEnvironment;
@@ -37,8 +57,7 @@ using ::testing::StartsWith;
 class ObservabilityIntegrationTest
     : public ::google::cloud::bigtable::testing::TableIntegrationTest {
  protected:
-  void SetUp() override {
-    TableIntegrationTest::SetUp();
+  static void SetUpTestSuite() {
     int port = 0;
     grpc::ServerBuilder builder;
     builder.AddListeningPort("localhost:0", grpc::InsecureServerCredentials(),
@@ -52,20 +71,41 @@ class ObservabilityIntegrationTest
             &collector_service_));
     server_ = builder.BuildAndStart();
     server_address_ = absl::StrCat("localhost:", port);
+    env_endpoint_ = std::make_unique<ScopedEnvironment>(
+        "GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT", server_address_);
+    env_otel_ = std::make_unique<ScopedEnvironment>(
+        "GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR", "1");
   }
 
-  void TearDown() override {
+  static void TearDownTestSuite() {
+    env_endpoint_.reset();
+    env_otel_.reset();
     if (server_) {
-      server_->Shutdown();
+      server_->Shutdown(std::chrono::system_clock::now() +
+                        std::chrono::seconds(1));
       server_->Wait();
     }
-    TableIntegrationTest::TearDown();
   }
 
-  google::cloud::testing_util::OtelCollectorServer collector_service_;
-  std::unique_ptr<grpc::Server> server_;
-  std::string server_address_;
+  void SetUp() override {
+    TableIntegrationTest::SetUp();
+    data_connection_.reset();
+    collector_service_.Clear();
+  }
+
+  static google::cloud::testing_util::OtelCollectorServer collector_service_;
+  static std::unique_ptr<grpc::Server> server_;
+  static std::string server_address_;
+  static std::unique_ptr<ScopedEnvironment> env_endpoint_;
+  static std::unique_ptr<ScopedEnvironment> env_otel_;
 };
+
+google::cloud::testing_util::OtelCollectorServer
+    ObservabilityIntegrationTest::collector_service_;
+std::unique_ptr<grpc::Server> ObservabilityIntegrationTest::server_;
+std::string ObservabilityIntegrationTest::server_address_;
+std::unique_ptr<ScopedEnvironment> ObservabilityIntegrationTest::env_endpoint_;
+std::unique_ptr<ScopedEnvironment> ObservabilityIntegrationTest::env_otel_;
 
 /// Use Table::Apply() to insert a single row.
 void Apply(Table& table, std::string const& row_key,
@@ -87,16 +127,13 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
     GTEST_SKIP() << "Metrics export integration test runs against production";
   }
 
-  // Redirect Cloud Monitoring metric export to local otel_collector
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT",
-                        server_address_);
-  ScopedEnvironment env_otel("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR", "1");
-
   // Set MetricsPeriodOption to 5s (minimum allowed by DefaultOptions; smaller
   // periods reset to 60s)
-  auto options =
-      Options{}.set<EnableMetricsOption>(true).set<MetricsPeriodOption>(
-          std::chrono::seconds(5));
+  auto options = Options{}
+                     .set<EnableMetricsOption>(true)
+                     .set<MetricsPeriodOption>(std::chrono::seconds(5))
+                     .set<MinConnectionRefreshOption>(std::chrono::hours(1))
+                     .set<MaxConnectionRefreshOption>(std::chrono::hours(1));
 
   auto const table_id = TableTestEnvironment::table_id();
 
@@ -168,6 +205,77 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
 
   EXPECT_TRUE(found_operation_latencies);
   EXPECT_TRUE(found_attempt_latencies);
+}
+
+TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP() << "Metrics export integration test runs against production";
+  }
+
+  auto disable_direct_path =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_DISABLE_DIRECT_PATH")
+          .value_or("");
+  if (disable_direct_path == "true" || !IsDirectPathReachable()) {
+    GTEST_SKIP() << "DirectPath is disabled or network is unreachable in this "
+                    "test environment";
+  }
+
+  ScopedEnvironment env_dp("CBT_ENABLE_DIRECTPATH", "true");
+
+  // Set MetricsPeriodOption to 5s (minimum allowed by DefaultOptions; smaller
+  // periods reset to 60s)
+  auto options = Options{}
+                     .set<EnableMetricsOption>(true)
+                     .set<MetricsPeriodOption>(std::chrono::seconds(5))
+                     .set<MinConnectionRefreshOption>(std::chrono::hours(1))
+                     .set<MaxConnectionRefreshOption>(std::chrono::hours(1))
+                     .set<GrpcChannelArgumentsOption>({
+                         {"grpc.client_idle_timeout_ms", "1000"},
+                         {"grpc.max_reconnect_backoff_ms", "1000"},
+                     });
+
+  auto const& table_id = TableTestEnvironment::table_id();
+
+  // Add scoped connection to ensure metrics are flushed on destruction.
+  {
+    auto conn = MakeDataConnection(
+        {InstanceResource(Project(project_id()), instance_id())}, options);
+    auto table = Table(std::move(conn),
+                       TableResource(project_id(), instance_id(), table_id));
+
+    std::string const row_key = "observability-directpath-row-1";
+    std::vector<Cell> expected{
+        {row_key, "family4", "c0", 1000, "v1000"},
+        {row_key, "family4", "c1", 2000, "v2000"},
+    };
+
+    // Perform mutations and read calls over DirectPath
+    Apply(table, row_key, expected);
+    auto actual = ReadRows(table, Filter::PassAllFilter());
+    CheckEqualUnordered(expected, actual);
+
+    // Wait for the periodic 5-second exporter background thread to flush
+    // metrics while conn is active
+    std::this_thread::sleep_for(std::chrono::seconds(6));
+  }
+
+  auto recorded = collector_service_.recorded_metrics();
+  ASSERT_FALSE(recorded.empty());
+
+  bool found_grpc_metrics = false;
+
+  for (auto const& req : recorded) {
+    EXPECT_EQ(req.name(), absl::StrCat("projects/", project_id()));
+
+    for (auto const& ts : req.time_series()) {
+      auto const& metric_type = ts.metric().type();
+      if (metric_type.find("grpc") != std::string::npos) {
+        found_grpc_metrics = true;
+      }
+    }
+  }
+
+  EXPECT_TRUE(found_grpc_metrics);
 }
 
 }  // namespace

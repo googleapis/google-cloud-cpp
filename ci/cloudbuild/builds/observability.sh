@@ -37,6 +37,6 @@ io::run bazel build "${args[@]}" \
 
 io::log_h2 "Running Bigtable Observability Integration Tests against production endpoint"
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="auto" \
+  --cache_test_results="auto" --test_output=all --test_timeout=300 \
   -- //google/cloud/bigtable/tests:observability_integration_test-default \
   //google/cloud/bigtable/tests:observability_integration_test-dynamic-pool
