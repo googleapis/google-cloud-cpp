@@ -80,6 +80,7 @@ add_library(
     internal/bucket_metadata_parser.h
     internal/bucket_requests.cc
     internal/bucket_requests.h
+    internal/checksum_helpers.h
     internal/complex_option.h
     internal/compute_engine_util.cc
     internal/compute_engine_util.h
