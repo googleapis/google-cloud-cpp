@@ -13,6 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/options.h"
+
+// TODO(v-pratap): Remove this when EnableMD5ValidationOption and
+// EnableCrc32cValidationOption are removed.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"
@@ -795,3 +799,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
