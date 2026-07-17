@@ -50,10 +50,10 @@ StatusOr<std::string> PrependPqcEcCurve(std::vector<std::string> groups,
         "libcurl version 7.73.0 or later is required to set SSL EC curves.");
   }
 
-  std::string_view constexpr target = "X25519MLKEM768";
+  std::string_view constexpr kTarget = "X25519MLKEM768";
   auto it = std::find_if(groups.begin(), groups.end(),
-                         [&target](std::string const& s) {
-                           return absl::EqualsIgnoreCase(s, target);
+                         [&kTarget](std::string const& s) {
+                           return absl::EqualsIgnoreCase(s, kTarget);
                          });
 
   if (it == groups.end()) {
