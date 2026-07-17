@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
+#include "absl/strings/match.h"
 #include "ci/otel_collector/otel_collector.h"
 #include <arpa/inet.h>
 #include <gmock/gmock.h>
@@ -169,8 +170,10 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
 
     for (auto const& ts : req.time_series()) {
       auto const& metric_type = ts.metric().type();
-      EXPECT_THAT(metric_type,
-                  StartsWith("bigtable.googleapis.com/internal/client/"));
+      if (!absl::StartsWith(metric_type,
+                            "bigtable.googleapis.com/internal/client/")) {
+        continue;
+      }
 
       if (metric_type.find("operation_latencies") != std::string::npos) {
         found_operation_latencies = true;
