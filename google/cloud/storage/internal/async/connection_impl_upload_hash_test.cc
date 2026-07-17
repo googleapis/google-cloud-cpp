@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/options.h"
-
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/default_options.h"

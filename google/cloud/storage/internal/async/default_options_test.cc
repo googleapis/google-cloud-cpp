@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/default_options.h"
-
 #include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/resume_policy.h"

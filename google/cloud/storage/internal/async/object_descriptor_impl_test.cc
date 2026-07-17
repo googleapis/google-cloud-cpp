@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
-
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/resume_policy.h"
