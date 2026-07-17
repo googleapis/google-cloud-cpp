@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
+#include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
@@ -204,6 +205,14 @@ MonitoredResourceResult MakeMonitoredResource(
     return opentelemetry::nostd::get<std::string>(it->second);
   };
   auto project_id = get_attr("project_id");
+  if (project_id.empty() &&
+      options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
+    auto const& instances =
+        options.get<bigtable_internal::InstanceChannelAffinityOption>();
+    if (!instances.empty()) {
+      project_id = instances[0].project_id();
+    }
+  }
   labels["project_id"] = project_id;
   labels["instance"] = get_attr("instance");
   labels["app_profile"] = options.get<bigtable::AppProfileIdOption>();
