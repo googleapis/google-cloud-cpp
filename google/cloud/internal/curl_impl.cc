@@ -171,9 +171,15 @@ std::size_t SpillBuffer::MoveTo(absl::Span<char> dst) {
 CurlImpl::CurlImpl(CurlHandle handle,
                    std::shared_ptr<CurlHandleFactory> factory,
                    Options const& options)
+    : CurlImpl(std::move(handle), std::move(factory), options, {}) {}
+
+CurlImpl::CurlImpl(CurlHandle handle,
+                   std::shared_ptr<CurlHandleFactory> factory,
+                   Options const& options, std::string pqc_ec_curves)
     : factory_(std::move(factory)),
       handle_(std::move(handle)),
-      multi_(factory_->CreateMultiHandle()) {
+      multi_(factory_->CreateMultiHandle()),
+      pqc_ec_curves_(std::move(pqc_ec_curves)) {
   CurlInitializeOnce(options);
 
   logging_enabled_ = google::cloud::internal::Contains(
@@ -380,6 +386,13 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     status = handle_.SetOption(CURLOPT_INTERFACE, interface_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
+
+#if CURL_AT_LEAST_VERSION(7, 73, 0)
+  if (!pqc_ec_curves_.empty()) {
+    status = handle_.SetOption(CURLOPT_SSL_EC_CURVES, pqc_ec_curves_.c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+#endif
 
   if (client_ssl_cert_.has_value()) {
 #if CURL_AT_LEAST_VERSION(7, 71, 0)

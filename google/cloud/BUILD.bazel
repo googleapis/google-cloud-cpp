@@ -240,6 +240,7 @@ cc_library(
         "@platforms//os:windows": [
             "-DEFAULTLIB:bcrypt.lib",
             "-DEFAULTLIB:crypt32.lib",
+            "-DEFAULTLIB:ncrypt.lib",
         ],
         "//conditions:default": [],
     }),

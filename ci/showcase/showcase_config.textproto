@@ -1,0 +1,18 @@
+# proto-file: generator/generator_config.proto
+# proto-message: GeneratorConfiguration
+
+service {
+  service_proto_path: "google/showcase/v1beta1/echo.proto"
+  product_path: "google/showcase/v1beta1"
+  initial_copyright_year: "2026"
+  generate_rest_transport: true
+  retryable_status_codes: ["kUnavailable"]
+  omitted_rpcs: [
+    "PagedExpandLegacyMapped",
+    "PagedExpandLegacy",
+    "PagedExpand",
+    "Expand",
+    "Collect",
+    "Chat"
+  ]
+}

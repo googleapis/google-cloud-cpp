@@ -1,0 +1,113 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@com_google_protobuf//bazel:cc_proto_library.bzl", "cc_proto_library")
+load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
+load("@grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])
+
+proto_library(
+    name = "showcase_echo_proto",
+    srcs = ["googleapis/gapic-showcase/schema/google/showcase/v1beta1/echo.proto"],
+    strip_import_prefix = "googleapis/gapic-showcase/schema",
+    deps = [
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:timestamp_proto",
+        "@googleapis//google/api:annotations_proto",
+        "@googleapis//google/api:client_proto",
+        "@googleapis//google/api:field_behavior_proto",
+        "@googleapis//google/api:field_info_proto",
+        "@googleapis//google/api:routing_proto",
+        "@googleapis//google/longrunning:operations_proto",
+        "@googleapis//google/rpc:status_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "showcase_echo_cc_proto",
+    deps = [":showcase_echo_proto"],
+)
+
+cc_grpc_library(
+    name = "showcase_echo_cc_grpc",
+    srcs = [":showcase_echo_proto"],
+    grpc_only = True,
+    deps = [":showcase_echo_cc_proto"],
+)
+
+filegroup(
+    name = "echo_srcs",
+    srcs = glob([
+        "google/showcase/v1beta1/internal/*_sources.cc",
+    ]),
+)
+
+filegroup(
+    name = "echo_hdrs",
+    srcs = glob(
+        include = [
+            "google/showcase/v1beta1/*.cc",
+            "google/showcase/v1beta1/*.h",
+            "google/showcase/v1beta1/internal/*.cc",
+            "google/showcase/v1beta1/internal/*.h",
+        ],
+        exclude = [
+            "google/showcase/v1beta1/internal/*_sources.cc",
+        ],
+    ),
+)
+
+cc_library(
+    name = "showcase_echo_client",
+    srcs = [":echo_srcs"],
+    hdrs = [":echo_hdrs"],
+    copts = [
+        "-Ici/showcase",
+        "-I$(BINDIR)/ci/showcase",
+    ],
+    includes = ["."],
+    strip_include_prefix = "",
+    deps = [
+        ":showcase_echo_cc_grpc",
+        ":showcase_echo_cc_proto",
+        "//:common",
+        "//:grpc_utils",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
+        "@abseil-cpp//absl/strings",
+        "@googleapis//google/longrunning:longrunning_cc_grpc",
+    ],
+)
+
+cc_test(
+    name = "rest_pqc_test",
+    srcs = ["rest_pqc_test.cc"],
+    copts = [
+        "-Ici/showcase",
+        "-I$(BINDIR)/ci/showcase",
+    ],
+    tags = ["integration-test"],
+    deps = [
+        ":showcase_echo_client",
+        "//:common",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@googletest//:gtest_main",
+    ],
+)

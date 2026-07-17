@@ -75,6 +75,8 @@ class CurlImpl {
 
   CurlImpl(CurlHandle handle, std::shared_ptr<CurlHandleFactory> factory,
            Options const& options);
+  CurlImpl(CurlHandle handle, std::shared_ptr<CurlHandleFactory> factory,
+           Options const& options, std::string pqc_ec_curves);
   ~CurlImpl();
 
   CurlImpl(CurlImpl const&) = delete;
@@ -195,6 +197,8 @@ class CurlImpl {
 
   // Store pending data between WriteCallback() calls.
   SpillBuffer spill_;
+
+  std::string pqc_ec_curves_;
 };
 
 /// Compute the CURLOPT_PROXY setting from @p options.
