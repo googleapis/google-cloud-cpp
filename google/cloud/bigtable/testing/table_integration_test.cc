@@ -124,6 +124,10 @@ void TableAdminTestEnvironment::TearDown() {
 
 void TableIntegrationTest::SetUp() {
   Options options;
+  // Disable metrics for the setup connection used to clean up/create tables.
+  // This prevents premature registration of the process-global gRPC telemetry
+  // plugin with default (60-second) periods, which would otherwise override
+  // the custom period (5 seconds) requested inside the tests.
   options.set<google::cloud::bigtable::EnableMetricsOption>(false);
   if (google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")

@@ -170,6 +170,9 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
 
     for (auto const& ts : req.time_series()) {
       auto const& metric_type = ts.metric().type();
+      // Skip any non-bigtable metrics (e.g. gRPC metrics) that might be
+      // exported since we globally enabled them in the client connection.
+      // This test only validates custom Bigtable client metrics.
       if (!absl::StartsWith(metric_type,
                             "bigtable.googleapis.com/internal/client/")) {
         continue;

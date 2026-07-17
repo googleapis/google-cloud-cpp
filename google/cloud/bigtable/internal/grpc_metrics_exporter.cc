@@ -205,6 +205,9 @@ MonitoredResourceResult MakeMonitoredResource(
     return opentelemetry::nostd::get<std::string>(it->second);
   };
   auto project_id = get_attr("project_id");
+  // Fall back to resolving the project ID from `InstanceChannelAffinityOption`
+  // if the static `ProjectIdOption` is not set on the client (which is common
+  // in client configurations with instance routing / channel affinity).
   if (project_id.empty() &&
       options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
     auto const& instances =

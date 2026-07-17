@@ -214,12 +214,19 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
         google::cloud::internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
     if (options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
+      // gRPC OpenTelemetry plugin registration is process-global. We must only
+      // instantiate and register the exporter once per process, and keep it
+      // alive globally for the lifetime of the process. If we bind its lifetime
+      // to a single connection instance, closing that connection will destroy
+      // the MeterProvider, shutting down the background export pipeline globally
+      // and breaking metrics for any subsequent connections in the same process.
       static std::shared_ptr<bigtable_internal::GrpcMetricsExporter> global_exporter;
       static std::once_flag once;
       std::call_once(once, [&]() {
         global_exporter = std::make_shared<bigtable_internal::GrpcMetricsExporter>(
             metric_service_connection, options, client_uid);
       });
+      // We pass nullptr to DataConnectionImpl because the global_exporter is static and kept alive globally.
       grpc_metrics_exporter = nullptr;
     }
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
