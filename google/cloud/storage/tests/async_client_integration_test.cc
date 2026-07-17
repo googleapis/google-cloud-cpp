@@ -691,10 +691,7 @@ TEST_F(AsyncClientIntegrationTest, DeleteObjectFailure) {
 TEST_F(AsyncClientIntegrationTest, GetBucketFailure) {
   auto async = AsyncClient(TestOptions());
 
-  auto bucket =
-      async
-          .GetBucket(BucketName("projects/_/buckets/" + MakeRandomObjectName()))
-          .get();
+  auto bucket = async.GetBucket(BucketName(MakeRandomObjectName())).get();
   ASSERT_THAT(bucket, Not(IsOk()));
 }
 

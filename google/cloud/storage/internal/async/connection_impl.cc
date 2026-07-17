@@ -151,12 +151,11 @@ future<StatusOr<google::storage::v2::Bucket>> AsyncConnectionImpl::GetBucket(
   auto request = std::move(p.request);
   auto const idempotency = idempotency_policy(*current)->GetBucket(request);
 
-  auto call = [stub = stub_, id = invocation_id_generator_.MakeInvocationId()](
+  auto call = [stub = stub_](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
                   google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::GetBucketRequest const& request) {
-    AddIdempotencyToken(*context, id);
     return stub->AsyncGetBucket(cq, std::move(context), std::move(options),
                                 request);
   };

@@ -104,10 +104,9 @@ TEST_F(AsyncConnectionImplTest, GetBucket) {
                     std::shared_ptr<grpc::ClientContext> const& context,
                     google::cloud::internal::ImmutableOptions const& options,
                     google::storage::v2::GetBucketRequest const& request) {
-        EXPECT_THAT(
-            GetMetadata(*context),
-            testing::Contains(testing::Pair("x-goog-gcs-idempotency-token",
-                                            testing::Not(testing::IsEmpty()))));
+        EXPECT_THAT(GetMetadata(*context),
+                    testing::Not(testing::Contains(
+                        testing::Key("x-goog-gcs-idempotency-token"))));
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto expected = google::storage::v2::GetBucketRequest{};
         EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
