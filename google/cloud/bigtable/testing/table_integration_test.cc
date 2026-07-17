@@ -124,6 +124,7 @@ void TableAdminTestEnvironment::TearDown() {
 
 void TableIntegrationTest::SetUp() {
   Options options;
+  options.set<google::cloud::bigtable::EnableMetricsOption>(false);
   if (google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
           .value_or("") == "dynamic") {
