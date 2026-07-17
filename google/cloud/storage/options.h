@@ -377,7 +377,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     IdempotencyPolicyOption, CARootsFilePathOption,
     UploadChecksumValidationOption, DownloadChecksumValidationOption,
     storage_experimental::HttpVersionOption>,
-    storage_experimental::OTelSpanEnrichmentOption>;
+      storage_experimental::OTelSpanEnrichmentOption > ;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
