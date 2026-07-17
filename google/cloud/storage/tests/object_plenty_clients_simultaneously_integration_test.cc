@@ -45,6 +45,7 @@ TEST_F(ObjectPlentyClientsSimultaneouslyIntegrationTest,
   // own tests.
   if (UsingGrpc()) GTEST_SKIP();
 
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();

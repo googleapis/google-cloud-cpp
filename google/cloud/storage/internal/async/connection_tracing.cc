@@ -328,8 +328,8 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
         });
   }
 
-  void EnrichSpan(opentelemetry::trace::Span& span,
-                  BucketCacheEntry const& entry) {
+  static void EnrichSpan(opentelemetry::trace::Span& span,
+                         BucketCacheEntry const& entry) {
     span.SetAttribute("gcp.resource.destination.id", entry.id);
     span.SetAttribute("gcp.resource.destination.location", entry.location);
   }
