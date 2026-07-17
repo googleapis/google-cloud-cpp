@@ -71,6 +71,43 @@ struct CAPathOption {
 }  // namespace internal
 
 /**
+ * Supported checksum algorithms.
+ *
+ * @ingroup storage-options
+ */
+enum class ChecksumAlgorithm {
+  kNone,    ///< Disable checksum validation
+  kCrc32c,  ///< Use CRC32C for checksum validation
+  kMD5,     ///< Use MD5 for checksum validation
+};
+
+/**
+ * Configure the checksum algorithm used for uploads.
+ *
+ * If set, the client computes (if necessary) and validates the checksum of
+ * an object during uploads. Set to `ChecksumAlgorithm::kNone` to disable
+ * checksum validation.
+ *
+ * @ingroup storage-options
+ */
+struct UploadChecksumValidationOption {
+  using Type = ChecksumAlgorithm;
+};
+
+/**
+ * Configure the checksum algorithm used for downloads.
+ *
+ * If set, the client computes (if necessary) and validates the checksum of
+ * an object during downloads. Set to `ChecksumAlgorithm::kNone` to disable
+ * checksum validation.
+ *
+ * @ingroup storage-options
+ */
+struct DownloadChecksumValidationOption {
+  using Type = ChecksumAlgorithm;
+};
+
+/**
  * Configure the REST endpoint for the GCS client library.
  *
  * @ingroup storage-options
@@ -325,6 +362,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
+    UploadChecksumValidationOption, DownloadChecksumValidationOption,
     storage_experimental::HttpVersionOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

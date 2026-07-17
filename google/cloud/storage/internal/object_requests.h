@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/auto_finalize.h"
 #include "google/cloud/storage/download_options.h"
 #include "google/cloud/storage/hashing_options.h"
@@ -645,4 +646,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
+#include "google/cloud/internal/diagnostics_pop.inc"
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_REQUESTS_H
