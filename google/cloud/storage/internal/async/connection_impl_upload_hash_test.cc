@@ -134,6 +134,11 @@ INSTANTIATE_TEST_SUITE_P(
         HashTestCase{Options{}.set<storage::UploadChecksumValidationOption>(
                          storage::ChecksumAlgorithm::kCrc32c),
                      kQuickFoxCrc32cChecksum, ""},
+        // Legacy options
+        HashTestCase{Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     kQuickFoxCrc32cChecksum, ""},
         HashTestCase{Options{}
                          .set<storage::EnableCrc32cValidationOption>(false)
                          .set<storage::EnableMD5ValidationOption>(true),
@@ -171,6 +176,7 @@ INSTANTIATE_TEST_SUITE_P(
                     storage::ChecksumAlgorithm::kNone)
                 .set<storage::UseMD5ValueOption>(BinaryMD5(kQuickFoxMD5Hash)),
             std::nullopt, kQuickFoxMD5Hash},
+        // Legacy options
         HashTestCase{Options{}
                          .set<storage::EnableCrc32cValidationOption>(false)
                          .set<storage::EnableMD5ValidationOption>(false),

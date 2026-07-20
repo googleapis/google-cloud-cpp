@@ -180,6 +180,22 @@ INSTANTIATE_TEST_SUITE_P(
                      Options{}.set<storage::DownloadChecksumValidationOption>(
                          storage::ChecksumAlgorithm::kNone),
                      kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
+        // Legacy options
+        HashTestCase{StatusCode::kOk,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     kQuickFoxCrc32cChecksum, kQuickFoxMD5HashBad},
+        HashTestCase{StatusCode::kOk,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(true),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5Hash},
+        HashTestCase{StatusCode::kOk,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(false),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
         // In the next three cases we verify that validation works when the
         // returned values are not correct.
         HashTestCase{StatusCode::kInvalidArgument,
@@ -202,6 +218,17 @@ INSTANTIATE_TEST_SUITE_P(
         HashTestCase{StatusCode::kInvalidArgument,
                      Options{}.set<storage::DownloadChecksumValidationOption>(
                          storage::ChecksumAlgorithm::kMD5),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
+        // Legacy options
+        HashTestCase{StatusCode::kInvalidArgument,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(false)
+                         .set<storage::EnableMD5ValidationOption>(true),
+                     kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
+        HashTestCase{StatusCode::kInvalidArgument,
+                     Options{}
+                         .set<storage::EnableCrc32cValidationOption>(true)
+                         .set<storage::EnableMD5ValidationOption>(false),
                      kQuickFoxCrc32cChecksumBad, kQuickFoxMD5HashBad},
         // The application may know what the values should be. Verify the
         // validation works correctly when the application provides correct
