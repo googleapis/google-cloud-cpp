@@ -1,5 +1,7 @@
 build-out/
-ci/
+ci/bzlmod_tests/consumer-test
+ci/verify_current_targets
+ci/verify_deprecated_targets
 cmake-out/
 cmake-build-debug/
 cmake-build-coverage/

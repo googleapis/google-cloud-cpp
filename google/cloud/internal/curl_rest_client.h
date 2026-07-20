@@ -79,6 +79,7 @@ class CurlRestClient : public RestClient {
   std::shared_ptr<CurlHandleFactory> handle_factory_;
   std::shared_ptr<oauth2_internal::Credentials> credentials_;
   Options options_;
+  std::string pqc_ec_curves_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -103,6 +103,7 @@ add_library(
     internal/oauth2_universe_domain.h
     internal/openssl/parse_service_account_p12_file.cc
     internal/openssl/sign_using_sha256.cc
+    internal/openssl/ssl_ec_curves.cc
     internal/parse_service_account_p12_file.h
     internal/populate_rest_options.cc
     internal/populate_rest_options.h
@@ -129,6 +130,8 @@ add_library(
     internal/rest_set_metadata.cc
     internal/rest_set_metadata.h
     internal/sign_using_sha256.h
+    internal/ssl_ec_curves.cc
+    internal/ssl_ec_curves.h
     internal/tracing_http_payload.cc
     internal/tracing_http_payload.h
     internal/tracing_rest_client.cc
@@ -139,6 +142,7 @@ add_library(
     internal/unified_rest_credentials.h
     internal/win32/parse_service_account_p12_file.cc
     internal/win32/sign_using_sha256.cc
+    internal/win32/ssl_ec_curves.cc
     internal/win32/win32_helpers.cc
     internal/win32/win32_helpers.h
     rest_options.h)
@@ -152,7 +156,7 @@ if (WIN32)
     # We use `setsockopt()` directly, which requires the ws2_32 (Winsock2 for
     # Windows32?) library on Windows.
     target_link_libraries(google_cloud_cpp_rest_internal PUBLIC ws2_32 bcrypt
-                                                                crypt32)
+                                                                crypt32 ncrypt)
 else ()
     # We already require OpenSSL for non-Windows platforms.
     target_compile_definitions(
@@ -211,7 +215,8 @@ google_cloud_cpp_add_pkgconfig(
     WIN32_LIBS
     ws2_32
     bcrypt
-    crypt32)
+    crypt32
+    ncrypt)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -303,6 +308,7 @@ if (BUILD_TESTING)
         internal/rest_response_test.cc
         internal/rest_retry_loop_test.cc
         internal/rest_set_metadata_test.cc
+        internal/ssl_ec_curves_test.cc
         internal/tracing_http_payload_test.cc
         internal/tracing_rest_client_test.cc
         internal/tracing_rest_response_test.cc

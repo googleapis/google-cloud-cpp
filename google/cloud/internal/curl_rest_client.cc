@@ -21,8 +21,10 @@
 #include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/ssl_ec_curves.h"
 #include "google/cloud/internal/tracing_rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
+#include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
@@ -115,14 +117,22 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
   if (options_.has<UnifiedCredentialsOption>()) {
     credentials_ = MapCredentials(*options_.get<UnifiedCredentialsOption>());
   }
+  auto pqc_curves = GetPqcEcCurves();
+  if (pqc_curves.ok()) {
+    pqc_ec_curves_ = *std::move(pqc_curves);
+  } else {
+    GCP_LOG(INFO)
+        << "Post-quantum cryptography (PQC) algorithms not available: "
+        << pqc_curves.status().message();
+  }
 }
 
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     RestContext const& context, RestRequest const& request,
     Options const& options) {
   auto handle = CurlHandle::MakeFromPool(*handle_factory_);
-  auto impl =
-      std::make_unique<CurlImpl>(std::move(handle), handle_factory_, options);
+  auto impl = std::make_unique<CurlImpl>(std::move(handle), handle_factory_,
+                                         options, pqc_ec_curves_);
   if (credentials_) {
     auto auth_headers = credentials_->AuthenticationHeaders(
         std::chrono::system_clock::now(), endpoint_address_);
