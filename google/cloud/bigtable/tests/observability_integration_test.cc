@@ -268,7 +268,7 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
   auto recorded = collector_service_.recorded_metrics();
   ASSERT_FALSE(recorded.empty());
 
-  bool found_grpc_metrics = false;
+  std::set<std::string> grpc_metric_types;
 
   for (auto const& req : recorded) {
     std::cout << "req=" << req.DebugString() << std::endl;
@@ -276,13 +276,28 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
 
     for (auto const& ts : req.time_series()) {
       auto const& metric_type = ts.metric().type();
-      if (metric_type.find("grpc") != std::string::npos) {
-        found_grpc_metrics = true;
+      if (absl::StartsWith(metric_type, "workload.googleapis.com/grpc.")) {
+        grpc_metric_types.insert(metric_type);
       }
     }
   }
 
-  EXPECT_TRUE(found_grpc_metrics);
+  // Verify that specific gRPC client metrics configured in GrpcMetricsExporter
+  // are present. OpenTelemetry metric names are exported to Cloud Monitoring
+  // with the "workload.googleapis.com/" prefix.
+  //
+  // Note: Event-driven and failure-driven metrics configured in
+  // GrpcMetricsExporter (such as grpc.lb.rls.*, grpc.xds_client.*, and
+  // grpc.subchannel.* disconnections/failures) are only exported when those
+  // specific events or errors occur during the export window. Therefore, only
+  // RPC attempt metrics (duration, started, message sizes) are guaranteed to
+  // produce time series during a healthy test run.
+  EXPECT_THAT(grpc_metric_types,
+              ::testing::Contains(
+                  "workload.googleapis.com/grpc.client.attempt.duration"));
+  EXPECT_THAT(grpc_metric_types,
+              ::testing::Contains(
+                  "workload.googleapis.com/grpc.client.attempt.started"));
 }
 
 }  // namespace
