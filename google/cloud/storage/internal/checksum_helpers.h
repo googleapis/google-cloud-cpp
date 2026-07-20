@@ -45,18 +45,20 @@ HashDisabled GetDownloadChecksumSettings(Request const& request,
                       algo != ChecksumAlgorithm::kCrc32cAndMD5);
     use_new_algo = true;
   }
-  
+
   auto const md5 = request.template GetOption<DisableMD5Hash>();
   if (md5.has_value()) {
-    // DisableMD5Hash defaults to true. We only override the new option if the legacy
-    // option was explicitly set to false, or if the new option was not provided at all.
+    // DisableMD5Hash defaults to true. We only override the new option if the
+    // legacy option was explicitly set to false, or if the new option was not
+    // provided at all.
     if (!use_new_algo || md5.value() != true) {
       disable_md5 = md5.value();
     }
   }
   auto const crc32c = request.template GetOption<DisableCrc32cChecksum>();
   if (crc32c.has_value()) {
-    // DisableCrc32cChecksum defaults to std::nullopt, so if it has a value, it was explicitly set.
+    // DisableCrc32cChecksum defaults to std::nullopt, so if it has a value, it
+    // was explicitly set.
     disable_crc32c = crc32c.value();
   }
   return {disable_md5, disable_crc32c};
@@ -76,18 +78,20 @@ HashDisabled GetUploadChecksumSettings(Request const& request,
                       algo != ChecksumAlgorithm::kCrc32cAndMD5);
     use_new_algo = true;
   }
-  
+
   auto const md5 = request.template GetOption<DisableMD5Hash>();
   if (md5.has_value()) {
-    // DisableMD5Hash defaults to true. We only override the new option if the legacy
-    // option was explicitly set to false, or if the new option was not provided at all.
+    // DisableMD5Hash defaults to true. We only override the new option if the
+    // legacy option was explicitly set to false, or if the new option was not
+    // provided at all.
     if (!use_new_algo || md5.value() != true) {
       disable_md5 = md5.value();
     }
   }
   auto const crc32c = request.template GetOption<DisableCrc32cChecksum>();
   if (crc32c.has_value()) {
-    // DisableCrc32cChecksum defaults to std::nullopt, so if it has a value, it was explicitly set.
+    // DisableCrc32cChecksum defaults to std::nullopt, so if it has a value, it
+    // was explicitly set.
     disable_crc32c = crc32c.value();
   }
   return {disable_md5, disable_crc32c};
