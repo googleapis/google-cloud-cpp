@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CHECKSUM_HELPERS_H
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
-#include "google/cloud/options.h"
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -34,25 +34,39 @@ struct HashDisabled {
 template <typename Request>
 HashDisabled GetDownloadChecksumSettings(Request const& request,
                                          Options const& options) {
+  if (request.template HasOption<DisableMD5Hash>() ||
+      request.template HasOption<DisableCrc32cChecksum>()) {
+    return {
+        request.template GetOption<DisableMD5Hash>().value_or(false),
+        request.template GetOption<DisableCrc32cChecksum>().value_or(false)};
+  }
   if (options.has<DownloadChecksumValidationOption>()) {
     auto const algo = options.get<DownloadChecksumValidationOption>();
-    return {algo != ChecksumAlgorithm::kMD5,
-            algo != ChecksumAlgorithm::kCrc32c};
+    return {algo != ChecksumAlgorithm::kMD5 &&
+                algo != ChecksumAlgorithm::kCrc32cAndMD5,
+            algo != ChecksumAlgorithm::kCrc32c &&
+                algo != ChecksumAlgorithm::kCrc32cAndMD5};
   }
-  return {request.template GetOption<DisableMD5Hash>().value_or(false),
-          request.template GetOption<DisableCrc32cChecksum>().value_or(false)};
+  return {false, false};
 }
 
 template <typename Request>
 HashDisabled GetUploadChecksumSettings(Request const& request,
                                        Options const& options) {
+  if (request.template HasOption<DisableMD5Hash>() ||
+      request.template HasOption<DisableCrc32cChecksum>()) {
+    return {
+        request.template GetOption<DisableMD5Hash>().value_or(false),
+        request.template GetOption<DisableCrc32cChecksum>().value_or(false)};
+  }
   if (options.has<UploadChecksumValidationOption>()) {
     auto const algo = options.get<UploadChecksumValidationOption>();
-    return {algo != ChecksumAlgorithm::kMD5,
-            algo != ChecksumAlgorithm::kCrc32c};
+    return {algo != ChecksumAlgorithm::kMD5 &&
+                algo != ChecksumAlgorithm::kCrc32cAndMD5,
+            algo != ChecksumAlgorithm::kCrc32c &&
+                algo != ChecksumAlgorithm::kCrc32cAndMD5};
   }
-  return {request.template GetOption<DisableMD5Hash>().value_or(false),
-          request.template GetOption<DisableCrc32cChecksum>().value_or(false)};
+  return {false, false};
 }
 
 }  // namespace internal

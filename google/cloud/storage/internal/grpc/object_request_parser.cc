@@ -936,16 +936,6 @@ Status Finalize(google::storage::v2::BidiWriteObjectRequest& write_request,
                            Merge(std::move(hashes), hash_function.Finish()));
 }
 
-// If this is the last `Write()` call of the last `InsertObjectMedia()` set the
-// flags to finalize the request
-Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
-                     grpc::WriteOptions& options,
-                     storage::internal::InsertObjectMediaRequest const& request,
-                     bool chunk_has_more) {
-  if (chunk_has_more) return {};
-  return Finalize(write_request, options, request.hash_function());
-}
-
 // If this is the last `Write()` call of the last `UploadChunk()` set the flags
 // to finalize the request
 Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
