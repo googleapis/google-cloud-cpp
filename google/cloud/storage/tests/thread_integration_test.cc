@@ -25,7 +25,6 @@
 #include <future>
 #include <iterator>
 #include <memory>
-#include <mutex>
 #include <set>
 #include <string>
 #include <thread>
@@ -155,11 +154,9 @@ TEST_F(ThreadIntegrationTest, Unshared) {
 class CaptureSendHeaderBackend : public LogBackend {
  public:
   std::vector<std::string> log_lines;
-  std::mutex mu;
 
   void Process(LogRecord const& lr) override {
     // Break the records in lines, because we will analyze the output per line.
-    std::lock_guard<std::mutex> lock(mu);
     std::vector<std::string> lines = absl::StrSplit(lr.message, '\n');
     log_lines.insert(log_lines.end(), lines.begin(), lines.end());
   }
@@ -212,19 +209,16 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   ASSERT_STATUS_OK(delete_status);
 
   std::set<std::string> connected;
-  {
-    std::lock_guard<std::mutex> lock(log_backend->mu);
-    std::copy_if(log_backend->log_lines.begin(), log_backend->log_lines.end(),
-                std::inserter(connected, connected.end()),
-                [](std::string const& line) {
-                  // libcurl prints established connections using this format:
-                  //   Connected to <hostname> (<ipaddress>) port <num>
-                  //   (#<connection>)
-                  // We capture all such lines to count how many connections were
-                  // used.
-                  return absl::StrContains(line, "== curl(Info): Connected to ");
-                });
-  }
+  std::copy_if(log_backend->log_lines.begin(), log_backend->log_lines.end(),
+               std::inserter(connected, connected.end()),
+               [](std::string const& line) {
+                 // libcurl prints established connections using this format:
+                 //   Connected to <hostname> (<ipaddress>) port <num>
+                 //   (#<connection>)
+                 // We capture all such lines to count how many connections were
+                 // used.
+                 return absl::StrContains(line, "== curl(Info): Connected to ");
+               });
   // We expect that at most 5% of the requests required a new connection,
   // ideally it should be 1 connection, but anything small is acceptable. Recall
   // that we make two requests per connection, so:
