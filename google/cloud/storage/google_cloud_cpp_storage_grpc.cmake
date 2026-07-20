@@ -99,6 +99,7 @@ add_library(
     async/writer_connection.h
     grpc_plugin.cc
     grpc_plugin.h
+    internal/async/checksum_helpers.h
     internal/async/connection_fwd.h
     internal/async/connection_impl.cc
     internal/async/connection_impl.h
