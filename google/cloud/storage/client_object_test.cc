@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/checksum_helpers.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -238,6 +239,14 @@ TEST_F(ObjectTest, ReadObjectChecksumPrecedence) {
       .WillOnce([](internal::ReadObjectRangeRequest const& r) {
         EXPECT_TRUE(r.HasOption<DisableMD5Hash>());
         EXPECT_FALSE(r.GetOption<DisableMD5Hash>().value());
+
+        auto settings =
+            internal::GetDownloadChecksumSettings(r, CurrentOptions());
+        // Verify MD5 is enabled (disable_md5 = false) and CRC32C is disabled
+        // (disable_crc32c = true)
+        EXPECT_FALSE(settings.md5);
+        EXPECT_TRUE(settings.crc32c);
+
         auto read_source = std::make_unique<testing::MockObjectReadSource>();
         EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
         EXPECT_CALL(*read_source, Read)
@@ -250,11 +259,38 @@ TEST_F(ObjectTest, ReadObjectChecksumPrecedence) {
   auto actual = client.ReadObject(
       "test-bucket-name", "test-object-name", DisableMD5Hash(false),
       Options{}.set<DownloadChecksumValidationOption>(
-          ChecksumAlgorithm::kCrc32c));
+          ChecksumAlgorithm::kNone));
   ASSERT_STATUS_OK(actual.status());
   std::vector<char> v(1024);
   actual.read(v.data(), v.size());
   EXPECT_EQ(actual.gcount(), 1024);
+}
+
+TEST_F(ObjectTest, InsertObjectChecksumPrecedence) {
+  EXPECT_CALL(*mock_, InsertObjectMedia)
+      .WillOnce([](internal::InsertObjectMediaRequest const& r) {
+        EXPECT_TRUE(r.HasOption<DisableCrc32cChecksum>());
+        EXPECT_TRUE(r.GetOption<DisableCrc32cChecksum>().value());
+
+        auto settings =
+            internal::GetUploadChecksumSettings(r, CurrentOptions());
+        // Verify CRC32C is disabled (disable_crc32c = true) and MD5 remains
+        // enabled (disable_md5 = false)
+        EXPECT_TRUE(settings.crc32c);
+        EXPECT_FALSE(settings.md5);
+
+        return make_status_or(
+            storage::internal::ObjectMetadataParser::FromString(
+                R"({"name": "test-object-name"})")
+                .value());
+      });
+  auto client = ClientForMock();
+  auto actual =
+      client.InsertObject("test-bucket-name", "test-object-name", "payload",
+                          DisableCrc32cChecksum(true),
+                          Options{}.set<UploadChecksumValidationOption>(
+                              ChecksumAlgorithm::kCrc32cAndMD5));
+  ASSERT_STATUS_OK(actual);
 }
 
 TEST_F(ObjectTest, WriteObject) {

@@ -34,39 +34,63 @@ struct HashDisabled {
 template <typename Request>
 HashDisabled GetDownloadChecksumSettings(Request const& request,
                                          Options const& options) {
-  if (request.template HasOption<DisableMD5Hash>() ||
-      request.template HasOption<DisableCrc32cChecksum>()) {
-    return {
-        request.template GetOption<DisableMD5Hash>().value_or(false),
-        request.template GetOption<DisableCrc32cChecksum>().value_or(false)};
-  }
+  bool disable_md5 = false;
+  bool disable_crc32c = false;
+  bool use_new_algo = false;
   if (options.has<DownloadChecksumValidationOption>()) {
     auto const algo = options.get<DownloadChecksumValidationOption>();
-    return {algo != ChecksumAlgorithm::kMD5 &&
-                algo != ChecksumAlgorithm::kCrc32cAndMD5,
-            algo != ChecksumAlgorithm::kCrc32c &&
-                algo != ChecksumAlgorithm::kCrc32cAndMD5};
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5 &&
+                   algo != ChecksumAlgorithm::kCrc32cAndMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c &&
+                      algo != ChecksumAlgorithm::kCrc32cAndMD5);
+    use_new_algo = true;
   }
-  return {false, false};
+  
+  auto const md5 = request.template GetOption<DisableMD5Hash>();
+  if (md5.has_value()) {
+    // DisableMD5Hash defaults to true. We only override the new option if the legacy
+    // option was explicitly set to false, or if the new option was not provided at all.
+    if (!use_new_algo || md5.value() != true) {
+      disable_md5 = md5.value();
+    }
+  }
+  auto const crc32c = request.template GetOption<DisableCrc32cChecksum>();
+  if (crc32c.has_value()) {
+    // DisableCrc32cChecksum defaults to std::nullopt, so if it has a value, it was explicitly set.
+    disable_crc32c = crc32c.value();
+  }
+  return {disable_md5, disable_crc32c};
 }
 
 template <typename Request>
 HashDisabled GetUploadChecksumSettings(Request const& request,
                                        Options const& options) {
-  if (request.template HasOption<DisableMD5Hash>() ||
-      request.template HasOption<DisableCrc32cChecksum>()) {
-    return {
-        request.template GetOption<DisableMD5Hash>().value_or(false),
-        request.template GetOption<DisableCrc32cChecksum>().value_or(false)};
-  }
+  bool disable_md5 = false;
+  bool disable_crc32c = false;
+  bool use_new_algo = false;
   if (options.has<UploadChecksumValidationOption>()) {
     auto const algo = options.get<UploadChecksumValidationOption>();
-    return {algo != ChecksumAlgorithm::kMD5 &&
-                algo != ChecksumAlgorithm::kCrc32cAndMD5,
-            algo != ChecksumAlgorithm::kCrc32c &&
-                algo != ChecksumAlgorithm::kCrc32cAndMD5};
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5 &&
+                   algo != ChecksumAlgorithm::kCrc32cAndMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c &&
+                      algo != ChecksumAlgorithm::kCrc32cAndMD5);
+    use_new_algo = true;
   }
-  return {false, false};
+  
+  auto const md5 = request.template GetOption<DisableMD5Hash>();
+  if (md5.has_value()) {
+    // DisableMD5Hash defaults to true. We only override the new option if the legacy
+    // option was explicitly set to false, or if the new option was not provided at all.
+    if (!use_new_algo || md5.value() != true) {
+      disable_md5 = md5.value();
+    }
+  }
+  auto const crc32c = request.template GetOption<DisableCrc32cChecksum>();
+  if (crc32c.has_value()) {
+    // DisableCrc32cChecksum defaults to std::nullopt, so if it has a value, it was explicitly set.
+    disable_crc32c = crc32c.value();
+  }
+  return {disable_md5, disable_crc32c};
 }
 
 }  // namespace internal
