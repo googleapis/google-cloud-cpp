@@ -25,11 +25,10 @@
 #   `ci/cloudbuild/build.sh --distro fedora rotate-keys --local`
 #
 # The purpose of this build is to rotate the service-account keys used by some
-# integration tests, such as GCS and Bigtable (see lib/integration.sh). The
-# idea is to have p12 and json keys stored in the
+# integration tests, such as GCS, Bigtable, and Observability (see lib/integration.sh).
+# The idea is to have p12 and json keys stored in the
 # gs://cloud-cpp-testing-resources-secrets bucket that are named for each
-# month. For example, there may be a key named `key-2021-04.p12`. That key will
-# be used for the month of April 2021 only.
+# month. For example, there may be a key named `key-2021-04.p12` and `observability-key-2026-07.json`.
 #
 # We need to create the keys for the next month sometime before that month
 # starts, and we need to delete the old keys sometime after we're sure they're
@@ -37,8 +36,8 @@
 #
 # The strategy is to:
 # 1. Make sure a keyfile exists for the *current* month.
-# 2. Make sure a keyfile exists for the month that's, say, 2 weeks in the future
-# 3. Delete any keyfile from the month that's, say, 45 days ago
+# 2. Make sure a keyfile exists for the month that's, say, 2 weeks in the future.
+# 3. Delete any keyfile from the month that's, say, 45 days ago.
 # 4. Delete any key that's over 90 days old.
 #
 # We can schedule this script to run every night or weekly and it will create
@@ -49,56 +48,63 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/lib/io.sh
 
-io::log_h2 "Current service account keys"
-# Note: For historical reasons this keyfile is named with "storage" in the
-# name, though it is used for more than just GCS. One day we may rename this
-# service account to something more generic.
-account="storage-key-file-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com"
-gcloud iam service-accounts keys list \
-  --iam-account="${account}" \
-  --managed-by=user \
-  --format="table(CREATED_AT, EXPIRES_AT)"
-
-io::log_h2 "Checking for the expected active keys"
 bucket="gs://cloud-cpp-testing-resources-secrets"
-active_key_bases=(
-  "key-$(date +"%Y-%m")"
-  "key-$(date +"%Y-%m" --date="now + 2 weeks")"
+
+# Configuration format: "SA_EMAIL|KEY_PREFIX|FILE_TYPES"
+accounts_config=(
+  "storage-key-file-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com|key|json p12"
+  "observability-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com|observability-key|json"
 )
-for key_base in "${active_key_bases[@]}"; do
-  for filetype in "json" "p12"; do
-    bucket_path="${bucket}/${key_base}.${filetype}"
-    io::log "Checking for active key at ${bucket_path}"
-    if ! gcloud storage objects list --stat --fetch-encrypted-object-hashes "${bucket_path}"; then
-      io::log "Not found. Creating ${bucket_path}"
-      gcloud iam service-accounts keys create - \
-        --iam-account="${account}" \
-        --key-file-type="${filetype}" |
-        gcloud storage cp - "${bucket_path}"
+
+for entry in "${accounts_config[@]}"; do
+  IFS="|" read -r sa_email prefix filetypes <<<"${entry}"
+
+  io::log_h2 "Current service account keys for ${sa_email}"
+  gcloud iam service-accounts keys list \
+    --iam-account="${sa_email}" \
+    --managed-by=user \
+    --format="table(CREATED_AT, EXPIRES_AT)"
+
+  io::log_h2 "Checking for the expected active keys (${prefix})"
+  active_key_bases=(
+    "${prefix}-$(date +"%Y-%m")"
+    "${prefix}-$(date +"%Y-%m" --date="now + 2 weeks")"
+  )
+  for key_base in "${active_key_bases[@]}"; do
+    for filetype in ${filetypes}; do
+      bucket_path="${bucket}/${key_base}.${filetype}"
+      io::log "Checking for active key at ${bucket_path}"
+      if ! gcloud storage objects list --stat --fetch-encrypted-object-hashes "${bucket_path}"; then
+        io::log "Not found. Creating ${bucket_path}"
+        gcloud iam service-accounts keys create - \
+          --iam-account="${sa_email}" \
+          --key-file-type="${filetype}" |
+          gcloud storage cp - "${bucket_path}"
+      fi
+    done
+  done
+
+  io::log_h2 "Checking for stale keyfiles (${prefix})"
+  stale_key_base="${prefix}-$(date +"%Y-%m" --date="now - 45 days")"
+  for filetype in ${filetypes}; do
+    bucket_path="${bucket}/${stale_key_base}.${filetype}"
+    io::log "Checking for stale key at ${bucket_path}"
+    if gcloud storage objects list --stat --fetch-encrypted-object-hashes "${bucket_path}"; then
+      io::log "Removing ${bucket_path}"
+      gcloud storage rm "${bucket_path}"
     fi
   done
-done
 
-io::log_h2 "Checking for stale keyfiles"
-stale_key_base="key-$(date +"%Y-%m" --date="now - 45 days")"
-for filetype in "json" "p12"; do
-  bucket_path="${bucket}/${stale_key_base}.${filetype}"
-  io::log "Checking for stale key at ${bucket_path}"
-  if gcloud storage objects list --stat --fetch-encrypted-object-hashes "${bucket_path}"; then
-    io::log "Removing ${bucket_path}"
-    gcloud storage rm "${bucket_path}"
-  fi
+  io::log_h2 "Checking for keys over 90-days old for ${sa_email}"
+  args=(
+    "--iam-account=${sa_email}"
+    "--managed-by=user"
+    "--filter=CREATED_AT<-p90d"
+    "--format=value(KEY_ID)"
+  )
+  for old_key in $(gcloud iam service-accounts keys list "${args[@]}"); do
+    io::log "Deleting key: ${old_key}"
+    gcloud iam service-accounts keys delete "${old_key}" --iam-account="${sa_email}" --quiet
+  done
+  echo
 done
-
-io::log_h2 "Checking for keys over 90-days old"
-args=(
-  "--iam-account=${account}"
-  "--managed-by=user"
-  "--filter=CREATED_AT<-p90d"
-  "--format=value(KEY_ID)"
-)
-for old_key in $(gcloud iam service-accounts keys list "${args[@]}"); do
-  io::log "Deleting key: ${old_key}"
-  gcloud iam service-accounts keys delete "${old_key}" --iam-account="${account}"
-done
-echo
