@@ -1,0 +1,99 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_CACHE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_CACHE_H
+
+#include "google/cloud/storage/version.h"
+#include "absl/types/optional.h"
+#include <cstddef>
+#include <list>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <utility>
+
+namespace google {
+namespace cloud {
+namespace storage {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class BucketMetadata;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage
+namespace storage_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+struct BucketCacheEntry {
+  std::string id;
+  std::string location;
+
+  static BucketCacheEntry FromMetadata(storage::BucketMetadata const& m);
+};
+
+class BucketMetadataCache {
+ public:
+  explicit BucketMetadataCache(std::size_t max_size = 10000)
+      : max_size_(max_size) {}
+
+  absl::optional<BucketCacheEntry> Get(std::string const& bucket_name);
+  void Put(std::string const& bucket_name, BucketCacheEntry entry);
+  void Invalidate(std::string const& bucket_name);
+  void Clear();
+  bool StartFetch(std::string const& bucket_name);
+  void EndFetch(std::string const& bucket_name);
+
+ private:
+  void MoveToFront(std::list<std::string>::iterator it);
+
+  std::size_t max_size_;
+  std::mutex mu_;
+  std::list<std::string> list_;
+  std::unordered_map<std::string, std::pair<BucketCacheEntry,
+                                            std::list<std::string>::iterator>>
+      map_;
+  std::unordered_set<std::string> in_flight_fetch_;
+};
+
+// Tracks an in-flight fetch and clears it when destroyed.
+class ScopedFetch {
+ public:
+  ScopedFetch() = default;
+  // Shared ownership of BucketMetadataCache keeps the cache alive during async
+  // callbacks and ensures ScopedFetch remains copyable for lambda captures.
+  ScopedFetch(std::shared_ptr<BucketMetadataCache> cache,
+              std::string bucket_name)
+      : state_(std::make_shared<State>(std::move(cache),
+                                       std::move(bucket_name))) {}
+
+ private:
+  struct State {
+    State(std::shared_ptr<BucketMetadataCache> c, std::string b)
+        : cache(std::move(c)), bucket_name(std::move(b)) {}
+    ~State() {
+      if (cache) cache->EndFetch(bucket_name);
+    }
+    std::shared_ptr<BucketMetadataCache> cache;
+    std::string bucket_name;
+  };
+  std::shared_ptr<State> state_;
+};
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage_internal
+}  // namespace cloud
+}  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_CACHE_H

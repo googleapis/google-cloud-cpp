@@ -37,6 +37,8 @@ TEST(IdempotencyPolicy, Strict) {
 
   EXPECT_EQ(policy->ReadObject(google::storage::v2::ReadObjectRequest{}),
             Idempotency::kIdempotent);
+  EXPECT_EQ(policy->GetBucket(google::storage::v2::GetBucketRequest{}),
+            Idempotency::kIdempotent);
 
   EXPECT_EQ(policy->InsertObject(google::storage::v2::WriteObjectRequest{}),
             Idempotency::kNonIdempotent);
@@ -89,6 +91,8 @@ TEST(IdempotencyPolicy, AlwaysRetry) {
   auto policy = MakeAlwaysRetryAsyncIdempotencyPolicy();
   ASSERT_THAT(policy, NotNull());
   EXPECT_EQ(policy->ReadObject(google::storage::v2::ReadObjectRequest{}),
+            Idempotency::kIdempotent);
+  EXPECT_EQ(policy->GetBucket(google::storage::v2::GetBucketRequest{}),
             Idempotency::kIdempotent);
   EXPECT_EQ(policy->InsertObject(google::storage::v2::WriteObjectRequest{}),
             Idempotency::kIdempotent);

@@ -51,6 +51,7 @@ class GrpcStub : public GenericStub {
       google::storage::v2::WriteObjectResponse>;
 
   Options options() const override;
+  google::cloud::CompletionQueue cq() const { return background_->cq(); }
 
   StatusOr<storage::internal::ListBucketsResponse> ListBuckets(
       rest_internal::RestContext& context, Options const& options,

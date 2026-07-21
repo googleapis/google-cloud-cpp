@@ -18,7 +18,12 @@
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/internal/grpc/enable_metrics.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
+#include "google/cloud/storage/internal/tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include <functional>
 #include <memory>
 #include <utility>
 
@@ -31,8 +36,15 @@ google::cloud::storage::Client MakeGrpcClient(Options opts) {
   opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
   storage_internal::EnableGrpcMetrics(opts);
   auto stub = std::make_unique<storage_internal::GrpcStub>(opts);
+  storage_internal::TracingConnection::AsyncRunner runner;
+  if (google::cloud::internal::TracingEnabled(opts)) {
+    runner = [cq = stub->cq()](std::function<void()> f) mutable {
+      cq.RunAsync(std::move(f));
+    };
+  }
   return storage::internal::ClientImplDetails::CreateWithoutDecorations(
-      MakeStorageConnection(std::move(opts), std::move(stub)));
+      MakeStorageConnection(std::move(opts), std::move(stub),
+                            std::move(runner)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

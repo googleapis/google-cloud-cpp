@@ -35,6 +35,11 @@ class AlwaysRetryAsyncIdempotencyPolicy : public AsyncIdempotencyPolicy {
     return Idempotency::kIdempotent;
   }
 
+  google::cloud::Idempotency GetBucket(
+      google::storage::v2::GetBucketRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
   google::cloud::Idempotency InsertObject(
       google::storage::v2::WriteObjectRequest const&) override {
     return Idempotency::kIdempotent;
@@ -67,6 +72,12 @@ AsyncIdempotencyPolicy::~AsyncIdempotencyPolicy() = default;
 
 google::cloud::Idempotency AsyncIdempotencyPolicy::ReadObject(
     google::storage::v2::ReadObjectRequest const&) {
+  // Read operations are always idempotent.
+  return Idempotency::kIdempotent;
+}
+
+google::cloud::Idempotency AsyncIdempotencyPolicy::GetBucket(
+    google::storage::v2::GetBucketRequest const&) {
   // Read operations are always idempotent.
   return Idempotency::kIdempotent;
 }
