@@ -49,13 +49,6 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
 
   Options options() const override { return impl_->options(); }
 
-  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
-      GetBucketParams p) override {
-    auto span = internal::MakeSpan("storage::AsyncConnection::GetBucket");
-    internal::OTelScope scope(span);
-    return internal::EndSpan(std::move(span), impl_->GetBucket(std::move(p)));
-  }
-
   future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::InsertObject");

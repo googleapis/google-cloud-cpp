@@ -206,8 +206,6 @@ class TracingConnection : public storage::internal::StorageConnection {
 
   AsyncRunner const& runner();
 
-  static BucketMetadataCache& cache();
-
   std::shared_ptr<StorageConnection> impl_;
   std::shared_ptr<BucketMetadataCache> cache_;
   absl::once_flag once_flag_;
