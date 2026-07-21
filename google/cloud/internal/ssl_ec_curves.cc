@@ -32,10 +32,17 @@ namespace {
 constexpr unsigned int kMinimumLibcurlVersionForEcCurves =
     (7U << 16) | (73U << 8) | 0U;
 
+// `curl_version_info()` is not thread-safe as libcurl constructs version
+// string details in internal static buffers without locks. Using a block-scope
+// static ensures thread-safe initialization exactly once via C++11 magic
+// statics, preventing data races when multiple threads create REST clients.
 bool SupportsSslEcCurves() {
-  auto* vinfo = curl_version_info(CURLVERSION_NOW);
-  return vinfo != nullptr &&
-         vinfo->version_num >= kMinimumLibcurlVersionForEcCurves;
+  static bool const kSupports = [] {
+    auto* vinfo = curl_version_info(CURLVERSION_NOW);
+    return vinfo != nullptr &&
+           vinfo->version_num >= kMinimumLibcurlVersionForEcCurves;
+  }();
+  return kSupports;
 }
 
 }  // namespace
