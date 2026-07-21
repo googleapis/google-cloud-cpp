@@ -21,6 +21,7 @@
 #include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/async/writer_connection.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
 #include <gmock/gmock.h>
 
@@ -107,6 +108,20 @@ TEST(DefaultOptionsAsync, EnableMultiStreamOptimizationOption) {
       Options{}.set<storage::EnableMultiStreamOptimizationOption>(false));
   EXPECT_FALSE(
       updated_options.get<storage::EnableMultiStreamOptimizationOption>());
+}
+
+TEST(DefaultOptionsAsync, OTelSpanEnrichmentOption) {
+  auto const options = DefaultOptionsAsync({});
+  EXPECT_TRUE(options.get<
+              google::cloud::storage_experimental::OTelSpanEnrichmentOption>());
+
+  auto const updated_options = DefaultOptionsAsync(
+      Options{}
+          .set<google::cloud::storage_experimental::OTelSpanEnrichmentOption>(
+              false));
+  EXPECT_FALSE(
+      updated_options.get<
+          google::cloud::storage_experimental::OTelSpanEnrichmentOption>());
 }
 
 }  // namespace
