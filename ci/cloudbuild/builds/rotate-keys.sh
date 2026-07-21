@@ -57,7 +57,8 @@ accounts_config=(
 )
 
 for entry in "${accounts_config[@]}"; do
-  IFS="|" read -r sa_email prefix filetypes <<<"${entry}"
+  IFS="|" read -r sa_email prefix filetypes_str <<<"${entry}"
+  read -r -a filetypes <<<"${filetypes_str}"
 
   io::log_h2 "Current service account keys for ${sa_email}"
   gcloud iam service-accounts keys list \
