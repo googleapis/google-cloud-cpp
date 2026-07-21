@@ -91,7 +91,7 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 steps:
   # Builds the docker image that will be used by the main build step. Makes 3
   # attempts to workaround #6438.
-- name: 'gcr.io/kaniko-project/executor:v1.24.0-debug'
+- name: 'gcr.io/kaniko-project/executor:v1.24.0-debug@sha256:2562c4fe551399514277ffff7dcca9a3b1628c4ea38cb017d7286dc6ea52f4cd'
   id: 'kaniko-build'
   entrypoint: '/busybox/sh'
   args:
@@ -138,7 +138,7 @@ steps:
   ]
 
   # Remove the image created by this build.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:96a99902b17be6192e01bd94067d72e9c1c017a042ad970e98eb576070562058'
   id: 'remove-image'
   allowFailure: true
   entrypoint: 'bash'
@@ -150,7 +150,7 @@ steps:
 
   # Cancels in-progress builds for previous commits in the current PR so we can
   # free up resources to start running the builds for the new commit.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:96a99902b17be6192e01bd94067d72e9c1c017a042ad970e98eb576070562058'
   id: 'cancel-in-progress-builds-for-PR'
   allowFailure: true
   waitFor: [ '-' ]
