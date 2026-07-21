@@ -29,6 +29,7 @@
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
+#include <opentelemetry/sdk/resource/resource.h>
 #include <vector>
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
@@ -68,7 +69,16 @@ struct MonitoredResourceResult {
 
 MonitoredResourceResult MakeMonitoredResource(
     opentelemetry::sdk::metrics::PointDataAttributes const& pda,
+    opentelemetry::sdk::resource::Resource const& detected_resource,
     Options const& options, std::string const& client_uid);
+
+inline MonitoredResourceResult MakeMonitoredResource(
+    opentelemetry::sdk::metrics::PointDataAttributes const& pda,
+    Options const& options, std::string const& client_uid) {
+  return MakeMonitoredResource(
+      pda, opentelemetry::sdk::resource::Resource::Create({}), options,
+      client_uid);
+}
 
 std::vector<double> MakeLatencyHistogramBoundaries();
 

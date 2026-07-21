@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
+#include "google/cloud/opentelemetry/resource_detector.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
@@ -26,6 +27,9 @@
 #include "absl/strings/string_view.h"
 #include <grpcpp/ext/otel_plugin.h>
 #include <grpcpp/grpcpp.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/faas_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
 #include <opentelemetry/version.h>
 #if OPENTELEMETRY_VERSION_MAJOR > 1 || \
     (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 10)
@@ -194,7 +198,9 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
 
 MonitoredResourceResult MakeMonitoredResource(
     opentelemetry::sdk::metrics::PointDataAttributes const& pda,
+    opentelemetry::sdk::resource::Resource const& detected_resource,
     Options const& options, std::string const& client_uid) {
+  namespace sc = ::opentelemetry::semconv;
   google::api::MonitoredResource resource;
   resource.set_type("bigtable.googleapis.com/Client");
   auto& labels = *resource.mutable_labels();
@@ -204,6 +210,13 @@ MonitoredResourceResult MakeMonitoredResource(
     if (it == attributes.end()) return std::string{};
     return opentelemetry::nostd::get<std::string>(it->second);
   };
+  auto const& detected_attributes = detected_resource.GetAttributes();
+  auto by_name = [&](std::string const& name, std::string default_value = {}) {
+    auto const l = detected_attributes.find(name);
+    if (l == detected_attributes.end()) return default_value;
+    return opentelemetry::nostd::get<std::string>(l->second);
+  };
+
   auto project_id = get_attr("project_id");
   // Fall back to resolving the project ID from `InstanceChannelAffinityOption`
   // if the static `ProjectIdOption` is not set on the client (which is common
@@ -216,11 +229,32 @@ MonitoredResourceResult MakeMonitoredResource(
       project_id = instances[0].project_id();
     }
   }
+  if (project_id.empty()) {
+    project_id = by_name(sc::cloud::kCloudAccountId);
+  }
+
   labels["project_id"] = project_id;
   labels["instance"] = get_attr("instance");
   labels["app_profile"] = options.get<bigtable::AppProfileIdOption>();
   labels["client_name"] = "cpp.Bigtable/" + bigtable::version_string();
   labels["uuid"] = client_uid;
+
+  auto client_project = by_name(sc::cloud::kCloudAccountId);
+  if (client_project.empty()) {
+    client_project = project_id;
+  }
+  if (!client_project.empty()) {
+    labels["client_project"] = client_project;
+  }
+  labels["location"] = by_name(sc::cloud::kCloudAvailabilityZone,
+                               by_name(sc::cloud::kCloudRegion, "global"));
+  labels["cloud_platform"] = by_name(sc::cloud::kCloudPlatform, "unknown");
+  labels["host_id"] = by_name("faas.id", by_name(sc::host::kHostId, "unknown"));
+  auto hostname = by_name(sc::host::kHostName);
+  if (!hostname.empty()) {
+    labels["hostname"] = hostname;
+  }
+
   return MonitoredResourceResult{std::move(project_id), std::move(resource)};
 }
 
@@ -230,10 +264,14 @@ GrpcMetricsExporter::GrpcMetricsExporter(
   auto authority = options.get<AuthorityOption>();
   if (!GrpcMetricsExporterRegistry::Singleton().Register(authority)) return;
 
+  auto detector = otel::MakeResourceDetector();
+  auto detected_resource = detector->Detect();
+
   auto dynamic_resource_fn =
-      [options, client_uid](
+      [options, client_uid, detected_resource = std::move(detected_resource)](
           opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
-        auto res = MakeMonitoredResource(pda, options, client_uid);
+        auto res =
+            MakeMonitoredResource(pda, detected_resource, options, client_uid);
         return std::make_pair(std::move(res.project_id),
                               std::move(res.resource));
       };

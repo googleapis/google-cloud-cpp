@@ -269,6 +269,18 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
   ASSERT_FALSE(recorded.empty());
 
   std::set<std::string> grpc_metric_types;
+  bool verified_resource_labels = false;
+
+  auto expected_client_project =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_TEST_EXPECTED_CLIENT_PROJECT")
+          .value_or(project_id());
+  auto expected_location = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_TEST_EXPECTED_LOCATION");
+  auto expected_cloud_platform = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_TEST_EXPECTED_CLOUD_PLATFORM");
+  auto expected_hostname = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_TEST_EXPECTED_HOSTNAME");
 
   for (auto const& req : recorded) {
     std::cout << "req=" << req.DebugString() << std::endl;
@@ -278,9 +290,51 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
       auto const& metric_type = ts.metric().type();
       if (absl::StartsWith(metric_type, "workload.googleapis.com/grpc.")) {
         grpc_metric_types.insert(metric_type);
+
+        auto const& labels = ts.resource().labels();
+        auto location_it = labels.find("location");
+        auto platform_it = labels.find("cloud_platform");
+        auto host_id_it = labels.find("host_id");
+        auto client_project_it = labels.find("client_project");
+
+        if (location_it != labels.end() && platform_it != labels.end() &&
+            host_id_it != labels.end() && client_project_it != labels.end()) {
+          verified_resource_labels = true;
+          EXPECT_FALSE(location_it->second.empty());
+          if (expected_location.has_value() && !expected_location->empty()) {
+            std::vector<absl::string_view> parts =
+                absl::StrSplit(*expected_location, '-');
+            auto region_prefix = parts.size() >= 2
+                                     ? absl::StrCat(parts[0], "-", parts[1])
+                                     : *expected_location;
+            EXPECT_THAT(location_it->second, StartsWith(region_prefix));
+          }
+
+          EXPECT_FALSE(platform_it->second.empty());
+          if (expected_cloud_platform.has_value() &&
+              !expected_cloud_platform->empty()) {
+            EXPECT_EQ(platform_it->second, *expected_cloud_platform);
+          }
+
+          EXPECT_FALSE(host_id_it->second.empty());
+
+          EXPECT_FALSE(client_project_it->second.empty());
+          if (!expected_client_project.empty()) {
+            EXPECT_EQ(client_project_it->second, expected_client_project);
+          }
+
+          if (expected_hostname.has_value() && !expected_hostname->empty()) {
+            auto hostname_it = labels.find("hostname");
+            if (hostname_it != labels.end()) {
+              EXPECT_EQ(hostname_it->second, *expected_hostname);
+            }
+          }
+        }
       }
     }
   }
+
+  EXPECT_TRUE(verified_resource_labels);
 
   // Verify that specific gRPC client metrics configured in GrpcMetricsExporter
   // are present. OpenTelemetry metric names are exported to Cloud Monitoring

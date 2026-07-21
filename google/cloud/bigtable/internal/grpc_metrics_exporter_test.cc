@@ -30,6 +30,8 @@
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
 #include <algorithm>
 #include <atomic>
 #include <chrono>
@@ -190,11 +192,15 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResource) {
 
   auto const& labels = resource.labels();
   EXPECT_THAT(labels.at("project_id"), Eq("test-project"));
+  EXPECT_THAT(labels.at("client_project"), Eq("test-project"));
   EXPECT_THAT(labels.at("instance"), Eq("test-instance"));
   EXPECT_THAT(labels.at("app_profile"), Eq("test-app-profile"));
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
+  EXPECT_THAT(labels.at("location"), Eq("global"));
+  EXPECT_THAT(labels.at("cloud_platform"), Eq("unknown"));
+  EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
 }
 
 TEST(GrpcMetricsExporterTest, MakeMonitoredResourceMissingAttributes) {
@@ -217,6 +223,9 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceMissingAttributes) {
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
+  EXPECT_THAT(labels.at("location"), Eq("global"));
+  EXPECT_THAT(labels.at("cloud_platform"), Eq("unknown"));
+  EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
 }
 
 TEST(GrpcMetricsExporterTest, MakeMonitoredResourcePartialAttributes) {
@@ -236,11 +245,15 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourcePartialAttributes) {
 
   auto const& labels = resource.labels();
   EXPECT_THAT(labels.at("project_id"), Eq("test-project"));
+  EXPECT_THAT(labels.at("client_project"), Eq("test-project"));
   EXPECT_THAT(labels.at("instance"), Eq(""));
   EXPECT_THAT(labels.at("app_profile"), Eq(""));
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
+  EXPECT_THAT(labels.at("location"), Eq("global"));
+  EXPECT_THAT(labels.at("cloud_platform"), Eq("unknown"));
+  EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
 }
 
 TEST(GrpcMetricsExporterTest, MakeMonitoredResourceExtraAttributes) {
@@ -262,15 +275,60 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceExtraAttributes) {
   EXPECT_THAT(resource.type(), Eq("bigtable.googleapis.com/Client"));
 
   auto const& labels = resource.labels();
-  EXPECT_THAT(labels.size(), Eq(5));
+  EXPECT_THAT(labels.size(), Eq(9));
   EXPECT_THAT(labels.at("project_id"), Eq("test-project"));
+  EXPECT_THAT(labels.at("client_project"), Eq("test-project"));
   EXPECT_THAT(labels.at("instance"), Eq("test-instance"));
   EXPECT_THAT(labels.at("app_profile"), Eq(""));
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
+  EXPECT_THAT(labels.at("location"), Eq("global"));
+  EXPECT_THAT(labels.at("cloud_platform"), Eq("unknown"));
+  EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
   EXPECT_THAT(labels.find("grpc.method"), Eq(labels.end()));
   EXPECT_THAT(labels.find("grpc.status"), Eq(labels.end()));
+}
+
+TEST(GrpcMetricsExporterTest, MakeMonitoredResourceWithDetectedResource) {
+  namespace sc = ::opentelemetry::semconv;
+  Options options;
+  options.set<bigtable::AppProfileIdOption>("test-app-profile");
+  std::string const client_uid = "test-client-uid";
+
+  opentelemetry::sdk::metrics::PointDataAttributes pda;
+  pda.attributes = opentelemetry::sdk::metrics::PointAttributes({
+      {"project_id", "test-project"},
+      {"instance", "test-instance"},
+  });
+
+  auto detected_resource = opentelemetry::sdk::resource::Resource::Create({
+      {sc::cloud::kCloudAccountId, "detected-vm-project"},
+      {sc::cloud::kCloudPlatform, "gcp_compute_engine"},
+      {sc::cloud::kCloudAvailabilityZone, "us-central1-a"},
+      {sc::host::kHostId, "123456789"},
+      {sc::host::kHostName, "test-vm-host"},
+  });
+
+  auto result =
+      MakeMonitoredResource(pda, detected_resource, options, client_uid);
+  EXPECT_THAT(result.project_id, Eq("test-project"));
+
+  auto const& resource = result.resource;
+  EXPECT_THAT(resource.type(), Eq("bigtable.googleapis.com/Client"));
+
+  auto const& labels = resource.labels();
+  EXPECT_THAT(labels.at("project_id"), Eq("test-project"));
+  EXPECT_THAT(labels.at("client_project"), Eq("detected-vm-project"));
+  EXPECT_THAT(labels.at("instance"), Eq("test-instance"));
+  EXPECT_THAT(labels.at("app_profile"), Eq("test-app-profile"));
+  EXPECT_THAT(labels.at("client_name"),
+              Eq("cpp.Bigtable/" + bigtable::version_string()));
+  EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
+  EXPECT_THAT(labels.at("location"), Eq("us-central1-a"));
+  EXPECT_THAT(labels.at("cloud_platform"), Eq("gcp_compute_engine"));
+  EXPECT_THAT(labels.at("host_id"), Eq("123456789"));
+  EXPECT_THAT(labels.at("hostname"), Eq("test-vm-host"));
 }
 
 TEST(GrpcMetricsExporterTest, MakeLatencyHistogramBoundaries) {
