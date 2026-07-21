@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/async/object_descriptor.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/rewriter.h"
 #include "google/cloud/storage/async/token.h"
