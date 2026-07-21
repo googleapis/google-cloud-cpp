@@ -45,8 +45,10 @@ using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::PromiseWithOTelContext;
+using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -761,6 +763,209 @@ TEST(ConnectionTracing, GetBucketError) {
                  AllOf(SpanNamed("storage::AsyncConnection::GetBucket"),
                        SpanWithStatus(opentelemetry::trace::StatusCode::kError),
                        SpanHasInstrumentationScope(), SpanKindIsClient())));
+}
+
+TEST(ConnectionTracing, GetBucketSpanEnrichment) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<google::storage::v2::Bucket>> p;
+
+  auto options =
+      TracingEnabled()
+          .set<google::cloud::storage_experimental::OTelSpanEnrichmentOption>(
+              true);
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(options));
+  EXPECT_CALL(*mock, GetBucket).WillOnce(expect_context(p));
+  auto actual = MakeTracingAsyncConnection(std::move(mock));
+
+  google::storage::v2::GetBucketRequest req;
+  req.set_name("projects/_/buckets/test-bucket");
+  auto result =
+      actual->GetBucket({std::move(req), options}).then(expect_no_context);
+
+  google::storage::v2::Bucket bucket_meta;
+  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_location("us-east1");
+  bucket_meta.set_location_type("regional");
+  p.set_value(make_status_or(std::move(bucket_meta)));
+  ASSERT_STATUS_OK(result.get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("storage::AsyncConnection::GetBucket"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
+}
+
+TEST(ConnectionTracing, BucketMetadataCacheSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<Status> delete_promise_1;
+  PromiseWithOTelContext<StatusOr<google::storage::v2::Bucket>> bucket_promise;
+  PromiseWithOTelContext<Status> delete_promise_2;
+
+  auto options =
+      TracingEnabled()
+          .set<google::cloud::storage_experimental::OTelSpanEnrichmentOption>(
+              true);
+
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(options));
+
+  // 1st call: DeleteObject on a cache miss triggers background GetBucket
+  EXPECT_CALL(*mock, DeleteObject)
+      .WillOnce(expect_context(delete_promise_1))
+      .WillOnce(expect_context(delete_promise_2));
+
+  EXPECT_CALL(*mock, GetBucket).WillOnce([&](auto const&) {
+    return bucket_promise.get_future();
+  });
+
+  auto actual = MakeTracingAsyncConnection(std::move(mock));
+
+  google::storage::v2::DeleteObjectRequest req;
+  req.set_bucket("projects/_/buckets/test-bucket");
+  req.set_object("test-object-1");
+
+  auto res1 = actual->DeleteObject({req, options}).then(expect_no_context);
+  delete_promise_1.set_value(Status{});
+  ASSERT_STATUS_OK(res1.get());
+
+  // Complete the background GetBucket fetch to populate the cache
+  google::storage::v2::Bucket bucket_meta;
+  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_location("us-east1");
+  bucket_meta.set_location_type("regional");
+  bucket_promise.set_value(make_status_or(std::move(bucket_meta)));
+
+  // Clear spans from the first operation and background GetBucket
+  (void)span_catcher->GetSpans();
+
+  // 2nd call: DeleteObject hits the cache and span is enriched
+  req.set_object("test-object-2");
+  auto res2 = actual->DeleteObject({req, options}).then(expect_no_context);
+  delete_promise_2.set_value(Status{});
+  ASSERT_STATUS_OK(res2.get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("storage::AsyncConnection::DeleteObject"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
+}
+
+TEST(ConnectionTracing, GetBucketMaybeInvalidateEvicts) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<google::storage::v2::Bucket>> p1;
+  PromiseWithOTelContext<StatusOr<google::storage::v2::Bucket>> p2;
+
+  auto options =
+      TracingEnabled()
+          .set<google::cloud::storage_experimental::OTelSpanEnrichmentOption>(
+              true);
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(options));
+
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce(expect_context(p1))
+      .WillOnce(expect_context(p2));
+
+  auto actual = MakeTracingAsyncConnection(std::move(mock));
+
+  // 1st call populates the cache
+  google::storage::v2::GetBucketRequest req;
+  req.set_name("projects/_/buckets/test-bucket");
+  auto res1 = actual->GetBucket({req, options}).then(expect_no_context);
+  google::storage::v2::Bucket bucket_meta;
+  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_location("us-east1");
+  bucket_meta.set_location_type("regional");
+  p1.set_value(make_status_or(std::move(bucket_meta)));
+  ASSERT_STATUS_OK(res1.get());
+
+  // 2nd call returns kNotFound and evicts the cached metadata
+  auto res2 = actual->GetBucket({req, options}).then(expect_no_context);
+  p2.set_value(StatusOr<google::storage::v2::Bucket>(
+      Status(StatusCode::kNotFound, "not found")));
+  EXPECT_THAT(res2.get(), StatusIs(StatusCode::kNotFound));
+}
+
+TEST(ConnectionTracing, DeleteObjectNoEvictOnError) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<google::storage::v2::Bucket>> bucket_p;
+  PromiseWithOTelContext<Status> delete_p1;
+  PromiseWithOTelContext<Status> delete_p2;
+
+  auto options =
+      TracingEnabled()
+          .set<google::cloud::storage_experimental::OTelSpanEnrichmentOption>(
+              true);
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(options));
+
+  EXPECT_CALL(*mock, GetBucket).WillOnce(expect_context(bucket_p));
+  EXPECT_CALL(*mock, DeleteObject)
+      .WillOnce(expect_context(delete_p1))
+      .WillOnce(expect_context(delete_p2));
+
+  auto actual = MakeTracingAsyncConnection(std::move(mock));
+
+  // 1st call: GetBucket populates the cache
+  google::storage::v2::GetBucketRequest bucket_req;
+  bucket_req.set_name("projects/_/buckets/test-bucket");
+  auto res_bucket =
+      actual->GetBucket({bucket_req, options}).then(expect_no_context);
+  google::storage::v2::Bucket bucket_meta;
+  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_location("us-east1");
+  bucket_meta.set_location_type("regional");
+  bucket_p.set_value(make_status_or(std::move(bucket_meta)));
+  ASSERT_STATUS_OK(res_bucket.get());
+
+  // 2nd call: DeleteObject fails with kNotFound (object missing)
+  google::storage::v2::DeleteObjectRequest del_req;
+  del_req.set_bucket("projects/_/buckets/test-bucket");
+  del_req.set_object("missing-object");
+  auto res_del1 =
+      actual->DeleteObject({del_req, options}).then(expect_no_context);
+  delete_p1.set_value(Status(StatusCode::kNotFound, "not found"));
+  EXPECT_THAT(res_del1.get(), StatusIs(StatusCode::kNotFound));
+
+  // Clear spans to verify next span enrichment
+  (void)span_catcher->GetSpans();
+
+  // 3rd call: DeleteObject proves bucket metadata was NOT evicted by object
+  // error
+  del_req.set_object("another-object");
+  auto res_del2 =
+      actual->DeleteObject({del_req, options}).then(expect_no_context);
+  delete_p2.set_value(Status{});
+  ASSERT_STATUS_OK(res_del2.get());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("storage::AsyncConnection::DeleteObject"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
 }
 
 }  // namespace
