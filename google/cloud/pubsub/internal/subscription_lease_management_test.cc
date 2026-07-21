@@ -109,18 +109,23 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1");
   fake_cq->SimulateCompletion(true);
+  // RunAsync, drain the deferred OnRefreshTimer
+  fake_cq->SimulateCompletion(true);
   ASSERT_EQ(1U, fake_cq->size());
 
   // Ack one more message and trigger the new timer.
   uut->NackMessage("ack-0-2");
+  fake_cq->SimulateCompletion(true);
+  // RunAsync, drain the deferred OnRefreshTimer
   fake_cq->SimulateCompletion(true);
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
 
-  fake_cq->SimulateCompletion(false);
-  ASSERT_EQ(0U, fake_cq->size());
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
   EXPECT_THAT(done.get(), IsOk());
 }
 
@@ -154,8 +159,9 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
           Status(StatusCode::kPermissionDenied, "uh-oh"))});
   ASSERT_EQ(1U, fake_cq->size());
 
-  fake_cq->SimulateCompletion(false);
-  ASSERT_EQ(0U, fake_cq->size());
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -219,12 +225,15 @@ TEST(SubscriptionLeaseManagementTest, UsesDeadlineExtension) {
 
   // Ignore message and then fire the timer. This will extend the deadline.
   fake_cq->SimulateCompletion(true);
+  // RunAsync, drain the deferred OnRefreshTimer
+  fake_cq->SimulateCompletion(true);
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
-  fake_cq->SimulateCompletion(false);
-  ASSERT_EQ(0U, fake_cq->size());
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
   EXPECT_THAT(done.get(), IsOk());
 }
 
@@ -270,13 +279,84 @@ TEST(SubscriptionLeaseManagementTest, ExpiredMessage) {
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1");
   fake_cq->SimulateCompletion(true);
+  // RunAsync, drain the deferred OnRefreshTimer
+  fake_cq->SimulateCompletion(true);
   ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
 
-  fake_cq->SimulateCompletion(false);
-  ASSERT_EQ(0U, fake_cq->size());
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
+  EXPECT_THAT(done.get(), IsOk());
+}
+
+/// @test Regression test for the self-deadlock in StartRefreshTimer: the lease
+/// refresh-timer continuation must be dispatched via `RunAsync` rather than run
+/// inline in the timer callback. Running it inline re-entered the already-held
+/// `mu_` and self-deadlocked the subscription. Here we verify that firing the
+/// timer only *schedules* the refresh (a RunAsync task); the lease extension
+/// runs on a subsequent completion, never synchronously in the timer callback.
+TEST(SubscriptionLeaseManagementTest,
+     RefreshTimerContinuationDispatchedViaRunAsync) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  std::shared_ptr<BatchCallback> batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](std::shared_ptr<BatchCallback> cb) {
+    batch_callback = std::move(cb);
+  });
+
+  auto mock_batch_callback =
+      std::make_shared<pubsub_testing::MockBatchCallback>();
+  EXPECT_CALL(*mock_batch_callback, callback).Times(1);
+
+  int extend_calls = 0;
+  EXPECT_CALL(*mock, ExtendLeases)
+      .WillRepeatedly(
+          [&](std::vector<std::string> const&, std::chrono::seconds) {
+            ++extend_calls;
+            return make_ready_future(Status{});
+          });
+  EXPECT_CALL(*mock, BulkNack)
+      .WillRepeatedly([](std::vector<std::string> const&) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, Shutdown).Times(1);
+
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(fake_cq);
+
+  auto shutdown_manager = std::make_shared<SessionShutdownManager>();
+  auto uut = SubscriptionLeaseManagement::Create(
+      cq, shutdown_manager, mock, std::chrono::seconds(345),
+      std::chrono::seconds(600));
+
+  auto done = shutdown_manager->Start({});
+  uut->Start(mock_batch_callback);
+  batch_callback->callback(
+      BatchCallback::StreamingPullResponse{GenerateMessages("0-", 1)});
+  ASSERT_EQ(1U, fake_cq->size());  // the refresh timer is pending
+
+  // Fire the timer. With the fix, the timer callback only *schedules*
+  // OnRefreshTimer via RunAsync; it must NOT extend leases inline (doing so
+  // re-enters the held mutex and deadlocks).
+  fake_cq->SimulateCompletion(true);
+  EXPECT_EQ(0, extend_calls)
+      << "lease refresh ran inline in the timer callback (deadlock path)";
+  EXPECT_EQ(1U, fake_cq->size());  // a RunAsync task is now pending
+
+  // Draining the RunAsync task runs OnRefreshTimer -> ExtendLeases.
+  fake_cq->SimulateCompletion(true);
+  EXPECT_EQ(1, extend_calls);
+
+  // The fix defers OnRefreshTimer to RunAsync, which the fake CQ only executes
+  // on SimulateCompletion(true) (false drops the task). Drain with true so the
+  // deferred refresh operation finishes and the session shutdown completes.
+  shutdown_manager->MarkAsShutdown(__func__, Status{});
+  uut->Shutdown();
+  for (int i = 0; i != 16 && !fake_cq->empty(); ++i) {
+    fake_cq->SimulateCompletion(true);
+  }
   EXPECT_THAT(done.get(), IsOk());
 }
 
