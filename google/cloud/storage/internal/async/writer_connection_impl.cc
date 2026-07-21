@@ -261,23 +261,24 @@ future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
         HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
   }
   offset_ += upload_size;
+  std::unique_lock<std::mutex> lk(mu_);
+  auto impl = impl_;
+  lk.unlock();
+
   struct ConsumeLoop {
-    AsyncWriterConnectionImpl* self;
-    future<StatusOr<bool>> operator()(
+    std::shared_ptr<StreamingRpc> impl;
+
+    future<void> operator()(
         future<std::optional<google::storage::v2::BidiWriteObjectResponse>> f) {
       auto response = f.get();
-      if (!response.has_value()) return make_ready_future(StatusOr<bool>(true));
-      return self->impl_->Read().then(*this);
+      if (!response.has_value()) return make_ready_future();
+      return impl->Read().then(*this);
     }
   };
 
-  return impl_->Read().then(ConsumeLoop{this}).then([this](auto f) {
-    auto res = f.get();
-    if (!res) {
-      return self->Finish().then(
-          HandleFinishAfterError(std::move(res).status()));
-    }
-    return self->Finish().then([](auto f2) { return f2.get(); });
+  return impl->Read().then(ConsumeLoop{impl}).then([this](auto f) {
+    f.get();
+    return Finish();
   });
 }
 
@@ -300,14 +301,18 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
   }
   offset_ += upload_size;
 
+  std::unique_lock<std::mutex> lk(mu_);
+  auto impl = impl_;
+  lk.unlock();
+
   struct ConsumeLoop {
     AsyncWriterConnectionImpl* self;
-    future<StatusOr<bool>> operator()(
+    std::shared_ptr<StreamingRpc> impl;
+
+    future<void> operator()(
         future<std::optional<google::storage::v2::BidiWriteObjectResponse>> f) {
       auto response = f.get();
-      if (!response.has_value()) {
-        return make_ready_future(StatusOr<bool>(true));
-      }
+      if (!response.has_value()) return make_ready_future();
       // Process intermediate messages.
       if (response->has_write_handle()) {
         self->latest_write_handle_ = response->write_handle();
@@ -318,36 +323,25 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
       if (response->has_resource()) {
         self->persisted_state_ = response->resource();
       }
-      return self->impl_->Read().then(*this);
+      return impl->Read().then(*this);
     }
   };
 
-  return impl_->Read()
-      .then(ConsumeLoop{this})
-      .then([this](
-                auto f) -> future<StatusOr<google::storage::v2::Object>> {
-        auto res = f.get();
-        if (!res) {
-          return self->Finish()
-              .then(HandleFinishAfterError(std::move(res).status()))
-              .then([](auto f) {
-                return StatusOr<google::storage::v2::Object>(f.get());
-              });
-        }
-        return self->Finish().then(
-            [self](auto f2) -> StatusOr<google::storage::v2::Object> {
-              auto status = f2.get();
-              if (!status.ok()) return status;
-              if (!absl::holds_alternative<google::storage::v2::Object>(
-                      self->persisted_state_)) {
-                return internal::InternalError(
-                    "no object metadata returned after finalizing upload",
-                    GCP_ERROR_INFO());
-              }
-              return absl::get<google::storage::v2::Object>(
-                  self->persisted_state_);
-            });
-      });
+  return impl->Read().then(ConsumeLoop{this, impl}).then([this](auto f) {
+    f.get();
+    return Finish().then(
+        [this](auto f2) -> StatusOr<google::storage::v2::Object> {
+          auto status = f2.get();
+          if (!status.ok()) return status;
+          if (!absl::holds_alternative<google::storage::v2::Object>(
+                  persisted_state_)) {
+            return internal::InternalError(
+                "no object metadata returned after finalizing upload",
+                GCP_ERROR_INFO());
+          }
+          return absl::get<google::storage::v2::Object>(persisted_state_);
+        });
+  });
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(

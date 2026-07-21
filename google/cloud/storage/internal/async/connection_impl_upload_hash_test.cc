@@ -216,16 +216,23 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
               EXPECT_TRUE(wopt.is_last_message());
               return sequencer.PushBack("Write");
             });
-    EXPECT_CALL(*stream, Read).WillOnce([&] {
-      return sequencer.PushBack("Read").then([](auto) {
-        auto response = google::storage::v2::BidiWriteObjectResponse{};
-        response.mutable_resource()->set_bucket(
-            "projects/_/buckets/test-bucket");
-        response.mutable_resource()->set_name("test-object");
-        response.mutable_resource()->set_generation(123456);
-        return std::make_optional(std::move(response));
-      });
-    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read1").then([](auto) {
+            auto response = google::storage::v2::BidiWriteObjectResponse{};
+            response.mutable_resource()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_resource()->set_name("test-object");
+            response.mutable_resource()->set_generation(123456);
+            return std::make_optional(std::move(response));
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read2").then([](auto) {
+            return std::optional<
+                google::storage::v2::BidiWriteObjectResponse>();
+          });
+        });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
       return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
@@ -267,7 +274,13 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Read");
+  EXPECT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
   auto response = w2.get();
@@ -277,9 +290,6 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartUnbuffered) {
   EXPECT_EQ(response->generation(), 123456);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST_P(AsyncConnectionImplUploadHashTest,
@@ -316,16 +326,23 @@ TEST_P(AsyncConnectionImplUploadHashTest,
               EXPECT_TRUE(wopt.is_last_message());
               return sequencer.PushBack("Write");
             });
-    EXPECT_CALL(*stream, Read).WillOnce([&] {
-      return sequencer.PushBack("Read").then([](auto) {
-        auto response = google::storage::v2::BidiWriteObjectResponse{};
-        response.mutable_resource()->set_bucket(
-            "projects/_/buckets/test-bucket");
-        response.mutable_resource()->set_name("test-object");
-        response.mutable_resource()->set_generation(123456);
-        return std::make_optional(std::move(response));
-      });
-    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read1").then([](auto) {
+            auto response = google::storage::v2::BidiWriteObjectResponse{};
+            response.mutable_resource()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_resource()->set_name("test-object");
+            response.mutable_resource()->set_generation(123456);
+            return std::make_optional(std::move(response));
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read2").then([](auto) {
+            return std::optional<
+                google::storage::v2::BidiWriteObjectResponse>();
+          });
+        });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
       return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
@@ -367,7 +384,13 @@ TEST_P(AsyncConnectionImplUploadHashTest,
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Read");
+  EXPECT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
   auto response = w2.get();
@@ -377,9 +400,6 @@ TEST_P(AsyncConnectionImplUploadHashTest,
   EXPECT_EQ(response->generation(), 123456);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
@@ -414,16 +434,23 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
               EXPECT_TRUE(wopt.is_last_message());
               return sequencer.PushBack("Write");
             });
-    EXPECT_CALL(*stream, Read).WillOnce([&] {
-      return sequencer.PushBack("Read").then([](auto) {
-        auto response = google::storage::v2::BidiWriteObjectResponse{};
-        response.mutable_resource()->set_bucket(
-            "projects/_/buckets/test-bucket");
-        response.mutable_resource()->set_name("test-object");
-        response.mutable_resource()->set_generation(123456);
-        return std::make_optional(std::move(response));
-      });
-    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read1").then([](auto) {
+            auto response = google::storage::v2::BidiWriteObjectResponse{};
+            response.mutable_resource()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_resource()->set_name("test-object");
+            response.mutable_resource()->set_generation(123456);
+            return std::make_optional(std::move(response));
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read2").then([](auto) {
+            return std::optional<
+                google::storage::v2::BidiWriteObjectResponse>();
+          });
+        });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
       return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
@@ -465,7 +492,13 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Read");
+  EXPECT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
   auto response = w2.get();
@@ -475,9 +508,6 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeUnbufferedWithPersistedData) {
   EXPECT_EQ(response->generation(), 123456);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
@@ -538,6 +568,13 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
                 response.mutable_resource()->set_generation(123456);
                 return std::make_optional(std::move(response));
               });
+        })
+        .WillOnce([&]() {
+          return sequencer.PushBack("Read(3)").then(
+              [](auto f) -> std::optional<
+                             google::storage::v2::BidiWriteObjectResponse> {
+                return std::nullopt;
+              });
         });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
@@ -590,6 +627,12 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read(2)");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(3)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
@@ -598,9 +641,6 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
   EXPECT_EQ(response->generation(), 123456);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
@@ -636,16 +676,23 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
               EXPECT_TRUE(wopt.is_last_message());
               return sequencer.PushBack("Write");
             });
-    EXPECT_CALL(*stream, Read).WillOnce([&] {
-      return sequencer.PushBack("Read").then([](auto) {
-        auto response = google::storage::v2::BidiWriteObjectResponse{};
-        response.mutable_resource()->set_bucket(
-            "projects/_/buckets/test-bucket");
-        response.mutable_resource()->set_name("test-object");
-        response.mutable_resource()->set_generation(123456);
-        return std::make_optional(std::move(response));
-      });
-    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read1").then([](auto) {
+            auto response = google::storage::v2::BidiWriteObjectResponse{};
+            response.mutable_resource()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_resource()->set_name("test-object");
+            response.mutable_resource()->set_generation(123456);
+            return std::make_optional(std::move(response));
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read2").then([](auto) {
+            return std::optional<
+                google::storage::v2::BidiWriteObjectResponse>();
+          });
+        });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
       return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
@@ -687,7 +734,13 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Read");
+  EXPECT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
   auto response = w2.get();
@@ -697,9 +750,6 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithoutPersistedData) {
   EXPECT_EQ(response->generation(), 123456);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
@@ -734,16 +784,23 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
               EXPECT_TRUE(wopt.is_last_message());
               return sequencer.PushBack("Write");
             });
-    EXPECT_CALL(*stream, Read).WillOnce([&] {
-      return sequencer.PushBack("Read").then([](auto) {
-        auto response = google::storage::v2::BidiWriteObjectResponse{};
-        response.mutable_resource()->set_bucket(
-            "projects/_/buckets/test-bucket");
-        response.mutable_resource()->set_name("test-object");
-        response.mutable_resource()->set_generation(123456);
-        return std::make_optional(std::move(response));
-      });
-    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read1").then([](auto) {
+            auto response = google::storage::v2::BidiWriteObjectResponse{};
+            response.mutable_resource()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_resource()->set_name("test-object");
+            response.mutable_resource()->set_generation(123456);
+            return std::make_optional(std::move(response));
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read2").then([](auto) {
+            return std::optional<
+                google::storage::v2::BidiWriteObjectResponse>();
+          });
+        });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
       return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
@@ -785,7 +842,13 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Read");
+  EXPECT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read2");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
 
   auto response = w2.get();
@@ -795,9 +858,6 @@ TEST_P(AsyncConnectionImplUploadHashTest, ResumeBufferedWithPersistedData) {
   EXPECT_EQ(response->generation(), 123456);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 }  // namespace
