@@ -17,6 +17,7 @@
 // in the final rendering.
 //! [async-includes]
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/read_all.h"
 
 //! [async-includes]
