@@ -150,6 +150,27 @@ AsyncConnectionImpl::AsyncConnectionImpl(
       stub_(std::move(stub)),
       options_(std::move(options)) {}
 
+future<StatusOr<google::storage::v2::Bucket>> AsyncConnectionImpl::GetBucket(
+    GetBucketParams p) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  auto request = std::move(p.request);
+  auto const idempotency = idempotency_policy(*current)->GetBucket(request);
+
+  auto call = [stub = stub_](
+                  CompletionQueue& cq,
+                  std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options,
+                  google::storage::v2::GetBucketRequest const& request) {
+    return stub->AsyncGetBucket(cq, std::move(context), std::move(options),
+                                request);
+  };
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
+  return google::cloud::internal::AsyncRetryLoop(
+      std::move(retry), std::move(backoff), idempotency, cq_, std::move(call),
+      std::move(current), std::move(request), __func__);
+}
+
 future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
     InsertObjectParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));

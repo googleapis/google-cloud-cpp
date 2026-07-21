@@ -57,6 +57,9 @@ class AsyncConnectionImpl
 
   Options options() const override { return options_; }
 
+  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      GetBucketParams p) override;
+
   future<StatusOr<google::storage::v2::Object>> InsertObject(
       InsertObjectParams p) override;
 

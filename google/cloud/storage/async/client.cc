@@ -41,6 +41,20 @@ AsyncClient::AsyncClient(Options options) {
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
     : connection_(std::move(connection)) {}
 
+future<StatusOr<google::storage::v2::Bucket>> AsyncClient::GetBucket(
+    BucketName const& bucket_name, Options opts) {
+  auto request = google::storage::v2::GetBucketRequest{};
+  request.set_name(bucket_name.FullName());
+  return GetBucket(std::move(request), std::move(opts));
+}
+
+future<StatusOr<google::storage::v2::Bucket>> AsyncClient::GetBucket(
+    google::storage::v2::GetBucketRequest request, Options opts) {
+  return connection_->GetBucket(
+      {std::move(request), google::cloud::internal::MergeOptions(
+                               std::move(opts), connection_->options())});
+}
+
 future<StatusOr<google::storage::v2::Object>> AsyncClient::InsertObject(
     google::storage::v2::WriteObjectRequest request, WritePayload contents,
     Options opts) {

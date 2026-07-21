@@ -90,6 +90,36 @@ class AsyncClient {
 
   ~AsyncClient() = default;
 
+  /**
+   * Get bucket metadata.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc get-bucket
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param bucket_name the name of the bucket to get metadata for.
+   * @param opts options controlling the behavior of this RPC.
+   */
+  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      BucketName const& bucket_name, Options opts = {});
+
+  /**
+   * Get bucket metadata using a raw request.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc get-bucket
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param request the request contents.
+   * @param opts options controlling the behavior of this RPC.
+   */
+  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      google::storage::v2::GetBucketRequest request, Options opts = {});
+
   /*
   This snippet discusses the tradeoffs between `InsertObject()`,
   `StartBufferedUpload()`, and `StartUnbufferedUpload()`. The text is included

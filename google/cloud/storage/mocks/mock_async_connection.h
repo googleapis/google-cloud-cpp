@@ -32,6 +32,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MockAsyncConnection : public storage::AsyncConnection {
  public:
   MOCK_METHOD(Options, options, (), (const, override));
+  MOCK_METHOD(future<StatusOr<google::storage::v2::Bucket>>, GetBucket,
+              (GetBucketParams), (override));
   MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, InsertObject,
               (InsertObjectParams), (override));
   MOCK_METHOD(
