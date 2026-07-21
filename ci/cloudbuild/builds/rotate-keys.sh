@@ -102,7 +102,8 @@ for entry in "${accounts_config[@]}"; do
     "--filter=CREATED_AT<-p90d"
     "--format=value(KEY_ID)"
   )
-  for old_key in $(gcloud iam service-accounts keys list "${args[@]}"); do
+  old_keys=$(gcloud iam service-accounts keys list "${args[@]}")
+  for old_key in ${old_keys}; do
     io::log "Deleting key: ${old_key}"
     gcloud iam service-accounts keys delete "${old_key}" --iam-account="${sa_email}" --quiet
   done
