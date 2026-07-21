@@ -72,7 +72,7 @@ for entry in "${accounts_config[@]}"; do
     "${prefix}-$(date +"%Y-%m" --date="now + 2 weeks")"
   )
   for key_base in "${active_key_bases[@]}"; do
-    for filetype in ${filetypes}; do
+    for filetype in "${filetypes[@]}"; do
       bucket_path="${bucket}/${key_base}.${filetype}"
       io::log "Checking for active key at ${bucket_path}"
       if ! gcloud storage objects list --stat --fetch-encrypted-object-hashes "${bucket_path}"; then
