@@ -492,7 +492,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L729}
+  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L727}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
@@ -547,7 +547,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L729}
+  /// [google.cloud.backupdr.v1.CreateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L727}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
@@ -615,7 +615,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L770}
+  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L768}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
@@ -654,7 +654,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L770}
+  /// [google.cloud.backupdr.v1.ListBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L768}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
@@ -696,7 +696,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L822}
+  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L820}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
@@ -737,7 +737,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L822}
+  /// [google.cloud.backupdr.v1.FetchUsableBackupVaultsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L820}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
@@ -764,7 +764,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L926}
+  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L924}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
@@ -794,7 +794,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L926}
+  /// [google.cloud.backupdr.v1.GetBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L924}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
@@ -832,7 +832,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L942}
+  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L940}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
@@ -885,7 +885,7 @@ class BackupDRClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.backupdr.v1.BackupVault]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L49}
-  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L942}
+  /// [google.cloud.backupdr.v1.UpdateBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L940}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
@@ -945,7 +945,7 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L987}
+  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L985}
   /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
   ///
   // clang-format on
@@ -996,7 +996,7 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L987}
+  /// [google.cloud.backupdr.v1.DeleteBackupVaultRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L985}
   /// [google.cloud.backupdr.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L811}
   ///
   // clang-format on
@@ -1066,8 +1066,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L224}
-  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1038}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
+  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1036}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
@@ -1105,8 +1105,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L224}
-  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1038}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
+  /// [google.cloud.backupdr.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1036}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
@@ -1132,8 +1132,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L224}
-  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1086}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
+  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1084}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
@@ -1162,8 +1162,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L224}
-  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1086}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
+  /// [google.cloud.backupdr.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1084}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
@@ -1200,8 +1200,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L224}
-  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1098}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
+  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1096}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
@@ -1253,8 +1253,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L224}
-  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1098}
+  /// [google.cloud.backupdr.v1.DataSource]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L222}
+  /// [google.cloud.backupdr.v1.UpdateDataSourceRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1096}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
@@ -1321,8 +1321,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1133}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1131}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
@@ -1360,8 +1360,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1133}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1131}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
@@ -1399,8 +1399,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.FetchBackupsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L870}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.FetchBackupsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L868}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> FetchBackupsForResourceType(
@@ -1439,8 +1439,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.FetchBackupsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L870}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.FetchBackupsForResourceTypeRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L868}
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::Backup> FetchBackupsForResourceType(
@@ -1466,8 +1466,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1185}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1183}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
@@ -1496,8 +1496,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1185}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1183}
   ///
   // clang-format on
   StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
@@ -1534,8 +1534,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1199}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1197}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
@@ -1587,8 +1587,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1199}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1197}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
@@ -1648,8 +1648,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1231}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
@@ -1700,8 +1700,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L533}
-  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1231}
+  /// [google.cloud.backupdr.v1.Backup]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L531}
+  /// [google.cloud.backupdr.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
@@ -1762,8 +1762,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1258}
-  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1322}
+  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1256}
+  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
@@ -1813,8 +1813,8 @@ class BackupDRClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1258}
-  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1322}
+  /// [google.cloud.backupdr.v1.RestoreBackupRequest]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1256}
+  /// [google.cloud.backupdr.v1.RestoreBackupResponse]: @googleapis_reference_link{google/cloud/backupdr/v1/backupvault.proto#L1320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>

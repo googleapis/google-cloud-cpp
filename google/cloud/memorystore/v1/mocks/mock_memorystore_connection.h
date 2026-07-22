@@ -368,6 +368,264 @@ class MockMemorystoreConnection : public memorystore_v1::MemorystoreConnection {
               BackupInstance, (google::longrunning::Operation const& operation),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartMigration(Matcher<google::cloud::memorystore::v1::StartMigrationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::Instance>>,
+      StartMigration,
+      (google::cloud::memorystore::v1::StartMigrationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StartMigration(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartMigration,
+      (NoAwaitTag,
+       google::cloud::memorystore::v1::StartMigrationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StartMigration(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::memorystore::v1::Instance>>,
+              StartMigration, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// FinishMigration(Matcher<google::cloud::memorystore::v1::FinishMigrationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::Instance>>,
+      FinishMigration,
+      (google::cloud::memorystore::v1::FinishMigrationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, FinishMigration(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, FinishMigration,
+      (NoAwaitTag,
+       google::cloud::memorystore::v1::FinishMigrationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, FinishMigration(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::memorystore::v1::Instance>>,
+              FinishMigration,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::memorystore::v1::TokenAuthUser>),
+      ListTokenAuthUsers,
+      (google::cloud::memorystore::v1::ListTokenAuthUsersRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::memorystore::v1::TokenAuthUser>, GetTokenAuthUser,
+      (google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::memorystore::v1::AuthToken>),
+              ListAuthTokens,
+              (google::cloud::memorystore::v1::ListAuthTokensRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::memorystore::v1::AuthToken>, GetAuthToken,
+      (google::cloud::memorystore::v1::GetAuthTokenRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddTokenAuthUser(Matcher<google::cloud::memorystore::v1::AddTokenAuthUserRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::Instance>>,
+      AddTokenAuthUser,
+      (google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AddTokenAuthUser(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, AddTokenAuthUser,
+      (NoAwaitTag,
+       google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, AddTokenAuthUser(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::memorystore::v1::Instance>>,
+              AddTokenAuthUser,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTokenAuthUser(Matcher<google::cloud::memorystore::v1::DeleteTokenAuthUserRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>,
+      DeleteTokenAuthUser,
+      (google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteTokenAuthUser(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteTokenAuthUser,
+              (NoAwaitTag,
+               google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTokenAuthUser(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>,
+      DeleteTokenAuthUser, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddAuthToken(Matcher<google::cloud::memorystore::v1::AddAuthTokenRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>,
+      AddAuthToken,
+      (google::cloud::memorystore::v1::AddAuthTokenRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AddAuthToken(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, AddAuthToken,
+      (NoAwaitTag,
+       google::cloud::memorystore::v1::AddAuthTokenRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, AddAuthToken(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>,
+              AddAuthToken, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAuthToken(Matcher<google::cloud::memorystore::v1::DeleteAuthTokenRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>,
+      DeleteAuthToken,
+      (google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAuthToken(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAuthToken,
+      (NoAwaitTag,
+       google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteAuthToken(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>,
+      DeleteAuthToken, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

@@ -131,6 +131,18 @@ class MockSecretManagerServiceConnection
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::secretmanager::v1::SecretVersion>,
+      EnableManagedRotation,
+      (google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::secretmanager::v1::SecretVersion>, RotateSecret,
+      (google::cloud::secretmanager::v1::RotateSecretRequest const& request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

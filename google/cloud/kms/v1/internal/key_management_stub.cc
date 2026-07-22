@@ -278,6 +278,36 @@ DefaultKeyManagementServiceStub::ImportCryptoKeyVersion(
   return response;
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+DefaultKeyManagementServiceStub::ImportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  google::cloud::kms::v1::CryptoKeyVersion response;
+  auto status = grpc_stub_->ImportTrustedKeyWrappedCryptoKeyVersion(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+DefaultKeyManagementServiceStub::ExportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse
+      response;
+  auto status = grpc_stub_->ExportTrustedKeyWrappedCryptoKeyVersion(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 DefaultKeyManagementServiceStub::CreateImportJob(
     grpc::ClientContext& context, Options const&,

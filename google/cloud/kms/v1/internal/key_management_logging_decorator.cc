@@ -285,6 +285,39 @@ KeyManagementServiceLogging::ImportCryptoKeyVersion(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+KeyManagementServiceLogging::ImportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::kms::v1::
+              ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+        return child_->ImportTrustedKeyWrappedCryptoKeyVersion(context, options,
+                                                               request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+KeyManagementServiceLogging::ExportTrustedKeyWrappedCryptoKeyVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::kms::v1::
+              ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+        return child_->ExportTrustedKeyWrappedCryptoKeyVersion(context, options,
+                                                               request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceLogging::CreateImportJob(
     grpc::ClientContext& context, Options const& options,

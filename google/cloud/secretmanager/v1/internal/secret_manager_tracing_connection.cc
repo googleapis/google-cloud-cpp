@@ -174,6 +174,26 @@ SecretManagerServiceTracingConnection::TestIamPermissions(
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceTracingConnection::EnableManagedRotation(
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::"
+      "EnableManagedRotation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->EnableManagedRotation(request));
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceTracingConnection::RotateSecret(
+    google::cloud::secretmanager::v1::RotateSecretRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::RotateSecret");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RotateSecret(request));
+}
+
 StreamRange<google::cloud::location::Location>
 SecretManagerServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

@@ -262,6 +262,46 @@ SecretManagerServiceClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::EnableManagedRotation(
+    std::string const& parent,
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest::
+        CloudSQLSingleUserCredentials const& cloud_sql_single_user_credentials,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::secretmanager::v1::EnableManagedRotationRequest request;
+  request.set_parent(parent);
+  *request.mutable_cloud_sql_single_user_credentials() =
+      cloud_sql_single_user_credentials;
+  return connection_->EnableManagedRotation(request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::EnableManagedRotation(
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EnableManagedRotation(request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::RotateSecret(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::secretmanager::v1::RotateSecretRequest request;
+  request.set_parent(parent);
+  return connection_->RotateSecret(request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceClient::RotateSecret(
+    google::cloud::secretmanager::v1::RotateSecretRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RotateSecret(request);
+}
+
 StreamRange<google::cloud::location::Location>
 SecretManagerServiceClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

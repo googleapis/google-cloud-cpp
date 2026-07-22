@@ -54,6 +54,20 @@ DefaultSqlConnectServiceRestStub::GetConnectSettings(
       std::move(query_params));
 }
 
+StatusOr<google::cloud::sql::v1::ConnectSettings>
+DefaultSqlConnectServiceRestStub::ResolveConnectSettings(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::sql::v1::ResolveConnectSettingsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Get<google::cloud::sql::v1::ConnectSettings>(
+      *service_, rest_context, request, true,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   "locations", "/", request.location(), "/", "dns", "/",
+                   request.dns_name(), ":resolveConnectSettings"),
+      std::move(query_params));
+}
+
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 DefaultSqlConnectServiceRestStub::GenerateEphemeralCert(
     google::cloud::rest_internal::RestContext& rest_context,

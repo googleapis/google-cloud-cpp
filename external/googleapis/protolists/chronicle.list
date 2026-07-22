@@ -6,6 +6,7 @@
 @googleapis//google/cloud/chronicle/v1:entity.proto
 @googleapis//google/cloud/chronicle/v1:featured_content_metadata.proto
 @googleapis//google/cloud/chronicle/v1:featured_content_native_dashboard.proto
+@googleapis//google/cloud/chronicle/v1:findings_refinement.proto
 @googleapis//google/cloud/chronicle/v1:instance.proto
 @googleapis//google/cloud/chronicle/v1:native_dashboard.proto
 @googleapis//google/cloud/chronicle/v1:reference_list.proto

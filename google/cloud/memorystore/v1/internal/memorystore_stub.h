@@ -159,6 +159,97 @@ class MemorystoreStub {
       grpc::ClientContext& context, Options options,
       google::cloud::memorystore::v1::BackupInstanceRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncStartMigration(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::StartMigrationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> StartMigration(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::StartMigrationRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncFinishMigration(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::FinishMigrationRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> FinishMigration(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::FinishMigrationRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::memorystore::v1::ListTokenAuthUsersResponse>
+  ListTokenAuthUsers(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::ListTokenAuthUsersRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+  GetTokenAuthUser(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::GetTokenAuthUserRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::memorystore::v1::ListAuthTokensResponse>
+  ListAuthTokens(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::ListAuthTokensRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::memorystore::v1::AuthToken> GetAuthToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::GetAuthTokenRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncAddTokenAuthUser(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteTokenAuthUser(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncAddAuthToken(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> AddAuthToken(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAuthToken(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -336,6 +427,99 @@ class DefaultMemorystoreStub : public MemorystoreStub {
   StatusOr<google::longrunning::Operation> BackupInstance(
       grpc::ClientContext& context, Options options,
       google::cloud::memorystore::v1::BackupInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncStartMigration(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::StartMigrationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StartMigration(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::StartMigrationRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncFinishMigration(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> FinishMigration(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request)
+      override;
+
+  StatusOr<google::cloud::memorystore::v1::ListTokenAuthUsersResponse>
+  ListTokenAuthUsers(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::ListTokenAuthUsersRequest const& request)
+      override;
+
+  StatusOr<google::cloud::memorystore::v1::TokenAuthUser> GetTokenAuthUser(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request)
+      override;
+
+  StatusOr<google::cloud::memorystore::v1::ListAuthTokensResponse>
+  ListAuthTokens(grpc::ClientContext& context, Options const& options,
+                 google::cloud::memorystore::v1::ListAuthTokensRequest const&
+                     request) override;
+
+  StatusOr<google::cloud::memorystore::v1::AuthToken> GetAuthToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memorystore::v1::GetAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncAddTokenAuthUser(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteTokenAuthUser(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncAddAuthToken(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AddAuthToken(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAuthToken(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      grpc::ClientContext& context, Options options,
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request)
       override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

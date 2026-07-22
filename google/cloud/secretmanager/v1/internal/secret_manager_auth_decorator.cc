@@ -171,6 +171,25 @@ SecretManagerServiceAuth::TestIamPermissions(
   return child_->TestIamPermissions(context, options, request);
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceAuth::EnableManagedRotation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->EnableManagedRotation(context, options, request);
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceAuth::RotateSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::secretmanager::v1::RotateSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RotateSecret(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecretManagerServiceAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

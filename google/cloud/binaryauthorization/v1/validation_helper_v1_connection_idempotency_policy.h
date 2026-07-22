@@ -22,6 +22,7 @@
 #include "google/cloud/binaryauthorization/v1/service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
+#include "google/iam/v1/iam_policy.grpc.pb.h"
 #include <memory>
 
 namespace google {
@@ -40,6 +41,15 @@ class ValidationHelperV1ConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ValidateAttestationOccurrence(
       google::cloud::binaryauthorization::v1::
           ValidateAttestationOccurrenceRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>

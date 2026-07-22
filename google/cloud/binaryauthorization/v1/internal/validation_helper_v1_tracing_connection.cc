@@ -43,6 +43,34 @@ ValidationHelperV1TracingConnection::ValidateAttestationOccurrence(
                            child_->ValidateAttestationOccurrence(request));
 }
 
+StatusOr<google::iam::v1::Policy>
+ValidationHelperV1TracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::ValidationHelperV1Connection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::Policy>
+ValidationHelperV1TracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::ValidationHelperV1Connection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ValidationHelperV1TracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::ValidationHelperV1Connection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection>
 MakeValidationHelperV1TracingConnection(
     std::shared_ptr<binaryauthorization_v1::ValidationHelperV1Connection>

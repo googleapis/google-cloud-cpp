@@ -53,6 +53,21 @@ SqlConnectServiceRestConnectionImpl::GetConnectSettings(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::sql::v1::ConnectSettings>
+SqlConnectServiceRestConnectionImpl::ResolveConnectSettings(
+    google::cloud::sql::v1::ResolveConnectSettingsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResolveConnectSettings(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::ResolveConnectSettingsRequest const&
+                 request) {
+        return stub_->ResolveConnectSettings(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceRestConnectionImpl::GenerateEphemeralCert(
     google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {

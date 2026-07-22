@@ -332,6 +332,38 @@ SecretManagerServiceConnectionImpl::TestIamPermissions(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceConnectionImpl::EnableManagedRotation(
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EnableManagedRotation(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+              request) {
+        return stub_->EnableManagedRotation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceConnectionImpl::RotateSecret(
+    google::cloud::secretmanager::v1::RotateSecretRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RotateSecret(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::secretmanager::v1::RotateSecretRequest const&
+                 request) {
+        return stub_->RotateSecret(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 SecretManagerServiceConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

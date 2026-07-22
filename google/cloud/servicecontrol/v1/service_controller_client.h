@@ -34,7 +34,8 @@ namespace servicecontrol_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// [Google Service Control API](/service-control/overview)
+/// [Google Service Control
+/// API](https://cloud.google.com/service-control/overview)
 ///
 /// Lets clients check and report operations against a [managed
 /// service](https://cloud.google.com/service-management/reference/rpc/google.api/servicemanagement.v1#google.api.servicemanagement.v1.ManagedService).
@@ -102,8 +103,8 @@ class ServiceControllerClient {
   /// propagation, therefore callers MUST NOT depend on the `Check` method having
   /// the latest policy information.
   ///
-  /// NOTE: the [CheckRequest][google.api.servicecontrol.v1.CheckRequest] has
-  /// the size limit (wire-format byte size) of 1MB.
+  /// NOTE: the [CheckRequest][google.api.servicecontrol.v1.CheckRequest] has the
+  /// size limit (wire-format byte size) of 1MB.
   ///
   /// This method requires the `servicemanagement.services.check` permission
   /// on the specified service. For more information, see
@@ -128,8 +129,8 @@ class ServiceControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicecontrol.v1.CheckRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L93}
-  /// [google.api.servicecontrol.v1.CheckResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L114}
+  /// [google.api.servicecontrol.v1.CheckRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L92}
+  /// [google.api.servicecontrol.v1.CheckResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L113}
   ///
   // clang-format on
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
@@ -173,8 +174,8 @@ class ServiceControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicecontrol.v1.ReportRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L194}
-  /// [google.api.servicecontrol.v1.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L225}
+  /// [google.api.servicecontrol.v1.ReportRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L193}
+  /// [google.api.servicecontrol.v1.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L224}
   ///
   // clang-format on
   StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
