@@ -17,6 +17,7 @@
 set -euo pipefail
 
 export USE_BAZEL_VERSION=7.7.1
+export GOOGLE_CLOUD_CPP_CI_BAZEL_USE_WORKSPACE=true
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
