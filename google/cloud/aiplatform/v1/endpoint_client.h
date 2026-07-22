@@ -427,7 +427,7 @@ class EndpointServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L39}
   /// [google.cloud.aiplatform.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L293}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
@@ -1028,7 +1028,7 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.DedicatedResources.autoscaling_metric_specs]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L153}
   /// [google.cloud.aiplatform.v1.MutateDeployedModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L426}
   /// [google.cloud.aiplatform.v1.MutateDeployedModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L461}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>

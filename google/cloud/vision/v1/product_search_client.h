@@ -369,7 +369,7 @@ class ProductSearchClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
   /// [google.cloud.vision.v1.UpdateProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L661}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
@@ -744,7 +744,7 @@ class ProductSearchClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   /// [google.cloud.vision.v1.UpdateProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L570}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(

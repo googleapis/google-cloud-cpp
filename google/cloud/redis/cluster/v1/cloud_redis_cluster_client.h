@@ -413,7 +413,7 @@ class CloudRedisClusterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L484}
-  /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
+  /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L72}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Any>> DeleteCluster(std::string const& name,
@@ -465,7 +465,7 @@ class CloudRedisClusterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.redis.cluster.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L484}
-  /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
+  /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L72}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Any>> DeleteCluster(
@@ -1201,7 +1201,7 @@ class CloudRedisClusterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.redis.cluster.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L622}
-  /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
+  /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L72}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Any>> DeleteBackup(std::string const& name,
@@ -1253,7 +1253,7 @@ class CloudRedisClusterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.redis.cluster.v1.DeleteBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L622}
-  /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
+  /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L72}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Any>> DeleteBackup(
