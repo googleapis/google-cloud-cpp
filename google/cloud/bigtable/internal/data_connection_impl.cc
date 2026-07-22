@@ -37,6 +37,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -208,6 +209,11 @@ Options MetricsExporterConnectionOptions(Options options) {
   // to allow default Monitoring defaults.
   options.unset<EndpointOption>();
   options.unset<AuthorityOption>();
+  auto collector = internal::GetEnv("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR");
+  if (collector.has_value()) {
+    // Override credentials when using the otel_collector test server.
+    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  }
   return options;
 }
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

@@ -61,6 +61,76 @@ auto TestProtoObject() {
   return result;
 }
 
+auto TestProtoBucket() {
+  google::storage::v2::Bucket result;
+  result.set_name("projects/_/buckets/test-bucket");
+  return result;
+}
+
+TEST(AsyncClient, GetBucket1) {
+  auto constexpr kExpectedRequest = R"pb(
+    name: "projects/_/buckets/test-bucket"
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](AsyncConnection::GetBucketParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::GetBucketRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(make_status_or(TestProtoBucket()));
+      });
+
+  auto client = AsyncClient(mock);
+  auto response = client
+                      .GetBucket(BucketName("test-bucket"),
+                                 Options{}
+                                     .set<TestOption<1>>("O1-function")
+                                     .set<TestOption<2>>("O2-function"))
+                      .get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(TestProtoBucket()));
+}
+
+TEST(AsyncClient, GetBucket2) {
+  auto constexpr kExpectedRequest = R"pb(
+    name: "projects/_/buckets/test-bucket"
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, GetBucket)
+      .WillOnce([&](AsyncConnection::GetBucketParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::GetBucketRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        return make_ready_future(make_status_or(TestProtoBucket()));
+      });
+
+  auto request = google::storage::v2::GetBucketRequest{};
+  request.set_name("projects/_/buckets/test-bucket");
+  auto client = AsyncClient(mock);
+  auto response =
+      client
+          .GetBucket(std::move(request), Options{}
+                                             .set<TestOption<1>>("O1-function")
+                                             .set<TestOption<2>>("O2-function"))
+          .get();
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsProtoEqual(TestProtoBucket()));
+}
+
 TEST(AsyncClient, InsertObject1) {
   auto constexpr kExpectedRequest = R"pb(
     write_object_spec {

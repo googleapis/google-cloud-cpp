@@ -74,6 +74,8 @@ add_library(
     internal/bucket_access_control_parser.h
     internal/bucket_acl_requests.cc
     internal/bucket_acl_requests.h
+    internal/bucket_metadata_cache.cc
+    internal/bucket_metadata_cache.h
     internal/bucket_metadata_parser.cc
     internal/bucket_metadata_parser.h
     internal/bucket_requests.cc
@@ -420,6 +422,7 @@ if (BUILD_TESTING)
         idempotency_policy_test.cc
         internal/base64_test.cc
         internal/bucket_acl_requests_test.cc
+        internal/bucket_metadata_cache_test.cc
         internal/bucket_requests_test.cc
         internal/complex_option_test.cc
         internal/compute_engine_util_test.cc

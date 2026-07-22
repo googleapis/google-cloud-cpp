@@ -17,6 +17,7 @@
 // in the final rendering.
 //! [async-includes]
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/read_all.h"
 
 //! [async-includes]
@@ -1171,6 +1172,24 @@ void ComposeObjectRequest(google::cloud::storage::AsyncClient& client,
    argv.at(4));
 }
 
+void GetBucket(google::cloud::storage::AsyncClient& client,
+               std::vector<std::string> const& argv) {
+  //! [get-bucket]
+  namespace gcs = google::cloud::storage;
+  [](gcs::AsyncClient& client, std::string bucket_name) {
+    client.GetBucket(gcs::BucketName(std::move(bucket_name)))
+        .then([](auto f) {
+          auto metadata = f.get();
+          if (!metadata) throw std::move(metadata).status();
+          std::cout << "Bucket metadata successfully fetched: "
+                    << metadata->DebugString() << "\n";
+        })
+        .get();
+  }
+  //! [get-bucket]
+  (client, argv.at(0));
+}
+
 // We would like to call this function `DeleteObject()`, but that conflicts with
 // a global `DeleteObject()` function on Windows.
 void AsyncDeleteObject(google::cloud::storage::AsyncClient& client,
@@ -1234,6 +1253,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateClientWithDPCommand({});
 
   auto client = google::cloud::storage::AsyncClient();
+
+  std::cout << "Running GetBucket() example" << std::endl;
+  GetBucket(client, {bucket_name});
 
   // We need different object names because writing to the same object within
   // a second exceeds the service's quota.
@@ -1509,9 +1531,30 @@ int main(int argc, char* argv[]) try {
     return {name, std::move(adapter)};
   };
 
+  auto make_bucket_entry =
+      [](std::string const& name, std::vector<std::string> arg_names,
+         Command const& command) -> examples::Commands::value_type {
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
+    auto adapter = [=](std::vector<std::string> const& argv) {
+      if (argv.size() != arg_names.size() ||
+          (!argv.empty() && argv[0] == "--help")) {
+        std::ostringstream os;
+        os << name;
+        for (auto const& a : arg_names) {
+          os << " " << a;
+        }
+        throw examples::Usage{std::move(os).str()};
+      }
+      auto client = google::cloud::storage::AsyncClient();
+      command(client, argv);
+    };
+    return {name, std::move(adapter)};
+  };
+
   examples::Example example({
       {"create-client", CreateClientCommand},
       {"create-client-with-dp", CreateClientWithDPCommand},
+      make_bucket_entry("get-bucket", {}, GetBucket),
       make_entry("insert-object", {}, InsertObject),
       make_entry("insert-object-vector", {}, InsertObjectVector),
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),

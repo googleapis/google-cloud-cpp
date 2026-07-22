@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/connection.h"
 #include "google/cloud/storage/async/object_descriptor.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/rewriter.h"
 #include "google/cloud/storage/async/token.h"
@@ -88,6 +89,36 @@ class AsyncClient {
   explicit AsyncClient(std::shared_ptr<AsyncConnection> connection);
 
   ~AsyncClient() = default;
+
+  /**
+   * Get bucket metadata.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc get-bucket
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param bucket_name the name of the bucket to get metadata for.
+   * @param opts options controlling the behavior of this RPC.
+   */
+  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      BucketName const& bucket_name, Options opts = {});
+
+  /**
+   * Get bucket metadata using a raw request.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc get-bucket
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @param request the request contents.
+   * @param opts options controlling the behavior of this RPC.
+   */
+  future<StatusOr<google::storage::v2::Bucket>> GetBucket(
+      google::storage::v2::GetBucketRequest request, Options opts = {});
 
   /*
   This snippet discusses the tradeoffs between `InsertObject()`,

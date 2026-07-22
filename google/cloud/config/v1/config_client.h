@@ -2197,7 +2197,7 @@ class ConfigClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.config.v1.AutoMigrationConfig]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L2630}
   /// [google.cloud.config.v1.UpdateAutoMigrationConfigRequest]: @googleapis_reference_link{google/cloud/config/v1/config.proto#L2652}
-  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
+  /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::config::v1::AutoMigrationConfig>>
