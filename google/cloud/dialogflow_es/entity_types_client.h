@@ -687,7 +687,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchDeleteEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L546}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
@@ -753,7 +753,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchDeleteEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L546}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
@@ -831,7 +831,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
@@ -903,7 +903,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
@@ -973,7 +973,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
@@ -1052,7 +1052,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
@@ -1127,7 +1127,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
@@ -1200,7 +1200,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
@@ -1278,7 +1278,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
@@ -1348,7 +1348,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
@@ -1415,7 +1415,7 @@ class EntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(

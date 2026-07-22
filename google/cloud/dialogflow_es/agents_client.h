@@ -387,7 +387,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.TrainAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L447}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
@@ -452,7 +452,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.TrainAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L447}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
@@ -677,7 +677,7 @@ class AgentsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Agents.TrainAgent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L111}
   /// [google.cloud.dialogflow.v2.ImportAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L499}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> ImportAgent(
@@ -768,7 +768,7 @@ class AgentsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.Agents.TrainAgent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L111}
   /// [google.cloud.dialogflow.v2.RestoreAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L528}
-  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L56}
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
