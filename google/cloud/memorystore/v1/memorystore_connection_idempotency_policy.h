@@ -87,6 +87,37 @@ class MemorystoreConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency BackupInstance(
       google::cloud::memorystore::v1::BackupInstanceRequest const& request);
 
+  virtual google::cloud::Idempotency StartMigration(
+      google::cloud::memorystore::v1::StartMigrationRequest const& request);
+
+  virtual google::cloud::Idempotency FinishMigration(
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request);
+
+  virtual google::cloud::Idempotency ListTokenAuthUsers(
+      google::cloud::memorystore::v1::ListTokenAuthUsersRequest request);
+
+  virtual google::cloud::Idempotency GetTokenAuthUser(
+      google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request);
+
+  virtual google::cloud::Idempotency ListAuthTokens(
+      google::cloud::memorystore::v1::ListAuthTokensRequest request);
+
+  virtual google::cloud::Idempotency GetAuthToken(
+      google::cloud::memorystore::v1::GetAuthTokenRequest const& request);
+
+  virtual google::cloud::Idempotency AddTokenAuthUser(
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteTokenAuthUser(
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+          request);
+
+  virtual google::cloud::Idempotency AddAuthToken(
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteAuthToken(
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

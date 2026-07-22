@@ -39,6 +39,12 @@ Idempotency SqlConnectServiceConnectionIdempotencyPolicy::GetConnectSettings(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+SqlConnectServiceConnectionIdempotencyPolicy::ResolveConnectSettings(
+    google::cloud::sql::v1::ResolveConnectSettingsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency SqlConnectServiceConnectionIdempotencyPolicy::GenerateEphemeralCert(
     google::cloud::sql::v1::GenerateEphemeralCertRequest const&) {
   return Idempotency::kNonIdempotent;

@@ -82,6 +82,24 @@ Status BinauthzManagementServiceV1Connection::DeleteAttestor(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::iam::v1::Policy>
+BinauthzManagementServiceV1Connection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy>
+BinauthzManagementServiceV1Connection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+BinauthzManagementServiceV1Connection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1Connection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

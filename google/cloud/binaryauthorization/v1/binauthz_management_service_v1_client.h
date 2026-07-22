@@ -67,9 +67,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.binaryauthorization.v1.Attestor]:
-/// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+/// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
 /// [google.cloud.binaryauthorization.v1.Policy]:
-/// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+/// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L34}
 ///
 class BinauthzManagementServiceV1Client {
  public:
@@ -104,16 +104,20 @@ class BinauthzManagementServiceV1Client {
 
   // clang-format off
   ///
-  /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the [attestors][google.cloud.binaryauthorization.v1.Attestor] that must attest to
-  /// a container image, before the project is allowed to deploy that
-  /// image. There is at most one policy per project. All image admission
-  /// requests are permitted if a project has no policy.
+  /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the
+  /// [attestors][google.cloud.binaryauthorization.v1.Attestor] that must attest
+  /// to a container image, before the project is allowed to deploy that image.
+  /// There is at most one policy per project. All image admission requests are
+  /// permitted if a project has no policy.
   ///
-  /// Gets the [policy][google.cloud.binaryauthorization.v1.Policy] for this project. Returns a default
-  /// [policy][google.cloud.binaryauthorization.v1.Policy] if the project does not have one.
+  /// Gets the [policy][google.cloud.binaryauthorization.v1.Policy] for this
+  /// project. Returns a default
+  /// [policy][google.cloud.binaryauthorization.v1.Policy] if the project does
+  /// not have one.
   ///
-  /// @param name  Required. The resource name of the [policy][google.cloud.binaryauthorization.v1.Policy] to retrieve,
-  ///  in the format `projects/*/policy`.
+  /// @param name  Required. The resource name of the
+  ///  [policy][google.cloud.binaryauthorization.v1.Policy] to retrieve, in the
+  ///  format `projects/*/policy`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -127,9 +131,9 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L155}
-  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
@@ -137,13 +141,16 @@ class BinauthzManagementServiceV1Client {
 
   // clang-format off
   ///
-  /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the [attestors][google.cloud.binaryauthorization.v1.Attestor] that must attest to
-  /// a container image, before the project is allowed to deploy that
-  /// image. There is at most one policy per project. All image admission
-  /// requests are permitted if a project has no policy.
+  /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the
+  /// [attestors][google.cloud.binaryauthorization.v1.Attestor] that must attest
+  /// to a container image, before the project is allowed to deploy that image.
+  /// There is at most one policy per project. All image admission requests are
+  /// permitted if a project has no policy.
   ///
-  /// Gets the [policy][google.cloud.binaryauthorization.v1.Policy] for this project. Returns a default
-  /// [policy][google.cloud.binaryauthorization.v1.Policy] if the project does not have one.
+  /// Gets the [policy][google.cloud.binaryauthorization.v1.Policy] for this
+  /// project. Returns a default
+  /// [policy][google.cloud.binaryauthorization.v1.Policy] if the project does
+  /// not have one.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -164,9 +171,9 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L155}
-  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
@@ -175,15 +182,18 @@ class BinauthzManagementServiceV1Client {
 
   // clang-format off
   ///
-  /// Creates or updates a project's [policy][google.cloud.binaryauthorization.v1.Policy], and returns a copy of the
-  /// new [policy][google.cloud.binaryauthorization.v1.Policy]. A policy is always updated as a whole, to avoid race
-  /// conditions with concurrent policy enforcement (or management!)
-  /// requests. Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT
-  /// if the request is malformed.
+  /// Creates or updates a project's
+  /// [policy][google.cloud.binaryauthorization.v1.Policy], and returns a copy of
+  /// the new [policy][google.cloud.binaryauthorization.v1.Policy]. A policy is
+  /// always updated as a whole, to avoid race conditions with concurrent policy
+  /// enforcement (or management!) requests. Returns `NOT_FOUND` if the project
+  /// does not exist, `INVALID_ARGUMENT` if the request is malformed.
   ///
-  /// @param policy  Required. A new or updated [policy][google.cloud.binaryauthorization.v1.Policy] value. The service will
-  ///  overwrite the [policy name][google.cloud.binaryauthorization.v1.Policy.name] field with the resource name in
-  ///  the request URL, in the format `projects/*/policy`.
+  /// @param policy  Required. A new or updated
+  ///  [policy][google.cloud.binaryauthorization.v1.Policy] value. The service
+  ///  will overwrite the [policy
+  ///  name][google.cloud.binaryauthorization.v1.Policy.name] field with the
+  ///  resource name in the request URL, in the format `projects/*/policy`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -197,9 +207,9 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
-  /// [google.cloud.binaryauthorization.v1.Policy.name]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L52}
-  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L34}
+  /// [google.cloud.binaryauthorization.v1.Policy.name]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L54}
+  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L182}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
@@ -208,11 +218,12 @@ class BinauthzManagementServiceV1Client {
 
   // clang-format off
   ///
-  /// Creates or updates a project's [policy][google.cloud.binaryauthorization.v1.Policy], and returns a copy of the
-  /// new [policy][google.cloud.binaryauthorization.v1.Policy]. A policy is always updated as a whole, to avoid race
-  /// conditions with concurrent policy enforcement (or management!)
-  /// requests. Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT
-  /// if the request is malformed.
+  /// Creates or updates a project's
+  /// [policy][google.cloud.binaryauthorization.v1.Policy], and returns a copy of
+  /// the new [policy][google.cloud.binaryauthorization.v1.Policy]. A policy is
+  /// always updated as a whole, to avoid race conditions with concurrent policy
+  /// enforcement (or management!) requests. Returns `NOT_FOUND` if the project
+  /// does not exist, `INVALID_ARGUMENT` if the request is malformed.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -233,8 +244,8 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
-  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
+  /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L34}
+  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L182}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
@@ -244,16 +255,21 @@ class BinauthzManagementServiceV1Client {
 
   // clang-format off
   ///
-  /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and returns a copy of the new
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns NOT_FOUND if the project does not exist,
-  /// INVALID_ARGUMENT if the request is malformed, ALREADY_EXISTS if the
+  /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and
+  /// returns a copy of the new
+  /// [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns
+  /// `NOT_FOUND` if the project does not exist, `INVALID_ARGUMENT` if the
+  /// request is malformed, `ALREADY_EXISTS` if the
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] already exists.
   ///
-  /// @param parent  Required. The parent of this [attestor][google.cloud.binaryauthorization.v1.Attestor].
+  /// @param parent  Required. The parent of this
+  ///  [attestor][google.cloud.binaryauthorization.v1.Attestor].
   /// @param attestor_id  Required. The [attestors][google.cloud.binaryauthorization.v1.Attestor] ID.
-  /// @param attestor  Required. The initial [attestor][google.cloud.binaryauthorization.v1.Attestor] value. The service will
-  ///  overwrite the [attestor name][google.cloud.binaryauthorization.v1.Attestor.name] field with the resource name,
-  ///  in the format `projects/*/attestors/*`.
+  /// @param attestor  Required. The initial
+  ///  [attestor][google.cloud.binaryauthorization.v1.Attestor] value. The service
+  ///  will overwrite the [attestor
+  ///  name][google.cloud.binaryauthorization.v1.Attestor.name] field with the
+  ///  resource name, in the format `projects/*/attestors/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -267,9 +283,9 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.Attestor.name]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L176}
-  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.Attestor.name]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L202}
+  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L193}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
@@ -279,9 +295,11 @@ class BinauthzManagementServiceV1Client {
 
   // clang-format off
   ///
-  /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and returns a copy of the new
-  /// [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns NOT_FOUND if the project does not exist,
-  /// INVALID_ARGUMENT if the request is malformed, ALREADY_EXISTS if the
+  /// Creates an [attestor][google.cloud.binaryauthorization.v1.Attestor], and
+  /// returns a copy of the new
+  /// [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns
+  /// `NOT_FOUND` if the project does not exist, `INVALID_ARGUMENT` if the
+  /// request is malformed, `ALREADY_EXISTS` if the
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] already exists.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -303,8 +321,8 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L193}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
@@ -315,10 +333,12 @@ class BinauthzManagementServiceV1Client {
   // clang-format off
   ///
   /// Gets an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
+  /// Returns `NOT_FOUND` if the
+  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param name  Required. The name of the [attestor][google.cloud.binaryauthorization.v1.Attestor] to retrieve, in the format
-  ///  `projects/*/attestors/*`.
+  /// @param name  Required. The name of the
+  ///  [attestor][google.cloud.binaryauthorization.v1.Attestor] to retrieve, in
+  ///  the format `projects/*/attestors/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -332,8 +352,8 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L216}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
@@ -342,7 +362,8 @@ class BinauthzManagementServiceV1Client {
   // clang-format off
   ///
   /// Gets an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
+  /// Returns `NOT_FOUND` if the
+  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -363,8 +384,8 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L216}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
@@ -374,11 +395,14 @@ class BinauthzManagementServiceV1Client {
   // clang-format off
   ///
   /// Updates an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
+  /// Returns `NOT_FOUND` if the
+  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param attestor  Required. The updated [attestor][google.cloud.binaryauthorization.v1.Attestor] value. The service will
-  ///  overwrite the [attestor name][google.cloud.binaryauthorization.v1.Attestor.name] field with the resource name
-  ///  in the request URL, in the format `projects/*/attestors/*`.
+  /// @param attestor  Required. The updated
+  ///  [attestor][google.cloud.binaryauthorization.v1.Attestor] value. The service
+  ///  will overwrite the [attestor
+  ///  name][google.cloud.binaryauthorization.v1.Attestor.name] field with the
+  ///  resource name in the request URL, in the format `projects/*/attestors/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -392,9 +416,9 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.Attestor.name]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L176}
-  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.Attestor.name]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L202}
+  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L230}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
@@ -404,7 +428,8 @@ class BinauthzManagementServiceV1Client {
   // clang-format off
   ///
   /// Updates an [attestor][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns NOT_FOUND if the [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
+  /// Returns `NOT_FOUND` if the
+  /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -425,8 +450,8 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L230}
   ///
   // clang-format on
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
@@ -437,10 +462,11 @@ class BinauthzManagementServiceV1Client {
   // clang-format off
   ///
   /// Lists [attestors][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns INVALID_ARGUMENT if the project does not exist.
+  /// Returns `INVALID_ARGUMENT` if the project does not exist.
   ///
   /// @param parent  Required. The resource name of the project associated with the
-  ///  [attestors][google.cloud.binaryauthorization.v1.Attestor], in the format `projects/*`.
+  ///  [attestors][google.cloud.binaryauthorization.v1.Attestor], in the format
+  ///  `projects/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -463,8 +489,8 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L241}
   ///
   // clang-format on
   StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
@@ -473,7 +499,7 @@ class BinauthzManagementServiceV1Client {
   // clang-format off
   ///
   /// Lists [attestors][google.cloud.binaryauthorization.v1.Attestor].
-  /// Returns INVALID_ARGUMENT if the project does not exist.
+  /// Returns `INVALID_ARGUMENT` if the project does not exist.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -503,8 +529,8 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L241}
   ///
   // clang-format on
   StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
@@ -513,11 +539,13 @@ class BinauthzManagementServiceV1Client {
 
   // clang-format off
   ///
-  /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns NOT_FOUND if the
+  /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor].
+  /// Returns `NOT_FOUND` if the
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
-  /// @param name  Required. The name of the [attestors][google.cloud.binaryauthorization.v1.Attestor] to delete, in the format
-  ///  `projects/*/attestors/*`.
+  /// @param name  Required. The name of the
+  ///  [attestors][google.cloud.binaryauthorization.v1.Attestor] to delete, in the
+  ///  format `projects/*/attestors/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -529,15 +557,16 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L278}
   ///
   // clang-format on
   Status DeleteAttestor(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
-  /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor]. Returns NOT_FOUND if the
+  /// Deletes an [attestor][google.cloud.binaryauthorization.v1.Attestor].
+  /// Returns `NOT_FOUND` if the
   /// [attestor][google.cloud.binaryauthorization.v1.Attestor] does not exist.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -557,13 +586,115 @@ class BinauthzManagementServiceV1Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
-  /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
+  /// [google.cloud.binaryauthorization.v1.Attestor]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L194}
+  /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L278}
   ///
   // clang-format on
   Status DeleteAttestor(
       google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the access control policy on the specified resource. Replaces any
+  /// existing policy.
+  ///
+  /// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the access control policy for a resource.
+  /// Returns an empty policy if the resource exists and does not have a policy
+  /// set.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// If the resource does not exist, this will return an empty set of
+  /// permissions, not a `NOT_FOUND` error.
+  ///
+  /// Note: This operation is designed to be used for building permission-aware
+  /// UIs and command-line tools, not for authorization checking. This operation
+  /// may "fail open" without warning.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
+  ///
+  // clang-format on
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
 
  private:

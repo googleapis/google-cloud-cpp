@@ -355,7 +355,7 @@ class CaseServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
-  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L300}
+  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
@@ -386,7 +386,7 @@ class CaseServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
-  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L300}
+  /// [google.cloud.support.v2.UpdateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L316}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
@@ -423,7 +423,7 @@ class CaseServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
-  /// [google.cloud.support.v2.EscalateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L286}
+  /// [google.cloud.support.v2.EscalateCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L302}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> EscalateCase(
@@ -454,7 +454,7 @@ class CaseServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.Case]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L59}
-  /// [google.cloud.support.v2.CloseCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L316}
+  /// [google.cloud.support.v2.CloseCaseRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L332}
   ///
   // clang-format on
   StatusOr<google::cloud::support::v2::Case> CloseCase(
@@ -503,7 +503,7 @@ class CaseServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.support.v2.CaseClassification]: @googleapis_reference_link{google/cloud/support/v2/case.proto#L180}
-  /// [google.cloud.support.v2.SearchCaseClassificationsRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L327}
+  /// [google.cloud.support.v2.SearchCaseClassificationsRequest]: @googleapis_reference_link{google/cloud/support/v2/case_service.proto#L343}
   ///
   // clang-format on
   StreamRange<google::cloud::support::v2::CaseClassification>

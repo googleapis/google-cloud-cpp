@@ -361,6 +361,25 @@ KeyManagementServiceClient::ImportCryptoKeyVersion(
   return connection_->ImportCryptoKeyVersion(request);
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+KeyManagementServiceClient::ImportTrustedKeyWrappedCryptoKeyVersion(
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportTrustedKeyWrappedCryptoKeyVersion(request);
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+KeyManagementServiceClient::ExportTrustedKeyWrappedCryptoKeyVersion(
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportTrustedKeyWrappedCryptoKeyVersion(request);
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceClient::CreateImportJob(
     std::string const& parent, std::string const& import_job_id,

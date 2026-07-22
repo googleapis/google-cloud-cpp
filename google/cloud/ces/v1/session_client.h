@@ -109,8 +109,8 @@ class SessionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.RunSessionRequest]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L433}
-  /// [google.cloud.ces.v1.RunSessionResponse]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L443}
+  /// [google.cloud.ces.v1.RunSessionRequest]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L474}
+  /// [google.cloud.ces.v1.RunSessionResponse]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L484}
   ///
   // clang-format on
   StatusOr<google::cloud::ces::v1::RunSessionResponse> RunSession(
@@ -148,9 +148,9 @@ class SessionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.RunSessionRequest]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L433}
-  /// [google.cloud.ces.v1.RunSessionResponse]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L443}
-  /// [google.cloud.ces.v1.SessionConfig.enable_text_streaming]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L261}
+  /// [google.cloud.ces.v1.RunSessionRequest]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L474}
+  /// [google.cloud.ces.v1.RunSessionResponse]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L484}
+  /// [google.cloud.ces.v1.SessionConfig.enable_text_streaming]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L296}
   ///
   // clang-format on
   StreamRange<google::cloud::ces::v1::RunSessionResponse> StreamRunSession(
@@ -240,21 +240,21 @@ class SessionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.ces.v1.BidiSessionClientMessage]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L451}
-  /// [google.cloud.ces.v1.BidiSessionClientMessage.config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L455}
-  /// [google.cloud.ces.v1.BidiSessionClientMessage.realtime_input]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L458}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L465}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.end_session]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L480}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.go_away]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L484}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.interruption_signal]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L476}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.recognition_result]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L472}
-  /// [google.cloud.ces.v1.BidiSessionServerMessage.session_output]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L469}
-  /// [google.cloud.ces.v1.SessionConfig.input_audio_config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L205}
-  /// [google.cloud.ces.v1.SessionConfig.output_audio_config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L209}
-  /// [google.cloud.ces.v1.SessionInput.audio]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L313}
-  /// [google.cloud.ces.v1.SessionOutput.audio]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L366}
-  /// [google.cloud.ces.v1.SessionOutput.diagnostic_info]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L397}
-  /// [google.cloud.ces.v1.SessionOutput.turn_completed]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L392}
+  /// [google.cloud.ces.v1.BidiSessionClientMessage]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L492}
+  /// [google.cloud.ces.v1.BidiSessionClientMessage.config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L496}
+  /// [google.cloud.ces.v1.BidiSessionClientMessage.realtime_input]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L499}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L506}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.end_session]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L521}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.go_away]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L525}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.interruption_signal]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L517}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.recognition_result]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L513}
+  /// [google.cloud.ces.v1.BidiSessionServerMessage.session_output]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L510}
+  /// [google.cloud.ces.v1.SessionConfig.input_audio_config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L240}
+  /// [google.cloud.ces.v1.SessionConfig.output_audio_config]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L244}
+  /// [google.cloud.ces.v1.SessionInput.audio]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L351}
+  /// [google.cloud.ces.v1.SessionOutput.audio]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L404}
+  /// [google.cloud.ces.v1.SessionOutput.diagnostic_info]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L435}
+  /// [google.cloud.ces.v1.SessionOutput.turn_completed]: @googleapis_reference_link{google/cloud/ces/v1/session_service.proto#L430}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

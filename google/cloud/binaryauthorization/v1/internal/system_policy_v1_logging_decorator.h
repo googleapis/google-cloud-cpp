@@ -46,6 +46,18 @@ class SystemPolicyV1Logging : public SystemPolicyV1Stub {
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request) override;
 
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
  private:
   std::shared_ptr<SystemPolicyV1Stub> child_;
   TracingOptions tracing_options_;

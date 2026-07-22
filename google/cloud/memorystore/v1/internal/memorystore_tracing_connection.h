@@ -157,6 +157,94 @@ class MemorystoreTracingConnection
   future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> StartMigration(
+      google::cloud::memorystore::v1::StartMigrationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StartMigration(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::StartMigrationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> StartMigration(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> FinishMigration(
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> FinishMigration(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::FinishMigrationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> FinishMigration(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::memorystore::v1::TokenAuthUser> ListTokenAuthUsers(
+      google::cloud::memorystore::v1::ListTokenAuthUsersRequest request)
+      override;
+
+  StatusOr<google::cloud::memorystore::v1::TokenAuthUser> GetTokenAuthUser(
+      google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request)
+      override;
+
+  StreamRange<google::cloud::memorystore::v1::AuthToken> ListAuthTokens(
+      google::cloud::memorystore::v1::ListAuthTokensRequest request) override;
+
+  StatusOr<google::cloud::memorystore::v1::AuthToken> GetAuthToken(
+      google::cloud::memorystore::v1::GetAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> AddTokenAuthUser(
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AddTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> AddTokenAuthUser(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteTokenAuthUser(
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTokenAuthUser(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteTokenAuthUser(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>> AddAuthToken(
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AddAuthToken(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::AddAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>> AddAuthToken(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAuthToken(google::cloud::memorystore::v1::DeleteAuthTokenRequest const&
+                      request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAuthToken(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteAuthToken(google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

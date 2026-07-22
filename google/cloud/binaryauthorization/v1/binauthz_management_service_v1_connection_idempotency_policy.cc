@@ -75,6 +75,25 @@ BinauthzManagementServiceV1ConnectionIdempotencyPolicy::DeleteAttestor(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
 MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy() {
   return std::make_unique<

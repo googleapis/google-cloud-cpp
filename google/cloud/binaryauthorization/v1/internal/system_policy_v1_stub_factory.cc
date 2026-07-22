@@ -29,6 +29,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "google/iam/v1/iam_policy.grpc.pb.h"
 #include <memory>
 #include <utility>
 
@@ -47,8 +48,10 @@ std::shared_ptr<SystemPolicyV1Stub> CreateDefaultSystemPolicyV1Stub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::binaryauthorization::v1::SystemPolicyV1::NewStub(channel);
+  auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<SystemPolicyV1Stub> stub =
-      std::make_shared<DefaultSystemPolicyV1Stub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultSystemPolicyV1Stub>(
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub =

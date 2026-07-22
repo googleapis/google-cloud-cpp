@@ -49,6 +49,41 @@ ValidationHelperV1TracingStub::ValidateAttestationOccurrence(
       child_->ValidateAttestationOccurrence(context, options, request));
 }
 
+StatusOr<google::iam::v1::Policy> ValidationHelperV1TracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.ValidationHelperV1", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy> ValidationHelperV1TracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.ValidationHelperV1", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, options, request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ValidationHelperV1TracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.ValidationHelperV1",
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
+}
+
 std::shared_ptr<ValidationHelperV1Stub> MakeValidationHelperV1TracingStub(
     std::shared_ptr<ValidationHelperV1Stub> stub) {
   return std::make_shared<ValidationHelperV1TracingStub>(std::move(stub));

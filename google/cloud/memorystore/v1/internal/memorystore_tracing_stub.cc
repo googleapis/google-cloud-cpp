@@ -317,6 +317,213 @@ StatusOr<google::longrunning::Operation> MemorystoreTracingStub::BackupInstance(
                            child_->BackupInstance(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreTracingStub::AsyncStartMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "StartMigration");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncStartMigration(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreTracingStub::StartMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "StartMigration");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->StartMigration(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreTracingStub::AsyncFinishMigration(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "FinishMigration");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncFinishMigration(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingStub::FinishMigration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "FinishMigration");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->FinishMigration(context, options, request));
+}
+
+StatusOr<google::cloud::memorystore::v1::ListTokenAuthUsersResponse>
+MemorystoreTracingStub::ListTokenAuthUsers(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListTokenAuthUsers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListTokenAuthUsers(context, options, request));
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreTracingStub::GetTokenAuthUser(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetTokenAuthUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetTokenAuthUser(context, options, request));
+}
+
+StatusOr<google::cloud::memorystore::v1::ListAuthTokensResponse>
+MemorystoreTracingStub::ListAuthTokens(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListAuthTokensRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListAuthTokens");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAuthTokens(context, options, request));
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreTracingStub::GetAuthToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetAuthToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAuthToken(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreTracingStub::AsyncAddTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "AddTokenAuthUser");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncAddTokenAuthUser(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingStub::AddTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "AddTokenAuthUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AddTokenAuthUser(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreTracingStub::AsyncDeleteTokenAuthUser(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteTokenAuthUser");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteTokenAuthUser(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingStub::DeleteTokenAuthUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteTokenAuthUser");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteTokenAuthUser(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreTracingStub::AsyncAddAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "AddAuthToken");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncAddAuthToken(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> MemorystoreTracingStub::AddAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "AddAuthToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AddAuthToken(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+MemorystoreTracingStub::AsyncDeleteAuthToken(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteAuthToken");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteAuthToken(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreTracingStub::DeleteAuthToken(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteAuthToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAuthToken(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 MemorystoreTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

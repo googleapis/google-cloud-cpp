@@ -110,6 +110,36 @@ Status BinauthzManagementServiceV1TracingConnection::DeleteAttestor(
   return internal::EndSpan(*span, child_->DeleteAttestor(request));
 }
 
+StatusOr<google::iam::v1::Policy>
+BinauthzManagementServiceV1TracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
+      "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::Policy>
+BinauthzManagementServiceV1TracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
+      "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+BinauthzManagementServiceV1TracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::BinauthzManagementServiceV1Connection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<binaryauthorization_v1::BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1TracingConnection(
     std::shared_ptr<

@@ -235,6 +235,31 @@ KeyManagementServiceTracingConnection::ImportCryptoKeyVersion(
   return internal::EndSpan(*span, child_->ImportCryptoKeyVersion(request));
 }
 
+StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+KeyManagementServiceTracingConnection::ImportTrustedKeyWrappedCryptoKeyVersion(
+    google::cloud::kms::v1::
+        ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::"
+      "ImportTrustedKeyWrappedCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportTrustedKeyWrappedCryptoKeyVersion(request));
+}
+
+StatusOr<
+    google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+KeyManagementServiceTracingConnection::ExportTrustedKeyWrappedCryptoKeyVersion(
+    google::cloud::kms::v1::
+        ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::KeyManagementServiceConnection::"
+      "ExportTrustedKeyWrappedCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportTrustedKeyWrappedCryptoKeyVersion(request));
+}
+
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceTracingConnection::CreateImportJob(
     google::cloud::kms::v1::CreateImportJobRequest const& request) {

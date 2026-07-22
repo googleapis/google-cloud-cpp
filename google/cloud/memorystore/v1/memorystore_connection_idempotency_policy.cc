@@ -111,6 +111,56 @@ Idempotency MemorystoreConnectionIdempotencyPolicy::BackupInstance(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency MemorystoreConnectionIdempotencyPolicy::StartMigration(
+    google::cloud::memorystore::v1::StartMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::FinishMigration(
+    google::cloud::memorystore::v1::FinishMigrationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::ListTokenAuthUsers(
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::GetTokenAuthUser(
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::ListAuthTokens(
+    google::cloud::memorystore::v1::ListAuthTokensRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::GetAuthToken(
+    google::cloud::memorystore::v1::GetAuthTokenRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::AddTokenAuthUser(
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::DeleteTokenAuthUser(
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::AddAuthToken(
+    google::cloud::memorystore::v1::AddAuthTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency MemorystoreConnectionIdempotencyPolicy::DeleteAuthToken(
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency MemorystoreConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

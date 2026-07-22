@@ -132,6 +132,21 @@ class KeyManagementServiceAuth : public KeyManagementServiceStub {
       google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request)
       override;
 
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
+  ImportTrustedKeyWrappedCryptoKeyVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::
+          ImportTrustedKeyWrappedCryptoKeyVersionRequest const& request)
+      override;
+
+  StatusOr<
+      google::cloud::kms::v1::ExportTrustedKeyWrappedCryptoKeyVersionResponse>
+  ExportTrustedKeyWrappedCryptoKeyVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::
+          ExportTrustedKeyWrappedCryptoKeyVersionRequest const& request)
+      override;
+
   StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateImportJobRequest const& request) override;

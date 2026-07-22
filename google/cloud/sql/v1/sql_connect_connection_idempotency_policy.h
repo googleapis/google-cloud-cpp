@@ -40,6 +40,9 @@ class SqlConnectServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetConnectSettings(
       google::cloud::sql::v1::GetConnectSettingsRequest const& request);
 
+  virtual google::cloud::Idempotency ResolveConnectSettings(
+      google::cloud::sql::v1::ResolveConnectSettingsRequest const& request);
+
   virtual google::cloud::Idempotency GenerateEphemeralCert(
       google::cloud::sql::v1::GenerateEphemeralCertRequest const& request);
 };

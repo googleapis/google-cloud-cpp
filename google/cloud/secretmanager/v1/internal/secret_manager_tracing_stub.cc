@@ -221,6 +221,32 @@ SecretManagerServiceTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceTracingStub::EnableManagedRotation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::secretmanager::v1::EnableManagedRotationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService",
+      "EnableManagedRotation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->EnableManagedRotation(context, options, request));
+}
+
+StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceTracingStub::RotateSecret(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::secretmanager::v1::RotateSecretRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "RotateSecret");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RotateSecret(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecretManagerServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

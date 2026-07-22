@@ -40,6 +40,31 @@ SystemPolicyV1TracingConnection::GetSystemPolicy(
   return internal::EndSpan(*span, child_->GetSystemPolicy(request));
 }
 
+StatusOr<google::iam::v1::Policy> SystemPolicyV1TracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::SystemPolicyV1Connection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::Policy> SystemPolicyV1TracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::SystemPolicyV1Connection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+SystemPolicyV1TracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "binaryauthorization_v1::SystemPolicyV1Connection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<binaryauthorization_v1::SystemPolicyV1Connection>
 MakeSystemPolicyV1TracingConnection(
     std::shared_ptr<binaryauthorization_v1::SystemPolicyV1Connection> conn) {

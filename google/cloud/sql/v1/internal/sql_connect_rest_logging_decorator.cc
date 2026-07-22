@@ -46,6 +46,19 @@ SqlConnectServiceRestLogging::GetConnectSettings(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::sql::v1::ConnectSettings>
+SqlConnectServiceRestLogging::ResolveConnectSettings(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::ResolveConnectSettingsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::ResolveConnectSettingsRequest const&
+                 request) {
+        return child_->ResolveConnectSettings(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
 SqlConnectServiceRestLogging::GenerateEphemeralCert(
     rest_internal::RestContext& rest_context, Options const& options,

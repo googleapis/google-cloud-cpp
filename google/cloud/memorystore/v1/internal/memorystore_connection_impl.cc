@@ -897,6 +897,662 @@ MemorystoreConnectionImpl::BackupInstance(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnectionImpl::StartMigration(
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StartMigration(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::memorystore::v1::Instance>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::memorystore::v1::StartMigrationRequest const&
+              request) {
+        return stub->AsyncStartMigration(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memorystore::v1::Instance>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreConnectionImpl::StartMigration(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::StartMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartMigration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::StartMigrationRequest const&
+                 request) {
+        return stub_->StartMigration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnectionImpl::StartMigration(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memorystore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::memorystore::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartMigration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memorystore::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memorystore::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnectionImpl::FinishMigration(
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->FinishMigration(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::memorystore::v1::Instance>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::memorystore::v1::FinishMigrationRequest const&
+              request) {
+        return stub->AsyncFinishMigration(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memorystore::v1::Instance>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreConnectionImpl::FinishMigration(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::FinishMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FinishMigration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::FinishMigrationRequest const&
+                 request) {
+        return stub_->FinishMigration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnectionImpl::FinishMigration(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memorystore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::memorystore::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to FinishMigration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memorystore::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memorystore::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreConnectionImpl::ListTokenAuthUsers(
+    google::cloud::memorystore::v1::ListTokenAuthUsersRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListTokenAuthUsers(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::memorystore::v1::TokenAuthUser>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<memorystore_v1::MemorystoreRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::memorystore::v1::ListTokenAuthUsersRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::memorystore::v1::ListTokenAuthUsersRequest const&
+                    request) {
+              return stub->ListTokenAuthUsers(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::memorystore::v1::ListTokenAuthUsersResponse r) {
+        std::vector<google::cloud::memorystore::v1::TokenAuthUser> result(
+            r.token_auth_users().size());
+        auto& messages = *r.mutable_token_auth_users();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::memorystore::v1::TokenAuthUser>
+MemorystoreConnectionImpl::GetTokenAuthUser(
+    google::cloud::memorystore::v1::GetTokenAuthUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetTokenAuthUser(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::GetTokenAuthUserRequest const&
+                 request) {
+        return stub_->GetTokenAuthUser(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::memorystore::v1::AuthToken>
+MemorystoreConnectionImpl::ListAuthTokens(
+    google::cloud::memorystore::v1::ListAuthTokensRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAuthTokens(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::memorystore::v1::AuthToken>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<memorystore_v1::MemorystoreRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::memorystore::v1::ListAuthTokensRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::memorystore::v1::ListAuthTokensRequest const&
+                       request) {
+              return stub->ListAuthTokens(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::memorystore::v1::ListAuthTokensResponse r) {
+        std::vector<google::cloud::memorystore::v1::AuthToken> result(
+            r.auth_tokens().size());
+        auto& messages = *r.mutable_auth_tokens();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::memorystore::v1::AuthToken>
+MemorystoreConnectionImpl::GetAuthToken(
+    google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAuthToken(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memorystore::v1::GetAuthTokenRequest const& request) {
+        return stub_->GetAuthToken(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnectionImpl::AddTokenAuthUser(
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AddTokenAuthUser(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::memorystore::v1::Instance>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::memorystore::v1::AddTokenAuthUserRequest const&
+              request) {
+        return stub->AsyncAddTokenAuthUser(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memorystore::v1::Instance>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreConnectionImpl::AddTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::AddTokenAuthUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddTokenAuthUser(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::AddTokenAuthUserRequest const&
+                 request) {
+        return stub_->AddTokenAuthUser(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::Instance>>
+MemorystoreConnectionImpl::AddTokenAuthUser(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memorystore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::memorystore::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AddTokenAuthUser",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memorystore::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memorystore::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnectionImpl::DeleteTokenAuthUser(
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTokenAuthUser(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::memorystore::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+              request) {
+        return stub->AsyncDeleteTokenAuthUser(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::memorystore::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreConnectionImpl::DeleteTokenAuthUser(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTokenAuthUser(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::DeleteTokenAuthUserRequest const&
+                 request) {
+        return stub_->DeleteTokenAuthUser(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnectionImpl::DeleteTokenAuthUser(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memorystore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteTokenAuthUser",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memorystore::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::memorystore::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreConnectionImpl::AddAuthToken(
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AddAuthToken(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::memorystore::v1::TokenAuthUser>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+        return stub->AsyncAddAuthToken(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memorystore::v1::TokenAuthUser>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreConnectionImpl::AddAuthToken(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddAuthToken(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memorystore::v1::AddAuthTokenRequest const& request) {
+        return stub_->AddAuthToken(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>
+MemorystoreConnectionImpl::AddAuthToken(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memorystore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::memorystore::v1::TokenAuthUser>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AddAuthToken",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memorystore::v1::TokenAuthUser>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memorystore::v1::TokenAuthUser>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnectionImpl::DeleteAuthToken(
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAuthToken(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::memorystore::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::memorystore::v1::DeleteAuthTokenRequest const&
+              request) {
+        return stub->AsyncDeleteAuthToken(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::memorystore::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+MemorystoreConnectionImpl::DeleteAuthToken(
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteAuthTokenRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAuthToken(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memorystore::v1::DeleteAuthTokenRequest const&
+                 request) {
+        return stub_->DeleteAuthToken(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+MemorystoreConnectionImpl::DeleteAuthToken(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memorystore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAuthToken",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memorystore::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::memorystore::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 MemorystoreConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
