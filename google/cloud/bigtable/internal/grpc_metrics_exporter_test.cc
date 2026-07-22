@@ -161,16 +161,44 @@ auto TestReaderOptions() {
   return reader_options;
 }
 
-TEST(GrpcMetricsExporterRegistryTest, SingletonAndClear) {
+class DummyMetricServiceConnection
+    : public monitoring_v3::MetricServiceConnection {
+ public:
+  ~DummyMetricServiceConnection() override = default;
+};
+
+TEST(GrpcMetricsExporterRegistryTest, GetOrCreateAndLifecycle) {
   auto& registry = GrpcMetricsExporterRegistry::Singleton();
   registry.Clear();
 
-  EXPECT_TRUE(registry.Register("test-authority-1"));
-  EXPECT_FALSE(registry.Register("test-authority-1"));
-  EXPECT_TRUE(registry.Register("test-authority-2"));
+  auto conn = std::make_shared<DummyMetricServiceConnection>();
 
-  registry.Clear();
-  EXPECT_TRUE(registry.Register("test-authority-1"));
+  Options options1;
+  options1.set<AuthorityOption>("test-authority-1");
+  Options options2;
+  options2.set<AuthorityOption>("test-authority-2");
+
+  auto exporter1_a = registry.GetOrCreate(conn, options1, "client-1");
+  ASSERT_NE(exporter1_a, nullptr);
+
+  // Second request for same authority returns the existing shared instance
+  auto exporter1_b = registry.GetOrCreate(conn, options1, "client-2");
+  EXPECT_EQ(exporter1_a, exporter1_b);
+
+  // Different authority gets a different instance
+  auto exporter2 = registry.GetOrCreate(conn, options2, "client-3");
+  ASSERT_NE(exporter2, nullptr);
+  EXPECT_NE(exporter1_a, exporter2);
+
+  // When all references to authority 1 are dropped, destructor runs and
+  // authority is unregistered
+  exporter1_a.reset();
+  exporter1_b.reset();
+
+  // A new request for authority 1 creates a new instance
+  auto exporter1_c = registry.GetOrCreate(conn, options1, "client-4");
+  ASSERT_NE(exporter1_c, nullptr);
+  EXPECT_NE(exporter1_c, exporter2);
 }
 
 TEST(GrpcMetricsExporterTest, MakeMonitoredResource) {

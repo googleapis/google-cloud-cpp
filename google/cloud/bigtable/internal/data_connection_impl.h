@@ -60,14 +60,14 @@ class DataConnectionImpl : public bigtable::DataConnection {
       std::unique_ptr<BackgroundThreads> background,
       std::unique_ptr<StubManager> stub_manager,
       std::unique_ptr<OperationContextFactory> operation_context_factory,
-      std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
+      std::shared_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
       std::shared_ptr<MutateRowsLimiter> limiter, Options options);
 
   DataConnectionImpl(
       std::unique_ptr<BackgroundThreads> background,
       std::shared_ptr<BigtableStub> stub,
       std::unique_ptr<OperationContextFactory> operation_context_factory,
-      std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
+      std::shared_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
       std::shared_ptr<MutateRowsLimiter> limiter, Options options);
 
   Options options() override { return options_; }
@@ -141,7 +141,7 @@ class DataConnectionImpl : public bigtable::DataConnection {
   std::unique_ptr<StubManager> stub_manager_;
   std::shared_ptr<::google::cloud::monitoring_v3::MetricServiceConnection>
       metric_service_connection_;
-  std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter_;
+  std::shared_ptr<GrpcMetricsExporter> grpc_metrics_exporter_;
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;

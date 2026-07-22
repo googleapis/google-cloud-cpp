@@ -65,14 +65,34 @@ GrpcMetricsExporterRegistry& GrpcMetricsExporterRegistry::Singleton() {
   return *registry;
 }
 
-bool GrpcMetricsExporterRegistry::Register(std::string authority) {
+std::shared_ptr<GrpcMetricsExporter> GrpcMetricsExporterRegistry::GetOrCreate(
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
+    Options const& options, std::string const& client_uid) {
   std::unique_lock<std::mutex> lk(mu_);
-  return known_authority_.insert(std::move(authority)).second;
+  auto authority = options.get<AuthorityOption>();
+  auto it = exporters_.find(authority);
+  if (it != exporters_.end()) {
+    if (auto exporter = it->second.lock()) {
+      return exporter;
+    }
+  }
+  auto exporter =
+      std::make_shared<GrpcMetricsExporter>(conn, options, client_uid);
+  exporters_[std::move(authority)] = exporter;
+  return exporter;
+}
+
+void GrpcMetricsExporterRegistry::Unregister(std::string const& authority) {
+  std::unique_lock<std::mutex> lk(mu_);
+  auto it = exporters_.find(authority);
+  if (it != exporters_.end() && it->second.expired()) {
+    exporters_.erase(it);
+  }
 }
 
 void GrpcMetricsExporterRegistry::Clear() {
   std::unique_lock<std::mutex> lk(mu_);
-  known_authority_.clear();
+  exporters_.clear();
 }
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
@@ -260,10 +280,8 @@ MonitoredResourceResult MakeMonitoredResource(
 
 GrpcMetricsExporter::GrpcMetricsExporter(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
-    Options const& options, std::string const& client_uid) {
-  auto authority = options.get<AuthorityOption>();
-  if (!GrpcMetricsExporterRegistry::Singleton().Register(authority)) return;
-
+    Options const& options, std::string const& client_uid)
+    : authority_(options.get<AuthorityOption>()) {
   auto detector = otel::MakeResourceDetector();
   auto detected_resource = detector->Detect();
 
@@ -311,7 +329,7 @@ GrpcMetricsExporter::GrpcMetricsExporter(
       absl::string_view{"grpc.subchannel.open_connections"},
   };
   auto scope_filter =
-      [authority = std::move(authority)](
+      [authority = authority_](
           grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
         GCP_LOG(INFO) << "GrpcMetricsExporter: scope filter checking target="
                       << scope.target()
@@ -339,6 +357,7 @@ GrpcMetricsExporter::~GrpcMetricsExporter() {
         provider_.get());
     p->Shutdown();
   }
+  GrpcMetricsExporterRegistry::Singleton().Unregister(authority_);
 }
 
 #else  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS

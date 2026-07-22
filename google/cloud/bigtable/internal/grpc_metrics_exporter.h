@@ -17,9 +17,9 @@
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 #include <mutex>
-#include <set>
 #include <string>
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
@@ -44,20 +44,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+class GrpcMetricsExporter;
+
+/**
+ * Thread-safe registry managing the lifetime and deduplication of
+ * `GrpcMetricsExporter` instances.
+ *
+ * gRPC OpenTelemetry plugin registration (`BuildAndRegisterGlobal`) is
+ * process-global per target channel authority. If an exporter's lifetime were
+ * bound to an individual `DataConnectionImpl` without sharing, closing a single
+ * connection would destroy the `MeterProvider` and call `Shutdown()`,
+ * prematurely halting metric export globally for other active connections in
+ * the same process.
+ *
+ * Conversely, keeping static `std::shared_ptr` singletons permanently violates
+ * Google C++ Style Guide rules against static non-trivially destructible
+ * objects and prevents `MeterProvider::Shutdown()` from ever flushing metrics
+ * upon connection shutdown.
+ *
+ * `GrpcMetricsExporterRegistry` resolves both requirements:
+ * 1. **Deduplication / Sharing**: Tracks active `GrpcMetricsExporter` instances
+ *    via `std::weak_ptr` keyed by channel authority. Multiple connection
+ *    instances targeting the same authority share ownership of the same
+ *    exporter `std::shared_ptr`.
+ * 2. **Clean Shutdown**: When all `DataConnectionImpl` instances sharing an
+ *    exporter are closed, the last `std::shared_ptr` is destroyed, invoking
+ *    `~GrpcMetricsExporter()` which cleanly calls `MeterProvider::Shutdown()`
+ *    and unregisters the authority from the registry.
+ */
 class GrpcMetricsExporterRegistry {
  public:
   static GrpcMetricsExporterRegistry& Singleton();
 
-  // Returns true if authority is newly registered, false if it was already
-  // registered.
-  bool Register(std::string authority);
+  std::shared_ptr<GrpcMetricsExporter> GetOrCreate(
+      std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
+      Options const& options, std::string const& client_uid);
+
+  void Unregister(std::string const& authority);
 
   void Clear();
 
  private:
   GrpcMetricsExporterRegistry() = default;
 
-  std::set<std::string> known_authority_;
+  std::map<std::string, std::weak_ptr<GrpcMetricsExporter>> exporters_;
   std::mutex mu_;
 };
 
@@ -97,6 +127,7 @@ class GrpcMetricsExporter {
 
  private:
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
+  std::string authority_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 };

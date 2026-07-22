@@ -223,7 +223,7 @@ DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::unique_ptr<StubManager> stub_manager,
     std::unique_ptr<OperationContextFactory> operation_context_factory,
-    std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
+    std::shared_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
     std::shared_ptr<MutateRowsLimiter> limiter, Options options)
     : background_(std::move(background)),
       stub_manager_(std::move(stub_manager)),
@@ -238,7 +238,7 @@ DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<BigtableStub> stub,
     std::unique_ptr<OperationContextFactory> operation_context_factory,
-    std::unique_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
+    std::shared_ptr<GrpcMetricsExporter> grpc_metrics_exporter,
     std::shared_ptr<MutateRowsLimiter> limiter, Options options)
     : DataConnectionImpl(std::move(background),
                          std::make_unique<StubManager>(std::move(stub)),
