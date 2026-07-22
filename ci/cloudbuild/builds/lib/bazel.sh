@@ -28,25 +28,13 @@ source module ci/lib/io.sh
 io::log "Using bazelisk version"
 bazelisk version
 
-io::log "Prefetching bazel deps..."
-# Bazel downloads all the dependencies of a project, as well as a number of
-# development tools during startup. In automated builds these downloads fail
-# from time to time due to transient network problems. Running `bazel fetch` at
-# the beginning of the build prevents such transient failures from flaking the
-# build.
-TIMEFORMAT="==> 🕑 prefetching done in %R seconds"
-time {
-  "ci/retry-command.sh" 3 120 bazel fetch ...
-}
-echo >&2
-
 # Outputs a list of args that should be given to all bazel invocations. To read
 # this into an array use `mapfile -t my_array < <(bazel::common_args)`
 function bazel::common_args() {
   function should_cache_test_results() {
     # Disables test caching on ci and daily builds to surface flaky tests.
     # Enables test caching on other builds to avoid surfacing unrelated flakes.
-    case "${TRIGGER_TYPE}" in
+    case "${TRIGGER_TYPE:-}" in
       ci | daily)
         echo no
         ;;
@@ -73,3 +61,27 @@ function bazel::common_args() {
   fi
   printf "%s\n" "${args[@]}"
 }
+
+# Bazel downloads all the dependencies of a project, as well as a number of
+# development tools during startup. In automated builds these downloads fail
+# from time to time due to transient network problems. Running `bazel fetch` at
+# the beginning of the build prevents such transient failures from flaking the
+# build.
+function bazel::prefetch() {
+  local args
+  mapfile -t args < <(bazel::common_args)
+  if [[ "${GOOGLE_CLOUD_CPP_CI_BAZEL_USE_WORKSPACE:-}" == "true" ]]; then
+    args+=(
+      "--noenable_bzlmod"
+      "--enable_workspace"
+    )
+  fi
+  "ci/retry-command.sh" 3 120 bazel fetch "${args[@]}" ...
+}
+
+io::log "Prefetching bazel deps..."
+TIMEFORMAT="==> 🕑 prefetching done in %R seconds"
+time {
+  bazel::prefetch
+}
+echo >&2
