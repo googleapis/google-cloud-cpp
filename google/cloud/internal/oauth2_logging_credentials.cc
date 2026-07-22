@@ -55,7 +55,7 @@ StatusOr<AccessToken> LoggingCredentials::GetToken(
 }
 
 StatusOr<std::vector<std::uint8_t>> LoggingCredentials::SignBlob(
-    absl::optional<std::string> const& signing_service_account,
+    std::optional<std::string> const& signing_service_account,
     std::string const& string_to_sign) const {
   GCP_LOG(DEBUG) << __func__ << "(" << phase_ << "), signing_service_account="
                  << signing_service_account.value_or("<not set>")

@@ -156,14 +156,14 @@ TEST(ExternalAccountTokenSource, SourceImdsv2Failure) {
   // Return an error in fetching the imdsv2 token. In any implementation the
   // imdsv2 query *must* happen if it is needed to fetch the region and secrets.
   // Unset the environment variables to set that behavior.
-  auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
+  auto const region = ScopedEnvironment("AWS_REGION", std::nullopt);
   auto const default_region =
-      ScopedEnvironment("AWS_DEFAULT_REGION", absl::nullopt);
+      ScopedEnvironment("AWS_DEFAULT_REGION", std::nullopt);
   auto const access_key_id =
-      ScopedEnvironment("AWS_ACCESS_KEY_ID", absl::nullopt);
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", std::nullopt);
   auto const secret_access_key =
-      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", absl::nullopt);
-  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", absl::nullopt);
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", std::nullopt);
+  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", std::nullopt);
   auto const credentials_source = nlohmann::json{
       {"environment_id", "aws1"},
       {"region_url", kTestRegionUrl},
@@ -196,9 +196,9 @@ TEST(ExternalAccountTokenSource, SourceRegionFailure) {
   // Do not use imdsv2, and force a metadata query to get the region. Use
   // environment variables for the secrets, in case the implementation order
   // changes.
-  auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
+  auto const region = ScopedEnvironment("AWS_REGION", std::nullopt);
   auto const default_region =
-      ScopedEnvironment("AWS_DEFAULT_REGION", absl::nullopt);
+      ScopedEnvironment("AWS_DEFAULT_REGION", std::nullopt);
   auto const access_key_id =
       ScopedEnvironment("AWS_ACCESS_KEY_ID", "test-access-key-id");
   auto const secret_access_key =
@@ -239,10 +239,10 @@ TEST(ExternalAccountTokenSource, SourceSecretsFailure) {
   // the region set, so this test works regardless of the query order.
   auto const region = ScopedEnvironment("AWS_REGION", "us-central1");
   auto const access_key_id =
-      ScopedEnvironment("AWS_ACCESS_KEY_ID", absl::nullopt);
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", std::nullopt);
   auto const secret_access_key =
-      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", absl::nullopt);
-  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", absl::nullopt);
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", std::nullopt);
+  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", std::nullopt);
   auto const credentials_source = nlohmann::json{
       {"environment_id", "aws1"},
       {"region_url", kTestRegionUrl},
@@ -618,7 +618,7 @@ TEST(ExternalAccountTokenSource, FetchRegionFromEnvRegion) {
 
 TEST(ExternalAccountTokenSource, FetchRegionFromEnvDefaultRegion) {
   auto const info = MakeTestInfoImdsV1();
-  auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
+  auto const region = ScopedEnvironment("AWS_REGION", std::nullopt);
   auto const default_region =
       ScopedEnvironment("AWS_DEFAULT_REGION", "default-region");
 
@@ -634,9 +634,9 @@ TEST(ExternalAccountTokenSource, FetchRegionFromEnvDefaultRegion) {
 
 TEST(ExternalAccountTokenSource, FetchRegionFromUrlV1) {
   auto const info = MakeTestInfoImdsV1();
-  auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
+  auto const region = ScopedEnvironment("AWS_REGION", std::nullopt);
   auto const default_region =
-      ScopedEnvironment("AWS_DEFAULT_REGION", absl::nullopt);
+      ScopedEnvironment("AWS_DEFAULT_REGION", std::nullopt);
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call(make_expected_options()))
@@ -657,9 +657,9 @@ TEST(ExternalAccountTokenSource, FetchRegionFromUrlV1) {
 
 TEST(ExternalAccountTokenSource, FetchRegionFromUrlV2) {
   auto const info = MakeTestInfoImdsV2();
-  auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
+  auto const region = ScopedEnvironment("AWS_REGION", std::nullopt);
   auto const default_region =
-      ScopedEnvironment("AWS_DEFAULT_REGION", absl::nullopt);
+      ScopedEnvironment("AWS_DEFAULT_REGION", std::nullopt);
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call(make_expected_options()))
@@ -685,9 +685,9 @@ TEST(ExternalAccountTokenSource, FetchRegionFromUrlV2) {
 
 TEST(ExternalAccountTokenSource, FetchRegionFromUrlEmpty) {
   auto const info = MakeTestInfoImdsV1();
-  auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
+  auto const region = ScopedEnvironment("AWS_REGION", std::nullopt);
   auto const default_region =
-      ScopedEnvironment("AWS_DEFAULT_REGION", absl::nullopt);
+      ScopedEnvironment("AWS_DEFAULT_REGION", std::nullopt);
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call(make_expected_options()))
@@ -736,7 +736,7 @@ TEST(ExternalAccountTokenSource, FetchSecretsFromEnvNoSessionToken) {
       ScopedEnvironment("AWS_ACCESS_KEY_ID", "test-access-key-id");
   auto const secret_access_key =
       ScopedEnvironment("AWS_SECRET_ACCESS_KEY", "test-secret-access-key");
-  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", absl::nullopt);
+  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", std::nullopt);
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
@@ -753,10 +753,10 @@ TEST(ExternalAccountTokenSource, FetchSecretsFromEnvNoSessionToken) {
 TEST(ExternalAccountTokenSource, FetchSecretsFromUrlV1) {
   auto const info = MakeTestInfoImdsV1();
   auto const access_key_id =
-      ScopedEnvironment("AWS_ACCESS_KEY_ID", absl::nullopt);
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", std::nullopt);
   auto const secret_access_key =
-      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", absl::nullopt);
-  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", absl::nullopt);
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", std::nullopt);
+  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", std::nullopt);
 
   auto make_client = [](std::string const& url, std::string const& contents) {
     auto mock = std::make_unique<MockRestClient>();
@@ -792,10 +792,10 @@ TEST(ExternalAccountTokenSource, FetchSecretsFromUrlV1) {
 TEST(ExternalAccountTokenSource, FetchSecretsFromUrlV2) {
   auto const info = MakeTestInfoImdsV2();
   auto const access_key_id =
-      ScopedEnvironment("AWS_ACCESS_KEY_ID", absl::nullopt);
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", std::nullopt);
   auto const secret_access_key =
-      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", absl::nullopt);
-  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", absl::nullopt);
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", std::nullopt);
+  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", std::nullopt);
 
   auto make_client = [](std::string const& url, std::string const& contents) {
     auto mock = std::make_unique<MockRestClient>();

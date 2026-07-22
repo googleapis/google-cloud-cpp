@@ -335,7 +335,7 @@ TEST(UnifiedRestCredentialsIntegrationTest, StorageServiceAccount) {
 
 TEST(UnifiedRestCredentialsIntegrationTest, BigQuerySelfSignedJWT) {
   ScopedEnvironment self_signed_jwt(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", std::nullopt);
 
   auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
   ASSERT_TRUE(env.has_value());
@@ -348,7 +348,7 @@ TEST(UnifiedRestCredentialsIntegrationTest, BigQuerySelfSignedJWT) {
 
 TEST(UnifiedRestCredentialsIntegrationTest, StorageSelfSignedJWT) {
   ScopedEnvironment self_signed_jwt(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", absl::nullopt);
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", std::nullopt);
 
   auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_REST_TEST_KEY_FILE_JSON");
   ASSERT_TRUE(env.has_value());

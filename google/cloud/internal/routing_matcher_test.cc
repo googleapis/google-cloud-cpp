@@ -55,7 +55,7 @@ TEST(RoutingMatcher, MatchesAll) {
           {[](TestRequest const& request) -> std::string const& {
              return request.foo();
            },
-           absl::nullopt},
+           std::nullopt},
       }};
 
   std::vector<std::string> params = {"previous"};
@@ -71,7 +71,7 @@ TEST(RoutingMatcher, EmptyFieldIsSkipped) {
           {[](TestRequest const& request) -> std::string const& {
              return request.foo();
            },
-           absl::nullopt},
+           std::nullopt},
           {[](TestRequest const& request) -> std::string const& {
              return request.bar();
            },
@@ -111,7 +111,7 @@ TEST(RoutingMatcher, UrlEncodesMatchAll) {
           {[](TestRequest const& request) -> std::string const& {
              return request.foo();
            },
-           absl::nullopt},
+           std::nullopt},
       }};
 
   std::vector<std::string> params = {"previous"};

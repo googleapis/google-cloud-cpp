@@ -24,9 +24,9 @@
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
-#include "absl/types/optional.h"
 #include <grpcpp/support/async_stream.h>
 #include <memory>
+#include <optional>
 #include <utility>
 
 namespace google {

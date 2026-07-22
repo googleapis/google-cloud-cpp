@@ -19,9 +19,9 @@
 #include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <mutex>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -164,9 +164,9 @@ class ComputeEngineCredentials : public Credentials {
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
   mutable std::mutex universe_domain_mu_;
-  mutable absl::optional<std::string> universe_domain_;
+  mutable std::optional<std::string> universe_domain_;
   mutable std::mutex project_id_mu_;
-  mutable absl::optional<std::string> project_id_;
+  mutable std::optional<std::string> project_id_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

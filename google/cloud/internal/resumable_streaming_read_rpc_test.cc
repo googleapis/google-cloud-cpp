@@ -44,7 +44,7 @@ struct FakeResponse {
 class MockStreamingReadRpc : public StreamingReadRpc<FakeResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read, (FakeResponse*), (override));
+  MOCK_METHOD(std::optional<Status>, Read, (FakeResponse*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
@@ -96,11 +96,11 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](FakeResponse* r) {
               *r = FakeResponse{"value-0", "token-1"};
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce([](FakeResponse* r) {
               *r = FakeResponse{"value-1", "token-2"};
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
@@ -112,7 +112,7 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](FakeResponse* r) {
               *r = FakeResponse{"value-2", "token-2"};
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status{}));
         return stream;
@@ -160,7 +160,7 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](FakeResponse* r) {
               *r = FakeResponse{"value-0", "token-1"};
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
         return stream;
@@ -215,7 +215,7 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
         EXPECT_CALL(*stream, Read)
             .WillOnce([](FakeResponse* r) {
               *r = FakeResponse{"value-0", "token-1"};
-              return absl::nullopt;
+              return std::nullopt;
             })
             .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
         return stream;

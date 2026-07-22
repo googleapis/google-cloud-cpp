@@ -21,9 +21,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <chrono>
 #include <memory>
+#include <optional>
 #include <string>
 
 namespace google {
@@ -44,7 +44,7 @@ class BackgroundCredentials : public Credentials {
       : background_(std::move(background)), child_(std::move(child)) {}
 
   StatusOr<std::vector<std::uint8_t>> SignBlob(
-      absl::optional<std::string> const& signing_service_account,
+      std::optional<std::string> const& signing_service_account,
       std::string const& string_to_sign) const override {
     return child_->SignBlob(signing_service_account, string_to_sign);
   }

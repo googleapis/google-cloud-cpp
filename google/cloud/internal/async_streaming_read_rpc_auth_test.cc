@@ -49,7 +49,7 @@ TEST(AsyncStreamReadWriteAuth, Start) {
     auto mock = std::make_unique<StrictMock<MockStream>>();
     EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
     EXPECT_CALL(*mock, Read).WillOnce([] {
-      return make_ready_future(absl::make_optional(FakeResponse{"k0", "v0"}));
+      return make_ready_future(std::make_optional(FakeResponse{"k0", "v0"}));
     });
     EXPECT_CALL(*mock, Finish).WillOnce([] {
       return make_ready_future(Status{});
@@ -122,11 +122,11 @@ TEST(AsyncStreamReadWriteAuth, CancelAfterStart) {
     ::testing::InSequence sequence;
     EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
     EXPECT_CALL(*mock, Read).WillOnce([] {
-      return make_ready_future(absl::make_optional(FakeResponse{"k0", "v0"}));
+      return make_ready_future(std::make_optional(FakeResponse{"k0", "v0"}));
     });
     EXPECT_CALL(*mock, Cancel).Times(1);
     EXPECT_CALL(*mock, Read).WillOnce([] {
-      return make_ready_future(absl::optional<FakeResponse>{});
+      return make_ready_future(std::optional<FakeResponse>{});
     });
     EXPECT_CALL(*mock, Finish).WillOnce([] {
       return make_ready_future(Status{});

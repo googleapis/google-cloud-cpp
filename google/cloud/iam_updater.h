@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_UPDATER_H
 
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "google/iam/v1/policy.pb.h"
 #include <functional>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * has been an intermediate update), this update is dropped and a new cycle is
  * initiated. In case (2) the existing policy is overwritten blindly.
  */
-using IamUpdater = std::function<absl::optional<google::iam::v1::Policy>(
+using IamUpdater = std::function<std::optional<google::iam::v1::Policy>(
     google::iam::v1::Policy)>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

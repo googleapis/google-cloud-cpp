@@ -54,7 +54,7 @@ StatusOr<AccessToken> CachedCredentials::GetToken(
 }
 
 StatusOr<std::vector<std::uint8_t>> CachedCredentials::SignBlob(
-    absl::optional<std::string> const& signing_service_account,
+    std::optional<std::string> const& signing_service_account,
     std::string const& string_to_sign) const {
   return impl_->SignBlob(signing_service_account, string_to_sign);
 }

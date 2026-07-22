@@ -131,7 +131,7 @@ TEST(AsyncStreamingReadWriteRpcTimeout, ReadSuccess) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([&] {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::make_optional(std::string("42")); });
+        [](auto) { return std::make_optional(std::string("42")); });
   });
   EXPECT_CALL(*mock, Cancel).Times(0);
 
@@ -161,7 +161,7 @@ TEST(AsyncStreamingReadWriteRpcTimeout, ReadTimeout) {
   auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([&] {
     return sequencer.PushBack("Read").then(
-        [](auto) { return absl::make_optional(std::string("42")); });
+        [](auto) { return std::make_optional(std::string("42")); });
   });
   EXPECT_CALL(*mock, Cancel).Times(1);
 
@@ -183,7 +183,7 @@ TEST(AsyncStreamingReadWriteRpcTimeout, ReadTimeout) {
   ASSERT_THAT(read.second, "Read");
   timer.first.set_value(true);
   read.first.set_value(true);
-  EXPECT_EQ(result.get(), absl::optional<std::string>{});
+  EXPECT_EQ(result.get(), std::optional<std::string>{});
 }
 
 TEST(AsyncStreamingReadWriteRpcTimeout, WriteSuccess) {

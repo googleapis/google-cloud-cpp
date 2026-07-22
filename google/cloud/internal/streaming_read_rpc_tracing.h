@@ -46,7 +46,7 @@ class StreamingReadRpcTracing : public StreamingReadRpc<ResponseType> {
     impl_->Cancel();
   }
 
-  absl::optional<Status> Read(ResponseType* response) override {
+  std::optional<Status> Read(ResponseType* response) override {
     auto result = impl_->Read(response);
     if (result.has_value()) {
       return End(*result);

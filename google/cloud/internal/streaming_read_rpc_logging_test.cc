@@ -34,7 +34,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
  public:
   ~MockStreamingReadRpc() override = default;
   MOCK_METHOD(void, Cancel, (), (override));
-  MOCK_METHOD(absl::optional<Status>, Read, (ResponseType*), (override));
+  MOCK_METHOD(std::optional<Status>, Read, (ResponseType*), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
@@ -60,7 +60,7 @@ TEST_F(StreamingReadRpcLoggingTest, Read) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([](google::protobuf::Duration* response) {
         response->set_seconds(42);
-        return absl::optional<Status>{};
+        return std::optional<Status>{};
       })
       .WillOnce([](google::protobuf::Duration*) {
         return Status(StatusCode::kInvalidArgument, "Invalid argument.");

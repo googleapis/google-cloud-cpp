@@ -66,7 +66,7 @@ class AsyncStreamingReadWriteRpcTimeout
 
   future<bool> Start() override { return state_->Start(); }
 
-  future<absl::optional<Response>> Read() override { return state_->Read(); }
+  future<std::optional<Response>> Read() override { return state_->Read(); }
 
   future<bool> Write(Request const& request,
                      grpc::WriteOptions options) override {
@@ -117,23 +117,23 @@ class AsyncStreamingReadWriteRpcTimeout
       });
     }
 
-    future<absl::optional<Response>> Read() {
+    future<std::optional<Response>> Read() {
       auto watchdog = CreateWatchdog(per_read_timeout);
       return child->Read().then(
           [wd = std::move(watchdog), w = WeakFromThis()](auto f) mutable {
             if (auto self = w.lock())
               return self->OnRead(std::move(wd), f.get());
-            return make_ready_future(absl::optional<Response>{});
+            return make_ready_future(std::optional<Response>{});
           });
     }
 
-    future<absl::optional<Response>> OnRead(future<bool> watchdog,
-                                            absl::optional<Response> response) {
+    future<std::optional<Response>> OnRead(future<bool> watchdog,
+                                           std::optional<Response> response) {
       watchdog.cancel();
       return watchdog.then(
           [w = WeakFromThis(), r = std::move(response)](auto f) mutable {
             auto expired = f.get();
-            if (expired) return absl::optional<Response>{};
+            if (expired) return std::optional<Response>{};
             return std::move(r);
           });
     }

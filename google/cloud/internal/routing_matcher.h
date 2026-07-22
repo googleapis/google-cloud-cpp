@@ -18,8 +18,8 @@
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include "absl/strings/str_cat.h"
-#include "absl/types/optional.h"
 #include <functional>
+#include <optional>
 #include <regex>
 #include <string>
 #include <vector>
@@ -40,7 +40,7 @@ struct RoutingMatcher {
 
   struct Pattern {
     std::function<std::string const&(Request const&)> field_getter;
-    absl::optional<std::regex> re;
+    std::optional<std::regex> re;
   };
   std::vector<Pattern> patterns;
 

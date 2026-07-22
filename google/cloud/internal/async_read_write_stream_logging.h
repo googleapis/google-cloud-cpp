@@ -51,12 +51,12 @@ class AsyncStreamingReadWriteRpcLogging
     });
   }
 
-  future<absl::optional<Response>> Read() override {
+  future<std::optional<Response>> Read() override {
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
     auto const& opt = tracing_options_;
     GCP_LOG(DEBUG) << prefix << " <<";
     return child_->Read().then(
-        [prefix, opt](future<absl::optional<Response>> f) {
+        [prefix, opt](future<std::optional<Response>> f) {
           auto r = f.get();
           if (r.has_value()) {
             GCP_LOG(DEBUG) << prefix << " >> " << DebugString(*r, opt);

@@ -133,7 +133,7 @@ TEST(MakeStatusFromRpcError, AllCodesWithPayload) {
     EXPECT_EQ(expected, actual);
     EXPECT_EQ(message, actual.message());
     EXPECT_EQ(ErrorInfo{}, actual.error_info());
-    EXPECT_EQ(absl::nullopt, internal::GetRetryInfo(actual));
+    EXPECT_EQ(std::nullopt, internal::GetRetryInfo(actual));
 
     // Make sure the actual payload is what we expect.
     auto actual_payload = google::cloud::internal::GetPayload(

@@ -109,7 +109,7 @@ class ErrorInfoBuilder {
   ErrorInfo Build(StatusCode code) &&;
 
  private:
-  absl::optional<std::string> reason_;
+  std::optional<std::string> reason_;
   std::unordered_map<std::string, std::string> metadata_;
 };
 

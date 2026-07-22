@@ -19,8 +19,8 @@
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/testing_util/credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <optional>
 
 namespace google {
 namespace cloud {
@@ -33,7 +33,7 @@ using ::google::cloud::testing_util::TestCredentialsVisitor;
 
 TEST(PopulateGrpcOptions, Simple) {
   // Unset any environment variables
-  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
+  ScopedEnvironment tracing("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", std::nullopt);
   auto actual = PopulateGrpcOptions(Options{});
   EXPECT_TRUE(actual.has<GrpcTracingOptionsOption>());
   EXPECT_EQ(actual.get<GrpcTracingOptionsOption>()

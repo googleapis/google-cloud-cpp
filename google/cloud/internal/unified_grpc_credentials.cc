@@ -180,8 +180,8 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
   return std::make_shared<GrpcChannelCredentialsAuthentication>(credentials);
 }
 
-absl::optional<std::string> LoadCAInfo(Options const& opts) {
-  if (!opts.has<CARootsFilePathOption>()) return absl::nullopt;
+std::optional<std::string> LoadCAInfo(Options const& opts) {
+  if (!opts.has<CARootsFilePathOption>()) return std::nullopt;
   std::ifstream is(opts.get<CARootsFilePathOption>());
   return std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
 }

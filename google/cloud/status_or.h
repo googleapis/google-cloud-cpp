@@ -18,7 +18,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
+#include <optional>
 #include <type_traits>
 #include <utility>
 
@@ -302,7 +302,7 @@ class StatusOr final {
   }
 
   Status status_;
-  absl::optional<T> value_;
+  std::optional<T> value_;
 };
 
 // Returns true IFF both `StatusOr<T>` objects hold an equal `Status` or an

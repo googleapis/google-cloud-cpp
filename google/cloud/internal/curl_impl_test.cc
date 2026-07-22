@@ -148,44 +148,44 @@ TEST_F(CurlImplTest, SetUrlPathContainsHttp) {
 }
 
 TEST_F(CurlImplTest, CurlOptProxy) {
-  EXPECT_EQ(CurlOptProxy(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptProxy(Options{}), std::nullopt);
   EXPECT_EQ(CurlOptProxy(Options{}.set<ProxyOption>(
                 ProxyConfig().set_hostname("hostname"))),
-            absl::make_optional(std::string("https://hostname")));
+            std::make_optional(std::string("https://hostname")));
   EXPECT_EQ(
       CurlOptProxy(Options{}.set<ProxyOption>(ProxyConfig()
                                                   .set_hostname("hostname")
                                                   .set_port("1080")
                                                   .set_scheme("http"))),
-      absl::make_optional(std::string("htt" /*silence*/ "p://hostname:1080")));
+      std::make_optional(std::string("htt" /*silence*/ "p://hostname:1080")));
 }
 
 TEST_F(CurlImplTest, CurlOptProxyUsername) {
-  EXPECT_EQ(CurlOptProxyUsername(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptProxyUsername(Options{}), std::nullopt);
   EXPECT_EQ(CurlOptProxyUsername(Options{}.set<ProxyOption>(
                 ProxyConfig().set_hostname("hostname"))),
-            absl::nullopt);
+            std::nullopt);
   EXPECT_EQ(
       CurlOptProxyUsername(Options{}.set<ProxyOption>(
           ProxyConfig().set_hostname("hostname").set_username("username"))),
-      absl::make_optional(std::string("username")));
+      std::make_optional(std::string("username")));
 }
 
 TEST_F(CurlImplTest, CurlOptProxyPassword) {
-  EXPECT_EQ(CurlOptProxyPassword(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptProxyPassword(Options{}), std::nullopt);
   EXPECT_EQ(CurlOptProxyPassword(Options{}.set<ProxyOption>(
                 ProxyConfig().set_hostname("hostname"))),
-            absl::nullopt);
+            std::nullopt);
   EXPECT_EQ(
       CurlOptProxyPassword(Options{}.set<ProxyOption>(
           ProxyConfig().set_hostname("hostname").set_password("password"))),
-      absl::make_optional(std::string("password")));
+      std::make_optional(std::string("password")));
 }
 
 TEST_F(CurlImplTest, CurlOptInterface) {
-  EXPECT_EQ(CurlOptInterface(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptInterface(Options{}), std::nullopt);
   EXPECT_EQ(CurlOptInterface(Options{}.set<Interface>("interface")),
-            absl::make_optional(std::string("interface")));
+            std::make_optional(std::string("interface")));
 }
 
 TEST_F(CurlImplTest, MergeAndWriteHeadersEmpty) {

@@ -18,8 +18,8 @@
 #include "google/cloud/internal/http_header.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <chrono>
+#include <optional>
 #include <string>
 #include <utility>
 
@@ -59,17 +59,17 @@ class RestContext {
   // Header names are case-insensitive; header values are case-sensitive.
   HttpHeader GetHeader(HttpHeaderName const& header) const;
 
-  absl::optional<std::string> local_ip_address() const {
+  std::optional<std::string> local_ip_address() const {
     return local_ip_address_;
   }
   void reset_local_ip_address() { local_ip_address_.reset(); }
   void set_local_ip_address(std::string a) { local_ip_address_ = std::move(a); }
 
-  absl::optional<std::int32_t> local_port() const { return local_port_; }
+  std::optional<std::int32_t> local_port() const { return local_port_; }
   void reset_local_port() { local_port_.reset(); }
   void set_local_port(std::int32_t p) { local_port_ = p; }
 
-  absl::optional<std::string> primary_ip_address() const {
+  std::optional<std::string> primary_ip_address() const {
     return primary_ip_address_;
   }
   void reset_primary_ip_address() { primary_ip_address_.reset(); }
@@ -77,12 +77,12 @@ class RestContext {
     primary_ip_address_ = std::move(a);
   }
 
-  absl::optional<std::int32_t> primary_port() const { return primary_port_; }
+  std::optional<std::int32_t> primary_port() const { return primary_port_; }
   void reset_primary_port() { primary_port_.reset(); }
   void set_primary_port(std::int32_t p) { primary_port_ = p; }
 
   // The time spent in DNS lookups
-  absl::optional<std::chrono::microseconds> namelookup_time() const {
+  std::optional<std::chrono::microseconds> namelookup_time() const {
     return namelookup_time_;
   }
   void reset_namelookup_time() { namelookup_time_.reset(); }
@@ -91,14 +91,14 @@ class RestContext {
   }
 
   // The time spent setting the TCP/IP connection.
-  absl::optional<std::chrono::microseconds> connect_time() const {
+  std::optional<std::chrono::microseconds> connect_time() const {
     return connect_time_;
   }
   void reset_connect_time() { connect_time_.reset(); }
   void set_connect_time(std::chrono::microseconds us) { connect_time_ = us; }
 
   // The time spent in the SSL handshake.
-  absl::optional<std::chrono::microseconds> appconnect_time() const {
+  std::optional<std::chrono::microseconds> appconnect_time() const {
     return appconnect_time_;
   }
   void reset_appconnect_time() { appconnect_time_.reset(); }
@@ -110,13 +110,13 @@ class RestContext {
   friend bool operator==(RestContext const& lhs, RestContext const& rhs);
   Options options_;
   HttpHeaders headers_;
-  absl::optional<std::string> local_ip_address_;
-  absl::optional<std::int32_t> local_port_;
-  absl::optional<std::string> primary_ip_address_;
-  absl::optional<std::int32_t> primary_port_;
-  absl::optional<std::chrono::microseconds> namelookup_time_;
-  absl::optional<std::chrono::microseconds> connect_time_;
-  absl::optional<std::chrono::microseconds> appconnect_time_;
+  std::optional<std::string> local_ip_address_;
+  std::optional<std::int32_t> local_port_;
+  std::optional<std::string> primary_ip_address_;
+  std::optional<std::int32_t> primary_port_;
+  std::optional<std::chrono::microseconds> namelookup_time_;
+  std::optional<std::chrono::microseconds> connect_time_;
+  std::optional<std::chrono::microseconds> appconnect_time_;
 };
 
 bool operator==(RestContext const& lhs, RestContext const& rhs);

@@ -171,7 +171,7 @@ TEST(Status, RetryInfoIgnoredWithOk) {
   internal::SetRetryInfo(s, internal::RetryInfo{std::chrono::minutes(5)});
   EXPECT_EQ(ok, s);
   auto ri = internal::GetRetryInfo(s);
-  EXPECT_EQ(ri, absl::nullopt);
+  EXPECT_EQ(ri, std::nullopt);
 }
 
 TEST(Status, RetryInfo) {
