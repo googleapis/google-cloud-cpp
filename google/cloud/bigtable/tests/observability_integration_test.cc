@@ -123,6 +123,33 @@ void Apply(Table& table, std::string const& row_key,
   ASSERT_STATUS_OK(status);
 }
 
+void VerifyResourceLabels(google::monitoring::v3::TimeSeries const& ts,
+                          std::string const& expected_project_id,
+                          std::string const& expected_instance_id,
+                          std::string const& expected_table_id) {
+  auto const& labels = ts.resource().labels();
+  auto project_it = labels.find("project_id");
+  if (project_it != labels.end()) {
+    EXPECT_EQ(project_it->second, expected_project_id);
+  }
+  auto instance_it = labels.find("instance");
+  if (instance_it != labels.end()) {
+    EXPECT_EQ(instance_it->second, expected_instance_id);
+  }
+  auto table_it = labels.find("table");
+  if (table_it != labels.end()) {
+    EXPECT_EQ(table_it->second, expected_table_id);
+  }
+  auto zone_it = labels.find("zone");
+  if (zone_it != labels.end() && !TableTestEnvironment::zone_a().empty()) {
+    std::vector<absl::string_view> parts =
+        absl::StrSplit(TableTestEnvironment::zone_a(), '-');
+    auto prefix = parts.size() >= 2 ? absl::StrCat(parts[0], "-", parts[1])
+                                    : TableTestEnvironment::zone_a();
+    EXPECT_THAT(zone_it->second, StartsWith(prefix));
+  }
+}
+
 TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
   if (UsingCloudBigtableEmulator()) {
     GTEST_SKIP() << "Metrics export integration test runs against production";
@@ -178,39 +205,98 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
         continue;
       }
 
-      if (metric_type.find("operation_latencies") != std::string::npos) {
+      if (absl::StrContains(metric_type, "operation_latencies")) {
         found_operation_latencies = true;
       }
-      if (metric_type.find("attempt_latencies") != std::string::npos) {
+      if (absl::StrContains(metric_type, "attempt_latencies")) {
         found_attempt_latencies = true;
       }
 
-      auto const& labels = ts.resource().labels();
-      auto project_it = labels.find("project_id");
-      if (project_it != labels.end()) {
-        EXPECT_EQ(project_it->second, project_id());
-      }
-      auto instance_it = labels.find("instance");
-      if (instance_it != labels.end()) {
-        EXPECT_EQ(instance_it->second, instance_id());
-      }
-      auto table_it = labels.find("table");
-      if (table_it != labels.end()) {
-        EXPECT_EQ(table_it->second, table_id);
-      }
-      auto zone_it = labels.find("zone");
-      if (zone_it != labels.end() && !TableTestEnvironment::zone_a().empty()) {
-        std::vector<absl::string_view> parts =
-            absl::StrSplit(TableTestEnvironment::zone_a(), '-');
-        auto prefix = parts.size() >= 2 ? absl::StrCat(parts[0], "-", parts[1])
-                                        : TableTestEnvironment::zone_a();
-        EXPECT_THAT(zone_it->second, StartsWith(prefix));
-      }
+      VerifyResourceLabels(ts, project_id(), instance_id(), table_id);
     }
   }
 
   EXPECT_TRUE(found_operation_latencies);
   EXPECT_TRUE(found_attempt_latencies);
+}
+
+bool VerifyDirectPathGrpcResourceLabels(
+    google::monitoring::v3::TimeSeries const& ts,
+    absl::optional<std::string> const& expected_location,
+    absl::optional<std::string> const& expected_cloud_platform,
+    std::string const& expected_client_project,
+    absl::optional<std::string> const& expected_hostname) {
+  auto const& labels = ts.resource().labels();
+  auto location_it = labels.find("location");
+  auto platform_it = labels.find("cloud_platform");
+  auto host_id_it = labels.find("host_id");
+  auto client_project_it = labels.find("client_project");
+
+  if (location_it == labels.end() || platform_it == labels.end() ||
+      host_id_it == labels.end() || client_project_it == labels.end()) {
+    return false;
+  }
+
+  EXPECT_FALSE(location_it->second.empty());
+  if (expected_location.has_value() && !expected_location->empty()) {
+    std::vector<absl::string_view> parts =
+        absl::StrSplit(*expected_location, '-');
+    auto region_prefix = parts.size() >= 2
+                             ? absl::StrCat(parts[0], "-", parts[1])
+                             : *expected_location;
+    EXPECT_THAT(location_it->second, StartsWith(region_prefix));
+  }
+
+  EXPECT_FALSE(platform_it->second.empty());
+  if (expected_cloud_platform.has_value() &&
+      !expected_cloud_platform->empty()) {
+    EXPECT_EQ(platform_it->second, *expected_cloud_platform);
+  }
+
+  EXPECT_FALSE(host_id_it->second.empty());
+
+  EXPECT_FALSE(client_project_it->second.empty());
+  if (!expected_client_project.empty()) {
+    EXPECT_EQ(client_project_it->second, expected_client_project);
+  }
+
+  if (expected_hostname.has_value() && !expected_hostname->empty()) {
+    auto hostname_it = labels.find("hostname");
+    if (hostname_it != labels.end()) {
+      EXPECT_EQ(hostname_it->second, *expected_hostname);
+    }
+  }
+
+  return true;
+}
+
+std::set<std::string> ProcessRecordedGrpcMetrics(
+    std::vector<google::monitoring::v3::CreateTimeSeriesRequest> const&
+        recorded,
+    std::string const& project_id,
+    absl::optional<std::string> const& expected_location,
+    absl::optional<std::string> const& expected_cloud_platform,
+    std::string const& expected_client_project,
+    absl::optional<std::string> const& expected_hostname,
+    bool& verified_resource_labels) {
+  std::set<std::string> grpc_metric_types;
+  for (auto const& req : recorded) {
+    std::cout << "req=" << req.DebugString() << std::endl;
+    EXPECT_EQ(req.name(), absl::StrCat("projects/", project_id));
+
+    for (auto const& ts : req.time_series()) {
+      auto const& metric_type = ts.metric().type();
+      if (absl::StartsWith(metric_type, "workload.googleapis.com/grpc.")) {
+        grpc_metric_types.insert(metric_type);
+        if (VerifyDirectPathGrpcResourceLabels(
+                ts, expected_location, expected_cloud_platform,
+                expected_client_project, expected_hostname)) {
+          verified_resource_labels = true;
+        }
+      }
+    }
+  }
+  return grpc_metric_types;
 }
 
 TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
@@ -268,7 +354,6 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
   auto recorded = collector_service_.recorded_metrics();
   ASSERT_FALSE(recorded.empty());
 
-  std::set<std::string> grpc_metric_types;
   bool verified_resource_labels = false;
 
   auto expected_client_project =
@@ -282,57 +367,9 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
   auto expected_hostname = google::cloud::internal::GetEnv(
       "GOOGLE_CLOUD_CPP_TEST_EXPECTED_HOSTNAME");
 
-  for (auto const& req : recorded) {
-    std::cout << "req=" << req.DebugString() << std::endl;
-    EXPECT_EQ(req.name(), absl::StrCat("projects/", project_id()));
-
-    for (auto const& ts : req.time_series()) {
-      auto const& metric_type = ts.metric().type();
-      if (absl::StartsWith(metric_type, "workload.googleapis.com/grpc.")) {
-        grpc_metric_types.insert(metric_type);
-
-        auto const& labels = ts.resource().labels();
-        auto location_it = labels.find("location");
-        auto platform_it = labels.find("cloud_platform");
-        auto host_id_it = labels.find("host_id");
-        auto client_project_it = labels.find("client_project");
-
-        if (location_it != labels.end() && platform_it != labels.end() &&
-            host_id_it != labels.end() && client_project_it != labels.end()) {
-          verified_resource_labels = true;
-          EXPECT_FALSE(location_it->second.empty());
-          if (expected_location.has_value() && !expected_location->empty()) {
-            std::vector<absl::string_view> parts =
-                absl::StrSplit(*expected_location, '-');
-            auto region_prefix = parts.size() >= 2
-                                     ? absl::StrCat(parts[0], "-", parts[1])
-                                     : *expected_location;
-            EXPECT_THAT(location_it->second, StartsWith(region_prefix));
-          }
-
-          EXPECT_FALSE(platform_it->second.empty());
-          if (expected_cloud_platform.has_value() &&
-              !expected_cloud_platform->empty()) {
-            EXPECT_EQ(platform_it->second, *expected_cloud_platform);
-          }
-
-          EXPECT_FALSE(host_id_it->second.empty());
-
-          EXPECT_FALSE(client_project_it->second.empty());
-          if (!expected_client_project.empty()) {
-            EXPECT_EQ(client_project_it->second, expected_client_project);
-          }
-
-          if (expected_hostname.has_value() && !expected_hostname->empty()) {
-            auto hostname_it = labels.find("hostname");
-            if (hostname_it != labels.end()) {
-              EXPECT_EQ(hostname_it->second, *expected_hostname);
-            }
-          }
-        }
-      }
-    }
-  }
+  auto grpc_metric_types = ProcessRecordedGrpcMetrics(
+      recorded, project_id(), expected_location, expected_cloud_platform,
+      expected_client_project, expected_hostname, verified_resource_labels);
 
   EXPECT_TRUE(verified_resource_labels);
 
