@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef _WIN32
+
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/credentials.h"
@@ -403,3 +405,5 @@ int main(int argc, char* argv[]) {
       new ::google::cloud::bigtable::testing::TableTestEnvironment);
   return RUN_ALL_TESTS();
 }
+
+#endif  // _WIN32
