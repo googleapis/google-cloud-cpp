@@ -570,11 +570,10 @@ TEST_P(AsyncConnectionImplUploadHashTest, StartBuffered) {
               });
         })
         .WillOnce([&]() {
-          return sequencer.PushBack("Read(3)").then(
-              [](auto f) -> std::optional<
-                             google::storage::v2::BidiWriteObjectResponse> {
-                return std::nullopt;
-              });
+          return sequencer.PushBack("Read(3)").then([](auto) {
+            return std::optional<
+                google::storage::v2::BidiWriteObjectResponse>{};
+          });
         });
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
