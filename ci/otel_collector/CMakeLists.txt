@@ -20,10 +20,14 @@ add_library(otel_collector otel_collector.cc otel_collector.h)
 target_link_libraries(
     otel_collector PUBLIC google_cloud_cpp_opentelemetry_testing_protos
                           google-cloud-cpp::monitoring_protos gRPC::grpc++)
-target_include_directories(otel_collector PUBLIC ${PROJECT_SOURCE_DIR})
+add_dependencies(otel_collector google_cloud_cpp_opentelemetry_testing_protos)
+target_include_directories(otel_collector PUBLIC ${PROJECT_SOURCE_DIR}
+                                                 ${PROJECT_BINARY_DIR})
 google_cloud_cpp_add_common_options(otel_collector NO_WARNINGS)
+set_target_properties(otel_collector PROPERTIES CXX_CLANG_TIDY "")
 
 google_cloud_cpp_add_executable(target "otel_collector_main"
                                 "otel_collector_main.cc")
-target_link_libraries(otel_collector_main PRIVATE otel_collector gRPC::grpc++)
-google_cloud_cpp_add_common_options(otel_collector_main NO_WARNINGS)
+target_link_libraries(${target} PRIVATE otel_collector gRPC::grpc++)
+google_cloud_cpp_add_common_options(${target} NO_WARNINGS)
+set_target_properties(${target} PROPERTIES CXX_CLANG_TIDY "")

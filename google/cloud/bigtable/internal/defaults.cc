@@ -316,6 +316,20 @@ Options DefaultTableAdminOptions(Options opts) {
       opts.get<::google::cloud::bigtable_internal::AdminEndpointOption>());
 }
 
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+Options MetricsExporterConnectionOptions(Options options) {
+  options.unset<EndpointOption>();
+  options.unset<AuthorityOption>();
+  auto collector = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR");
+  if (collector.has_value()) {
+    options.set<google::cloud::UnifiedCredentialsOption>(
+        google::cloud::MakeInsecureCredentials());
+  }
+  return options;
+}
+#endif
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
