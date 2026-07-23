@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_METADATA_CACHE_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <cstddef>
 #include <list>
@@ -40,6 +42,8 @@ struct BucketCacheEntry {
   std::string id;
   std::string location;
 
+  static BucketCacheEntry FromLocation(std::string id, std::string location,
+                                       std::string const& location_type);
   static BucketCacheEntry FromMetadata(storage::BucketMetadata const& m);
 };
 
@@ -48,12 +52,26 @@ class BucketMetadataCache {
   explicit BucketMetadataCache(std::size_t max_size = 10000)
       : max_size_(max_size) {}
 
+  static std::string NormalizeBucketName(std::string const& bucket);
+
   absl::optional<BucketCacheEntry> Get(std::string const& bucket_name);
   void Put(std::string const& bucket_name, BucketCacheEntry entry);
   void Invalidate(std::string const& bucket_name);
   void Clear();
   bool StartFetch(std::string const& bucket_name);
   void EndFetch(std::string const& bucket_name);
+
+  void MaybeInvalidate(Status const& status, std::string const& bucket_name) {
+    if (!status.ok() && status.code() == StatusCode::kNotFound) {
+      Invalidate(bucket_name);
+    }
+  }
+
+  template <typename T>
+  void MaybeInvalidate(StatusOr<T> const& result,
+                       std::string const& bucket_name) {
+    MaybeInvalidate(result.status(), bucket_name);
+  }
 
  private:
   void MoveToFront(std::list<std::string>::iterator it);
