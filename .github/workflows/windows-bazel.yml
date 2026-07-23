@@ -22,7 +22,7 @@ permissions:
 jobs:
   bazel:
     name: bazel + ${{ matrix.msvc }} + ${{ matrix.compilation_mode }} + ${{ matrix.shard }}
-    runs-on: windows-2022
+    runs-on: windows-2025
     permissions:
       contents: 'read'
     strategy:
