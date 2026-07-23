@@ -16,6 +16,7 @@
 #include "google/cloud/storage/bucket_metadata.h"
 #include "absl/strings/match.h"
 #include <mutex>
+#include <string_view>
 #include <utility>
 
 namespace google {
@@ -40,9 +41,13 @@ BucketCacheEntry BucketCacheEntry::FromMetadata(
 
 std::string BucketMetadataCache::NormalizeBucketName(
     std::string const& bucket) {
-  auto const prefix = std::string("projects/_/buckets/");
-  if (absl::StartsWith(bucket, prefix)) {
-    return bucket.substr(prefix.size());
+  auto constexpr kPrefix = "projects/";
+  auto constexpr kMiddle = "/buckets/";
+  if (absl::StartsWith(bucket, kPrefix)) {
+    auto pos = bucket.find(kMiddle);
+    if (pos != std::string::npos) {
+      return bucket.substr(pos + std::string_view(kMiddle).size());
+    }
   }
   return bucket;
 }
