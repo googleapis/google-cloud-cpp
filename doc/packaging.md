@@ -1032,7 +1032,7 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 #### Install CMake v3.22
 
 mkdir -p $HOME/Downloads/cmake && cd $HOME/Downloads/cmake curl -fsSL
-https://github.com/Kitware/cmake/archive/v3.31.12.tar.gz | \
+https://github.com/Kitware/cmake/archive/v4.4.0.tar.gz | \
 tar -xzf - --strip-components=1 && \
 ./bootstrap && make -j ${NCPU:-4} && sudo make install
 
