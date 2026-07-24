@@ -701,8 +701,9 @@ NonResumableParallelUploadState::Create(Client client,
 
   auto upload_options = StaticTupleFilter<
       Among<ContentEncoding, ContentType, DisableCrc32cChecksum, DisableMD5Hash,
-            EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
-            WithObjectMetadata>::TPred>(std::move(options));
+            UploadChecksumValidationOption, EncryptionKey, KmsKeyName,
+            PredefinedAcl, UserProject, WithObjectMetadata>::TPred>(
+      std::move(options));
   for (std::size_t i = 0; i < num_shards; ++i) {
     ResumableUploadRequest request(
         bucket_name, prefix + ".upload_shard_" + std::to_string(i));
@@ -806,8 +807,9 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
   auto upload_options = std::tuple_cat(
       StaticTupleFilter<
           Among<ContentEncoding, ContentType, DisableCrc32cChecksum,
-                DisableMD5Hash, EncryptionKey, KmsKeyName, PredefinedAcl,
-                UserProject, WithObjectMetadata>::TPred>(options),
+                DisableMD5Hash, UploadChecksumValidationOption, EncryptionKey,
+                KmsKeyName, PredefinedAcl, UserProject,
+                WithObjectMetadata>::TPred>(options),
       std::make_tuple(UseResumableUploadSession("")));
   for (std::size_t i = 0; i < num_shards; ++i) {
     ResumableUploadRequest request(
@@ -864,8 +866,8 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
 
   auto read_options = std::tuple_cat(
       StaticTupleFilter<Among<DisableCrc32cChecksum, DisableMD5Hash,
-                              EncryptionKey, Generation, UserProject>::TPred>(
-          options),
+                              UploadChecksumValidationOption, EncryptionKey,
+                              Generation, UserProject>::TPred>(options),
       std::make_tuple(IfGenerationMatch(state_and_gen->second)));
 
   auto state_stream = google::cloud::internal::apply(
@@ -915,8 +917,9 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
 
   auto upload_options = StaticTupleFilter<
       Among<ContentEncoding, ContentType, DisableCrc32cChecksum, DisableMD5Hash,
-            EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
-            WithObjectMetadata>::TPred>(std::move(options));
+            UploadChecksumValidationOption, EncryptionKey, KmsKeyName,
+            PredefinedAcl, UserProject, WithObjectMetadata>::TPred>(
+      std::move(options));
   for (auto& stream_desc : persistent_state->streams) {
     ResumableUploadRequest request(bucket_name,
                                    std::move(stream_desc.object_name));
