@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/options.h"
@@ -78,3 +79,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

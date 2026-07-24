@@ -12,12 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/internal/checksum_helpers.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/options.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_split.h"
 #include <algorithm>
@@ -206,22 +211,14 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r) {
   return os << "}";
 }
 
-InsertObjectMediaRequest::InsertObjectMediaRequest() { reset_hash_function(); }
+InsertObjectMediaRequest::InsertObjectMediaRequest() = default;
 
 InsertObjectMediaRequest::InsertObjectMediaRequest(std::string bucket_name,
                                                    std::string object_name,
                                                    absl::string_view payload)
     : InsertObjectRequestImpl<InsertObjectMediaRequest>(std::move(bucket_name),
                                                         std::move(object_name)),
-      payload_(payload) {
-  reset_hash_function();
-}
-
-void InsertObjectMediaRequest::reset_hash_function() {
-  hash_function_ = CreateHashFunction(
-      GetOption<Crc32cChecksumValue>(), GetOption<DisableCrc32cChecksum>(),
-      GetOption<MD5HashValue>(), GetOption<DisableMD5Hash>());
-}
+      payload_(payload) {}
 
 void InsertObjectMediaRequest::set_payload(absl::string_view payload) {
   payload_ = payload;
@@ -240,11 +237,6 @@ void InsertObjectMediaRequest::set_contents(std::string v) {
   payload_ = contents_;
   dirty_ = false;
 }
-
-HashValues FinishHashes(InsertObjectMediaRequest const& request) {
-  return request.hash_function().Finish();
-}
-
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
   os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
@@ -679,3 +671,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"

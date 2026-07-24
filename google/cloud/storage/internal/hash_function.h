@@ -19,6 +19,7 @@
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
@@ -29,6 +30,11 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+struct DownloadChecksumValidationOption;
+struct UploadChecksumValidationOption;
+enum class ChecksumAlgorithm;
+
 namespace internal {
 
 class ReadObjectRangeRequest;
