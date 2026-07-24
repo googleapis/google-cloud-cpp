@@ -32,7 +32,7 @@ struct HashDisabled {
 };
 
 template <typename Request>
-HashDisabled GetDownloadChecksumSettings(Request const& request,
+HashDisabled GetDownloadChecksumSettings(Request const&,
                                          Options const& options) {
   bool disable_md5 = true;
   bool disable_crc32c = false;
@@ -44,19 +44,12 @@ HashDisabled GetDownloadChecksumSettings(Request const& request,
                       algo != ChecksumAlgorithm::kCrc32cAndMD5);
   }
 
-  auto const md5 = request.template GetOption<DisableMD5Hash>();
-  if (md5.has_value()) {
-    disable_md5 = md5.value();
-  }
-  auto const crc32c = request.template GetOption<DisableCrc32cChecksum>();
-  if (crc32c.has_value()) {
-    disable_crc32c = crc32c.value();
-  }
+
   return {disable_md5, disable_crc32c};
 }
 
 template <typename Request>
-HashDisabled GetUploadChecksumSettings(Request const& request,
+HashDisabled GetUploadChecksumSettings(Request const&,
                                        Options const& options) {
   bool disable_md5 = true;
   bool disable_crc32c = false;
@@ -68,14 +61,7 @@ HashDisabled GetUploadChecksumSettings(Request const& request,
                       algo != ChecksumAlgorithm::kCrc32cAndMD5);
   }
 
-  auto const md5 = request.template GetOption<DisableMD5Hash>();
-  if (md5.has_value()) {
-    disable_md5 = md5.value();
-  }
-  auto const crc32c = request.template GetOption<DisableCrc32cChecksum>();
-  if (crc32c.has_value()) {
-    disable_crc32c = crc32c.value();
-  }
+
   return {disable_md5, disable_crc32c};
 }
 

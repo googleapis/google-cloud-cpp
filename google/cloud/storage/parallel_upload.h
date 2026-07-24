@@ -700,7 +700,7 @@ NonResumableParallelUploadState::Create(Client client,
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = StaticTupleFilter<
-      Among<ContentEncoding, ContentType, DisableCrc32cChecksum, DisableMD5Hash,
+      Among<ContentEncoding, ContentType,
             UploadChecksumValidationOption, EncryptionKey, KmsKeyName,
             PredefinedAcl, UserProject, WithObjectMetadata>::TPred>(
       std::move(options));
@@ -806,8 +806,8 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
 
   auto upload_options = std::tuple_cat(
       StaticTupleFilter<
-          Among<ContentEncoding, ContentType, DisableCrc32cChecksum,
-                DisableMD5Hash, UploadChecksumValidationOption, EncryptionKey,
+          Among<ContentEncoding, ContentType,
+                 UploadChecksumValidationOption, EncryptionKey,
                 KmsKeyName, PredefinedAcl, UserProject,
                 WithObjectMetadata>::TPred>(options),
       std::make_tuple(UseResumableUploadSession("")));
@@ -865,7 +865,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   }
 
   auto read_options = std::tuple_cat(
-      StaticTupleFilter<Among<DisableCrc32cChecksum, DisableMD5Hash,
+      StaticTupleFilter<Among<
                               UploadChecksumValidationOption, EncryptionKey,
                               Generation, UserProject>::TPred>(options),
       std::make_tuple(IfGenerationMatch(state_and_gen->second)));
@@ -916,7 +916,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = StaticTupleFilter<
-      Among<ContentEncoding, ContentType, DisableCrc32cChecksum, DisableMD5Hash,
+      Among<ContentEncoding, ContentType,
             UploadChecksumValidationOption, EncryptionKey, KmsKeyName,
             PredefinedAcl, UserProject, WithObjectMetadata>::TPred>(
       std::move(options));

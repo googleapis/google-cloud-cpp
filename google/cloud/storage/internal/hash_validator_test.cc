@@ -200,22 +200,18 @@ TEST(HashValidatorImplTest, CreateHashFunctionRead) {
   struct Test {
     std::string crc32c_expected;
     std::string md5_expected;
-    DisableCrc32cChecksum crc32_disabled;
-    DisableMD5Hash md5_disabled;
+    ChecksumAlgorithm validation_algo;
   } cases[]{
-      {"", "", DisableCrc32cChecksum(true), DisableMD5Hash(true)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true),
-       DisableMD5Hash(false)},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       DisableMD5Hash(true)},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       DisableMD5Hash(false)},
+      {"", "", ChecksumAlgorithm::kNone},
+      {"", kQuickFoxMD5Hash, ChecksumAlgorithm::kMD5},
+      {kQuickFoxCrc32cChecksum, "", ChecksumAlgorithm::kCrc32c},
+      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash, ChecksumAlgorithm::kCrc32cAndMD5},
   };
 
   for (auto const& test : cases) {
-    auto request =
-        ReadObjectRangeRequest("test-bucket", "test-object")
-            .set_multiple_options(test.crc32_disabled, test.md5_disabled);
+    google::cloud::internal::OptionsSpan span(
+        Options{}.set<DownloadChecksumValidationOption>(test.validation_algo));
+    auto request = ReadObjectRangeRequest("test-bucket", "test-object");
     auto validator = CreateHashValidator(request);
     auto actual =
         std::move(*validator).Finish(HashQuick(CreateHashFunction(request)));
@@ -228,10 +224,11 @@ TEST(HashValidatorImplTest, CreateHashFunctionUpload) {
   auto const upload_cases = testing::UploadHashCases();
 
   for (auto const& test : upload_cases) {
+    google::cloud::internal::OptionsSpan span(
+        Options{}.set<UploadChecksumValidationOption>(test.validation_algo));
     auto request =
         ResumableUploadRequest("test-bucket", "test-object")
-            .set_multiple_options(test.crc32_disabled, test.crc32_value,
-                                  test.md5_disabled, test.md5_value);
+            .set_multiple_options(test.crc32_value, test.md5_value);
     auto validator = CreateHashValidator(request);
     auto actual =
         std::move(*validator).Finish(HashQuick(CreateHashFunction(request)));

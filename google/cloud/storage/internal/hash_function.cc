@@ -29,15 +29,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::unique_ptr<HashFunction> CreateHashFunction(
-    Crc32cChecksumValue const& crc32c_value,
-    DisableCrc32cChecksum const& crc32c_disabled, MD5HashValue const& md5_value,
-    DisableMD5Hash const& md5_disabled) {
+    Crc32cChecksumValue const& crc32c_value, bool disable_crc32c,
+    MD5HashValue const& md5_value, bool disable_md5) {
   auto crc32c = std::unique_ptr<HashFunction>();
   auto crc32c_v = crc32c_value.value_or("");
   if (!crc32c_v.empty()) {
     crc32c = std::make_unique<PrecomputedHashFunction>(
         HashValues{/*.crc32c=*/std::move(crc32c_v), /*md5=*/{}});
-  } else if (!crc32c_disabled.value_or(false)) {
+  } else if (!disable_crc32c) {
     crc32c = std::make_unique<Crc32cHashFunction>();
   }
 
@@ -46,7 +45,7 @@ std::unique_ptr<HashFunction> CreateHashFunction(
   if (!md5_v.empty()) {
     md5 = std::make_unique<PrecomputedHashFunction>(
         HashValues{/*.crc32c=*/{}, /*.md5=*/std::move(md5_v)});
-  } else if (!md5_disabled.value_or(false)) {
+  } else if (!disable_md5) {
     md5 = MD5HashFunction::Create();
   }
 
@@ -88,11 +87,9 @@ std::unique_ptr<HashFunction> CreateHashFunction(
 
   auto const settings = GetUploadChecksumSettings(
       request, google::cloud::internal::CurrentOptions());
-  auto disable_md5 = DisableMD5Hash(settings.md5);
-  auto disable_crc32c = DisableCrc32cChecksum(settings.crc32c);
   return CreateHashFunction(request.GetOption<Crc32cChecksumValue>(),
-                            disable_crc32c, request.GetOption<MD5HashValue>(),
-                            disable_md5);
+                            settings.crc32c, request.GetOption<MD5HashValue>(),
+                            settings.md5);
 }
 
 }  // namespace internal

@@ -688,13 +688,12 @@ TEST(ObjectWriteStreambufTest, FlushFinalWithHashes) {
   });
 
   ResumableUploadRequest request;
-  request.set_option(DisableCrc32cChecksum(false));
-  request.set_option(DisableMD5Hash(false));
+
   ObjectWriteStreambuf streambuf(
       std::move(mock), request, "test-only-upload-id",
       /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
-      CreateHashFunction(Crc32cChecksumValue(), DisableCrc32cChecksum(false),
-                         MD5HashValue(), DisableMD5Hash(false)),
+      CreateHashFunction(Crc32cChecksumValue(), false,
+                         MD5HashValue(), false),
       HashValues{}, CreateHashValidator(request), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload.data(), payload.size());

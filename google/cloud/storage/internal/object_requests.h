@@ -106,7 +106,7 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
 template <typename Derived>
 using InsertObjectRequestImpl = GenericObjectRequest<
     Derived, ContentEncoding, ContentType, Crc32cChecksumValue,
-    DisableCrc32cChecksum, DisableMD5Hash, EncryptionKey, IfGenerationMatch,
+    EncryptionKey, IfGenerationMatch,
     IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
     KmsKeyName, MD5HashValue, PredefinedAcl, Projection, UserProject,
     UploadFromOffset, UploadLimit, WithObjectMetadata>;
@@ -193,7 +193,7 @@ std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r);
  */
 class ReadObjectRangeRequest
     : public GenericObjectRequest<
-          ReadObjectRangeRequest, DisableCrc32cChecksum, DisableMD5Hash,
+          ReadObjectRangeRequest,
           EncryptionKey, Generation, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, ReadFromOffset,
           ReadRange, ReadLast, UserProject, AcceptEncoding> {
@@ -438,7 +438,7 @@ std::ostream& operator<<(std::ostream& os, RestoreObjectRequest const& r);
 class ResumableUploadRequest
     : public GenericObjectRequest<
           ResumableUploadRequest, ContentEncoding, ContentType,
-          Crc32cChecksumValue, DisableCrc32cChecksum, DisableMD5Hash,
+          Crc32cChecksumValue,
           EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
           MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,

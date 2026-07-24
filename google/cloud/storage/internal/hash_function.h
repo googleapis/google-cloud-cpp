@@ -88,9 +88,8 @@ class HashFunction {
 
 /// Create a hash function configured by several options.
 std::unique_ptr<HashFunction> CreateHashFunction(
-    Crc32cChecksumValue const& crc32c_value,
-    DisableCrc32cChecksum const& crc32c_disabled, MD5HashValue const& md5_value,
-    DisableMD5Hash const& md5_disabled);
+    Crc32cChecksumValue const& crc32c_value, bool disable_crc32c,
+    MD5HashValue const& md5_value, bool disable_md5);
 
 /// Create a no-op hash function
 std::unique_ptr<HashFunction> CreateNullHashFunction();

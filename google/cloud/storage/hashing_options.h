@@ -62,40 +62,7 @@ inline std::string ComputeMD5Hash(char const* payload) {
 }
 
 /**
- * Disable or enable MD5 Hashing computations.
- *
- * By default MD5 hashes are disabled. To enable them use the
- * `EnableMD5Hash()` helper function.
- *
- * @warning MD5 hashes are disabled by default, as they are computationally
- *   expensive, and CRC32C checksums provide enough data integrity protection
- *   for most applications.  Disabling CRC32C checksums while MD5 hashes remain
- *   disabled exposes your application to data corruption. We recommend that all
- *   uploads to GCS and downloads from GCS use CRC32C checksums.
- *
- * @deprecated Use `UploadChecksumValidationOption` and
- * `DownloadChecksumValidationOption` instead.
- */
-struct [[deprecated(
-    "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")]] DisableMD5Hash
-    : public internal::ComplexOption<DisableMD5Hash, bool> {
-  using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
-  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
-  // explicitly
-  DisableMD5Hash() = default;
-  static char const* name() { return "disable-md5-hash"; }
-};
 
-/**
- * Enable MD5 hashes in upload and download operations.
- *
- * Use this function where the option `DisableMD5Hash` is expected to enable MD5
- * hashes.
- */
-inline DisableMD5Hash EnableMD5Hash() { return DisableMD5Hash(false); }
-
-/**
  * Provide a pre-computed CRC32C checksum value.
  *
  * The application may be able to obtain a CRC32C checksum in some out-of-band
@@ -130,32 +97,6 @@ inline std::string ComputeCrc32cChecksum(char const* payload) {
                                                   : absl::string_view{payload});
 }
 
-/**
- * Disable CRC32C checksum computations.
- *
- * By default the GCS client library computes CRC32C checksums in all upload and
- * download operations. The application can use this option to disable the
- * checksum computation.
- *
- * @warning MD5 hashes are disabled by default, as they are computationally
- *   expensive, and CRC32C checksums provide enough data integrity protection
- *   for most applications.  Disabling CRC32C checksums while MD5 hashes remain
- *   disabled exposes your application to data corruption. We recommend that all
- *   uploads to GCS and downloads from GCS use CRC32C checksums.
- *
- * @deprecated Use `UploadChecksumValidationOption` and
- * `DownloadChecksumValidationOption` instead.
- */
-struct [[deprecated(
-    "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")]] DisableCrc32cChecksum
-    : public internal::ComplexOption<DisableCrc32cChecksum, bool> {
-  using ComplexOption<DisableCrc32cChecksum, bool>::ComplexOption;
-  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
-  // explicitly
-  DisableCrc32cChecksum() = default;
-  static char const* name() { return "disable-crc32c-checksum"; }
-};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
