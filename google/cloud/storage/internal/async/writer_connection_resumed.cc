@@ -578,7 +578,6 @@ class AsyncWriterConnectionResumedState
 
   void SetFlushed(std::unique_lock<std::mutex> lk, Status const& result) {
     if (!result.ok()) return SetError(std::move(lk), std::move(result));
-    flush_ = false;  // Reset flush flag; WriteLoop may set it again.
     // Do NOT reset finalize_ or finalizing_ here.
     auto handlers = ClearHandlers(lk);
     // Dequeue the promise corresponding to an explicit Flush() call, if any.
@@ -586,13 +585,16 @@ class AsyncWriterConnectionResumedState
       // This can happen if SetError cleared the queue first, or if this
       // flush was triggered internally by buffer size (not by an explicit
       // Flush() call) and thus has no promise in the queue.
+      flush_ = false;
       lk.unlock();
       for (auto& h : handlers) h->Execute(Status{});
       return;
     }
     auto flushed = std::move(pending_flush_promises_.front());
     pending_flush_promises_.pop_front();
-
+    if (pending_flush_promises_.empty()) {
+      flush_ = false;
+    }
     lk.unlock();  // Unlock only once before notifying
     // Notify handlers and the specific flush promise *after* releasing the
     // lock.
