@@ -75,8 +75,7 @@ TEST_F(ObjectHashIntegrationTest, InsertObjectExplicitDisable) {
   auto object_name = MakeRandomObjectName();
 
   auto meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32c),
-      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5), IfGenerationMatch(0));
+      bucket_name_, object_name, LoremIpsum(), Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32cAndMD5), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
@@ -309,7 +308,7 @@ TEST_F(ObjectHashIntegrationTest, ReadObjectCorruptedByServerGetc) {
   ScheduleForDelete(*meta);
 
   auto stream = client.ReadObject(
-      bucket_name_, object_name, Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5),
+      bucket_name_, object_name, Options{}.set<DownloadChecksumValidationOption>(ChecksumAlgorithm::kMD5),
       CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -348,7 +347,7 @@ TEST_F(ObjectHashIntegrationTest, ReadObjectCorruptedByServerRead) {
   ScheduleForDelete(*meta);
 
   auto stream = client.ReadObject(
-      bucket_name_, object_name, Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5),
+      bucket_name_, object_name, Options{}.set<DownloadChecksumValidationOption>(ChecksumAlgorithm::kMD5),
       CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to read the full contents.

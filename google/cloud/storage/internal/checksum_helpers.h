@@ -31,9 +31,7 @@ struct HashDisabled {
   bool crc32c;
 };
 
-template <typename Request>
-HashDisabled GetDownloadChecksumSettings(Request const&,
-                                         Options const& options) {
+inline HashDisabled GetDownloadChecksumSettings(Options const& options) {
   bool disable_md5 = true;
   bool disable_crc32c = false;
   if (options.has<DownloadChecksumValidationOption>()) {
@@ -48,9 +46,7 @@ HashDisabled GetDownloadChecksumSettings(Request const&,
   return {disable_md5, disable_crc32c};
 }
 
-template <typename Request>
-HashDisabled GetUploadChecksumSettings(Request const&,
-                                       Options const& options) {
+inline HashDisabled GetUploadChecksumSettings(Options const& options) {
   bool disable_md5 = true;
   bool disable_crc32c = false;
   if (options.has<UploadChecksumValidationOption>()) {

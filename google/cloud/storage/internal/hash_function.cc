@@ -64,8 +64,7 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     ReadObjectRangeRequest const& request) {
   if (request.RequiresRangeHeader()) return CreateNullHashFunction();
 
-  auto const settings = GetDownloadChecksumSettings(
-      request, google::cloud::internal::CurrentOptions());
+  auto const settings = GetDownloadChecksumSettings(google::cloud::internal::CurrentOptions());
   auto const disable_md5 = settings.md5;
   auto const disable_crc32c = settings.crc32c;
   if (disable_md5 && disable_crc32c) {
@@ -85,8 +84,7 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     return CreateNullHashFunction();
   }
 
-  auto const settings = GetUploadChecksumSettings(
-      request, google::cloud::internal::CurrentOptions());
+  auto const settings = GetUploadChecksumSettings(google::cloud::internal::CurrentOptions());
   return CreateHashFunction(request.GetOption<Crc32cChecksumValue>(),
                             settings.crc32c, request.GetOption<MD5HashValue>(),
                             settings.md5);

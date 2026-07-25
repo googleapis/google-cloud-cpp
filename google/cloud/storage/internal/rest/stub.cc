@@ -381,7 +381,7 @@ StatusOr<ObjectMetadata> RestStub::InsertObjectMediaMultipart(
   }
 
   auto const settings =
-      storage::internal::GetUploadChecksumSettings(request, options);
+      storage::internal::GetUploadChecksumSettings(options);
   auto hash_function = storage::internal::CreateHashFunction(
       request.GetOption<storage::Crc32cChecksumValue>(), settings.crc32c,
       request.GetOption<storage::MD5HashValue>(), settings.md5);
@@ -459,7 +459,7 @@ StatusOr<ObjectMetadata> RestStub::InsertObjectMedia(
   // computing the MD5 hash or CRC32C checksum, we need to use multipart
   // uploads.
   auto const settings =
-      storage::internal::GetUploadChecksumSettings(request, options);
+      storage::internal::GetUploadChecksumSettings(options);
   if (!settings.md5 || !settings.crc32c || request.HasOption<MD5HashValue>() ||
       request.HasOption<Crc32cChecksumValue>()) {
     return InsertObjectMediaMultipart(context, options, request);
