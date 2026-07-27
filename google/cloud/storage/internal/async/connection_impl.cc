@@ -59,6 +59,7 @@
 #include "google/cloud/internal/make_status.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <set>
 #include <utility>
 
 namespace google {
@@ -226,7 +227,12 @@ AsyncConnectionImpl::Open(OpenParams p) {
   if (current->has<ReadRangesOption>()) {
     auto const& ranges = current->get<ReadRangesOption>();
     std::int64_t id = 0;
+    std::set<std::pair<std::int64_t, std::int64_t>> seen_ranges;
     for (auto const& r : ranges) {
+      auto range_key = std::make_pair(r.offset, r.length);
+      if (!seen_ranges.insert(range_key).second) {
+        continue;  // Skip duplicate range.
+      }
       auto* proto_range = initial_request.add_read_ranges();
       proto_range->set_read_offset(r.offset);
       proto_range->set_read_length(r.length);

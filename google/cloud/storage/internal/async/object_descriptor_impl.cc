@@ -61,7 +61,12 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     auto it = stream_manager_->GetFirstStream();
     if (it != stream_manager_->End()) {
       std::int64_t id = 0;
+      std::set<std::pair<std::int64_t, std::int64_t>> seen_ranges;
       for (auto const& r : ranges) {
+        auto range_key = std::make_pair(r.offset, r.length);
+        if (!seen_ranges.insert(range_key).second) {
+          continue;  // Skip duplicate range.
+        }
         ++id;
         auto range = std::make_shared<ReadRange>(r.offset, r.length,
                                                  read_object_spec_.bucket(),
@@ -70,7 +75,7 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
         // these ranges.
         it->active_ranges.emplace(id, range);
         // Cache them so subsequent `Read()` calls can claim them.
-        prewarmed_ranges_[{r.offset, r.length}] = PrewarmedRange{range, id};
+        prewarmed_ranges_.emplace(range_key, PrewarmedRange{range, id});
       }
       // Ensure new dynamically requested ranges use IDs that don't conflict
       // with pre-warmed ones.
@@ -222,8 +227,8 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   auto cache_key = std::make_pair(p.start, p.length);
   auto cache_it = prewarmed_ranges_.find(cache_key);
   if (cache_it != prewarmed_ranges_.end()) {
-    // Cache hit. Claim the pre-warmed range and return it to the client.
-    auto prewarmed = cache_it->second;
+    // Cache hit. Claim the pre-warmed range and return it to the user.
+    auto prewarmed = std::move(cache_it->second);
     prewarmed_ranges_.erase(cache_it);
     lk.unlock();
     if (!internal::TracingEnabled(options_)) {
