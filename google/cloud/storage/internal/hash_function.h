@@ -31,9 +31,7 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-struct DownloadChecksumValidationOption;
-struct UploadChecksumValidationOption;
-enum class ChecksumAlgorithm;
+
 
 namespace internal {
 

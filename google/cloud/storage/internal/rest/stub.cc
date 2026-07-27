@@ -457,9 +457,9 @@ StatusOr<ObjectMetadata> RestStub::InsertObjectMedia(
     return InsertObjectMediaMultipart(context, options, request);
   }
 
-  // If the application has set an explicit hash value we need to use multipart
-  // uploads. `DisableMD5Hash` and `DisableCrc32cChecksum` should not be
-  // dependent on each other.
+  // If the application has set an explicit hash value, or if it requires
+  // computing the MD5 hash or CRC32C checksum, we need to use multipart
+  // uploads.
   auto const settings =
       storage::internal::GetUploadChecksumSettings(request, options);
   if (!settings.md5 || !settings.crc32c || request.HasOption<MD5HashValue>() ||
