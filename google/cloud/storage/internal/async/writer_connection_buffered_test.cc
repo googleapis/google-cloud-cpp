@@ -1376,12 +1376,17 @@ TEST(WriteConnectionBuffered, MultipleConcurrentFlushesAreQueued) {
       return sequencer.PushBack("Query1").then(
           [](auto) { return make_status_or(static_cast<std::int64_t>(4096)); });
     });
-    EXPECT_CALL(*mock, Write(expected_write_size(8192)))
+    EXPECT_CALL(*mock, Flush(expected_write_size(8192)))
         .Times(1)
         .WillOnce([&](auto) {
-          return sequencer.PushBack("Write").then(
+          return sequencer.PushBack("Flush2").then(
               [](auto) { return Status{}; });
         });
+    EXPECT_CALL(*mock, Query).WillOnce([&]() {
+      return sequencer.PushBack("Query2").then([](auto) {
+        return make_status_or(static_cast<std::int64_t>(4096 + 8192));
+      });
+    });
   }
 
   MockFactory mock_factory;
@@ -1409,10 +1414,17 @@ TEST(WriteConnectionBuffered, MultipleConcurrentFlushesAreQueued) {
   // After the Query, the first Flush future should be completed.
   EXPECT_STATUS_OK(f1.get());
 
-  // Satisfy the Write call for the remaining data.
+  // Satisfy the second Flush call.
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Write");
+  EXPECT_EQ(next.second, "Flush2");
   next.first.set_value(true);
+
+  // The second Flush is also followed by a Query.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query2");
+  next.first.set_value(true);
+
+  EXPECT_STATUS_OK(f2.get());
 }
 
 TEST(WriteConnectionBuffered, FinalizeWithEmptyPayloadIsImmediate) {
