@@ -27,9 +27,11 @@
 #include "google/storage/v2/storage.pb.h"
 #include <cstdint>
 #include <functional>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <optional>
+#include <set>
 #include <unordered_map>
 
 namespace google {
@@ -123,6 +125,15 @@ class ObjectDescriptorImpl
   google::storage::v2::BidiReadObjectSpec read_object_spec_;
   std::optional<google::storage::v2::Object> metadata_;
   std::int64_t read_id_generator_ = 0;
+
+  // Information about a pre-warmed range that has not been claimed yet.
+  struct PrewarmedRange {
+    std::shared_ptr<ReadRange> range;
+    std::int64_t read_id;
+  };
+  // Cache of pre-warmed ranges, keyed by (offset, length).
+  std::map<std::pair<std::int64_t, std::int64_t>, PrewarmedRange>
+      prewarmed_ranges_;
 
   Options options_;
   std::unique_ptr<StreamManager> stream_manager_;

@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/multi_stream_manager.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
@@ -28,6 +29,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/rpc/status.pb.h"
+#include <algorithm>
 #include <limits>
 #include <memory>
 #include <utility>
@@ -52,6 +54,29 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
       std::make_shared<ReadStream>(std::move(stream),
                                    resume_policy_prototype_->clone()));
+  // If pre-warmed ranges are specified, initialize their `ReadRange` objects,
+  // register them as active on the initial stream, and cache them.
+  if (options_.has<ReadRangesOption>()) {
+    auto const& ranges = options_.get<ReadRangesOption>();
+    auto it = stream_manager_->GetFirstStream();
+    if (it != stream_manager_->End()) {
+      std::int64_t id = 0;
+      for (auto const& r : ranges) {
+        ++id;
+        auto range = std::make_shared<ReadRange>(r.offset, r.length,
+                                                 read_object_spec_.bucket(),
+                                                 read_object_spec_.object());
+        // Registering on the stream allows `OnRead` to route incoming data to
+        // these ranges.
+        it->active_ranges.emplace(id, range);
+        // Cache them so subsequent `Read()` calls can claim them.
+        prewarmed_ranges_[{r.offset, r.length}] = PrewarmedRange{range, id};
+      }
+      // Ensure new dynamically requested ranges use IDs that don't conflict
+      // with pre-warmed ones.
+      read_id_generator_ = id;
+    }
+  }
 }
 
 ObjectDescriptorImpl::~ObjectDescriptorImpl() { Cancel(); }
@@ -193,6 +218,21 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       read_object_spec_.bucket(), read_object_spec_.object());
 
   std::unique_lock<std::mutex> lk(mu_);
+  // Check if this range matches a pre-warmed range.
+  auto cache_key = std::make_pair(p.start, p.length);
+  auto cache_it = prewarmed_ranges_.find(cache_key);
+  if (cache_it != prewarmed_ranges_.end()) {
+    // Cache hit. Claim the pre-warmed range and return it to the client.
+    auto prewarmed = cache_it->second;
+    prewarmed_ranges_.erase(cache_it);
+    lk.unlock();
+    if (!internal::TracingEnabled(options_)) {
+      return std::unique_ptr<storage::AsyncReaderConnection>(
+          std::make_unique<ObjectDescriptorReader>(std::move(prewarmed.range)));
+    }
+    return MakeTracingObjectDescriptorReader(std::move(prewarmed.range));
+  }
+
   if (stream_manager_->Empty()) {
     lk.unlock();
     range->OnFinish(Status(StatusCode::kFailedPrecondition,
@@ -366,9 +406,17 @@ void ObjectDescriptorImpl::OnRead(
     auto id = range_data.read_range().read_id();
     auto const l = copy.find(id);
     if (l == copy.end()) continue;
-    // TODO(#15104) - Consider returning if the range is done, and then
-    // skipping CleanupDoneRanges().
-    l->second->OnRead(std::move(range_data), is_transcoded, object_size);
+
+    auto range = l->second;
+    bool active = false;
+    lk.lock();
+    active = it->active_ranges.count(id) != 0;
+    lk.unlock();
+    if (active) {
+      // TODO(#15104) - Consider returning if the range is done, and then
+      // skipping CleanupDoneRanges().
+      range->OnRead(std::move(range_data), is_transcoded, object_size);
+    }
   }
   lk.lock();
   stream_manager_->CleanupDoneRanges(it);

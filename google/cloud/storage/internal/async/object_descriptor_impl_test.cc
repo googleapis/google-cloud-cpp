@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
+#include "google/cloud/storage/internal/async/options.h"
 
 // TODO(v-pratap): Remove this when EnableMD5ValidationOption and
 // EnableCrc32cValidationOption are removed.
@@ -2286,6 +2287,197 @@ TEST(ObjectDescriptorImpl, PartialReadChecksumValidationBypassed) {
                   [](storage::ReadPayload const& p) { return p.contents(); },
                   ElementsAre(absl::string_view{
                       "The quick brown fox jumps over the lazy dog"}))));
+
+  EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read[2]");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+TEST(ObjectDescriptorImpl, PrewarmedCacheHit) {
+  auto constexpr kResponse0 = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-12345" }
+  )pb";
+
+  auto constexpr kResponse1 = R"pb(
+    read_handle { handle: "handle-23456" }
+    object_data_ranges {
+      range_end: true
+      read_range { read_id: 1 read_offset: 0 }
+      checksummed_data { content: "Pre-warmed data" }
+    }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write).Times(0);
+
+  EXPECT_CALL(*stream, Read)
+      .WillOnce([=, &sequencer]() {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
+          auto response = Response{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
+          return absl::make_optional(response);
+        });
+      })
+      .WillOnce([&sequencer]() {
+        return sequencer.PushBack("Read[2]").then(
+            [](auto) { return absl::optional<Response>{}; });
+      });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(true);
+  options.set<ReadRangesOption>({{0, 15}});
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options);
+
+  auto response = Response{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
+  tested->Start(std::move(response));
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+
+  auto s1 = tested->Read({0, 15});
+  ASSERT_THAT(s1, NotNull());
+
+  auto s1r1 = s1->Read();
+  EXPECT_FALSE(s1r1.is_ready());
+
+  read1.first.set_value(true);
+
+  EXPECT_TRUE(s1r1.is_ready());
+  EXPECT_THAT(s1r1.get(),
+              VariantWith<storage::ReadPayload>(ResultOf(
+                  "contents are",
+                  [](storage::ReadPayload const& p) { return p.contents(); },
+                  ElementsAre(absl::string_view{"Pre-warmed data"}))));
+
+  EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read[2]");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
+TEST(ObjectDescriptorImpl, PrewarmedCacheMiss) {
+  auto constexpr kResponse0 = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-12345" }
+  )pb";
+
+  auto constexpr kExpectedRequest = R"pb(
+    read_ranges { read_id: 2 read_offset: 100 read_length: 15 }
+  )pb";
+
+  auto constexpr kResponse1 = R"pb(
+    object_data_ranges {
+      range_end: true
+      read_range { read_id: 2 read_offset: 100 }
+      checksummed_data { content: "Missed range data" }
+    }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        auto expected = Request{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      });
+
+  EXPECT_CALL(*stream, Read)
+      .WillOnce([=, &sequencer]() {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
+          auto response = Response{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
+          return absl::make_optional(response);
+        });
+      })
+      .WillOnce([&sequencer]() {
+        return sequencer.PushBack("Read[2]").then(
+            [](auto) { return absl::optional<Response>{}; });
+      });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(true);
+  options.set<ReadRangesOption>({{0, 15}});
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options);
+
+  auto response = Response{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
+  tested->Start(std::move(response));
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+
+  auto s1 = tested->Read({100, 15});
+  ASSERT_THAT(s1, NotNull());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write[1]");
+  next.first.set_value(true);
+
+  auto s1r1 = s1->Read();
+  EXPECT_FALSE(s1r1.is_ready());
+
+  read1.first.set_value(true);
+
+  EXPECT_TRUE(s1r1.is_ready());
+  EXPECT_THAT(s1r1.get(),
+              VariantWith<storage::ReadPayload>(ResultOf(
+                  "contents are",
+                  [](storage::ReadPayload const& p) { return p.contents(); },
+                  ElementsAre(absl::string_view{"Missed range data"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
 
