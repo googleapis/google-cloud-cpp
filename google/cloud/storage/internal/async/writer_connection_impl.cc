@@ -118,6 +118,7 @@ std::string AsyncWriterConnectionImpl::UploadId() const {
 
 absl::variant<std::int64_t, google::storage::v2::Object>
 AsyncWriterConnectionImpl::PersistedState() const {
+  std::unique_lock<std::mutex> lk(mu_);
   return persisted_state_;
 }
 
@@ -213,7 +214,10 @@ future<Status> AsyncWriterConnectionImpl::Close(storage::WritePayload payload) {
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
-  return impl_->Read().then([this](auto f) { return OnQuery(f.get()); });
+  std::unique_lock<std::mutex> lk(mu_);
+  auto impl = impl_;
+  lk.unlock();
+  return impl->Read().then([this](auto f) { return OnQuery(f.get()); });
 }
 
 RpcMetadata AsyncWriterConnectionImpl::GetRequestMetadata() {
@@ -304,44 +308,19 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
   std::unique_lock<std::mutex> lk(mu_);
   auto impl = impl_;
   lk.unlock();
-
-  struct ConsumeLoop {
-    AsyncWriterConnectionImpl* self;
-    std::shared_ptr<StreamingRpc> impl;
-
-    future<void> operator()(
-        future<std::optional<google::storage::v2::BidiWriteObjectResponse>> f) {
-      auto response = f.get();
-      if (!response.has_value()) return make_ready_future();
-      // Process intermediate messages.
-      if (response->has_write_handle()) {
-        self->latest_write_handle_ = response->write_handle();
-      }
-      if (response->has_persisted_size()) {
-        self->persisted_state_ = response->persisted_size();
-      }
-      if (response->has_resource()) {
-        self->persisted_state_ = response->resource();
-      }
-      return impl->Read().then(*this);
-    }
-  };
-
-  return impl->Read().then(ConsumeLoop{this, impl}).then([this](auto f) {
-    f.get();
-    return Finish().then(
-        [this](auto f2) -> StatusOr<google::storage::v2::Object> {
-          auto status = f2.get();
-          if (!status.ok()) return status;
-          if (!absl::holds_alternative<google::storage::v2::Object>(
-                  persisted_state_)) {
-            return internal::InternalError(
-                "no object metadata returned after finalizing upload",
-                GCP_ERROR_INFO());
-          }
-          return absl::get<google::storage::v2::Object>(persisted_state_);
-        });
-  });
+  return impl->Read()
+      .then([this](auto f) { return OnQuery(f.get()); })
+      .then([this](auto g) -> StatusOr<google::storage::v2::Object> {
+        auto status = g.get();
+        if (!status) return std::move(status).status();
+        if (!absl::holds_alternative<google::storage::v2::Object>(
+                persisted_state_)) {
+          return internal::InternalError(
+              "no object metadata returned after finalizing upload",
+              GCP_ERROR_INFO());
+        }
+        return absl::get<google::storage::v2::Object>(persisted_state_);
+      });
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
@@ -357,18 +336,25 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
           return StatusOr<std::int64_t>(std::move(result));
         });
   }
-  if (response->has_write_handle()) {
-    latest_write_handle_ = response->write_handle();
+
+  std::shared_ptr<StreamingRpc> impl;
+  {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (response->has_write_handle()) {
+      latest_write_handle_ = response->write_handle();
+    }
+    if (response->has_persisted_size()) {
+      persisted_state_ = response->persisted_size();
+      return make_ready_future(make_status_or(response->persisted_size()));
+    }
+    if (response->has_resource()) {
+      persisted_state_ = response->resource();
+      return make_ready_future(make_status_or(response->resource().size()));
+    }
+    impl = impl_;
   }
-  if (response->has_persisted_size()) {
-    persisted_state_ = response->persisted_size();
-    return make_ready_future(make_status_or(response->persisted_size()));
-  }
-  if (response->has_resource()) {
-    persisted_state_ = response->resource();
-    return make_ready_future(make_status_or(response->resource().size()));
-  }
-  return make_ready_future(make_status_or(static_cast<std::int64_t>(0)));
+
+  return impl->Read().then([this](auto f) { return OnQuery(f.get()); });
 }
 
 future<Status> AsyncWriterConnectionImpl::Finish() {
