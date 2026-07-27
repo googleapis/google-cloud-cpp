@@ -276,7 +276,7 @@ TEST_F(ObjectTest, ReadObjectChecksumPrecedenceDisableMD5) {
             internal::GetDownloadChecksumSettings(r, CurrentOptions());
         // DisableMD5Hash(true) should override ChecksumAlgorithm::kMD5
         EXPECT_TRUE(settings.md5);
-        EXPECT_TRUE(settings.crc32c); // kMD5 disables crc32c
+        EXPECT_TRUE(settings.crc32c);  // kMD5 disables crc32c
 
         auto read_source = std::make_unique<testing::MockObjectReadSource>();
         EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
@@ -289,8 +289,7 @@ TEST_F(ObjectTest, ReadObjectChecksumPrecedenceDisableMD5) {
   auto client = ClientForMock();
   auto actual = client.ReadObject(
       "test-bucket-name", "test-object-name", DisableMD5Hash(true),
-      Options{}.set<DownloadChecksumValidationOption>(
-          ChecksumAlgorithm::kMD5));
+      Options{}.set<DownloadChecksumValidationOption>(ChecksumAlgorithm::kMD5));
   ASSERT_STATUS_OK(actual.status());
   std::vector<char> v(1024);
   actual.read(v.data(), v.size());
@@ -334,7 +333,7 @@ TEST_F(ObjectTest, InsertObjectChecksumPrecedenceEnableCrc32c) {
             internal::GetUploadChecksumSettings(r, CurrentOptions());
         // DisableCrc32cChecksum(false) should override ChecksumAlgorithm::kNone
         EXPECT_FALSE(settings.crc32c);
-        EXPECT_TRUE(settings.md5); // kNone disables md5
+        EXPECT_TRUE(settings.md5);  // kNone disables md5
 
         return make_status_or(
             storage::internal::ObjectMetadataParser::FromString(
@@ -342,11 +341,10 @@ TEST_F(ObjectTest, InsertObjectChecksumPrecedenceEnableCrc32c) {
                 .value());
       });
   auto client = ClientForMock();
-  auto actual =
-      client.InsertObject("test-bucket-name", "test-object-name", "payload",
-                          DisableCrc32cChecksum(false),
-                          Options{}.set<UploadChecksumValidationOption>(
-                              ChecksumAlgorithm::kNone));
+  auto actual = client.InsertObject(
+      "test-bucket-name", "test-object-name", "payload",
+      DisableCrc32cChecksum(false),
+      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kNone));
   ASSERT_STATUS_OK(actual);
 }
 
