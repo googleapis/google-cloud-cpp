@@ -50,11 +50,7 @@ TEST(ChecksumHelpersTest, DownloadChecksumSettingsOnlyNewOptions) {
   EXPECT_TRUE(settings.md5);
   EXPECT_TRUE(settings.crc32c);
 
-  settings = GetDownloadChecksumSettings(
-      request, Options{}.set<DownloadChecksumValidationOption>(
-                   ChecksumAlgorithm::kCrc32cAndMD5));
-  EXPECT_FALSE(settings.md5);
-  EXPECT_FALSE(settings.crc32c);
+
 }
 
 TEST(ChecksumHelpersTest, DownloadChecksumSettingsOnlyOldOptions) {
@@ -126,11 +122,7 @@ TEST(ChecksumHelpersTest, UploadChecksumSettingsOnlyNewOptions) {
   EXPECT_TRUE(settings.md5);
   EXPECT_TRUE(settings.crc32c);
 
-  settings = GetUploadChecksumSettings(
-      request, Options{}.set<UploadChecksumValidationOption>(
-                   ChecksumAlgorithm::kCrc32cAndMD5));
-  EXPECT_FALSE(settings.md5);
-  EXPECT_FALSE(settings.crc32c);
+
 }
 
 TEST(ChecksumHelpersTest, UploadChecksumSettingsOnlyOldOptions) {

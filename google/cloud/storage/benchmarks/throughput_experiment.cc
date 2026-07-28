@@ -85,8 +85,7 @@ class ResumableUpload : public ThroughputExperiment {
             bucket_name, object_name,
             google::cloud::Options{}.set<gcs::UploadChecksumValidationOption>(
                 config.enable_crc32c
-                    ? (config.enable_md5 ? gcs::ChecksumAlgorithm::kCrc32cAndMD5
-                                         : gcs::ChecksumAlgorithm::kCrc32c)
+                    ? gcs::ChecksumAlgorithm::kCrc32c
                     : (config.enable_md5 ? gcs::ChecksumAlgorithm::kMD5
                                          : gcs::ChecksumAlgorithm::kNone)));
     auto upload_id = ExtractUploadId(writer.resumable_session_id());
@@ -161,8 +160,7 @@ class SimpleUpload : public ThroughputExperiment {
             bucket_name, object_name, data,
             google::cloud::Options{}.set<gcs::UploadChecksumValidationOption>(
                 config.enable_crc32c
-                    ? (config.enable_md5 ? gcs::ChecksumAlgorithm::kCrc32cAndMD5
-                                         : gcs::ChecksumAlgorithm::kCrc32c)
+                    ? gcs::ChecksumAlgorithm::kCrc32c
                     : (config.enable_md5 ? gcs::ChecksumAlgorithm::kMD5
                                          : gcs::ChecksumAlgorithm::kNone)));
     auto const usage = timer.Sample();
@@ -224,8 +222,7 @@ class DownloadObject : public ThroughputExperiment {
             bucket_name, object_name, read_range,
             google::cloud::Options{}.set<gcs::DownloadChecksumValidationOption>(
                 config.enable_crc32c
-                    ? (config.enable_md5 ? gcs::ChecksumAlgorithm::kCrc32cAndMD5
-                                         : gcs::ChecksumAlgorithm::kCrc32c)
+                    ? gcs::ChecksumAlgorithm::kCrc32c
                     : (config.enable_md5 ? gcs::ChecksumAlgorithm::kMD5
                                          : gcs::ChecksumAlgorithm::kNone)));
     std::int64_t transfer_size = 0;

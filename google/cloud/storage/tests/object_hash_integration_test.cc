@@ -75,7 +75,7 @@ TEST_F(ObjectHashIntegrationTest, InsertObjectExplicitDisable) {
   auto object_name = MakeRandomObjectName();
 
   auto meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32cAndMD5), IfGenerationMatch(0));
+      bucket_name_, object_name, LoremIpsum(), Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kNone), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
@@ -126,10 +126,9 @@ TEST_F(ObjectHashIntegrationTest, InsertObjectWithValueFailure) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
-  // This should fail because the MD5 hash value is incorrect.
   auto failure = client.InsertObject(
       bucket_name_, object_name, LoremIpsum(), MD5HashValue(ComputeMD5Hash("")),
-      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32cAndMD5), IfGenerationMatch(0));
+      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5), IfGenerationMatch(0));
   EXPECT_THAT(failure, Not(IsOk()));
 }
 

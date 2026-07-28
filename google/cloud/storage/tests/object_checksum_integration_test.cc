@@ -79,7 +79,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertObjectExplicitDisable) {
   }
 }
 
-/// @test Verify that `Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32cAndMD5)` works as expected.
+/// @test Verify that `Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32c)` works as expected.
 TEST_F(ObjectChecksumIntegrationTest, InsertObjectExplicitEnable) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
@@ -179,7 +179,7 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectExplicitEnable) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto os = client.WriteObject(bucket_name_, object_name,
-                               Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32cAndMD5), IfGenerationMatch(0));
+                               Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32c), IfGenerationMatch(0));
   os << LoremIpsum();
   os.Close();
   auto meta = os.metadata();
@@ -282,7 +282,7 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithFullChecksumValidation) {
   auto expected_crc32c = ComputeCrc32cChecksum(content);
 
   auto os = client.WriteObject(bucket_name_, object_name,
-                               Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32cAndMD5), IfGenerationMatch(0));
+                               Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32c), IfGenerationMatch(0));
   os << content;
   os.Close();
   auto meta = os.metadata();

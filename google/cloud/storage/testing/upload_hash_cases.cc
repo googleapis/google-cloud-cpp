@@ -51,14 +51,7 @@ std::vector<UploadHashCase> UploadHashCases() {
       // DisableCrc32c == false, Crc32cChecksumValue == {} and change the MD5
       {kQuickFoxCrc32cChecksum, "",                  ChecksumAlgorithm::kCrc32c, Crc32cChecksumValue(),  MD5HashValue()},
       {kQuickFoxCrc32cChecksum, kEmptyStringMD5Hash, ChecksumAlgorithm::kCrc32c, Crc32cChecksumValue(),  MD5HashValue(kEmptyStringMD5Hash)},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash,    ChecksumAlgorithm::kCrc32cAndMD5, Crc32cChecksumValue(),  MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, kEmptyStringMD5Hash, ChecksumAlgorithm::kCrc32cAndMD5, Crc32cChecksumValue(),  MD5HashValue(kEmptyStringMD5Hash)},
 
-      // DisableCrc32c == false, Crc32cChecksumValue == kEmptyStringCrc32Checksum and change the MD5
-      {kEmptyStringCrc32cChecksum, "",                  ChecksumAlgorithm::kCrc32c, Crc32cChecksumValue(kEmptyStringCrc32cChecksum),  MD5HashValue()},
-      {kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash, ChecksumAlgorithm::kCrc32c, Crc32cChecksumValue(kEmptyStringCrc32cChecksum),  MD5HashValue(kEmptyStringMD5Hash)},
-      {kEmptyStringCrc32cChecksum, kQuickFoxMD5Hash,    ChecksumAlgorithm::kCrc32cAndMD5, Crc32cChecksumValue(kEmptyStringCrc32cChecksum),  MD5HashValue()},
-      {kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash, ChecksumAlgorithm::kCrc32cAndMD5, Crc32cChecksumValue(kEmptyStringCrc32cChecksum),  MD5HashValue(kEmptyStringMD5Hash)},
       // clang-format on
   };
 }

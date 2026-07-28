@@ -36,10 +36,8 @@ inline HashDisabled GetDownloadChecksumSettings(Options const& options) {
   bool disable_crc32c = false;
   if (options.has<DownloadChecksumValidationOption>()) {
     auto const algo = options.get<DownloadChecksumValidationOption>();
-    disable_md5 = (algo != ChecksumAlgorithm::kMD5 &&
-                   algo != ChecksumAlgorithm::kCrc32cAndMD5);
-    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c &&
-                      algo != ChecksumAlgorithm::kCrc32cAndMD5);
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
   }
 
 
@@ -51,10 +49,8 @@ inline HashDisabled GetUploadChecksumSettings(Options const& options) {
   bool disable_crc32c = false;
   if (options.has<UploadChecksumValidationOption>()) {
     auto const algo = options.get<UploadChecksumValidationOption>();
-    disable_md5 = (algo != ChecksumAlgorithm::kMD5 &&
-                   algo != ChecksumAlgorithm::kCrc32cAndMD5);
-    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c &&
-                      algo != ChecksumAlgorithm::kCrc32cAndMD5);
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
   }
 
 

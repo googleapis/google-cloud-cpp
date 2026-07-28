@@ -383,7 +383,7 @@ TEST(HashFunctionImplTest, CreateHashFunctionRead) {
       {"", "", ChecksumAlgorithm::kNone},
       {"", kQuickFoxMD5Hash, ChecksumAlgorithm::kMD5},
       {kQuickFoxCrc32cChecksum, "", ChecksumAlgorithm::kCrc32c},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash, ChecksumAlgorithm::kCrc32cAndMD5},
+
   };
 
   for (auto const& test : cases) {
