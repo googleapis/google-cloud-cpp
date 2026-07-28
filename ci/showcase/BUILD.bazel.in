@@ -95,6 +95,23 @@ cc_library(
 )
 
 cc_test(
+    name = "grpc_pqc_test",
+    srcs = ["grpc_pqc_test.cc"],
+    copts = [
+        "-Ici/showcase",
+        "-I$(BINDIR)/ci/showcase",
+    ],
+    tags = ["integration-test"],
+    deps = [
+        ":showcase_echo_client",
+        "//:common",
+        "//:grpc_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
     name = "rest_pqc_test",
     srcs = ["rest_pqc_test.cc"],
     copts = [
