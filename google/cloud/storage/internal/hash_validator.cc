@@ -65,7 +65,7 @@ std::unique_ptr<HashValidator> CreateHashValidator(
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
-    ResumableUploadRequest const& request) {
+    ResumableUploadRequest const& /*request*/) {
   auto const settings = GetUploadChecksumSettings(
       google::cloud::internal::CurrentOptions());
   auto const disable_md5 = settings.md5;
