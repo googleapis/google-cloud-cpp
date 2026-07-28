@@ -63,6 +63,13 @@ std::string ExtractUploadId(std::string v) {
   return v.substr(pos + std::strlen(kRestField));
 }
 
+gcs::ChecksumAlgorithm GetChecksumAlgorithm(bool enable_crc32c,
+                                            bool enable_md5) {
+  if (enable_crc32c) return gcs::ChecksumAlgorithm::kCrc32c;
+  if (enable_md5) return gcs::ChecksumAlgorithm::kMD5;
+  return gcs::ChecksumAlgorithm::kNone;
+}
+
 class ResumableUpload : public ThroughputExperiment {
  public:
   explicit ResumableUpload(google::cloud::storage::Client client,
@@ -80,14 +87,10 @@ class ResumableUpload : public ThroughputExperiment {
 
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
-    auto writer =
-        client_.WriteObject(
+    auto writer = client_.WriteObject(
             bucket_name, object_name,
             google::cloud::Options{}.set<gcs::UploadChecksumValidationOption>(
-                config.enable_crc32c
-                    ? gcs::ChecksumAlgorithm::kCrc32c
-                    : (config.enable_md5 ? gcs::ChecksumAlgorithm::kMD5
-                                         : gcs::ChecksumAlgorithm::kNone)));
+                GetChecksumAlgorithm(config.enable_crc32c, config.enable_md5)));
     auto upload_id = ExtractUploadId(writer.resumable_session_id());
     for (std::int64_t offset = 0; offset < config.object_size;
          offset += config.app_buffer_size) {
@@ -159,10 +162,7 @@ class SimpleUpload : public ThroughputExperiment {
         client_.InsertObject(
             bucket_name, object_name, data,
             google::cloud::Options{}.set<gcs::UploadChecksumValidationOption>(
-                config.enable_crc32c
-                    ? gcs::ChecksumAlgorithm::kCrc32c
-                    : (config.enable_md5 ? gcs::ChecksumAlgorithm::kMD5
-                                         : gcs::ChecksumAlgorithm::kNone)));
+                GetChecksumAlgorithm(config.enable_crc32c, config.enable_md5)));
     auto const usage = timer.Sample();
     auto generation = object_metadata
                           ? std::to_string(object_metadata->generation())
@@ -221,10 +221,7 @@ class DownloadObject : public ThroughputExperiment {
         client_.ReadObject(
             bucket_name, object_name, read_range,
             google::cloud::Options{}.set<gcs::DownloadChecksumValidationOption>(
-                config.enable_crc32c
-                    ? gcs::ChecksumAlgorithm::kCrc32c
-                    : (config.enable_md5 ? gcs::ChecksumAlgorithm::kMD5
-                                         : gcs::ChecksumAlgorithm::kNone)));
+                GetChecksumAlgorithm(config.enable_crc32c, config.enable_md5)));
     std::int64_t transfer_size = 0;
     while (!reader.eof() && !reader.bad()) {
       reader.read(buffer.data(), buffer.size());

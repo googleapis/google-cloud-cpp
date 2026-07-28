@@ -1117,7 +1117,6 @@ TEST(DefaultCtorsWork, Trivial) {
   EXPECT_FALSE(ReadFromOffset().has_value());
   EXPECT_FALSE(ReadLast().has_value());
   EXPECT_FALSE(MD5HashValue().has_value());
-
   EXPECT_FALSE(Crc32cChecksumValue().has_value());
   EXPECT_FALSE(WithObjectMetadata().has_value());
   EXPECT_FALSE(UseResumableUploadSession().has_value());

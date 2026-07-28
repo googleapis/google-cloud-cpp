@@ -688,7 +688,6 @@ TEST(ObjectWriteStreambufTest, FlushFinalWithHashes) {
   });
 
   ResumableUploadRequest request;
-
   ObjectWriteStreambuf streambuf(
       std::move(mock), request, "test-only-upload-id",
       /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,

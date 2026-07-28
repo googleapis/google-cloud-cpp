@@ -234,7 +234,6 @@ TEST_F(ObjectTest, ReadObject) {
   EXPECT_EQ(actual.gcount(), 1024);
 }
 
-
 TEST_F(ObjectTest, WriteObject) {
   EXPECT_CALL(*mock_, CreateResumableUpload)
       .WillOnce(Return(TransientError()))
