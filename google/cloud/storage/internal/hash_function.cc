@@ -12,9 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/checksum_helpers.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/options.h"
+#include "google/cloud/options.h"
 #include <memory>
 #include <utility>
 
@@ -61,9 +65,10 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     ReadObjectRangeRequest const& request) {
   if (request.RequiresRangeHeader()) return CreateNullHashFunction();
 
-  auto const disable_crc32c =
-      request.GetOption<DisableCrc32cChecksum>().value_or(false);
-  auto const disable_md5 = request.GetOption<DisableMD5Hash>().value_or(false);
+  auto const settings = GetDownloadChecksumSettings(
+      request, google::cloud::internal::CurrentOptions());
+  auto const disable_md5 = settings.md5;
+  auto const disable_crc32c = settings.crc32c;
   if (disable_md5 && disable_crc32c) {
     return std::make_unique<NullHashFunction>();
   }
@@ -80,10 +85,14 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     // for previous values is lost.
     return CreateNullHashFunction();
   }
+
+  auto const settings = GetUploadChecksumSettings(
+      request, google::cloud::internal::CurrentOptions());
+  auto disable_md5 = DisableMD5Hash(settings.md5);
+  auto disable_crc32c = DisableCrc32cChecksum(settings.crc32c);
   return CreateHashFunction(request.GetOption<Crc32cChecksumValue>(),
-                            request.GetOption<DisableCrc32cChecksum>(),
-                            request.GetOption<MD5HashValue>(),
-                            request.GetOption<DisableMD5Hash>());
+                            disable_crc32c, request.GetOption<MD5HashValue>(),
+                            disable_md5);
 }
 
 }  // namespace internal
@@ -91,3 +100,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"

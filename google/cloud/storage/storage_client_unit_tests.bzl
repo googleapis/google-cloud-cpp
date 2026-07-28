@@ -45,6 +45,7 @@ storage_client_unit_tests = [
     "internal/bucket_acl_requests_test.cc",
     "internal/bucket_metadata_cache_test.cc",
     "internal/bucket_requests_test.cc",
+    "internal/checksum_helpers_test.cc",
     "internal/complex_option_test.cc",
     "internal/compute_engine_util_test.cc",
     "internal/connection_impl_bucket_acl_test.cc",

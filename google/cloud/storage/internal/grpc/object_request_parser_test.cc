@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
@@ -736,121 +737,6 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestSimple) {
       "The quick brown fox jumps over the lazy dog");
   auto actual = ToProto(request).value();
   EXPECT_THAT(actual, IsProtoEqual(expected));
-}
-
-TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
-  using storage::internal::InsertObjectMediaRequest;
-  // See top-of-file comments for details on the magic numbers
-  struct Test {
-    std::function<void(InsertObjectMediaRequest&)> apply_options;
-    std::string expected_checksums;
-  } cases[] = {
-      // These tests provide the "wrong" hashes. This is what would happen if
-      // one was (for example) reading a GCS file, obtained the expected hashes
-      // from GCS, and then uploaded to another GCS destination *but* the data
-      // was somehow corrupted locally (say a bad disk). In that case, we don't
-      // want to recompute the hashes in the upload.
-      {
-          [](storage::internal::InsertObjectMediaRequest& r) {
-            r.set_option(storage::MD5HashValue(storage::ComputeMD5Hash(kText)));
-            r.set_option(storage::DisableCrc32cChecksum(true));
-          },
-          R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6")pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(storage::MD5HashValue(storage::ComputeMD5Hash(kText)));
-            r.set_option(storage::DisableCrc32cChecksum(false));
-          },
-          R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x4ad67f80)pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(storage::MD5HashValue(storage::ComputeMD5Hash(kText)));
-            r.set_option(storage::Crc32cChecksumValue(
-                storage::ComputeCrc32cChecksum(kText)));
-          },
-          R"pb(
-            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
-            crc32c: 0x22620404)pb",
-      },
-
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(storage::DisableMD5Hash(false));
-            r.set_option(storage::DisableCrc32cChecksum(true));
-          },
-          R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(storage::DisableMD5Hash(false));
-            r.set_option(storage::DisableCrc32cChecksum(false));
-          },
-          R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
-            crc32c: 0x4ad67f80)pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(storage::DisableMD5Hash(false));
-            r.set_option(storage::Crc32cChecksumValue(
-                storage::ComputeCrc32cChecksum(kText)));
-          },
-          R"pb(
-            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
-            crc32c: 0x22620404)pb",
-      },
-
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(storage::DisableMD5Hash(true));
-            r.set_option(storage::DisableCrc32cChecksum(true));
-          },
-          R"pb(
-          )pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(storage::DisableMD5Hash(true));
-            r.set_option(storage::DisableCrc32cChecksum(false));
-          },
-          R"pb(
-            crc32c: 0x4ad67f80)pb",
-      },
-      {
-          [](InsertObjectMediaRequest& r) {
-            r.set_option(storage::DisableMD5Hash(true));
-            r.set_option(storage::Crc32cChecksumValue(
-                storage::ComputeCrc32cChecksum(kText)));
-          },
-          R"pb(
-            crc32c: 0x22620404)pb",
-      },
-  };
-  for (auto const& test : cases) {
-    SCOPED_TRACE("Expected outcome " + test.expected_checksums);
-    storage_proto::ObjectChecksums expected;
-    ASSERT_TRUE(
-        TextFormat::ParseFromString(test.expected_checksums, &expected));
-
-    storage::internal::InsertObjectMediaRequest request(
-        "test-bucket-name", "test-object-name", kAlt);
-    test.apply_options(request);
-    request.set_multiple_options();
-    request.hash_function().Update(0, kAlt);
-    storage_proto::WriteObjectRequest write_request;
-    grpc::WriteOptions write_options;
-    auto status = MaybeFinalize(write_request, write_options, request, false);
-    ASSERT_STATUS_OK(status);
-    EXPECT_TRUE(write_request.finish_write());
-    EXPECT_TRUE(write_options.is_last_message());
-    EXPECT_THAT(write_request.object_checksums(), IsProtoEqual(expected));
-  }
 }
 
 TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
@@ -1582,3 +1468,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"

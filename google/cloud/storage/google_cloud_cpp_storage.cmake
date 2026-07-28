@@ -80,6 +80,7 @@ add_library(
     internal/bucket_metadata_parser.h
     internal/bucket_requests.cc
     internal/bucket_requests.h
+    internal/checksum_helpers.h
     internal/complex_option.h
     internal/compute_engine_util.cc
     internal/compute_engine_util.h
@@ -424,6 +425,7 @@ if (BUILD_TESTING)
         internal/bucket_acl_requests_test.cc
         internal/bucket_metadata_cache_test.cc
         internal/bucket_requests_test.cc
+        internal/checksum_helpers_test.cc
         internal/complex_option_test.cc
         internal/compute_engine_util_test.cc
         internal/connection_impl_bucket_acl_test.cc

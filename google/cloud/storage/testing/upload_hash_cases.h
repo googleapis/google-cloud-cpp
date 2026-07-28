@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_UPLOAD_HASH_CASES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_UPLOAD_HASH_CASES_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/options.h"
 #include <string>
 #include <vector>
@@ -41,3 +42,4 @@ std::vector<UploadHashCase> UploadHashCases();
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_UPLOAD_HASH_CASES_H
+#include "google/cloud/internal/diagnostics_pop.inc"

@@ -83,7 +83,7 @@ struct [[deprecated(
   using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
-  DisableMD5Hash() : DisableMD5Hash(true) {}
+  DisableMD5Hash() = default;
   static char const* name() { return "disable-md5-hash"; }
 };
 

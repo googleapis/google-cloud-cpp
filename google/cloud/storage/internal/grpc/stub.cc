@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/grpc/stub.h"
+#include "google/cloud/storage/internal/checksum_helpers.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc/bucket_metadata_parser.h"
@@ -346,6 +348,14 @@ StatusOr<storage::ObjectMetadata> GrpcStub::InsertObjectMedia(
   ApplyRoutingHeaders(*ctx, request);
   auto stream = stub_->WriteObject(std::move(ctx), options);
 
+  auto const settings =
+      storage::internal::GetUploadChecksumSettings(request, options);
+  auto disable_md5 = storage::DisableMD5Hash(settings.md5);
+  auto disable_crc32c = storage::DisableCrc32cChecksum(settings.crc32c);
+  auto hash_function = storage::internal::CreateHashFunction(
+      request.GetOption<storage::Crc32cChecksumValue>(), disable_crc32c,
+      request.GetOption<storage::MD5HashValue>(), disable_md5);
+
   auto splitter = SplitObjectWriteData<ContentType>(request.payload());
   std::int64_t offset = 0;
 
@@ -356,11 +366,13 @@ StatusOr<storage::ObjectMetadata> GrpcStub::InsertObjectMedia(
     auto& data = *proto_request.mutable_checksummed_data();
     SetMutableContent(data, splitter.Next());
     data.set_crc32c(Crc32c(GetContent(data)));
-    request.hash_function().Update(offset, GetContent(data), data.crc32c());
+    hash_function->Update(offset, GetContent(data), data.crc32c());
     offset += GetContent(data).size();
 
     auto wopts = grpc::WriteOptions{};
-    MaybeFinalize(proto_request, wopts, request, !splitter.Done());
+    if (splitter.Done()) {
+      storage_internal::Finalize(proto_request, wopts, *hash_function);
+    }
 
     auto watchdog = create_watchdog().then([&stream](auto f) {
       if (!f.get()) return false;
@@ -1216,3 +1228,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"
