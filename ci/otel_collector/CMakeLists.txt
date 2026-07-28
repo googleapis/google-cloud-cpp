@@ -20,7 +20,6 @@ add_library(otel_collector otel_collector.cc otel_collector.h)
 target_link_libraries(
     otel_collector PUBLIC google_cloud_cpp_opentelemetry_testing_protos
                           google-cloud-cpp::monitoring_protos gRPC::grpc++)
-add_dependencies(otel_collector google_cloud_cpp_opentelemetry_testing_protos)
 target_include_directories(otel_collector PUBLIC ${PROJECT_SOURCE_DIR}
                                                  ${PROJECT_BINARY_DIR})
 google_cloud_cpp_add_common_options(otel_collector NO_WARNINGS)
