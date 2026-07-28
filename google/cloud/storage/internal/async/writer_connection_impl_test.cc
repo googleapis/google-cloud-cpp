@@ -1311,6 +1311,72 @@ TEST(AsyncWriterConnectionTest, CloseMultipleResponsesBeforeEOF) {
   tested = {};
 }
 
+TEST(AsyncWriterConnectionTest, QueryConsumesIntermediateMessagesBeforeSize) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Cancel).Times(1);
+
+  // We simulate a scenario where Flush(state_lookup=true) causes GCS to send
+  // multiple responses. The first is an intermediate message (no size).
+  // The second is the actual persisted_size response.
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&] {
+        return sequencer.PushBack("Read1").then([](auto f) {
+          f.get();
+          auto r = Response{};
+          r.mutable_write_handle()->set_handle("intermediate-handle");
+          return std::make_optional(r);
+        });
+      })
+      .WillOnce([&] {
+        return sequencer.PushBack("Read2").then([](auto f) {
+          f.get();
+          auto r = Response{};
+          r.set_persisted_size(1024);
+          return std::make_optional(r);
+        });
+      });
+
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto f) {
+      if (f.get()) return Status{};
+      return PermanentError();
+    });
+  });
+
+  Request request;
+  request.mutable_write_object_spec()->mutable_resource()->set_bucket(
+      "test-bucket");
+  request.mutable_write_object_spec()->mutable_resource()->set_name(
+      "test-object");
+
+  auto tested = std::make_unique<AsyncWriterConnectionImpl>(
+      TestOptions(), request, std::move(mock), /*hash_function=*/nullptr,
+      /*persisted_size=*/1024);
+
+  auto query_future = tested->Query();
+
+  // The client requests the first read. We satisfy it with the intermediate
+  // message.
+  auto next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Read1");
+  next.first.set_value(true);
+
+  // The client requests the second read. We satisfy it with the persisted_size.
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Read2");
+  next.first.set_value(true);
+
+  // The query should finally resolve with the correct size (1024) instead of 0.
+  auto result = query_future.get();
+  EXPECT_THAT(result, IsOkAndHolds(1024));
+
+  tested.reset();
+  next = sequencer.PopFrontWithName();
+  ASSERT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
