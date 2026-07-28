@@ -90,3 +90,6 @@ When reviewing or generating code, apply rigorous scrutiny:
 - Code must be formatted with clang-format, using the local .clang-format
   configuration.
 - Avoid excessive blank lines; use line breaks only to signal context shifts.
+- Do not create nested scope blocks for `if` statements if there is no `else`
+  clause and the conditional expression and statement are less than 80
+  characters.
