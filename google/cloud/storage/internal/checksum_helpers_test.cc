@@ -24,147 +24,52 @@ namespace internal {
 namespace {
 
 TEST(ChecksumHelpersTest, DownloadChecksumSettingsDefaults) {
-  ReadObjectRangeRequest request("bucket", "object");
-  auto settings = GetDownloadChecksumSettings(request, Options{});
+  auto settings = GetDownloadChecksumSettings(Options{});
   EXPECT_TRUE(settings.md5);
   EXPECT_FALSE(settings.crc32c);
 }
 
 TEST(ChecksumHelpersTest, DownloadChecksumSettingsOnlyNewOptions) {
-  ReadObjectRangeRequest request("bucket", "object");
   auto settings = GetDownloadChecksumSettings(
-      request,
       Options{}.set<DownloadChecksumValidationOption>(ChecksumAlgorithm::kMD5));
   EXPECT_FALSE(settings.md5);
   EXPECT_TRUE(settings.crc32c);
 
   settings = GetDownloadChecksumSettings(
-      request, Options{}.set<DownloadChecksumValidationOption>(
-                   ChecksumAlgorithm::kCrc32c));
+      Options{}.set<DownloadChecksumValidationOption>(
+          ChecksumAlgorithm::kCrc32c));
   EXPECT_TRUE(settings.md5);
   EXPECT_FALSE(settings.crc32c);
 
   settings = GetDownloadChecksumSettings(
-      request, Options{}.set<DownloadChecksumValidationOption>(
-                   ChecksumAlgorithm::kNone));
+      Options{}.set<DownloadChecksumValidationOption>(
+          ChecksumAlgorithm::kNone));
   EXPECT_TRUE(settings.md5);
   EXPECT_TRUE(settings.crc32c);
-
-
-}
-
-TEST(ChecksumHelpersTest, DownloadChecksumSettingsOnlyOldOptions) {
-  ReadObjectRangeRequest request("bucket", "object");
-  request.set_option(DisableMD5Hash(true));
-  request.set_option(DisableCrc32cChecksum(true));
-  auto settings = GetDownloadChecksumSettings(request, Options{});
-  EXPECT_TRUE(settings.md5);
-  EXPECT_TRUE(settings.crc32c);
-
-  request.set_option(DisableMD5Hash(false));
-  request.set_option(DisableCrc32cChecksum(false));
-  settings = GetDownloadChecksumSettings(request, Options{});
-  EXPECT_FALSE(settings.md5);
-  EXPECT_FALSE(settings.crc32c);
-}
-
-TEST(ChecksumHelpersTest, DownloadChecksumSettingsOverride) {
-  ReadObjectRangeRequest request("bucket", "object");
-  request.set_option(DisableMD5Hash(true));
-  request.set_option(DisableCrc32cChecksum(false));
-  auto settings = GetDownloadChecksumSettings(
-      request,
-      Options{}.set<DownloadChecksumValidationOption>(ChecksumAlgorithm::kMD5));
-  EXPECT_TRUE(settings.md5);
-  EXPECT_FALSE(settings.crc32c);
-
-  request.set_option(DisableMD5Hash(false));
-  request.set_option(DisableCrc32cChecksum(true));
-  settings = GetDownloadChecksumSettings(
-      request,
-      Options{}.set<DownloadChecksumValidationOption>(ChecksumAlgorithm::kMD5));
-  EXPECT_FALSE(settings.md5);
-  EXPECT_TRUE(settings.crc32c);
-
-  request.set_option(DisableMD5Hash(true));
-  request.set_option(DisableCrc32cChecksum(false));
-  settings = GetDownloadChecksumSettings(
-      request, Options{}.set<DownloadChecksumValidationOption>(
-                   ChecksumAlgorithm::kNone));
-  EXPECT_TRUE(settings.md5);
-  EXPECT_FALSE(settings.crc32c);
 }
 
 TEST(ChecksumHelpersTest, UploadChecksumSettingsDefaults) {
-  InsertObjectMediaRequest request("bucket", "object", "contents");
-  auto settings = GetUploadChecksumSettings(request, Options{});
+  auto settings = GetUploadChecksumSettings(Options{});
   EXPECT_TRUE(settings.md5);
   EXPECT_FALSE(settings.crc32c);
 }
 
 TEST(ChecksumHelpersTest, UploadChecksumSettingsOnlyNewOptions) {
-  InsertObjectMediaRequest request("bucket", "object", "contents");
   auto settings = GetUploadChecksumSettings(
-      request,
       Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5));
   EXPECT_FALSE(settings.md5);
   EXPECT_TRUE(settings.crc32c);
 
   settings = GetUploadChecksumSettings(
-      request, Options{}.set<UploadChecksumValidationOption>(
-                   ChecksumAlgorithm::kCrc32c));
+      Options{}.set<UploadChecksumValidationOption>(
+          ChecksumAlgorithm::kCrc32c));
   EXPECT_TRUE(settings.md5);
   EXPECT_FALSE(settings.crc32c);
 
   settings = GetUploadChecksumSettings(
-      request,
       Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kNone));
   EXPECT_TRUE(settings.md5);
   EXPECT_TRUE(settings.crc32c);
-
-
-}
-
-TEST(ChecksumHelpersTest, UploadChecksumSettingsOnlyOldOptions) {
-  InsertObjectMediaRequest request("bucket", "object", "contents");
-  request.set_option(DisableMD5Hash(true));
-  request.set_option(DisableCrc32cChecksum(true));
-  auto settings = GetUploadChecksumSettings(request, Options{});
-  EXPECT_TRUE(settings.md5);
-  EXPECT_TRUE(settings.crc32c);
-
-  request.set_option(DisableMD5Hash(false));
-  request.set_option(DisableCrc32cChecksum(false));
-  settings = GetUploadChecksumSettings(request, Options{});
-  EXPECT_FALSE(settings.md5);
-  EXPECT_FALSE(settings.crc32c);
-}
-
-TEST(ChecksumHelpersTest, UploadChecksumSettingsOverride) {
-  InsertObjectMediaRequest request("bucket", "object", "contents");
-  request.set_option(DisableMD5Hash(true));
-  request.set_option(DisableCrc32cChecksum(false));
-  auto settings = GetUploadChecksumSettings(
-      request,
-      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5));
-  EXPECT_TRUE(settings.md5);
-  EXPECT_FALSE(settings.crc32c);
-
-  request.set_option(DisableMD5Hash(false));
-  request.set_option(DisableCrc32cChecksum(true));
-  settings = GetUploadChecksumSettings(
-      request,
-      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kMD5));
-  EXPECT_FALSE(settings.md5);
-  EXPECT_TRUE(settings.crc32c);
-
-  request.set_option(DisableMD5Hash(true));
-  request.set_option(DisableCrc32cChecksum(false));
-  settings = GetUploadChecksumSettings(
-      request,
-      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kNone));
-  EXPECT_TRUE(settings.md5);
-  EXPECT_FALSE(settings.crc32c);
 }
 
 }  // namespace
