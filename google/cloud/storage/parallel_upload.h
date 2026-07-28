@@ -700,9 +700,9 @@ NonResumableParallelUploadState::Create(Client client,
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = StaticTupleFilter<
-      Among<ContentEncoding, ContentType,
-            UploadChecksumValidationOption, EncryptionKey, KmsKeyName,
-            PredefinedAcl, UserProject, WithObjectMetadata>::TPred>(
+      Among<ContentEncoding, ContentType, UploadChecksumValidationOption,
+            EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
+            WithObjectMetadata>::TPred>(
       std::move(options));
   for (std::size_t i = 0; i < num_shards; ++i) {
     ResumableUploadRequest request(
@@ -806,9 +806,8 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
 
   auto upload_options = std::tuple_cat(
       StaticTupleFilter<
-          Among<ContentEncoding, ContentType,
-                 UploadChecksumValidationOption, EncryptionKey,
-                KmsKeyName, PredefinedAcl, UserProject,
+          Among<ContentEncoding, ContentType, UploadChecksumValidationOption,
+                EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
                 WithObjectMetadata>::TPred>(options),
       std::make_tuple(UseResumableUploadSession("")));
   for (std::size_t i = 0; i < num_shards; ++i) {
@@ -865,8 +864,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   }
 
   auto read_options = std::tuple_cat(
-      StaticTupleFilter<Among<
-                              UploadChecksumValidationOption, EncryptionKey,
+      StaticTupleFilter<Among<UploadChecksumValidationOption, EncryptionKey,
                               Generation, UserProject>::TPred>(options),
       std::make_tuple(IfGenerationMatch(state_and_gen->second)));
 
@@ -916,9 +914,9 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = StaticTupleFilter<
-      Among<ContentEncoding, ContentType,
-            UploadChecksumValidationOption, EncryptionKey, KmsKeyName,
-            PredefinedAcl, UserProject, WithObjectMetadata>::TPred>(
+      Among<ContentEncoding, ContentType, UploadChecksumValidationOption,
+            EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
+            WithObjectMetadata>::TPred>(
       std::move(options));
   for (auto& stream_desc : persistent_state->streams) {
     ResumableUploadRequest request(bucket_name,

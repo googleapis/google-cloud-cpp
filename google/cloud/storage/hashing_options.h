@@ -62,7 +62,6 @@ inline std::string ComputeMD5Hash(char const* payload) {
 }
 
 /**
-
  * Provide a pre-computed CRC32C checksum value.
  *
  * The application may be able to obtain a CRC32C checksum in some out-of-band
@@ -96,7 +95,6 @@ inline std::string ComputeCrc32cChecksum(char const* payload) {
   return ComputeCrc32cChecksum(payload == nullptr ? absl::string_view{}
                                                   : absl::string_view{payload});
 }
-
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

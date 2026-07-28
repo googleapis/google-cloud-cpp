@@ -437,9 +437,14 @@ TEST(HashFunctionImplTest, CreateHashFunctionInsertObjectMedia) {
   auto const upload_cases = testing::UploadHashCases();
 
   for (auto const& test : upload_cases) {
-    bool disable_crc32c = (test.validation_algo == ChecksumAlgorithm::kNone || test.validation_algo == ChecksumAlgorithm::kMD5);
-    bool disable_md5 = (test.validation_algo == ChecksumAlgorithm::kNone || test.validation_algo == ChecksumAlgorithm::kCrc32c);
-    auto function = CreateHashFunction(test.crc32_value, disable_crc32c, test.md5_value, disable_md5);
+    bool disable_crc32c =
+        (test.validation_algo == ChecksumAlgorithm::kNone ||
+         test.validation_algo == ChecksumAlgorithm::kMD5);
+    bool disable_md5 =
+        (test.validation_algo == ChecksumAlgorithm::kNone ||
+         test.validation_algo == ChecksumAlgorithm::kCrc32c);
+    auto function = CreateHashFunction(test.crc32_value, disable_crc32c,
+                                       test.md5_value, disable_md5);
     ASSERT_STATUS_OK(function->Update(/*offset=*/0, kQuickFox));
     auto const actual = function->Finish();
     EXPECT_EQ(test.crc32c_expected, actual.crc32c);

@@ -39,7 +39,6 @@ inline HashDisabled GetDownloadChecksumSettings(Options const& options) {
     disable_md5 = (algo != ChecksumAlgorithm::kMD5);
     disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
   }
-
   return {disable_md5, disable_crc32c};
 }
 
@@ -51,7 +50,6 @@ inline HashDisabled GetUploadChecksumSettings(Options const& options) {
     disable_md5 = (algo != ChecksumAlgorithm::kMD5);
     disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
   }
-
   return {disable_md5, disable_crc32c};
 }
 
