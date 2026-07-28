@@ -179,14 +179,15 @@ class HeaderInterceptingEchoStub : public v1beta1_internal::EchoStub {
 
  private:
   void ExtractMetadata(grpc::ClientContext& context) {
+    auto to_string = [](grpc::string_ref ref) {
+      return ref.empty() ? std::string{} : std::string{ref.data(), ref.size()};
+    };
     std::multimap<std::string, std::string> metadata;
     for (auto const& pair : context.GetServerInitialMetadata()) {
-      metadata.emplace(std::string(pair.first.data(), pair.first.size()),
-                       std::string(pair.second.data(), pair.second.size()));
+      metadata.emplace(to_string(pair.first), to_string(pair.second));
     }
     for (auto const& pair : context.GetServerTrailingMetadata()) {
-      metadata.emplace(std::string(pair.first.data(), pair.first.size()),
-                       std::string(pair.second.data(), pair.second.size()));
+      metadata.emplace(to_string(pair.first), to_string(pair.second));
     }
     metadata_callback_(metadata);
   }
