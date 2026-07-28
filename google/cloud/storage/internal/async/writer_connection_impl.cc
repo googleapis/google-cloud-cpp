@@ -217,7 +217,8 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
   std::unique_lock<std::mutex> lk(mu_);
   auto impl = impl_;
   lk.unlock();
-  return impl->Read().then([this](auto f) { return OnQuery(f.get()); });
+  return impl->Read().then(
+      [this](auto f) { return OnQuery(std::move(f).get()); });
 }
 
 RpcMetadata AsyncWriterConnectionImpl::GetRequestMetadata() {
@@ -274,7 +275,7 @@ future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
 
     future<void> operator()(
         future<std::optional<google::storage::v2::BidiWriteObjectResponse>> f) {
-      auto response = f.get();
+      auto response = std::move(f).get();
       if (!response.has_value()) return make_ready_future();
       return impl->Read().then(*this);
     }
@@ -354,7 +355,8 @@ future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
     impl = impl_;
   }
 
-  return impl->Read().then([this](auto f) { return OnQuery(f.get()); });
+  return impl->Read().then(
+      [this](auto f) { return OnQuery(std::move(f).get()); });
 }
 
 future<Status> AsyncWriterConnectionImpl::Finish() {
