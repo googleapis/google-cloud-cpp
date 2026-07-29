@@ -238,7 +238,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     auto const bucket_name = p.request.name();
     auto const options = p.options;
     return impl_->GetBucket(std::move(p))
-        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+        .then([this, oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                span = std::move(span), cache = cache_, bucket_name,
                options](future<StatusOr<google::storage::v2::Bucket>> f)
                   -> StatusOr<google::storage::v2::Bucket> {
