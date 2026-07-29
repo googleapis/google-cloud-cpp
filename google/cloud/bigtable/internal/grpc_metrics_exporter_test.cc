@@ -342,7 +342,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceWithDetectedResource) {
 }
 
 TEST(GrpcMetricsExporterTest, MakeLatencyHistogramBoundaries) {
-  auto const boundaries = MakeLatencyHistogramBoundaries();
+  auto const& boundaries = MakeLatencyHistogramBoundaries();
   ASSERT_THAT(boundaries, Not(IsEmpty()));
   ASSERT_THAT(boundaries, SizeIs(Le(200U)));
   auto sorted = boundaries;
