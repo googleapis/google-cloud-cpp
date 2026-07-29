@@ -327,9 +327,9 @@ TEST(SubscriptionLeaseManagementTest,
   CompletionQueue cq(fake_cq);
 
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
-  auto uut = SubscriptionLeaseManagement::Create(
-      cq, shutdown_manager, mock, std::chrono::seconds(345),
-      std::chrono::seconds(600));
+  auto uut = SubscriptionLeaseManagement::Create(cq, shutdown_manager, mock,
+                                                 std::chrono::seconds(345),
+                                                 std::chrono::seconds(600));
 
   auto done = shutdown_manager->Start({});
   uut->Start(mock_batch_callback);
