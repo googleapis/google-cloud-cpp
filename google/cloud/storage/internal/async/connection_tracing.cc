@@ -71,9 +71,8 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
                       std::shared_ptr<storage::ObjectDescriptorConnection>> {
           auto result = f.get();
           internal::DetachOTelContext(oc);
-          if (!result) {
+          if (!result)
             return internal::EndSpan(*span, std::move(result).status());
-          }
           return MakeTracingObjectDescriptorConnection(std::move(span),
                                                        *std::move(result));
         });
@@ -89,9 +88,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
         -> StatusOr<std::unique_ptr<storage::AsyncReaderConnection>> {
       auto reader = f.get();
       internal::DetachOTelContext(oc);
-      if (!reader) {
-        return internal::EndSpan(*span, std::move(reader).status());
-      }
+      if (!reader) return internal::EndSpan(*span, std::move(reader).status());
       return MakeTracingReaderConnection(std::move(span), *std::move(reader));
     };
     return impl_->ReadObject(std::move(p)).then(std::move(wrap));
@@ -119,9 +116,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
                   -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
-          if (!w) {
-            return internal::EndSpan(*span, std::move(w).status());
-          }
+          if (!w) return internal::EndSpan(*span, std::move(w).status());
           return MakeTracingWriterConnection(span, *std::move(w));
         });
   }
@@ -139,9 +134,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
                   -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
-          if (!w) {
-            return internal::EndSpan(*span, std::move(w).status());
-          }
+          if (!w) return internal::EndSpan(*span, std::move(w).status());
           return MakeTracingWriterConnection(span, *std::move(w));
         });
   }
@@ -159,9 +152,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
                   -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
-          if (!w) {
-            return internal::EndSpan(*span, std::move(w).status());
-          }
+          if (!w) return internal::EndSpan(*span, std::move(w).status());
           return MakeTracingWriterConnection(span, *std::move(w));
         });
   }
@@ -179,9 +170,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
                   -> StatusOr<std::unique_ptr<storage::AsyncWriterConnection>> {
           auto w = f.get();
           internal::DetachOTelContext(oc);
-          if (!w) {
-            return internal::EndSpan(*span, std::move(w).status());
-          }
+          if (!w) return internal::EndSpan(*span, std::move(w).status());
           return MakeTracingWriterConnection(span, *std::move(w));
         });
   }
@@ -253,7 +242,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
                span = std::move(span), cache = cache_, bucket_name,
                options](future<StatusOr<google::storage::v2::Bucket>> f)
                   -> StatusOr<google::storage::v2::Bucket> {
-          auto result = f.get();
+          StatusOr<google::storage::v2::Bucket> result = f.get();
           internal::DetachOTelContext(oc);
           if (result.ok()) {
             EnrichSpan(*span, options, *result, bucket_name, *cache);
@@ -265,6 +254,9 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
   }
 
  private:
+  static constexpr char kProjectBucketPrefix[] = "projects/_/buckets/";
+  static constexpr char kGlobalLocation[] = "global";
+
   BucketMetadataCache& cache() const { return *cache_; }
 
   void MaybeTriggerBackgroundFetch(Options const& options,
@@ -277,13 +269,14 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     google::storage::v2::GetBucketRequest request;
     auto const normalized_bucket_name =
         BucketMetadataCache::NormalizeBucketName(bucket_name);
-    request.set_name("projects/_/buckets/" + normalized_bucket_name);
+    request.set_name(std::string(kProjectBucketPrefix) +
+                     normalized_bucket_name);
     GetBucketParams params{std::move(request), options};
 
     impl_->GetBucket(std::move(params))
         .then([cache = cache_, bucket_name, guard = std::move(guard)](
                   future<StatusOr<google::storage::v2::Bucket>> f) {
-          auto metadata = f.get();
+          StatusOr<google::storage::v2::Bucket> metadata = f.get();
           if (metadata.ok()) {
             BucketCacheEntry entry = BucketCacheEntry::FromLocation(
                 metadata->project() + "/buckets/" +
@@ -293,9 +286,9 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
           } else if (metadata.status().code() ==
                      StatusCode::kPermissionDenied) {
             BucketCacheEntry entry{
-                "projects/_/buckets/" +
+                std::string(kProjectBucketPrefix) +
                     BucketMetadataCache::NormalizeBucketName(bucket_name),
-                "global"};
+                kGlobalLocation};
             cache->Put(bucket_name, std::move(entry));
           }
         });
