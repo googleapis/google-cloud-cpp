@@ -88,7 +88,7 @@ inline MonitoredResourceResult MakeMonitoredResource(
       client_uid);
 }
 
-std::vector<double> MakeLatencyHistogramBoundaries();
+std::vector<double> const& MakeLatencyHistogramBoundaries();
 
 std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
     std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter> exporter,

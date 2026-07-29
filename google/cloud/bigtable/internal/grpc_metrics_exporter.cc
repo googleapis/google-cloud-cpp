@@ -78,7 +78,7 @@ void GrpcMetricsExporterRegistry::Clear() {
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
-std::vector<double> MakeLatencyHistogramBoundaries() {
+std::vector<double> const& MakeLatencyHistogramBoundaries() {
   static auto const kBoundaries = [] {
     using dseconds = std::chrono::duration<double, std::ratio<1>>;
     std::vector<double> boundaries;
@@ -208,13 +208,19 @@ MonitoredResourceResult MakeMonitoredResource(
   auto const& attributes = pda.attributes.GetAttributes();
   auto get_attr = [&](std::string const& key) {
     auto it = attributes.find(key);
-    if (it == attributes.end()) return std::string{};
+    if (it == attributes.end() ||
+        !opentelemetry::nostd::holds_alternative<std::string>(it->second)) {
+      return std::string{};
+    }
     return opentelemetry::nostd::get<std::string>(it->second);
   };
   auto const& detected_attributes = detected_resource.GetAttributes();
   auto by_name = [&](std::string const& name, std::string default_value = {}) {
     auto const l = detected_attributes.find(name);
-    if (l == detected_attributes.end()) return default_value;
+    if (l == detected_attributes.end() ||
+        !opentelemetry::nostd::holds_alternative<std::string>(l->second)) {
+      return default_value;
+    }
     return opentelemetry::nostd::get<std::string>(l->second);
   };
 
@@ -314,10 +320,10 @@ void EnableGrpcMetrics(
   auto scope_filter =
       [authority = std::move(authority)](
           grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
-        GCP_LOG(INFO) << "GrpcMetricsExporter: scope filter checking target="
-                      << scope.target()
-                      << " default_authority=" << scope.default_authority()
-                      << " vs expected authority=" << authority;
+        GCP_LOG(DEBUG) << "GrpcMetricsExporter: scope filter checking target="
+                       << scope.target()
+                       << " default_authority=" << scope.default_authority()
+                       << " vs expected authority=" << authority;
         return scope.default_authority() == authority;
       };
   auto status =
