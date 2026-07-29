@@ -68,6 +68,13 @@ MakeTracingAsyncRewriterConnection(
     std::shared_ptr<storage::AsyncRewriterConnection> impl, bool enabled) {
   if (!enabled) return impl;
   auto span = internal::MakeSpan("storage::AsyncConnection::RewriteObject");
+  return MakeTracingAsyncRewriterConnection(std::move(impl), std::move(span));
+}
+
+std::shared_ptr<storage::AsyncRewriterConnection>
+MakeTracingAsyncRewriterConnection(
+    std::shared_ptr<storage::AsyncRewriterConnection> impl,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span) {
   return std::make_shared<AsyncRewriterTracingConnection>(std::move(impl),
                                                           std::move(span));
 }

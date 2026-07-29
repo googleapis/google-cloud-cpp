@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_REWRITER_CONNECTION_TRACING_H
 
 #include "google/cloud/storage/async/rewriter_connection.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -28,6 +29,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<storage::AsyncRewriterConnection>
 MakeTracingAsyncRewriterConnection(
     std::shared_ptr<storage::AsyncRewriterConnection> impl, bool enabled);
+
+std::shared_ptr<storage::AsyncRewriterConnection>
+MakeTracingAsyncRewriterConnection(
+    std::shared_ptr<storage::AsyncRewriterConnection> impl,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
