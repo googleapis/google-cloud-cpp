@@ -89,7 +89,7 @@ function (google_cloud_cpp_add_common_options target)
     endif ()
 
     if (_opt_NO_WARNINGS)
-        set_target_properties(${libname} PROPERTIES CXX_CLANG_TIDY "")
+        set_target_properties(${target} PROPERTIES CXX_CLANG_TIDY "")
         return()
     endif ()
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WALL)
