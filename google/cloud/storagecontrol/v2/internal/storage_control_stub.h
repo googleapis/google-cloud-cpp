@@ -108,6 +108,12 @@ class StorageControlStub {
       google::storage::control::v2::ListManagedFoldersRequest const&
           request) = 0;
 
+  virtual StatusOr<google::storage::control::v2::ManagedFolder>
+  UpdateManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::UpdateManagedFolderRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateAnywhereCache(
       google::cloud::CompletionQueue& cq,
@@ -162,6 +168,37 @@ class StorageControlStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::ListAnywhereCachesRequest const&
           request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateRapidCache(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::CreateRapidCacheRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateRapidCache(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::CreateRapidCacheRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateRapidCache(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::UpdateRapidCacheRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateRapidCache(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::UpdateRapidCacheRequest const& request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetRapidCacheRequest const& request) = 0;
+
+  virtual StatusOr<google::storage::control::v2::ListRapidCachesResponse>
+  ListRapidCaches(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ListRapidCachesRequest const& request) = 0;
 
   virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
   GetProjectIntelligenceConfig(
@@ -336,6 +373,11 @@ class DefaultStorageControlStub : public StorageControlStub {
       google::storage::control::v2::ListManagedFoldersRequest const& request)
       override;
 
+  StatusOr<google::storage::control::v2::ManagedFolder> UpdateManagedFolder(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::UpdateManagedFolderRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAnywhereCache(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -385,6 +427,40 @@ class DefaultStorageControlStub : public StorageControlStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::ListAnywhereCachesRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateRapidCache(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::CreateRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateRapidCache(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::CreateRapidCacheRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateRapidCache(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::storage::control::v2::UpdateRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateRapidCache(
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::UpdateRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetRapidCacheRequest const& request)
+      override;
+
+  StatusOr<google::storage::control::v2::ListRapidCachesResponse>
+  ListRapidCaches(grpc::ClientContext& context, Options const& options,
+                  google::storage::control::v2::ListRapidCachesRequest const&
+                      request) override;
 
   StatusOr<google::storage::control::v2::IntelligenceConfig>
   GetProjectIntelligenceConfig(
