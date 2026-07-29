@@ -28,10 +28,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<storage::AsyncRewriterConnection>
 MakeTracingAsyncRewriterConnection(
-    std::shared_ptr<storage::AsyncRewriterConnection> impl, bool enabled);
-
-std::shared_ptr<storage::AsyncRewriterConnection>
-MakeTracingAsyncRewriterConnection(
     std::shared_ptr<storage::AsyncRewriterConnection> impl,
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span);
 

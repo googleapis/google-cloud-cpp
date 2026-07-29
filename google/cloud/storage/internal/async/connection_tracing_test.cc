@@ -543,8 +543,10 @@ TEST(ConnectionTracing, RewriteObjectSpanEnrichment) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<StatusOr<google::storage::v2::Bucket>> p;
 
-  auto options = TracingEnabled().set<
-      google::cloud::storage_experimental::OTelSpanEnrichmentOption>(true);
+  auto options =
+      TracingEnabled()
+          .set<google::cloud::storage_experimental::OTelSpanEnrichmentOption>(
+              true);
   auto mock = std::make_unique<MockAsyncConnection>();
   EXPECT_CALL(*mock, options).WillRepeatedly(Return(options));
 
