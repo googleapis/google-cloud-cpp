@@ -702,8 +702,7 @@ NonResumableParallelUploadState::Create(Client client,
   auto upload_options = StaticTupleFilter<
       Among<ContentEncoding, ContentType, UploadChecksumValidationOption,
             EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
-            WithObjectMetadata>::TPred>(
-      std::move(options));
+            WithObjectMetadata>::TPred>(std::move(options));
   for (std::size_t i = 0; i < num_shards; ++i) {
     ResumableUploadRequest request(
         bucket_name, prefix + ".upload_shard_" + std::to_string(i));
@@ -916,8 +915,7 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   auto upload_options = StaticTupleFilter<
       Among<ContentEncoding, ContentType, UploadChecksumValidationOption,
             EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
-            WithObjectMetadata>::TPred>(
-      std::move(options));
+            WithObjectMetadata>::TPred>(std::move(options));
   for (auto& stream_desc : persistent_state->streams) {
     ResumableUploadRequest request(bucket_name,
                                    std::move(stream_desc.object_name));

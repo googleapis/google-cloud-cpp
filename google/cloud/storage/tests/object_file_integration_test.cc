@@ -300,9 +300,10 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
     os.close();
   });
   testing_util::ScopedLog log;
-  StatusOr<ObjectMetadata> meta =
-      client.UploadFile(file_name, bucket_name_, object_name,
-                        IfGenerationMatch(0), Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kCrc32c));
+  StatusOr<ObjectMetadata> meta = client.UploadFile(
+      file_name, bucket_name_, object_name, IfGenerationMatch(0),
+      Options{}.set<UploadChecksumValidationOption>(
+          ChecksumAlgorithm::kCrc32c));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 

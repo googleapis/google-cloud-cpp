@@ -60,8 +60,8 @@ TEST(ChecksumHelpersTest, UploadChecksumSettingsOnlyNewOptions) {
   EXPECT_FALSE(settings.md5);
   EXPECT_TRUE(settings.crc32c);
 
-  settings = GetUploadChecksumSettings(
-      Options{}.set<UploadChecksumValidationOption>(
+  settings =
+      GetUploadChecksumSettings(Options{}.set<UploadChecksumValidationOption>(
           ChecksumAlgorithm::kCrc32c));
   EXPECT_TRUE(settings.md5);
   EXPECT_FALSE(settings.crc32c);

@@ -226,9 +226,8 @@ TEST(HashValidatorImplTest, CreateHashFunctionUpload) {
   for (auto const& test : upload_cases) {
     google::cloud::internal::OptionsSpan span(
         Options{}.set<UploadChecksumValidationOption>(test.validation_algo));
-    auto request =
-        ResumableUploadRequest("test-bucket", "test-object")
-            .set_multiple_options(test.crc32_value, test.md5_value);
+    auto request = ResumableUploadRequest("test-bucket", "test-object")
+                       .set_multiple_options(test.crc32_value, test.md5_value);
     auto validator = CreateHashValidator(request);
     auto actual =
         std::move(*validator).Finish(HashQuick(CreateHashFunction(request)));

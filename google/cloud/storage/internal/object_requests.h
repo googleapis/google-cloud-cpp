@@ -105,11 +105,10 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r);
  */
 template <typename Derived>
 using InsertObjectRequestImpl = GenericObjectRequest<
-    Derived, ContentEncoding, ContentType, Crc32cChecksumValue,
-    EncryptionKey, IfGenerationMatch,
-    IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-    KmsKeyName, MD5HashValue, PredefinedAcl, Projection, UserProject,
-    UploadFromOffset, UploadLimit, WithObjectMetadata>;
+    Derived, ContentEncoding, ContentType, Crc32cChecksumValue, EncryptionKey,
+    IfGenerationMatch, IfGenerationNotMatch, IfMetagenerationMatch,
+    IfMetagenerationNotMatch, KmsKeyName, MD5HashValue, PredefinedAcl,
+    Projection, UserProject, UploadFromOffset, UploadLimit, WithObjectMetadata>;
 
 /**
  * Represents a request to the `Objects: insert` API with a string for the
@@ -193,10 +192,9 @@ std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r);
  */
 class ReadObjectRangeRequest
     : public GenericObjectRequest<
-          ReadObjectRangeRequest,
-          EncryptionKey, Generation, IfGenerationMatch, IfGenerationNotMatch,
-          IfMetagenerationMatch, IfMetagenerationNotMatch, ReadFromOffset,
-          ReadRange, ReadLast, UserProject, AcceptEncoding> {
+          ReadObjectRangeRequest, EncryptionKey, Generation, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
+          ReadFromOffset, ReadRange, ReadLast, UserProject, AcceptEncoding> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 
@@ -438,12 +436,12 @@ std::ostream& operator<<(std::ostream& os, RestoreObjectRequest const& r);
 class ResumableUploadRequest
     : public GenericObjectRequest<
           ResumableUploadRequest, ContentEncoding, ContentType,
-          Crc32cChecksumValue,
-          EncryptionKey, IfGenerationMatch, IfGenerationNotMatch,
-          IfMetagenerationMatch, IfMetagenerationNotMatch, KmsKeyName,
-          MD5HashValue, PredefinedAcl, Projection, UseResumableUploadSession,
-          UserProject, UploadFromOffset, UploadLimit, WithObjectMetadata,
-          UploadContentLength, AutoFinalize, UploadBufferSize> {
+          Crc32cChecksumValue, EncryptionKey, IfGenerationMatch,
+          IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
+          KmsKeyName, MD5HashValue, PredefinedAcl, Projection,
+          UseResumableUploadSession, UserProject, UploadFromOffset, UploadLimit,
+          WithObjectMetadata, UploadContentLength, AutoFinalize,
+          UploadBufferSize> {
  public:
   ResumableUploadRequest() = default;
 

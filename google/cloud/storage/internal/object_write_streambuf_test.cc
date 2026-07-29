@@ -691,8 +691,7 @@ TEST(ObjectWriteStreambufTest, FlushFinalWithHashes) {
   ObjectWriteStreambuf streambuf(
       std::move(mock), request, "test-only-upload-id",
       /*committed_size=*/0, std::nullopt, /*max_buffer_size=*/quantum,
-      CreateHashFunction(Crc32cChecksumValue(), false,
-                         MD5HashValue(), false),
+      CreateHashFunction(Crc32cChecksumValue(), false, MD5HashValue(), false),
       HashValues{}, CreateHashValidator(request), AutoFinalizeConfig::kEnabled);
 
   streambuf.sputn(payload.data(), payload.size());

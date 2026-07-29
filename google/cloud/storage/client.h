@@ -1176,9 +1176,9 @@ class Client {
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `DownloadChecksumValidationOption`,
-   *     `EncryptionKey`, `Generation`, `IfGenerationMatch`,
-   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     Valid types for this operation include
+   * `DownloadChecksumValidationOption`, `EncryptionKey`, `Generation`,
+   * `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, `ReadLast`,
    *     `UserProject`, and `AcceptEncoding`.
    *

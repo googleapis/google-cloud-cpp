@@ -369,7 +369,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIp) {
   testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kNone), UserIp("10.0.0.1"));
+      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kNone),
+      UserIp("10.0.0.1"));
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 
@@ -440,7 +441,8 @@ TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
   testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kNone), UserIp(""));
+      Options{}.set<UploadChecksumValidationOption>(ChecksumAlgorithm::kNone),
+      UserIp(""));
   ASSERT_STATUS_OK(insert_meta);
   ScheduleForDelete(*insert_meta);
 

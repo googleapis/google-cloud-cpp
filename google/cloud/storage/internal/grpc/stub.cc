@@ -348,8 +348,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::InsertObjectMedia(
   ApplyRoutingHeaders(*ctx, request);
   auto stream = stub_->WriteObject(std::move(ctx), options);
 
-  auto const settings =
-      storage::internal::GetUploadChecksumSettings(options);
+  auto const settings = storage::internal::GetUploadChecksumSettings(options);
   auto hash_function = storage::internal::CreateHashFunction(
       request.GetOption<storage::Crc32cChecksumValue>(), settings.crc32c,
       request.GetOption<storage::MD5HashValue>(), settings.md5);

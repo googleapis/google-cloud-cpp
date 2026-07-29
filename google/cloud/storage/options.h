@@ -89,8 +89,8 @@ struct CAPathOption {
  * @ingroup storage-options
  */
 enum class ChecksumAlgorithm {
-  kNone,          ///< Disable checksum validation
-  kCrc32c,        ///< Use CRC32C for checksum validation
+  kNone,    ///< Disable checksum validation
+  kCrc32c,  ///< Use CRC32C for checksum validation
   kMD5,     ///< Use MD5 for checksum validation
 };
 
