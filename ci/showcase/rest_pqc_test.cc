@@ -18,6 +18,7 @@
 #include "google/cloud/internal/curl_options.h"  // for HttpVersionOption
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_client.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "google/showcase/v1beta1/echo_client.h"
@@ -25,6 +26,7 @@
 #include "google/showcase/v1beta1/internal/echo_rest_connection_impl.h"
 #include "google/showcase/v1beta1/internal/echo_rest_metadata_decorator.h"
 #include "google/showcase/v1beta1/internal/echo_rest_stub.h"
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <chrono>
 #include <cstdlib>
@@ -44,6 +46,12 @@ using ::google::cloud::rest_internal::RestClient;
 using ::google::cloud::rest_internal::RestContext;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
+using ::google::cloud::testing_util::IsOkAndHolds;
+using ::testing::Eq;
+using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Not;
+using ::testing::NotNull;
 
 class HeaderInterceptingRestClient : public RestClient {
  public:
@@ -113,7 +121,7 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithPqcVerification) {
     ca_path = ca_env;
   } else {
     auto* test_srcdir = std::getenv("TEST_SRCDIR");
-    ASSERT_NE(test_srcdir, nullptr);
+    ASSERT_THAT(test_srcdir, NotNull());
     ca_path = std::string(test_srcdir) + "/_main/ci/showcase/showcase.pem";
   }
 
@@ -148,7 +156,7 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithPqcVerification) {
 
   // Create the real REST client
   auto real_client = rest_internal::MakePooledRestClient(endpoint, options);
-  ASSERT_NE(real_client, nullptr) << "Failed to create real REST client";
+  ASSERT_THAT(real_client, NotNull()) << "Failed to create real REST client";
 
   // Wrap it with our interceptor
   auto intercepting_client = std::make_shared<HeaderInterceptingRestClient>(
@@ -179,8 +187,8 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithPqcVerification) {
   request.set_content("Hello from C++ GAPIC REST!");
 
   auto response = client.Echo(request);
-  ASSERT_TRUE(response.ok()) << response.status().message();
-  EXPECT_EQ(response->content(), "Hello from C++ GAPIC REST!");
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(response->content(), Eq("Hello from C++ GAPIC REST!"));
 
   // Verify headers
   auto get_header_value =
@@ -199,13 +207,14 @@ TEST(EchoRestIntegrationTest, EchoSuccessRestWithPqcVerification) {
   std::string supported_groups = get_header_value(
       intercepted_headers, "x-showcase-tls-client-supported-groups");
 
-  EXPECT_FALSE(tls_group.empty()) << "x-showcase-tls-group header not found";
-  EXPECT_FALSE(supported_groups.empty())
+  EXPECT_THAT(tls_group, Not(IsEmpty()))
+      << "x-showcase-tls-group header not found";
+  EXPECT_THAT(supported_groups, Not(IsEmpty()))
       << "x-showcase-tls-client-supported-groups header not found";
 
   // Assert PQC was used.
-  EXPECT_EQ(tls_group, "X25519MLKEM768");
-  EXPECT_TRUE(absl::StrContains(supported_groups, "X25519MLKEM768"));
+  EXPECT_THAT(tls_group, Eq("X25519MLKEM768"));
+  EXPECT_THAT(supported_groups, HasSubstr("X25519MLKEM768"));
 }
 
 }  // namespace
