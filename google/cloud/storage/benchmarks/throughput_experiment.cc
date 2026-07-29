@@ -65,6 +65,10 @@ std::string ExtractUploadId(std::string v) {
 
 gcs::ChecksumAlgorithm GetChecksumAlgorithm(bool enable_crc32c,
                                             bool enable_md5) {
+  if (enable_crc32c && enable_md5) {
+    throw std::invalid_argument(
+        "Cannot enable both CRC32C and MD5 checksum validation");
+  }
   if (enable_crc32c) return gcs::ChecksumAlgorithm::kCrc32c;
   if (enable_md5) return gcs::ChecksumAlgorithm::kMD5;
   return gcs::ChecksumAlgorithm::kNone;

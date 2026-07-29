@@ -700,9 +700,9 @@ NonResumableParallelUploadState::Create(Client client,
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = StaticTupleFilter<
-      Among<ContentEncoding, ContentType, UploadChecksumValidationOption,
-            EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
-            WithObjectMetadata>::TPred>(std::move(options));
+      Among<ContentEncoding, ContentType, EncryptionKey, KmsKeyName,
+            PredefinedAcl, UserProject, WithObjectMetadata>::TPred>(
+      std::move(options));
   for (std::size_t i = 0; i < num_shards; ++i) {
     ResumableUploadRequest request(
         bucket_name, prefix + ".upload_shard_" + std::to_string(i));
@@ -804,10 +804,9 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = std::tuple_cat(
-      StaticTupleFilter<
-          Among<ContentEncoding, ContentType, UploadChecksumValidationOption,
-                EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
-                WithObjectMetadata>::TPred>(options),
+      StaticTupleFilter<Among<ContentEncoding, ContentType, EncryptionKey,
+                              KmsKeyName, PredefinedAcl, UserProject,
+                              WithObjectMetadata>::TPred>(options),
       std::make_tuple(UseResumableUploadSession("")));
   for (std::size_t i = 0; i < num_shards; ++i) {
     ResumableUploadRequest request(
@@ -863,8 +862,8 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   }
 
   auto read_options = std::tuple_cat(
-      StaticTupleFilter<Among<UploadChecksumValidationOption, EncryptionKey,
-                              Generation, UserProject>::TPred>(options),
+      StaticTupleFilter<
+          Among<EncryptionKey, Generation, UserProject>::TPred>(options),
       std::make_tuple(IfGenerationMatch(state_and_gen->second)));
 
   auto state_stream = google::cloud::internal::apply(
@@ -913,9 +912,9 @@ StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = StaticTupleFilter<
-      Among<ContentEncoding, ContentType, UploadChecksumValidationOption,
-            EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
-            WithObjectMetadata>::TPred>(std::move(options));
+      Among<ContentEncoding, ContentType, EncryptionKey, KmsKeyName,
+            PredefinedAcl, UserProject, WithObjectMetadata>::TPred>(
+      std::move(options));
   for (auto& stream_desc : persistent_state->streams) {
     ResumableUploadRequest request(bucket_name,
                                    std::move(stream_desc.object_name));
