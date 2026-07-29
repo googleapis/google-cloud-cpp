@@ -25,6 +25,20 @@ using ::testing::Eq;
 using ::testing::IsFalse;
 using ::testing::IsTrue;
 
+TEST(BucketMetadataCacheTest, NormalizeBucketName) {
+  EXPECT_THAT(BucketMetadataCache::NormalizeBucketName("test-bucket"),
+              Eq("test-bucket"));
+  EXPECT_THAT(BucketMetadataCache::NormalizeBucketName(
+                  "projects/_/buckets/test-bucket"),
+              Eq("test-bucket"));
+  EXPECT_THAT(BucketMetadataCache::NormalizeBucketName(
+                  "projects/123456/buckets/test-bucket"),
+              Eq("test-bucket"));
+  EXPECT_THAT(BucketMetadataCache::NormalizeBucketName(
+                  "projects/my-project/buckets/test-bucket"),
+              Eq("test-bucket"));
+}
+
 TEST(BucketMetadataCacheTest, HitAndMiss) {
   BucketMetadataCache cache(10);
   EXPECT_FALSE(cache.Get("test-bucket").has_value());
