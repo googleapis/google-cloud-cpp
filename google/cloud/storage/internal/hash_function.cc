@@ -34,10 +34,15 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     DisableMD5Hash const& md5_disabled) {
   auto const& options = google::cloud::internal::CurrentOptions();
   auto crc32c = std::unique_ptr<HashFunction>();
-  auto crc32c_v = crc32c_value.value_or(
-      options.has<Crc32cChecksumValue>()
-          ? options.get<Crc32cChecksumValue>()
-          : "");
+  auto crc32c_v = crc32c_value.value_or("");
+  if (crc32c_v.empty() && options.has<Crc32cChecksumValue>()) {
+    crc32c_v = options.get<Crc32cChecksumValue>();
+  }
+  if (crc32c_v.empty() && options.has<PrecomputedChecksumsOption>()) {
+    auto m = options.get<PrecomputedChecksumsOption>();
+    auto it = m.find(ChecksumAlgorithm::kCrc32c);
+    if (it != m.end()) crc32c_v = it->second;
+  }
   if (!crc32c_v.empty()) {
     crc32c = std::make_unique<PrecomputedHashFunction>(
         HashValues{/*.crc32c=*/std::move(crc32c_v), /*md5=*/{}});
@@ -46,10 +51,15 @@ std::unique_ptr<HashFunction> CreateHashFunction(
   }
 
   auto md5 = std::unique_ptr<HashFunction>();
-  auto md5_v = md5_value.value_or(
-      options.has<MD5HashValue>()
-          ? options.get<MD5HashValue>()
-          : "");
+  auto md5_v = md5_value.value_or("");
+  if (md5_v.empty() && options.has<MD5HashValue>()) {
+    md5_v = options.get<MD5HashValue>();
+  }
+  if (md5_v.empty() && options.has<PrecomputedChecksumsOption>()) {
+    auto m = options.get<PrecomputedChecksumsOption>();
+    auto it = m.find(ChecksumAlgorithm::kMD5);
+    if (it != m.end()) md5_v = it->second;
+  }
   if (!md5_v.empty()) {
     md5 = std::make_unique<PrecomputedHashFunction>(
         HashValues{/*.crc32c=*/{}, /*.md5=*/std::move(md5_v)});

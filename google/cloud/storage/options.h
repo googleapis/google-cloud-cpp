@@ -25,6 +25,7 @@
 #include "google/cloud/options.h"
 #include <chrono>
 #include <cstdint>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -121,6 +122,20 @@ struct UploadChecksumValidationOption {
 struct DownloadChecksumValidationOption {
   using Type = ChecksumAlgorithm;
 };
+
+/**
+ * Provide precomputed hashes for uploads and downloads.
+ *
+ * If set, the client will use these precomputed hashes instead of computing
+ * them locally. This is useful when the application has already computed the
+ * hash and wants to avoid recomputing it.
+ *
+ * @ingroup storage-options
+ */
+struct PrecomputedChecksumsOption {
+  using Type = std::map<ChecksumAlgorithm, std::string>;
+};
+
 
 /**
  * Configure the REST endpoint for the GCS client library.
@@ -378,6 +393,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
     UploadChecksumValidationOption, DownloadChecksumValidationOption,
+    PrecomputedChecksumsOption,
     storage_experimental::HttpVersionOption,
     storage_experimental::OTelSpanEnrichmentOption>;
 
