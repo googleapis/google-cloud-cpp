@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OPTIONS_H
 
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"

@@ -141,8 +141,14 @@ ObjectWriteStream Client::WriteObjectImpl(
       response->committed_size, std::move(response->metadata), buffer_size,
       internal::CreateHashFunction(request),
       internal::HashValues{
-          request.GetOption<Crc32cChecksumValue>().value_or(""),
-          request.GetOption<MD5HashValue>().value_or(""),
+          request.GetOption<Crc32cChecksumValue>().value_or(
+              current.has<Crc32cChecksumValue>()
+                  ? current.get<Crc32cChecksumValue>()
+                  : ""),
+          request.GetOption<MD5HashValue>().value_or(
+              current.has<MD5HashValue>()
+                  ? current.get<MD5HashValue>()
+                  : ""),
       },
       internal::CreateHashValidator(request),
       request.GetOption<AutoFinalize>().value_or(

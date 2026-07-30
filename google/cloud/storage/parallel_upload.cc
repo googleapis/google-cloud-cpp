@@ -44,8 +44,18 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
             committed_size, std::move(metadata), max_buffer_size,
             CreateHashFunction(request),
             internal::HashValues{
-                request.GetOption<Crc32cChecksumValue>().value_or(""),
-                request.GetOption<MD5HashValue>().value_or(""),
+                request.GetOption<Crc32cChecksumValue>().value_or(
+                    google::cloud::internal::CurrentOptions()
+                            .has<Crc32cChecksumValue>()
+                        ? google::cloud::internal::CurrentOptions()
+                              .get<Crc32cChecksumValue>()
+                        : ""),
+                request.GetOption<MD5HashValue>().value_or(
+                    google::cloud::internal::CurrentOptions()
+                            .has<MD5HashValue>()
+                        ? google::cloud::internal::CurrentOptions()
+                              .get<MD5HashValue>()
+                        : ""),
             },
             CreateHashValidator(request), AutoFinalizeConfig::kEnabled),
         state_(std::move(state)),

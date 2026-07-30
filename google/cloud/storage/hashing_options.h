@@ -41,6 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct MD5HashValue
     : public internal::ComplexOption<MD5HashValue, std::string> {
   using ComplexOption<MD5HashValue, std::string>::ComplexOption;
+  using Type = std::string;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
   MD5HashValue() = default;
@@ -110,6 +111,7 @@ inline DisableMD5Hash EnableMD5Hash() { return DisableMD5Hash(false); }
 struct Crc32cChecksumValue
     : public internal::ComplexOption<Crc32cChecksumValue, std::string> {
   using ComplexOption<Crc32cChecksumValue, std::string>::ComplexOption;
+  using Type = std::string;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
   Crc32cChecksumValue() = default;
