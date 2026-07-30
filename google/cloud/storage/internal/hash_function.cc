@@ -36,9 +36,7 @@ std::unique_ptr<HashFunction> CreateHashFunction(
   auto crc32c = std::unique_ptr<HashFunction>();
   auto crc32c_v = crc32c_value.value_or("");
   if (crc32c_v.empty() && options.has<PrecomputedChecksumsOption>()) {
-    auto m = options.get<PrecomputedChecksumsOption>();
-    auto it = m.find(ChecksumAlgorithm::kCrc32c);
-    if (it != m.end()) crc32c_v = it->second;
+    crc32c_v = options.get<PrecomputedChecksumsOption>().crc32c;
   }
   if (!crc32c_v.empty()) {
     crc32c = std::make_unique<PrecomputedHashFunction>(
@@ -50,9 +48,7 @@ std::unique_ptr<HashFunction> CreateHashFunction(
   auto md5 = std::unique_ptr<HashFunction>();
   auto md5_v = md5_value.value_or("");
   if (md5_v.empty() && options.has<PrecomputedChecksumsOption>()) {
-    auto m = options.get<PrecomputedChecksumsOption>();
-    auto it = m.find(ChecksumAlgorithm::kMD5);
-    if (it != m.end()) md5_v = it->second;
+    md5_v = options.get<PrecomputedChecksumsOption>().md5;
   }
   if (!md5_v.empty()) {
     md5 = std::make_unique<PrecomputedHashFunction>(

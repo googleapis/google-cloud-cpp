@@ -714,17 +714,15 @@ StatusOr<CreateResumableUploadResponse> RestStub::CreateResumableUpload(
   }
   if (request.HasOption<Crc32cChecksumValue>()) {
     resource["crc32c"] = request.GetOption<Crc32cChecksumValue>().value();
-  } else if (options.has<PrecomputedChecksumsOption>()) {
-    auto m = options.get<PrecomputedChecksumsOption>();
-    auto it = m.find(ChecksumAlgorithm::kCrc32c);
-    if (it != m.end()) resource["crc32c"] = it->second;
+  } else if (options.has<PrecomputedChecksumsOption>() &&
+             !options.get<PrecomputedChecksumsOption>().crc32c.empty()) {
+    resource["crc32c"] = options.get<PrecomputedChecksumsOption>().crc32c;
   }
   if (request.HasOption<MD5HashValue>()) {
     resource["md5Hash"] = request.GetOption<MD5HashValue>().value();
-  } else if (options.has<PrecomputedChecksumsOption>()) {
-    auto m = options.get<PrecomputedChecksumsOption>();
-    auto it = m.find(ChecksumAlgorithm::kMD5);
-    if (it != m.end()) resource["md5Hash"] = it->second;
+  } else if (options.has<PrecomputedChecksumsOption>() &&
+             !options.get<PrecomputedChecksumsOption>().md5.empty()) {
+    resource["md5Hash"] = options.get<PrecomputedChecksumsOption>().md5;
   }
 
   if (resource.empty()) {

@@ -133,7 +133,7 @@ struct DownloadChecksumValidationOption {
  * @ingroup storage-options
  */
 struct PrecomputedChecksumsOption {
-  using Type = std::map<ChecksumAlgorithm, std::string>;
+  using Type = PrecomputedChecksums;
 };
 
 /**
