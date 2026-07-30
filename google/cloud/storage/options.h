@@ -136,7 +136,6 @@ struct PrecomputedChecksumsOption {
   using Type = std::map<ChecksumAlgorithm, std::string>;
 };
 
-
 /**
  * Configure the REST endpoint for the GCS client library.
  *
@@ -393,8 +392,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
     UploadChecksumValidationOption, DownloadChecksumValidationOption,
-    PrecomputedChecksumsOption,
-    storage_experimental::HttpVersionOption,
+    PrecomputedChecksumsOption, storage_experimental::HttpVersionOption,
     storage_experimental::OTelSpanEnrichmentOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

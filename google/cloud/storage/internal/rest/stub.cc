@@ -464,8 +464,7 @@ StatusOr<ObjectMetadata> RestStub::InsertObjectMedia(
       storage::internal::GetUploadChecksumSettings(request, options);
   if (!settings.md5 || !settings.crc32c || request.HasOption<MD5HashValue>() ||
       request.HasOption<Crc32cChecksumValue>() ||
-      options.has<MD5HashValue>() ||
-      options.has<Crc32cChecksumValue>()) {
+      options.has<PrecomputedChecksumsOption>()) {
     return InsertObjectMediaMultipart(context, options, request);
   }
 
