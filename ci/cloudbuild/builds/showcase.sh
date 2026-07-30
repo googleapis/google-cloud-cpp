@@ -96,4 +96,5 @@ io::log_h2 "Running showcase tests"
 bazel test --test_env=SHOWCASE_PORT="${SHOWCASE_PORT}" \
   --test_env=SHOWCASE_CA_CERT="${SHOWCASE_CA_CERT}" \
   --test_output=errors \
-  //ci/showcase:rest_pqc_test
+  //ci/showcase:rest_pqc_test \
+  //ci/showcase:grpc_pqc_test

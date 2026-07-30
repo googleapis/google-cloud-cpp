@@ -56,6 +56,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   std::string UploadId() const override;
   std::optional<google::storage::v2::BidiWriteHandle> WriteHandle()
       const override {
+    std::unique_lock<std::mutex> lk(mu_);
     return latest_write_handle_;
   }
   absl::variant<std::int64_t, google::storage::v2::Object> PersistedState()
@@ -115,7 +116,7 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
   // Track the latest write handle seen in responses.
   std::optional<google::storage::v2::BidiWriteHandle> latest_write_handle_;
 
-  std::mutex mu_;
+  mutable std::mutex mu_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

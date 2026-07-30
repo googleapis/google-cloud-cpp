@@ -104,6 +104,12 @@ std::unique_ptr<MockAsyncBidiWriteObjectStream> MakeCommonAppendStream(
               response.mutable_resource()->set_size(persisted_size + 1024);
               return std::make_optional(std::move(response));
             });
+      })
+      // The third `Read()` call returns EOF.
+      .WillOnce([&] {
+        return sequencer.PushBack("Read(EOF)").then([](auto) {
+          return std::optional<google::storage::v2::BidiWriteObjectResponse>();
+        });
       });
 
   EXPECT_CALL(*stream, Cancel).Times(1);
@@ -304,6 +310,12 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadSuccess) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read(FinalObject)");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(EOF)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
@@ -312,9 +324,6 @@ TEST_F(AsyncConnectionImplAppendableTest, StartAppendableObjectUploadSuccess) {
   EXPECT_EQ(response->size(), 1024);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadSuccess) {
@@ -370,15 +379,18 @@ TEST_F(AsyncConnectionImplAppendableTest, ResumeAppendableObjectUploadSuccess) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read(FinalObject)");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(EOF)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->size(), kPersistedSize + 1024);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadTooManyTransients) {
@@ -517,6 +529,12 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirect) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read(FinalObject)");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(EOF)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
@@ -525,9 +543,6 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirect) {
   EXPECT_EQ(response->size(), 1024 + 1024);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 
 TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirectNoHandle) {
@@ -614,6 +629,12 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirectNoHandle) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read(FinalObject)");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read(EOF)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
 
   auto response = w2.get();
   ASSERT_STATUS_OK(response);
@@ -622,9 +643,6 @@ TEST_F(AsyncConnectionImplAppendableTest, AppendableUploadRedirectNoHandle) {
   EXPECT_EQ(response->size(), 1024 + 1024);
 
   writer.reset();
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Finish");
-  next.first.set_value(true);
 }
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@ cc_library(
     srcs = ["otel_collector.cc"],
     hdrs = ["otel_collector.h"],
     deps = [
+        "//:common",
         "//protos/google/cloud/opentelemetry/testing:observability_verification_cc_grpc",
         "//protos/google/cloud/opentelemetry/testing:observability_verification_cc_proto",
         "@googleapis//google/monitoring/v3:monitoring_cc_grpc",
