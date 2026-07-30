@@ -31,50 +31,24 @@ struct HashDisabled {
   bool crc32c;
 };
 
-template <typename Request>
-HashDisabled GetDownloadChecksumSettings(Request const& request,
-                                         Options const& options) {
+inline HashDisabled GetDownloadChecksumSettings(Options const& options) {
   bool disable_md5 = true;
   bool disable_crc32c = false;
   if (options.has<DownloadChecksumValidationOption>()) {
     auto const algo = options.get<DownloadChecksumValidationOption>();
-    disable_md5 = (algo != ChecksumAlgorithm::kMD5 &&
-                   algo != ChecksumAlgorithm::kCrc32cAndMD5);
-    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c &&
-                      algo != ChecksumAlgorithm::kCrc32cAndMD5);
-  }
-
-  auto const md5 = request.template GetOption<DisableMD5Hash>();
-  if (md5.has_value()) {
-    disable_md5 = md5.value();
-  }
-  auto const crc32c = request.template GetOption<DisableCrc32cChecksum>();
-  if (crc32c.has_value()) {
-    disable_crc32c = crc32c.value();
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
   }
   return {disable_md5, disable_crc32c};
 }
 
-template <typename Request>
-HashDisabled GetUploadChecksumSettings(Request const& request,
-                                       Options const& options) {
+inline HashDisabled GetUploadChecksumSettings(Options const& options) {
   bool disable_md5 = true;
   bool disable_crc32c = false;
   if (options.has<UploadChecksumValidationOption>()) {
     auto const algo = options.get<UploadChecksumValidationOption>();
-    disable_md5 = (algo != ChecksumAlgorithm::kMD5 &&
-                   algo != ChecksumAlgorithm::kCrc32cAndMD5);
-    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c &&
-                      algo != ChecksumAlgorithm::kCrc32cAndMD5);
-  }
-
-  auto const md5 = request.template GetOption<DisableMD5Hash>();
-  if (md5.has_value()) {
-    disable_md5 = md5.value();
-  }
-  auto const crc32c = request.template GetOption<DisableCrc32cChecksum>();
-  if (crc32c.has_value()) {
-    disable_crc32c = crc32c.value();
+    disable_md5 = (algo != ChecksumAlgorithm::kMD5);
+    disable_crc32c = (algo != ChecksumAlgorithm::kCrc32c);
   }
   return {disable_md5, disable_crc32c};
 }

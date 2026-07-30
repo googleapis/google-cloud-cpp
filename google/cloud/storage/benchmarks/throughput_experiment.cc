@@ -63,6 +63,17 @@ std::string ExtractUploadId(std::string v) {
   return v.substr(pos + std::strlen(kRestField));
 }
 
+gcs::ChecksumAlgorithm GetChecksumAlgorithm(bool enable_crc32c,
+                                            bool enable_md5) {
+  if (enable_crc32c && enable_md5) {
+    throw std::invalid_argument(
+        "Cannot enable both CRC32C and MD5 checksum validation");
+  }
+  if (enable_crc32c) return gcs::ChecksumAlgorithm::kCrc32c;
+  if (enable_md5) return gcs::ChecksumAlgorithm::kMD5;
+  return gcs::ChecksumAlgorithm::kNone;
+}
+
 class ResumableUpload : public ThroughputExperiment {
  public:
   explicit ResumableUpload(google::cloud::storage::Client client,
@@ -80,10 +91,10 @@ class ResumableUpload : public ThroughputExperiment {
 
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
-    auto writer =
-        client_.WriteObject(bucket_name, object_name,
-                            gcs::DisableCrc32cChecksum(!config.enable_crc32c),
-                            gcs::DisableMD5Hash(!config.enable_md5));
+    auto writer = client_.WriteObject(
+        bucket_name, object_name,
+        google::cloud::Options{}.set<gcs::UploadChecksumValidationOption>(
+            GetChecksumAlgorithm(config.enable_crc32c, config.enable_md5)));
     auto upload_id = ExtractUploadId(writer.resumable_session_id());
     for (std::int64_t offset = 0; offset < config.object_size;
          offset += config.app_buffer_size) {
@@ -151,10 +162,10 @@ class SimpleUpload : public ThroughputExperiment {
     auto timer = Timer::PerThread();
     auto data = absl::string_view{*random_data_}.substr(
         0, static_cast<std::size_t>(config.object_size));
-    auto object_metadata =
-        client_.InsertObject(bucket_name, object_name, data,
-                             gcs::DisableCrc32cChecksum(!config.enable_crc32c),
-                             gcs::DisableMD5Hash(!config.enable_md5));
+    auto object_metadata = client_.InsertObject(
+        bucket_name, object_name, data,
+        google::cloud::Options{}.set<gcs::UploadChecksumValidationOption>(
+            GetChecksumAlgorithm(config.enable_crc32c, config.enable_md5)));
     auto const usage = timer.Sample();
     auto generation = object_metadata
                           ? std::to_string(object_metadata->generation())
@@ -209,10 +220,10 @@ class DownloadObject : public ThroughputExperiment {
         config.read_range.has_value()
             ? gcs::ReadRange(offset, offset + config.read_range->second)
             : gcs::ReadRange();
-    auto reader =
-        client_.ReadObject(bucket_name, object_name, read_range,
-                           gcs::DisableCrc32cChecksum(!config.enable_crc32c),
-                           gcs::DisableMD5Hash(!config.enable_md5));
+    auto reader = client_.ReadObject(
+        bucket_name, object_name, read_range,
+        google::cloud::Options{}.set<gcs::DownloadChecksumValidationOption>(
+            GetChecksumAlgorithm(config.enable_crc32c, config.enable_md5)));
     std::int64_t transfer_size = 0;
     while (!reader.eof() && !reader.bad()) {
       reader.read(buffer.data(), buffer.size());

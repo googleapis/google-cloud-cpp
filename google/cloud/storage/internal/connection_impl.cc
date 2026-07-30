@@ -814,7 +814,7 @@ This is often a problem because:
     preserve data integrity.
 
 Consider using UploadLimit option or Client::WriteObject(). You may also need to disable data
-integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
+integrity checks using the UploadChecksumValidationOption() option.
 )""";
   } else {
     std::error_code size_err;

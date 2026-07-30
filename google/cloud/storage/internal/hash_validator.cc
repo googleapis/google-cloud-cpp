@@ -57,17 +57,17 @@ std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
   if (request.RequiresRangeHeader()) return CreateNullHashValidator();
 
-  auto const settings = GetDownloadChecksumSettings(
-      request, google::cloud::internal::CurrentOptions());
+  auto const settings =
+      GetDownloadChecksumSettings(google::cloud::internal::CurrentOptions());
   auto const disable_md5 = settings.md5;
   auto const disable_crc32c = settings.crc32c;
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
-    ResumableUploadRequest const& request) {
-  auto const settings = GetUploadChecksumSettings(
-      request, google::cloud::internal::CurrentOptions());
+    ResumableUploadRequest const& /*request*/) {
+  auto const settings =
+      GetUploadChecksumSettings(google::cloud::internal::CurrentOptions());
   auto const disable_md5 = settings.md5;
   auto const disable_crc32c = settings.crc32c;
   return CreateHashValidator(disable_md5, disable_crc32c);

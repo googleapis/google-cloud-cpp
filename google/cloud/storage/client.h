@@ -946,8 +946,8 @@ class Client {
    * @param contents the contents (media) for the new object.
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `ContentEncoding`,
-   *     `ContentType`, `Crc32cChecksumValue`, `DisableCrc32cChecksum`,
-   *     `DisableMD5Hash`, `EncryptionKey`, `IfGenerationMatch`,
+   *     `ContentType`, `Crc32cChecksumValue`,
+   *     `UploadChecksumValidationOption`, `EncryptionKey`, `IfGenerationMatch`,
    *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `KmsKeyName`, `MD5HashValue`,
    *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
@@ -1176,9 +1176,9 @@ class Client {
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `DisableCrc32cChecksum`,
-   *     `DisableMD5Hash`, `EncryptionKey`, `Generation`, `IfGenerationMatch`,
-   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     Valid types for this operation include
+   * `DownloadChecksumValidationOption`, `EncryptionKey`, `Generation`,
+   * `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, `ReadLast`,
    *     `UserProject`, and `AcceptEncoding`.
    *
@@ -1240,7 +1240,7 @@ class Client {
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
    *   Valid types for this operation include `ContentEncoding`, `ContentType`,
-   *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
+   *   `Crc32cChecksumValue`, `UploadChecksumValidationOption`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
    *   `MD5HashValue`, `PredefinedAcl`, `Projection`,
@@ -1295,7 +1295,7 @@ class Client {
    * @param object_name the name of the object to be read.
    * @param options a list of optional query parameters and/or request headers.
    *   Valid types for this operation include `ContentEncoding`, `ContentType`,
-   *   `Crc32cChecksumValue`, `DisableCrc32cChecksum`, `DisableMD5Hash`,
+   *   `Crc32cChecksumValue`, `UploadChecksumValidationOption`,
    *   `EncryptionKey`, `IfGenerationMatch`, `IfGenerationNotMatch`,
    *   `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `KmsKeyName`,
    *   `MD5HashValue`, `PredefinedAcl`, `Projection`, `UserProject`,

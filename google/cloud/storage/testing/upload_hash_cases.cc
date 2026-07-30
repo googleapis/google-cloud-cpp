@@ -37,28 +37,21 @@ std::vector<UploadHashCase> UploadHashCases() {
   return std::vector<UploadHashCase>{
       // clang-format off
       // DisableCrc32c == true, Crc32cChecksumValue == {} and change the MD5
-      {"", "",                  DisableCrc32cChecksum(true), Crc32cChecksumValue(), DisableMD5Hash(true),  MD5HashValue()},
-      {"", kEmptyStringMD5Hash, DisableCrc32cChecksum(true), Crc32cChecksumValue(), DisableMD5Hash(true),  MD5HashValue(kEmptyStringMD5Hash)},
-      {"", kQuickFoxMD5Hash,    DisableCrc32cChecksum(true), Crc32cChecksumValue(), DisableMD5Hash(false), MD5HashValue()},
-      {"", kEmptyStringMD5Hash, DisableCrc32cChecksum(true), Crc32cChecksumValue(), DisableMD5Hash(false), MD5HashValue(kEmptyStringMD5Hash)},
+      {"", "",                  ChecksumAlgorithm::kNone, Crc32cChecksumValue(),  MD5HashValue()},
+      {"", kEmptyStringMD5Hash, ChecksumAlgorithm::kNone, Crc32cChecksumValue(),  MD5HashValue(kEmptyStringMD5Hash)},
+      {"", kQuickFoxMD5Hash,    ChecksumAlgorithm::kMD5, Crc32cChecksumValue(),  MD5HashValue()},
+      {"", kEmptyStringMD5Hash, ChecksumAlgorithm::kMD5, Crc32cChecksumValue(),  MD5HashValue(kEmptyStringMD5Hash)},
 
       // DisableCrc32c == true, Crc32cChecksumValue == kEmptyStringCrc32cChecksum and change the MD5
-      {kEmptyStringCrc32cChecksum, "",                  DisableCrc32cChecksum(true),  Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),   MD5HashValue()},
-      {kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash, DisableCrc32cChecksum(true),  Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),   MD5HashValue(kEmptyStringMD5Hash)},
-      {kEmptyStringCrc32cChecksum, kQuickFoxMD5Hash,    DisableCrc32cChecksum(true),  Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false),  MD5HashValue()},
-      {kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash, DisableCrc32cChecksum(true),  Crc32cChecksumValue(kEmptyStringCrc32cChecksum),  DisableMD5Hash(false), MD5HashValue(kEmptyStringMD5Hash)},
+      {kEmptyStringCrc32cChecksum, "",                  ChecksumAlgorithm::kNone,  Crc32cChecksumValue(kEmptyStringCrc32cChecksum),   MD5HashValue()},
+      {kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash, ChecksumAlgorithm::kNone,  Crc32cChecksumValue(kEmptyStringCrc32cChecksum),   MD5HashValue(kEmptyStringMD5Hash)},
+      {kEmptyStringCrc32cChecksum, kQuickFoxMD5Hash,    ChecksumAlgorithm::kMD5,  Crc32cChecksumValue(kEmptyStringCrc32cChecksum),  MD5HashValue()},
+      {kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash, ChecksumAlgorithm::kMD5,  Crc32cChecksumValue(kEmptyStringCrc32cChecksum),  MD5HashValue(kEmptyStringMD5Hash)},
 
       // DisableCrc32c == false, Crc32cChecksumValue == {} and change the MD5
-      {kQuickFoxCrc32cChecksum, "",                  DisableCrc32cChecksum(false), Crc32cChecksumValue(), DisableMD5Hash(true),  MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, kEmptyStringMD5Hash, DisableCrc32cChecksum(false), Crc32cChecksumValue(), DisableMD5Hash(true),  MD5HashValue(kEmptyStringMD5Hash)},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash,    DisableCrc32cChecksum(false), Crc32cChecksumValue(), DisableMD5Hash(false), MD5HashValue()},
-      {kQuickFoxCrc32cChecksum, kEmptyStringMD5Hash, DisableCrc32cChecksum(false), Crc32cChecksumValue(), DisableMD5Hash(false), MD5HashValue(kEmptyStringMD5Hash)},
+      {kQuickFoxCrc32cChecksum, "",                  ChecksumAlgorithm::kCrc32c, Crc32cChecksumValue(),  MD5HashValue()},
+      {kQuickFoxCrc32cChecksum, kEmptyStringMD5Hash, ChecksumAlgorithm::kCrc32c, Crc32cChecksumValue(),  MD5HashValue(kEmptyStringMD5Hash)},
 
-      // DisableCrc32c == false, Crc32cChecksumValue == kEmptyStringCrc32Checksum and change the MD5
-      {kEmptyStringCrc32cChecksum, "",                  DisableCrc32cChecksum(false), Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),  MD5HashValue()},
-      {kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash, DisableCrc32cChecksum(false), Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(true),  MD5HashValue(kEmptyStringMD5Hash)},
-      {kEmptyStringCrc32cChecksum, kQuickFoxMD5Hash,    DisableCrc32cChecksum(false), Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false), MD5HashValue()},
-      {kEmptyStringCrc32cChecksum, kEmptyStringMD5Hash, DisableCrc32cChecksum(false), Crc32cChecksumValue(kEmptyStringCrc32cChecksum), DisableMD5Hash(false), MD5HashValue(kEmptyStringMD5Hash)},
       // clang-format on
   };
 }

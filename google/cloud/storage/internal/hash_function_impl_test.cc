@@ -378,22 +378,19 @@ TEST(HashFunctionImplTest, CreateHashFunctionRead) {
   struct Test {
     std::string crc32c_expected;
     std::string md5_expected;
-    DisableCrc32cChecksum crc32_disabled;
-    DisableMD5Hash md5_disabled;
+    ChecksumAlgorithm validation_algo;
   } cases[]{
-      {"", "", DisableCrc32cChecksum(true), DisableMD5Hash(true)},
-      {"", kQuickFoxMD5Hash, DisableCrc32cChecksum(true),
-       DisableMD5Hash(false)},
-      {kQuickFoxCrc32cChecksum, "", DisableCrc32cChecksum(false),
-       DisableMD5Hash(true)},
-      {kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash, DisableCrc32cChecksum(false),
-       DisableMD5Hash(false)},
+      {"", "", ChecksumAlgorithm::kNone},
+      {"", kQuickFoxMD5Hash, ChecksumAlgorithm::kMD5},
+      {kQuickFoxCrc32cChecksum, "", ChecksumAlgorithm::kCrc32c},
+
   };
 
   for (auto const& test : cases) {
+    google::cloud::internal::OptionsSpan span(
+        Options{}.set<DownloadChecksumValidationOption>(test.validation_algo));
     auto function = CreateHashFunction(
-        ReadObjectRangeRequest("test-bucket", "test-object")
-            .set_multiple_options(test.crc32_disabled, test.md5_disabled));
+        ReadObjectRangeRequest("test-bucket", "test-object"));
     function->Update(kQuickFox);
     auto const actual = std::move(*function).Finish();
     EXPECT_EQ(test.crc32c_expected, actual.crc32c);
@@ -404,9 +401,9 @@ TEST(HashFunctionImplTest, CreateHashFunctionRead) {
 struct UploadTest {
   std::string crc32c_expected;
   std::string md5_expected;
-  DisableCrc32cChecksum crc32_disabled;
+  bool disable_crc32c;
   Crc32cChecksumValue crc32_value;
-  DisableMD5Hash md5_disabled;
+  bool disable_md5;
   MD5HashValue md5_value;
 };
 
@@ -414,10 +411,11 @@ TEST(HashFunctionImplTest, CreateHashFunctionUpload) {
   auto const upload_cases = testing::UploadHashCases();
 
   for (auto const& test : upload_cases) {
+    google::cloud::internal::OptionsSpan span(
+        Options{}.set<UploadChecksumValidationOption>(test.validation_algo));
     auto function = CreateHashFunction(
         ResumableUploadRequest("test-bucket", "test-object")
-            .set_multiple_options(test.crc32_disabled, test.crc32_value,
-                                  test.md5_disabled, test.md5_value));
+            .set_multiple_options(test.crc32_value, test.md5_value));
     function->Update(kQuickFox);
     auto const actual = std::move(*function).Finish();
     EXPECT_EQ(test.crc32c_expected, actual.crc32c);
@@ -428,9 +426,7 @@ TEST(HashFunctionImplTest, CreateHashFunctionUpload) {
 TEST(HashFunctionImplTest, CreateHashFunctionUploadResumedSession) {
   auto function = CreateHashFunction(
       ResumableUploadRequest("test-bucket", "test-object")
-          .set_multiple_options(UseResumableUploadSession("test-session-id"),
-                                DisableCrc32cChecksum(false),
-                                DisableMD5Hash(false)));
+          .set_multiple_options(UseResumableUploadSession("test-session-id")));
   function->Update(kQuickFox);
   auto const actual = std::move(*function).Finish();
   EXPECT_THAT(actual.crc32c, IsEmpty());
@@ -441,8 +437,12 @@ TEST(HashFunctionImplTest, CreateHashFunctionInsertObjectMedia) {
   auto const upload_cases = testing::UploadHashCases();
 
   for (auto const& test : upload_cases) {
-    auto function = CreateHashFunction(test.crc32_value, test.crc32_disabled,
-                                       test.md5_value, test.md5_disabled);
+    bool disable_crc32c = (test.validation_algo == ChecksumAlgorithm::kNone ||
+                           test.validation_algo == ChecksumAlgorithm::kMD5);
+    bool disable_md5 = (test.validation_algo == ChecksumAlgorithm::kNone ||
+                        test.validation_algo == ChecksumAlgorithm::kCrc32c);
+    auto function = CreateHashFunction(test.crc32_value, disable_crc32c,
+                                       test.md5_value, disable_md5);
     ASSERT_STATUS_OK(function->Update(/*offset=*/0, kQuickFox));
     auto const actual = function->Finish();
     EXPECT_EQ(test.crc32c_expected, actual.crc32c);
