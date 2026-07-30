@@ -38,6 +38,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @see
  * https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s01-hochschild.pdf
  */
+
+/**
+ * A structure to hold precomputed hashes.
+ *
+ * @ingroup storage-options
+ */
+struct PrecomputedChecksums {
+  std::string crc32c;
+  std::string md5;
+};
+
 struct MD5HashValue
     : public internal::ComplexOption<MD5HashValue, std::string> {
   using ComplexOption<MD5HashValue, std::string>::ComplexOption;

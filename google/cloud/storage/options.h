@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OPTIONS_H
 
+#include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
@@ -119,6 +120,19 @@ struct UploadChecksumValidationOption {
  */
 struct DownloadChecksumValidationOption {
   using Type = ChecksumAlgorithm;
+};
+
+/**
+ * Provide precomputed hashes for uploads and downloads.
+ *
+ * If set, the client will use these precomputed hashes instead of computing
+ * them locally. This is useful when the application has already computed the
+ * hash and wants to avoid recomputing it.
+ *
+ * @ingroup storage-options
+ */
+struct PrecomputedChecksumsOption {
+  using Type = PrecomputedChecksums;
 };
 
 /**
@@ -377,7 +391,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     TransferStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption,
     UploadChecksumValidationOption, DownloadChecksumValidationOption,
-    storage_experimental::HttpVersionOption,
+    PrecomputedChecksumsOption, storage_experimental::HttpVersionOption,
     storage_experimental::OTelSpanEnrichmentOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
