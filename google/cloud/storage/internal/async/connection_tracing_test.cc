@@ -539,6 +539,61 @@ TEST(ConnectionTracing, RewriteObject) {
                  SpanHasEvents(EventNamed("gl-cpp.storage.rewrite.iterate")))));
 }
 
+TEST(ConnectionTracing, RewriteObjectSpanEnrichment) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<StatusOr<google::storage::v2::Bucket>> p;
+
+  auto options =
+      TracingEnabled()
+          .set<google::cloud::storage_experimental::OTelSpanEnrichmentOption>(
+              true);
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(options));
+
+  EXPECT_CALL(*mock, GetBucket).WillOnce(expect_context(p));
+  EXPECT_CALL(*mock, RewriteObject).WillOnce([] {
+    auto rewriter = std::make_shared<MockAsyncRewriterConnection>();
+    EXPECT_CALL(*rewriter, Iterate).WillOnce([] {
+      return make_ready_future(make_status_or(MakeRewriteResponse()));
+    });
+    return rewriter;
+  });
+
+  auto connection = MakeTracingAsyncConnection(std::move(mock));
+
+  // 1st call populates the cache
+  google::storage::v2::GetBucketRequest req;
+  req.set_name("projects/_/buckets/test-bucket");
+  auto res1 = connection->GetBucket({req, options}).then(expect_no_context);
+  google::storage::v2::Bucket bucket_meta;
+  bucket_meta.set_project("projects/123456");
+  bucket_meta.set_location("us-east1");
+  bucket_meta.set_location_type("regional");
+  p.set_value(make_status_or(std::move(bucket_meta)));
+  ASSERT_STATUS_OK(res1.get());
+
+  (void)span_catcher->GetSpans();
+
+  // 2nd call: RewriteObject uses cached bucket metadata for span enrichment
+  google::storage::v2::RewriteObjectRequest rewrite_req;
+  rewrite_req.set_destination_bucket("projects/_/buckets/test-bucket");
+  auto rewriter = connection->RewriteObject({rewrite_req, options});
+  auto r1 = rewriter->Iterate().get();
+  ASSERT_STATUS_OK(r1);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("storage::AsyncConnection::RewriteObject"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gcp.resource.destination.id",
+                                         "projects/123456/buckets/test-bucket"),
+              OTelAttribute<std::string>("gcp.resource.destination.location",
+                                         "us-east1")))));
+}
+
 TEST(ConnectionTracing, OpenError) {
   auto span_catcher = InstallSpanCatcher();
   PromiseWithOTelContext<
