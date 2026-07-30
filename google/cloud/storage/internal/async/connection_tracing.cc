@@ -125,8 +125,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
   ResumeAppendableObjectUpload(AppendableUploadParams p) override {
     auto span = internal::MakeSpan(
         "storage::AsyncConnection::ResumeAppendableObjectUpload");
-    EnrichSpan(*span, p.options,
-               p.request.write_object_spec().resource().bucket());
+    EnrichSpan(*span, p.options, p.request.append_object_spec().bucket());
     internal::OTelScope scope(span);
     return impl_->ResumeAppendableObjectUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
