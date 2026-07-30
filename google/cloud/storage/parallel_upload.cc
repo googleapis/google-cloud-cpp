@@ -43,20 +43,28 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
             std::move(connection), request, std::move(upload_id),
             committed_size, std::move(metadata), max_buffer_size,
             CreateHashFunction(request),
-            internal::HashValues{
-                request.GetOption<Crc32cChecksumValue>().value_or(
-                    google::cloud::internal::CurrentOptions()
-                            .has<Crc32cChecksumValue>()
-                        ? google::cloud::internal::CurrentOptions()
-                              .get<Crc32cChecksumValue>()
-                        : ""),
-                request.GetOption<MD5HashValue>().value_or(
-                    google::cloud::internal::CurrentOptions()
-                            .has<MD5HashValue>()
-                        ? google::cloud::internal::CurrentOptions()
-                              .get<MD5HashValue>()
-                        : ""),
-            },
+            [&request]() {
+              auto const& current = google::cloud::internal::CurrentOptions();
+              auto crc = request.GetOption<Crc32cChecksumValue>().value_or("");
+              if (crc.empty() && current.has<Crc32cChecksumValue>()) {
+                crc = current.get<Crc32cChecksumValue>();
+              }
+              if (crc.empty() && current.has<PrecomputedChecksumsOption>()) {
+                auto m = current.get<PrecomputedChecksumsOption>();
+                auto it = m.find(ChecksumAlgorithm::kCrc32c);
+                if (it != m.end()) crc = it->second;
+              }
+              auto md5 = request.GetOption<MD5HashValue>().value_or("");
+              if (md5.empty() && current.has<MD5HashValue>()) {
+                md5 = current.get<MD5HashValue>();
+              }
+              if (md5.empty() && current.has<PrecomputedChecksumsOption>()) {
+                auto m = current.get<PrecomputedChecksumsOption>();
+                auto it = m.find(ChecksumAlgorithm::kMD5);
+                if (it != m.end()) md5 = it->second;
+              }
+              return internal::HashValues{std::move(crc), std::move(md5)};
+            }(),
             CreateHashValidator(request), AutoFinalizeConfig::kEnabled),
         state_(std::move(state)),
         stream_idx_(stream_idx) {}
