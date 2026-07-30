@@ -139,6 +139,12 @@ StorageControlConnection::ListManagedFolders(
       StreamRange<google::storage::control::v2::ManagedFolder>>();
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlConnection::UpdateManagedFolder(
+    google::storage::control::v2::UpdateManagedFolderRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
 StorageControlConnection::CreateAnywhereCache(
     google::storage::control::v2::CreateAnywhereCacheRequest const&) {
@@ -217,6 +223,66 @@ StorageControlConnection::ListAnywhereCaches(
         ListAnywhereCachesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storage::control::v2::AnywhereCache>>();
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnection::CreateRapidCache(
+    google::storage::control::v2::CreateRapidCacheRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::RapidCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnection::CreateRapidCache(
+    NoAwaitTag, google::storage::control::v2::CreateRapidCacheRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnection::CreateRapidCache(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::RapidCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnection::UpdateRapidCache(
+    google::storage::control::v2::UpdateRapidCacheRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::RapidCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlConnection::UpdateRapidCache(
+    NoAwaitTag, google::storage::control::v2::UpdateRapidCacheRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlConnection::UpdateRapidCache(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::RapidCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::storage::control::v2::RapidCache>
+StorageControlConnection::GetRapidCache(
+    google::storage::control::v2::GetRapidCacheRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::storage::control::v2::RapidCache>
+StorageControlConnection::ListRapidCaches(
+    google::storage::control::v2::
+        ListRapidCachesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storage::control::v2::RapidCache>>();
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>

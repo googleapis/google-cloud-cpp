@@ -250,6 +250,10 @@ class StorageControlConnection {
   ListManagedFolders(
       google::storage::control::v2::ListManagedFoldersRequest request);
 
+  virtual StatusOr<google::storage::control::v2::ManagedFolder>
+  UpdateManagedFolder(
+      google::storage::control::v2::UpdateManagedFolderRequest const& request);
+
   virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
   CreateAnywhereCache(
       google::storage::control::v2::CreateAnywhereCacheRequest const& request);
@@ -291,6 +295,34 @@ class StorageControlConnection {
   virtual StreamRange<google::storage::control::v2::AnywhereCache>
   ListAnywhereCaches(
       google::storage::control::v2::ListAnywhereCachesRequest request);
+
+  virtual future<StatusOr<google::storage::control::v2::RapidCache>>
+  CreateRapidCache(
+      google::storage::control::v2::CreateRapidCacheRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateRapidCache(
+      NoAwaitTag,
+      google::storage::control::v2::CreateRapidCacheRequest const& request);
+
+  virtual future<StatusOr<google::storage::control::v2::RapidCache>>
+  CreateRapidCache(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::storage::control::v2::RapidCache>>
+  UpdateRapidCache(
+      google::storage::control::v2::UpdateRapidCacheRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateRapidCache(
+      NoAwaitTag,
+      google::storage::control::v2::UpdateRapidCacheRequest const& request);
+
+  virtual future<StatusOr<google::storage::control::v2::RapidCache>>
+  UpdateRapidCache(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::storage::control::v2::RapidCache> GetRapidCache(
+      google::storage::control::v2::GetRapidCacheRequest const& request);
+
+  virtual StreamRange<google::storage::control::v2::RapidCache> ListRapidCaches(
+      google::storage::control::v2::ListRapidCachesRequest request);
 
   virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
   GetProjectIntelligenceConfig(

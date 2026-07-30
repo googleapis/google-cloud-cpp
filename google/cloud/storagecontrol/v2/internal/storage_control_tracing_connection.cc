@@ -174,6 +174,15 @@ StorageControlTracingConnection::ListManagedFolders(
                                                    std::move(sr));
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlTracingConnection::UpdateManagedFolder(
+    google::storage::control::v2::UpdateManagedFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::UpdateManagedFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateManagedFolder(request));
+}
+
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
 StorageControlTracingConnection::CreateAnywhereCache(
     google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
@@ -282,6 +291,86 @@ StorageControlTracingConnection::ListAnywhereCaches(
   return internal::MakeTracedStreamRange<
       google::storage::control::v2::AnywhereCache>(std::move(span),
                                                    std::move(sr));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlTracingConnection::CreateRapidCache(
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::CreateRapidCache");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateRapidCache(request));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlTracingConnection::CreateRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::CreateRapidCache");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateRapidCache(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlTracingConnection::CreateRapidCache(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::CreateRapidCache");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateRapidCache(operation));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlTracingConnection::UpdateRapidCache(
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::UpdateRapidCache");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateRapidCache(request));
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlTracingConnection::UpdateRapidCache(
+    NoAwaitTag,
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::UpdateRapidCache");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateRapidCache(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::storage::control::v2::RapidCache>>
+StorageControlTracingConnection::UpdateRapidCache(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::UpdateRapidCache");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateRapidCache(operation));
+}
+
+StatusOr<google::storage::control::v2::RapidCache>
+StorageControlTracingConnection::GetRapidCache(
+    google::storage::control::v2::GetRapidCacheRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::GetRapidCache");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRapidCache(request));
+}
+
+StreamRange<google::storage::control::v2::RapidCache>
+StorageControlTracingConnection::ListRapidCaches(
+    google::storage::control::v2::ListRapidCachesRequest request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::ListRapidCaches");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListRapidCaches(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::storage::control::v2::RapidCache>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>

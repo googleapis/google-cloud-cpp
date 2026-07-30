@@ -1,2 +1,3 @@
 @googleapis//google/api/cloudquotas/v1:cloudquotas.proto
+@googleapis//google/api/cloudquotas/v1:quota_adjuster_settings.proto
 @googleapis//google/api/cloudquotas/v1:resources.proto
