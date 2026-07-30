@@ -25,7 +25,6 @@
 #include "google/cloud/options.h"
 #include <chrono>
 #include <cstdint>
-#include <map>
 #include <memory>
 #include <string>
 
