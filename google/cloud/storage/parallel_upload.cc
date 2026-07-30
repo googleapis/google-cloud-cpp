@@ -46,18 +46,12 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
             [&request]() {
               auto const& current = google::cloud::internal::CurrentOptions();
               auto crc = request.GetOption<Crc32cChecksumValue>().value_or("");
-              if (crc.empty() && current.has<Crc32cChecksumValue>()) {
-                crc = current.get<Crc32cChecksumValue>();
-              }
               if (crc.empty() && current.has<PrecomputedChecksumsOption>()) {
                 auto m = current.get<PrecomputedChecksumsOption>();
                 auto it = m.find(ChecksumAlgorithm::kCrc32c);
                 if (it != m.end()) crc = it->second;
               }
               auto md5 = request.GetOption<MD5HashValue>().value_or("");
-              if (md5.empty() && current.has<MD5HashValue>()) {
-                md5 = current.get<MD5HashValue>();
-              }
               if (md5.empty() && current.has<PrecomputedChecksumsOption>()) {
                 auto m = current.get<PrecomputedChecksumsOption>();
                 auto it = m.find(ChecksumAlgorithm::kMD5);

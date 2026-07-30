@@ -35,9 +35,6 @@ std::unique_ptr<HashFunction> CreateHashFunction(
   auto const& options = google::cloud::internal::CurrentOptions();
   auto crc32c = std::unique_ptr<HashFunction>();
   auto crc32c_v = crc32c_value.value_or("");
-  if (crc32c_v.empty() && options.has<Crc32cChecksumValue>()) {
-    crc32c_v = options.get<Crc32cChecksumValue>();
-  }
   if (crc32c_v.empty() && options.has<PrecomputedChecksumsOption>()) {
     auto m = options.get<PrecomputedChecksumsOption>();
     auto it = m.find(ChecksumAlgorithm::kCrc32c);
@@ -52,9 +49,6 @@ std::unique_ptr<HashFunction> CreateHashFunction(
 
   auto md5 = std::unique_ptr<HashFunction>();
   auto md5_v = md5_value.value_or("");
-  if (md5_v.empty() && options.has<MD5HashValue>()) {
-    md5_v = options.get<MD5HashValue>();
-  }
   if (md5_v.empty() && options.has<PrecomputedChecksumsOption>()) {
     auto m = options.get<PrecomputedChecksumsOption>();
     auto it = m.find(ChecksumAlgorithm::kMD5);

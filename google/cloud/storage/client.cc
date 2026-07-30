@@ -140,16 +140,21 @@ ObjectWriteStream Client::WriteObjectImpl(
       connection_, request, std::move(response->upload_id),
       response->committed_size, std::move(response->metadata), buffer_size,
       internal::CreateHashFunction(request),
-      internal::HashValues{
-          request.GetOption<Crc32cChecksumValue>().value_or(
-              current.has<Crc32cChecksumValue>()
-                  ? current.get<Crc32cChecksumValue>()
-                  : ""),
-          request.GetOption<MD5HashValue>().value_or(
-              current.has<MD5HashValue>()
-                  ? current.get<MD5HashValue>()
-                  : ""),
-      },
+      [&]() {
+        auto crc = request.GetOption<Crc32cChecksumValue>().value_or("");
+        if (crc.empty() && current.has<PrecomputedChecksumsOption>()) {
+          auto m = current.get<PrecomputedChecksumsOption>();
+          auto it = m.find(ChecksumAlgorithm::kCrc32c);
+          if (it != m.end()) crc = it->second;
+        }
+        auto md5 = request.GetOption<MD5HashValue>().value_or("");
+        if (md5.empty() && current.has<PrecomputedChecksumsOption>()) {
+          auto m = current.get<PrecomputedChecksumsOption>();
+          auto it = m.find(ChecksumAlgorithm::kMD5);
+          if (it != m.end()) md5 = it->second;
+        }
+        return internal::HashValues{std::move(crc), std::move(md5)};
+      }(),
       internal::CreateHashValidator(request),
       request.GetOption<AutoFinalize>().value_or(
           AutoFinalizeConfig::kEnabled)));
