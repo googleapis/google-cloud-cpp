@@ -463,7 +463,8 @@ StatusOr<ObjectMetadata> RestStub::InsertObjectMedia(
   auto const settings =
       storage::internal::GetUploadChecksumSettings(request, options);
   if (!settings.md5 || !settings.crc32c || request.HasOption<MD5HashValue>() ||
-      request.HasOption<Crc32cChecksumValue>()) {
+      request.HasOption<Crc32cChecksumValue>() ||
+      options.has<PrecomputedChecksumsOption>()) {
     return InsertObjectMediaMultipart(context, options, request);
   }
 
@@ -716,6 +717,17 @@ StatusOr<CreateResumableUploadResponse> RestStub::CreateResumableUpload(
   }
   if (request.HasOption<MD5HashValue>()) {
     resource["md5Hash"] = request.GetOption<MD5HashValue>().value();
+  }
+
+  if (options.has<PrecomputedChecksumsOption>()) {
+    auto const& checksums = options.get<PrecomputedChecksumsOption>();
+    if (!request.HasOption<Crc32cChecksumValue>() &&
+        !checksums.crc32c.empty()) {
+      resource["crc32c"] = checksums.crc32c;
+    }
+    if (!request.HasOption<MD5HashValue>() && !checksums.md5.empty()) {
+      resource["md5Hash"] = checksums.md5;
+    }
   }
 
   if (resource.empty()) {

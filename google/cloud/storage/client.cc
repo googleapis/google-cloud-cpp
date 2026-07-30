@@ -140,10 +140,17 @@ ObjectWriteStream Client::WriteObjectImpl(
       connection_, request, std::move(response->upload_id),
       response->committed_size, std::move(response->metadata), buffer_size,
       internal::CreateHashFunction(request),
-      internal::HashValues{
-          request.GetOption<Crc32cChecksumValue>().value_or(""),
-          request.GetOption<MD5HashValue>().value_or(""),
-      },
+      [&]() {
+        auto crc = request.GetOption<Crc32cChecksumValue>().value_or("");
+        auto md5 = request.GetOption<MD5HashValue>().value_or("");
+        if ((crc.empty() || md5.empty()) &&
+            current.has<PrecomputedChecksumsOption>()) {
+          auto const& checksums = current.get<PrecomputedChecksumsOption>();
+          if (crc.empty()) crc = checksums.crc32c;
+          if (md5.empty()) md5 = checksums.md5;
+        }
+        return internal::HashValues{std::move(crc), std::move(md5)};
+      }(),
       internal::CreateHashValidator(request),
       request.GetOption<AutoFinalize>().value_or(
           AutoFinalizeConfig::kEnabled)));
