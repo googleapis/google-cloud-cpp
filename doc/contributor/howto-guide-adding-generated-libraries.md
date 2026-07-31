@@ -35,10 +35,9 @@ bazel_output_base="$(bazelisk info output_base)"
 
 You may need to
 [Send a PR to update the googleapis SHA to the latest version](../contributor/howto-guide-update-googleapis-sha.md).
-Wait until that is submitted before proceeding any further for the following 2
-cases:
+Wait until that is submitted before proceeding any further for the case:
 
-1. The dependency does not exist at the pinned version of the googleapis repo.
+- The dependency does not exist at the pinned version of the googleapis repo.
 
 ```shell
 bazelisk --batch query --noshow_progress --noshow_loading_progress \
@@ -51,9 +50,6 @@ bazelisk --batch query --noshow_progress --noshow_loading_progress \
 ```shell
 ERROR: no targets found beneath 'commerce'
 ```
-
-2. Check `$bazel_output_base/external/googleapis~/api-index-v1.json`, if
-   `$library` with the correct version is not in `apis` section.
 
 ### Edit the scripts and configuration
 
@@ -98,7 +94,7 @@ Find the list of `.proto` files that will need to be included:
 
 ```shell
 find "${bazel_output_base}/external/googleapis+/${subdir}" -name '*.proto' -print0 |
-  xargs -0 grep -l '^service'
+  xargs -0 grep -l '^service' | sed 's|.*/external/googleapis/||' | sort
 ```
 
 > **Note:** While older service definitions may not include the version
