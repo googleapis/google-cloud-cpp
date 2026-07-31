@@ -12,6 +12,9 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 ### [Cloud Quotas API](/google/cloud/cloudquotas/README.md)
  - The library has been expanded to include the QuotaAdjusterSettingsManager service.
 
+### [Cloud Sql Admin API](/google/cloud/sql/README.md)
+ - The library has been expanded to include the Backups and FeatureEligibility services.
+
 ## v3.7.0 - 2026-07
 
 ### Removed Libraries
