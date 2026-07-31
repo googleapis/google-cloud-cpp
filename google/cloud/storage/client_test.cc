@@ -426,6 +426,23 @@ TEST_F(ClientTest, TracingWithEnv) {
   EXPECT_TRUE(options.get<OpenTelemetryTracingOption>());
 }
 
+TEST_F(ClientTest, MetricsWithoutEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS", std::nullopt);
+  auto options = internal::DefaultOptions();
+  EXPECT_FALSE(options.get<OpenTelemetryMetricsOption>());
+
+  options =
+      internal::DefaultOptions(Options{}.set<OpenTelemetryMetricsOption>(true));
+  EXPECT_TRUE(options.get<OpenTelemetryMetricsOption>());
+}
+
+TEST_F(ClientTest, MetricsWithEnv) {
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS", "ON");
+  auto const options = internal::DefaultOptions(
+      Options{}.set<OpenTelemetryMetricsOption>(false));
+  EXPECT_TRUE(options.get<OpenTelemetryMetricsOption>());
+}
+
 TEST_F(ClientTest, ProjectIdWithoutEnv) {
   ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", std::nullopt);
   auto const options = internal::DefaultOptions();

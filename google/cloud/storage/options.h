@@ -22,6 +22,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_options.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include <chrono>
 #include <cstdint>
@@ -392,7 +393,8 @@ using ClientOptionList = ::google::cloud::OptionList<
     IdempotencyPolicyOption, CARootsFilePathOption,
     UploadChecksumValidationOption, DownloadChecksumValidationOption,
     PrecomputedChecksumsOption, storage_experimental::HttpVersionOption,
-    storage_experimental::OTelSpanEnrichmentOption>;
+    storage_experimental::OTelSpanEnrichmentOption, OpenTelemetryTracingOption,
+    OpenTelemetryMetricsOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

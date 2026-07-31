@@ -72,6 +72,10 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
   if (e && !e->empty()) {
     opts.set<OpenTelemetryTracingOption>(true);
   }
+  e = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS");
+  if (e && !e->empty()) {
+    opts.set<OpenTelemetryMetricsOption>(true);
+  }
   if (!opts.has<LoggingComponentsOption>()) {
     opts.set<LoggingComponentsOption>(DefaultTracingComponents());
   }
@@ -101,6 +105,10 @@ Options MakeAuthOptions(Options const& options) {
   if (options.has<OpenTelemetryTracingOption>()) {
     opts.set<OpenTelemetryTracingOption>(
         options.get<OpenTelemetryTracingOption>());
+  }
+  if (options.has<OpenTelemetryMetricsOption>()) {
+    opts.set<OpenTelemetryMetricsOption>(
+        options.get<OpenTelemetryMetricsOption>());
   }
   if (options.has<LoggingComponentsOption>()) {
     opts.set<LoggingComponentsOption>(options.get<LoggingComponentsOption>());

@@ -594,6 +594,11 @@ Options DefaultOptions(Options opts) {
     o.set<OpenTelemetryTracingOption>(true);
   }
 
+  auto metrics = GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS");
+  if (metrics && !metrics->empty()) {
+    o.set<OpenTelemetryMetricsOption>(true);
+  }
+
   auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT");
   if (project_id.has_value()) {
     o.set<ProjectIdOption>(std::move(*project_id));
