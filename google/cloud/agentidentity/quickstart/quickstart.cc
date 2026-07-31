@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/agentidentity/v1/ EDIT HERE _client.h"
+#include "google/cloud/agentidentity/v1/auth_provider_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,10 +26,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace agentidentity = ::google::cloud::agentidentity_v1;
-  auto client = agentidentity::ServiceClient(
-      agentidentity::MakeServiceConnection());  // EDIT HERE
+  auto client = agentidentity::AuthProviderServiceClient(
+      agentidentity::MakeAuthProviderServiceConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListAuthProviders(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
