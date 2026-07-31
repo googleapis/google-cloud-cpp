@@ -213,6 +213,35 @@ struct DynamicChannelPoolSizingPolicyOption {
   using Type = DynamicChannelPoolSizingPolicy;
 };
 
+enum class DirectPathMode {
+  kDisabled,  // Default.
+  kEnabled,
+};
+
+/**
+ * Option to control whether DirectPath should be used for Bigtable
+ * connections.
+ *
+ * By default, DirectPath is disabled.
+ */
+struct DirectPathModeOption {
+  using Type = DirectPathMode;
+};
+
+enum class DirectPathMetricsMode {
+  kEnabled,  // Default.
+  kDisabled,
+};
+
+/**
+ * Option to control whether DirectPath should emit OpenTelemetry metrics.
+ *
+ * By default, DirectPath OpenTelemetry metrics are enabled.
+ */
+struct DirectPathMetricsModeOption {
+  using Type = DirectPathMetricsMode;
+};
+
 }  // namespace experimental
 
 /// The complete list of options accepted by `bigtable::*Client`
