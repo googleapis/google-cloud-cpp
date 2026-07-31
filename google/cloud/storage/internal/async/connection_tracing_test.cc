@@ -722,9 +722,12 @@ TEST(ConnectionTracing, ResumeAppendableObjectUploadSuccess) {
 
   EXPECT_CALL(*mock, ResumeAppendableObjectUpload).WillOnce(expect_context(p));
   auto actual = MakeTracingAsyncConnection(std::move(mock));
+  google::storage::v2::BidiWriteObjectRequest request;
+  request.mutable_append_object_spec()->set_bucket("test-bucket");
   auto f = actual
                ->ResumeAppendableObjectUpload(
-                   AsyncConnection::AppendableUploadParams{})
+                   AsyncConnection::AppendableUploadParams{request,
+                                                           TracingEnabled()})
                .then(expect_no_context);
 
   auto mock_writer = std::make_unique<MockAsyncWriterConnection>();
