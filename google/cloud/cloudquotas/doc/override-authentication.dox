@@ -11,6 +11,11 @@ The following example shows how to explicitly load a service account key file:
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_quotas_client_samples.cc with-service-account
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudquotas_v1::CloudQuotasClient](@ref cloudquotas_v1::CloudQuotasClient-service-account-snippet)
+- [\c cloudquotas_v1::QuotaAdjusterSettingsManagerClient](@ref cloudquotas_v1::QuotaAdjusterSettingsManagerClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -30,6 +35,12 @@ guide for more details.
 /*! @page cloudquotas_v1::CloudQuotasClient-service-account-snippet Override cloudquotas_v1::CloudQuotasClient Authentication Defaults
 
 @snippet google/cloud/cloudquotas/v1/samples/cloud_quotas_client_samples.cc with-service-account
+
+*/
+
+/*! @page cloudquotas_v1::QuotaAdjusterSettingsManagerClient-service-account-snippet Override cloudquotas_v1::QuotaAdjusterSettingsManagerClient Authentication Defaults
+
+@snippet google/cloud/cloudquotas/v1/samples/quota_adjuster_settings_manager_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->

@@ -190,6 +190,8 @@ add_library(
     internal/endpoint_options.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
+    internal/grpc_metrics_exporter.cc
+    internal/grpc_metrics_exporter.h
     internal/logging_result_set_reader.cc
     internal/logging_result_set_reader.h
     internal/metrics.cc
@@ -285,7 +287,17 @@ target_compile_definitions(google_cloud_cpp_bigtable
                            PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
 target_link_libraries(google_cloud_cpp_bigtable
                       PUBLIC google-cloud-cpp::opentelemetry)
-set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
+if (TARGET gRPC::grpcpp_otel_plugin)
+    target_compile_definitions(
+        google_cloud_cpp_bigtable
+        PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS)
+    target_link_libraries(google_cloud_cpp_bigtable
+                          PUBLIC gRPC::grpcpp_otel_plugin)
+    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "grpcpp_otel_plugin"
+                      "opentelemetry_metrics")
+else ()
+    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "opentelemetry_metrics")
+endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigtable)
 target_include_directories(
     google_cloud_cpp_bigtable
@@ -460,6 +472,7 @@ if (BUILD_TESTING)
         internal/defaults_test.cc
         internal/dynamic_channel_pool_test.cc
         internal/google_bytes_traits_test.cc
+        internal/grpc_metrics_exporter_test.cc
         internal/logging_result_set_reader_test.cc
         internal/metrics_test.cc
         internal/mutate_rows_limiter_test.cc
@@ -527,6 +540,11 @@ if (BUILD_TESTING)
         if (opentelemetry-cpp_FOUND)
             target_compile_definitions(
                 ${target} PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS)
+        endif ()
+        if (TARGET gRPC::grpcpp_otel_plugin)
+            target_compile_definitions(
+                ${target}
+                PRIVATE GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS)
         endif ()
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})

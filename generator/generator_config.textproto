@@ -796,6 +796,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/api/cloudquotas/v1/quota_adjuster_settings.proto"
+  product_path: "google/cloud/cloudquotas/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Security Compliance
 service {
   service_proto_path: "google/cloud/cloudsecuritycompliance/v1/config.proto"

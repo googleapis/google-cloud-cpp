@@ -76,6 +76,11 @@ This assumes you have created a custom idempotency policy. Such as:
 @snippet cloud_quotas_client_samples.cc custom-idempotency-policy
 
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudquotas_v1::CloudQuotasClient](@ref cloudquotas_v1::CloudQuotasClient-retry-snippet)
+- [\c cloudquotas_v1::QuotaAdjusterSettingsManagerClient](@ref cloudquotas_v1::QuotaAdjusterSettingsManagerClient-retry-snippet)
+
 <!-- inject-retry-snippet-end -->
 
 @section cloudquotas-override-retry-more-information More Information
@@ -99,6 +104,18 @@ This shows how to override the retry policies for cloudquotas_v1::CloudQuotasCli
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/cloudquotas/v1/samples/cloud_quotas_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page cloudquotas_v1::QuotaAdjusterSettingsManagerClient-retry-snippet Override cloudquotas_v1::QuotaAdjusterSettingsManagerClient Retry Policies
+
+This shows how to override the retry policies for cloudquotas_v1::QuotaAdjusterSettingsManagerClient:
+
+@snippet google/cloud/cloudquotas/v1/samples/quota_adjuster_settings_manager_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/cloudquotas/v1/samples/quota_adjuster_settings_manager_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->
