@@ -42,7 +42,8 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "accessapproval"
     "accesscontextmanager"
     "advisorynotifications"
-    "agentregistry" # Generated 2026-06-26
+    "agentidentity"
+    "agentregistry"
     "aiplatform"
     "alloydb"
     "apigateway"
