@@ -25,6 +25,9 @@
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
+#include "absl/strings/str_join.h"
+#include "absl/strings/str_replace.h"
+#include "absl/strings/str_split.h"
 #include "absl/strings/string_view.h"
 #include <grpcpp/ext/otel_plugin.h>
 #include <grpcpp/grpcpp.h>
@@ -203,7 +206,7 @@ MonitoredResourceResult MakeMonitoredResource(
     Options const& options, std::string const& client_uid) {
   namespace sc = ::opentelemetry::semconv;
   google::api::MonitoredResource resource;
-  resource.set_type("bigtable.googleapis.com/Client");
+  resource.set_type("bigtable_client");
   auto& labels = *resource.mutable_labels();
   auto const& attributes = pda.attributes.GetAttributes();
   auto get_attr = [&](std::string const& key) {
@@ -225,9 +228,6 @@ MonitoredResourceResult MakeMonitoredResource(
   };
 
   auto project_id = get_attr("project_id");
-  // Fall back to resolving the project ID from `InstanceChannelAffinityOption`
-  // if the static `ProjectIdOption` is not set on the client (which is common
-  // in client configurations with instance routing / channel affinity).
   if (project_id.empty() &&
       options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
     auto const& instances =
@@ -240,8 +240,18 @@ MonitoredResourceResult MakeMonitoredResource(
     project_id = by_name(sc::cloud::kCloudAccountId);
   }
 
+  auto instance = get_attr("instance");
+  if (instance.empty() &&
+      options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
+    auto const& instances =
+        options.get<bigtable_internal::InstanceChannelAffinityOption>();
+    if (!instances.empty()) {
+      instance = instances[0].instance_id();
+    }
+  }
+
   labels["project_id"] = project_id;
-  labels["instance"] = get_attr("instance");
+  labels["instance"] = std::move(instance);
   labels["app_profile"] = options.get<bigtable::AppProfileIdOption>();
   labels["client_name"] = "cpp.Bigtable/" + bigtable::version_string();
   labels["uuid"] = client_uid;
@@ -253,13 +263,25 @@ MonitoredResourceResult MakeMonitoredResource(
   if (!client_project.empty()) {
     labels["client_project"] = client_project;
   }
-  labels["location"] = by_name(sc::cloud::kCloudAvailabilityZone,
-                               by_name(sc::cloud::kCloudRegion, "global"));
+
+  auto region = by_name(sc::cloud::kCloudRegion);
+  if (region.empty()) {
+    region = by_name(sc::cloud::kCloudAvailabilityZone);
+    std::vector<absl::string_view> parts = absl::StrSplit(region, '-');
+    if (parts.size() >= 3 && parts.back().size() == 1) {
+      parts.pop_back();
+      region = absl::StrJoin(parts, "-");
+    }
+  }
+  if (region.empty()) {
+    region = "global";
+  }
+  labels["region"] = std::move(region);
   labels["cloud_platform"] = by_name(sc::cloud::kCloudPlatform, "unknown");
   labels["host_id"] = by_name("faas.id", by_name(sc::host::kHostId, "unknown"));
   auto hostname = by_name(sc::host::kHostName);
   if (!hostname.empty()) {
-    labels["hostname"] = hostname;
+    labels["host_name"] = hostname;
   }
 
   return MonitoredResourceResult{std::move(project_id), std::move(resource)};
@@ -283,14 +305,42 @@ void EnableGrpcMetrics(
                               std::move(res.resource));
       };
 
-  std::set<std::string> excluded_labels{"project_id", "instance"};
+  std::set<std::string> excluded_labels{
+      "project_id",
+      "instance",
+      "app_profile",
+      "client_project",
+      "cloud_platform",
+      "region",
+      "client_region",
+      "host_id",
+      "host_name",
+      "client_name",
+      "uuid",
+      "service_name",
+      "service_namespace",
+      "service_instance_id",
+      "service.name",
+      "service.namespace",
+      "service.instance.id",
+  };
   auto resource_filter_fn =
       [excluded_labels = std::move(excluded_labels)](std::string const& key) {
         return internal::Contains(excluded_labels, key);
       };
 
+  auto constexpr kBigtableMetricNamePath =
+      "bigtable.googleapis.com/internal/client/";
+  auto exporter_options = options;
+  // Internal metrics must use ServiceTimeSeries to avoid permission issues.
+  exporter_options.set<otel::ServiceTimeSeriesOption>(true);
+  exporter_options.set<otel::MetricNameFormatterOption>([=](auto const& name) {
+    return absl::StrCat(kBigtableMetricNamePath,
+                        absl::StrReplaceAll(name, {{".", "/"}}));
+  });
+
   auto exporter = otel_internal::MakeMonitoringExporter(
-      dynamic_resource_fn, resource_filter_fn, conn, options);
+      dynamic_resource_fn, resource_filter_fn, conn, exporter_options);
 
   auto reader_options =
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
@@ -317,6 +367,14 @@ void EnableGrpcMetrics(
       absl::string_view{"grpc.subchannel.connection_attempts_failed"},
       absl::string_view{"grpc.subchannel.open_connections"},
   };
+
+  auto const disable_metrics = std::vector<absl::string_view>{
+      absl::string_view{
+          "grpc.client.attempt.sent_total_compressed_message_size"},
+      absl::string_view{
+          "grpc.client.attempt.rcvd_total_compressed_message_size"},
+  };
+
   auto scope_filter =
       [authority = std::move(authority)](
           grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
@@ -330,6 +388,7 @@ void EnableGrpcMetrics(
       grpc::OpenTelemetryPluginBuilder()
           .SetMeterProvider(provider)
           .EnableMetrics(metrics)
+          .DisableMetrics(disable_metrics)
           .SetGenericMethodAttributeFilter([](absl::string_view target) {
             return absl::StartsWith(target, "google.bigtable.v2");
           })
