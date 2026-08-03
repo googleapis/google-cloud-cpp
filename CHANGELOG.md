@@ -9,6 +9,10 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.8.0 - TBD
 
+### Removed Libraries
+
+- The `parallelstore` client library has been removed because the Parallelstore service has been deprecated.
+
 ### New Libraries
 
 We are happy to announce the following GA libraries. Unless specifically noted,
