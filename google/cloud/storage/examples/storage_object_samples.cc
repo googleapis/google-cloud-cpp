@@ -132,7 +132,7 @@ void InsertObject(google::cloud::storage::Client client,
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name, std::string const& contents) {
+     std::string const& object_name, std::string contents) {
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.InsertObject(bucket_name, object_name, std::move(contents));
     if (!object_metadata) throw std::move(object_metadata).status();
@@ -151,11 +151,12 @@ void InsertObjectWithChecksum(google::cloud::storage::Client client,
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name, std::string const& contents) {
+     std::string const& object_name, std::string contents) {
+    auto checksum = gcs::ComputeCrc32cChecksum(contents);
     StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
         bucket_name, object_name, std::move(contents),
         google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
-            gcs::PrecomputedChecksums{gcs::ComputeCrc32cChecksum(contents)}));
+            gcs::PrecomputedChecksums{std::move(checksum)}));
 
     if (!object_metadata) throw std::move(object_metadata).status();
 
@@ -172,16 +173,19 @@ void InsertObjectWithBadChecksum(google::cloud::storage::Client client,
   //! [insert-object-with-bad-checksum]
   namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name, std::string const& contents) {
-    try {
-      client.InsertObject(
-          bucket_name, object_name, std::move(contents),
-          google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
-              gcs::PrecomputedChecksums{"bad_crc32c"}));
-    } catch (google::cloud::Status const& status) {
+     std::string const& object_name, std::string contents) {
+    auto object_metadata = client.InsertObject(
+        bucket_name, object_name, std::move(contents),
+        google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
+            gcs::PrecomputedChecksums{"bad_crc32c"}));
+
+    if (!object_metadata) {
       std::cout << "The object was not created because the checksum was bad. "
-                << "Status: " << status << "\n";
+                << "Status: " << object_metadata.status() << "\n";
+      return;
     }
+    throw std::runtime_error(
+        "The object was created, but it shouldn't have been!");
   }
   //! [insert-object-with-bad-checksum]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
@@ -194,7 +198,7 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client,
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](std::string const& bucket_name, std::string const& object_name,
-     std::string const& contents) {
+     std::string contents) {
     // Create a client that only retries idempotent operations, the default is
     // to retry all operations.
     auto client =
