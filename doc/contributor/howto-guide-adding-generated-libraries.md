@@ -94,7 +94,7 @@ Find the list of `.proto` files that will need to be included:
 
 ```shell
 find "${bazel_output_base}/external/googleapis+/${subdir}" -name '*.proto' -print0 |
-  xargs -0 grep -l '^service' | sed 's|.*/external/googleapis/||' | sort
+  xargs -0 grep -l '^service' | sed 's|.*/external/googleapis[^/]*/||' | sort
 ```
 
 > **Note:** While older service definitions may not include the version
