@@ -67,6 +67,19 @@ struct OTelSpanEnrichmentOption {
   using Type = bool;
 };
 
+/**
+ * Enable/disable OpenTelemetry metrics collection for Storage.
+ *
+ * @par Environment variable
+ * This option is controlled by the `GCP_STORAGE_CPP_ENABLE_OTEL_METRICS` or
+ * `GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS` environment variable.
+ *
+ * @ingroup storage-options
+ */
+struct EnableOTelMetricsOption {
+  using Type = bool;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 
@@ -393,7 +406,8 @@ using ClientOptionList = ::google::cloud::OptionList<
     IdempotencyPolicyOption, CARootsFilePathOption,
     UploadChecksumValidationOption, DownloadChecksumValidationOption,
     PrecomputedChecksumsOption, storage_experimental::HttpVersionOption,
-    storage_experimental::OTelSpanEnrichmentOption, OpenTelemetryTracingOption,
+    storage_experimental::OTelSpanEnrichmentOption,
+    storage_experimental::EnableOTelMetricsOption, OpenTelemetryTracingOption,
     OpenTelemetryMetricsOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

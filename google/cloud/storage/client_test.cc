@@ -427,20 +427,59 @@ TEST_F(ClientTest, TracingWithEnv) {
 }
 
 TEST_F(ClientTest, MetricsWithoutEnv) {
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS", std::nullopt);
+  ScopedEnvironment env1("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS",
+                         std::nullopt);
+  ScopedEnvironment env2("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
   auto options = internal::DefaultOptions();
   EXPECT_FALSE(options.get<OpenTelemetryMetricsOption>());
 
   options =
       internal::DefaultOptions(Options{}.set<OpenTelemetryMetricsOption>(true));
   EXPECT_TRUE(options.get<OpenTelemetryMetricsOption>());
+
+  options = internal::DefaultOptions(
+      Options{}.set<storage_experimental::EnableOTelMetricsOption>(true));
+  EXPECT_TRUE(options.get<OpenTelemetryMetricsOption>());
+  EXPECT_TRUE(options.get<storage_experimental::EnableOTelMetricsOption>());
 }
 
 TEST_F(ClientTest, MetricsWithEnv) {
-  ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS", "ON");
+  ScopedEnvironment env1("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
+  ScopedEnvironment env2("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS", "ON");
   auto const options = internal::DefaultOptions(
       Options{}.set<OpenTelemetryMetricsOption>(false));
   EXPECT_TRUE(options.get<OpenTelemetryMetricsOption>());
+}
+
+TEST_F(ClientTest, StorageMetricsWithEnv) {
+  ScopedEnvironment env1("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS",
+                         std::nullopt);
+  ScopedEnvironment env2("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", "ON");
+  auto const options = internal::DefaultOptions();
+  EXPECT_TRUE(options.get<OpenTelemetryMetricsOption>());
+  EXPECT_TRUE(options.get<storage_experimental::EnableOTelMetricsOption>());
+}
+
+TEST_F(ClientTest, StorageOptionPrecedenceOverGeneric) {
+  ScopedEnvironment env1("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS",
+                         std::nullopt);
+  ScopedEnvironment env2("GCP_STORAGE_CPP_ENABLE_OTEL_METRICS", std::nullopt);
+
+  // Storage-specific option = false overrides generic option = true
+  auto options = internal::DefaultOptions(
+      Options{}
+          .set<OpenTelemetryMetricsOption>(true)
+          .set<storage_experimental::EnableOTelMetricsOption>(false));
+  EXPECT_FALSE(options.get<OpenTelemetryMetricsOption>());
+  EXPECT_FALSE(options.get<storage_experimental::EnableOTelMetricsOption>());
+
+  // Storage-specific option = true overrides generic option = false
+  options = internal::DefaultOptions(
+      Options{}
+          .set<OpenTelemetryMetricsOption>(false)
+          .set<storage_experimental::EnableOTelMetricsOption>(true));
+  EXPECT_TRUE(options.get<OpenTelemetryMetricsOption>());
+  EXPECT_TRUE(options.get<storage_experimental::EnableOTelMetricsOption>());
 }
 
 TEST_F(ClientTest, ProjectIdWithoutEnv) {
