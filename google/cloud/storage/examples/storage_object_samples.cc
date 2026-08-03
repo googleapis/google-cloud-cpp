@@ -145,6 +145,29 @@ void InsertObject(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void InsertObjectWithChecksum(google::cloud::storage::Client client,
+                              std::vector<std::string> const& argv) {
+  //! [insert-object-with-checksum]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name, std::string const& contents) {
+    StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
+        bucket_name, object_name, std::move(contents),
+        google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
+            gcs::PrecomputedChecksums{
+                gcs::ComputeCrc32cChecksum(contents), ""}));
+
+    if (!object_metadata) throw std::move(object_metadata).status();
+
+    std::cout << "The object " << object_metadata->name()
+              << " was created in bucket " << object_metadata->bucket()
+              << " with precomputed checksums.\n";
+  }
+  //! [insert-object-with-checksum]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 void InsertObjectStrictIdempotency(google::cloud::storage::Client,
                                    std::vector<std::string> const& argv) {
@@ -392,6 +415,34 @@ void WriteObject(google::cloud::storage::Client client,
   }
   //! [write object] [END storage_stream_file_upload]
   (std::move(client), argv.at(0), argv.at(1), std::stoi(argv.at(2)));
+}
+
+void WriteObjectWithChecksum(google::cloud::storage::Client client,
+                             std::vector<std::string> const& argv) {
+  //! [write-object-with-checksum]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& object_name) {
+    std::string const text = "Some data\n";
+    gcs::ObjectWriteStream stream = client.WriteObject(
+        bucket_name, object_name,
+        google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
+            gcs::PrecomputedChecksums{
+                gcs::ComputeCrc32cChecksum(text), ""}));
+
+    stream << text;
+    stream.Close();
+
+    StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
+    if (!metadata) throw std::move(metadata).status();
+
+    std::cout << "The object " << metadata->name()
+              << " was created in bucket " << metadata->bucket()
+              << " with precomputed checksums.\n";
+  }
+  //! [write-object-with-checksum]
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void WriteObjectFromMemory(google::cloud::storage::Client client,
@@ -677,6 +728,9 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning InsertObject() example [1]" << std::endl;
   InsertObject(client, {bucket_name, object_name, object_media});
 
+  std::cout << "\nRunning InsertObjectWithChecksum() example" << std::endl;
+  InsertObjectWithChecksum(client, {bucket_name, object_name + "_with_checksum", object_media});
+
   std::cout << "\nRunning ListObjects() example" << std::endl;
   ListObjects(client, {bucket_name});
 
@@ -724,6 +778,9 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning WriteObject() example" << std::endl;
   WriteObject(client, {bucket_name, object_name, "100000"});
+
+  std::cout << "\nRunning WriteObjectWithChecksum() example" << std::endl;
+  WriteObjectWithChecksum(client, {bucket_name, object_name + "_write_checksum"});
 
   std::cout << "\nRunning ReadObjectRange() example" << std::endl;
   ReadObjectRange(client, {bucket_name, object_name, "1000", "2000"});
@@ -830,6 +887,9 @@ int main(int argc, char* argv[]) {
                  ListObjectsAndFolders),
       make_entry("insert-object",
                  {"<object-name>", "<object-contents (string)>"}, InsertObject),
+      make_entry("insert-object-with-checksum",
+                 {"<object-name>", "<object-contents (string)>"},
+                 InsertObjectWithChecksum),
       make_entry("insert-object-strict-idempotency",
                  {"<object-name>", "<object-contents (string)>"},
                  InsertObjectStrictIdempotency),
@@ -855,6 +915,8 @@ int main(int argc, char* argv[]) {
       make_entry("delete-object", {"<object-name>"}, DeleteObject),
       make_entry("write-object",
                  {"<object-name>", "<target-object-line-count>"}, WriteObject),
+      make_entry("write-object-with-checksum", {"<object-name>"},
+                 WriteObjectWithChecksum),
       make_entry("write-object-from-memory", {"<object-name>"},
                  WriteObjectFromMemory),
       make_entry("update-object-metadata",
