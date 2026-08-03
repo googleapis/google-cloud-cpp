@@ -64,7 +64,7 @@ std::string CreateFeaturesMetadata(bool is_direct_path) {
   return internal::UrlsafeBase64EncodeWithPadding(proto.SerializeAsString());
 }
 
-std::string FeaturesMetadata(Options const& options) {
+std::string const& FeaturesMetadata(Options const& options) {
   if (bigtable::internal::IsDirectPath(options)) {
     static auto const* const kDirectPathFeatures =
         new std::string(CreateFeaturesMetadata(true));
