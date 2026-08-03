@@ -16,6 +16,12 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Agent Identity API](/google/cloud/agentidentity/README.md)
 
+### [Cloud Quotas API](/google/cloud/cloudquotas/README.md)
+ - The library has been expanded to include the QuotaAdjusterSettingsManager service.
+
+### [Cloud Sql Admin API](/google/cloud/sql/README.md)
+ - The library has been expanded to include the Backups and FeatureEligibility services.
+
 ## v3.7.0 - 2026-07
 
 ### Removed Libraries

@@ -804,6 +804,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/api/cloudquotas/v1/quota_adjuster_settings.proto"
+  product_path: "google/cloud/cloudquotas/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Security Compliance
 service {
   service_proto_path: "google/cloud/cloudsecuritycompliance/v1/config.proto"
@@ -3782,6 +3789,16 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/sql/v1/cloud_sql_backups.proto"
+  product_path: "google/cloud/sql/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
+}
+
+service {
   service_proto_path: "google/cloud/sql/v1/cloud_sql_connect.proto"
   product_path: "google/cloud/sql/v1"
   initial_copyright_year: "2023"
@@ -3805,6 +3822,16 @@ service {
   service_proto_path: "google/cloud/sql/v1/cloud_sql_events.proto"
   product_path: "google/cloud/sql/v1"
   initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
+}
+
+service {
+  service_proto_path: "google/cloud/sql/v1/cloud_sql_feature_eligibility.proto"
+  product_path: "google/cloud/sql/v1"
+  initial_copyright_year: "2026"
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
   generate_grpc_transport: false

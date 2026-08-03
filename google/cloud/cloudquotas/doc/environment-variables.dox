@@ -13,6 +13,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "cloudquotas.googleapis.com")
   used by `MakeCloudQuotasConnection()`.
 
+- `GOOGLE_CLOUD_CPP_QUOTA_ADJUSTER_SETTINGS_MANAGER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudquotas.googleapis.com")
+  used by `MakeQuotaAdjusterSettingsManagerConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption

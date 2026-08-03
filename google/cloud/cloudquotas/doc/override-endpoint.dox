@@ -11,6 +11,11 @@ For example, this will override the default endpoint for `cloudquotas_v1::CloudQ
 
 @snippet cloud_quotas_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudquotas_v1::CloudQuotasClient](@ref cloudquotas_v1::CloudQuotasClient-endpoint-snippet)
+- [\c cloudquotas_v1::QuotaAdjusterSettingsManagerClient](@ref cloudquotas_v1::QuotaAdjusterSettingsManagerClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
@@ -20,6 +25,12 @@ For example, this will override the default endpoint for `cloudquotas_v1::CloudQ
 /*! @page cloudquotas_v1::CloudQuotasClient-endpoint-snippet Override cloudquotas_v1::CloudQuotasClient Endpoint Configuration
 
 @snippet google/cloud/cloudquotas/v1/samples/cloud_quotas_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page cloudquotas_v1::QuotaAdjusterSettingsManagerClient-endpoint-snippet Override cloudquotas_v1::QuotaAdjusterSettingsManagerClient Endpoint Configuration
+
+@snippet google/cloud/cloudquotas/v1/samples/quota_adjuster_settings_manager_client_samples.cc set-client-endpoint
 
 */
 // <!-- inject-endpoint-pages-end -->

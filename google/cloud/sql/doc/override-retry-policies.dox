@@ -80,9 +80,11 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c sql_v1::SqlAvailableDatabaseVersionsServiceClient](@ref sql_v1::SqlAvailableDatabaseVersionsServiceClient-retry-snippet)
 - [\c sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-retry-snippet)
+- [\c sql_v1::SqlBackupsServiceClient](@ref sql_v1::SqlBackupsServiceClient-retry-snippet)
 - [\c sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-retry-snippet)
 - [\c sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-retry-snippet)
 - [\c sql_v1::SqlEventsServiceClient](@ref sql_v1::SqlEventsServiceClient-retry-snippet)
+- [\c sql_v1::SqlFeatureEligibilityServiceClient](@ref sql_v1::SqlFeatureEligibilityServiceClient-retry-snippet)
 - [\c sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-retry-snippet)
 - [\c sql_v1::SqlIamPoliciesServiceClient](@ref sql_v1::SqlIamPoliciesServiceClient-retry-snippet)
 - [\c sql_v1::SqlInstanceNamesServiceClient](@ref sql_v1::SqlInstanceNamesServiceClient-retry-snippet)
@@ -131,6 +133,18 @@ Assuming you have created a custom idempotency policy. Such as:
 
 */
 
+/*! @page sql_v1::SqlBackupsServiceClient-retry-snippet Override sql_v1::SqlBackupsServiceClient Retry Policies
+
+This shows how to override the retry policies for sql_v1::SqlBackupsServiceClient:
+
+@snippet google/cloud/sql/v1/samples/sql_backups_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/sql/v1/samples/sql_backups_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page sql_v1::SqlConnectServiceClient-retry-snippet Override sql_v1::SqlConnectServiceClient Retry Policies
 
 This shows how to override the retry policies for sql_v1::SqlConnectServiceClient:
@@ -164,6 +178,18 @@ This shows how to override the retry policies for sql_v1::SqlEventsServiceClient
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/sql/v1/samples/sql_events_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page sql_v1::SqlFeatureEligibilityServiceClient-retry-snippet Override sql_v1::SqlFeatureEligibilityServiceClient Retry Policies
+
+This shows how to override the retry policies for sql_v1::SqlFeatureEligibilityServiceClient:
+
+@snippet google/cloud/sql/v1/samples/sql_feature_eligibility_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/sql/v1/samples/sql_feature_eligibility_client_samples.cc custom-idempotency-policy
 
 */
 
