@@ -89,10 +89,6 @@ class ReadRange {
 
   bool IsDone() const;
 
-  /// Returns the size of the currently buffered payload for this range.
-  /// Used for pacing memory usage of unclaimed pre-warmed ranges.
-  std::size_t BufferedSize() const;
-
   std::optional<google::storage::v2::ReadRange> RangeForResume(
       std::int64_t read_id) const;
 

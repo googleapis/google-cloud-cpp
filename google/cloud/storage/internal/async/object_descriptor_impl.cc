@@ -419,6 +419,34 @@ void ObjectDescriptorImpl::OnRead(
   // Release the lock while notifying the ranges. The notifications may trigger
   // application code, and that code may callback on this class.
   lk.unlock();
+  auto apply_pacing_and_check_eviction =
+      [this](std::int64_t id, std::size_t chunk_size, StreamIterator it) {
+        auto unclaimed_it = unclaimed_bytes_buffered_.find(id);
+        if (unclaimed_it == unclaimed_bytes_buffered_.end()) return false;
+
+        if (total_prewarmed_bytes_buffered_ + chunk_size >
+            max_prewarmed_buffer_size_) {
+          // Evict the range if it exceeds the pacing limit.
+          total_prewarmed_bytes_buffered_ -= unclaimed_it->second;
+          unclaimed_bytes_buffered_.erase(unclaimed_it);
+          auto cache_it = std::find_if(
+              prewarmed_ranges_.begin(), prewarmed_ranges_.end(),
+              [id](auto const& kv) { return kv.second.read_id == id; });
+          if (cache_it != prewarmed_ranges_.end()) {
+            prewarmed_ranges_.erase(cache_it);
+          }
+          // Erasing from active_ranges ensures we ignore any subsequent GCS
+          // chunks for this range.
+          it->active_ranges.erase(id);
+          return true;
+        }
+
+        // Track buffered data size for pacing.
+        unclaimed_it->second += chunk_size;
+        total_prewarmed_bytes_buffered_ += chunk_size;
+        return false;
+      };
+
   for (auto& range_data : *response->mutable_object_data_ranges()) {
     auto id = range_data.read_range().read_id();
     auto const l = copy.find(id);
@@ -434,30 +462,7 @@ void ObjectDescriptorImpl::OnRead(
     // breach the pacing limit and evict a subsequent chunk's range.
     bool active = it->active_ranges.count(id) != 0;
     if (active) {
-      // If this is an unclaimed pre-warmed range, apply pacing/eviction logic.
-      auto unclaimed_it = unclaimed_bytes_buffered_.find(id);
-      if (unclaimed_it != unclaimed_bytes_buffered_.end()) {
-        if (total_prewarmed_bytes_buffered_ + chunk_size >
-            max_prewarmed_buffer_size_) {
-          // Evict the range if it exceeds the pacing limit.
-          evict = true;
-          total_prewarmed_bytes_buffered_ -= unclaimed_it->second;
-          unclaimed_bytes_buffered_.erase(unclaimed_it);
-          auto cache_it = std::find_if(
-              prewarmed_ranges_.begin(), prewarmed_ranges_.end(),
-              [id](auto const& kv) { return kv.second.read_id == id; });
-          if (cache_it != prewarmed_ranges_.end()) {
-            prewarmed_ranges_.erase(cache_it);
-          }
-          // Erasing from active_ranges ensures we ignore any subsequent GCS
-          // chunks for this range.
-          it->active_ranges.erase(id);
-        } else {
-          // Track buffered data size for pacing.
-          unclaimed_it->second += chunk_size;
-          total_prewarmed_bytes_buffered_ += chunk_size;
-        }
-      }
+      evict = apply_pacing_and_check_eviction(id, chunk_size, it);
     }
     lk.unlock();
     if (active) {

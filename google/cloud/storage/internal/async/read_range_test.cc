@@ -133,28 +133,6 @@ TEST(ReadRange, BasicLifecycle) {
   EXPECT_THAT(actual.Read().get(), VariantWith<Status>(IsOk()));
 }
 
-TEST(ReadRange, BufferedSize) {
-  ReadRange actual(0, 100);
-  EXPECT_EQ(actual.BufferedSize(), 0);
-
-  auto data = google::storage::v2::ObjectRangeData{};
-  auto constexpr kData0 = R"pb(
-    checksummed_data { content: "0123456789" }
-    read_range { read_offset: 0 read_length: 10 read_id: 7 }
-    range_end: false
-  )pb";
-  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
-
-  // Receive data before Read() is invoked to test payload buffering.
-  actual.OnRead(std::move(data));
-  EXPECT_EQ(actual.BufferedSize(), 10);
-
-  // Claiming the buffered payload resets the buffered size to 0.
-  auto pending = actual.Read();
-  EXPECT_TRUE(pending.is_ready());
-  EXPECT_EQ(actual.BufferedSize(), 0);
-}
-
 TEST(ReadRange, Error) {
   ReadRange actual(10000, 40);
   auto pending = actual.Read();
