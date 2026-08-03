@@ -753,8 +753,7 @@ void CreateAndWriteAppendableObjectWithChecksum(
     // just before calling Finalize().
     google::cloud::internal::OptionsSpan span(
         google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
-            gcs::PrecomputedChecksums{
-                gcs::ComputeCrc32cChecksum("Some data\n"), ""}));
+            gcs::PrecomputedChecksums{gcs::ComputeCrc32cChecksum("Some data\n")}));
     co_return (co_await writer.Finalize(std::move(token))).value();
   };
   // [END storage_create_and_write_appendable_object_with_checksum]
