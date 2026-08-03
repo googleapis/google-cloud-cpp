@@ -224,7 +224,7 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client,
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](std::string const& bucket_name, std::string const& object_name,
-     std::string const& contents) {
+     std::string contents) {
     // Create a client that only gives up on the third error. The default policy
     // is to retry for several minutes.
     auto client =
@@ -251,7 +251,7 @@ void InsertObjectMultipart(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& content_type,
-     std::string const& contents) {
+     std::string contents) {
     // Setting the object metadata (via the `gcs::WithObjectMadata` option)
     // requires a multipart upload, the library prefers simple uploads unless
     // required as in this case.
