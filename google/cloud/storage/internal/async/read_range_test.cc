@@ -581,6 +581,39 @@ TEST(ReadRange, NoResumeIfRequestExceeded) {
   EXPECT_FALSE(resume.has_value());
 }
 
+TEST(ReadRangeDeduplicationTest, Basic) {
+  std::vector<ReadRangeConfig> ranges = {
+      {0, 10},  {10, 10}, {0, 10},  // Duplicate
+      {20, 10}, {10, 10},           // Duplicate
+  };
+
+  auto deduped = DeduplicateRanges(ranges);
+  ASSERT_EQ(deduped.size(), 3);
+  EXPECT_EQ(deduped[0].config.offset, 0);
+  EXPECT_EQ(deduped[0].config.length, 10);
+  EXPECT_EQ(deduped[0].read_id, 1);
+
+  EXPECT_EQ(deduped[1].config.offset, 10);
+  EXPECT_EQ(deduped[1].config.length, 10);
+  EXPECT_EQ(deduped[1].read_id, 2);
+
+  EXPECT_EQ(deduped[2].config.offset, 20);
+  EXPECT_EQ(deduped[2].config.length, 10);
+  EXPECT_EQ(deduped[2].read_id, 3);
+}
+
+TEST(ReadRangeDeduplicationTest, InitialId) {
+  std::vector<ReadRangeConfig> ranges = {
+      {0, 10},
+  };
+
+  auto deduped = DeduplicateRanges(ranges, /*initial_id=*/5);
+  ASSERT_EQ(deduped.size(), 1);
+  EXPECT_EQ(deduped[0].config.offset, 0);
+  EXPECT_EQ(deduped[0].config.length, 10);
+  EXPECT_EQ(deduped[0].read_id, 6);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

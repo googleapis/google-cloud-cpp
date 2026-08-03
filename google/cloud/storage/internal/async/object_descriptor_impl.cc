@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/async/multi_stream_manager.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
 #include "google/cloud/storage/internal/async/options.h"
+#include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
@@ -60,26 +61,23 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     auto const& ranges = options_.get<ReadRangesOption>();
     auto it = stream_manager_->GetFirstStream();
     if (it != stream_manager_->End()) {
-      std::int64_t id = 0;
-      std::set<std::pair<std::int64_t, std::int64_t>> seen_ranges;
-      for (auto const& r : ranges) {
-        auto range_key = std::make_pair(r.offset, r.length);
-        if (!seen_ranges.insert(range_key).second) {
-          continue;  // Skip duplicate range.
-        }
-        ++id;
-        auto range = std::make_shared<ReadRange>(r.offset, r.length,
-                                                 read_object_spec_.bucket(),
-                                                 read_object_spec_.object());
+      auto deduped_ranges = DeduplicateRanges(ranges);
+      for (auto const& dr : deduped_ranges) {
+        auto range_key = std::make_pair(dr.config.offset, dr.config.length);
+        auto range = std::make_shared<ReadRange>(
+            dr.config.offset, dr.config.length, read_object_spec_.bucket(),
+            read_object_spec_.object());
         // Registering on the stream allows `OnRead` to route incoming data to
         // these ranges.
-        it->active_ranges.emplace(id, range);
+        it->active_ranges.emplace(dr.read_id, range);
         // Cache them so subsequent `Read()` calls can claim them.
-        prewarmed_ranges_.emplace(range_key, PrewarmedRange{range, id});
+        prewarmed_ranges_.emplace(range_key, PrewarmedRange{range, dr.read_id});
       }
       // Ensure new dynamically requested ranges use IDs that don't conflict
       // with pre-warmed ones.
-      read_id_generator_ = id;
+      if (!deduped_ranges.empty()) {
+        read_id_generator_ = deduped_ranges.back().read_id;
+      }
     }
   }
 }
@@ -415,6 +413,8 @@ void ObjectDescriptorImpl::OnRead(
     auto range = l->second;
     bool active = false;
     lk.lock();
+    // Verify the range is still active on this stream. It might have been
+    // evicted or cancelled during the processing of this batch.
     active = it->active_ranges.count(id) != 0;
     lk.unlock();
     if (active) {

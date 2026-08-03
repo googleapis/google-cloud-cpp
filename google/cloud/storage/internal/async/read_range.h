@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_READ_RANGE_H
 
 #include "google/cloud/storage/async/reader_connection.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/future.h"
@@ -26,11 +27,23 @@
 #include <memory>
 #include <mutex>
 #include <optional>
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+struct DedupedReadRange {
+  ReadRangeConfig config;
+  std::int64_t read_id;
+};
+
+// Deduplicates a list of ReadRangeConfigs and assigns a sequential
+// read_id to each unique range, starting with initial_id + 1.
+// Returns a vector mapping each assigned read_id to its corresponding range.
+std::vector<DedupedReadRange> DeduplicateRanges(
+    std::vector<ReadRangeConfig> const& ranges, std::int64_t initial_id = 0);
 
 /**
  * A read range represents a partially completed range download via a

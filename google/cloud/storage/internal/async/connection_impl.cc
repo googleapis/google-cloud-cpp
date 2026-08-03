@@ -28,6 +28,7 @@
 #include "google/cloud/storage/internal/async/open_stream.h"
 #include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
+#include "google/cloud/storage/internal/async/read_range.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_impl.h"
@@ -226,18 +227,12 @@ AsyncConnectionImpl::Open(OpenParams p) {
   // with these ranges to start downloading them as soon as the stream opens.
   if (current->has<ReadRangesOption>()) {
     auto const& ranges = current->get<ReadRangesOption>();
-    std::int64_t id = 0;
-    std::set<std::pair<std::int64_t, std::int64_t>> seen_ranges;
-    for (auto const& r : ranges) {
-      auto range_key = std::make_pair(r.offset, r.length);
-      if (!seen_ranges.insert(range_key).second) {
-        continue;  // Skip duplicate range.
-      }
+    for (auto const& r : DeduplicateRanges(ranges)) {
       auto* proto_range = initial_request.add_read_ranges();
-      proto_range->set_read_offset(r.offset);
-      proto_range->set_read_length(r.length);
+      proto_range->set_read_offset(r.config.offset);
+      proto_range->set_read_length(r.config.length);
       // Generate sequential IDs starting at 1. The receiver must match these.
-      proto_range->set_read_id(++id);
+      proto_range->set_read_id(r.read_id);
     }
   }
   // Get the policy factory and immediately create a policy.
