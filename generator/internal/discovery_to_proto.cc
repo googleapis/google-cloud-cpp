@@ -346,28 +346,30 @@ Status ProcessMethodRequestsAndResponses(
 // NOLINTNEXTLINE(misc-no-recursion)
 std::set<std::string> FindAllTypesToImport(nlohmann::json const& json) {
   std::set<std::string> types_to_import;
-  nlohmann::json fields;
-  if (json.contains("properties")) {
-    fields = json["properties"];
-  } else if (json.contains("additionalProperties") || json.contains("items")) {
-    fields = json;
-  }
+  std::vector<nlohmann::json const*> worklist;
+  worklist.push_back(&json);
 
-  for (auto const& f : fields) {
-    if (f.contains("type")) {
-      if (f["type"] == "any") {
-        types_to_import.insert("google.protobuf.Any");
+  while (!worklist.empty()) {
+    auto const* current = worklist.back();
+    worklist.pop_back();
+
+    if (current->contains("type") && (*current)["type"] == "any") {
+      types_to_import.insert("google.protobuf.Any");
+    }
+    if (current->contains("$ref")) {
+      types_to_import.insert((*current)["$ref"]);
+    }
+
+    if (IsDiscoveryNestedType(*current) || current->contains("properties")) {
+      for (auto const& f : (*current)["properties"]) {
+        worklist.push_back(&f);
       }
     }
-
-    if (f.contains("$ref")) {
-      types_to_import.insert(f["$ref"]);
+    if (IsDiscoveryArrayType(*current)) {
+      worklist.push_back(&(*current)["items"]);
     }
-
-    if (IsDiscoveryArrayType(f) || IsDiscoveryMapType(f) ||
-        IsDiscoveryNestedType(f)) {
-      auto new_ref_values = FindAllTypesToImport(f);
-      types_to_import.insert(new_ref_values.begin(), new_ref_values.end());
+    if (IsDiscoveryMapType(*current)) {
+      worklist.push_back(&(*current)["additionalProperties"]);
     }
   }
 
