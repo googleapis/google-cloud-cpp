@@ -266,11 +266,13 @@ MonitoredResourceResult MakeMonitoredResource(
 
   auto region = by_name(sc::cloud::kCloudRegion);
   if (region.empty()) {
-    region = by_name(sc::cloud::kCloudAvailabilityZone);
-    std::vector<absl::string_view> parts = absl::StrSplit(region, '-');
+    auto zone = by_name(sc::cloud::kCloudAvailabilityZone);
+    std::vector<std::string_view> parts = absl::StrSplit(zone, '-');
     if (parts.size() >= 3 && parts.back().size() == 1) {
       parts.pop_back();
       region = absl::StrJoin(parts, "-");
+    } else {
+      region = std::move(zone);
     }
   }
   if (region.empty()) {
