@@ -214,13 +214,14 @@ future<Status> AsyncWriterConnectionImpl::Close(storage::WritePayload payload) {
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
-  if (absl::holds_alternative<std::int64_t>(persisted_state_)) {
-    return make_ready_future(
-        make_status_or(absl::get<std::int64_t>(persisted_state_)));
+  std::unique_lock<std::mutex> lk(mu_);
+  if (auto* size = absl::get_if<std::int64_t>(&persisted_state_)) {
+    return make_ready_future(make_status_or(*size));
   }
-  if (absl::holds_alternative<google::storage::v2::Object>(persisted_state_)) {
-    return make_ready_future(make_status_or(static_cast<std::int64_t>(
-        absl::get<google::storage::v2::Object>(persisted_state_).size())));
+  if (auto* meta =
+          absl::get_if<google::storage::v2::Object>(&persisted_state_)) {
+    return make_ready_future(
+        make_status_or(static_cast<std::int64_t>(meta->size())));
   }
   return make_ready_future(make_status_or(static_cast<std::int64_t>(0)));
 }
@@ -256,7 +257,9 @@ future<Status> AsyncWriterConnectionImpl::OnPartialUpload(
     return Finish().then(
         HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
   }
+  std::unique_lock<std::mutex> lk(mu_);
   offset_ += upload_size;
+  lk.unlock();
   return make_ready_future(Status{});
 }
 
@@ -269,9 +272,8 @@ future<Status> AsyncWriterConnectionImpl::OnFlush(std::size_t upload_size,
     return Finish().then(
         HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
   }
-  offset_ += upload_size;
-
   std::unique_lock<std::mutex> lk(mu_);
+  offset_ += upload_size;
   auto expected_offset = offset_;
   auto impl = impl_;
   lk.unlock();
@@ -319,8 +321,8 @@ future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
     return Finish().then(
         HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
   }
-  offset_ += upload_size;
   std::unique_lock<std::mutex> lk(mu_);
+  offset_ += upload_size;
   auto impl = impl_;
   lk.unlock();
 
@@ -358,9 +360,9 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
             "Expected error in Finish() after non-ok Write()"))
         .then(transform);
   }
+  std::unique_lock<std::mutex> lk(mu_);
   offset_ += upload_size;
 
-  std::unique_lock<std::mutex> lk(mu_);
   auto impl = impl_;
   lk.unlock();
 
