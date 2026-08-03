@@ -49,7 +49,8 @@ struct [[deprecated(
  * checksums. Note that this option has no effect if the service does not return
  * or compute a CRC32C checksum.
  */
-struct UseCrc32cValueOption {
+struct [[deprecated("Use PrecomputedChecksumsOption instead")]]
+UseCrc32cValueOption {
   using Type = std::uint32_t;
 };
 
@@ -79,7 +80,8 @@ struct [[deprecated(
  * Note that this option has no effect if the service does not return or compute
  * a MD5 hash.
  */
-struct UseMD5ValueOption {
+struct [[deprecated("Use PrecomputedChecksumsOption instead")]]
+UseMD5ValueOption {
   using Type = std::string;
 };
 
