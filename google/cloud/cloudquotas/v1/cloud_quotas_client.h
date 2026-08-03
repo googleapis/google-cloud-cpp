@@ -96,7 +96,7 @@ class CloudQuotasClient {
   ///
   /// Lists QuotaInfos of all quotas for a given project, folder or organization.
   ///
-  /// @param parent  Required. Parent value of QuotaInfo resources.
+  /// @param parent  Required. Identifier. Parent value of QuotaInfo resources.
   ///  Listing across different resource containers (such as 'projects/-') is not
   ///  allowed.
   ///  @n
@@ -177,7 +177,7 @@ class CloudQuotasClient {
   ///
   /// Retrieve the QuotaInfo of a quota for a project, folder or organization.
   ///
-  /// @param name  Required. The resource name of the quota info.
+  /// @param name  Required. Identifier. The resource name of the quota info.
   ///  @n
   ///  An example name:
   ///  `projects/123/locations/global/services/compute.googleapis.com/quotaInfos/CpusPerProjectPerRegion`
@@ -194,7 +194,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.GetQuotaInfoRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L191}
+  /// [google.api.cloudquotas.v1.GetQuotaInfoRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L192}
   /// [google.api.cloudquotas.v1.QuotaInfo]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L48}
   ///
   // clang-format on
@@ -224,7 +224,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.GetQuotaInfoRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L191}
+  /// [google.api.cloudquotas.v1.GetQuotaInfoRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L192}
   /// [google.api.cloudquotas.v1.QuotaInfo]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L48}
   ///
   // clang-format on
@@ -236,7 +236,7 @@ class CloudQuotasClient {
   ///
   /// Lists QuotaPreferences in a given project, folder or organization.
   ///
-  /// @param parent  Required. Parent value of QuotaPreference resources.
+  /// @param parent  Required. Identifier. Parent value of QuotaPreference resources.
   ///  Listing across different resource containers (such as 'projects/-') is not
   ///  allowed.
   ///  @n
@@ -268,7 +268,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.ListQuotaPreferencesRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L205}
+  /// [google.api.cloudquotas.v1.ListQuotaPreferencesRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L207}
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
@@ -307,7 +307,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.ListQuotaPreferencesRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L205}
+  /// [google.api.cloudquotas.v1.ListQuotaPreferencesRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L207}
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
@@ -320,7 +320,7 @@ class CloudQuotasClient {
   ///
   /// Gets details of a single QuotaPreference.
   ///
-  /// @param name  Required. Name of the resource
+  /// @param name  Required. Identifier. Name of the resource
   ///  @n
   ///  Example name:
   ///  `projects/123/locations/global/quota_preferences/my-config-for-us-east1`
@@ -337,7 +337,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.GetQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L261}
+  /// [google.api.cloudquotas.v1.GetQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L264}
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
@@ -367,7 +367,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.GetQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L261}
+  /// [google.api.cloudquotas.v1.GetQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L264}
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
@@ -379,7 +379,7 @@ class CloudQuotasClient {
   ///
   /// Creates a new QuotaPreference that declares the desired value for a quota.
   ///
-  /// @param parent  Required. Value for parent.
+  /// @param parent  Required. Identifier. Value for parent.
   ///  @n
   ///  Example:
   ///  `projects/123/locations/global`
@@ -399,7 +399,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.CreateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L275}
+  /// [google.api.cloudquotas.v1.CreateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L279}
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
@@ -412,7 +412,7 @@ class CloudQuotasClient {
   ///
   /// Creates a new QuotaPreference that declares the desired value for a quota.
   ///
-  /// @param parent  Required. Value for parent.
+  /// @param parent  Required. Identifier. Value for parent.
   ///  @n
   ///  Example:
   ///  `projects/123/locations/global`
@@ -430,7 +430,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.CreateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L275}
+  /// [google.api.cloudquotas.v1.CreateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L279}
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
@@ -462,7 +462,7 @@ class CloudQuotasClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.cloudquotas.v1.CreateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L275}
+  /// [google.api.cloudquotas.v1.CreateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L279}
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
@@ -495,7 +495,7 @@ class CloudQuotasClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
-  /// [google.api.cloudquotas.v1.UpdateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L299}
+  /// [google.api.cloudquotas.v1.UpdateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L304}
   ///
   // clang-format on
   StatusOr<google::api::cloudquotas::v1::QuotaPreference> UpdateQuotaPreference(
@@ -527,7 +527,7 @@ class CloudQuotasClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
-  /// [google.api.cloudquotas.v1.UpdateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L299}
+  /// [google.api.cloudquotas.v1.UpdateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L304}
   ///
   // clang-format on
   StatusOr<google::api::cloudquotas::v1::QuotaPreference> UpdateQuotaPreference(

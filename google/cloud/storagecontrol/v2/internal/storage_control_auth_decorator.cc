@@ -168,6 +168,15 @@ StorageControlAuth::ListManagedFolders(
   return child_->ListManagedFolders(context, options, request);
 }
 
+StatusOr<google::storage::control::v2::ManagedFolder>
+StorageControlAuth::UpdateManagedFolder(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::UpdateManagedFolderRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateManagedFolder(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncCreateAnywhereCache(
     google::cloud::CompletionQueue& cq,
@@ -269,6 +278,80 @@ StorageControlAuth::ListAnywhereCaches(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAnywhereCaches(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageControlAuth::AsyncCreateRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateRapidCache(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> StorageControlAuth::CreateRapidCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::CreateRapidCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRapidCache(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+StorageControlAuth::AsyncUpdateRapidCache(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateRapidCache(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> StorageControlAuth::UpdateRapidCache(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::UpdateRapidCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRapidCache(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::RapidCache>
+StorageControlAuth::GetRapidCache(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::GetRapidCacheRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetRapidCache(context, options, request);
+}
+
+StatusOr<google::storage::control::v2::ListRapidCachesResponse>
+StorageControlAuth::ListRapidCaches(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ListRapidCachesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListRapidCaches(context, options, request);
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>

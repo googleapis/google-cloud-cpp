@@ -15,9 +15,11 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c sql_v1::SqlAvailableDatabaseVersionsServiceClient](@ref sql_v1::SqlAvailableDatabaseVersionsServiceClient-service-account-snippet)
 - [\c sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-service-account-snippet)
+- [\c sql_v1::SqlBackupsServiceClient](@ref sql_v1::SqlBackupsServiceClient-service-account-snippet)
 - [\c sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-service-account-snippet)
 - [\c sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-service-account-snippet)
 - [\c sql_v1::SqlEventsServiceClient](@ref sql_v1::SqlEventsServiceClient-service-account-snippet)
+- [\c sql_v1::SqlFeatureEligibilityServiceClient](@ref sql_v1::SqlFeatureEligibilityServiceClient-service-account-snippet)
 - [\c sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-service-account-snippet)
 - [\c sql_v1::SqlIamPoliciesServiceClient](@ref sql_v1::SqlIamPoliciesServiceClient-service-account-snippet)
 - [\c sql_v1::SqlInstanceNamesServiceClient](@ref sql_v1::SqlInstanceNamesServiceClient-service-account-snippet)
@@ -56,6 +58,12 @@ guide for more details.
 
 */
 
+/*! @page sql_v1::SqlBackupsServiceClient-service-account-snippet Override sql_v1::SqlBackupsServiceClient Authentication Defaults
+
+@snippet google/cloud/sql/v1/samples/sql_backups_client_samples.cc with-service-account
+
+*/
+
 /*! @page sql_v1::SqlConnectServiceClient-service-account-snippet Override sql_v1::SqlConnectServiceClient Authentication Defaults
 
 @snippet google/cloud/sql/v1/samples/sql_connect_client_samples.cc with-service-account
@@ -71,6 +79,12 @@ guide for more details.
 /*! @page sql_v1::SqlEventsServiceClient-service-account-snippet Override sql_v1::SqlEventsServiceClient Authentication Defaults
 
 @snippet google/cloud/sql/v1/samples/sql_events_client_samples.cc with-service-account
+
+*/
+
+/*! @page sql_v1::SqlFeatureEligibilityServiceClient-service-account-snippet Override sql_v1::SqlFeatureEligibilityServiceClient Authentication Defaults
+
+@snippet google/cloud/sql/v1/samples/sql_feature_eligibility_client_samples.cc with-service-account
 
 */
 

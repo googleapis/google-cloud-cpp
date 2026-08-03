@@ -117,7 +117,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.ListEndpointPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L139}
+  /// [google.cloud.networkservices.v1.ListEndpointPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L141}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::EndpointPolicy>
@@ -156,7 +156,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.ListEndpointPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L139}
+  /// [google.cloud.networkservices.v1.ListEndpointPoliciesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L141}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::EndpointPolicy>
@@ -184,7 +184,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.GetEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L182}
+  /// [google.cloud.networkservices.v1.GetEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L184}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
@@ -214,7 +214,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.GetEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L182}
+  /// [google.cloud.networkservices.v1.GetEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L184}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
@@ -252,7 +252,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L194}
+  /// [google.cloud.networkservices.v1.CreateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L196}
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
   ///
   // clang-format on
@@ -308,7 +308,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.CreateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L194}
+  /// [google.cloud.networkservices.v1.CreateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L196}
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
   ///
   // clang-format on
@@ -379,7 +379,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.UpdateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L213}
+  /// [google.cloud.networkservices.v1.UpdateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L215}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
@@ -434,7 +434,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.EndpointPolicy]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L49}
-  /// [google.cloud.networkservices.v1.UpdateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L213}
+  /// [google.cloud.networkservices.v1.UpdateEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L215}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
@@ -499,7 +499,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L227}
+  /// [google.cloud.networkservices.v1.DeleteEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L229}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -550,7 +550,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L227}
+  /// [google.cloud.networkservices.v1.DeleteEndpointPolicyRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/endpoint_policy.proto#L229}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -5722,7 +5722,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
-  /// [google.cloud.networkservices.v1.ListAgentGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L202}
+  /// [google.cloud.networkservices.v1.ListAgentGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L210}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::AgentGateway>
@@ -5761,7 +5761,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
-  /// [google.cloud.networkservices.v1.ListAgentGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L202}
+  /// [google.cloud.networkservices.v1.ListAgentGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L210}
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::AgentGateway>
@@ -5789,7 +5789,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
-  /// [google.cloud.networkservices.v1.GetAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L243}
+  /// [google.cloud.networkservices.v1.GetAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L251}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::AgentGateway> GetAgentGateway(
@@ -5819,7 +5819,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
-  /// [google.cloud.networkservices.v1.GetAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L243}
+  /// [google.cloud.networkservices.v1.GetAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L251}
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::AgentGateway> GetAgentGateway(
@@ -5855,7 +5855,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
-  /// [google.cloud.networkservices.v1.CreateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L255}
+  /// [google.cloud.networkservices.v1.CreateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L263}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
@@ -5911,7 +5911,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
-  /// [google.cloud.networkservices.v1.CreateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L255}
+  /// [google.cloud.networkservices.v1.CreateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L263}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
@@ -5981,7 +5981,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
-  /// [google.cloud.networkservices.v1.UpdateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L273}
+  /// [google.cloud.networkservices.v1.UpdateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L281}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
@@ -6036,7 +6036,7 @@ class NetworkServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkservices.v1.AgentGateway]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L33}
-  /// [google.cloud.networkservices.v1.UpdateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L273}
+  /// [google.cloud.networkservices.v1.UpdateAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L281}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::AgentGateway>>
@@ -6101,7 +6101,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L287}
+  /// [google.cloud.networkservices.v1.DeleteAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L295}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on
@@ -6152,7 +6152,7 @@ class NetworkServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkservices.v1.DeleteAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L287}
+  /// [google.cloud.networkservices.v1.DeleteAgentGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/agent_gateway.proto#L295}
   /// [google.cloud.networkservices.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkservices/v1/common.proto#L48}
   ///
   // clang-format on

@@ -91,10 +91,10 @@ def gl_cpp_workspace0(name = None):
     maybe(
         http_archive,
         name = "bazel_skylib",
-        sha256 = "3b5b49006181f5f8ff626ef8ddceaa95e9bb8ad294f7b5d7b11ea9f7ddaf8c59",
+        sha256 = "37cdfbc6faefea94f7b37760a305c98c08981116c2bc9e821e3b423221fad8c8",
         urls = [
-            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.9.0/bazel-skylib-1.9.0.tar.gz",
-            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.9.0/bazel-skylib-1.9.0.tar.gz",
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.9.2/bazel-skylib-1.9.2.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.9.2/bazel-skylib-1.9.2.tar.gz",
         ],
     )
 
@@ -136,10 +136,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/3e4ab771a856b7fd2a837321f5ba484487e831f9.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/b8486a2f44f15dc578a9dc1e17b144253079d5c1.tar.gz",
         ],
-        sha256 = "ee0c8489195e62179a4d2f7dbea8b587cc1da5b7932c122aa382acc004247f71",
-        strip_prefix = "googleapis-3e4ab771a856b7fd2a837321f5ba484487e831f9",
+        sha256 = "12411ca5cb6c70d7c873d7058c5182a8d23fa88af8d984b0e73b1c3ad1d83766",
+        strip_prefix = "googleapis-b8486a2f44f15dc578a9dc1e17b144253079d5c1",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         patches = [

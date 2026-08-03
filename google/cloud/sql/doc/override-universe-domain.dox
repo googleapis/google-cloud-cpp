@@ -14,9 +14,11 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c sql_v1::SqlAvailableDatabaseVersionsServiceClient](@ref sql_v1::SqlAvailableDatabaseVersionsServiceClient-universe-domain-snippet)
 - [\c sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlBackupsServiceClient](@ref sql_v1::SqlBackupsServiceClient-universe-domain-snippet)
 - [\c sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-universe-domain-snippet)
 - [\c sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-universe-domain-snippet)
 - [\c sql_v1::SqlEventsServiceClient](@ref sql_v1::SqlEventsServiceClient-universe-domain-snippet)
+- [\c sql_v1::SqlFeatureEligibilityServiceClient](@ref sql_v1::SqlFeatureEligibilityServiceClient-universe-domain-snippet)
 - [\c sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-universe-domain-snippet)
 - [\c sql_v1::SqlIamPoliciesServiceClient](@ref sql_v1::SqlIamPoliciesServiceClient-universe-domain-snippet)
 - [\c sql_v1::SqlInstanceNamesServiceClient](@ref sql_v1::SqlInstanceNamesServiceClient-universe-domain-snippet)
@@ -45,6 +47,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page sql_v1::SqlBackupsServiceClient-universe-domain-snippet Override sql_v1::SqlBackupsServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_backups_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page sql_v1::SqlConnectServiceClient-universe-domain-snippet Override sql_v1::SqlConnectServiceClient Universe Domain
 
 @snippet google/cloud/sql/v1/samples/sql_connect_client_samples.cc set-client-universe-domain
@@ -60,6 +68,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page sql_v1::SqlEventsServiceClient-universe-domain-snippet Override sql_v1::SqlEventsServiceClient Universe Domain
 
 @snippet google/cloud/sql/v1/samples/sql_events_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page sql_v1::SqlFeatureEligibilityServiceClient-universe-domain-snippet Override sql_v1::SqlFeatureEligibilityServiceClient Universe Domain
+
+@snippet google/cloud/sql/v1/samples/sql_feature_eligibility_client_samples.cc set-client-universe-domain
 
 */
 
