@@ -224,7 +224,8 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
     operation_context_factory =
         std::make_unique<bigtable_internal::MetricsOperationContextFactory>(
-            std::move(client_uid), std::move(metric_service_connection), options);
+            std::move(client_uid), std::move(metric_service_connection),
+            options);
   } else {
     operation_context_factory =
         std::make_unique<bigtable_internal::SimpleOperationContextFactory>();
