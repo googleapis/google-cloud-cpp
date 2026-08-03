@@ -28,7 +28,6 @@
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
-#include "absl/strings/string_view.h"
 #include <grpcpp/ext/otel_plugin.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
@@ -55,6 +54,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
@@ -357,23 +357,23 @@ void EnableGrpcMetrics(
   auto provider =
       MakeGrpcMeterProvider(std::move(exporter), std::move(reader_options));
 
-  auto const metrics = std::vector<absl::string_view>{
-      absl::string_view{"grpc.client.attempt.duration"},
-      absl::string_view{"grpc.lb.rls.default_target_picks"},
-      absl::string_view{"grpc.lb.rls.target_picks"},
-      absl::string_view{"grpc.lb.rls.failed_picks"},
-      absl::string_view{"grpc.xds_client.server_failure"},
-      absl::string_view{"grpc.xds_client.resource_updates_invalid"},
-      absl::string_view{"grpc.subchannel.disconnections"},
-      absl::string_view{"grpc.subchannel.connection_attempts_succeeded"},
-      absl::string_view{"grpc.subchannel.connection_attempts_failed"},
-      absl::string_view{"grpc.subchannel.open_connections"},
+  auto const metrics = std::vector<std::string_view>{
+      std::string_view{"grpc.client.attempt.duration"},
+      std::string_view{"grpc.lb.rls.default_target_picks"},
+      std::string_view{"grpc.lb.rls.target_picks"},
+      std::string_view{"grpc.lb.rls.failed_picks"},
+      std::string_view{"grpc.xds_client.server_failure"},
+      std::string_view{"grpc.xds_client.resource_updates_invalid"},
+      std::string_view{"grpc.subchannel.disconnections"},
+      std::string_view{"grpc.subchannel.connection_attempts_succeeded"},
+      std::string_view{"grpc.subchannel.connection_attempts_failed"},
+      std::string_view{"grpc.subchannel.open_connections"},
   };
 
-  auto const disable_metrics = std::vector<absl::string_view>{
-      absl::string_view{
+  auto const disable_metrics = std::vector<std::string_view>{
+      std::string_view{
           "grpc.client.attempt.sent_total_compressed_message_size"},
-      absl::string_view{
+      std::string_view{
           "grpc.client.attempt.rcvd_total_compressed_message_size"},
   };
 
@@ -391,7 +391,7 @@ void EnableGrpcMetrics(
           .SetMeterProvider(provider)
           .EnableMetrics(metrics)
           .DisableMetrics(disable_metrics)
-          .SetGenericMethodAttributeFilter([](absl::string_view target) {
+          .SetGenericMethodAttributeFilter([](std::string_view target) {
             return absl::StartsWith(target, "google.bigtable.v2");
           })
           .SetChannelScopeFilter(std::move(scope_filter))
