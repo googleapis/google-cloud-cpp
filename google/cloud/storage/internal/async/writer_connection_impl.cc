@@ -196,7 +196,7 @@ future<Status> AsyncWriterConnectionImpl::Flush(storage::WritePayload payload) {
 
   return coro->Start().then([coro, size, this](auto f) mutable {
     coro.reset();  // breaks the cycle between the completion queue and coro
-    return OnPartialUpload(size, f.get());
+    return OnFlush(size, f.get());
   });
 }
 
@@ -214,11 +214,15 @@ future<Status> AsyncWriterConnectionImpl::Close(storage::WritePayload payload) {
 }
 
 future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::Query() {
-  std::unique_lock<std::mutex> lk(mu_);
-  auto impl = impl_;
-  lk.unlock();
-  return impl->Read().then(
-      [this](auto f) { return OnQuery(std::move(f).get()); });
+  if (absl::holds_alternative<std::int64_t>(persisted_state_)) {
+    return make_ready_future(
+        make_status_or(absl::get<std::int64_t>(persisted_state_)));
+  }
+  if (absl::holds_alternative<google::storage::v2::Object>(persisted_state_)) {
+    return make_ready_future(make_status_or(static_cast<std::int64_t>(
+        absl::get<google::storage::v2::Object>(persisted_state_).size())));
+  }
+  return make_ready_future(make_status_or(static_cast<std::int64_t>(0)));
 }
 
 RpcMetadata AsyncWriterConnectionImpl::GetRequestMetadata() {
@@ -254,6 +258,56 @@ future<Status> AsyncWriterConnectionImpl::OnPartialUpload(
   }
   offset_ += upload_size;
   return make_ready_future(Status{});
+}
+
+future<Status> AsyncWriterConnectionImpl::OnFlush(std::size_t upload_size,
+                                                  StatusOr<bool> success) {
+  if (!success) {
+    return Finish().then(HandleFinishAfterError(std::move(success).status()));
+  }
+  if (!*success) {
+    return Finish().then(
+        HandleFinishAfterError("Expected Finish() error after non-ok Write()"));
+  }
+  offset_ += upload_size;
+
+  std::unique_lock<std::mutex> lk(mu_);
+  auto expected_offset = offset_;
+  auto impl = impl_;
+  lk.unlock();
+
+  struct ConsumeLoop {
+    AsyncWriterConnectionImpl* self;
+    std::shared_ptr<StreamingRpc> impl;
+    std::int64_t expected_offset;
+
+    future<Status> operator()(
+        future<absl::optional<google::storage::v2::BidiWriteObjectResponse>>
+            f) {
+      auto response = std::move(f).get();
+      if (!response.has_value()) {
+        return self->Finish().then(HandleFinishAfterError(
+            "Expected error in Finish() after non-ok Read()"));
+      }
+      std::unique_lock<std::mutex> lk(self->mu_);
+      if (response->has_write_handle()) {
+        self->latest_write_handle_ = response->write_handle();
+      }
+      if (response->has_persisted_size()) {
+        self->persisted_state_ = response->persisted_size();
+        if (response->persisted_size() >= expected_offset) {
+          return make_ready_future(Status{});
+        }
+      }
+      if (response->has_resource()) {
+        self->persisted_state_ = response->resource();
+        return make_ready_future(Status{});
+      }
+      lk.unlock();
+      return impl->Read().then(std::move(*this));
+    }
+  };
+  return impl->Read().then(ConsumeLoop{this, impl, expected_offset});
 }
 
 future<Status> AsyncWriterConnectionImpl::OnClose(std::size_t upload_size,
@@ -350,41 +404,6 @@ AsyncWriterConnectionImpl::OnFinalUpload(std::size_t upload_size,
           return absl::get<google::storage::v2::Object>(persisted_state_);
         });
   });
-}
-
-future<StatusOr<std::int64_t>> AsyncWriterConnectionImpl::OnQuery(
-    std::optional<google::storage::v2::BidiWriteObjectResponse> response) {
-  if (!response.has_value()) {
-    return Finish()
-        .then(HandleFinishAfterError(
-            "Expected error in Finish() after non-ok Read()"))
-        .then([this](auto g) {
-          auto result = g.get();
-          google::rpc::Status grpc_status = ExtractGrpcStatus(result);
-          HandleBidiWriteRedirect(request_, grpc_status);
-          return StatusOr<std::int64_t>(std::move(result));
-        });
-  }
-
-  std::shared_ptr<StreamingRpc> impl;
-  {
-    std::unique_lock<std::mutex> lk(mu_);
-    if (response->has_write_handle()) {
-      latest_write_handle_ = response->write_handle();
-    }
-    if (response->has_persisted_size()) {
-      persisted_state_ = response->persisted_size();
-      return make_ready_future(make_status_or(response->persisted_size()));
-    }
-    if (response->has_resource()) {
-      persisted_state_ = response->resource();
-      return make_ready_future(make_status_or(response->resource().size()));
-    }
-    impl = impl_;
-  }
-
-  return impl->Read().then(
-      [this](auto f) { return OnQuery(std::move(f).get()); });
 }
 
 future<Status> AsyncWriterConnectionImpl::Finish() {
