@@ -25,18 +25,28 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Configuration for a single read range to be pre-warmed.
+/// Configuration for a single read range to be pre-warmed.
 struct ReadRangeConfig {
   std::int64_t offset;
   std::int64_t length;
 };
 
-// Internal option to pass the list of ranges to pre-warm from `AsyncClient` to
-// `Connection`.
+/// Internal option to pass the list of ranges to pre-warm from `AsyncClient` to
+/// `Connection`.
 struct ReadRangesOption {
   using Type = std::vector<ReadRangeConfig>;
   static char const* name() {
     return "google::cloud::storage::ReadRangesOption";
+  }
+};
+
+/// Internal option to override the pacing buffer limit (in bytes) for
+/// pre-warmed ranges. Primarily used in unit tests to test pacing limits
+/// without generating large payloads.
+struct PreWarmBufferLimitOption {
+  using Type = std::size_t;
+  static char const* name() {
+    return "google::cloud::storage::PreWarmBufferLimitOption";
   }
 };
 

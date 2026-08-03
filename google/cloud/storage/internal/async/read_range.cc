@@ -49,6 +49,11 @@ bool ReadRange::IsDone() const {
   return status_.has_value();
 }
 
+std::size_t ReadRange::BufferedSize() const {
+  std::lock_guard<std::mutex> lk(mu_);
+  return payload_ ? payload_->size() : 0;
+}
+
 std::optional<google::storage::v2::ReadRange> ReadRange::RangeForResume(
     std::int64_t read_id) const {
   auto range = google::storage::v2::ReadRange{};

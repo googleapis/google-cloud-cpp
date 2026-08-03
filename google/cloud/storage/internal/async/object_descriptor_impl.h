@@ -134,6 +134,16 @@ class ObjectDescriptorImpl
   // Cache of pre-warmed ranges, keyed by (offset, length).
   std::map<std::pair<std::int64_t, std::int64_t>, PrewarmedRange>
       prewarmed_ranges_;
+  // Map of read_id to buffered bytes for pre-warmed ranges that have not been
+  // claimed by the user. Used to identify which incoming data chunks belong to
+  // unclaimed ranges and track their size for pacing.
+  std::unordered_map<std::int64_t, std::size_t> unclaimed_bytes_buffered_;
+  // Total bytes currently buffered across all unclaimed pre-warmed ranges.
+  std::size_t total_prewarmed_bytes_buffered_ = 0;
+  // Maximum bytes allowed to be buffered across all unclaimed pre-warmed ranges
+  // before we start evicting them.
+  std::size_t max_prewarmed_buffer_size_ =
+      5 * 1024 * 1024;  // Default 5 MiB pacing limit
 
   Options options_;
   std::unique_ptr<StreamManager> stream_manager_;

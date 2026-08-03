@@ -55,6 +55,10 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
       std::make_shared<ReadStream>(std::move(stream),
                                    resume_policy_prototype_->clone()));
+  // Initialize the pacing limit from options if configured.
+  if (options_.has<PreWarmBufferLimitOption>()) {
+    max_prewarmed_buffer_size_ = options_.get<PreWarmBufferLimitOption>();
+  }
   // If pre-warmed ranges are specified, initialize their `ReadRange` objects,
   // register them as active on the initial stream, and cache them.
   if (options_.has<ReadRangesOption>()) {
@@ -72,6 +76,9 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
         it->active_ranges.emplace(dr.read_id, range);
         // Cache them so subsequent `Read()` calls can claim them.
         prewarmed_ranges_.emplace(range_key, PrewarmedRange{range, dr.read_id});
+        // Mark them as unclaimed for pacing checks (starting with 0 bytes
+        // buffered).
+        unclaimed_bytes_buffered_.emplace(dr.read_id, 0);
       }
       // Ensure new dynamically requested ranges use IDs that don't conflict
       // with pre-warmed ones.
@@ -228,6 +235,13 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     // Cache hit. Claim the pre-warmed range and return it to the user.
     auto prewarmed = std::move(cache_it->second);
     prewarmed_ranges_.erase(cache_it);
+    // Mark as claimed so we stop applying pacing constraints to it, and
+    // reclaim the buffer budget used by this range atomically under the lock.
+    auto unclaimed_it = unclaimed_bytes_buffered_.find(prewarmed.read_id);
+    if (unclaimed_it != unclaimed_bytes_buffered_.end()) {
+      total_prewarmed_bytes_buffered_ -= unclaimed_it->second;
+      unclaimed_bytes_buffered_.erase(unclaimed_it);
+    }
     lk.unlock();
     if (!internal::TracingEnabled(options_)) {
       return std::unique_ptr<storage::AsyncReaderConnection>(
@@ -411,16 +425,52 @@ void ObjectDescriptorImpl::OnRead(
     if (l == copy.end()) continue;
 
     auto range = l->second;
-    bool active = false;
+    auto chunk_size = range_data.checksummed_data().content().size();
+
+    bool evict = false;
     lk.lock();
-    // Verify the range is still active on this stream. It might have been
-    // evicted or cancelled during the processing of this batch.
-    active = it->active_ranges.count(id) != 0;
+    // Verify the range is still active under the lock. Because `OnRead`
+    // processes chunks in batches, an earlier chunk in the same batch could
+    // breach the pacing limit and evict a subsequent chunk's range.
+    bool active = it->active_ranges.count(id) != 0;
+    if (active) {
+      // If this is an unclaimed pre-warmed range, apply pacing/eviction logic.
+      auto unclaimed_it = unclaimed_bytes_buffered_.find(id);
+      if (unclaimed_it != unclaimed_bytes_buffered_.end()) {
+        if (total_prewarmed_bytes_buffered_ + chunk_size >
+            max_prewarmed_buffer_size_) {
+          // Evict the range if it exceeds the pacing limit.
+          evict = true;
+          total_prewarmed_bytes_buffered_ -= unclaimed_it->second;
+          unclaimed_bytes_buffered_.erase(unclaimed_it);
+          auto cache_it = std::find_if(
+              prewarmed_ranges_.begin(), prewarmed_ranges_.end(),
+              [id](auto const& kv) { return kv.second.read_id == id; });
+          if (cache_it != prewarmed_ranges_.end()) {
+            prewarmed_ranges_.erase(cache_it);
+          }
+          // Erasing from active_ranges ensures we ignore any subsequent GCS
+          // chunks for this range.
+          it->active_ranges.erase(id);
+        } else {
+          // Track buffered data size for pacing.
+          unclaimed_it->second += chunk_size;
+          total_prewarmed_bytes_buffered_ += chunk_size;
+        }
+      }
+    }
     lk.unlock();
     if (active) {
-      // TODO(#15104) - Consider returning if the range is done, and then
-      // skipping CleanupDoneRanges().
-      range->OnRead(std::move(range_data), is_transcoded, object_size);
+      if (evict) {
+        // Complete the evicted range with an error.
+        range->OnFinish(Status(StatusCode::kResourceExhausted,
+                               "Evicted pre-warmed range due to pacing limit"));
+      } else {
+        // Deliver data to the range.
+        // TODO(#15104) - Consider returning if the range is done, and then
+        // skipping CleanupDoneRanges().
+        range->OnRead(std::move(range_data), is_transcoded, object_size);
+      }
     }
   }
   lk.lock();
