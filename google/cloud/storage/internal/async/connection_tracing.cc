@@ -125,8 +125,7 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
   ResumeAppendableObjectUpload(AppendableUploadParams p) override {
     auto span = internal::MakeSpan(
         "storage::AsyncConnection::ResumeAppendableObjectUpload");
-    EnrichSpan(*span, p.options,
-               p.request.write_object_spec().resource().bucket());
+    EnrichSpan(*span, p.options, p.request.append_object_spec().bucket());
     internal::OTelScope scope(span);
     return impl_->ResumeAppendableObjectUpload(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
@@ -227,8 +226,11 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
   std::shared_ptr<storage::AsyncRewriterConnection> RewriteObject(
       RewriteObjectParams p) override {
     auto const enabled = internal::TracingEnabled(p.options);
+    if (!enabled) return impl_->RewriteObject(std::move(p));
+    auto span = internal::MakeSpan("storage::AsyncConnection::RewriteObject");
+    EnrichSpan(*span, p.options, p.request.destination_bucket());
     return MakeTracingAsyncRewriterConnection(
-        impl_->RewriteObject(std::move(p)), enabled);
+        impl_->RewriteObject(std::move(p)), std::move(span));
   }
 
   future<StatusOr<google::storage::v2::Bucket>> GetBucket(

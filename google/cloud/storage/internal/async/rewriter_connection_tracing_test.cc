@@ -93,8 +93,9 @@ TEST(RewriterTracingConnection, Basic) {
         });
       });
 
+  auto span = internal::MakeSpan("storage::AsyncConnection::RewriteObject");
   auto actual =
-      MakeTracingAsyncRewriterConnection(std::move(mock), /*enabled=*/true);
+      MakeTracingAsyncRewriterConnection(std::move(mock), std::move(span));
   auto r1 = actual->Iterate();
   sequencer.PopFront().set_value();
   EXPECT_THAT(r1.get(), StatusIs(PermanentError().status().code()));
@@ -145,8 +146,9 @@ TEST(RewriterTracingConnection, Disabled) {
   auto mock = std::make_unique<MockAsyncRewriterConnection>();
   auto* const expected = mock.get();
 
-  auto actual =
-      MakeTracingAsyncRewriterConnection(std::move(mock), /*enabled=*/false);
+  auto actual = MakeTracingAsyncRewriterConnection(
+      std::move(mock),
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>{});
   EXPECT_EQ(actual.get(), expected);
 }
 

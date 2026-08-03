@@ -100,6 +100,11 @@ Idempotency StorageControlConnectionIdempotencyPolicy::ListManagedFolders(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::UpdateManagedFolder(
+    google::storage::control::v2::UpdateManagedFolderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency StorageControlConnectionIdempotencyPolicy::CreateAnywhereCache(
     google::storage::control::v2::CreateAnywhereCacheRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
@@ -140,6 +145,26 @@ Idempotency StorageControlConnectionIdempotencyPolicy::ListAnywhereCaches(
     google::storage::control::v2::ListAnywhereCachesRequest
         request) {  // NOLINT
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::CreateRapidCache(
+    google::storage::control::v2::CreateRapidCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::UpdateRapidCache(
+    google::storage::control::v2::UpdateRapidCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::GetRapidCache(
+    google::storage::control::v2::GetRapidCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::ListRapidCaches(
+    google::storage::control::v2::ListRapidCachesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
