@@ -23,6 +23,7 @@ set(bigtable_client_integration_tests
     filters_integration_test.cc
     instance_admin_integration_test.cc
     mutations_integration_test.cc
+    observability_integration_test.cc
     table_admin_backup_integration_test.cc
     table_admin_iam_policy_integration_test.cc
     table_admin_integration_test.cc
@@ -31,6 +32,11 @@ set(bigtable_client_integration_tests
 include(CreateBazelConfig)
 export_list_to_bazel("bigtable_client_integration_tests.bzl"
                      "bigtable_client_integration_tests" YEAR "2018")
+
+if (NOT TARGET otel_collector)
+    add_subdirectory("${PROJECT_SOURCE_DIR}/ci/otel_collector"
+                     "${CMAKE_BINARY_DIR}/ci/otel_collector")
+endif ()
 
 foreach (fname ${bigtable_client_integration_tests})
     google_cloud_cpp_add_executable(target "bigtable" "${fname}")
@@ -49,6 +55,9 @@ foreach (fname ${bigtable_client_integration_tests})
                 gRPC::grpc++
                 gRPC::grpc
                 protobuf::libprotobuf)
+    if (TARGET otel_collector)
+        target_link_libraries(${target} PRIVATE otel_collector)
+    endif ()
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS
