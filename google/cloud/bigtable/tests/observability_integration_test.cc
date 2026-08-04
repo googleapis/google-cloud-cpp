@@ -28,8 +28,11 @@
 #include <arpa/inet.h>
 #include <gmock/gmock.h>
 #include <netinet/in.h>
+#include <cerrno>
 #include <chrono>
 #include <thread>
+#include <fcntl.h>
+#include <poll.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
@@ -42,13 +45,25 @@ namespace {
 bool IsDirectPathReachable() {
   int s = socket(AF_INET6, SOCK_STREAM, 0);
   if (s < 0) return false;
+  int flags = fcntl(s, F_GETFL, 0);
+  (void)fcntl(s, F_SETFL, flags | O_NONBLOCK);
   sockaddr_in6 addr{};
   addr.sin6_family = AF_INET6;
   addr.sin6_port = htons(443);
   inet_pton(AF_INET6, "2607:f8b0:4001:c2f::5f", &addr.sin6_addr);
-  timeval tv{1, 0};
-  setsockopt(s, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof(tv));
   int res = connect(s, reinterpret_cast<sockaddr*>(&addr), sizeof(addr));
+  if (res < 0 && errno == EINPROGRESS) {
+    pollfd pfd{s, POLLOUT, 0};
+    res = poll(&pfd, 1, 1000);
+    if (res > 0) {
+      int err = 0;
+      socklen_t len = sizeof(err);
+      (void)getsockopt(s, SOL_SOCKET, SO_ERROR, &err, &len);
+      res = (err == 0) ? 0 : -1;
+    } else {
+      res = -1;
+    }
+  }
   close(s);
   return res == 0;
 }
@@ -293,7 +308,6 @@ std::set<std::string> ProcessRecordedGrpcMetrics(
     bool& verified_resource_labels) {
   std::set<std::string> grpc_metric_types;
   for (auto const& req : recorded) {
-    std::cout << "req=" << req.DebugString() << std::endl;
     EXPECT_THAT(req.name(), Eq(absl::StrCat("projects/", project_id)));
 
     for (auto const& ts : req.time_series()) {

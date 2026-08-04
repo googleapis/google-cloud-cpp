@@ -91,6 +91,7 @@ cleanup() {
     gcloud compute instances delete "${VM_NAME}" \
       --project="${PROJECT_ID}" \
       --zone="${ZONE}" \
+      --async \
       --quiet >/dev/null 2>&1 &
   fi
 
