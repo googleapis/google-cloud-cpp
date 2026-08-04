@@ -1561,7 +1561,8 @@ auto constexpr kOperationJson = R"""({
       "id": "Operation"
 })""";
 
-TEST(FindAllTypesToImportTest, ArrayItemsWithPropertiesWithoutExplicitObjectType) {
+TEST(FindAllTypesToImportTest,
+     ArrayItemsWithPropertiesWithoutExplicitObjectType) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "items_field": {

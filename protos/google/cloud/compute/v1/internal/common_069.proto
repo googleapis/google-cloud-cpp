@@ -30,10 +30,10 @@ import "google/cloud/compute/v1/internal/common_070.proto";
 message InterconnectAttachment {
   // Determines whether this Attachment will carry packets. Not present for
   // PARTNER_PROVIDER.
-  optional bool admin_enabled = 1 [json_name="adminEnabled"];
+  optional bool admin_enabled = 1 [json_name = "adminEnabled"];
 
   // [Output Only] URL of the AttachmentGroup that includes this Attachment.
-  optional string attachment_group = 41 [json_name="attachmentGroup"];
+  optional string attachment_group = 41 [json_name = "attachmentGroup"];
 
   // Provisioned bandwidth capacity for the interconnect attachment. For
   // attachments of type DEDICATED, the user can set the bandwidth. For
@@ -43,7 +43,7 @@ message InterconnectAttachment {
   // values: - BPS_50M: 50 Mbit/s - BPS_100M: 100 Mbit/s - BPS_200M: 200 Mbit/s
   // - BPS_300M: 300 Mbit/s - BPS_400M: 400 Mbit/s - BPS_500M: 500 Mbit/s -
   // BPS_1G: 1 Gbit/s - BPS_2G: 2 Gbit/s - BPS_5G: 5 Gbit/s - BPS_10G: 10 Gbit/s
-  // - BPS_20G: 20 Gbit/s - BPS_50G: 50 Gbit/s - BPS_100G: 100 Gbit/s 
+  // - BPS_20G: 20 Gbit/s - BPS_50G: 50 Gbit/s - BPS_100G: 100 Gbit/s
   // BPS_100G: 100 Gbit/s
   // BPS_100M: 100 Mbit/s
   // BPS_10G: 10 Gbit/s
@@ -57,10 +57,11 @@ message InterconnectAttachment {
   // BPS_50G: 50 Gbit/s
   // BPS_50M: 50 Mbit/s
   // BPS_5G: 5 Gbit/s
-  optional string bandwidth = 2 [json_name="bandwidth"];
+  optional string bandwidth = 2 [json_name = "bandwidth"];
 
   // This field is not available.
-  repeated string candidate_ipv6_subnets = 3 [json_name="candidateIpv6Subnets"];
+  repeated string candidate_ipv6_subnets = 3
+      [json_name = "candidateIpv6Subnets"];
 
   // Input only. Up to 16 candidate prefixes that can be used to restrict the
   // allocation of cloudRouterIpAddress and customerRouterIpAddress for this
@@ -70,44 +71,51 @@ message InterconnectAttachment {
   // request will fail if all possible /29s are in use on Google's edge. If not
   // supplied, Google will randomly select an unused /29 from all of link-local
   // space.
-  repeated string candidate_subnets = 4 [json_name="candidateSubnets"];
+  repeated string candidate_subnets = 4 [json_name = "candidateSubnets"];
 
   // [Output Only] IPv4 address + prefix length to be configured on Cloud Router
   // Interface for this interconnect attachment.
-  optional string cloud_router_ip_address = 5 [json_name="cloudRouterIpAddress"];
+  optional string cloud_router_ip_address = 5
+      [json_name = "cloudRouterIpAddress"];
 
   // [Output Only] IPv6 address + prefix length to be configured on Cloud Router
   // Interface for this interconnect attachment.
-  optional string cloud_router_ipv6_address = 6 [json_name="cloudRouterIpv6Address"];
+  optional string cloud_router_ipv6_address = 6
+      [json_name = "cloudRouterIpv6Address"];
 
   // This field is not available.
-  optional string cloud_router_ipv6_interface_id = 7 [json_name="cloudRouterIpv6InterfaceId"];
+  optional string cloud_router_ipv6_interface_id = 7
+      [json_name = "cloudRouterIpv6InterfaceId"];
 
   // [Output Only] Constraints for this attachment, if any. The attachment does
   // not work if these constraints are not met.
-  optional InterconnectAttachmentConfigurationConstraints configuration_constraints = 36 [json_name="configurationConstraints"];
+  optional InterconnectAttachmentConfigurationConstraints
+      configuration_constraints = 36 [json_name = "configurationConstraints"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 8 [json_name="creationTimestamp"];
+  optional string creation_timestamp = 8 [json_name = "creationTimestamp"];
 
   // [Output Only] IPv4 address + prefix length to be configured on the customer
   // router subinterface for this interconnect attachment.
-  optional string customer_router_ip_address = 9 [json_name="customerRouterIpAddress"];
+  optional string customer_router_ip_address = 9
+      [json_name = "customerRouterIpAddress"];
 
   // [Output Only] IPv6 address + prefix length to be configured on the customer
   // router subinterface for this interconnect attachment.
-  optional string customer_router_ipv6_address = 10 [json_name="customerRouterIpv6Address"];
+  optional string customer_router_ipv6_address = 10
+      [json_name = "customerRouterIpv6Address"];
 
   // This field is not available.
-  optional string customer_router_ipv6_interface_id = 11 [json_name="customerRouterIpv6InterfaceId"];
+  optional string customer_router_ipv6_interface_id = 11
+      [json_name = "customerRouterIpv6InterfaceId"];
 
   // [Output Only] Dataplane version for this InterconnectAttachment. This field
   // is only present for Dataplane version 2 and higher. Absence of this field
   // in the API output indicates that the Dataplane is version 1.
-  optional int32 dataplane_version = 12 [json_name="dataplaneVersion"];
+  optional int32 dataplane_version = 12 [json_name = "dataplaneVersion"];
 
   // An optional description of this resource.
-  optional string description = 13 [json_name="description"];
+  optional string description = 13 [json_name = "description"];
 
   // Input only. Desired availability domain for the attachment. Only available
   // for type PARTNER, at creation time, and can take one of the following
@@ -117,10 +125,11 @@ message InterconnectAttachment {
   // availability domain will be provided to the Partner via the pairing key, so
   // that the provisioned circuit will lie in the specified domain. If not
   // specified, the value will default to AVAILABILITY_DOMAIN_ANY.
-  // AVAILABILITY_DOMAIN_1: 
-  // AVAILABILITY_DOMAIN_2: 
-  // AVAILABILITY_DOMAIN_ANY: 
-  optional string edge_availability_domain = 14 [json_name="edgeAvailabilityDomain"];
+  // AVAILABILITY_DOMAIN_1:
+  // AVAILABILITY_DOMAIN_2:
+  // AVAILABILITY_DOMAIN_ANY:
+  optional string edge_availability_domain = 14
+      [json_name = "edgeAvailabilityDomain"];
 
   // Indicates the user-supplied encryption option of this VLAN attachment
   // (interconnectAttachment). Can only be specified at attachment creation for
@@ -131,7 +140,7 @@ message InterconnectAttachment {
   // traffic that is encrypted by an IPsec device, such as an HA VPN gateway or
   // third-party IPsec VPN. VMs cannot directly send traffic to, or receive
   // traffic from, such a VLAN attachment. To use *HA VPN over Cloud
-  // Interconnect*, the VLAN attachment must be created with this option. 
+  // Interconnect*, the VLAN attachment must be created with this option.
   // IPSEC: The interconnect attachment will carry only encrypted traffic that
   // is encrypted by an IPsec device such as HA VPN gateway; VMs cannot directly
   // send traffic to or receive traffic from such an interconnect attachment. To
@@ -140,20 +149,20 @@ message InterconnectAttachment {
   // NONE: This is the default value, which means the Interconnect Attachment
   // will carry unencrypted traffic. VMs will be able to send traffic to or
   // receive traffic from such interconnect attachment.
-  optional string encryption = 15 [json_name="encryption"];
+  optional string encryption = 15 [json_name = "encryption"];
 
   // [Output Only] Google reference ID, to be used when raising support tickets
   // with Google or otherwise to debug backend connectivity issues. [Deprecated]
   // This field is not used.
-  optional string google_reference_id = 16 [json_name="googleReferenceId"];
+  optional string google_reference_id = 16 [json_name = "googleReferenceId"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 17 [json_name="id"];
+  optional string id = 17 [json_name = "id"];
 
   // URL of the underlying Interconnect object that this attachment's traffic
   // will traverse through.
-  optional string interconnect = 18 [json_name="interconnect"];
+  optional string interconnect = 18 [json_name = "interconnect"];
 
   // A list of URLs of addresses that have been reserved for the VLAN
   // attachment. Used only for the VLAN attachment that has the encryption
@@ -168,11 +177,12 @@ message InterconnectAttachment {
   // attachment, then later on when creating an HA VPN gateway on this VLAN
   // attachment, the HA VPN gateway's IP address is allocated from the regional
   // external IP address pool.
-  repeated string ipsec_internal_addresses = 19 [json_name="ipsecInternalAddresses"];
+  repeated string ipsec_internal_addresses = 19
+      [json_name = "ipsecInternalAddresses"];
 
   // [Output Only] Type of the resource. Always compute#interconnectAttachment
   // for interconnect attachments.
-  optional string kind = 20 [json_name="kind"];
+  optional string kind = 20 [json_name = "kind"];
 
   // A fingerprint for the labels being applied to this InterconnectAttachment,
   // which is essentially a hash of the labels set used for optimistic locking.
@@ -181,17 +191,17 @@ message InterconnectAttachment {
   // up-to-date fingerprint hash in order to update or change labels, otherwise
   // the request will fail with error 412 conditionNotMet. To see the latest
   // fingerprint, make a get() request to retrieve an InterconnectAttachment.
-  optional string label_fingerprint = 37 [json_name="labelFingerprint"];
+  optional string label_fingerprint = 37 [json_name = "labelFingerprint"];
 
   // Labels for this resource. These can only be added or modified by the
   // setLabels method. Each label key/value pair must comply with RFC1035. Label
   // values may be empty.
-  map<string, string> labels = 38 [json_name="labels"];
+  map<string, string> labels = 38 [json_name = "labels"];
 
   // Maximum Transmission Unit (MTU), in bytes, of packets passing through this
   // interconnect attachment. Valid values are 1440, 1460, 1500, and 8896. If
   // not specified, the value will default to 1440.
-  optional int32 mtu = 21 [json_name="mtu"];
+  optional int32 mtu = 21 [json_name = "mtu"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -200,44 +210,46 @@ message InterconnectAttachment {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 22 [json_name="name"];
+  optional string name = 22 [json_name = "name"];
 
   // [Output Only] The current status of whether or not this interconnect
   // attachment is functional, which can take one of the following values: -
   // OS_ACTIVE: The attachment has been turned up and is ready to use. -
   // OS_UNPROVISIONED: The attachment is not ready to use yet, because turnup is
-  // not complete. 
+  // not complete.
   // OS_ACTIVE: Indicates that attachment has been turned up and is ready to
   // use.
   // OS_UNPROVISIONED: Indicates that attachment is not ready to use yet,
   // because turnup is not complete.
-  optional string operational_status = 23 [json_name="operationalStatus"];
+  optional string operational_status = 23 [json_name = "operationalStatus"];
 
   // [Output only for type PARTNER. Input only for PARTNER_PROVIDER. Not present
   // for DEDICATED]. The opaque identifier of a PARTNER attachment used to
   // initiate provisioning with a selected partner. Of the form
   // "XXXXX/region/domain"
-  optional string pairing_key = 24 [json_name="pairingKey"];
+  optional string pairing_key = 24 [json_name = "pairingKey"];
 
   // Optional BGP ASN for the router supplied by a Layer 3 Partner if they
   // configured BGP on behalf of the customer. Output only for PARTNER type,
   // input only for PARTNER_PROVIDER, not available for DEDICATED.
-  optional string partner_asn = 25 [json_name="partnerAsn"];
+  optional string partner_asn = 25 [json_name = "partnerAsn"];
 
   // Informational metadata about Partner attachments from Partners to display
   // to customers. Output only for PARTNER type, mutable for PARTNER_PROVIDER,
   // not available for DEDICATED.
-  optional InterconnectAttachmentPartnerMetadata partner_metadata = 26 [json_name="partnerMetadata"];
+  optional InterconnectAttachmentPartnerMetadata partner_metadata = 26
+      [json_name = "partnerMetadata"];
 
   // [Output Only] Information specific to an InterconnectAttachment. This
   // property is populated if the interconnect that this is attached to is of
   // type DEDICATED.
-  optional InterconnectAttachmentPrivateInfo private_interconnect_info = 27 [json_name="privateInterconnectInfo"];
+  optional InterconnectAttachmentPrivateInfo private_interconnect_info = 27
+      [json_name = "privateInterconnectInfo"];
 
   // [Output Only] URL of the region where the regional interconnect attachment
   // resides. You must specify this field as part of the HTTP request URL. It is
   // not settable as a field in the request body.
-  optional string region = 28 [json_name="region"];
+  optional string region = 28 [json_name = "region"];
 
   // [Output Only] If the attachment is on a Cross-Cloud Interconnect
   // connection, this field contains the interconnect's remote location service
@@ -245,19 +257,19 @@ message InterconnectAttachment {
   // field is set only for attachments on Cross-Cloud Interconnect connections.
   // Its value is copied from the InterconnectRemoteLocation remoteService
   // field.
-  optional string remote_service = 39 [json_name="remoteService"];
+  optional string remote_service = 39 [json_name = "remoteService"];
 
   // URL of the Cloud Router to be used for dynamic routing. This router must be
   // in the same region as this InterconnectAttachment. The
   // InterconnectAttachment will automatically connect the Interconnect to the
   // network & region within which the Cloud Router is configured.
-  optional string router = 29 [json_name="router"];
+  optional string router = 29 [json_name = "router"];
 
   // [Output Only] Reserved for future use.
-  optional bool satisfies_pzs = 30 [json_name="satisfiesPzs"];
+  optional bool satisfies_pzs = 30 [json_name = "satisfiesPzs"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 31 [json_name="selfLink"];
+  optional string self_link = 31 [json_name = "selfLink"];
 
   // The stack type for this interconnect attachment to identify whether the
   // IPv6 feature is enabled or not. If not specified, IPV4_ONLY will be used.
@@ -267,7 +279,7 @@ message InterconnectAttachment {
   // addresses.
   // IPV4_ONLY: The interconnect attachment will only be assigned IPv4
   // addresses.
-  optional string stack_type = 32 [json_name="stackType"];
+  optional string stack_type = 32 [json_name = "stackType"];
 
   // [Output Only] The current state of this attachment's functionality. Enum
   // values ACTIVE and UNPROVISIONED are shared by DEDICATED/PRIVATE, PARTNER,
@@ -284,7 +296,7 @@ message InterconnectAttachment {
   // attachment that is waiting for a customer to activate it. - DEFUNCT: The
   // attachment was deleted externally and is no longer functional. This could
   // be because the associated Interconnect was removed, or because the other
-  // side of a Partner attachment was deleted. 
+  // side of a Partner attachment was deleted.
   // ACTIVE: Indicates that attachment has been turned up and is ready to use.
   // DEFUNCT: The attachment was deleted externally and is no longer functional.
   // This could be because the associated Interconnect was wiped out, or because
@@ -296,10 +308,10 @@ message InterconnectAttachment {
   // for the customer to activate.
   // PENDING_PARTNER: A newly created PARTNER attachment that has not yet been
   // configured on the Partner side.
-  // STATE_UNSPECIFIED: 
+  // STATE_UNSPECIFIED:
   // UNPROVISIONED: Indicates that attachment is not ready to use yet, because
   // turnup is not complete.
-  optional string state = 33 [json_name="state"];
+  optional string state = 33 [json_name = "state"];
 
   // Input only. Length of the IPv4 subnet mask. Allowed values: - 29 (default)
   // - 30 The default value is 29, except for Cross-Cloud Interconnect
@@ -308,49 +320,50 @@ message InterconnectAttachment {
   // that use an Azure remote location fall into this category. In these cases,
   // the default value is 30, and requesting 29 returns an error. Where both 29
   // and 30 are allowed, 29 is preferred, because it gives Google Cloud Support
-  // more debugging visibility. 
-  optional int32 subnet_length = 40 [json_name="subnetLength"];
+  // more debugging visibility.
+  optional int32 subnet_length = 40 [json_name = "subnetLength"];
 
   // The type of interconnect attachment this is, which can take one of the
   // following values: - DEDICATED: an attachment to a Dedicated Interconnect. -
   // PARTNER: an attachment to a Partner Interconnect, created by the customer.
   // - PARTNER_PROVIDER: an attachment to a Partner Interconnect, created by the
-  // partner. 
+  // partner.
   // DEDICATED: Attachment to a dedicated interconnect.
   // PARTNER: Attachment to a partner interconnect, created by the customer.
   // PARTNER_PROVIDER: Attachment to a partner interconnect, created by the
   // partner.
-  optional string type = 34 [json_name="type"];
+  optional string type = 34 [json_name = "type"];
 
   // The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4093. Only
   // specified at creation time.
-  optional int32 vlan_tag8021q = 35 [json_name="vlanTag8021q"];
+  optional int32 vlan_tag8021q = 35 [json_name = "vlanTag8021q"];
 }
 
 message InterconnectAttachmentAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of InterconnectAttachmentsScopedList resources.
-  map<string, InterconnectAttachmentsScopedList> items = 2 [json_name="items"];
+  map<string, InterconnectAttachmentsScopedList> items = 2
+      [json_name = "items"];
 
   // [Output Only] Type of resource. Always
   // compute#interconnectAttachmentAggregatedList for aggregated lists of
   // interconnect attachments.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6 [json_name="unreachables"];
+  repeated string unreachables = 6 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -411,7 +424,7 @@ message InterconnectAttachmentAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -421,46 +434,46 @@ message InterconnectAttachmentAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7 [json_name="warning"];
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 // Response to the list request, and contains a list of interconnect
 // attachments.
 message InterconnectAttachmentList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of InterconnectAttachment resources.
-  repeated InterconnectAttachment items = 2 [json_name="items"];
+  repeated InterconnectAttachment items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#interconnectAttachmentList
   // for lists of interconnect attachments.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -521,7 +534,7 @@ message InterconnectAttachmentList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -531,22 +544,22 @@ message InterconnectAttachmentList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name="warning"];
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Informational metadata about Partner attachments from Partners to display to
@@ -556,16 +569,16 @@ message InterconnectAttachmentPartnerMetadata {
   // Plain text name of the Interconnect this attachment is connected to, as
   // displayed in the Partner's portal. For instance "Chicago 1". This value may
   // be validated to match approved Partner values.
-  optional string interconnect_name = 1 [json_name="interconnectName"];
+  optional string interconnect_name = 1 [json_name = "interconnectName"];
 
   // Plain text name of the Partner providing this attachment. This value may be
   // validated to match approved Partner values.
-  optional string partner_name = 2 [json_name="partnerName"];
+  optional string partner_name = 2 [json_name = "partnerName"];
 
   // URL of the Partner's portal for this Attachment. Partners may customise
   // this to be a deep link to the specific resource on the Partner portal. This
   // value may be validated to match approved Partner values.
-  optional string portal_url = 3 [json_name="portalUrl"];
+  optional string portal_url = 3 [json_name = "portalUrl"];
 }
 
 // Information for an interconnect attachment when this belongs to an
@@ -573,12 +586,13 @@ message InterconnectAttachmentPartnerMetadata {
 message InterconnectAttachmentPrivateInfo {
   // [Output Only] 802.1q encapsulation tag to be used for traffic between
   // Google and the customer, going to and from this network and region.
-  optional uint32 tag8021q = 1 [json_name="tag8021q"];
+  optional uint32 tag8021q = 1 [json_name = "tag8021q"];
 }
 
 message InterconnectAttachmentsScopedList {
   // A list of interconnect attachments contained in this scope.
-  repeated InterconnectAttachment interconnect_attachments = 1 [json_name="interconnectAttachments"];
+  repeated InterconnectAttachment interconnect_attachments = 1
+      [json_name = "interconnectAttachments"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -639,7 +653,7 @@ message InterconnectAttachmentsScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -649,21 +663,21 @@ message InterconnectAttachmentsScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // Informational warning which replaces the list of addresses when the list is
   // empty.
-  optional Warning warning = 2 [json_name="warning"];
+  optional Warning warning = 2 [json_name = "warning"];
 }

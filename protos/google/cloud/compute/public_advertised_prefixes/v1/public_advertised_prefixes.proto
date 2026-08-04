@@ -33,13 +33,14 @@ import "google/cloud/extended_operations.proto";
 service PublicAdvertisedPrefixes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Announces the specified PublicAdvertisedPrefix
   // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/announce
-  rpc Announce(AnnounceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc Announce(AnnounceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}/announce"
       body: "*"
@@ -50,7 +51,8 @@ service PublicAdvertisedPrefixes {
 
   // Deletes the specified PublicAdvertisedPrefix
   // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/delete
-  rpc DeletePublicAdvertisedPrefix(DeletePublicAdvertisedPrefixRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeletePublicAdvertisedPrefix(DeletePublicAdvertisedPrefixRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
     };
@@ -60,7 +62,8 @@ service PublicAdvertisedPrefixes {
 
   // Returns the specified PublicAdvertisedPrefix resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/get
-  rpc GetPublicAdvertisedPrefix(GetPublicAdvertisedPrefixRequest) returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefix) {
+  rpc GetPublicAdvertisedPrefix(GetPublicAdvertisedPrefixRequest)
+      returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefix) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
     };
@@ -70,18 +73,21 @@ service PublicAdvertisedPrefixes {
   // Creates a PublicAdvertisedPrefix in the specified project using the
   // parameters that are included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/insert
-  rpc InsertPublicAdvertisedPrefix(InsertPublicAdvertisedPrefixRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertPublicAdvertisedPrefix(InsertPublicAdvertisedPrefixRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes"
       body: "public_advertised_prefix_resource"
     };
-    option (google.api.method_signature) = "project,public_advertised_prefix_resource";
+    option (google.api.method_signature) =
+        "project,public_advertised_prefix_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Lists the PublicAdvertisedPrefixes for a project.
   // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/list
-  rpc ListPublicAdvertisedPrefixes(ListPublicAdvertisedPrefixesRequest) returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefixList) {
+  rpc ListPublicAdvertisedPrefixes(ListPublicAdvertisedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefixList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes"
     };
@@ -92,18 +98,21 @@ service PublicAdvertisedPrefixes {
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/patch
-  rpc PatchPublicAdvertisedPrefix(PatchPublicAdvertisedPrefixRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchPublicAdvertisedPrefix(PatchPublicAdvertisedPrefixRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
       body: "public_advertised_prefix_resource"
     };
-    option (google.api.method_signature) = "project,public_advertised_prefix,public_advertised_prefix_resource";
+    option (google.api.method_signature) =
+        "project,public_advertised_prefix,public_advertised_prefix_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Withdraws the specified PublicAdvertisedPrefix
   // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/withdraw
-  rpc Withdraw(WithdrawRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc Withdraw(WithdrawRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}/withdraw"
       body: "*"
@@ -116,10 +125,17 @@ service PublicAdvertisedPrefixes {
 // Request message for Announce.
 message AnnounceRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // The name of the public advertised prefix. It should comply with RFC1035.
-  string public_advertised_prefix = 2 [(google.api.field_behavior) = REQUIRED,json_name="publicAdvertisedPrefix"];
+  string public_advertised_prefix = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "publicAdvertisedPrefix"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -131,16 +147,23 @@ message AnnounceRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3 [json_name="requestId"];
+  optional string request_id = 3 [json_name = "requestId"];
 }
 
 // Request message for DeletePublicAdvertisedPrefix.
 message DeletePublicAdvertisedPrefixRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // Name of the PublicAdvertisedPrefix resource to delete.
-  string public_advertised_prefix = 2 [(google.api.field_behavior) = REQUIRED,json_name="publicAdvertisedPrefix"];
+  string public_advertised_prefix = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "publicAdvertisedPrefix"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -152,25 +175,34 @@ message DeletePublicAdvertisedPrefixRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3 [json_name="requestId"];
+  optional string request_id = 3 [json_name = "requestId"];
 }
 
 // Request message for GetPublicAdvertisedPrefix.
 message GetPublicAdvertisedPrefixRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,json_name="project"];
+  string project = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the PublicAdvertisedPrefix resource to return.
-  string public_advertised_prefix = 2 [(google.api.field_behavior) = REQUIRED,json_name="publicAdvertisedPrefix"];
+  string public_advertised_prefix = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "publicAdvertisedPrefix"
+  ];
 }
 
 // Request message for InsertPublicAdvertisedPrefix.
 message InsertPublicAdvertisedPrefixRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // The PublicAdvertisedPrefix for this request.
-  optional google.cloud.cpp.compute.v1.PublicAdvertisedPrefix public_advertised_prefix_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.PublicAdvertisedPrefix
+      public_advertised_prefix_resource = 2 [json_name = "__json_request_body"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -182,7 +214,7 @@ message InsertPublicAdvertisedPrefixRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3 [json_name="requestId"];
+  optional string request_id = 3 [json_name = "requestId"];
 }
 
 // Request message for ListPublicAdvertisedPrefixes.
@@ -219,14 +251,14 @@ message ListPublicAdvertisedPrefixesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name="filter"];
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2 [json_name="maxResults"];
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -236,32 +268,41 @@ message ListPublicAdvertisedPrefixesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3 [json_name="orderBy"];
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4 [json_name="pageToken"];
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED,json_name="project"];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 6 [json_name="returnPartialSuccess"];
+  optional bool return_partial_success = 6 [json_name = "returnPartialSuccess"];
 }
 
 // Request message for PatchPublicAdvertisedPrefix.
 message PatchPublicAdvertisedPrefixRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // Name of the PublicAdvertisedPrefix resource to patch.
-  string public_advertised_prefix = 2 [(google.api.field_behavior) = REQUIRED,json_name="publicAdvertisedPrefix"];
+  string public_advertised_prefix = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "publicAdvertisedPrefix"
+  ];
 
   // The PublicAdvertisedPrefix for this request.
-  optional google.cloud.cpp.compute.v1.PublicAdvertisedPrefix public_advertised_prefix_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.PublicAdvertisedPrefix
+      public_advertised_prefix_resource = 3 [json_name = "__json_request_body"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -273,16 +314,23 @@ message PatchPublicAdvertisedPrefixRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name="requestId"];
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for Withdraw.
 message WithdrawRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // The name of the public advertised prefix. It should comply with RFC1035.
-  string public_advertised_prefix = 2 [(google.api.field_behavior) = REQUIRED,json_name="publicAdvertisedPrefix"];
+  string public_advertised_prefix = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "publicAdvertisedPrefix"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -294,5 +342,5 @@ message WithdrawRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3 [json_name="requestId"];
+  optional string request_id = 3 [json_name = "requestId"];
 }

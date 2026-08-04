@@ -25,83 +25,89 @@ import "google/cloud/compute/v1/internal/common_023.proto";
 
 message StoragePoolType {
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1 [json_name="creationTimestamp"];
+  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
   // [Output Only] The deprecation status associated with this storage pool
   // type.
-  optional DeprecationStatus deprecated = 2 [json_name="deprecated"];
+  optional DeprecationStatus deprecated = 2 [json_name = "deprecated"];
 
   // [Output Only] An optional description of this resource.
-  optional string description = 3 [json_name="description"];
+  optional string description = 3 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 4 [json_name="id"];
+  optional string id = 4 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#storagePoolType for
   // storage pool types.
-  optional string kind = 5 [json_name="kind"];
+  optional string kind = 5 [json_name = "kind"];
 
   // [Output Only] Maximum storage pool size in GB.
-  optional string max_pool_provisioned_capacity_gb = 6 [json_name="maxPoolProvisionedCapacityGb"];
+  optional string max_pool_provisioned_capacity_gb = 6
+      [json_name = "maxPoolProvisionedCapacityGb"];
 
   // [Output Only] Maximum provisioned IOPS.
-  optional string max_pool_provisioned_iops = 7 [json_name="maxPoolProvisionedIops"];
+  optional string max_pool_provisioned_iops = 7
+      [json_name = "maxPoolProvisionedIops"];
 
   // [Output Only] Maximum provisioned throughput.
-  optional string max_pool_provisioned_throughput = 8 [json_name="maxPoolProvisionedThroughput"];
+  optional string max_pool_provisioned_throughput = 8
+      [json_name = "maxPoolProvisionedThroughput"];
 
   // [Output Only] Minimum storage pool size in GB.
-  optional string min_pool_provisioned_capacity_gb = 9 [json_name="minPoolProvisionedCapacityGb"];
+  optional string min_pool_provisioned_capacity_gb = 9
+      [json_name = "minPoolProvisionedCapacityGb"];
 
   // [Output Only] Minimum provisioned IOPS.
-  optional string min_pool_provisioned_iops = 10 [json_name="minPoolProvisionedIops"];
+  optional string min_pool_provisioned_iops = 10
+      [json_name = "minPoolProvisionedIops"];
 
   // [Output Only] Minimum provisioned throughput.
-  optional string min_pool_provisioned_throughput = 11 [json_name="minPoolProvisionedThroughput"];
+  optional string min_pool_provisioned_throughput = 11
+      [json_name = "minPoolProvisionedThroughput"];
 
   // [Deprecated] This field is deprecated. Use minPoolProvisionedCapacityGb
   // instead.
-  optional string min_size_gb = 12 [json_name="minSizeGb"];
+  optional string min_size_gb = 12 [json_name = "minSizeGb"];
 
   // [Output Only] Name of the resource.
-  optional string name = 13 [json_name="name"];
+  optional string name = 13 [json_name = "name"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 14 [json_name="selfLink"];
+  optional string self_link = 14 [json_name = "selfLink"];
 
   // [Output Only] Server-defined URL for this resource with the resource id.
-  optional string self_link_with_id = 15 [json_name="selfLinkWithId"];
+  optional string self_link_with_id = 15 [json_name = "selfLinkWithId"];
 
   // [Output Only] The list of disk types supported in this storage pool type.
-  repeated string supported_disk_types = 16 [json_name="supportedDiskTypes"];
+  repeated string supported_disk_types = 16 [json_name = "supportedDiskTypes"];
 
   // [Output Only] URL of the zone where the storage pool type resides. You must
   // specify this field as part of the HTTP request URL. It is not settable as a
   // field in the request body.
-  optional string zone = 17 [json_name="zone"];
+  optional string zone = 17 [json_name = "zone"];
 }
 
 message StoragePoolTypeAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of StoragePoolTypesScopedList resources.
-  map<string, StoragePoolTypesScopedList> items = 2 [json_name="items"];
+  map<string, StoragePoolTypesScopedList> items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always
   // compute#storagePoolTypeAggregatedList .
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -162,7 +168,7 @@ message StoragePoolTypeAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -172,45 +178,45 @@ message StoragePoolTypeAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name="warning"];
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Contains a list of storage pool types.
 message StoragePoolTypeList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of StoragePoolType resources.
-  repeated StoragePoolType items = 2 [json_name="items"];
+  repeated StoragePoolType items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#storagePoolTypeList for
   // storage pool types.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -271,7 +277,7 @@ message StoragePoolTypeList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -281,27 +287,28 @@ message StoragePoolTypeList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name="warning"];
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 message StoragePoolTypesScopedList {
   // [Output Only] A list of storage pool types contained in this scope.
-  repeated StoragePoolType storage_pool_types = 1 [json_name="storagePoolTypes"];
+  repeated StoragePoolType storage_pool_types = 1
+      [json_name = "storagePoolTypes"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -362,7 +369,7 @@ message StoragePoolTypesScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -372,21 +379,21 @@ message StoragePoolTypesScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning which replaces the list of storage pool
   // types when the list is empty.
-  optional Warning warning = 2 [json_name="warning"];
+  optional Warning warning = 2 [json_name = "warning"];
 }

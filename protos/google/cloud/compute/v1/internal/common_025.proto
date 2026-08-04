@@ -28,30 +28,30 @@ message DiskMoveRequest {
   // The URL of the destination zone to move the disk. This can be a full or
   // partial URL. For example, the following are all valid URLs to a zone: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone -
-  // projects/project/zones/zone - zones/zone 
-  optional string destination_zone = 1 [json_name="destinationZone"];
+  // projects/project/zones/zone - zones/zone
+  optional string destination_zone = 1 [json_name = "destinationZone"];
 
   // The URL of the target disk to move. This can be a full or partial URL. For
   // example, the following are all valid URLs to a disk: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /disks/disk - projects/project/zones/zone/disks/disk -
-  // zones/zone/disks/disk 
-  optional string target_disk = 2 [json_name="targetDisk"];
+  // zones/zone/disks/disk
+  optional string target_disk = 2 [json_name = "targetDisk"];
 }
 
 message InstanceMoveRequest {
   // The URL of the destination zone to move the instance. This can be a full or
   // partial URL. For example, the following are all valid URLs to a zone: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone -
-  // projects/project/zones/zone - zones/zone 
-  optional string destination_zone = 1 [json_name="destinationZone"];
+  // projects/project/zones/zone - zones/zone
+  optional string destination_zone = 1 [json_name = "destinationZone"];
 
   // The URL of the target instance to move. This can be a full or partial URL.
   // For example, the following are all valid URLs to an instance: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /instances/instance - projects/project/zones/zone/instances/instance -
-  // zones/zone/instances/instance 
-  optional string target_instance = 2 [json_name="targetInstance"];
+  // zones/zone/instances/instance
+  optional string target_instance = 2 [json_name = "targetInstance"];
 }
 
 // Represents a Project resource. A project is used to organize resources in a
@@ -64,14 +64,15 @@ message Project {
   // CA_ENTERPRISE_ANNUAL: Enterprise tier protection billed annually.
   // CA_ENTERPRISE_PAYGO: Enterprise tier protection billed monthly.
   // CA_STANDARD: Standard protection.
-  optional string cloud_armor_tier = 15 [json_name="cloudArmorTier"];
+  optional string cloud_armor_tier = 15 [json_name = "cloudArmorTier"];
 
   // Metadata key/value pairs available to all instances contained in this
   // project. See Custom metadata for more information.
-  optional Metadata common_instance_metadata = 1 [json_name="commonInstanceMetadata"];
+  optional Metadata common_instance_metadata = 1
+      [json_name = "commonInstanceMetadata"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2 [json_name="creationTimestamp"];
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // This signifies the default network tier used for configuring resources of
   // the project and can only take the following values: PREMIUM, STANDARD.
@@ -83,87 +84,89 @@ message Project {
   // networking products.
   // STANDARD_OVERRIDES_FIXED_STANDARD: (Output only) Temporary tier for
   // FIXED_STANDARD when fixed standard tier is expired or not configured.
-  optional string default_network_tier = 3 [json_name="defaultNetworkTier"];
+  optional string default_network_tier = 3 [json_name = "defaultNetworkTier"];
 
   // [Output Only] Default service account used by VMs running in this project.
-  optional string default_service_account = 4 [json_name="defaultServiceAccount"];
+  optional string default_service_account = 4
+      [json_name = "defaultServiceAccount"];
 
   // An optional textual description of the resource.
-  optional string description = 5 [json_name="description"];
+  optional string description = 5 [json_name = "description"];
 
   // An optional list of restricted features enabled for use on this project.
-  repeated string enabled_features = 6 [json_name="enabledFeatures"];
+  repeated string enabled_features = 6 [json_name = "enabledFeatures"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server. This is *not* the project ID, and is just a unique
   // ID used by Compute Engine to identify resources.
-  optional string id = 7 [json_name="id"];
+  optional string id = 7 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#project for projects.
-  optional string kind = 8 [json_name="kind"];
+  optional string kind = 8 [json_name = "kind"];
 
   // The project ID. For example: my-example-project. Use the project ID to make
   // requests to Compute Engine.
-  optional string name = 9 [json_name="name"];
+  optional string name = 9 [json_name = "name"];
 
   // [Output Only] Quotas assigned to this project.
-  repeated Quota quotas = 10 [json_name="quotas"];
+  repeated Quota quotas = 10 [json_name = "quotas"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 11 [json_name="selfLink"];
+  optional string self_link = 11 [json_name = "selfLink"];
 
   // An optional naming prefix for daily usage reports and the Google Cloud
   // Storage bucket where they are stored.
-  optional UsageExportLocation usage_export_location = 12 [json_name="usageExportLocation"];
+  optional UsageExportLocation usage_export_location = 12
+      [json_name = "usageExportLocation"];
 
   // [Output Only] Default internal DNS setting used by VMs running in this
   // project.
-  // GLOBAL_DEFAULT: 
-  // UNSPECIFIED_VM_DNS_SETTING: 
-  // ZONAL_DEFAULT: 
-  // ZONAL_ONLY: 
-  optional string vm_dns_setting = 13 [json_name="vmDnsSetting"];
+  // GLOBAL_DEFAULT:
+  // UNSPECIFIED_VM_DNS_SETTING:
+  // ZONAL_DEFAULT:
+  // ZONAL_ONLY:
+  optional string vm_dns_setting = 13 [json_name = "vmDnsSetting"];
 
   // [Output Only] The role this project has in a shared VPC configuration.
   // Currently, only projects with the host role, which is specified by the
   // value HOST, are differentiated.
-  // HOST: 
-  // UNSPECIFIED_XPN_PROJECT_STATUS: 
-  optional string xpn_project_status = 14 [json_name="xpnProjectStatus"];
+  // HOST:
+  // UNSPECIFIED_XPN_PROJECT_STATUS:
+  optional string xpn_project_status = 14 [json_name = "xpnProjectStatus"];
 }
 
 message ProjectsDisableXpnResourceRequest {
   // Service resource (a.k.a service project) ID.
-  optional XpnResourceId xpn_resource = 1 [json_name="xpnResource"];
+  optional XpnResourceId xpn_resource = 1 [json_name = "xpnResource"];
 }
 
 message ProjectsEnableXpnResourceRequest {
   // Service resource (a.k.a service project) ID.
-  optional XpnResourceId xpn_resource = 1 [json_name="xpnResource"];
+  optional XpnResourceId xpn_resource = 1 [json_name = "xpnResource"];
 }
 
 message ProjectsGetXpnResources {
   // [Output Only] Type of resource. Always compute#projectsGetXpnResources for
   // lists of service resources (a.k.a service projects)
-  optional string kind = 1 [json_name="kind"];
+  optional string kind = 1 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 2 [json_name="nextPageToken"];
+  optional string next_page_token = 2 [json_name = "nextPageToken"];
 
   // Service resources (a.k.a service projects) attached to this project as
   // their shared VPC host.
-  repeated XpnResourceId resources = 3 [json_name="resources"];
+  repeated XpnResourceId resources = 3 [json_name = "resources"];
 }
 
 message ProjectsListXpnHostsRequest {
   // Optional organization ID managed by Cloud Resource Manager, for which to
   // list shared VPC host projects. If not specified, the organization will be
   // inferred from the project.
-  optional string organization = 1 [json_name="organization"];
+  optional string organization = 1 [json_name = "organization"];
 }
 
 message ProjectsSetCloudArmorTierRequest {
@@ -171,7 +174,7 @@ message ProjectsSetCloudArmorTierRequest {
   // CA_ENTERPRISE_ANNUAL: Enterprise tier protection billed annually.
   // CA_ENTERPRISE_PAYGO: Enterprise tier protection billed monthly.
   // CA_STANDARD: Standard protection.
-  optional string cloud_armor_tier = 1 [json_name="cloudArmorTier"];
+  optional string cloud_armor_tier = 1 [json_name = "cloudArmorTier"];
 }
 
 message ProjectsSetDefaultNetworkTierRequest {
@@ -183,7 +186,7 @@ message ProjectsSetDefaultNetworkTierRequest {
   // networking products.
   // STANDARD_OVERRIDES_FIXED_STANDARD: (Output only) Temporary tier for
   // FIXED_STANDARD when fixed standard tier is expired or not configured.
-  optional string network_tier = 1 [json_name="networkTier"];
+  optional string network_tier = 1 [json_name = "networkTier"];
 }
 
 // The location in Cloud Storage and naming method of the daily usage report.
@@ -195,36 +198,36 @@ message UsageExportLocation {
   // example-bucket, or the bucket name with gs:// or
   // https://storage.googleapis.com/ in front of it, such as
   // gs://example-bucket.
-  optional string bucket_name = 1 [json_name="bucketName"];
+  optional string bucket_name = 1 [json_name = "bucketName"];
 
   // An optional prefix for the name of the usage report object stored in
   // bucketName. If not supplied, defaults to usage_gce. The report is stored as
   // a CSV file named report_name_prefix_gce_YYYYMMDD.csv where YYYYMMDD is the
   // day of the usage according to Pacific Time. If you supply a prefix, it
   // should conform to Cloud Storage object naming conventions.
-  optional string report_name_prefix = 2 [json_name="reportNamePrefix"];
+  optional string report_name_prefix = 2 [json_name = "reportNamePrefix"];
 }
 
 message XpnHostList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // [Output Only] A list of shared VPC host project URLs.
-  repeated Project items = 2 [json_name="items"];
+  repeated Project items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#xpnHostList for lists of
   // shared VPC hosts.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -285,7 +288,7 @@ message XpnHostList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -295,22 +298,22 @@ message XpnHostList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name="warning"];
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Service resource (a.k.a service project) ID.
@@ -318,10 +321,10 @@ message XpnResourceId {
   // The ID of the service resource. In the case of projects, this field
   // supports project id (e.g., my-project-123) and project number (e.g.
   // 12345678).
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // The type of the service resource.
-  // PROJECT: 
-  // XPN_RESOURCE_TYPE_UNSPECIFIED: 
-  optional string type = 2 [json_name="type"];
+  // PROJECT:
+  // XPN_RESOURCE_TYPE_UNSPECIFIED:
+  optional string type = 2 [json_name = "type"];
 }

@@ -35,14 +35,15 @@ import "google/cloud/extended_operations.proto";
 service Addresses {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of addresses. To prevent failure, Google
   // recommends that you set the `returnPartialSuccess` parameter to `true`.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/aggregatedList
-  rpc AggregatedListAddresses(AggregatedListAddressesRequest) returns (google.cloud.cpp.compute.v1.AddressAggregatedList) {
+  rpc AggregatedListAddresses(AggregatedListAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.AddressAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/addresses"
     };
@@ -51,7 +52,8 @@ service Addresses {
 
   // Deletes the specified address resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/delete
-  rpc DeleteAddress(DeleteAddressRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteAddress(DeleteAddressRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/addresses/{address}"
     };
@@ -61,7 +63,8 @@ service Addresses {
 
   // Returns the specified address resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/get
-  rpc GetAddress(GetAddressRequest) returns (google.cloud.cpp.compute.v1.Address) {
+  rpc GetAddress(GetAddressRequest)
+      returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/addresses/{address}"
     };
@@ -71,7 +74,8 @@ service Addresses {
   // Creates an address resource in the specified project by using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/insert
-  rpc InsertAddress(InsertAddressRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertAddress(InsertAddressRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/addresses"
       body: "address_resource"
@@ -82,7 +86,8 @@ service Addresses {
 
   // Retrieves a list of addresses contained within the specified region.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/list
-  rpc ListAddresses(ListAddressesRequest) returns (google.cloud.cpp.compute.v1.AddressList) {
+  rpc ListAddresses(ListAddressesRequest)
+      returns (google.cloud.cpp.compute.v1.AddressList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/addresses"
     };
@@ -96,19 +101,22 @@ service Addresses {
       post: "/compute/v1/projects/{project}/regions/{region}/addresses/{address}/move"
       body: "region_addresses_move_request_resource"
     };
-    option (google.api.method_signature) = "project,region,address,region_addresses_move_request_resource";
+    option (google.api.method_signature) =
+        "project,region,address,region_addresses_move_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Sets the labels on an Address. To learn more about labels, read the
   // Labeling Resources documentation.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/setLabels
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/addresses/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_labels_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -147,7 +155,7 @@ message AggregatedListAddressesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name="filter"];
+  optional string filter = 1 [json_name = "filter"];
 
   // Indicates whether every visible scope for each scope type (zone, region,
   // global) should be included in the response. For new resource types added
@@ -156,14 +164,14 @@ message AggregatedListAddressesRequest {
   // types which predate this field, if this flag is omitted or false, only
   // scopes of the scope types where the resource type is expected to be found
   // will be included.
-  optional bool include_all_scopes = 2 [json_name="includeAllScopes"];
+  optional bool include_all_scopes = 2 [json_name = "includeAllScopes"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 3 [json_name="maxResults"];
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -173,36 +181,47 @@ message AggregatedListAddressesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 4 [json_name="orderBy"];
+  optional string order_by = 4 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 5 [json_name="pageToken"];
+  optional string page_token = 5 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 6 [(google.api.field_behavior) = REQUIRED,json_name="project"];
+  string project = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 7 [json_name="returnPartialSuccess"];
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 
   // The Shared VPC service project id or service project number for which
   // aggregated list request is invoked for subnetworks list-usable api.
-  optional string service_project_number = 8 [json_name="serviceProjectNumber"];
+  optional string service_project_number = 8
+      [json_name = "serviceProjectNumber"];
 }
 
 // Request message for DeleteAddress.
 message DeleteAddressRequest {
   // Name of the address resource to delete.
-  string address = 1 [(google.api.field_behavior) = REQUIRED,json_name="address"];
+  string address = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "address"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -214,31 +233,43 @@ message DeleteAddressRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name="requestId"];
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for GetAddress.
 message GetAddressRequest {
   // Name of the address resource to return.
-  string address = 1 [(google.api.field_behavior) = REQUIRED,json_name="address"];
+  string address = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "address"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,json_name="project"];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,json_name="region"];
+  string region = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 }
 
 // Request message for InsertAddress.
 message InsertAddressRequest {
   // The Address for this request.
-  optional google.cloud.cpp.compute.v1.Address address_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Address address_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -250,7 +281,7 @@ message InsertAddressRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name="requestId"];
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for ListAddresses.
@@ -287,14 +318,14 @@ message ListAddressesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name="filter"];
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2 [json_name="maxResults"];
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -304,38 +335,51 @@ message ListAddressesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3 [json_name="orderBy"];
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4 [json_name="pageToken"];
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED,json_name="project"];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region for this request.
-  string region = 6 [(google.api.field_behavior) = REQUIRED,json_name="region"];
+  string region = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 7 [json_name="returnPartialSuccess"];
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 }
 
 // Request message for Move.
 message MoveRequest {
   // Name of the address resource to move.
-  string address = 1 [(google.api.field_behavior) = REQUIRED,json_name="address"];
+  string address = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "address"];
 
   // Source project ID which the Address is moved from.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
+  ];
 
   // The RegionAddressesMoveRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionAddressesMoveRequest region_addresses_move_request_resource = 4 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionAddressesMoveRequest
+      region_addresses_move_request_resource = 4
+      [json_name = "__json_request_body"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -347,19 +391,29 @@ message MoveRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 5 [json_name="requestId"];
+  optional string request_id = 5 [json_name = "requestId"];
 }
 
 // Request message for SetLabels.
 message SetLabelsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // The region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
+  ];
 
   // The RegionSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest region_set_labels_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest
+      region_set_labels_request_resource = 3
+      [json_name = "__json_request_body"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -371,8 +425,9 @@ message SetLabelsRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name="requestId"];
+  optional string request_id = 4 [json_name = "requestId"];
 
   // Name or id of the resource for this request.
-  string resource = 5 [(google.api.field_behavior) = REQUIRED,json_name="resource"];
+  string resource = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }

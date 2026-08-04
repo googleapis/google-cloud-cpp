@@ -33,15 +33,16 @@ import "google/cloud/extended_operations.proto";
 service RegionCommitments {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of commitments by region. To prevent failure,
   // Google recommends that you set the `returnPartialSuccess` parameter to
   // `true`.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/aggregatedList
-  rpc AggregatedListRegionCommitments(AggregatedListRegionCommitmentsRequest) returns (google.cloud.cpp.compute.v1.CommitmentAggregatedList) {
+  rpc AggregatedListRegionCommitments(AggregatedListRegionCommitmentsRequest)
+      returns (google.cloud.cpp.compute.v1.CommitmentAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/commitments"
     };
@@ -50,7 +51,8 @@ service RegionCommitments {
 
   // Returns the specified commitment resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/get
-  rpc GetCommitment(GetCommitmentRequest) returns (google.cloud.cpp.compute.v1.Commitment) {
+  rpc GetCommitment(GetCommitmentRequest)
+      returns (google.cloud.cpp.compute.v1.Commitment) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}"
     };
@@ -60,7 +62,8 @@ service RegionCommitments {
   // Creates a commitment in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/insert
-  rpc InsertCommitment(InsertCommitmentRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertCommitment(InsertCommitmentRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/commitments"
       body: "commitment_resource"
@@ -71,7 +74,8 @@ service RegionCommitments {
 
   // Retrieves a list of commitments contained within the specified region.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/list
-  rpc ListRegionCommitments(ListRegionCommitmentsRequest) returns (google.cloud.cpp.compute.v1.CommitmentList) {
+  rpc ListRegionCommitments(ListRegionCommitmentsRequest)
+      returns (google.cloud.cpp.compute.v1.CommitmentList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/commitments"
     };
@@ -82,12 +86,14 @@ service RegionCommitments {
   // Update is performed only on selected fields included as part of
   // update-mask. Only the following fields can be updated: auto_renew and plan.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/update
-  rpc UpdateCommitment(UpdateCommitmentRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateCommitment(UpdateCommitmentRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}"
       body: "commitment_resource"
     };
-    option (google.api.method_signature) = "project,region,commitment,update_mask,commitment_resource";
+    option (google.api.method_signature) =
+        "project,region,commitment,update_mask,commitment_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -126,7 +132,7 @@ message AggregatedListRegionCommitmentsRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name="filter"];
+  optional string filter = 1 [json_name = "filter"];
 
   // Indicates whether every visible scope for each scope type (zone, region,
   // global) should be included in the response. For new resource types added
@@ -135,14 +141,14 @@ message AggregatedListRegionCommitmentsRequest {
   // types which predate this field, if this flag is omitted or false, only
   // scopes of the scope types where the resource type is expected to be found
   // will be included.
-  optional bool include_all_scopes = 2 [json_name="includeAllScopes"];
+  optional bool include_all_scopes = 2 [json_name = "includeAllScopes"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 3 [json_name="maxResults"];
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -152,48 +158,62 @@ message AggregatedListRegionCommitmentsRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 4 [json_name="orderBy"];
+  optional string order_by = 4 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 5 [json_name="pageToken"];
+  optional string page_token = 5 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 6 [(google.api.field_behavior) = REQUIRED,json_name="project"];
+  string project = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 7 [json_name="returnPartialSuccess"];
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 
   // The Shared VPC service project id or service project number for which
   // aggregated list request is invoked for subnetworks list-usable api.
-  optional string service_project_number = 8 [json_name="serviceProjectNumber"];
+  optional string service_project_number = 8
+      [json_name = "serviceProjectNumber"];
 }
 
 // Request message for GetCommitment.
 message GetCommitmentRequest {
   // Name of the commitment to return.
-  string commitment = 1 [(google.api.field_behavior) = REQUIRED,json_name="commitment"];
+  string commitment = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "commitment"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,json_name="project"];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,json_name="region"];
+  string region = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 }
 
 // Request message for InsertCommitment.
 message InsertCommitmentRequest {
   // The Commitment for this request.
-  optional google.cloud.cpp.compute.v1.Commitment commitment_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Commitment commitment_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -205,7 +225,7 @@ message InsertCommitmentRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name="requestId"];
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for ListRegionCommitments.
@@ -242,14 +262,14 @@ message ListRegionCommitmentsRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name="filter"];
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2 [json_name="maxResults"];
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -259,40 +279,52 @@ message ListRegionCommitmentsRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3 [json_name="orderBy"];
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4 [json_name="pageToken"];
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED,json_name="project"];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region for this request.
-  string region = 6 [(google.api.field_behavior) = REQUIRED,json_name="region"];
+  string region = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 7 [json_name="returnPartialSuccess"];
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 }
 
 // Request message for UpdateCommitment.
 message UpdateCommitmentRequest {
   // Name of the commitment that you want to update.
-  string commitment = 1 [(google.api.field_behavior) = REQUIRED,json_name="commitment"];
+  string commitment = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "commitment"];
 
   // The Commitment for this request.
-  optional google.cloud.cpp.compute.v1.Commitment commitment_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.compute.v1.Commitment commitment_resource = 2
+      [json_name = "__json_request_body"];
 
-  optional string paths = 3 [json_name="paths"];
+  optional string paths = 3 [json_name = "paths"];
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
+  string region = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -304,8 +336,8 @@ message UpdateCommitmentRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 6 [json_name="requestId"];
+  optional string request_id = 6 [json_name = "requestId"];
 
   // update_mask indicates fields to be updated as part of this request.
-  optional string update_mask = 7 [json_name="updateMask"];
+  optional string update_mask = 7 [json_name = "updateMask"];
 }

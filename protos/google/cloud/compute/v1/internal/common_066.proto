@@ -29,25 +29,25 @@ message InstantSnapshot {
   // ARCHITECTURE_UNSPECIFIED: Default value indicating Architecture is not set.
   // ARM64: Machines with architecture ARM64
   // X86_64: Machines with architecture X86_64
-  optional string architecture = 1 [json_name="architecture"];
+  optional string architecture = 1 [json_name = "architecture"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2 [json_name="creationTimestamp"];
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3 [json_name="description"];
+  optional string description = 3 [json_name = "description"];
 
   // [Output Only] Size of the source disk, specified in GB.
-  optional string disk_size_gb = 4 [json_name="diskSizeGb"];
+  optional string disk_size_gb = 4 [json_name = "diskSizeGb"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 5 [json_name="id"];
+  optional string id = 5 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#instantSnapshot for
   // InstantSnapshot resources.
-  optional string kind = 6 [json_name="kind"];
+  optional string kind = 6 [json_name = "kind"];
 
   // A fingerprint for the labels being applied to this InstantSnapshot, which
   // is essentially a hash of the labels set used for optimistic locking. The
@@ -56,11 +56,11 @@ message InstantSnapshot {
   // up-to-date fingerprint hash in order to update or change labels, otherwise
   // the request will fail with error 412 conditionNotMet. To see the latest
   // fingerprint, make a get() request to retrieve a InstantSnapshot.
-  optional string label_fingerprint = 7 [json_name="labelFingerprint"];
+  optional string label_fingerprint = 7 [json_name = "labelFingerprint"];
 
   // Labels to apply to this InstantSnapshot. These can be later modified by the
   // setLabels method. Label values may be empty.
-  map<string, string> labels = 8 [json_name="labels"];
+  map<string, string> labels = 8 [json_name = "labels"];
 
   // Name of the resource; provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -69,27 +69,28 @@ message InstantSnapshot {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 9 [json_name="name"];
+  optional string name = 9 [json_name = "name"];
 
   // [Output Only] URL of the region where the instant snapshot resides. You
   // must specify this field as part of the HTTP request URL. It is not settable
   // as a field in the request body.
-  optional string region = 10 [json_name="region"];
+  optional string region = 10 [json_name = "region"];
 
   // [Output Only] Status information for the instant snapshot resource.
-  optional InstantSnapshotResourceStatus resource_status = 11 [json_name="resourceStatus"];
+  optional InstantSnapshotResourceStatus resource_status = 11
+      [json_name = "resourceStatus"];
 
   // Output only. Reserved for future use.
-  optional bool satisfies_pzi = 12 [json_name="satisfiesPzi"];
+  optional bool satisfies_pzi = 12 [json_name = "satisfiesPzi"];
 
   // [Output Only] Reserved for future use.
-  optional bool satisfies_pzs = 13 [json_name="satisfiesPzs"];
+  optional bool satisfies_pzs = 13 [json_name = "satisfiesPzs"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 14 [json_name="selfLink"];
+  optional string self_link = 14 [json_name = "selfLink"];
 
   // [Output Only] Server-defined URL for this resource's resource id.
-  optional string self_link_with_id = 15 [json_name="selfLinkWithId"];
+  optional string self_link_with_id = 15 [json_name = "selfLinkWithId"];
 
   // URL of the source disk used to create this instant snapshot. Note that the
   // source disk must be in the same zone/region as the instant snapshot to be
@@ -100,13 +101,13 @@ message InstantSnapshot {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /disks/disk - projects/project/zones/zone/disks/disk -
   // projects/project/regions/region/disks/disk - zones/zone/disks/disk -
-  // regions/region/disks/disk 
-  optional string source_disk = 16 [json_name="sourceDisk"];
+  // regions/region/disks/disk
+  optional string source_disk = 16 [json_name = "sourceDisk"];
 
   // [Output Only] The ID value of the disk used to create this InstantSnapshot.
   // This value may be used to determine whether the InstantSnapshot was taken
   // from the current or a previous instance of a given disk name.
-  optional string source_disk_id = 17 [json_name="sourceDiskId"];
+  optional string source_disk_id = 17 [json_name = "sourceDiskId"];
 
   // [Output Only] The status of the instantSnapshot. This can be CREATING,
   // DELETING, FAILED, or READY.
@@ -116,34 +117,34 @@ message InstantSnapshot {
   // READY: InstantSnapshot has been created successfully.
   // UNAVAILABLE: InstantSnapshot is currently unavailable and cannot be used
   // for Disk restoration
-  optional string status = 18 [json_name="status"];
+  optional string status = 18 [json_name = "status"];
 
   // [Output Only] URL of the zone where the instant snapshot resides. You must
   // specify this field as part of the HTTP request URL. It is not settable as a
   // field in the request body.
-  optional string zone = 19 [json_name="zone"];
+  optional string zone = 19 [json_name = "zone"];
 }
 
 // Contains a list of InstantSnapshot resources.
 message InstantSnapshotList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of InstantSnapshot resources.
-  repeated InstantSnapshot items = 2 [json_name="items"];
+  repeated InstantSnapshot items = 2 [json_name = "items"];
 
   // Type of resource.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -204,7 +205,7 @@ message InstantSnapshotList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -214,25 +215,25 @@ message InstantSnapshotList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name="warning"];
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 message InstantSnapshotResourceStatus {
   // [Output Only] The storage size of this instant snapshot.
-  optional string storage_size_bytes = 1 [json_name="storageSizeBytes"];
+  optional string storage_size_bytes = 1 [json_name = "storageSizeBytes"];
 }

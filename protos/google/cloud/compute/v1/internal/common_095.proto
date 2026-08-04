@@ -32,17 +32,17 @@ message PublicAdvertisedPrefix {
   // V2: This public advertised prefix can only be used to create regional
   // public delegated prefixes. Public delegated prefix creation and deletion
   // takes minutes and the BGP status can be modified.
-  optional string byoip_api_version = 13 [json_name="byoipApiVersion"];
+  optional string byoip_api_version = 13 [json_name = "byoipApiVersion"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1 [json_name="creationTimestamp"];
+  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 2 [json_name="description"];
+  optional string description = 2 [json_name = "description"];
 
   // The address to be used for reverse DNS verification.
-  optional string dns_verification_ip = 3 [json_name="dnsVerificationIp"];
+  optional string dns_verification_ip = 3 [json_name = "dnsVerificationIp"];
 
   // Fingerprint of this resource. A hash of the contents stored in this object.
   // This field is used in optimistic locking. This field will be ignored when
@@ -50,19 +50,19 @@ message PublicAdvertisedPrefix {
   // provided in order to update the PublicAdvertisedPrefix, otherwise the
   // request will fail with error 412 conditionNotMet. To see the latest
   // fingerprint, make a get() request to retrieve a PublicAdvertisedPrefix.
-  optional string fingerprint = 4 [json_name="fingerprint"];
+  optional string fingerprint = 4 [json_name = "fingerprint"];
 
   // [Output Only] The unique identifier for the resource type. The server
   // generates this identifier.
-  optional string id = 5 [json_name="id"];
+  optional string id = 5 [json_name = "id"];
 
   // The address range, in CIDR format, represented by this public advertised
   // prefix.
-  optional string ip_cidr_range = 6 [json_name="ipCidrRange"];
+  optional string ip_cidr_range = 6 [json_name = "ipCidrRange"];
 
   // [Output Only] Type of the resource. Always compute#publicAdvertisedPrefix
   // for public advertised prefixes.
-  optional string kind = 7 [json_name="kind"];
+  optional string kind = 7 [json_name = "kind"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -71,7 +71,7 @@ message PublicAdvertisedPrefix {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 8 [json_name="name"];
+  optional string name = 8 [json_name = "name"];
 
   // Specifies how child public delegated prefix will be scoped. It could be one
   // of following values: - `REGIONAL`: The public delegated prefix is regional
@@ -79,24 +79,25 @@ message PublicAdvertisedPrefix {
   // delegated prefix is global only. The provisioning will take ~4 weeks. -
   // `GLOBAL_AND_REGIONAL` [output only]: The public delegated prefixes is BYOIP
   // V1 legacy prefix. This is output only value and no longer supported in
-  // BYOIP V2. 
+  // BYOIP V2.
   // GLOBAL: The public delegated prefix is global only. The provisioning will
   // take ~4 weeks.
   // GLOBAL_AND_REGIONAL: The public delegated prefixes is BYOIP V1 legacy
   // prefix. This is output only value and no longer supported in BYOIP V2.
   // REGIONAL: The public delegated prefix is regional only. The provisioning
   // will take a few minutes.
-  optional string pdp_scope = 14 [json_name="pdpScope"];
+  optional string pdp_scope = 14 [json_name = "pdpScope"];
 
   // [Output Only] The list of public delegated prefixes that exist for this
   // public advertised prefix.
-  repeated PublicAdvertisedPrefixPublicDelegatedPrefix public_delegated_prefixs = 9 [json_name="publicDelegatedPrefixs"];
+  repeated PublicAdvertisedPrefixPublicDelegatedPrefix
+      public_delegated_prefixs = 9 [json_name = "publicDelegatedPrefixs"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 10 [json_name="selfLink"];
+  optional string self_link = 10 [json_name = "selfLink"];
 
   // [Output Only] The shared secret to be used for reverse DNS verification.
-  optional string shared_secret = 11 [json_name="sharedSecret"];
+  optional string shared_secret = 11 [json_name = "sharedSecret"];
 
   // The status of the public advertised prefix. Possible values include: -
   // `INITIAL`: RPKI validation is complete. - `PTR_CONFIGURED`: User has
@@ -104,7 +105,7 @@ message PublicAdvertisedPrefix {
   // `REVERSE_DNS_LOOKUP_FAILED`: Reverse DNS lookup failed. -
   // `PREFIX_CONFIGURATION_IN_PROGRESS`: The prefix is being configured. -
   // `PREFIX_CONFIGURATION_COMPLETE`: The prefix is fully configured. -
-  // `PREFIX_REMOVAL_IN_PROGRESS`: The prefix is being removed. 
+  // `PREFIX_REMOVAL_IN_PROGRESS`: The prefix is being removed.
   // ANNOUNCED_TO_INTERNET: The prefix is announced to Internet.
   // INITIAL: RPKI validation is complete.
   // PREFIX_CONFIGURATION_COMPLETE: The prefix is fully configured.
@@ -115,29 +116,29 @@ message PublicAdvertisedPrefix {
   // announced.
   // REVERSE_DNS_LOOKUP_FAILED: Reverse DNS lookup failed.
   // VALIDATED: Reverse DNS lookup is successful.
-  optional string status = 12 [json_name="status"];
+  optional string status = 12 [json_name = "status"];
 }
 
 message PublicAdvertisedPrefixList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of PublicAdvertisedPrefix resources.
-  repeated PublicAdvertisedPrefix items = 2 [json_name="items"];
+  repeated PublicAdvertisedPrefix items = 2 [json_name = "items"];
 
   // [Output Only] Type of the resource. Always compute#publicAdvertisedPrefix
   // for public advertised prefixes.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -198,7 +199,7 @@ message PublicAdvertisedPrefixList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -208,42 +209,42 @@ message PublicAdvertisedPrefixList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name="warning"];
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Represents a CIDR range which can be used to assign addresses.
 message PublicAdvertisedPrefixPublicDelegatedPrefix {
   // The IP address range of the public delegated prefix
-  optional string ip_range = 1 [json_name="ipRange"];
+  optional string ip_range = 1 [json_name = "ipRange"];
 
   // The name of the public delegated prefix
-  optional string name = 2 [json_name="name"];
+  optional string name = 2 [json_name = "name"];
 
   // The project number of the public delegated prefix
-  optional string project = 3 [json_name="project"];
+  optional string project = 3 [json_name = "project"];
 
   // The region of the public delegated prefix if it is regional. If absent, the
   // prefix is global.
-  optional string region = 4 [json_name="region"];
+  optional string region = 4 [json_name = "region"];
 
   // The status of the public delegated prefix. Possible values are:
   // INITIALIZING: The public delegated prefix is being initialized and
   // addresses cannot be created yet. ANNOUNCED: The public delegated prefix is
   // active.
-  optional string status = 5 [json_name="status"];
+  optional string status = 5 [json_name = "status"];
 }

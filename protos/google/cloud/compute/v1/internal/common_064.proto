@@ -33,27 +33,27 @@ message InstanceSettings {
   // to update or change the resource, otherwise the request will fail with
   // error 412 conditionNotMet. To see the latest fingerprint, make a get()
   // request to retrieve the resource.
-  optional string fingerprint = 1 [json_name="fingerprint"];
+  optional string fingerprint = 1 [json_name = "fingerprint"];
 
   // [Output Only] Type of the resource. Always compute#instance_settings for
   // instance settings.
-  optional string kind = 2 [json_name="kind"];
+  optional string kind = 2 [json_name = "kind"];
 
   // The metadata key/value pairs assigned to all the instances in the
   // corresponding scope.
-  optional InstanceSettingsMetadata metadata = 3 [json_name="metadata"];
+  optional InstanceSettingsMetadata metadata = 3 [json_name = "metadata"];
 
   // [Output Only] URL of the zone where the resource resides You must specify
   // this field as part of the HTTP request URL. It is not settable as a field
   // in the request body.
-  optional string zone = 4 [json_name="zone"];
+  optional string zone = 4 [json_name = "zone"];
 }
 
 message InstanceSettingsMetadata {
   // A metadata key/value items map. The total size of all keys and values must
   // be less than 512KB.
-  map<string, string> items = 1 [json_name="items"];
+  map<string, string> items = 1 [json_name = "items"];
 
   // [Output Only] Type of the resource. Always compute#metadata for metadata.
-  optional string kind = 2 [json_name="kind"];
+  optional string kind = 2 [json_name = "kind"];
 }

@@ -30,37 +30,39 @@ message PacketMirroring {
   // The Forwarding Rule resource of type loadBalancingScheme=INTERNAL that will
   // be used as collector for mirrored traffic. The specified forwarding rule
   // must have isMirroringCollector set to true.
-  optional PacketMirroringForwardingRuleInfo collector_ilb = 1 [json_name="collectorIlb"];
+  optional PacketMirroringForwardingRuleInfo collector_ilb = 1
+      [json_name = "collectorIlb"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2 [json_name="creationTimestamp"];
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3 [json_name="description"];
+  optional string description = 3 [json_name = "description"];
 
   // Indicates whether or not this packet mirroring takes effect. If set to
   // FALSE, this packet mirroring policy will not be enforced on the network.
   // The default is TRUE.
-  // FALSE: 
-  // TRUE: 
-  optional string enable = 4 [json_name="enable"];
+  // FALSE:
+  // TRUE:
+  optional string enable = 4 [json_name = "enable"];
 
   // Filter for mirrored traffic. If unspecified, all IPv4 traffic is mirrored.
-  optional PacketMirroringFilter filter = 5 [json_name="filter"];
+  optional PacketMirroringFilter filter = 5 [json_name = "filter"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 6 [json_name="id"];
+  optional string id = 6 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#packetMirroring for
   // packet mirrorings.
-  optional string kind = 7 [json_name="kind"];
+  optional string kind = 7 [json_name = "kind"];
 
   // PacketMirroring mirroredResourceInfos. MirroredResourceInfo specifies a set
   // of mirrored VM instances, subnetworks and/or tags for which traffic from/to
   // all VM instances will be mirrored.
-  optional PacketMirroringMirroredResourceInfo mirrored_resources = 8 [json_name="mirroredResources"];
+  optional PacketMirroringMirroredResourceInfo mirrored_resources = 8
+      [json_name = "mirroredResources"];
 
   // Name of the resource; provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -69,49 +71,49 @@ message PacketMirroring {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 9 [json_name="name"];
+  optional string name = 9 [json_name = "name"];
 
   // Specifies the mirrored VPC network. Only packets in this network will be
   // mirrored. All mirrored VMs should have a NIC in the given network. All
   // mirrored subnetworks should belong to the given network.
-  optional PacketMirroringNetworkInfo network = 10 [json_name="network"];
+  optional PacketMirroringNetworkInfo network = 10 [json_name = "network"];
 
   // The priority of applying this configuration. Priority is used to break ties
   // in cases where there is more than one matching rule. In the case of two
   // rules that apply for a given Instance, the one with the lowest-numbered
   // priority value wins. Default value is 1000. Valid range is 0 through 65535.
-  optional uint32 priority = 11 [json_name="priority"];
+  optional uint32 priority = 11 [json_name = "priority"];
 
   // [Output Only] URI of the region where the packetMirroring resides.
-  optional string region = 12 [json_name="region"];
+  optional string region = 12 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 13 [json_name="selfLink"];
+  optional string self_link = 13 [json_name = "selfLink"];
 }
 
 // Contains a list of packetMirrorings.
 message PacketMirroringAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of PacketMirroring resources.
-  map<string, PacketMirroringsScopedList> items = 2 [json_name="items"];
+  map<string, PacketMirroringsScopedList> items = 2 [json_name = "items"];
 
   // Type of resource.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6 [json_name="unreachables"];
+  repeated string unreachables = 6 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -172,7 +174,7 @@ message PacketMirroringAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -182,22 +184,22 @@ message PacketMirroringAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7 [json_name="warning"];
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 message PacketMirroringFilter {
@@ -205,7 +207,7 @@ message PacketMirroringFilter {
   // specified, all traffic that matches the specified CIDR ranges is mirrored.
   // If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is
   // mirrored.
-  repeated string ip_protocols = 1 [json_name="IPProtocols"];
+  repeated string ip_protocols = 1 [json_name = "IPProtocols"];
 
   // One or more IPv4 or IPv6 CIDR ranges that apply as filters on the source
   // (ingress) or destination (egress) IP in the IP header. If no ranges are
@@ -213,47 +215,47 @@ message PacketMirroringFilter {
   // mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4
   // traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use
   // "0.0.0.0/0,::/0".
-  repeated string cidr_ranges = 2 [json_name="cidrRanges"];
+  repeated string cidr_ranges = 2 [json_name = "cidrRanges"];
 
   // Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH. The
   // default is BOTH.
   // BOTH: Default, both directions are mirrored.
   // EGRESS: Only egress traffic is mirrored.
   // INGRESS: Only ingress traffic is mirrored.
-  optional string direction = 3 [json_name="direction"];
+  optional string direction = 3 [json_name = "direction"];
 }
 
 message PacketMirroringForwardingRuleInfo {
   // [Output Only] Unique identifier for the forwarding rule; defined by the
   // server.
-  optional string canonical_url = 1 [json_name="canonicalUrl"];
+  optional string canonical_url = 1 [json_name = "canonicalUrl"];
 
   // Resource URL to the forwarding rule representing the ILB configured as
   // destination of the mirrored traffic.
-  optional string url = 2 [json_name="url"];
+  optional string url = 2 [json_name = "url"];
 }
 
 // Contains a list of PacketMirroring resources.
 message PacketMirroringList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of PacketMirroring resources.
-  repeated PacketMirroring items = 2 [json_name="items"];
+  repeated PacketMirroring items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#packetMirroring for
   // packetMirrorings.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -314,7 +316,7 @@ message PacketMirroringList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -324,22 +326,22 @@ message PacketMirroringList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name="warning"];
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 message PacketMirroringMirroredResourceInfo {
@@ -348,46 +350,49 @@ message PacketMirroringMirroredResourceInfo {
   // this config will apply only to those network interfaces of the Instances
   // that belong to the network specified in this packetMirroring. You may
   // specify a maximum of 50 Instances.
-  repeated PacketMirroringMirroredResourceInfoInstanceInfo instances = 1 [json_name="instances"];
+  repeated PacketMirroringMirroredResourceInfoInstanceInfo instances = 1
+      [json_name = "instances"];
 
   // A set of subnetworks for which traffic from/to all VM instances will be
   // mirrored. They must live in the same region as this packetMirroring. You
   // may specify a maximum of 5 subnetworks.
-  repeated PacketMirroringMirroredResourceInfoSubnetInfo subnetworks = 2 [json_name="subnetworks"];
+  repeated PacketMirroringMirroredResourceInfoSubnetInfo subnetworks = 2
+      [json_name = "subnetworks"];
 
   // A set of mirrored tags. Traffic from/to all VM instances that have one or
   // more of these tags will be mirrored.
-  repeated string tags = 3 [json_name="tags"];
+  repeated string tags = 3 [json_name = "tags"];
 }
 
 message PacketMirroringMirroredResourceInfoInstanceInfo {
   // [Output Only] Unique identifier for the instance; defined by the server.
-  optional string canonical_url = 1 [json_name="canonicalUrl"];
+  optional string canonical_url = 1 [json_name = "canonicalUrl"];
 
   // Resource URL to the virtual machine instance which is being mirrored.
-  optional string url = 2 [json_name="url"];
+  optional string url = 2 [json_name = "url"];
 }
 
 message PacketMirroringMirroredResourceInfoSubnetInfo {
   // [Output Only] Unique identifier for the subnetwork; defined by the server.
-  optional string canonical_url = 1 [json_name="canonicalUrl"];
+  optional string canonical_url = 1 [json_name = "canonicalUrl"];
 
   // Resource URL to the subnetwork for which traffic from/to all VM instances
   // will be mirrored.
-  optional string url = 2 [json_name="url"];
+  optional string url = 2 [json_name = "url"];
 }
 
 message PacketMirroringNetworkInfo {
   // [Output Only] Unique identifier for the network; defined by the server.
-  optional string canonical_url = 1 [json_name="canonicalUrl"];
+  optional string canonical_url = 1 [json_name = "canonicalUrl"];
 
   // URL of the network resource.
-  optional string url = 2 [json_name="url"];
+  optional string url = 2 [json_name = "url"];
 }
 
 message PacketMirroringsScopedList {
   // A list of packetMirrorings contained in this scope.
-  repeated PacketMirroring packet_mirrorings = 1 [json_name="packetMirrorings"];
+  repeated PacketMirroring packet_mirrorings = 1
+      [json_name = "packetMirrorings"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -448,7 +453,7 @@ message PacketMirroringsScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -458,21 +463,21 @@ message PacketMirroringsScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // Informational warning which replaces the list of packetMirrorings when the
   // list is empty.
-  optional Warning warning = 2 [json_name="warning"];
+  optional Warning warning = 2 [json_name = "warning"];
 }

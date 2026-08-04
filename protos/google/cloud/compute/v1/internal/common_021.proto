@@ -27,19 +27,20 @@ message CustomerEncryptionKey {
   // key_region/cryptoKeys/key The fully-qualifed key name may be returned for
   // resource GET requests. For example: "kmsKeyName":
   // "projects/kms_project_id/locations/region/keyRings/
-  // key_region/cryptoKeys/key /cryptoKeyVersions/1 
-  optional string kms_key_name = 1 [json_name="kmsKeyName"];
+  // key_region/cryptoKeys/key /cryptoKeyVersions/1
+  optional string kms_key_name = 1 [json_name = "kmsKeyName"];
 
   // The service account being used for the encryption request for the given KMS
   // key. If absent, the Compute Engine default service account is used. For
-  // example: "kmsKeyServiceAccount": "name@project_id.iam.gserviceaccount.com/ 
-  optional string kms_key_service_account = 2 [json_name="kmsKeyServiceAccount"];
+  // example: "kmsKeyServiceAccount": "name@project_id.iam.gserviceaccount.com/
+  optional string kms_key_service_account = 2
+      [json_name = "kmsKeyServiceAccount"];
 
   // Specifies a 256-bit customer-supplied encryption key, encoded in RFC 4648
   // base64 to either encrypt or decrypt this resource. You can provide either
   // the rawKey or the rsaEncryptedKey. For example: "rawKey":
-  // "SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0=" 
-  optional string raw_key = 3 [json_name="rawKey"];
+  // "SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0="
+  optional string raw_key = 3 [json_name = "rawKey"];
 
   // Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit
   // customer-supplied encryption key to either encrypt or decrypt this
@@ -53,12 +54,12 @@ message CustomerEncryptionKey {
   // provided by Google. 2. After being wrapped, the key must be encoded in RFC
   // 4648 base64 encoding. Gets the RSA public key certificate provided by
   // Google at:
-  // https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem 
-  optional string rsa_encrypted_key = 4 [json_name="rsaEncryptedKey"];
+  // https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem
+  optional string rsa_encrypted_key = 4 [json_name = "rsaEncryptedKey"];
 
   // [Output only] The RFC 4648 base64 encoded SHA-256 hash of the
   // customer-supplied encryption key that protects this resource.
-  optional string sha256 = 5 [json_name="sha256"];
+  optional string sha256 = 5 [json_name = "sha256"];
 }
 
 // Guest OS features.
@@ -69,20 +70,20 @@ message GuestOsFeature {
   // GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_LIVE_MIGRATABLE_V2 -
   // SEV_SNP_CAPABLE - TDX_CAPABLE - IDPF - SNP_SVSM_CAPABLE For more
   // information, see Enabling guest operating system features.
-  // BARE_METAL_LINUX_COMPATIBLE: 
-  // FEATURE_TYPE_UNSPECIFIED: 
-  // GVNIC: 
-  // IDPF: 
-  // MULTI_IP_SUBNET: 
-  // SECURE_BOOT: 
-  // SEV_CAPABLE: 
-  // SEV_LIVE_MIGRATABLE: 
-  // SEV_LIVE_MIGRATABLE_V2: 
-  // SEV_SNP_CAPABLE: 
-  // SNP_SVSM_CAPABLE: 
-  // TDX_CAPABLE: 
-  // UEFI_COMPATIBLE: 
-  // VIRTIO_SCSI_MULTIQUEUE: 
-  // WINDOWS: 
-  optional string type = 1 [json_name="type"];
+  // BARE_METAL_LINUX_COMPATIBLE:
+  // FEATURE_TYPE_UNSPECIFIED:
+  // GVNIC:
+  // IDPF:
+  // MULTI_IP_SUBNET:
+  // SECURE_BOOT:
+  // SEV_CAPABLE:
+  // SEV_LIVE_MIGRATABLE:
+  // SEV_LIVE_MIGRATABLE_V2:
+  // SEV_SNP_CAPABLE:
+  // SNP_SVSM_CAPABLE:
+  // TDX_CAPABLE:
+  // UEFI_COMPATIBLE:
+  // VIRTIO_SCSI_MULTIQUEUE:
+  // WINDOWS:
+  optional string type = 1 [json_name = "type"];
 }

@@ -32,8 +32,9 @@ message BulkInsertDiskResource {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /resourcePolicies/resourcePolicy -
   // projects/project/regions/region/resourcePolicies/resourcePolicy -
-  // regions/region/resourcePolicies/resourcePolicy 
-  optional string source_consistency_group_policy = 1 [json_name="sourceConsistencyGroupPolicy"];
+  // regions/region/resourcePolicies/resourcePolicy
+  optional string source_consistency_group_policy = 1
+      [json_name = "sourceConsistencyGroupPolicy"];
 }
 
 // Represents a Persistent Disk resource. Google Compute Engine has two Disk
@@ -58,26 +59,28 @@ message Disk {
   // instances in RW mode.
   // READ_WRITE_SINGLE: The default AccessMode, means the disk can be attached
   // to single instance in RW mode.
-  optional string access_mode = 50 [json_name="accessMode"];
+  optional string access_mode = 50 [json_name = "accessMode"];
 
   // The architecture of the disk. Valid values are ARM64 or X86_64.
   // ARCHITECTURE_UNSPECIFIED: Default value indicating Architecture is not set.
   // ARM64: Machines with architecture ARM64
   // X86_64: Machines with architecture X86_64
-  optional string architecture = 1 [json_name="architecture"];
+  optional string architecture = 1 [json_name = "architecture"];
 
   // Disk asynchronously replicated into this disk.
-  optional DiskAsyncReplication async_primary_disk = 39 [json_name="asyncPrimaryDisk"];
+  optional DiskAsyncReplication async_primary_disk = 39
+      [json_name = "asyncPrimaryDisk"];
 
   // [Output Only] A list of disks this disk is asynchronously replicated to.
-  map<string, DiskAsyncReplicationList> async_secondary_disks = 40 [json_name="asyncSecondaryDisks"];
+  map<string, DiskAsyncReplicationList> async_secondary_disks = 40
+      [json_name = "asyncSecondaryDisks"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2 [json_name="creationTimestamp"];
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3 [json_name="description"];
+  optional string description = 3 [json_name = "description"];
 
   // Encrypts the disk using a customer-supplied encryption key or a
   // customer-managed encryption key. Encryption keys do not protect access to
@@ -94,22 +97,24 @@ message Disk {
   // an encryption key when creating the disk, then the disk is encrypted using
   // an automatically generated key and you don't need to provide a key to use
   // the disk later.
-  optional CustomerEncryptionKey disk_encryption_key = 4 [json_name="diskEncryptionKey"];
+  optional CustomerEncryptionKey disk_encryption_key = 4
+      [json_name = "diskEncryptionKey"];
 
   // Whether this disk is using confidential compute mode.
-  optional bool enable_confidential_compute = 45 [json_name="enableConfidentialCompute"];
+  optional bool enable_confidential_compute = 45
+      [json_name = "enableConfidentialCompute"];
 
   // A list of features to enable on the guest operating system. Applicable only
   // for bootable images. Read Enabling guest operating system features to see a
   // list of available options.
-  repeated GuestOsFeature guest_os_features = 5 [json_name="guestOsFeatures"];
+  repeated GuestOsFeature guest_os_features = 5 [json_name = "guestOsFeatures"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 6 [json_name="id"];
+  optional string id = 6 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#disk for disks.
-  optional string kind = 7 [json_name="kind"];
+  optional string kind = 7 [json_name = "kind"];
 
   // A fingerprint for the labels being applied to this disk, which is
   // essentially a hash of the labels set used for optimistic locking. The
@@ -118,27 +123,29 @@ message Disk {
   // up-to-date fingerprint hash in order to update or change labels, otherwise
   // the request will fail with error 412 conditionNotMet. To see the latest
   // fingerprint, make a get() request to retrieve a disk.
-  optional string label_fingerprint = 8 [json_name="labelFingerprint"];
+  optional string label_fingerprint = 8 [json_name = "labelFingerprint"];
 
   // Labels to apply to this disk. These can be later modified by the setLabels
   // method.
-  map<string, string> labels = 9 [json_name="labels"];
+  map<string, string> labels = 9 [json_name = "labels"];
 
   // [Output Only] Last attach timestamp in RFC3339 text format.
-  optional string last_attach_timestamp = 10 [json_name="lastAttachTimestamp"];
+  optional string last_attach_timestamp = 10
+      [json_name = "lastAttachTimestamp"];
 
   // [Output Only] Last detach timestamp in RFC3339 text format.
-  optional string last_detach_timestamp = 11 [json_name="lastDetachTimestamp"];
+  optional string last_detach_timestamp = 11
+      [json_name = "lastDetachTimestamp"];
 
   // Integer license codes indicating which licenses are attached to this disk.
-  repeated string license_codes = 12 [json_name="licenseCodes"];
+  repeated string license_codes = 12 [json_name = "licenseCodes"];
 
   // A list of publicly visible licenses. Reserved for Google's use.
-  repeated string licenses = 13 [json_name="licenses"];
+  repeated string licenses = 13 [json_name = "licenses"];
 
   // An opaque location hint used to place the disk close to other resources.
   // This field is for use by internal tools that use the public API.
-  optional string location_hint = 14 [json_name="locationHint"];
+  optional string location_hint = 14 [json_name = "locationHint"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -147,56 +154,59 @@ message Disk {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 15 [json_name="name"];
+  optional string name = 15 [json_name = "name"];
 
   // Internal use only.
-  optional string options = 16 [json_name="options"];
+  optional string options = 16 [json_name = "options"];
 
   // Input only. [Input Only] Additional params passed with the request, but not
   // persisted as part of resource payload.
-  optional DiskParams params = 17 [json_name="params"];
+  optional DiskParams params = 17 [json_name = "params"];
 
   // Physical block size of the persistent disk, in bytes. If not present in a
   // request, a default value is used. The currently supported size is 4096,
   // other sizes may be added in the future. If an unsupported value is
   // requested, the error message will list the supported values for the
   // caller's project.
-  optional string physical_block_size_bytes = 18 [json_name="physicalBlockSizeBytes"];
+  optional string physical_block_size_bytes = 18
+      [json_name = "physicalBlockSizeBytes"];
 
   // Indicates how many IOPS to provision for the disk. This sets the number of
   // I/O operations per second that the disk can handle. Values must be between
   // 10,000 and 120,000. For more details, see the Extreme persistent disk
   // documentation.
-  optional string provisioned_iops = 19 [json_name="provisionedIops"];
+  optional string provisioned_iops = 19 [json_name = "provisionedIops"];
 
   // Indicates how much throughput to provision for the disk. This sets the
   // number of throughput mb per second that the disk can handle. Values must be
   // greater than or equal to 1.
-  optional string provisioned_throughput = 41 [json_name="provisionedThroughput"];
+  optional string provisioned_throughput = 41
+      [json_name = "provisionedThroughput"];
 
   // [Output Only] URL of the region where the disk resides. Only applicable for
   // regional resources. You must specify this field as part of the HTTP request
   // URL. It is not settable as a field in the request body.
-  optional string region = 20 [json_name="region"];
+  optional string region = 20 [json_name = "region"];
 
   // URLs of the zones where the disk should be replicated to. Only applicable
   // for regional resources.
-  repeated string replica_zones = 21 [json_name="replicaZones"];
+  repeated string replica_zones = 21 [json_name = "replicaZones"];
 
   // Resource policies applied to this disk for automatic snapshot creations.
-  repeated string resource_policies = 22 [json_name="resourcePolicies"];
+  repeated string resource_policies = 22 [json_name = "resourcePolicies"];
 
   // [Output Only] Status information for the disk resource.
-  optional DiskResourceStatus resource_status = 42 [json_name="resourceStatus"];
+  optional DiskResourceStatus resource_status = 42
+      [json_name = "resourceStatus"];
 
   // Output only. Reserved for future use.
-  optional bool satisfies_pzi = 46 [json_name="satisfiesPzi"];
+  optional bool satisfies_pzi = 46 [json_name = "satisfiesPzi"];
 
   // [Output Only] Reserved for future use.
-  optional bool satisfies_pzs = 23 [json_name="satisfiesPzs"];
+  optional bool satisfies_pzs = 23 [json_name = "satisfiesPzs"];
 
   // [Output Only] Server-defined fully-qualified URL for this resource.
-  optional string self_link = 24 [json_name="selfLink"];
+  optional string self_link = 24 [json_name = "selfLink"];
 
   // Size, in GB, of the persistent disk. You can specify this field when
   // creating a persistent disk using the sourceImage, sourceSnapshot, or
@@ -204,15 +214,17 @@ message Disk {
   // disk. If you specify this field along with a source, the value of sizeGb
   // must not be less than the size of the source. Acceptable values are greater
   // than 0.
-  optional string size_gb = 25 [json_name="sizeGb"];
+  optional string size_gb = 25 [json_name = "sizeGb"];
 
   // [Output Only] URL of the DiskConsistencyGroupPolicy for a secondary disk
   // that was created using a consistency group.
-  optional string source_consistency_group_policy = 43 [json_name="sourceConsistencyGroupPolicy"];
+  optional string source_consistency_group_policy = 43
+      [json_name = "sourceConsistencyGroupPolicy"];
 
   // [Output Only] ID of the DiskConsistencyGroupPolicy for a secondary disk
   // that was created using a consistency group.
-  optional string source_consistency_group_policy_id = 44 [json_name="sourceConsistencyGroupPolicyId"];
+  optional string source_consistency_group_policy_id = 44
+      [json_name = "sourceConsistencyGroupPolicyId"];
 
   // The source disk used to create this disk. You can provide this as a partial
   // or full URL to the resource. For example, the following are valid values: -
@@ -221,15 +233,15 @@ message Disk {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /disks/disk - projects/project/zones/zone/disks/disk -
   // projects/project/regions/region/disks/disk - zones/zone/disks/disk -
-  // regions/region/disks/disk 
-  optional string source_disk = 26 [json_name="sourceDisk"];
+  // regions/region/disks/disk
+  optional string source_disk = 26 [json_name = "sourceDisk"];
 
   // [Output Only] The unique ID of the disk used to create this disk. This
   // value identifies the exact disk that was used to create this persistent
   // disk. For example, if you created the persistent disk from a disk that was
   // later deleted and recreated under the same name, the source disk ID would
   // identify the exact version of the disk that was used.
-  optional string source_disk_id = 27 [json_name="sourceDiskId"];
+  optional string source_disk_id = 27 [json_name = "sourceDiskId"];
 
   // The source image used to create this disk. If the source image is deleted,
   // this field will not be set. To create a disk with one of the public
@@ -242,19 +254,20 @@ message Disk {
   // following format: global/images/my-custom-image You can also specify a
   // custom image by its image family, which returns the latest version of the
   // image in that family. Replace the image name with family/family-name:
-  // global/images/family/my-image-family 
-  optional string source_image = 28 [json_name="sourceImage"];
+  // global/images/family/my-image-family
+  optional string source_image = 28 [json_name = "sourceImage"];
 
   // The customer-supplied encryption key of the source image. Required if the
   // source image is protected by a customer-supplied encryption key.
-  optional CustomerEncryptionKey source_image_encryption_key = 29 [json_name="sourceImageEncryptionKey"];
+  optional CustomerEncryptionKey source_image_encryption_key = 29
+      [json_name = "sourceImageEncryptionKey"];
 
   // [Output Only] The ID value of the image used to create this disk. This
   // value identifies the exact image that was used to create this persistent
   // disk. For example, if you created the persistent disk from an image that
   // was later deleted and recreated under the same name, the source image ID
   // would identify the exact version of the image that was used.
-  optional string source_image_id = 30 [json_name="sourceImageId"];
+  optional string source_image_id = 30 [json_name = "sourceImageId"];
 
   // The source instant snapshot used to create this disk. You can provide this
   // as a partial or full URL to the resource. For example, the following are
@@ -262,8 +275,9 @@ message Disk {
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /instantSnapshots/instantSnapshot -
   // projects/project/zones/zone/instantSnapshots/instantSnapshot -
-  // zones/zone/instantSnapshots/instantSnapshot 
-  optional string source_instant_snapshot = 47 [json_name="sourceInstantSnapshot"];
+  // zones/zone/instantSnapshots/instantSnapshot
+  optional string source_instant_snapshot = 47
+      [json_name = "sourceInstantSnapshot"];
 
   // [Output Only] The unique ID of the instant snapshot used to create this
   // disk. This value identifies the exact instant snapshot that was used to
@@ -271,25 +285,27 @@ message Disk {
   // disk from an instant snapshot that was later deleted and recreated under
   // the same name, the source instant snapshot ID would identify the exact
   // version of the instant snapshot that was used.
-  optional string source_instant_snapshot_id = 48 [json_name="sourceInstantSnapshotId"];
+  optional string source_instant_snapshot_id = 48
+      [json_name = "sourceInstantSnapshotId"];
 
   // The source snapshot used to create this disk. You can provide this as a
   // partial or full URL to the resource. For example, the following are valid
   // values: - https://www.googleapis.com/compute/v1/projects/project
   // /global/snapshots/snapshot - projects/project/global/snapshots/snapshot -
-  // global/snapshots/snapshot 
-  optional string source_snapshot = 31 [json_name="sourceSnapshot"];
+  // global/snapshots/snapshot
+  optional string source_snapshot = 31 [json_name = "sourceSnapshot"];
 
   // The customer-supplied encryption key of the source snapshot. Required if
   // the source snapshot is protected by a customer-supplied encryption key.
-  optional CustomerEncryptionKey source_snapshot_encryption_key = 32 [json_name="sourceSnapshotEncryptionKey"];
+  optional CustomerEncryptionKey source_snapshot_encryption_key = 32
+      [json_name = "sourceSnapshotEncryptionKey"];
 
   // [Output Only] The unique ID of the snapshot used to create this disk. This
   // value identifies the exact snapshot that was used to create this persistent
   // disk. For example, if you created the persistent disk from a snapshot that
   // was later deleted and recreated under the same name, the source snapshot ID
   // would identify the exact version of the snapshot that was used.
-  optional string source_snapshot_id = 33 [json_name="sourceSnapshotId"];
+  optional string source_snapshot_id = 33 [json_name = "sourceSnapshotId"];
 
   // The full Google Cloud Storage URI where the disk image is stored. This file
   // must be a gzip-compressed tarball whose name ends in .tar.gz or virtual
@@ -297,12 +313,13 @@ message Disk {
   // https://storage.googleapis.com/. This flag is not optimized for creating
   // multiple disks from a source storage object. To create many disks from a
   // source storage object, use gcloud compute images import instead.
-  optional string source_storage_object = 34 [json_name="sourceStorageObject"];
+  optional string source_storage_object = 34
+      [json_name = "sourceStorageObject"];
 
   // [Output Only] The status of disk creation. - CREATING: Disk is
   // provisioning. - RESTORING: Source data is being copied into the disk. -
   // FAILED: Disk creation failed. - READY: Disk is ready for use. - DELETING:
-  // Disk is deleting. 
+  // Disk is deleting.
   // CREATING: Disk is provisioning
   // DELETING: Disk is deleting.
   // FAILED: Disk creation failed.
@@ -310,47 +327,49 @@ message Disk {
   // RESTORING: Source data is being copied into the disk.
   // UNAVAILABLE: Disk is currently unavailable and cannot be accessed, attached
   // or detached.
-  optional string status = 35 [json_name="status"];
+  optional string status = 35 [json_name = "status"];
 
   // The storage pool in which the new disk is created. You can provide this as
   // a partial or full URL to the resource. For example, the following are valid
   // values: - https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /storagePools/storagePool -
   // projects/project/zones/zone/storagePools/storagePool -
-  // zones/zone/storagePools/storagePool 
-  optional string storage_pool = 49 [json_name="storagePool"];
+  // zones/zone/storagePools/storagePool
+  optional string storage_pool = 49 [json_name = "storagePool"];
 
   // URL of the disk type resource describing which disk type to use to create
   // the disk. Provide this when creating the disk. For example:
   // projects/project /zones/zone/diskTypes/pd-ssd . See Persistent disk types.
-  optional string type = 36 [json_name="type"];
+  optional string type = 36 [json_name = "type"];
 
   // [Output Only] Links to the users of the disk (attached instances) in form:
   // projects/project/zones/zone/instances/instance
-  repeated string users = 37 [json_name="users"];
+  repeated string users = 37 [json_name = "users"];
 
   // [Output Only] URL of the zone where the disk resides. You must specify this
   // field as part of the HTTP request URL. It is not settable as a field in the
   // request body.
-  optional string zone = 38 [json_name="zone"];
+  optional string zone = 38 [json_name = "zone"];
 }
 
 message DiskAsyncReplication {
   // [Output Only] URL of the DiskConsistencyGroupPolicy if replication was
   // started on the disk as a member of a group.
-  optional string consistency_group_policy = 1 [json_name="consistencyGroupPolicy"];
+  optional string consistency_group_policy = 1
+      [json_name = "consistencyGroupPolicy"];
 
   // [Output Only] ID of the DiskConsistencyGroupPolicy if replication was
   // started on the disk as a member of a group.
-  optional string consistency_group_policy_id = 2 [json_name="consistencyGroupPolicyId"];
+  optional string consistency_group_policy_id = 2
+      [json_name = "consistencyGroupPolicyId"];
 
   // The other disk asynchronously replicated to or from the current disk. You
   // can provide this as a partial or full URL to the resource. For example, the
   // following are valid values: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /disks/disk - projects/project/zones/zone/disks/disk -
-  // zones/zone/disks/disk 
-  optional string disk = 3 [json_name="disk"];
+  // zones/zone/disks/disk
+  optional string disk = 3 [json_name = "disk"];
 
   // [Output Only] The unique ID of the other disk asynchronously replicated to
   // or from the current disk. This value identifies the exact disk that was
@@ -358,33 +377,34 @@ message DiskAsyncReplication {
   // the persistent disk from a disk that was later deleted and recreated under
   // the same name, the disk ID would identify the exact version of the disk
   // that was used.
-  optional string disk_id = 4 [json_name="diskId"];
+  optional string disk_id = 4 [json_name = "diskId"];
 }
 
 message DiskAsyncReplicationList {
-  optional DiskAsyncReplication async_replication_disk = 1 [json_name="asyncReplicationDisk"];
+  optional DiskAsyncReplication async_replication_disk = 1
+      [json_name = "asyncReplicationDisk"];
 }
 
 // A list of Disk resources.
 message DiskList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name="id"];
+  optional string id = 1 [json_name = "id"];
 
   // A list of Disk resources.
-  repeated Disk items = 2 [json_name="items"];
+  repeated Disk items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#diskList for lists of disks.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name="selfLink"];
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -445,7 +465,7 @@ message DiskList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name="code"];
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -455,22 +475,22 @@ message DiskList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name="key"];
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name="value"];
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
-    repeated DataItem data = 2 [json_name="data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name="message"];
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name="warning"];
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Additional disk params.
@@ -479,24 +499,27 @@ message DiskParams {
   // same definition as resource manager tags. Keys must be in the format
   // `tagKeys/{tag_key_id}`, and values are in the format `tagValues/456`. The
   // field is ignored (both PUT & PATCH) when empty.
-  map<string, string> resource_manager_tags = 1 [json_name="resourceManagerTags"];
+  map<string, string> resource_manager_tags = 1
+      [json_name = "resourceManagerTags"];
 }
 
 message DiskResourceStatus {
-  optional DiskResourceStatusAsyncReplicationStatus async_primary_disk = 1 [json_name="asyncPrimaryDisk"];
+  optional DiskResourceStatusAsyncReplicationStatus async_primary_disk = 1
+      [json_name = "asyncPrimaryDisk"];
 
   // Key: disk, value: AsyncReplicationStatus message
-  map<string, DiskResourceStatusAsyncReplicationStatus> async_secondary_disks = 2 [json_name="asyncSecondaryDisks"];
+  map<string, DiskResourceStatusAsyncReplicationStatus> async_secondary_disks =
+      2 [json_name = "asyncSecondaryDisks"];
 }
 
 message DiskResourceStatusAsyncReplicationStatus {
   // ACTIVE: Replication is active.
   // CREATED: Secondary disk is created and is waiting for replication to start.
   // STARTING: Replication is starting.
-  // STATE_UNSPECIFIED: 
+  // STATE_UNSPECIFIED:
   // STOPPED: Replication is stopped.
   // STOPPING: Replication is stopping.
-  optional string state = 1 [json_name="state"];
+  optional string state = 1 [json_name = "state"];
 }
 
 // A transient resource used in compute.disks.stopGroupAsyncReplication and
@@ -508,6 +531,6 @@ message DisksStopGroupAsyncReplicationResource {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /resourcePolicies/resourcePolicy -
   // projects/project/regions/region/resourcePolicies/resourcePolicy -
-  // regions/region/resourcePolicies/resourcePolicy 
-  optional string resource_policy = 1 [json_name="resourcePolicy"];
+  // regions/region/resourcePolicies/resourcePolicy
+  optional string resource_policy = 1 [json_name = "resourcePolicy"];
 }
