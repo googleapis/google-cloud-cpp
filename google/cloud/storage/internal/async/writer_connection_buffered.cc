@@ -307,7 +307,7 @@ class AsyncWriterConnectionBufferedState
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
     auto impl = Impl(lk);
-    auto state = impl->PersistedState();
+    auto const& state = impl->PersistedState();
     std::int64_t persisted_size = 0;
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
       persisted_size = absl::get<google::storage::v2::Object>(state).size();

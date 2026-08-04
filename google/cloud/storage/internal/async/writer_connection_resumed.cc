@@ -324,7 +324,7 @@ class AsyncWriterConnectionResumedState
     std::unique_lock<std::mutex> lk(mu_);
     write_offset_ += write_size;
     auto impl = Impl(lk);
-    auto state = impl->PersistedState();
+    auto const& state = impl->PersistedState();
     std::int64_t persisted_size = 0;
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
       persisted_size = absl::get<google::storage::v2::Object>(state).size();
@@ -333,7 +333,7 @@ class AsyncWriterConnectionResumedState
     }
     lk.unlock();
     OnQuery(persisted_size);
-    SetFlushed(std::unique_lock<std::mutex>(mu_), result);
+    SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
   }
 
   void OnQuery(StatusOr<std::int64_t> persisted_size) {
