@@ -108,10 +108,10 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
   std::shared_ptr<OpenStream> rpc_;
   promise<StatusOr<OpenStreamResult>> promise_;
   google::storage::v2::BidiReadObjectRequest initial_request_;
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
   std::chrono::steady_clock::time_point t0_;
   std::chrono::steady_clock::time_point t1_;
   std::chrono::steady_clock::time_point t2_;
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
 #endif
 };

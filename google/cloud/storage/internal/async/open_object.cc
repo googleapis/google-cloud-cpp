@@ -73,8 +73,8 @@ struct StreamOpenMetrics {
 #endif
 
 future<StatusOr<OpenStreamResult>> OpenObject::Call() {
-  t0_ = std::chrono::steady_clock::now();
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+  t0_ = std::chrono::steady_clock::now();
   span_ = opentelemetry::trace::Tracer::GetCurrentSpan();
 #endif
   auto future = promise_.get_future();
@@ -99,7 +99,9 @@ std::unique_ptr<OpenStream::StreamingRpc> OpenObject::CreateRpc(
 }
 
 void OpenObject::OnStart(bool ok) {
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
   t1_ = std::chrono::steady_clock::now();
+#endif
   if (!ok) return DoFinish();
   rpc_->Write(initial_request_).then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnWrite(f.get());
@@ -107,7 +109,9 @@ void OpenObject::OnStart(bool ok) {
 }
 
 void OpenObject::OnWrite(bool ok) {
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
   t2_ = std::chrono::steady_clock::now();
+#endif
   if (!ok) return DoFinish();
   rpc_->Read().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnRead(f.get());
@@ -116,8 +120,8 @@ void OpenObject::OnWrite(bool ok) {
 
 void OpenObject::OnRead(
     std::optional<google::storage::v2::BidiReadObjectResponse> response) {
-  auto t3 = std::chrono::steady_clock::now();
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+  auto t3 = std::chrono::steady_clock::now();
   auto const& metrics = StreamOpenMetrics::Instance();
 
   auto p1 = static_cast<double>(
