@@ -25,6 +25,7 @@
 #include "google/cloud/version.h"
 #include "google/storage/v2/storage.pb.h"
 #include <grpcpp/grpcpp.h>
+#include <chrono>
 #include <memory>
 #include <string>
 
@@ -107,6 +108,12 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
   std::shared_ptr<OpenStream> rpc_;
   promise<StatusOr<OpenStreamResult>> promise_;
   google::storage::v2::BidiReadObjectRequest initial_request_;
+  std::chrono::steady_clock::time_point t0_;
+  std::chrono::steady_clock::time_point t1_;
+  std::chrono::steady_clock::time_point t2_;
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
+#endif
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
