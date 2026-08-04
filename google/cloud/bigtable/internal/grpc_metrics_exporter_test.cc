@@ -198,7 +198,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResource) {
   EXPECT_THAT(result.project_id, Eq("test-project"));
 
   auto const& resource = result.resource;
-  EXPECT_THAT(resource.type(), Eq("bigtable.googleapis.com/Client"));
+  EXPECT_THAT(resource.type(), Eq("bigtable_client"));
 
   auto const& labels = resource.labels();
   EXPECT_THAT(labels.at("project_id"), Eq("test-project"));
@@ -208,7 +208,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResource) {
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
-  EXPECT_THAT(labels.at("location"), Eq("global"));
+  EXPECT_THAT(labels.at("region"), Eq("global"));
   EXPECT_THAT(labels.at("cloud_platform"), Eq("unknown"));
   EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
 }
@@ -224,7 +224,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceMissingAttributes) {
   EXPECT_THAT(result.project_id, Eq(""));
 
   auto const& resource = result.resource;
-  EXPECT_THAT(resource.type(), Eq("bigtable.googleapis.com/Client"));
+  EXPECT_THAT(resource.type(), Eq("bigtable_client"));
 
   auto const& labels = resource.labels();
   EXPECT_THAT(labels.at("project_id"), Eq(""));
@@ -233,7 +233,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceMissingAttributes) {
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
-  EXPECT_THAT(labels.at("location"), Eq("global"));
+  EXPECT_THAT(labels.at("region"), Eq("global"));
   EXPECT_THAT(labels.at("cloud_platform"), Eq("unknown"));
   EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
 }
@@ -251,7 +251,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourcePartialAttributes) {
   EXPECT_THAT(result.project_id, Eq("test-project"));
 
   auto const& resource = result.resource;
-  EXPECT_THAT(resource.type(), Eq("bigtable.googleapis.com/Client"));
+  EXPECT_THAT(resource.type(), Eq("bigtable_client"));
 
   auto const& labels = resource.labels();
   EXPECT_THAT(labels.at("project_id"), Eq("test-project"));
@@ -261,7 +261,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourcePartialAttributes) {
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
-  EXPECT_THAT(labels.at("location"), Eq("global"));
+  EXPECT_THAT(labels.at("region"), Eq("global"));
   EXPECT_THAT(labels.at("cloud_platform"), Eq("unknown"));
   EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
 }
@@ -282,7 +282,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceExtraAttributes) {
   EXPECT_THAT(result.project_id, Eq("test-project"));
 
   auto const& resource = result.resource;
-  EXPECT_THAT(resource.type(), Eq("bigtable.googleapis.com/Client"));
+  EXPECT_THAT(resource.type(), Eq("bigtable_client"));
 
   auto const& labels = resource.labels();
   EXPECT_THAT(labels.size(), Eq(9));
@@ -293,7 +293,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceExtraAttributes) {
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
-  EXPECT_THAT(labels.at("location"), Eq("global"));
+  EXPECT_THAT(labels.at("region"), Eq("global"));
   EXPECT_THAT(labels.at("cloud_platform"), Eq("unknown"));
   EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
   EXPECT_THAT(labels.find("grpc.method"), Eq(labels.end()));
@@ -325,7 +325,7 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceWithDetectedResource) {
   EXPECT_THAT(result.project_id, Eq("test-project"));
 
   auto const& resource = result.resource;
-  EXPECT_THAT(resource.type(), Eq("bigtable.googleapis.com/Client"));
+  EXPECT_THAT(resource.type(), Eq("bigtable_client"));
 
   auto const& labels = resource.labels();
   EXPECT_THAT(labels.at("project_id"), Eq("test-project"));
@@ -335,10 +335,10 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResourceWithDetectedResource) {
   EXPECT_THAT(labels.at("client_name"),
               Eq("cpp.Bigtable/" + bigtable::version_string()));
   EXPECT_THAT(labels.at("uuid"), Eq("test-client-uid"));
-  EXPECT_THAT(labels.at("location"), Eq("us-central1-a"));
+  EXPECT_THAT(labels.at("region"), Eq("us-central1"));
   EXPECT_THAT(labels.at("cloud_platform"), Eq("gcp_compute_engine"));
   EXPECT_THAT(labels.at("host_id"), Eq("123456789"));
-  EXPECT_THAT(labels.at("hostname"), Eq("test-vm-host"));
+  EXPECT_THAT(labels.at("host_name"), Eq("test-vm-host"));
 }
 
 TEST(GrpcMetricsExporterTest, MakeLatencyHistogramBoundaries) {
