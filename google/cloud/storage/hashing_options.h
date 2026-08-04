@@ -18,6 +18,7 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
 #include <string>
@@ -49,7 +50,8 @@ struct PrecomputedChecksums {
   std::string md5;
 };
 
-struct [[deprecated("Use PrecomputedChecksumsOption instead")]] MD5HashValue
+GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
+struct MD5HashValue
     : public internal::ComplexOption<MD5HashValue, std::string> {
   using ComplexOption<MD5HashValue, std::string>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
@@ -118,8 +120,8 @@ inline DisableMD5Hash EnableMD5Hash() { return DisableMD5Hash(false); }
  * @see
  * https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s01-hochschild.pdf
  */
-struct [[deprecated(
-    "Use PrecomputedChecksumsOption instead")]] Crc32cChecksumValue
+GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
+struct Crc32cChecksumValue
     : public internal::ComplexOption<Crc32cChecksumValue, std::string> {
   using ComplexOption<Crc32cChecksumValue, std::string>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it

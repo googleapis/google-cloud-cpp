@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OPTIONS_H
 
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include <cstdint>
 #include <string>
@@ -49,8 +50,8 @@ struct [[deprecated(
  * checksums. Note that this option has no effect if the service does not return
  * or compute a CRC32C checksum.
  */
-struct [[deprecated("Use PrecomputedChecksumsOption instead")]]
-UseCrc32cValueOption {
+GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
+struct UseCrc32cValueOption {
   using Type = std::uint32_t;
 };
 
@@ -80,8 +81,8 @@ struct [[deprecated(
  * Note that this option has no effect if the service does not return or compute
  * a MD5 hash.
  */
-struct [[deprecated("Use PrecomputedChecksumsOption instead")]]
-UseMD5ValueOption {
+GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
+struct UseMD5ValueOption {
   using Type = std::string;
 };
 
