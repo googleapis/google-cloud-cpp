@@ -34,79 +34,68 @@ import "google/cloud/extended_operations.proto";
 service RegionNetworkEndpointGroups {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-      "https://www.googleapis.com/auth/cloud-platform,"
-      "https://www.googleapis.com/auth/compute,"
-      "https://www.googleapis.com/auth/compute.readonly";
+    "https://www.googleapis.com/auth/cloud-platform,"
+    "https://www.googleapis.com/auth/compute,"
+    "https://www.googleapis.com/auth/compute.readonly";
 
   // Attach a list of network endpoints to the specified network endpoint group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/attachNetworkEndpoints
-  rpc AttachNetworkEndpoints(AttachNetworkEndpointsRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AttachNetworkEndpoints(AttachNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}/attachNetworkEndpoints"
       body: "region_network_endpoint_groups_attach_endpoints_request_resource"
     };
-    option (google.api.method_signature) =
-        "project,region,network_endpoint_group,region_network_endpoint_groups_attach_endpoints_request_resource";
+    option (google.api.method_signature) = "project,region,network_endpoint_group,region_network_endpoint_groups_attach_endpoints_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Deletes the specified network endpoint group. Note that the NEG cannot be
   // deleted if it is configured as a backend of a backend service.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/delete
-  rpc DeleteNetworkEndpointGroup(DeleteNetworkEndpointGroupRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteNetworkEndpointGroup(DeleteNetworkEndpointGroupRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}"
     };
-    option (google.api.method_signature) =
-        "project,region,network_endpoint_group";
+    option (google.api.method_signature) = "project,region,network_endpoint_group";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Detach the network endpoint from the specified network endpoint group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/detachNetworkEndpoints
-  rpc DetachNetworkEndpoints(DetachNetworkEndpointsRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DetachNetworkEndpoints(DetachNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}/detachNetworkEndpoints"
       body: "region_network_endpoint_groups_detach_endpoints_request_resource"
     };
-    option (google.api.method_signature) =
-        "project,region,network_endpoint_group,region_network_endpoint_groups_detach_endpoints_request_resource";
+    option (google.api.method_signature) = "project,region,network_endpoint_group,region_network_endpoint_groups_detach_endpoints_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns the specified network endpoint group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/get
-  rpc GetNetworkEndpointGroup(GetNetworkEndpointGroupRequest)
-      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
+  rpc GetNetworkEndpointGroup(GetNetworkEndpointGroupRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}"
     };
-    option (google.api.method_signature) =
-        "project,region,network_endpoint_group";
+    option (google.api.method_signature) = "project,region,network_endpoint_group";
   }
 
   // Creates a network endpoint group in the specified project using the
   // parameters that are included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/insert
-  rpc InsertNetworkEndpointGroup(InsertNetworkEndpointGroupRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertNetworkEndpointGroup(InsertNetworkEndpointGroupRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups"
       body: "network_endpoint_group_resource"
     };
-    option (google.api.method_signature) =
-        "project,region,network_endpoint_group_resource";
+    option (google.api.method_signature) = "project,region,network_endpoint_group_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves the list of regional network endpoint groups available to the
   // specified project in the given region.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/list
-  rpc ListRegionNetworkEndpointGroups(ListRegionNetworkEndpointGroupsRequest)
-      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
+  rpc ListRegionNetworkEndpointGroups(ListRegionNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups"
     };
@@ -115,14 +104,12 @@ service RegionNetworkEndpointGroups {
 
   // Lists the network endpoints in the specified network endpoint group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/listNetworkEndpoints
-  rpc ListNetworkEndpoints(ListNetworkEndpointsRequest) returns (
-      google.cloud.cpp.compute.v1.NetworkEndpointGroupsListNetworkEndpoints) {
+  rpc ListNetworkEndpoints(ListNetworkEndpointsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupsListNetworkEndpoints) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}/listNetworkEndpoints"
       body: "*"
     };
-    option (google.api.method_signature) =
-        "project,region,network_endpoint_group";
+    option (google.api.method_signature) = "project,region,network_endpoint_group";
   }
 }
 
@@ -130,31 +117,17 @@ service RegionNetworkEndpointGroups {
 message AttachNetworkEndpointsRequest {
   // The name of the network endpoint group where you are attaching network
   // endpoints to. It should comply with RFC1035.
-  string network_endpoint_group = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    json_name = "networkEndpointGroup"
-  ];
+  string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED,json_name="networkEndpointGroup"];
 
   // Project ID for this request.
-  string project = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // The name of the region where you want to create the network endpoint group.
   // It should comply with RFC1035.
-  string region = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region",
-    json_name = "region"
-  ];
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
 
   // The RegionNetworkEndpointGroupsAttachEndpointsRequest for this request.
-  optional google.cloud.cpp.compute.v1
-      .RegionNetworkEndpointGroupsAttachEndpointsRequest
-          region_network_endpoint_groups_attach_endpoints_request_resource = 4
-      [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionNetworkEndpointGroupsAttachEndpointsRequest region_network_endpoint_groups_attach_endpoints_request_resource = 4 [json_name="__json_request_body"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -166,32 +139,21 @@ message AttachNetworkEndpointsRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 5 [json_name = "requestId"];
+  optional string request_id = 5 [json_name="requestId"];
 }
 
 // Request message for DeleteNetworkEndpointGroup.
 message DeleteNetworkEndpointGroupRequest {
   // The name of the network endpoint group to delete. It should comply with
   // RFC1035.
-  string network_endpoint_group = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    json_name = "networkEndpointGroup"
-  ];
+  string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED,json_name="networkEndpointGroup"];
 
   // Project ID for this request.
-  string project = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // The name of the region where the network endpoint group is located. It
   // should comply with RFC1035.
-  string region = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region",
-    json_name = "region"
-  ];
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -203,38 +165,24 @@ message DeleteNetworkEndpointGroupRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name = "requestId"];
+  optional string request_id = 4 [json_name="requestId"];
 }
 
 // Request message for DetachNetworkEndpoints.
 message DetachNetworkEndpointsRequest {
   // The name of the network endpoint group you are detaching network endpoints
   // from. It should comply with RFC1035.
-  string network_endpoint_group = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    json_name = "networkEndpointGroup"
-  ];
+  string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED,json_name="networkEndpointGroup"];
 
   // Project ID for this request.
-  string project = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // The name of the region where the network endpoint group is located. It
   // should comply with RFC1035.
-  string region = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region",
-    json_name = "region"
-  ];
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
 
   // The RegionNetworkEndpointGroupsDetachEndpointsRequest for this request.
-  optional google.cloud.cpp.compute.v1
-      .RegionNetworkEndpointGroupsDetachEndpointsRequest
-          region_network_endpoint_groups_detach_endpoints_request_resource = 4
-      [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.RegionNetworkEndpointGroupsDetachEndpointsRequest region_network_endpoint_groups_detach_endpoints_request_resource = 4 [json_name="__json_request_body"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -247,47 +195,33 @@ message DetachNetworkEndpointsRequest {
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000). end_interface:
   // MixerMutationRequestBuilder
-  optional string request_id = 5 [json_name = "requestId"];
+  optional string request_id = 5 [json_name="requestId"];
 }
 
 // Request message for GetNetworkEndpointGroup.
 message GetNetworkEndpointGroupRequest {
   // The name of the network endpoint group. It should comply with RFC1035.
-  string network_endpoint_group = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    json_name = "networkEndpointGroup"
-  ];
+  string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED,json_name="networkEndpointGroup"];
 
   // Project ID for this request.
-  string project = 2
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 
   // The name of the region where the network endpoint group is located. It
   // should comply with RFC1035.
-  string region = 3
-      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
+  string region = 3 [(google.api.field_behavior) = REQUIRED,json_name="region"];
 }
 
 // Request message for InsertNetworkEndpointGroup.
 message InsertNetworkEndpointGroupRequest {
   // The NetworkEndpointGroup for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEndpointGroup
-      network_endpoint_group_resource = 1 [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.NetworkEndpointGroup network_endpoint_group_resource = 1 [json_name="__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // The name of the region where you want to create the network endpoint group.
   // It should comply with RFC1035.
-  string region = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region",
-    json_name = "region"
-  ];
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region",json_name="region"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -299,7 +233,7 @@ message InsertNetworkEndpointGroupRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name = "requestId"];
+  optional string request_id = 4 [json_name="requestId"];
 }
 
 // Request message for ListNetworkEndpoints.
@@ -336,21 +270,18 @@ message ListNetworkEndpointsRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name = "filter"];
+  optional string filter = 1 [json_name="filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2 [json_name = "maxResults"];
+  optional uint32 max_results = 2 [json_name="maxResults"];
 
   // The name of the network endpoint group from which you want to generate a
   // list of included network endpoints. It should comply with RFC1035.
-  string network_endpoint_group = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    json_name = "networkEndpointGroup"
-  ];
+  string network_endpoint_group = 3 [(google.api.field_behavior) = REQUIRED,json_name="networkEndpointGroup"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -360,26 +291,24 @@ message ListNetworkEndpointsRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 4 [json_name = "orderBy"];
+  optional string order_by = 4 [json_name="orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 5 [json_name = "pageToken"];
+  optional string page_token = 5 [json_name="pageToken"];
 
   // Project ID for this request.
-  string project = 6
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 6 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 
   // The name of the region where the network endpoint group is located. It
   // should comply with RFC1035.
-  string region = 7
-      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
+  string region = 7 [(google.api.field_behavior) = REQUIRED,json_name="region"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 8 [json_name = "returnPartialSuccess"];
+  optional bool return_partial_success = 8 [json_name="returnPartialSuccess"];
 }
 
 // Request message for ListRegionNetworkEndpointGroups.
@@ -416,14 +345,14 @@ message ListRegionNetworkEndpointGroupsRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name = "filter"];
+  optional string filter = 1 [json_name="filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2 [json_name = "maxResults"];
+  optional uint32 max_results = 2 [json_name="maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -433,24 +362,22 @@ message ListRegionNetworkEndpointGroupsRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3 [json_name = "orderBy"];
+  optional string order_by = 3 [json_name="orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4 [json_name = "pageToken"];
+  optional string page_token = 4 [json_name="pageToken"];
 
   // Project ID for this request.
-  string project = 5
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 5 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 
   // The name of the region where the network endpoint group is located. It
   // should comply with RFC1035.
-  string region = 6
-      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
+  string region = 6 [(google.api.field_behavior) = REQUIRED,json_name="region"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
+  optional bool return_partial_success = 7 [json_name="returnPartialSuccess"];
 }

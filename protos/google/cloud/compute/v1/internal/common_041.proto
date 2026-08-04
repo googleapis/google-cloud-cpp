@@ -56,21 +56,21 @@ message ForwardingRule {
   // you can use. For detailed information, see [IP address
   // specifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).
   // When reading an IPAddress, the API always returns the IP address number.
-  optional string ip_address = 1 [json_name = "IPAddress"];
+  optional string ip_address = 1 [json_name="IPAddress"];
 
   // The IP protocol to which this rule applies. For protocol forwarding, valid
   // options are TCP, UDP, ESP, AH, SCTP, ICMP and L3_DEFAULT. The valid IP
   // protocols are different for different load balancing products as described
   // in [Load balancing
   // features](https://cloud.google.com/load-balancing/docs/features#protocols_from_the_load_balancer_to_the_backends).
-  // AH:
-  // ESP:
-  // ICMP:
-  // L3_DEFAULT:
-  // SCTP:
-  // TCP:
-  // UDP:
-  optional string ip_protocol = 2 [json_name = "IPProtocol"];
+  // AH: 
+  // ESP: 
+  // ICMP: 
+  // L3_DEFAULT: 
+  // SCTP: 
+  // TCP: 
+  // UDP: 
+  optional string ip_protocol = 2 [json_name="IPProtocol"];
 
   // The ports, portRange, and allPorts fields are mutually exclusive. Only
   // packets addressed to ports in the specified range will be forwarded to the
@@ -83,8 +83,8 @@ message ForwardingRule {
   // addressed to any port or packets lacking destination port information (for
   // example, UDP fragments after the first fragment) to be forwarded to the
   // backends configured with this forwarding rule. The L3_DEFAULT protocol
-  // requires allPorts be set to true.
-  optional bool all_ports = 3 [json_name = "allPorts"];
+  // requires allPorts be set to true. 
+  optional bool all_ports = 3 [json_name="allPorts"];
 
   // If set to true, clients can access the internal passthrough Network Load
   // Balancers, the regional internal Application Load Balancer, and the
@@ -92,31 +92,30 @@ message ForwardingRule {
   // only allows access from the local region the load balancer is located at.
   // Note that for INTERNAL_MANAGED forwarding rules, this field cannot be
   // changed after the forwarding rule is created.
-  optional bool allow_global_access = 4 [json_name = "allowGlobalAccess"];
+  optional bool allow_global_access = 4 [json_name="allowGlobalAccess"];
 
   // This is used in PSC consumer ForwardingRule to control whether the PSC
   // endpoint can be accessed from another region.
-  optional bool allow_psc_global_access = 34
-      [json_name = "allowPscGlobalAccess"];
+  optional bool allow_psc_global_access = 34 [json_name="allowPscGlobalAccess"];
 
   // Identifies the backend service to which the forwarding rule sends traffic.
   // Required for internal and external passthrough Network Load Balancers; must
   // be omitted for all other load balancer types.
-  optional string backend_service = 5 [json_name = "backendService"];
+  optional string backend_service = 5 [json_name="backendService"];
 
   // [Output Only] The URL for the corresponding base forwarding rule. By base
   // forwarding rule, we mean the forwarding rule that has the same IP address,
   // protocol, and port settings with the current forwarding rule, but without
   // sourceIPRanges specified. Always empty if the current forwarding rule does
   // not have sourceIPRanges specified.
-  optional string base_forwarding_rule = 6 [json_name = "baseForwardingRule"];
+  optional string base_forwarding_rule = 6 [json_name="baseForwardingRule"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 7 [json_name = "creationTimestamp"];
+  optional string creation_timestamp = 7 [json_name="creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 8 [json_name = "description"];
+  optional string description = 8 [json_name="description"];
 
   // Specifies the canary migration state for the backend buckets attached to
   // this forwarding rule. Possible values are PREPARE, TEST_BY_PERCENTAGE, and
@@ -131,11 +130,10 @@ message ForwardingRule {
   // be set to TEST_ALL_TRAFFIC at the same time. Optionally, the
   // TEST_BY_PERCENTAGE state can be used to migrate some traffic back to
   // EXTERNAL or PREPARE can be used to migrate all traffic back to EXTERNAL.
-  // PREPARE:
-  // TEST_ALL_TRAFFIC:
-  // TEST_BY_PERCENTAGE:
-  optional string external_managed_backend_bucket_migration_state = 36
-      [json_name = "externalManagedBackendBucketMigrationState"];
+  // PREPARE: 
+  // TEST_ALL_TRAFFIC: 
+  // TEST_BY_PERCENTAGE: 
+  optional string external_managed_backend_bucket_migration_state = 36 [json_name="externalManagedBackendBucketMigrationState"];
 
   // Determines the fraction of requests to backend buckets that should be
   // processed by the global external Application Load Balancer. The value of
@@ -143,8 +141,7 @@ message ForwardingRule {
   // loadBalancingScheme in the BackendService is set to EXTERNAL (when using
   // the classic Application Load Balancer) and the migration state is
   // TEST_BY_PERCENTAGE.
-  optional float external_managed_backend_bucket_migration_testing_percentage =
-      37 [json_name = "externalManagedBackendBucketMigrationTestingPercentage"];
+  optional float external_managed_backend_bucket_migration_testing_percentage = 37 [json_name="externalManagedBackendBucketMigrationTestingPercentage"];
 
   // Fingerprint of this resource. A hash of the contents stored in this object.
   // This field is used in optimistic locking. This field will be ignored when
@@ -152,11 +149,11 @@ message ForwardingRule {
   // ensure that you do not overwrite changes that were applied from another
   // concurrent request. To see the latest fingerprint, make a get() request to
   // retrieve a ForwardingRule.
-  optional string fingerprint = 9 [json_name = "fingerprint"];
+  optional string fingerprint = 9 [json_name="fingerprint"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 10 [json_name = "id"];
+  optional string id = 10 [json_name="id"];
 
   // Resource reference of a PublicDelegatedPrefix. The PDP must be a sub-PDP in
   // EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode. Use one of the following
@@ -165,27 +162,26 @@ message ForwardingRule {
   // https://www.googleapis.com/compute/v1/projects/project_id/regions/region
   // /publicDelegatedPrefixes/sub-pdp-name Partial URL, as in: -
   // projects/project_id/regions/region/publicDelegatedPrefixes/sub-pdp-name -
-  // regions/region/publicDelegatedPrefixes/sub-pdp-name
-  optional string ip_collection = 35 [json_name = "ipCollection"];
+  // regions/region/publicDelegatedPrefixes/sub-pdp-name 
+  optional string ip_collection = 35 [json_name="ipCollection"];
 
   // The IP Version that will be used by this forwarding rule. Valid options are
   // IPV4 or IPV6.
-  // IPV4:
-  // IPV6:
-  // UNSPECIFIED_VERSION:
-  optional string ip_version = 11 [json_name = "ipVersion"];
+  // IPV4: 
+  // IPV6: 
+  // UNSPECIFIED_VERSION: 
+  optional string ip_version = 11 [json_name="ipVersion"];
 
   // Indicates whether or not this load balancer can be used as a collector for
   // packet mirroring. To prevent mirroring loops, instances behind this load
   // balancer will not have their traffic mirrored even if a PacketMirroring
   // rule applies to them. This can only be set to true for load balancers that
   // have their loadBalancingScheme set to INTERNAL.
-  optional bool is_mirroring_collector = 12
-      [json_name = "isMirroringCollector"];
+  optional bool is_mirroring_collector = 12 [json_name="isMirroringCollector"];
 
   // [Output Only] Type of the resource. Always compute#forwardingRule for
   // forwarding rule resources.
-  optional string kind = 13 [json_name = "kind"];
+  optional string kind = 13 [json_name="kind"];
 
   // A fingerprint for the labels being applied to this resource, which is
   // essentially a hash of the labels set used for optimistic locking. The
@@ -194,23 +190,22 @@ message ForwardingRule {
   // up-to-date fingerprint hash in order to update or change labels, otherwise
   // the request will fail with error 412 conditionNotMet. To see the latest
   // fingerprint, make a get() request to retrieve a ForwardingRule.
-  optional string label_fingerprint = 14 [json_name = "labelFingerprint"];
+  optional string label_fingerprint = 14 [json_name="labelFingerprint"];
 
   // Labels for this resource. These can only be added or modified by the
   // setLabels method. Each label key/value pair must comply with RFC1035. Label
   // values may be empty.
-  map<string, string> labels = 15 [json_name = "labels"];
+  map<string, string> labels = 15 [json_name="labels"];
 
   // Specifies the forwarding rule type. For more information about forwarding
   // rules, refer to Forwarding rule concepts.
-  // EXTERNAL:
-  // EXTERNAL_MANAGED:
-  // INTERNAL:
-  // INTERNAL_MANAGED:
-  // INTERNAL_SELF_MANAGED:
-  // INVALID:
-  optional string load_balancing_scheme = 16
-      [json_name = "loadBalancingScheme"];
+  // EXTERNAL: 
+  // EXTERNAL_MANAGED: 
+  // INTERNAL: 
+  // INTERNAL_MANAGED: 
+  // INTERNAL_SELF_MANAGED: 
+  // INVALID: 
+  optional string load_balancing_scheme = 16 [json_name="loadBalancingScheme"];
 
   // Opaque filter criteria used by load balancer to restrict routing
   // configuration to a limited set of xDS compliant clients. In their xDS
@@ -228,7 +223,7 @@ message ForwardingRule {
   // the UrlMap that this ForwardingRule references. metadataFilters only
   // applies to Loadbalancers that have their loadBalancingScheme set to
   // INTERNAL_SELF_MANAGED.
-  repeated MetadataFilter metadata_filters = 17 [json_name = "metadataFilters"];
+  repeated MetadataFilter metadata_filters = 17 [json_name="metadataFilters"];
 
   // Name of the resource; provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -239,7 +234,7 @@ message ForwardingRule {
   // dash. For Private Service Connect forwarding rules that forward traffic to
   // Google APIs, the forwarding rule name must be a 1-20 characters string with
   // lowercase letters and numbers and must start with a letter.
-  optional string name = 18 [json_name = "name"];
+  optional string name = 18 [json_name="name"];
 
   // This field is not used for global external load balancing. For internal
   // passthrough Network Load Balancers, this field identifies the network that
@@ -248,7 +243,7 @@ message ForwardingRule {
   // neither subnetwork nor this field is specified, the default network will be
   // used. For Private Service Connect forwarding rules that forward traffic to
   // Google APIs, a network must be provided.
-  optional string network = 19 [json_name = "network"];
+  optional string network = 19 [json_name="network"];
 
   // This signifies the networking tier used for configuring this load balancer
   // and can only take the following values: PREMIUM, STANDARD. For regional
@@ -263,12 +258,12 @@ message ForwardingRule {
   // networking products.
   // STANDARD_OVERRIDES_FIXED_STANDARD: (Output only) Temporary tier for
   // FIXED_STANDARD when fixed standard tier is expired or not configured.
-  optional string network_tier = 20 [json_name = "networkTier"];
+  optional string network_tier = 20 [json_name="networkTier"];
 
   // This is used in PSC consumer ForwardingRule to control whether it should
   // try to auto-generate a DNS zone or not. Non-PSC forwarding rules do not use
   // this field. Once set, this field is not mutable.
-  optional bool no_automate_dns_zone = 21 [json_name = "noAutomateDnsZone"];
+  optional bool no_automate_dns_zone = 21 [json_name="noAutomateDnsZone"];
 
   // The ports, portRange, and allPorts fields are mutually exclusive. Only
   // packets addressed to ports in the specified range will be forwarded to the
@@ -284,7 +279,7 @@ message ForwardingRule {
   // portRanges. For internal forwarding rules within the same VPC network, two
   // or more forwarding rules cannot use the same [IPAddress, IPProtocol] pair,
   // and cannot have overlapping portRanges. @pattern: \\d+(?:-\\d+)?
-  optional string port_range = 22 [json_name = "portRange"];
+  optional string port_range = 22 [json_name="portRange"];
 
   // The ports, portRange, and allPorts fields are mutually exclusive. Only
   // packets addressed to ports in the specified range will be forwarded to the
@@ -300,10 +295,10 @@ message ForwardingRule {
   // within the same VPC network, two or more forwarding rules cannot use the
   // same [IPAddress, IPProtocol] pair if they share at least one port number.
   // @pattern: \\d+(?:-\\d+)?
-  repeated string ports = 23 [json_name = "ports"];
+  repeated string ports = 23 [json_name="ports"];
 
   // [Output Only] The PSC connection id of the PSC forwarding rule.
-  optional string psc_connection_id = 24 [json_name = "pscConnectionId"];
+  optional string psc_connection_id = 24 [json_name="pscConnectionId"];
 
   // ACCEPTED: The connection has been accepted by the producer.
   // CLOSED: The connection has been closed by the producer and will not serve
@@ -313,27 +308,24 @@ message ForwardingRule {
   // traffic.
   // PENDING: The connection is pending acceptance by the producer.
   // REJECTED: The connection has been rejected by the producer.
-  // STATUS_UNSPECIFIED:
-  optional string psc_connection_status = 25
-      [json_name = "pscConnectionStatus"];
+  // STATUS_UNSPECIFIED: 
+  optional string psc_connection_status = 25 [json_name="pscConnectionStatus"];
 
   // [Output Only] URL of the region where the regional forwarding rule resides.
   // This field is not applicable to global forwarding rules. You must specify
   // this field as part of the HTTP request URL. It is not settable as a field
   // in the request body.
-  optional string region = 26 [json_name = "region"];
+  optional string region = 26 [json_name="region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 27 [json_name = "selfLink"];
+  optional string self_link = 27 [json_name="selfLink"];
 
   // [Output Only] Server-defined URL for this resource with the resource id.
-  optional string self_link_with_id = 38 [json_name = "selfLinkWithId"];
+  optional string self_link_with_id = 38 [json_name="selfLinkWithId"];
 
   // Service Directory resources to register this forwarding rule with.
   // Currently, only supports a single Service Directory resource.
-  repeated ForwardingRuleServiceDirectoryRegistration
-      service_directory_registrations = 28
-      [json_name = "serviceDirectoryRegistrations"];
+  repeated ForwardingRuleServiceDirectoryRegistration service_directory_registrations = 28 [json_name="serviceDirectoryRegistrations"];
 
   // An optional prefix to the service name for this forwarding rule. If
   // specified, the prefix is the first label of the fully qualified service
@@ -343,11 +335,11 @@ message ForwardingRule {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash. This field is only used for internal load balancing.
-  optional string service_label = 29 [json_name = "serviceLabel"];
+  optional string service_label = 29 [json_name="serviceLabel"];
 
   // [Output Only] The internal fully qualified service name for this forwarding
   // rule. This field is only used for internal load balancing.
-  optional string service_name = 30 [json_name = "serviceName"];
+  optional string service_name = 30 [json_name="serviceName"];
 
   // If not empty, this forwarding rule will only forward the traffic when the
   // source IP address matches one of the IP addresses or CIDR ranges set here.
@@ -355,7 +347,7 @@ message ForwardingRule {
   // this field can only be used with a regional forwarding rule whose scheme is
   // EXTERNAL. Each source_ip_range entry should be either an IP address (for
   // example, 1.2.3.4) or a CIDR range (for example, 1.2.3.0/24).
-  repeated string source_ip_ranges = 31 [json_name = "sourceIpRanges"];
+  repeated string source_ip_ranges = 31 [json_name="sourceIpRanges"];
 
   // This field identifies the subnetwork that the load balanced IP should
   // belong to for this forwarding rule, used with internal load balancers and
@@ -363,7 +355,7 @@ message ForwardingRule {
   // specified is in auto subnet mode, this field is optional. However, a
   // subnetwork must be specified if the network is in custom subnet mode or
   // when creating external forwarding rule with IPv6.
-  optional string subnetwork = 32 [json_name = "subnetwork"];
+  optional string subnetwork = 32 [json_name="subnetwork"];
 
   // The URL of the target resource to receive the matched traffic. For regional
   // forwarding rules, this target must be in the same region as the forwarding
@@ -376,30 +368,30 @@ message ForwardingRule {
   // APIs that support VPC Service Controls. - all-apis - All supported Google
   // APIs. - For Private Service Connect forwarding rules that forward traffic
   // to managed services, the target must be a service attachment. The target is
-  // not mutable once set as a service attachment.
-  optional string target = 33 [json_name = "target"];
+  // not mutable once set as a service attachment. 
+  optional string target = 33 [json_name="target"];
 }
 
 // Contains a list of ForwardingRule resources.
 message ForwardingRuleList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name = "id"];
+  optional string id = 1 [json_name="id"];
 
   // A list of ForwardingRule resources.
-  repeated ForwardingRule items = 2 [json_name = "items"];
+  repeated ForwardingRule items = 2 [json_name="items"];
 
   // Type of resource.
-  optional string kind = 3 [json_name = "kind"];
+  optional string kind = 3 [json_name="kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name = "nextPageToken"];
+  optional string next_page_token = 4 [json_name="nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name = "selfLink"];
+  optional string self_link = 5 [json_name="selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -460,7 +452,7 @@ message ForwardingRuleList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name = "code"];
+    optional string code = 1 [json_name="code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -470,22 +462,22 @@ message ForwardingRuleList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [json_name="key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name = "value"];
+      optional string value = 2 [json_name="value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2 [json_name = "data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    repeated DataItem data = 2 [json_name="data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name = "message"];
+    optional string message = 3 [json_name="message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name = "warning"];
+  optional Warning warning = 6 [json_name="warning"];
 }
 
 // Describes the auto-registration of the forwarding rule to Service Directory.
@@ -493,15 +485,14 @@ message ForwardingRuleList {
 // registration will be the same as this forwarding rule.
 message ForwardingRuleServiceDirectoryRegistration {
   // Service Directory namespace to register the forwarding rule under.
-  optional string namespace = 1 [json_name = "namespace"];
+  optional string namespace = 1 [json_name="namespace"];
 
   // Service Directory service to register the forwarding rule under.
-  optional string service = 2 [json_name = "service"];
+  optional string service = 2 [json_name="service"];
 
   // [Optional] Service Directory region to register this global forwarding rule
   // under. Default to "us-central1". Only used for PSC for Google APIs. All PSC
   // for Google APIs forwarding rules on the same network should use the same
   // Service Directory region.
-  optional string service_directory_region = 3
-      [json_name = "serviceDirectoryRegion"];
+  optional string service_directory_region = 3 [json_name="serviceDirectoryRegion"];
 }

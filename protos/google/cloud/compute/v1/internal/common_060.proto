@@ -27,28 +27,28 @@ import "google/cloud/compute/v1/internal/common_083.proto";
 
 message InstanceGroupAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name = "id"];
+  optional string id = 1 [json_name="id"];
 
   // A list of InstanceGroupsScopedList resources.
-  map<string, InstanceGroupsScopedList> items = 2 [json_name = "items"];
+  map<string, InstanceGroupsScopedList> items = 2 [json_name="items"];
 
   // [Output Only] The resource type, which is always
   // compute#instanceGroupAggregatedList for aggregated lists of instance
   // groups.
-  optional string kind = 3 [json_name = "kind"];
+  optional string kind = 3 [json_name="kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name = "nextPageToken"];
+  optional string next_page_token = 4 [json_name="nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name = "selfLink"];
+  optional string self_link = 5 [json_name="selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6 [json_name = "unreachables"];
+  repeated string unreachables = 6 [json_name="unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -109,7 +109,7 @@ message InstanceGroupAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name = "code"];
+    optional string code = 1 [json_name="code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -119,45 +119,45 @@ message InstanceGroupAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [json_name="key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name = "value"];
+      optional string value = 2 [json_name="value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2 [json_name = "data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    repeated DataItem data = 2 [json_name="data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name = "message"];
+    optional string message = 3 [json_name="message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7 [json_name = "warning"];
+  optional Warning warning = 7 [json_name="warning"];
 }
 
 // A list of InstanceGroup resources.
 message InstanceGroupList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name = "id"];
+  optional string id = 1 [json_name="id"];
 
   // A list of InstanceGroup resources.
-  repeated InstanceGroup items = 2 [json_name = "items"];
+  repeated InstanceGroup items = 2 [json_name="items"];
 
   // [Output Only] The resource type, which is always compute#instanceGroupList
   // for instance group lists.
-  optional string kind = 3 [json_name = "kind"];
+  optional string kind = 3 [json_name="kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name = "nextPageToken"];
+  optional string next_page_token = 4 [json_name="nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name = "selfLink"];
+  optional string self_link = 5 [json_name="selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -218,7 +218,7 @@ message InstanceGroupList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name = "code"];
+    optional string code = 1 [json_name="code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -228,50 +228,50 @@ message InstanceGroupList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [json_name="key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name = "value"];
+      optional string value = 2 [json_name="value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2 [json_name = "data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    repeated DataItem data = 2 [json_name="data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name = "message"];
+    optional string message = 3 [json_name="message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name = "warning"];
+  optional Warning warning = 6 [json_name="warning"];
 }
 
 message InstanceGroupsAddInstancesRequest {
   // The list of instances to add to the instance group.
-  repeated InstanceReference instances = 1 [json_name = "instances"];
+  repeated InstanceReference instances = 1 [json_name="instances"];
 }
 
 message InstanceGroupsListInstances {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name = "id"];
+  optional string id = 1 [json_name="id"];
 
   // A list of InstanceWithNamedPorts resources.
-  repeated InstanceWithNamedPorts items = 2 [json_name = "items"];
+  repeated InstanceWithNamedPorts items = 2 [json_name="items"];
 
   // [Output Only] The resource type, which is always
   // compute#instanceGroupsListInstances for the list of instances in the
   // specified instance group.
-  optional string kind = 3 [json_name = "kind"];
+  optional string kind = 3 [json_name="kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name = "nextPageToken"];
+  optional string next_page_token = 4 [json_name="nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name = "selfLink"];
+  optional string self_link = 5 [json_name="selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -332,7 +332,7 @@ message InstanceGroupsListInstances {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name = "code"];
+    optional string code = 1 [json_name="code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -342,22 +342,22 @@ message InstanceGroupsListInstances {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [json_name="key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name = "value"];
+      optional string value = 2 [json_name="value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2 [json_name = "data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    repeated DataItem data = 2 [json_name="data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name = "message"];
+    optional string message = 3 [json_name="message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name = "warning"];
+  optional Warning warning = 6 [json_name="warning"];
 }
 
 message InstanceGroupsListInstancesRequest {
@@ -368,17 +368,17 @@ message InstanceGroupsListInstancesRequest {
   // state.
   // RUNNING: Includes instances in the generated list only if they have a
   // RUNNING state.
-  optional string instance_state = 1 [json_name = "instanceState"];
+  optional string instance_state = 1 [json_name="instanceState"];
 }
 
 message InstanceGroupsRemoveInstancesRequest {
   // The list of instances to remove from the instance group.
-  repeated InstanceReference instances = 1 [json_name = "instances"];
+  repeated InstanceReference instances = 1 [json_name="instances"];
 }
 
 message InstanceGroupsScopedList {
   // [Output Only] The list of instance groups that are contained in this scope.
-  repeated InstanceGroup instance_groups = 1 [json_name = "instanceGroups"];
+  repeated InstanceGroup instance_groups = 1 [json_name="instanceGroups"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -439,7 +439,7 @@ message InstanceGroupsScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name = "code"];
+    optional string code = 1 [json_name="code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -449,23 +449,23 @@ message InstanceGroupsScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [json_name="key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name = "value"];
+      optional string value = 2 [json_name="value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2 [json_name = "data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    repeated DataItem data = 2 [json_name="data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name = "message"];
+    optional string message = 3 [json_name="message"];
   }
 
   // [Output Only] An informational warning that replaces the list of instance
   // groups when the list is empty.
-  optional Warning warning = 2 [json_name = "warning"];
+  optional Warning warning = 2 [json_name="warning"];
 }
 
 message InstanceGroupsSetNamedPortsRequest {
@@ -476,8 +476,8 @@ message InstanceGroupsSetNamedPortsRequest {
   // ensure that you do not overwrite changes that were applied from another
   // concurrent request. A request with an incorrect fingerprint will fail with
   // error 412 conditionNotMet.
-  optional string fingerprint = 1 [json_name = "fingerprint"];
+  optional string fingerprint = 1 [json_name="fingerprint"];
 
   // The list of named ports to set for this instance group.
-  repeated NamedPort named_ports = 2 [json_name = "namedPorts"];
+  repeated NamedPort named_ports = 2 [json_name="namedPorts"];
 }

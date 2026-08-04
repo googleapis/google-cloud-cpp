@@ -33,14 +33,13 @@ import "google/cloud/extended_operations.proto";
 service SnapshotSettings {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-      "https://www.googleapis.com/auth/cloud-platform,"
-      "https://www.googleapis.com/auth/compute,"
-      "https://www.googleapis.com/auth/compute.readonly";
+    "https://www.googleapis.com/auth/cloud-platform,"
+    "https://www.googleapis.com/auth/compute,"
+    "https://www.googleapis.com/auth/compute.readonly";
 
   // Get snapshot settings.
   // https://cloud.google.com/compute/docs/reference/rest/v1/snapshotSettings/get
-  rpc GetSnapshotSettings(GetSnapshotSettingsRequest)
-      returns (google.cloud.cpp.compute.v1.SnapshotSettings) {
+  rpc GetSnapshotSettings(GetSnapshotSettingsRequest) returns (google.cloud.cpp.compute.v1.SnapshotSettings) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/snapshotSettings"
     };
@@ -49,14 +48,12 @@ service SnapshotSettings {
 
   // Patch snapshot settings.
   // https://cloud.google.com/compute/docs/reference/rest/v1/snapshotSettings/patch
-  rpc PatchSnapshotSettings(PatchSnapshotSettingsRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchSnapshotSettings(PatchSnapshotSettingsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/snapshotSettings"
       body: "snapshot_settings_resource"
     };
-    option (google.api.method_signature) =
-        "project,update_mask,snapshot_settings_resource";
+    option (google.api.method_signature) = "project,update_mask,snapshot_settings_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -64,18 +61,13 @@ service SnapshotSettings {
 // Request message for GetSnapshotSettings.
 message GetSnapshotSettingsRequest {
   // Project ID for this request.
-  string project = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 1 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 }
 
 // Request message for PatchSnapshotSettings.
 message PatchSnapshotSettingsRequest {
   // Project ID for this request.
-  string project = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -87,12 +79,11 @@ message PatchSnapshotSettingsRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 2 [json_name = "requestId"];
+  optional string request_id = 2 [json_name="requestId"];
 
   // The SnapshotSettings for this request.
-  optional google.cloud.cpp.compute.v1.SnapshotSettings
-      snapshot_settings_resource = 3 [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SnapshotSettings snapshot_settings_resource = 3 [json_name="__json_request_body"];
 
   // update_mask indicates fields to be updated as part of this request.
-  optional string update_mask = 4 [json_name = "updateMask"];
+  optional string update_mask = 4 [json_name="updateMask"];
 }

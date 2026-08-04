@@ -27,13 +27,11 @@ import "google/cloud/compute/v1/internal/common_146.proto";
 message GroupMaintenanceInfo {
   // Progress for ongoing maintenance for this group of VMs/hosts. Describes
   // number of hosts in the block that have ongoing maintenance.
-  optional int32 maintenance_ongoing_count = 1
-      [json_name = "maintenanceOngoingCount"];
+  optional int32 maintenance_ongoing_count = 1 [json_name="maintenanceOngoingCount"];
 
   // Progress for ongoing maintenance for this group of VMs/hosts. Describes
   // number of hosts in the block that have pending maintenance.
-  optional int32 maintenance_pending_count = 2
-      [json_name = "maintenancePendingCount"];
+  optional int32 maintenance_pending_count = 2 [json_name="maintenancePendingCount"];
 
   // The type of maintenance for the reservation.
   // GROUPED: Maintenance on all reserved instances in the reservation is
@@ -41,9 +39,8 @@ message GroupMaintenanceInfo {
   // GROUP_MAINTENANCE_TYPE_UNSPECIFIED: Unknown maintenance type.
   // INDEPENDENT: Maintenance is not synchronized for this reservation. Instead,
   // each instance has its own maintenance window.
-  optional string scheduling_type = 3 [json_name = "schedulingType"];
+  optional string scheduling_type = 3 [json_name="schedulingType"];
 
   // Maintenance information on this group of VMs.
-  optional UpcomingMaintenance upcoming_group_maintenance = 4
-      [json_name = "upcomingGroupMaintenance"];
+  optional UpcomingMaintenance upcoming_group_maintenance = 4 [json_name="upcomingGroupMaintenance"];
 }

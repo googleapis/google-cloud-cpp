@@ -31,15 +31,14 @@ import "google/cloud/compute/v1/internal/common_150.proto";
 service RegionZones {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-      "https://www.googleapis.com/auth/cloud-platform,"
-      "https://www.googleapis.com/auth/compute,"
-      "https://www.googleapis.com/auth/compute.readonly";
+    "https://www.googleapis.com/auth/cloud-platform,"
+    "https://www.googleapis.com/auth/compute,"
+    "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of Zone resources under the specific region available to
   // the specified project.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionZones/list
-  rpc ListRegionZones(ListRegionZonesRequest)
-      returns (google.cloud.cpp.compute.v1.ZoneList) {
+  rpc ListRegionZones(ListRegionZonesRequest) returns (google.cloud.cpp.compute.v1.ZoneList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/zones"
     };
@@ -81,14 +80,14 @@ message ListRegionZonesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name = "filter"];
+  optional string filter = 1 [json_name="filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2 [json_name = "maxResults"];
+  optional uint32 max_results = 2 [json_name="maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -98,23 +97,21 @@ message ListRegionZonesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3 [json_name = "orderBy"];
+  optional string order_by = 3 [json_name="orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4 [json_name = "pageToken"];
+  optional string page_token = 4 [json_name="pageToken"];
 
   // Project ID for this request.
-  string project = 5
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 5 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 
   // Region for this request.
-  string region = 6
-      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
+  string region = 6 [(google.api.field_behavior) = REQUIRED,json_name="region"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
+  optional bool return_partial_success = 7 [json_name="returnPartialSuccess"];
 }

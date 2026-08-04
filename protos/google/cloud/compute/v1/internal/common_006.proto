@@ -31,133 +31,122 @@ import "google/cloud/compute/v1/internal/common_120.proto";
 // one can create instances of varying shapes against this reservation.
 message AllocationAggregateReservation {
   // [Output only] List of resources currently in use.
-  repeated AllocationAggregateReservationReservedResourceInfo in_use_resources =
-      1 [json_name = "inUseResources"];
+  repeated AllocationAggregateReservationReservedResourceInfo in_use_resources = 1 [json_name="inUseResources"];
 
   // List of reserved resources (CPUs, memory, accelerators).
-  repeated AllocationAggregateReservationReservedResourceInfo
-      reserved_resources = 2 [json_name = "reservedResources"];
+  repeated AllocationAggregateReservationReservedResourceInfo reserved_resources = 2 [json_name="reservedResources"];
 
   // The VM family that all instances scheduled against this reservation must
   // belong to.
-  // VM_FAMILY_CLOUD_TPU_DEVICE_CT3:
-  // VM_FAMILY_CLOUD_TPU_LITE_DEVICE_CT5L:
-  // VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT5LP:
-  // VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT6E:
-  // VM_FAMILY_CLOUD_TPU_POD_SLICE_CT3P:
-  // VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P:
-  // VM_FAMILY_CLOUD_TPU_POD_SLICE_CT5P:
-  optional string vm_family = 3 [json_name = "vmFamily"];
+  // VM_FAMILY_CLOUD_TPU_DEVICE_CT3: 
+  // VM_FAMILY_CLOUD_TPU_LITE_DEVICE_CT5L: 
+  // VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT5LP: 
+  // VM_FAMILY_CLOUD_TPU_LITE_POD_SLICE_CT6E: 
+  // VM_FAMILY_CLOUD_TPU_POD_SLICE_CT3P: 
+  // VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P: 
+  // VM_FAMILY_CLOUD_TPU_POD_SLICE_CT5P: 
+  optional string vm_family = 3 [json_name="vmFamily"];
 
   // The workload type of the instances that will target this reservation.
   // BATCH: Reserved resources will be optimized for BATCH workloads, such as ML
   // training.
   // SERVING: Reserved resources will be optimized for SERVING workloads, such
   // as ML inference.
-  // UNSPECIFIED:
-  optional string workload_type = 4 [json_name = "workloadType"];
+  // UNSPECIFIED: 
+  optional string workload_type = 4 [json_name="workloadType"];
 }
 
 message AllocationAggregateReservationReservedResourceInfo {
   // Properties of accelerator resources in this reservation.
-  optional AllocationAggregateReservationReservedResourceInfoAccelerator
-      accelerator = 1 [json_name = "accelerator"];
+  optional AllocationAggregateReservationReservedResourceInfoAccelerator accelerator = 1 [json_name="accelerator"];
 }
 
 message AllocationAggregateReservationReservedResourceInfoAccelerator {
   // Number of accelerators of specified type.
-  optional int32 accelerator_count = 1 [json_name = "acceleratorCount"];
+  optional int32 accelerator_count = 1 [json_name="acceleratorCount"];
 
   // Full or partial URL to accelerator type. e.g.
   // "projects/{PROJECT}/zones/{ZONE}/acceleratorTypes/ct4l"
-  optional string accelerator_type = 2 [json_name = "acceleratorType"];
+  optional string accelerator_type = 2 [json_name="acceleratorType"];
 }
 
 message AllocationReservationSharingPolicy {
   // Sharing config for all Google Cloud services.
   // ALLOW_ALL: Allow all Google Cloud managed services to share reservations.
   // DISALLOW_ALL: [Default] Disallow sharing with all Google Cloud services.
-  // SERVICE_SHARE_TYPE_UNSPECIFIED:
-  optional string service_share_type = 1 [json_name = "serviceShareType"];
+  // SERVICE_SHARE_TYPE_UNSPECIFIED: 
+  optional string service_share_type = 1 [json_name="serviceShareType"];
 }
 
 // [Output Only] Contains output only fields.
 message AllocationResourceStatus {
   // The number of reservation blocks associated with this reservation.
-  optional int32 reservation_block_count = 2
-      [json_name = "reservationBlockCount"];
+  optional int32 reservation_block_count = 2 [json_name="reservationBlockCount"];
 
   // Maintenance information for this reservation
-  optional GroupMaintenanceInfo reservation_maintenance = 3
-      [json_name = "reservationMaintenance"];
+  optional GroupMaintenanceInfo reservation_maintenance = 3 [json_name="reservationMaintenance"];
 
   // Allocation Properties of this reservation.
-  optional AllocationResourceStatusSpecificSKUAllocation
-      specific_sku_allocation = 1 [json_name = "specificSkuAllocation"];
+  optional AllocationResourceStatusSpecificSKUAllocation specific_sku_allocation = 1 [json_name="specificSkuAllocation"];
 }
 
 // Contains Properties set for the reservation.
 message AllocationResourceStatusSpecificSKUAllocation {
   // ID of the instance template used to populate reservation properties.
-  optional string source_instance_template_id = 1
-      [json_name = "sourceInstanceTemplateId"];
+  optional string source_instance_template_id = 1 [json_name="sourceInstanceTemplateId"];
 
   // Per service utilization breakdown. The Key is the Google Cloud managed
   // service name.
-  map<string, string> utilizations = 2 [json_name = "utilizations"];
+  map<string, string> utilizations = 2 [json_name="utilizations"];
 }
 
 message AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk {
   // Specifies the size of the disk in base-2 GB.
-  optional string disk_size_gb = 1 [json_name = "diskSizeGb"];
+  optional string disk_size_gb = 1 [json_name="diskSizeGb"];
 
   // Specifies the disk interface to use for attaching this disk, which is
   // either SCSI or NVME. The default is SCSI. For performance characteristics
   // of SCSI over NVMe, see Local SSD performance.
-  // NVME:
-  // SCSI:
-  optional string interface = 2 [json_name = "interface"];
+  // NVME: 
+  // SCSI: 
+  optional string interface = 2 [json_name="interface"];
 }
 
 // Properties of the SKU instances being reserved. Next ID: 9
 message AllocationSpecificSKUAllocationReservedInstanceProperties {
   // Specifies accelerator type and count.
-  repeated AcceleratorConfig guest_accelerators = 1
-      [json_name = "guestAccelerators"];
+  repeated AcceleratorConfig guest_accelerators = 1 [json_name="guestAccelerators"];
 
   // Specifies amount of local ssd to reserve with each instance. The type of
   // disk is local-ssd.
-  repeated
-      AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk
-          local_ssds = 2 [json_name = "localSsds"];
+  repeated AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk local_ssds = 2 [json_name="localSsds"];
 
   // An opaque location hint used to place the allocation close to other
   // resources. This field is for use by internal tools that use the public API.
-  optional string location_hint = 3 [json_name = "locationHint"];
+  optional string location_hint = 3 [json_name="locationHint"];
 
   // Specifies type of machine (name only) which has fixed number of vCPUs and
   // fixed amount of memory. This also includes specifying custom machine type
   // following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.
-  optional string machine_type = 4 [json_name = "machineType"];
+  optional string machine_type = 4 [json_name="machineType"];
 
   // Minimum cpu platform the reservation.
-  optional string min_cpu_platform = 5 [json_name = "minCpuPlatform"];
+  optional string min_cpu_platform = 5 [json_name="minCpuPlatform"];
 }
 
 // This reservation type allows to pre allocate specific instance configuration.
 message AllocationSpecificSKUReservation {
   // [Output Only] Indicates how many instances are actually usable currently.
-  optional string assured_count = 1 [json_name = "assuredCount"];
+  optional string assured_count = 1 [json_name="assuredCount"];
 
   // Specifies the number of resources that are allocated.
-  optional string count = 2 [json_name = "count"];
+  optional string count = 2 [json_name="count"];
 
   // [Output Only] Indicates how many instances are in use.
-  optional string in_use_count = 3 [json_name = "inUseCount"];
+  optional string in_use_count = 3 [json_name="inUseCount"];
 
   // The instance properties for the reservation.
-  optional AllocationSpecificSKUAllocationReservedInstanceProperties
-      instance_properties = 4 [json_name = "instanceProperties"];
+  optional AllocationSpecificSKUAllocationReservedInstanceProperties instance_properties = 4 [json_name="instanceProperties"];
 
   // Specifies the instance template to create the reservation. If you use this
   // field, you must exclude the instanceProperties field. This field is
@@ -166,9 +155,8 @@ message AllocationSpecificSKUReservation {
   // https://www.googleapis.com/compute/v1/projects/project
   // /global/instanceTemplates/instanceTemplate -
   // projects/project/global/instanceTemplates/instanceTemplate -
-  // global/instanceTemplates/instanceTemplate
-  optional string source_instance_template = 5
-      [json_name = "sourceInstanceTemplate"];
+  // global/instanceTemplates/instanceTemplate 
+  optional string source_instance_template = 5 [json_name="sourceInstanceTemplate"];
 }
 
 // Represents a reservation resource. A reservation ensures that capacity is
@@ -176,51 +164,48 @@ message AllocationSpecificSKUReservation {
 // information, read Reserving zonal resources.
 message Reservation {
   // Reservation for aggregated resources, providing shape flexibility.
-  optional AllocationAggregateReservation aggregate_reservation = 16
-      [json_name = "aggregateReservation"];
+  optional AllocationAggregateReservation aggregate_reservation = 16 [json_name="aggregateReservation"];
 
   // [Output Only] Full or partial URL to a parent commitment. This field
   // displays for reservations that are tied to a commitment.
-  optional string commitment = 1 [json_name = "commitment"];
+  optional string commitment = 1 [json_name="commitment"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
+  optional string creation_timestamp = 2 [json_name="creationTimestamp"];
 
   // Duration time relative to reservation creation when Compute Engine will
   // automatically delete this resource.
-  optional Duration delete_after_duration = 20
-      [json_name = "deleteAfterDuration"];
+  optional Duration delete_after_duration = 20 [json_name="deleteAfterDuration"];
 
   // Absolute time in future when the reservation will be auto-deleted by
   // Compute Engine. Timestamp is represented in RFC3339 text format.
-  optional string delete_at_time = 21 [json_name = "deleteAtTime"];
+  optional string delete_at_time = 21 [json_name="deleteAtTime"];
 
   // Specifies the deployment strategy for this reservation.
   // DENSE: The reserved capacity is made up of densely deployed reservation
   // blocks.
-  // DEPLOYMENT_TYPE_UNSPECIFIED:
-  optional string deployment_type = 18 [json_name = "deploymentType"];
+  // DEPLOYMENT_TYPE_UNSPECIFIED: 
+  optional string deployment_type = 18 [json_name="deploymentType"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3 [json_name = "description"];
+  optional string description = 3 [json_name="description"];
 
   // Indicates whether Compute Engine allows unplanned maintenance for your VMs;
   // for example, to fix hardware errors.
-  optional bool enable_emergent_maintenance = 22
-      [json_name = "enableEmergentMaintenance"];
+  optional bool enable_emergent_maintenance = 22 [json_name="enableEmergentMaintenance"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 4 [json_name = "id"];
+  optional string id = 4 [json_name="id"];
 
   // [Output Only] Type of the resource. Always compute#reservations for
   // reservations.
-  optional string kind = 5 [json_name = "kind"];
+  optional string kind = 5 [json_name="kind"];
 
   // [Output Only] Full or partial URL to parent commitments. This field
   // displays for reservations that are tied to multiple commitments.
-  repeated string linked_commitments = 19 [json_name = "linkedCommitments"];
+  repeated string linked_commitments = 19 [json_name="linkedCommitments"];
 
   // The name of the resource, provided by the client when initially creating
   // the resource. The resource name must be 1-63 characters long, and comply
@@ -229,56 +214,52 @@ message Reservation {
   // character must be a lowercase letter, and all following characters must be
   // a dash, lowercase letter, or digit, except the last character, which cannot
   // be a dash.
-  optional string name = 6 [json_name = "name"];
+  optional string name = 6 [json_name="name"];
 
   // Specify the reservation sharing policy. If unspecified, the reservation
   // will not be shared with Google Cloud managed services.
-  optional AllocationReservationSharingPolicy reservation_sharing_policy = 17
-      [json_name = "reservationSharingPolicy"];
+  optional AllocationReservationSharingPolicy reservation_sharing_policy = 17 [json_name="reservationSharingPolicy"];
 
   // Resource policies to be added to this reservation. The key is defined by
   // user, and the value is resource policy url. This is to define placement
   // policy with reservation.
-  map<string, string> resource_policies = 7 [json_name = "resourcePolicies"];
+  map<string, string> resource_policies = 7 [json_name="resourcePolicies"];
 
   // [Output Only] Status information for Reservation resource.
-  optional AllocationResourceStatus resource_status = 8
-      [json_name = "resourceStatus"];
+  optional AllocationResourceStatus resource_status = 8 [json_name="resourceStatus"];
 
   // [Output Only] Reserved for future use.
-  optional bool satisfies_pzs = 9 [json_name = "satisfiesPzs"];
+  optional bool satisfies_pzs = 9 [json_name="satisfiesPzs"];
 
   // [Output Only] Server-defined fully-qualified URL for this resource.
-  optional string self_link = 10 [json_name = "selfLink"];
+  optional string self_link = 10 [json_name="selfLink"];
 
   // Specify share-settings to create a shared reservation. This property is
   // optional. For more information about the syntax and options for this field
   // and its subfields, see the guide for creating a shared reservation.
-  optional ShareSettings share_settings = 11 [json_name = "shareSettings"];
+  optional ShareSettings share_settings = 11 [json_name="shareSettings"];
 
   // Reservation for instances with specific machine shapes.
-  optional AllocationSpecificSKUReservation specific_reservation = 12
-      [json_name = "specificReservation"];
+  optional AllocationSpecificSKUReservation specific_reservation = 12 [json_name="specificReservation"];
 
   // Indicates whether the reservation can be consumed by VMs with affinity for
   // "any" reservation. If the field is set, then only VMs that target the
   // reservation by name can consume from this reservation.
-  optional bool specific_reservation_required = 13
-      [json_name = "specificReservationRequired"];
+  optional bool specific_reservation_required = 13 [json_name="specificReservationRequired"];
 
   // [Output Only] The status of the reservation. - CREATING: Reservation
   // resources are being allocated. - READY: Reservation resources have been
   // allocated, and the reservation is ready for use. - DELETING: Reservation
-  // deletion is in progress. - UPDATING: Reservation update is in progress.
+  // deletion is in progress. - UPDATING: Reservation update is in progress. 
   // CREATING: Reservation resources are being allocated.
   // DELETING: Reservation deletion is in progress.
-  // INVALID:
+  // INVALID: 
   // READY: Reservation resources have been allocated, and the reservation is
   // ready for use.
   // UPDATING: Reservation update is in progress.
-  optional string status = 14 [json_name = "status"];
+  optional string status = 14 [json_name="status"];
 
   // Zone in which the reservation resides. A zone must be provided if the
   // reservation is created within a commitment.
-  optional string zone = 15 [json_name = "zone"];
+  optional string zone = 15 [json_name="zone"];
 }

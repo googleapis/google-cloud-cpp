@@ -38,28 +38,25 @@ import "google/cloud/extended_operations.proto";
 service BackendBuckets {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-      "https://www.googleapis.com/auth/cloud-platform,"
-      "https://www.googleapis.com/auth/compute,"
-      "https://www.googleapis.com/auth/compute.readonly";
+    "https://www.googleapis.com/auth/cloud-platform,"
+    "https://www.googleapis.com/auth/compute,"
+    "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds a key for validating requests with signed URLs for this backend
   // bucket.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/addSignedUrlKey
-  rpc AddSignedUrlKey(AddSignedUrlKeyRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddSignedUrlKey(AddSignedUrlKeyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/addSignedUrlKey"
       body: "signed_url_key_resource"
     };
-    option (google.api.method_signature) =
-        "project,backend_bucket,signed_url_key_resource";
+    option (google.api.method_signature) = "project,backend_bucket,signed_url_key_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Deletes the specified BackendBucket resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/delete
-  rpc DeleteBackendBucket(DeleteBackendBucketRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteBackendBucket(DeleteBackendBucketRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
     };
@@ -70,8 +67,7 @@ service BackendBuckets {
   // Deletes a key for validating requests with signed URLs for this backend
   // bucket.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/deleteSignedUrlKey
-  rpc DeleteSignedUrlKey(DeleteSignedUrlKeyRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteSignedUrlKey(DeleteSignedUrlKeyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/deleteSignedUrlKey"
       body: "*"
@@ -82,8 +78,7 @@ service BackendBuckets {
 
   // Returns the specified BackendBucket resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/get
-  rpc GetBackendBucket(GetBackendBucketRequest)
-      returns (google.cloud.cpp.compute.v1.BackendBucket) {
+  rpc GetBackendBucket(GetBackendBucketRequest) returns (google.cloud.cpp.compute.v1.BackendBucket) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
     };
@@ -93,8 +88,7 @@ service BackendBuckets {
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/getIamPolicy
-  rpc GetIamPolicy(GetIamPolicyRequest)
-      returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/backendBuckets/{resource}/getIamPolicy"
     };
@@ -104,8 +98,7 @@ service BackendBuckets {
   // Creates a BackendBucket resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/insert
-  rpc InsertBackendBucket(InsertBackendBucketRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertBackendBucket(InsertBackendBucketRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/backendBuckets"
       body: "backend_bucket_resource"
@@ -117,8 +110,7 @@ service BackendBuckets {
   // Retrieves the list of BackendBucket resources available to the specified
   // project.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/list
-  rpc ListBackendBuckets(ListBackendBucketsRequest)
-      returns (google.cloud.cpp.compute.v1.BackendBucketList) {
+  rpc ListBackendBuckets(ListBackendBucketsRequest) returns (google.cloud.cpp.compute.v1.BackendBucketList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/backendBuckets"
     };
@@ -129,66 +121,56 @@ service BackendBuckets {
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/patch
-  rpc PatchBackendBucket(PatchBackendBucketRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchBackendBucket(PatchBackendBucketRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
       body: "backend_bucket_resource"
     };
-    option (google.api.method_signature) =
-        "project,backend_bucket,backend_bucket_resource";
+    option (google.api.method_signature) = "project,backend_bucket,backend_bucket_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Sets the edge security policy for the specified backend bucket.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/setEdgeSecurityPolicy
-  rpc SetEdgeSecurityPolicy(SetEdgeSecurityPolicyRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetEdgeSecurityPolicy(SetEdgeSecurityPolicyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/setEdgeSecurityPolicy"
       body: "security_policy_reference_resource"
     };
-    option (google.api.method_signature) =
-        "project,backend_bucket,security_policy_reference_resource";
+    option (google.api.method_signature) = "project,backend_bucket,security_policy_reference_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/setIamPolicy
-  rpc SetIamPolicy(SetIamPolicyRequest)
-      returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/backendBuckets/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
-    option (google.api.method_signature) =
-        "project,resource,global_set_policy_request_resource";
+    option (google.api.method_signature) = "project,resource,global_set_policy_request_resource";
   }
 
   // Returns permissions that a caller has on the specified resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/testIamPermissions
-  rpc TestIamPermissions(TestIamPermissionsRequest)
-      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/backendBuckets/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) =
-        "project,resource,test_permissions_request_resource";
+    option (google.api.method_signature) = "project,resource,test_permissions_request_resource";
   }
 
   // Updates the specified BackendBucket resource with the data included in the
   // request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/update
-  rpc UpdateBackendBucket(UpdateBackendBucketRequest)
-      returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateBackendBucket(UpdateBackendBucketRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
       body: "backend_bucket_resource"
     };
-    option (google.api.method_signature) =
-        "project,backend_bucket,backend_bucket_resource";
+    option (google.api.method_signature) = "project,backend_bucket,backend_bucket_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -197,15 +179,10 @@ service BackendBuckets {
 message AddSignedUrlKeyRequest {
   // Name of the BackendBucket resource to which the Signed URL Key should be
   // added. The name should conform to RFC1035.
-  string backend_bucket = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "backendBucket"];
+  string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED,json_name="backendBucket"];
 
   // Project ID for this request.
-  string project = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -217,25 +194,19 @@ message AddSignedUrlKeyRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3 [json_name = "requestId"];
+  optional string request_id = 3 [json_name="requestId"];
 
   // The SignedUrlKey for this request.
-  optional google.cloud.cpp.compute.v1.SignedUrlKey signed_url_key_resource = 4
-      [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SignedUrlKey signed_url_key_resource = 4 [json_name="__json_request_body"];
 }
 
 // Request message for DeleteBackendBucket.
 message DeleteBackendBucketRequest {
   // Name of the BackendBucket resource to delete.
-  string backend_bucket = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "backendBucket"];
+  string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED,json_name="backendBucket"];
 
   // Project ID for this request.
-  string project = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -247,26 +218,20 @@ message DeleteBackendBucketRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3 [json_name = "requestId"];
+  optional string request_id = 3 [json_name="requestId"];
 }
 
 // Request message for DeleteSignedUrlKey.
 message DeleteSignedUrlKeyRequest {
   // Name of the BackendBucket resource to which the Signed URL Key should be
   // added. The name should conform to RFC1035.
-  string backend_bucket = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "backendBucket"];
+  string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED,json_name="backendBucket"];
 
   // The name of the Signed URL Key to delete.
-  string key_name = 2
-      [(google.api.field_behavior) = REQUIRED, json_name = "keyName"];
+  string key_name = 2 [(google.api.field_behavior) = REQUIRED,json_name="keyName"];
 
   // Project ID for this request.
-  string project = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -278,47 +243,37 @@ message DeleteSignedUrlKeyRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name = "requestId"];
+  optional string request_id = 4 [json_name="requestId"];
 }
 
 // Request message for GetBackendBucket.
 message GetBackendBucketRequest {
   // Name of the BackendBucket resource to return.
-  string backend_bucket = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "backendBucket"];
+  string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED,json_name="backendBucket"];
 
   // Project ID for this request.
-  string project = 2
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 }
 
 // Request message for GetIamPolicy.
 message GetIamPolicyRequest {
   // Requested IAM Policy version.
-  optional int32 options_requested_policy_version = 1
-      [json_name = "optionsRequestedPolicyVersion"];
+  optional int32 options_requested_policy_version = 1 [json_name="optionsRequestedPolicyVersion"];
 
   // Project ID for this request.
-  string project = 2
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 
   // Name or id of the resource for this request.
-  string resource = 3
-      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
+  string resource = 3 [(google.api.field_behavior) = REQUIRED,json_name="resource"];
 }
 
 // Request message for InsertBackendBucket.
 message InsertBackendBucketRequest {
   // The BackendBucket for this request.
-  optional google.cloud.cpp.compute.v1.BackendBucket backend_bucket_resource = 1
-      [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.BackendBucket backend_bucket_resource = 1 [json_name="__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -330,7 +285,7 @@ message InsertBackendBucketRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3 [json_name = "requestId"];
+  optional string request_id = 3 [json_name="requestId"];
 }
 
 // Request message for ListBackendBuckets.
@@ -367,14 +322,14 @@ message ListBackendBucketsRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1 [json_name = "filter"];
+  optional string filter = 1 [json_name="filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2 [json_name = "maxResults"];
+  optional uint32 max_results = 2 [json_name="maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -384,39 +339,32 @@ message ListBackendBucketsRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3 [json_name = "orderBy"];
+  optional string order_by = 3 [json_name="orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4 [json_name = "pageToken"];
+  optional string page_token = 4 [json_name="pageToken"];
 
   // Project ID for this request.
-  string project = 5
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 5 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false. For example, when partial success
   // behavior is enabled, aggregatedList for a single zone scope either returns
   // all resources in the zone or no resources, with an error code.
-  optional bool return_partial_success = 6 [json_name = "returnPartialSuccess"];
+  optional bool return_partial_success = 6 [json_name="returnPartialSuccess"];
 }
 
 // Request message for PatchBackendBucket.
 message PatchBackendBucketRequest {
   // Name of the BackendBucket resource to patch.
-  string backend_bucket = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "backendBucket"];
+  string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED,json_name="backendBucket"];
 
   // The BackendBucket for this request.
-  optional google.cloud.cpp.compute.v1.BackendBucket backend_bucket_resource = 2
-      [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.BackendBucket backend_bucket_resource = 2 [json_name="__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -428,22 +376,17 @@ message PatchBackendBucketRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name = "requestId"];
+  optional string request_id = 4 [json_name="requestId"];
 }
 
 // Request message for SetEdgeSecurityPolicy.
 message SetEdgeSecurityPolicyRequest {
   // Name of the BackendBucket resource to which the security policy should be
   // set. The name should conform to RFC1035.
-  string backend_bucket = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "backendBucket"];
+  string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED,json_name="backendBucket"];
 
   // Project ID for this request.
-  string project = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -455,61 +398,46 @@ message SetEdgeSecurityPolicyRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3 [json_name = "requestId"];
+  optional string request_id = 3 [json_name="requestId"];
 
   // The SecurityPolicyReference for this request.
-  optional google.cloud.cpp.compute.v1.SecurityPolicyReference
-      security_policy_reference_resource = 4
-      [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.SecurityPolicyReference security_policy_reference_resource = 4 [json_name="__json_request_body"];
 }
 
 // Request message for SetIamPolicy.
 message SetIamPolicyRequest {
   // The GlobalSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest
-      global_set_policy_request_resource = 1
-      [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest global_set_policy_request_resource = 1 [json_name="__json_request_body"];
 
   // Project ID for this request.
-  string project = 2
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 2 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 
   // Name or id of the resource for this request.
-  string resource = 3
-      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
+  string resource = 3 [(google.api.field_behavior) = REQUIRED,json_name="resource"];
 }
 
 // Request message for TestIamPermissions.
 message TestIamPermissionsRequest {
   // Project ID for this request.
-  string project = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
+  string project = 1 [(google.api.field_behavior) = REQUIRED,json_name="project"];
 
   // Name or id of the resource for this request.
-  string resource = 2
-      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
+  string resource = 2 [(google.api.field_behavior) = REQUIRED,json_name="resource"];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
-      test_permissions_request_resource = 3 [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3 [json_name="__json_request_body"];
 }
 
 // Request message for UpdateBackendBucket.
 message UpdateBackendBucketRequest {
   // Name of the BackendBucket resource to update.
-  string backend_bucket = 1
-      [(google.api.field_behavior) = REQUIRED, json_name = "backendBucket"];
+  string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED,json_name="backendBucket"];
 
   // The BackendBucket for this request.
-  optional google.cloud.cpp.compute.v1.BackendBucket backend_bucket_resource = 2
-      [json_name = "__json_request_body"];
+  optional google.cloud.cpp.compute.v1.BackendBucket backend_bucket_resource = 2 [json_name="__json_request_body"];
 
   // Project ID for this request.
-  string project = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project",
-    json_name = "project"
-  ];
+  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project",json_name="project"];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -521,5 +449,5 @@ message UpdateBackendBucketRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4 [json_name = "requestId"];
+  optional string request_id = 4 [json_name="requestId"];
 }

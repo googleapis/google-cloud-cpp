@@ -25,214 +25,204 @@ package google.cloud.cpp.compute.v1;
 message NetworkProfile {
   reserved 10;
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
+  optional string creation_timestamp = 1 [json_name="creationTimestamp"];
 
   // [Output Only] An optional description of this resource.
-  optional string description = 2 [json_name = "description"];
+  optional string description = 2 [json_name="description"];
 
   // [Output Only] Features supported by the network.
-  optional NetworkProfileNetworkFeatures features = 3 [json_name = "features"];
+  optional NetworkProfileNetworkFeatures features = 3 [json_name="features"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 4 [json_name = "id"];
+  optional string id = 4 [json_name="id"];
 
   // [Output Only] Type of the resource. Always compute#networkProfile for
   // network profiles.
-  optional string kind = 5 [json_name = "kind"];
+  optional string kind = 5 [json_name="kind"];
 
   // [Output Only] Location to which the network is restricted.
-  optional NetworkProfileLocation location = 6 [json_name = "location"];
+  optional NetworkProfileLocation location = 6 [json_name="location"];
 
   // [Output Only] Name of the resource.
-  optional string name = 7 [json_name = "name"];
+  optional string name = 7 [json_name="name"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 8 [json_name = "selfLink"];
+  optional string self_link = 8 [json_name="selfLink"];
 
   // [Output Only] Server-defined URL for this resource with the resource id.
-  optional string self_link_with_id = 9 [json_name = "selfLinkWithId"];
+  optional string self_link_with_id = 9 [json_name="selfLinkWithId"];
 }
 
 message NetworkProfileLocation {
-  optional string name = 1 [json_name = "name"];
+  optional string name = 1 [json_name="name"];
 
-  // REGION:
-  // ZONE:
-  optional string scope = 2 [json_name = "scope"];
+  // REGION: 
+  // ZONE: 
+  optional string scope = 2 [json_name="scope"];
 }
 
 message NetworkProfileNetworkFeatures {
   // Specifies what address purposes are supported. If empty, all address
   // purposes are supported.
-  repeated string address_purposes = 1 [json_name = "addressPurposes"];
+  repeated string address_purposes = 1 [json_name="addressPurposes"];
 
   // Specifies whether alias IP ranges (and secondary address ranges) are
   // allowed.
-  // ALIAS_IP_RANGES_ALLOWED:
-  // ALIAS_IP_RANGES_BLOCKED:
-  optional string allow_alias_ip_ranges = 2 [json_name = "allowAliasIpRanges"];
+  // ALIAS_IP_RANGES_ALLOWED: 
+  // ALIAS_IP_RANGES_BLOCKED: 
+  optional string allow_alias_ip_ranges = 2 [json_name="allowAliasIpRanges"];
 
   // Specifies whether auto mode subnet creation is allowed.
-  // AUTO_MODE_SUBNET_ALLOWED:
-  // AUTO_MODE_SUBNET_BLOCKED:
-  optional string allow_auto_mode_subnet = 3
-      [json_name = "allowAutoModeSubnet"];
+  // AUTO_MODE_SUBNET_ALLOWED: 
+  // AUTO_MODE_SUBNET_BLOCKED: 
+  optional string allow_auto_mode_subnet = 3 [json_name="allowAutoModeSubnet"];
 
   // Specifies whether firewalls for Class D address ranges are supported.
-  // CLASS_D_FIREWALLS_ALLOWED:
-  // CLASS_D_FIREWALLS_BLOCKED:
-  optional string allow_class_d_firewalls = 4
-      [json_name = "allowClassDFirewalls"];
+  // CLASS_D_FIREWALLS_ALLOWED: 
+  // CLASS_D_FIREWALLS_BLOCKED: 
+  optional string allow_class_d_firewalls = 4 [json_name="allowClassDFirewalls"];
 
   // Specifies whether cloud NAT creation is allowed.
-  // CLOUD_NAT_ALLOWED:
-  // CLOUD_NAT_BLOCKED:
-  optional string allow_cloud_nat = 5 [json_name = "allowCloudNat"];
+  // CLOUD_NAT_ALLOWED: 
+  // CLOUD_NAT_BLOCKED: 
+  optional string allow_cloud_nat = 5 [json_name="allowCloudNat"];
 
   // Specifies whether cloud router creation is allowed.
-  // CLOUD_ROUTER_ALLOWED:
-  // CLOUD_ROUTER_BLOCKED:
-  optional string allow_cloud_router = 6 [json_name = "allowCloudRouter"];
+  // CLOUD_ROUTER_ALLOWED: 
+  // CLOUD_ROUTER_BLOCKED: 
+  optional string allow_cloud_router = 6 [json_name="allowCloudRouter"];
 
   // Specifies whether default NIC attachment is allowed.
-  // DEFAULT_NIC_ATTACHMENT_ALLOWED:
-  // DEFAULT_NIC_ATTACHMENT_BLOCKED:
-  optional string allow_default_nic_attachment = 23
-      [json_name = "allowDefaultNicAttachment"];
+  // DEFAULT_NIC_ATTACHMENT_ALLOWED: 
+  // DEFAULT_NIC_ATTACHMENT_BLOCKED: 
+  optional string allow_default_nic_attachment = 23 [json_name="allowDefaultNicAttachment"];
 
   // Specifies whether VMs are allowed to have external IP access on network
   // interfaces connected to this VPC.
-  // EXTERNAL_IP_ACCESS_ALLOWED:
-  // EXTERNAL_IP_ACCESS_BLOCKED:
-  optional string allow_external_ip_access = 7
-      [json_name = "allowExternalIpAccess"];
+  // EXTERNAL_IP_ACCESS_ALLOWED: 
+  // EXTERNAL_IP_ACCESS_BLOCKED: 
+  optional string allow_external_ip_access = 7 [json_name="allowExternalIpAccess"];
 
   // Specifies whether Cloud Interconnect creation is allowed.
-  // INTERCONNECT_ALLOWED:
-  // INTERCONNECT_BLOCKED:
-  optional string allow_interconnect = 8 [json_name = "allowInterconnect"];
+  // INTERCONNECT_ALLOWED: 
+  // INTERCONNECT_BLOCKED: 
+  optional string allow_interconnect = 8 [json_name="allowInterconnect"];
 
   // Specifies whether IP forwarding is allowed.
-  // IP_FORWARDING_ALLOWED:
-  // IP_FORWARDING_BLOCKED:
-  optional string allow_ip_forwarding = 24 [json_name = "allowIpForwarding"];
+  // IP_FORWARDING_ALLOWED: 
+  // IP_FORWARDING_BLOCKED: 
+  optional string allow_ip_forwarding = 24 [json_name="allowIpForwarding"];
 
   // Specifies whether cloud load balancing is allowed.
-  // LOAD_BALANCING_ALLOWED:
-  // LOAD_BALANCING_BLOCKED:
-  optional string allow_load_balancing = 9 [json_name = "allowLoadBalancing"];
+  // LOAD_BALANCING_ALLOWED: 
+  // LOAD_BALANCING_BLOCKED: 
+  optional string allow_load_balancing = 9 [json_name="allowLoadBalancing"];
 
   // Specifies whether multi-nic in the same network is allowed.
-  // MULTI_NIC_IN_SAME_NETWORK_ALLOWED:
-  // MULTI_NIC_IN_SAME_NETWORK_BLOCKED:
-  optional string allow_multi_nic_in_same_network = 10
-      [json_name = "allowMultiNicInSameNetwork"];
+  // MULTI_NIC_IN_SAME_NETWORK_ALLOWED: 
+  // MULTI_NIC_IN_SAME_NETWORK_BLOCKED: 
+  optional string allow_multi_nic_in_same_network = 10 [json_name="allowMultiNicInSameNetwork"];
 
   // Specifies whether NCC is allowed.
-  // NCC_ALLOWED:
-  // NCC_BLOCKED:
-  optional string allow_ncc = 25 [json_name = "allowNcc"];
+  // NCC_ALLOWED: 
+  // NCC_BLOCKED: 
+  optional string allow_ncc = 25 [json_name="allowNcc"];
 
   // Specifies whether VM network migration is allowed.
-  // NETWORK_MIGRATION_ALLOWED:
-  // NETWORK_MIGRATION_BLOCKED:
-  optional string allow_network_migration = 26
-      [json_name = "allowNetworkMigration"];
+  // NETWORK_MIGRATION_ALLOWED: 
+  // NETWORK_MIGRATION_BLOCKED: 
+  optional string allow_network_migration = 26 [json_name="allowNetworkMigration"];
 
   // Specifies whether Packet Mirroring 1.0 is supported.
-  // PACKET_MIRRORING_ALLOWED:
-  // PACKET_MIRRORING_BLOCKED:
-  optional string allow_packet_mirroring = 11
-      [json_name = "allowPacketMirroring"];
+  // PACKET_MIRRORING_ALLOWED: 
+  // PACKET_MIRRORING_BLOCKED: 
+  optional string allow_packet_mirroring = 11 [json_name="allowPacketMirroring"];
 
   // Specifies whether private Google access is allowed.
-  // PRIVATE_GOOGLE_ACCESS_ALLOWED:
-  // PRIVATE_GOOGLE_ACCESS_BLOCKED:
-  optional string allow_private_google_access = 12
-      [json_name = "allowPrivateGoogleAccess"];
+  // PRIVATE_GOOGLE_ACCESS_ALLOWED: 
+  // PRIVATE_GOOGLE_ACCESS_BLOCKED: 
+  optional string allow_private_google_access = 12 [json_name="allowPrivateGoogleAccess"];
 
   // Specifies whether PSC creation is allowed.
-  // PSC_ALLOWED:
-  // PSC_BLOCKED:
-  optional string allow_psc = 13 [json_name = "allowPsc"];
+  // PSC_ALLOWED: 
+  // PSC_BLOCKED: 
+  optional string allow_psc = 13 [json_name="allowPsc"];
 
   // Specifies whether unicast within the same network is allowed.
-  // SAME_NETWORK_UNICAST_ALLOWED:
-  // SAME_NETWORK_UNICAST_BLOCKED:
-  optional string allow_same_network_unicast = 14
-      [json_name = "allowSameNetworkUnicast"];
+  // SAME_NETWORK_UNICAST_ALLOWED: 
+  // SAME_NETWORK_UNICAST_BLOCKED: 
+  optional string allow_same_network_unicast = 14 [json_name="allowSameNetworkUnicast"];
 
   // Specifies whether static route creation is allowed.
-  // STATIC_ROUTES_ALLOWED:
-  // STATIC_ROUTES_BLOCKED:
-  optional string allow_static_routes = 15 [json_name = "allowStaticRoutes"];
+  // STATIC_ROUTES_ALLOWED: 
+  // STATIC_ROUTES_BLOCKED: 
+  optional string allow_static_routes = 15 [json_name="allowStaticRoutes"];
 
   // Specifies whether sub interfaces are allowed.
-  // SUBINTERFACES_ALLOWED:
-  // SUBINTERFACES_BLOCKED:
-  optional string allow_sub_interfaces = 16 [json_name = "allowSubInterfaces"];
+  // SUBINTERFACES_ALLOWED: 
+  // SUBINTERFACES_BLOCKED: 
+  optional string allow_sub_interfaces = 16 [json_name="allowSubInterfaces"];
 
   // Specifies whether VPC peering is allowed.
-  // VPC_PEERING_ALLOWED:
-  // VPC_PEERING_BLOCKED:
-  optional string allow_vpc_peering = 17 [json_name = "allowVpcPeering"];
+  // VPC_PEERING_ALLOWED: 
+  // VPC_PEERING_BLOCKED: 
+  optional string allow_vpc_peering = 17 [json_name="allowVpcPeering"];
 
   // Specifies whether VPN creation is allowed.
-  // VPN_ALLOWED:
-  // VPN_BLOCKED:
-  optional string allow_vpn = 18 [json_name = "allowVpn"];
+  // VPN_ALLOWED: 
+  // VPN_BLOCKED: 
+  optional string allow_vpn = 18 [json_name="allowVpn"];
 
   // If set, limits the interface types that the network supports. If empty, all
   // interface types are supported.
-  repeated string interface_types = 19 [json_name = "interfaceTypes"];
+  repeated string interface_types = 19 [json_name="interfaceTypes"];
 
   // Specifies which subnetwork purposes are supported.
-  repeated string subnet_purposes = 20 [json_name = "subnetPurposes"];
+  repeated string subnet_purposes = 20 [json_name="subnetPurposes"];
 
   // Specifies which subnetwork stack types are supported.
-  repeated string subnet_stack_types = 21 [json_name = "subnetStackTypes"];
+  repeated string subnet_stack_types = 21 [json_name="subnetStackTypes"];
 
   // Specifies which subnetwork purposes are supported.
-  repeated string subnetwork_purposes = 27 [json_name = "subnetworkPurposes"];
+  repeated string subnetwork_purposes = 27 [json_name="subnetworkPurposes"];
 
   // Specifies which subnetwork stack types are supported.
-  repeated string subnetwork_stack_types = 28
-      [json_name = "subnetworkStackTypes"];
+  repeated string subnetwork_stack_types = 28 [json_name="subnetworkStackTypes"];
 
   // Specifies which type of unicast is supported.
-  // UNICAST_SDN:
-  // UNICAST_ULL:
-  optional string unicast = 22 [json_name = "unicast"];
+  // UNICAST_SDN: 
+  // UNICAST_ULL: 
+  optional string unicast = 22 [json_name="unicast"];
 }
 
 // Contains a list of network profiles.
 message NetworkProfilesListResponse {
-  optional string etag = 1 [json_name = "etag"];
+  optional string etag = 1 [json_name="etag"];
 
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 2 [json_name = "id"];
+  optional string id = 2 [json_name="id"];
 
   // A list of NetworkProfile resources.
-  repeated NetworkProfile items = 3 [json_name = "items"];
+  repeated NetworkProfile items = 3 [json_name="items"];
 
   // [Output Only] Type of resource. Always compute#networkProfileList for
   // network profiles.
-  optional string kind = 4 [json_name = "kind"];
+  optional string kind = 4 [json_name="kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 5 [json_name = "nextPageToken"];
+  optional string next_page_token = 5 [json_name="nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 6 [json_name = "selfLink"];
+  optional string self_link = 6 [json_name="selfLink"];
 
   // [Output Only] Unreachable resources. end_interface:
   // MixerListResponseWithEtagBuilder
-  repeated string unreachables = 7 [json_name = "unreachables"];
+  repeated string unreachables = 7 [json_name="unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -293,7 +283,7 @@ message NetworkProfilesListResponse {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1 [json_name = "code"];
+    optional string code = 1 [json_name="code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -303,20 +293,20 @@ message NetworkProfilesListResponse {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1 [json_name = "key"];
+      optional string key = 1 [json_name="key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2 [json_name = "value"];
+      optional string value = 2 [json_name="value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2 [json_name = "data"];
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    repeated DataItem data = 2 [json_name="data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3 [json_name = "message"];
+    optional string message = 3 [json_name="message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 8 [json_name = "warning"];
+  optional Warning warning = 8 [json_name="warning"];
 }
