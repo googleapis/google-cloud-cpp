@@ -85,11 +85,10 @@ class AsyncWriterConnectionImpl : public storage::AsyncWriterConnection {
 
   future<Status> OnPartialUpload(std::size_t upload_size,
                                  StatusOr<bool> success);
+  future<Status> OnFlush(std::size_t upload_size, StatusOr<bool> success);
   future<Status> OnClose(std::size_t upload_size, StatusOr<bool> success);
   future<StatusOr<google::storage::v2::Object>> OnFinalUpload(
       std::size_t upload_size, StatusOr<bool> success);
-  future<StatusOr<std::int64_t>> OnQuery(
-      std::optional<google::storage::v2::BidiWriteObjectResponse> response);
   future<Status> Finish();
 
   google::cloud::internal::ImmutableOptions options_;
