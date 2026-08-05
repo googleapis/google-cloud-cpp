@@ -18,6 +18,7 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
 #include <string>
@@ -49,8 +50,8 @@ struct PrecomputedChecksums {
   std::string md5;
 };
 
-struct MD5HashValue
-    : public internal::ComplexOption<MD5HashValue, std::string> {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
+    MD5HashValue : public internal::ComplexOption<MD5HashValue, std::string> {
   using ComplexOption<MD5HashValue, std::string>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
@@ -87,9 +88,9 @@ inline std::string ComputeMD5Hash(char const* payload) {
  * @deprecated Use `UploadChecksumValidationOption` and
  * `DownloadChecksumValidationOption` instead.
  */
-struct [[deprecated(
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
     "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")]] DisableMD5Hash
+    "instead") DisableMD5Hash
     : public internal::ComplexOption<DisableMD5Hash, bool> {
   using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
@@ -118,7 +119,8 @@ inline DisableMD5Hash EnableMD5Hash() { return DisableMD5Hash(false); }
  * @see
  * https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s01-hochschild.pdf
  */
-struct Crc32cChecksumValue
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
+    Crc32cChecksumValue
     : public internal::ComplexOption<Crc32cChecksumValue, std::string> {
   using ComplexOption<Crc32cChecksumValue, std::string>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
@@ -157,9 +159,9 @@ inline std::string ComputeCrc32cChecksum(char const* payload) {
  * @deprecated Use `UploadChecksumValidationOption` and
  * `DownloadChecksumValidationOption` instead.
  */
-struct [[deprecated(
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
     "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")]] DisableCrc32cChecksum
+    "instead") DisableCrc32cChecksum
     : public internal::ComplexOption<DisableCrc32cChecksum, bool> {
   using ComplexOption<DisableCrc32cChecksum, bool>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
