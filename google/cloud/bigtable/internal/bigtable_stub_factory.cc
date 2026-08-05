@@ -64,8 +64,8 @@ std::string CreateFeaturesMetadata(bool is_direct_path) {
   return internal::UrlsafeBase64EncodeWithPadding(proto.SerializeAsString());
 }
 
-std::string FeaturesMetadata() {
-  if (bigtable::internal::IsDirectPath()) {
+std::string const& FeaturesMetadata(Options const& options) {
+  if (bigtable::internal::IsDirectPath(options)) {
     static auto const* const kDirectPathFeatures =
         new std::string(CreateFeaturesMetadata(true));
     return *kDirectPathFeatures;
@@ -84,7 +84,7 @@ std::shared_ptr<BigtableStub> ApplyCommonDecorators(
   stub = std::make_shared<BigtableMetadata>(
       std::move(stub),
       std::multimap<std::string, std::string>{
-          {"bigtable-features", FeaturesMetadata()}},
+          {"bigtable-features", FeaturesMetadata(options)}},
       internal::HandCraftedLibClientHeader());
   if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

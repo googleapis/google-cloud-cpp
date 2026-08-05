@@ -2490,6 +2490,99 @@ TEST(ObjectDescriptorImpl, PrewarmedCacheMiss) {
   next.first.set_value(true);
 }
 
+TEST(ObjectDescriptorImpl, PrewarmedPacingEviction) {
+  auto constexpr kResponse0 = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-12345" }
+  )pb";
+
+  auto constexpr kResponse1 = R"pb(
+    read_handle { handle: "handle-23456" }
+    object_data_ranges {
+      range_end: false
+      read_range { read_id: 1 read_offset: 0 }
+      checksummed_data { content: "123456" }
+    }
+  )pb";
+
+  auto constexpr kExpectedRequest = R"pb(
+    read_ranges { read_id: 2 read_offset: 0 read_length: 10 }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        auto expected = Request{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      });
+
+  EXPECT_CALL(*stream, Read)
+      .WillOnce([=, &sequencer]() {
+        return sequencer.PushBack("Read[1]").then([&](auto) {
+          auto response = Response{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
+          return absl::make_optional(response);
+        });
+      })
+      .WillOnce([&sequencer]() {
+        return sequencer.PushBack("Read[2]").then(
+            [](auto) { return absl::optional<Response>{}; });
+      });
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then(
+        [](auto) { return PermanentError(); });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([](Request const&) {
+    return make_ready_future(StatusOr<OpenStreamResult>(PermanentError()));
+  });
+
+  Options options;
+  options.set<storage::EnableMultiStreamOptimizationOption>(true);
+  options.set<ReadRangesOption>({{0, 10}});
+  options.set<PreWarmBufferLimitOption>(5);
+
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(),
+      google::storage::v2::BidiReadObjectSpec{},
+      std::make_shared<OpenStream>(std::move(stream)), options);
+
+  auto response = Response{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
+  tested->Start(std::move(response));
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+  read1.first.set_value(true);
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read[2]");
+
+  auto s1 = tested->Read({0, 10});
+  ASSERT_THAT(s1, NotNull());
+
+  auto write_next = sequencer.PopFrontWithName();
+  EXPECT_EQ(write_next.second, "Write[1]");
+  write_next.first.set_value(true);
+
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
