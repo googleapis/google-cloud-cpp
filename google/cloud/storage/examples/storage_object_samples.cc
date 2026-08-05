@@ -20,6 +20,7 @@
 #include <iostream>
 #include <iterator>
 #include <map>
+#include <memory>
 #include <random>
 #include <stdexcept>
 #include <string>
@@ -180,7 +181,7 @@ void InsertObjectWithBadChecksum(google::cloud::storage::Client client,
             .set<gcs::PrecomputedChecksumsOption>(
                 gcs::PrecomputedChecksums{"bad_crc32c"})
             .set<gcs::RetryPolicyOption>(
-                gcs::LimitedErrorCountRetryPolicy(2).clone()));
+                std::make_shared<gcs::LimitedErrorCountRetryPolicy>(2)));
 
     if (!object_metadata) {
       std::cout << "The object was not created because the checksum was bad. "
