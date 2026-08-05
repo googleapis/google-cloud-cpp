@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_row_reader.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
@@ -115,7 +116,8 @@ class MockMetric : public Metric {
                ElementDeliveryParams const&),
               (override));
   MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (ResourceLabels resource_labels, DataLabels data_labels),
+              (TableResourceLabels const& resource_labels,
+               TableDataLabels const& data_labels),
               (const, override));
 };
 
@@ -124,7 +126,8 @@ class CloningMetric : public Metric {
  public:
   explicit CloningMetric(std::unique_ptr<MockMetric> metric)
       : metric_(std::move(metric)) {}
-  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
+  std::unique_ptr<Metric> clone(TableResourceLabels const&,
+                                TableDataLabels const&) const override {
     return std::move(metric_);
   }
 
@@ -160,7 +163,8 @@ TEST_F(AsyncRowReaderTest, Success) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -259,7 +263,8 @@ TEST_F(AsyncRowReaderTest, SuccessDelayedFuture) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -352,7 +357,8 @@ TEST_F(AsyncRowReaderTest, ResponseInMultipleChunks) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -425,7 +431,8 @@ TEST_F(AsyncRowReaderTest, ParserEofFailsOnUnfinishedRow) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -497,7 +504,8 @@ TEST_F(AsyncRowReaderTest, ParserEofDoesntFailOnUnfinishedRowIfRowLimit) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -575,7 +583,8 @@ TEST_F(AsyncRowReaderTest, PermanentFailure) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -648,7 +657,8 @@ TEST_F(AsyncRowReaderTest, RetryPolicyExhausted) {
   EXPECT_CALL(*mock, AsyncReadRows)
       .Times(kNumRetries + 1)
       .WillRepeatedly([this](Unused, auto context, Unused,
-                             v2::ReadRowsRequest const& request) {
+                             v2::ReadRowsRequest const& request,
+                             bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -698,21 +708,22 @@ TEST_F(AsyncRowReaderTest, RetryInfoHeeded) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce(
-          [this](Unused, auto context, Unused, v2::ReadRowsRequest const&) {
-            metadata_fixture_.SetServerMetadata(*context, {});
-            auto stream = std::make_unique<MockAsyncReadRowsStream>();
-            EXPECT_CALL(*stream, Start)
-                .WillOnce(Return(ByMove(make_ready_future(false))));
-            EXPECT_CALL(*stream, Finish).WillOnce([] {
-              auto status = internal::PermissionDeniedError("try again");
-              internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
-              return make_ready_future(status);
-            });
-            return stream;
-          })
+      .WillOnce([this](Unused, auto context, Unused, v2::ReadRowsRequest const&,
+                       bigtable_internal::OperationContext&) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(false))));
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          auto status = internal::PermissionDeniedError("try again");
+          internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+          return make_ready_future(status);
+        });
+        return stream;
+      })
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const&) {
+                       v2::ReadRowsRequest const&,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         auto stream = std::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start)
@@ -749,19 +760,19 @@ TEST_F(AsyncRowReaderTest, RetryInfoIgnored) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce(
-          [this](Unused, auto context, Unused, v2::ReadRowsRequest const&) {
-            metadata_fixture_.SetServerMetadata(*context, {});
-            auto stream = std::make_unique<MockAsyncReadRowsStream>();
-            EXPECT_CALL(*stream, Start)
-                .WillOnce(Return(ByMove(make_ready_future(false))));
-            EXPECT_CALL(*stream, Finish).WillOnce([] {
-              auto status = internal::PermissionDeniedError("try again");
-              internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
-              return make_ready_future(status);
-            });
-            return stream;
-          });
+      .WillOnce([this](Unused, auto context, Unused, v2::ReadRowsRequest const&,
+                       bigtable_internal::OperationContext&) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(false))));
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          auto status = internal::PermissionDeniedError("try again");
+          internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+          return make_ready_future(status);
+        });
+        return stream;
+      });
 
   MockFunction<future<bool>(bigtable::Row const&)> on_row;
   EXPECT_CALL(on_row, Call).Times(0);
@@ -813,7 +824,8 @@ TEST_F(AsyncRowReaderTest, RetrySkipsReadRows) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -834,7 +846,8 @@ TEST_F(AsyncRowReaderTest, RetrySkipsReadRows) {
         return stream;
       })
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -895,7 +908,8 @@ TEST_F(AsyncRowReaderTest, NoRetryIfRowSetIsEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -957,7 +971,8 @@ TEST_F(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -984,7 +999,8 @@ TEST_F(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
         return stream;
       })
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1045,7 +1061,8 @@ TEST_F(AsyncRowReaderTest, ParserFailsOnOutOfOrderRowKeys) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1110,7 +1127,8 @@ TEST_P(AsyncRowReaderExceptionTest, CancelMidStream) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1216,7 +1234,8 @@ TEST_F(AsyncRowReaderTest, CancelAfterStreamFinish) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1290,7 +1309,8 @@ TEST_F(AsyncRowReaderTest, DeepStack) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1358,7 +1378,8 @@ TEST_F(AsyncRowReaderTest, TimerErrorEndsLoop) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1422,7 +1443,8 @@ TEST_F(AsyncRowReaderTest, CurrentOptionsContinuedOnRetries) {
   EXPECT_CALL(*mock, AsyncReadRows)
       .Times(2)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::ReadRowsRequest const&) {
+                             v2::ReadRowsRequest const&,
+                             bigtable_internal::OperationContext&) {
         EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncReadRowsStream>();
@@ -1474,7 +1496,8 @@ TEST_F(AsyncRowReaderTest, ReverseScanSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_TRUE(request.reversed());
         auto stream = std::make_unique<MockAsyncReadRowsStream>();
@@ -1533,7 +1556,8 @@ TEST_F(AsyncRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_TRUE(request.reversed());
         auto stream = std::make_unique<MockAsyncReadRowsStream>();
@@ -1593,7 +1617,8 @@ TEST_F(AsyncRowReaderTest, ReverseScanResumption) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .WillOnce([this](Unused, auto context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_TRUE(request.reversed());
         // The initial row set contains three rows: "r1", "r2", and "r3".
@@ -1619,7 +1644,8 @@ TEST_F(AsyncRowReaderTest, ReverseScanResumption) {
         return stream;
       })
       .WillOnce([this](Unused, auto client_context, Unused,
-                       v2::ReadRowsRequest const& request) {
+                       v2::ReadRowsRequest const& request,
+                       bigtable_internal::OperationContext&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1682,36 +1708,36 @@ TEST_F(AsyncRowReaderTest, BigtableCookie) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce(
-          [this](Unused, auto context, Unused, v2::ReadRowsRequest const&) {
-            // Return a bigtable cookie in the first request.
-            metadata_fixture_.SetServerMetadata(
-                *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
-            auto stream = std::make_unique<MockAsyncReadRowsStream>();
-            EXPECT_CALL(*stream, Start).WillOnce([] {
-              return make_ready_future(false);
-            });
-            EXPECT_CALL(*stream, Finish).WillOnce([] {
-              return make_ready_future(TransientError());
-            });
-            return stream;
-          })
-      .WillOnce(
-          [this](Unused, auto context, Unused, v2::ReadRowsRequest const&) {
-            // Verify that the next request includes the bigtable cookie from
-            // above.
-            auto headers = metadata_fixture_.GetMetadata(*context);
-            EXPECT_THAT(headers,
-                        Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
-            auto stream = std::make_unique<MockAsyncReadRowsStream>();
-            EXPECT_CALL(*stream, Start).WillOnce([] {
-              return make_ready_future(false);
-            });
-            EXPECT_CALL(*stream, Finish).WillOnce([] {
-              return make_ready_future(internal::PermissionDeniedError("fail"));
-            });
-            return stream;
-          });
+      .WillOnce([this](Unused, auto context, Unused, v2::ReadRowsRequest const&,
+                       bigtable_internal::OperationContext&) {
+        // Return a bigtable cookie in the first request.
+        metadata_fixture_.SetServerMetadata(
+            *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(TransientError());
+        });
+        return stream;
+      })
+      .WillOnce([this](Unused, auto context, Unused, v2::ReadRowsRequest const&,
+                       bigtable_internal::OperationContext&) {
+        // Verify that the next request includes the bigtable cookie from
+        // above.
+        auto headers = metadata_fixture_.GetMetadata(*context);
+        EXPECT_THAT(headers,
+                    Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([] {
+          return make_ready_future(false);
+        });
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          return make_ready_future(internal::PermissionDeniedError("fail"));
+        });
+        return stream;
+      });
 
   MockFunction<future<bool>(bigtable::Row const&)> on_row;
   EXPECT_CALL(on_row, Call).Times(0);
@@ -1747,7 +1773,7 @@ TEST_F(AsyncRowReaderTest, TracedBackoff) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this](auto&, auto context, auto, auto const&) {
+      .WillRepeatedly([this](auto&, auto context, auto, auto const&, auto&) {
         metadata_fixture_.SetServerMetadata(*context);
         return std::make_unique<ErrorStream>(TransientError());
       });
@@ -1784,11 +1810,12 @@ TEST_F(AsyncRowReaderTest, CallSpanActiveThroughout) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this, span](auto&, auto context, auto, auto const&) {
-        metadata_fixture_.SetServerMetadata(*context);
-        EXPECT_THAT(span, IsActive());
-        return std::make_unique<ErrorStream>(TransientError());
-      });
+      .WillRepeatedly(
+          [this, span](auto&, auto context, auto, auto const&, auto&) {
+            metadata_fixture_.SetServerMetadata(*context);
+            EXPECT_THAT(span, IsActive());
+            return std::make_unique<ErrorStream>(TransientError());
+          });
 
   promise<void> p;
   internal::AutomaticallyCreatedBackgroundThreads background;

@@ -197,23 +197,11 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
       std::move(provider));
 }
 
-MonitoredResourceResult MakeMonitoredResource(
-    opentelemetry::sdk::metrics::PointDataAttributes const& pda,
-    opentelemetry::sdk::resource::Resource const& detected_resource,
-    Options const& options, std::string const& client_uid) {
+ClientResourceLabels MakeClientResourceLabels(
+    std::string project_id, std::string instance, std::string app_profile,
+    Options const& options, std::string const& client_uid,
+    opentelemetry::sdk::resource::Resource const& detected_resource) {
   namespace sc = ::opentelemetry::semconv;
-  google::api::MonitoredResource resource;
-  resource.set_type("bigtable.googleapis.com/Client");
-  auto& labels = *resource.mutable_labels();
-  auto const& attributes = pda.attributes.GetAttributes();
-  auto get_attr = [&](std::string const& key) {
-    auto it = attributes.find(key);
-    if (it == attributes.end() ||
-        !opentelemetry::nostd::holds_alternative<std::string>(it->second)) {
-      return std::string{};
-    }
-    return opentelemetry::nostd::get<std::string>(it->second);
-  };
   auto const& detected_attributes = detected_resource.GetAttributes();
   auto by_name = [&](std::string const& name, std::string default_value = {}) {
     auto const l = detected_attributes.find(name);
@@ -224,10 +212,6 @@ MonitoredResourceResult MakeMonitoredResource(
     return opentelemetry::nostd::get<std::string>(l->second);
   };
 
-  auto project_id = get_attr("project_id");
-  // Fall back to resolving the project ID from `InstanceChannelAffinityOption`
-  // if the static `ProjectIdOption` is not set on the client (which is common
-  // in client configurations with instance routing / channel affinity).
   if (project_id.empty() &&
       options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
     auto const& instances =
@@ -240,29 +224,65 @@ MonitoredResourceResult MakeMonitoredResource(
     project_id = by_name(sc::cloud::kCloudAccountId);
   }
 
-  labels["project_id"] = project_id;
-  labels["instance"] = get_attr("instance");
-  labels["app_profile"] = options.get<bigtable::AppProfileIdOption>();
-  labels["client_name"] = "cpp.Bigtable/" + bigtable::version_string();
-  labels["uuid"] = client_uid;
-
   auto client_project = by_name(sc::cloud::kCloudAccountId);
   if (client_project.empty()) {
     client_project = project_id;
   }
-  if (!client_project.empty()) {
-    labels["client_project"] = client_project;
+
+  ClientResourceLabels labels;
+  labels.project_id = std::move(project_id);
+  labels.instance = std::move(instance);
+  labels.app_profile = std::move(app_profile);
+  labels.client_name = "cpp.Bigtable/" + bigtable::version_string();
+  labels.client_uid = client_uid;
+  labels.client_project = std::move(client_project);
+  labels.location = by_name(sc::cloud::kCloudAvailabilityZone,
+                            by_name(sc::cloud::kCloudRegion, "global"));
+  labels.cloud_platform = by_name(sc::cloud::kCloudPlatform, "unknown");
+  labels.host_id = by_name("faas.id", by_name(sc::host::kHostId, "unknown"));
+  labels.hostname = by_name(sc::host::kHostName);
+  return labels;
+}
+
+MonitoredResourceResult MakeMonitoredResource(
+    opentelemetry::sdk::metrics::PointDataAttributes const& pda,
+    opentelemetry::sdk::resource::Resource const& detected_resource,
+    Options const& options, std::string const& client_uid) {
+  google::api::MonitoredResource resource;
+  resource.set_type("bigtable.googleapis.com/Client");
+  auto const& attributes = pda.attributes.GetAttributes();
+  auto get_attr = [&](std::string const& key) {
+    auto it = attributes.find(key);
+    if (it == attributes.end() ||
+        !opentelemetry::nostd::holds_alternative<std::string>(it->second)) {
+      return std::string{};
+    }
+    return opentelemetry::nostd::get<std::string>(it->second);
+  };
+  auto project_id = get_attr("project_id");
+  auto instance = get_attr("instance");
+  auto app_profile = options.get<bigtable::AppProfileIdOption>();
+  auto labels = MakeClientResourceLabels(
+      std::move(project_id), std::move(instance), std::move(app_profile),
+      options, client_uid, detected_resource);
+
+  auto& m = *resource.mutable_labels();
+  m["project_id"] = labels.project_id;
+  m["instance"] = labels.instance;
+  m["app_profile"] = labels.app_profile;
+  m["client_name"] = labels.client_name;
+  m["uuid"] = labels.client_uid;
+  if (!labels.client_project.empty()) {
+    m["client_project"] = labels.client_project;
   }
-  labels["location"] = by_name(sc::cloud::kCloudAvailabilityZone,
-                               by_name(sc::cloud::kCloudRegion, "global"));
-  labels["cloud_platform"] = by_name(sc::cloud::kCloudPlatform, "unknown");
-  labels["host_id"] = by_name("faas.id", by_name(sc::host::kHostId, "unknown"));
-  auto hostname = by_name(sc::host::kHostName);
-  if (!hostname.empty()) {
-    labels["hostname"] = hostname;
+  m["location"] = labels.location;
+  m["cloud_platform"] = labels.cloud_platform;
+  m["host_id"] = labels.host_id;
+  if (!labels.hostname.empty()) {
+    m["hostname"] = labels.hostname;
   }
 
-  return MonitoredResourceResult{std::move(project_id), std::move(resource)};
+  return MonitoredResourceResult{labels.project_id, std::move(resource)};
 }
 
 void EnableGrpcMetrics(

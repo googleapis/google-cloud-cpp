@@ -40,99 +40,109 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableAuth::ReadRows(std::shared_ptr<grpc::ClientContext> context,
                        Options const& options,
-                       google::bigtable::v2::ReadRowsRequest const& request) {
+                       google::bigtable::v2::ReadRowsRequest const& request,
+                       OperationContext& oc) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::bigtable::v2::ReadRowsResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->ReadRows(std::move(context), options, request);
+  return child_->ReadRows(std::move(context), options, request, oc);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::SampleRowKeysResponse>>
 BigtableAuth::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::bigtable::v2::SampleRowKeysRequest const& request) {
+    google::bigtable::v2::SampleRowKeysRequest const& request,
+    OperationContext& oc) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::bigtable::v2::SampleRowKeysResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->SampleRowKeys(std::move(context), options, request);
+  return child_->SampleRowKeys(std::move(context), options, request, oc);
 }
 
 StatusOr<google::bigtable::v2::MutateRowResponse> BigtableAuth::MutateRow(
     grpc::ClientContext& context, Options const& options,
-    google::bigtable::v2::MutateRowRequest const& request) {
+    google::bigtable::v2::MutateRowRequest const& request,
+    OperationContext& oc) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->MutateRow(context, options, request);
+  return child_->MutateRow(context, options, request, oc);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::MutateRowsResponse>>
-BigtableAuth::MutateRows(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::bigtable::v2::MutateRowsRequest const& request) {
+BigtableAuth::MutateRows(std::shared_ptr<grpc::ClientContext> context,
+                         Options const& options,
+                         google::bigtable::v2::MutateRowsRequest const& request,
+                         OperationContext& oc) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::bigtable::v2::MutateRowsResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->MutateRows(std::move(context), options, request);
+  return child_->MutateRows(std::move(context), options, request, oc);
 }
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableAuth::CheckAndMutateRow(
     grpc::ClientContext& context, Options const& options,
-    google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+    google::bigtable::v2::CheckAndMutateRowRequest const& request,
+    OperationContext& oc) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CheckAndMutateRow(context, options, request);
+  return child_->CheckAndMutateRow(context, options, request, oc);
 }
 
 StatusOr<google::bigtable::v2::PingAndWarmResponse> BigtableAuth::PingAndWarm(
     grpc::ClientContext& context, Options const& options,
-    google::bigtable::v2::PingAndWarmRequest const& request) {
+    google::bigtable::v2::PingAndWarmRequest const& request,
+    OperationContext& oc) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PingAndWarm(context, options, request);
+  return child_->PingAndWarm(context, options, request, oc);
 }
 
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableAuth::ReadModifyWriteRow(
     grpc::ClientContext& context, Options const& options,
-    google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+    OperationContext& oc) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReadModifyWriteRow(context, options, request);
+  return child_->ReadModifyWriteRow(context, options, request, oc);
 }
 
 StatusOr<google::bigtable::v2::PrepareQueryResponse> BigtableAuth::PrepareQuery(
     grpc::ClientContext& context, Options const& options,
-    google::bigtable::v2::PrepareQueryRequest const& request) {
+    google::bigtable::v2::PrepareQueryRequest const& request,
+    OperationContext& oc) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PrepareQuery(context, options, request);
+  return child_->PrepareQuery(context, options, request, oc);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ExecuteQueryResponse>>
 BigtableAuth::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::bigtable::v2::ExecuteQueryRequest const& request) {
+    google::bigtable::v2::ExecuteQueryRequest const& request,
+    OperationContext& oc) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::bigtable::v2::ExecuteQueryResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->ExecuteQuery(std::move(context), options, request);
+  return child_->ExecuteQuery(std::move(context), options, request, oc);
 }
 
 StatusOr<google::bigtable::v2::ClientConfiguration>
 BigtableAuth::GetClientConfiguration(
     grpc::ClientContext& context, Options const& options,
-    google::bigtable::v2::GetClientConfigurationRequest const& request) {
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    OperationContext& oc) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetClientConfiguration(context, options, request);
+  return child_->GetClientConfiguration(context, options, request, oc);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -198,14 +208,15 @@ BigtableAuth::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::ReadRowsRequest const& request) {
+    google::bigtable::v2::ReadRowsRequest const& request,
+    OperationContext& oc) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::bigtable::v2::ReadRowsResponse>;
 
   auto& child = child_;
-  auto call = [child, cq, opts = std::move(options),
-               request](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncReadRows(cq, std::move(ctx), opts, request);
+  auto call = [child, cq, opts = std::move(options), request,
+               &oc](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncReadRows(cq, std::move(ctx), opts, request, oc);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
@@ -217,14 +228,15 @@ BigtableAuth::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::SampleRowKeysRequest const& request) {
+    google::bigtable::v2::SampleRowKeysRequest const& request,
+    OperationContext& oc) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::bigtable::v2::SampleRowKeysResponse>;
 
   auto& child = child_;
-  auto call = [child, cq, opts = std::move(options),
-               request](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncSampleRowKeys(cq, std::move(ctx), opts, request);
+  auto call = [child, cq, opts = std::move(options), request,
+               &oc](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncSampleRowKeys(cq, std::move(ctx), opts, request, oc);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
@@ -235,11 +247,12 @@ BigtableAuth::AsyncMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::MutateRowRequest const& request) {
+    google::bigtable::v2::MutateRowRequest const& request,
+    OperationContext& oc) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+      .then([cq, child = child_, options = std::move(options), request,
+             &oc](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                      f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(
@@ -247,7 +260,7 @@ BigtableAuth::AsyncMutateRow(
                   std::move(context).status()));
         }
         return child->AsyncMutateRow(cq, *std::move(context),
-                                     std::move(options), request);
+                                     std::move(options), request, oc);
       });
 }
 
@@ -257,14 +270,15 @@ BigtableAuth::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::MutateRowsRequest const& request) {
+    google::bigtable::v2::MutateRowsRequest const& request,
+    OperationContext& oc) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::bigtable::v2::MutateRowsResponse>;
 
   auto& child = child_;
-  auto call = [child, cq, opts = std::move(options),
-               request](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncMutateRows(cq, std::move(ctx), opts, request);
+  auto call = [child, cq, opts = std::move(options), request,
+               &oc](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncMutateRows(cq, std::move(ctx), opts, request, oc);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
@@ -275,11 +289,12 @@ BigtableAuth::AsyncCheckAndMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+    google::bigtable::v2::CheckAndMutateRowRequest const& request,
+    OperationContext& oc) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+      .then([cq, child = child_, options = std::move(options), request,
+             &oc](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                      f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(
@@ -287,7 +302,7 @@ BigtableAuth::AsyncCheckAndMutateRow(
                   std::move(context).status()));
         }
         return child->AsyncCheckAndMutateRow(cq, *std::move(context),
-                                             std::move(options), request);
+                                             std::move(options), request, oc);
       });
 }
 
@@ -296,11 +311,12 @@ BigtableAuth::AsyncPingAndWarm(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::PingAndWarmRequest const& request) {
+    google::bigtable::v2::PingAndWarmRequest const& request,
+    OperationContext& oc) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+      .then([cq, child = child_, options = std::move(options), request,
+             &oc](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                      f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(
@@ -308,7 +324,7 @@ BigtableAuth::AsyncPingAndWarm(
                   std::move(context).status()));
         }
         return child->AsyncPingAndWarm(cq, *std::move(context),
-                                       std::move(options), request);
+                                       std::move(options), request, oc);
       });
 }
 
@@ -317,11 +333,12 @@ BigtableAuth::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+    OperationContext& oc) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+      .then([cq, child = child_, options = std::move(options), request,
+             &oc](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                      f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(
@@ -329,7 +346,7 @@ BigtableAuth::AsyncReadModifyWriteRow(
                   std::move(context).status()));
         }
         return child->AsyncReadModifyWriteRow(cq, *std::move(context),
-                                              std::move(options), request);
+                                              std::move(options), request, oc);
       });
 }
 
@@ -338,11 +355,12 @@ BigtableAuth::AsyncPrepareQuery(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::PrepareQueryRequest const& request) {
+    google::bigtable::v2::PrepareQueryRequest const& request,
+    OperationContext& oc) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+      .then([cq, child = child_, options = std::move(options), request,
+             &oc](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                      f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(
@@ -350,7 +368,7 @@ BigtableAuth::AsyncPrepareQuery(
                   std::move(context).status()));
         }
         return child->AsyncPrepareQuery(cq, *std::move(context),
-                                        std::move(options), request);
+                                        std::move(options), request, oc);
       });
 }
 

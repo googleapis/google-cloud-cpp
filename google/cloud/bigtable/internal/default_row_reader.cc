@@ -68,7 +68,8 @@ void DefaultRowReader::MakeRequest() {
   internal::ConfigureContext(*client_context_, options);
   operation_context_->PreCall(*client_context_);
   called_post_call_ = false;
-  stream_ = stub_->ReadRows(client_context_, options, request);
+  stream_ =
+      stub_->ReadRows(client_context_, options, request, *operation_context_);
   stream_is_open_ = true;
 
   parser_ = bigtable::internal::ReadRowsParserFactory().Create(reverse_);

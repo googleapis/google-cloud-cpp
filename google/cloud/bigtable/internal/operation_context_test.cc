@@ -141,7 +141,8 @@ class MockMetric : public Metric {
                ElementDeliveryParams const&),
               (override));
   MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (ResourceLabels resource_labels, DataLabels data_labels),
+              (TableResourceLabels const& resource_labels,
+               TableDataLabels const& data_labels),
               (const, override));
 };
 
@@ -150,7 +151,8 @@ class CloningMetric : public Metric {
  public:
   explicit CloningMetric(std::unique_ptr<MockMetric> metric)
       : metric_(std::move(metric)) {}
-  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
+  std::unique_ptr<Metric> clone(TableResourceLabels const&,
+                                TableDataLabels const&) const override {
     return std::move(metric_);
   }
 

@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -147,8 +148,9 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
       grpc::ClientContext client_context;
       google::bigtable::v2::PingAndWarmRequest request;
       request.set_name(std::string{instance_name});
-      auto response =
-          stub->PingAndWarm(client_context, options, std::move(request));
+      OperationContext default_oc;
+      auto response = stub->PingAndWarm(client_context, options,
+                                        std::move(request), default_oc);
       if (!response.ok()) return response.status();
     }
 

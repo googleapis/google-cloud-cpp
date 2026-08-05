@@ -326,7 +326,7 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::MutateRowRequest const& request) {
         operation_context->PreCall(context);
-        auto s = stub->MutateRow(context, options, request);
+        auto s = stub->MutateRow(context, options, request, *operation_context);
         operation_context->PostCall(context, s.status());
         return s;
       },
@@ -369,7 +369,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
                  google::bigtable::v2::MutateRowRequest const& request) {
                operation_context->PreCall(*context);
                auto f = stub->AsyncMutateRow(cq, context, std::move(options),
-                                             request);
+                                             request, *operation_context);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -504,7 +504,8 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::CheckAndMutateRowRequest const& request) {
         operation_context->PreCall(context);
-        auto s = stub->CheckAndMutateRow(context, options, request);
+        auto s = stub->CheckAndMutateRow(context, options, request,
+                                         *operation_context);
         operation_context->PostCall(context, s.status());
         return s;
       },
@@ -553,8 +554,9 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
                  google::bigtable::v2::CheckAndMutateRowRequest const&
                      request) {
                operation_context->PreCall(*context);
-               auto f = stub->AsyncCheckAndMutateRow(
-                   cq, context, std::move(options), request);
+               auto f =
+                   stub->AsyncCheckAndMutateRow(cq, context, std::move(options),
+                                                request, *operation_context);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -594,7 +596,8 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
     auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
     operation_context->PreCall(*context);
-    auto stream = stub->SampleRowKeys(context, Options{}, request);
+    auto stream =
+        stub->SampleRowKeys(context, Options{}, request, *operation_context);
 
     std::optional<Status> status;
     while (true) {
@@ -656,7 +659,8 @@ StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
         operation_context->PreCall(context);
-        auto result = stub->ReadModifyWriteRow(context, options, request);
+        auto result = stub->ReadModifyWriteRow(context, options, request,
+                                               *operation_context);
         operation_context->PostCall(context, result.status());
         return result;
       },
@@ -686,7 +690,8 @@ future<StatusOr<bigtable::Row>> DataConnectionImpl::AsyncReadModifyWriteRow(
                      request) {
                operation_context->PreCall(*context);
                auto f = stub->AsyncReadModifyWriteRow(
-                   cq, context, std::move(options), request);
+                   cq, context, std::move(options), request,
+                   *operation_context);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -819,7 +824,8 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
           grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::PrepareQueryRequest const& request) {
         operation_context->PreCall(context);
-        auto const& result = stub->PrepareQuery(context, options, request);
+        auto const& result =
+            stub->PrepareQuery(context, options, request, *operation_context);
         operation_context->PostCall(context, result.status());
         return result;
       },
@@ -858,8 +864,9 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
                    google::cloud::internal::ImmutableOptions options,
                    google::bigtable::v2::PrepareQueryRequest const& request) {
                  operation_context->PreCall(*context);
-                 auto f = stub->AsyncPrepareQuery(cq, context,
-                                                  std::move(options), request);
+                 auto f =
+                     stub->AsyncPrepareQuery(cq, context, std::move(options),
+                                             request, *operation_context);
                  return f.then(
                      [operation_context, context = std::move(context)](auto f) {
                        auto s = f.get();
@@ -909,7 +916,7 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                  google::bigtable::v2::PrepareQueryRequest const& request) {
                operation_context->PreCall(*context);
                auto f = stub->AsyncPrepareQuery(cq, context, std::move(options),
-                                                request);
+                                                request, *operation_context);
                return f.then(
                    [operation_context, context = std::move(context)](auto f) {
                      auto s = f.get();
@@ -960,7 +967,8 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                              request) {
                        operation_context->PreCall(*context);
                        auto f = stub->AsyncPrepareQuery(
-                           cq, context, std::move(options), request);
+                           cq, context, std::move(options), request,
+                           *operation_context);
                        return f.then([operation_context,
                                       context = std::move(context)](auto f) {
                          auto s = f.get();
@@ -1143,7 +1151,8 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
           auto const& options = internal::CurrentOptions();
           internal::ConfigureContext(*context, options);
           operation_context->PreCall(*context);
-          auto stream = stub->ExecuteQuery(context, options, request);
+          auto stream =
+              stub->ExecuteQuery(context, options, request, *operation_context);
           std::unique_ptr<PartialResultSetReader> reader =
               std::make_unique<DefaultPartialResultSetReader>(
                   std::move(context), operation_context, std::move(stream));
