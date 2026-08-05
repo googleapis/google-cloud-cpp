@@ -17,6 +17,7 @@ set -euo pipefail
 
 declare -A -r LIBRARIES=(
   ["accessapproval"]="@googleapis//google/cloud/accessapproval/v1:accessapproval_cc_grpc"
+  ["agentidentity"]="@googleapis//google/cloud/agentidentity/v1:agentidentity_cc_grpc"
   ["agentregistry"]="@googleapis//google/cloud/agentregistry/v1:agentregistry_cc_grpc"
   ["accesscontextmanager"]="$(
     printf ",%s" \
@@ -246,7 +247,6 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/oslogin/common:common_cc_grpc"
   )"
   ["parametermanager"]="@googleapis//google/cloud/parametermanager/v1:parametermanager_cc_grpc"
-  ["parallelstore"]="@googleapis//google/cloud/parallelstore/v1:parallelstore_cc_grpc"
   ["policysimulator"]="@googleapis//google/cloud/policysimulator/v1:policysimulator_cc_grpc"
   ["policytroubleshooter"]="$(
     printf ",%s" \

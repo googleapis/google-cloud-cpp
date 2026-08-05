@@ -39,9 +39,11 @@ struct DedupedReadRange {
   std::int64_t read_id;
 };
 
-// Deduplicates a list of ReadRangeConfigs and assigns a sequential
-// read_id to each unique range, starting with initial_id + 1.
-// Returns a vector mapping each assigned read_id to its corresponding range.
+/**
+ * Deduplicates a list of ReadRangeConfigs and assigns a sequential
+ * read_id to each unique range, starting with initial_id + 1.
+ * Returns a vector mapping each assigned read_id to its corresponding range.
+ */
 std::vector<DedupedReadRange> DeduplicateRanges(
     std::vector<ReadRangeConfig> const& ranges, std::int64_t initial_id = 0);
 

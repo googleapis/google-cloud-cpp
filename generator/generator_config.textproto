@@ -22,6 +22,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Agent Identity
+service {
+  service_proto_path: "google/cloud/agentidentity/v1/auth_provider_service.proto"
+  product_path: "google/cloud/agentidentity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Agent Registry
 service {
   service_proto_path: "google/cloud/agentregistry/v1/agentregistry_service.proto"
@@ -3271,14 +3279,6 @@ service {
   service_proto_path: "google/cloud/oslogin/v1/oslogin.proto"
   product_path: "google/cloud/oslogin/v1"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-# Parallel Store
-service {
-  service_proto_path: "google/cloud/parallelstore/v1/parallelstore.proto"
-  product_path: "google/cloud/parallelstore/v1"
-  initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
 }
 

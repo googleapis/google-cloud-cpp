@@ -1,0 +1,25 @@
+/*!
+@page agentidentity-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `agentidentity_v1::AuthProviderServiceClient`:
+
+@snippet auth_provider_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page agentidentity_v1::AuthProviderServiceClient-endpoint-snippet Override agentidentity_v1::AuthProviderServiceClient Endpoint Configuration
+
+@snippet google/cloud/agentidentity/v1/samples/auth_provider_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

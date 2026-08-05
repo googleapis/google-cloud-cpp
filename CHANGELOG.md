@@ -9,6 +9,17 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.8.0 - TBD
 
+### Removed Libraries
+
+- The `parallelstore` client library has been removed because the Parallelstore service has been deprecated.
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Agent Identity API](/google/cloud/agentidentity/README.md)
+
 ### [Cloud Quotas API](/google/cloud/cloudquotas/README.md)
  - The library has been expanded to include the QuotaAdjusterSettingsManager service.
 

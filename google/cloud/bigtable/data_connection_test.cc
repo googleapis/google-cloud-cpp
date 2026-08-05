@@ -109,6 +109,46 @@ TEST(MakeDataConnection, TestingOtelCollectorEnvVar) {
   auto conn = MakeDataConnection(TestOptions().set<EnableMetricsOption>(true));
   EXPECT_NE(conn, nullptr);
 }
+
+TEST(MakeDataConnection, DirectPathMetricsModeOptionDisabled) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
+                                      "1");
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a}, TestOptions()
+                        .set<EnableMetricsOption>(true)
+                        .set<experimental::DirectPathMetricsModeOption>(
+                            experimental::DirectPathMetricsMode::kDisabled));
+  EXPECT_NE(conn, nullptr);
+}
+
+TEST(MakeDataConnection, DirectPathMetricsModeOptionEnabled) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
+                                      "1");
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a}, TestOptions()
+                        .set<EnableMetricsOption>(true)
+                        .set<experimental::DirectPathModeOption>(
+                            experimental::DirectPathMode::kEnabled)
+                        .set<experimental::DirectPathMetricsModeOption>(
+                            experimental::DirectPathMetricsMode::kEnabled));
+  EXPECT_NE(conn, nullptr);
+}
+
+TEST(MakeDataConnection, DirectPathModeOptionDisabledNoGrpcMetrics) {
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
+                                      "1");
+  InstanceResource instance_a{Project("my-project"), "instance-a"};
+  auto conn = MakeDataConnection(
+      {instance_a}, TestOptions()
+                        .set<EnableMetricsOption>(true)
+                        .set<experimental::DirectPathModeOption>(
+                            experimental::DirectPathMode::kDisabled)
+                        .set<experimental::DirectPathMetricsModeOption>(
+                            experimental::DirectPathMetricsMode::kEnabled));
+  EXPECT_NE(conn, nullptr);
+}
 #endif
 
 }  // namespace

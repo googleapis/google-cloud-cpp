@@ -53,6 +53,8 @@ readonly SED_ARGS=(
   -e '/^resourcesettings/d'
   # TODO(#15652) Remove when pubsublite is removed from vcpkg
   -e '/^pubsublite/d'
+  # TODO(#16400) Remove when parallelstore is removed from vcpkg
+  -e '/^parallelstore/d'
 )
 mapfile -t features < <(
   env -C "${vcpkg_dir}" ./vcpkg search google-cloud-cpp |
