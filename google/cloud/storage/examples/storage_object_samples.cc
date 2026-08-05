@@ -176,8 +176,11 @@ void InsertObjectWithBadChecksum(google::cloud::storage::Client client,
      std::string const& object_name, std::string contents) {
     auto object_metadata = client.InsertObject(
         bucket_name, object_name, std::move(contents),
-        google::cloud::Options{}.set<gcs::PrecomputedChecksumsOption>(
-            gcs::PrecomputedChecksums{"bad_crc32c"}));
+        google::cloud::Options{}
+            .set<gcs::PrecomputedChecksumsOption>(
+                gcs::PrecomputedChecksums{"bad_crc32c"})
+            .set<gcs::RetryPolicyOption>(
+                gcs::LimitedErrorCountRetryPolicy(2).clone()));
 
     if (!object_metadata) {
       std::cout << "The object was not created because the checksum was bad. "
