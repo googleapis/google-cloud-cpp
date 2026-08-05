@@ -55,7 +55,6 @@ class AsyncObjectDescriptorConnectionTracing
                      {"read-start", p.start},
                      {"read-length", p.length}});
     return impl_->Read(p);
-    ;
   }
 
   void MakeSubsequentStream() override {
