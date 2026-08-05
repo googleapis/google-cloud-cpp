@@ -143,6 +143,8 @@ class ObjectDescriptorImpl
 
   // Map of read_id to unclaimed range state (bytes buffered and original key).
   std::unordered_map<std::int64_t, UnclaimedRangeState> unclaimed_ranges_;
+  // Set capturing tombstones for evicted pre-warmed ranges.
+  std::set<std::pair<std::int64_t, std::int64_t>> evicted_ranges_;
   // Total bytes currently buffered across all unclaimed pre-warmed ranges.
   std::size_t total_prewarmed_bytes_buffered_ = 0;
   // Maximum bytes allowed to be buffered across all unclaimed pre-warmed ranges

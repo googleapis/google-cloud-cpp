@@ -231,7 +231,10 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   // Check if this range matches a pre-warmed range.
   auto cache_key = std::make_pair(p.start, p.length);
   auto cache_it = prewarmed_ranges_.find(cache_key);
+  absl::string_view cache_status = "MISS";
+
   if (cache_it != prewarmed_ranges_.end()) {
+    cache_status = "HIT";
     // Cache hit. Claim the pre-warmed range and return it to the user.
     auto prewarmed = std::move(cache_it->second);
     prewarmed_ranges_.erase(cache_it);
@@ -247,7 +250,13 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       return std::unique_ptr<storage::AsyncReaderConnection>(
           std::make_unique<ObjectDescriptorReader>(std::move(prewarmed.range)));
     }
-    return MakeTracingObjectDescriptorReader(std::move(prewarmed.range));
+    return MakeTracingObjectDescriptorReader(std::move(prewarmed.range),
+                                             cache_status);
+  }
+
+  // If not hit, check if it was evicted earlier due to pacing.
+  if (evicted_ranges_.erase(cache_key) != 0) {
+    cache_status = "EVICTED";
   }
 
   if (stream_manager_->Empty()) {
@@ -258,7 +267,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       return std::unique_ptr<storage::AsyncReaderConnection>(
           std::make_unique<ObjectDescriptorReader>(std::move(range)));
     }
-    return MakeTracingObjectDescriptorReader(std::move(range));
+    return MakeTracingObjectDescriptorReader(std::move(range), cache_status);
   }
 
   auto it = stream_manager_->GetLeastBusyStream();
@@ -274,8 +283,7 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     return std::unique_ptr<storage::AsyncReaderConnection>(
         std::make_unique<ObjectDescriptorReader>(std::move(range)));
   }
-
-  return MakeTracingObjectDescriptorReader(std::move(range));
+  return MakeTracingObjectDescriptorReader(std::move(range), cache_status);
 }
 
 std::shared_ptr<storage::internal::HashFunction>
@@ -429,6 +437,7 @@ void ObjectDescriptorImpl::OnRead(
         max_prewarmed_buffer_size_) {
       // Evict the range if it exceeds the pacing limit.
       total_prewarmed_bytes_buffered_ -= unclaimed_it->second.bytes_buffered;
+      evicted_ranges_.insert(unclaimed_it->second.cache_it->first);
       prewarmed_ranges_.erase(unclaimed_it->second.cache_it);
       unclaimed_ranges_.erase(unclaimed_it);
 
