@@ -437,7 +437,9 @@ void ObjectDescriptorImpl::OnRead(
         max_prewarmed_buffer_size_) {
       // Evict the range if it exceeds the pacing limit.
       total_prewarmed_bytes_buffered_ -= unclaimed_it->second.bytes_buffered;
-      evicted_ranges_.insert(unclaimed_it->second.cache_it->first);
+      if (evicted_ranges_.size() < 1000) {
+        evicted_ranges_.insert(unclaimed_it->second.cache_it->first);
+      }
       prewarmed_ranges_.erase(unclaimed_it->second.cache_it);
       unclaimed_ranges_.erase(unclaimed_it);
 

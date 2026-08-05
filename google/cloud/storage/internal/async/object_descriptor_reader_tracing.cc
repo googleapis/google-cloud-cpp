@@ -32,16 +32,15 @@ namespace sc = ::opentelemetry::semconv;
 class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
  public:
   explicit ObjectDescriptorReaderTracing(std::shared_ptr<ReadRange> impl,
-                                         std::string cache_status)
-      : ObjectDescriptorReader(std::move(impl)),
-        cache_status_(std::move(cache_status)) {}
+                                         absl::string_view cache_status)
+      : ObjectDescriptorReader(std::move(impl)), cache_status_(cache_status) {}
 
   ~ObjectDescriptorReaderTracing() override = default;
 
   future<ObjectDescriptorReader::ReadResponse> Read() override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadRange");
     if (!cache_status_.empty()) {
-      span->SetAttribute("fast_open_cache_status", cache_status_);
+      span->SetAttribute("fast_open_cache_status", std::string(cache_status_));
     }
     internal::OTelScope scope(span);
     return ObjectDescriptorReader::Read().then(
@@ -71,7 +70,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
   }
 
  private:
-  std::string cache_status_;
+  absl::string_view cache_status_;
 };
 
 }  // namespace
@@ -79,8 +78,8 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
 std::unique_ptr<storage::AsyncReaderConnection>
 MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl,
                                   absl::string_view cache_status) {
-  return std::make_unique<ObjectDescriptorReaderTracing>(
-      std::move(impl), std::string(cache_status));
+  return std::make_unique<ObjectDescriptorReaderTracing>(std::move(impl),
+                                                         cache_status);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
