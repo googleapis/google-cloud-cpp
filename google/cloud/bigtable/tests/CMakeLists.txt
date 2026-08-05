@@ -23,6 +23,7 @@ set(bigtable_client_integration_tests
     filters_integration_test.cc
     instance_admin_integration_test.cc
     mutations_integration_test.cc
+    observability_integration_test.cc
     table_admin_backup_integration_test.cc
     table_admin_iam_policy_integration_test.cc
     table_admin_integration_test.cc

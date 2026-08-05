@@ -223,25 +223,56 @@ void MetricsOperationContextFactory::InitializeProvider(
 
   auto dynamic_resource_fn =
       [=](opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
-        google::api::MonitoredResource resource;
-        resource.set_type(kResourceType);
-        auto& labels = *resource.mutable_labels();
         auto const& attributes = pda.attributes.GetAttributes();
-        labels[kProjectLabel] =
-            std::get<std::string>(attributes.find(kProjectLabel)->second);
-        labels[kInstanceLabel] =
-            std::get<std::string>(attributes.find(kInstanceLabel)->second);
-        labels[kTableLabel] =
-            std::get<std::string>(attributes.find(kTableLabel)->second);
-        labels[kClusterLabel] =
-            std::get<std::string>(attributes.find(kClusterLabel)->second);
-        labels[kZoneLabel] =
-            std::get<std::string>(attributes.find(kZoneLabel)->second);
-        return std::make_pair(labels[kProjectLabel], resource);
+        auto get_attr = [&](std::string const& key) {
+          auto it = attributes.find(key);
+          if (it == attributes.end() ||
+              !opentelemetry::nostd::holds_alternative<std::string>(
+                  it->second)) {
+            return std::string{};
+          }
+          return opentelemetry::nostd::get<std::string>(it->second);
+        };
+
+        if (attributes.find(kTableLabel) != attributes.end()) {
+          google::api::MonitoredResource resource;
+          resource.set_type(kResourceType);
+          auto& labels = *resource.mutable_labels();
+          labels[kProjectLabel] = get_attr(kProjectLabel);
+          labels[kInstanceLabel] = get_attr(kInstanceLabel);
+          labels[kTableLabel] = get_attr(kTableLabel);
+          labels[kClusterLabel] = get_attr(kClusterLabel);
+          labels[kZoneLabel] = get_attr(kZoneLabel);
+          return std::make_pair(labels[kProjectLabel], resource);
+        }
+
+        google::api::MonitoredResource resource;
+        resource.set_type("bigtable.googleapis.com/Client");
+        auto& labels = *resource.mutable_labels();
+        labels["project_id"] = get_attr("project_id");
+        labels["instance"] = get_attr("instance");
+        labels["app_profile"] = get_attr("app_profile");
+        labels["client_name"] = get_attr("client_name");
+        labels["uuid"] = get_attr("client_uid");
+        auto client_project = get_attr("client_project");
+        if (!client_project.empty()) {
+          labels["client_project"] = std::move(client_project);
+        }
+        labels["location"] = get_attr("location");
+        labels["cloud_platform"] = get_attr("cloud_platform");
+        labels["host_id"] = get_attr("host_id");
+        auto hostname = get_attr("hostname");
+        if (!hostname.empty()) {
+          labels["hostname"] = std::move(hostname);
+        }
+        return std::make_pair(labels["project_id"], resource);
       };
 
-  std::set<std::string> s{kProjectLabel, kInstanceLabel, kTableLabel,
-                          kClusterLabel, kZoneLabel};
+  std::set<std::string> s{kProjectLabel,    kInstanceLabel, kTableLabel,
+                          kClusterLabel,    kZoneLabel,     "app_profile",
+                          "client_name",    "client_uid",   "uuid",
+                          "client_project", "location",     "cloud_platform",
+                          "host_id",        "hostname"};
   auto resource_filter_fn = [resource_labels =
                                  std::move(s)](std::string const& key) {
     return internal::Contains(resource_labels, key);

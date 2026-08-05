@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/credentials.h"
@@ -32,6 +33,9 @@ namespace {
 
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::Eq;
+using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::StartsWith;
 
 class ObservabilityIntegrationTest
@@ -113,7 +117,7 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
 
     // Perform mutations and read calls
     Apply(table, row_key, expected);
-    auto actual = ReadRows(table, Filter::PassAllFilter());
+    auto actual = ReadRows(table, Filter::RowKeysRegex(row_key));
     CheckEqualUnordered(expected, actual);
 
     // Wait for the periodic 5-second exporter background thread to flush
@@ -168,6 +172,104 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
 
   EXPECT_TRUE(found_operation_latencies);
   EXPECT_TRUE(found_attempt_latencies);
+}
+
+TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP() << "Metrics export integration test runs against production";
+  }
+
+  // Redirect Cloud Monitoring metric export to local otel_collector
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT",
+                        server_address_);
+  ScopedEnvironment env_otel("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR", "1");
+
+  // Set MetricsPeriodOption to 5s (minimum allowed by DefaultOptions; smaller
+  // periods reset to 60s)
+  auto options =
+      Options{}.set<EnableMetricsOption>(true).set<MetricsPeriodOption>(
+          std::chrono::seconds(5));
+
+  auto const table_id = TableTestEnvironment::table_id();
+
+  auto verify_pool_metric = [this, &options, &table_id](
+                                bool dynamic_pool,
+                                std::string const& expected_lb_policy) {
+    collector_service_.Clear();
+    {
+      std::shared_ptr<DataConnection> conn;
+      if (dynamic_pool) {
+        conn = MakeDataConnection(
+            {InstanceResource(Project(project_id()), instance_id())}, options);
+      } else {
+        conn = MakeDataConnection(options);
+      }
+      auto table = Table(std::move(conn),
+                         TableResource(project_id(), instance_id(), table_id));
+
+      std::string const row_key = "observability-rpc-" + expected_lb_policy;
+      std::vector<Cell> expected{{row_key, "family4", "c0", 1000, "v1000"},
+                                 {row_key, "family4", "c1", 2000, "v2000"}};
+
+      // Perform mutations and read calls
+      Apply(table, row_key, expected);
+      auto actual = ReadRows(table, Filter::RowKeysRegex(row_key));
+      CheckEqualUnordered(expected, actual);
+
+      // Wait for the periodic 5-second exporter background thread to flush
+      // metrics while conn is active
+      std::this_thread::sleep_for(std::chrono::seconds(6));
+    }
+
+    auto recorded = collector_service_.recorded_metrics();
+    ASSERT_THAT(recorded, Not(IsEmpty()));
+
+    bool found_outstanding_rpcs = false;
+    for (auto const& req : recorded) {
+      EXPECT_THAT(req.name(), Eq(absl::StrCat("projects/", project_id())));
+
+      for (auto const& ts : req.time_series()) {
+        auto const& metric_type = ts.metric().type();
+        EXPECT_THAT(metric_type,
+                    StartsWith("bigtable.googleapis.com/internal/client/"));
+
+        if (metric_type.find("connection_pool/outstanding_rpcs") !=
+            std::string::npos) {
+          found_outstanding_rpcs = true;
+          EXPECT_THAT(ts.resource().type(),
+                      Eq("bigtable.googleapis.com/Client"));
+
+          auto const& res_labels = ts.resource().labels();
+          auto project_it = res_labels.find("project_id");
+          if (project_it != res_labels.end()) {
+            EXPECT_THAT(project_it->second, Eq(project_id()));
+          }
+          auto instance_it = res_labels.find("instance");
+          if (instance_it != res_labels.end()) {
+            EXPECT_THAT(instance_it->second, Eq(instance_id()));
+          }
+
+          auto const& metric_labels = ts.metric().labels();
+          auto lb_policy_it = metric_labels.find("channel_pool_lb_policy");
+          ASSERT_THAT(lb_policy_it, Not(Eq(metric_labels.end())));
+          EXPECT_THAT(lb_policy_it->second, Eq(expected_lb_policy));
+
+          auto transport_it = metric_labels.find("transport_type");
+          ASSERT_THAT(transport_it, Not(Eq(metric_labels.end())));
+          EXPECT_THAT(transport_it->second, Not(IsEmpty()));
+
+          auto streaming_it = metric_labels.find("streaming");
+          ASSERT_THAT(streaming_it, Not(Eq(metric_labels.end())));
+          EXPECT_THAT(streaming_it->second, Not(IsEmpty()));
+        }
+      }
+    }
+    EXPECT_TRUE(found_outstanding_rpcs)
+        << "Failed to find outstanding_rpcs metric for " << expected_lb_policy;
+  };
+
+  verify_pool_metric(/*dynamic_pool=*/true, "RANDOM_TWO_LEAST_USED");
+  verify_pool_metric(/*dynamic_pool=*/false, "ROUND_ROBIN");
 }
 
 }  // namespace
