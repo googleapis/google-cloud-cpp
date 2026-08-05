@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/data_tracing_connection.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/partial_result_set_source.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
@@ -29,7 +30,12 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/monitoring/v3/metric_connection.h"
+#include "google/cloud/internal/random.h"
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include <memory>
+#include <mutex>
 
 namespace google {
 namespace cloud {
@@ -194,6 +200,41 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
       background->cq(), options);
   auto limiter =
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
+
+  std::shared_ptr<monitoring_v3::MetricServiceConnection>
+      metric_service_connection;
+  std::unique_ptr<bigtable_internal::OperationContextFactory>
+      operation_context_factory;
+
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  if (options.get<EnableMetricsOption>()) {
+    metric_service_connection = monitoring_v3::MakeMetricServiceConnection(
+        internal::MetricsExporterConnectionOptions(options));
+    auto gen = google::cloud::internal::MakeDefaultPRNG();
+    std::string client_uid = google::cloud::internal::Sample(
+        gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
+    if (bigtable::internal::IsDirectPath(options) &&
+        options.has<bigtable_internal::InstanceChannelAffinityOption>() &&
+        options.get<experimental::DirectPathMetricsModeOption>() ==
+            experimental::DirectPathMetricsMode::kEnabled) {
+      bigtable_internal::EnableGrpcMetrics(metric_service_connection, options,
+                                           client_uid);
+    }
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
+    operation_context_factory =
+        std::make_unique<bigtable_internal::MetricsOperationContextFactory>(
+            std::move(client_uid), std::move(metric_service_connection),
+            options);
+  } else {
+    operation_context_factory =
+        std::make_unique<bigtable_internal::SimpleOperationContextFactory>();
+  }
+#else
+  operation_context_factory =
+      std::make_unique<bigtable_internal::SimpleOperationContextFactory>();
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+
   std::shared_ptr<DataConnection> conn;
 
   if (options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
@@ -212,14 +253,16 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
         std::move(background),
         std::make_unique<bigtable_internal::StubManager>(
             std::move(affinity_stubs), stub_creation_fn),
-        std::move(limiter), std::move(options));
+        std::move(operation_context_factory), std::move(limiter),
+        std::move(options));
   } else {
     auto stub = bigtable_internal::CreateBigtableStub(
         std::move(auth), background->cq(), options);
     conn = std::make_shared<bigtable_internal::DataConnectionImpl>(
         std::move(background),
         std::make_unique<bigtable_internal::StubManager>(std::move(stub)),
-        std::move(limiter), std::move(options));
+        std::move(operation_context_factory), std::move(limiter),
+        std::move(options));
   }
   if (google::cloud::internal::TracingEnabled(conn->options())) {
     conn = bigtable_internal::MakeDataTracingConnection(std::move(conn));

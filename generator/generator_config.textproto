@@ -3282,14 +3282,6 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Parallel Store
-service {
-  service_proto_path: "google/cloud/parallelstore/v1/parallelstore.proto"
-  product_path: "google/cloud/parallelstore/v1"
-  initial_copyright_year: "2024"
-  retryable_status_codes: ["kUnavailable"]
-}
-
 # Parameter Manager
 service {
   service_proto_path: "google/cloud/parametermanager/v1/service.proto"

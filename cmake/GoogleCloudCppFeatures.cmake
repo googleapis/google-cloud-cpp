@@ -144,7 +144,6 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "orgpolicy"
     "osconfig"
     "oslogin"
-    "parallelstore"
     "parametermanager"
     "policysimulator"
     "policytroubleshooter"

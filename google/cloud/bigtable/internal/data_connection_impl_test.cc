@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/crc32c.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
 #include "google/cloud/bigtable/internal/query_plan.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
@@ -267,7 +268,9 @@ std::shared_ptr<DataConnectionImpl> TestConnection(
         std::make_shared<NoopMutateRowsLimiter>()) {
   auto background = internal::MakeBackgroundThreadsFactory()();
   return std::make_shared<DataConnectionImpl>(
-      std::move(background), std::move(stub), std::move(limiter), Options{});
+      std::move(background), std::move(stub),
+      std::make_unique<SimpleOperationContextFactory>(), std::move(limiter),
+      Options{});
 }
 
 std::shared_ptr<DataConnectionImpl> TestConnection(

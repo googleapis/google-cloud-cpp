@@ -1561,6 +1561,29 @@ auto constexpr kOperationJson = R"""({
       "id": "Operation"
 })""";
 
+TEST(FindAllTypesToImportTest,
+     ArrayItemsWithPropertiesWithoutExplicitObjectType) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "items_field": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "nested_ref": {
+            "$ref": "NestedRefType"
+          }
+        }
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllTypesToImport(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("NestedRefType"));
+}
+
 TEST(FindAllTypesToImportTest, ComplexJsonWithRefTypes) {
   auto const parsed_json =
       nlohmann::json::parse(kOperationJson, nullptr, false);
