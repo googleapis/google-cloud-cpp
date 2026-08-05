@@ -213,6 +213,28 @@ TEST(GrpcMetricsExporterTest, MakeMonitoredResource) {
   EXPECT_THAT(labels.at("host_id"), Eq("unknown"));
 }
 
+TEST(GrpcMetricsExporterTest, MakeClientResourceLabels) {
+  Options options;
+  options.set<bigtable::AppProfileIdOption>("test-app-profile");
+  std::string const client_uid = "test-client-uid";
+
+  auto labels = MakeClientResourceLabels(
+      "test-project", "test-instance", "test-app-profile", options, client_uid,
+      opentelemetry::sdk::resource::Resource::Create({}));
+
+  EXPECT_THAT(labels.project_id, Eq("test-project"));
+  EXPECT_THAT(labels.instance, Eq("test-instance"));
+  EXPECT_THAT(labels.app_profile, Eq("test-app-profile"));
+  EXPECT_THAT(labels.client_name,
+              Eq("cpp.Bigtable/" + bigtable::version_string()));
+  EXPECT_THAT(labels.client_uid, Eq("test-client-uid"));
+  EXPECT_THAT(labels.client_project, Eq("test-project"));
+  EXPECT_THAT(labels.location, Eq("global"));
+  EXPECT_THAT(labels.cloud_platform, Eq("unknown"));
+  EXPECT_THAT(labels.host_id, Eq("unknown"));
+  EXPECT_THAT(labels.hostname, IsEmpty());
+}
+
 TEST(GrpcMetricsExporterTest, MakeMonitoredResourceMissingAttributes) {
   Options options;
   std::string const client_uid = "test-client-uid";

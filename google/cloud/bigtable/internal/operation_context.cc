@@ -30,11 +30,18 @@ namespace {
 std::vector<std::shared_ptr<Metric>> CloneMetrics(
     TableResourceLabels const& resource_labels,
     TableDataLabels const& data_labels,
+    ClientResourceLabels const& client_resource_labels,
     std::vector<std::shared_ptr<Metric const>> const& metrics) {
   std::vector<std::shared_ptr<Metric>> v;
   v.reserve(metrics.size());
   for (auto const& m : metrics) {
-    v.emplace_back(m->clone(resource_labels, data_labels));
+    auto clone = m->clone(resource_labels, data_labels);
+    if (!clone) {
+      clone = m->clone(client_resource_labels);
+    }
+    if (clone) {
+      v.emplace_back(std::move(clone));
+    }
   }
   return v;
 }
@@ -59,8 +66,25 @@ OperationContext::OperationContext(
     TableDataLabels const& data_labels,
     std::vector<std::shared_ptr<Metric const>> const& metrics,
     std::shared_ptr<Clock> clock)
-    : cloned_metrics_(CloneMetrics(resource_labels, data_labels, metrics)),
+    : OperationContext(resource_labels, data_labels, ClientResourceLabels{},
+                       metrics, std::move(clock)) {}
+
+OperationContext::OperationContext(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    ClientResourceLabels const& client_resource_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics,
+    std::shared_ptr<Clock> clock)
+    : cloned_metrics_(CloneMetrics(resource_labels, data_labels,
+                                   client_resource_labels, metrics)),
       clock_(std::move(clock)) {}
+
+void OperationContext::StubSelection(StubSelectionParams const& params) {
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  for (auto& m : cloned_metrics_) {
+    m->StubSelection(otel_context, params);
+  }
+}
 
 void OperationContext::PreCall(grpc::ClientContext& client_context) {
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();

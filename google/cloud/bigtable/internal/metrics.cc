@@ -89,6 +89,76 @@ LabelMap IntoLabelMap(TableResourceLabels const& r, TableDataLabels const& d,
   return labels;
 }
 
+std::string ToString(ChannelPoolLbPolicy policy) {
+  switch (policy) {
+    case ChannelPoolLbPolicy::kRoundRobin:
+      return "ROUND_ROBIN";
+    case ChannelPoolLbPolicy::kRandomTwoLeastUsed:
+      return "RANDOM_TWO_LEAST_USED";
+  }
+  return "ROUND_ROBIN";
+}
+
+std::string ToString(TransportType type) {
+  switch (type) {
+    case TransportType::kCloudPath:
+      return "CloudPath";
+    case TransportType::kDirectPath:
+      return "DirectPath";
+  }
+  return "CloudPath";
+}
+
+std::string ToString(RpcType streaming) {
+  switch (streaming) {
+    case RpcType::kUnary:
+      return "false";
+    case RpcType::kStreaming:
+      return "true";
+  }
+  return "false";
+}
+
+LabelMap IntoLabelMap(ClientResourceLabels const& r,
+                      ClientOutstandingRpcLabels const& d,
+                      std::set<std::string> const& filtered_data_labels) {
+  LabelMap labels = {
+      {"project_id", r.project_id},   {"instance", r.instance},
+      {"app_profile", r.app_profile}, {"client_name", r.client_name},
+      {"client_uid", r.client_uid},   {"client_project", r.client_project},
+      {"location", r.location},       {"cloud_platform", r.cloud_platform},
+      {"host_id", r.host_id},         {"hostname", r.hostname}};
+
+  std::map<std::string, std::string> data = {{
+      {"transport_type", ToString(d.transport_type)},
+      {"channel_pool_lb_policy", ToString(d.channel_pool_lb_policy)},
+      {"streaming", ToString(d.streaming)},
+  }};
+
+  if (filtered_data_labels.empty()) {
+    labels.insert(data.begin(), data.end());
+    return labels;
+  }
+
+  struct Compare {
+    bool operator()(std::pair<std::string const, std::string> const& a,
+                    std::string const& b) {
+      return a.first < b;
+    }
+
+    bool operator()(std::string const& a,
+                    std::pair<std::string const, std::string> const& b) {
+      return a < b.first;
+    }
+  };
+
+  std::set_difference(data.begin(), data.end(), filtered_data_labels.begin(),
+                      filtered_data_labels.end(),
+                      std::inserter(labels, labels.begin()), Compare());
+
+  return labels;
+}
+
 bool HasServerTiming(grpc::ClientContext const& client_context) {
   auto const& initial_metadata = client_context.GetServerInitialMetadata();
   auto it = initial_metadata.find("server-timing");
@@ -542,6 +612,37 @@ std::unique_ptr<Metric> ApplicationBlockingLatency::clone(
   auto m = std::make_unique<ApplicationBlockingLatency>(*this);
   m->resource_labels_ = resource_labels;
   m->data_labels_ = data_labels;
+  return m;
+}
+
+OutstandingRpcs::OutstandingRpcs(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : outstanding_rpcs_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateDoubleHistogram(
+                  "connection_pool/outstanding_rpcs",
+                  "Instantaneous count of outstanding RPCs on the selected "
+                  "channel.",
+                  "1")) {}
+
+void OutstandingRpcs::StubSelection(
+    opentelemetry::context::Context const& context,
+    StubSelectionParams const& p) {
+  ClientOutstandingRpcLabels data_labels{p.transport_type,
+                                         p.channel_pool_lb_policy, p.streaming};
+  outstanding_rpcs_->Record(static_cast<double>(p.outstanding_rpcs),
+                            IntoLabelMap(resource_labels_, data_labels),
+                            context);
+}
+
+std::unique_ptr<Metric> OutstandingRpcs::clone(
+    ClientResourceLabels const& resource_labels) const {
+  auto m = std::make_unique<OutstandingRpcs>(*this);
+  m->resource_labels_ = resource_labels;
   return m;
 }
 

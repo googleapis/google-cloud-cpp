@@ -26,6 +26,7 @@ namespace {
 
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::NotNull;
 
 class MockMetric : public Metric {
  public:
@@ -206,6 +207,20 @@ TEST(MetricsOperationContextFactoryTest, ExecuteQuery) {
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context =
       factory.ExecuteQuery(instance_full_name, app_profile);
+}
+
+TEST(MetricsOperationContextFactoryTest, IncludesOutstandingRpcs) {
+  std::string app_profile = "my-app-profile";
+  std::string table_full_name =
+      "projects/my-project/instances/my-instance/tables/my-table";
+  MetricsOperationContextFactory factory(
+      "test-uid",
+      std::shared_ptr<monitoring_v3::MetricServiceConnection>(nullptr));
+  auto operation_context = factory.ReadRow(table_full_name, app_profile);
+  EXPECT_THAT(operation_context, NotNull());
+  operation_context->StubSelection(
+      StubSelectionParams{10, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+                          TransportType::kDirectPath, RpcType::kUnary});
 }
 
 }  // namespace

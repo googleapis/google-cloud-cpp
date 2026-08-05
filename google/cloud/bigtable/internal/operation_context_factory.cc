@@ -149,6 +149,17 @@ std::shared_ptr<OperationContext> SimpleOperationContextFactory::ExecuteQuery(
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
+namespace {
+ClientResourceLabels MakeClientLabels(
+    ClientResourceLabels base, TableResourceLabels const& resource_labels,
+    std::string const& app_profile) {
+  base.project_id = resource_labels.project_id;
+  base.instance = resource_labels.instance;
+  base.app_profile = app_profile;
+  return base;
+}
+}  // namespace
+
 MetricsOperationContextFactory::MetricsOperationContextFactory(
     std::string client_uid,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
@@ -212,25 +223,56 @@ void MetricsOperationContextFactory::InitializeProvider(
 
   auto dynamic_resource_fn =
       [=](opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
-        google::api::MonitoredResource resource;
-        resource.set_type(kResourceType);
-        auto& labels = *resource.mutable_labels();
         auto const& attributes = pda.attributes.GetAttributes();
-        labels[kProjectLabel] =
-            std::get<std::string>(attributes.find(kProjectLabel)->second);
-        labels[kInstanceLabel] =
-            std::get<std::string>(attributes.find(kInstanceLabel)->second);
-        labels[kTableLabel] =
-            std::get<std::string>(attributes.find(kTableLabel)->second);
-        labels[kClusterLabel] =
-            std::get<std::string>(attributes.find(kClusterLabel)->second);
-        labels[kZoneLabel] =
-            std::get<std::string>(attributes.find(kZoneLabel)->second);
-        return std::make_pair(labels[kProjectLabel], resource);
+        auto get_attr = [&](std::string const& key) {
+          auto it = attributes.find(key);
+          if (it == attributes.end() ||
+              !opentelemetry::nostd::holds_alternative<std::string>(
+                  it->second)) {
+            return std::string{};
+          }
+          return opentelemetry::nostd::get<std::string>(it->second);
+        };
+
+        if (attributes.find(kTableLabel) != attributes.end()) {
+          google::api::MonitoredResource resource;
+          resource.set_type(kResourceType);
+          auto& labels = *resource.mutable_labels();
+          labels[kProjectLabel] = get_attr(kProjectLabel);
+          labels[kInstanceLabel] = get_attr(kInstanceLabel);
+          labels[kTableLabel] = get_attr(kTableLabel);
+          labels[kClusterLabel] = get_attr(kClusterLabel);
+          labels[kZoneLabel] = get_attr(kZoneLabel);
+          return std::make_pair(labels[kProjectLabel], resource);
+        }
+
+        google::api::MonitoredResource resource;
+        resource.set_type("bigtable.googleapis.com/Client");
+        auto& labels = *resource.mutable_labels();
+        labels["project_id"] = get_attr("project_id");
+        labels["instance"] = get_attr("instance");
+        labels["app_profile"] = get_attr("app_profile");
+        labels["client_name"] = get_attr("client_name");
+        labels["uuid"] = get_attr("client_uid");
+        auto client_project = get_attr("client_project");
+        if (!client_project.empty()) {
+          labels["client_project"] = std::move(client_project);
+        }
+        labels["location"] = get_attr("location");
+        labels["cloud_platform"] = get_attr("cloud_platform");
+        labels["host_id"] = get_attr("host_id");
+        auto hostname = get_attr("hostname");
+        if (!hostname.empty()) {
+          labels["hostname"] = std::move(hostname);
+        }
+        return std::make_pair(labels["project_id"], resource);
       };
 
-  std::set<std::string> s{kProjectLabel, kInstanceLabel, kTableLabel,
-                          kClusterLabel, kZoneLabel};
+  std::set<std::string> s{kProjectLabel,    kInstanceLabel, kTableLabel,
+                          kClusterLabel,    kZoneLabel,     "app_profile",
+                          "client_name",    "client_uid",   "uuid",
+                          "client_project", "location",     "cloud_platform",
+                          "host_id",        "hostname"};
   auto resource_filter_fn = [resource_labels =
                                  std::move(s)](std::string const& key) {
     return internal::Contains(resource_labels, key);
@@ -289,6 +331,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(read_row_metrics_.metrics, v);
   });
 
@@ -300,8 +343,10 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
                                  app_profile,
                                  "" /*=status*/};
 
-  return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                            read_row_metrics_.metrics, clock_);
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      read_row_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
@@ -318,6 +363,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(read_rows_metrics_.metrics, v);
   });
 
@@ -329,8 +375,10 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
                                  app_profile,
                                  "" /*=status*/};
 
-  return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                            read_rows_metrics_.metrics, clock_);
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      read_rows_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
@@ -346,6 +394,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(mutate_row_metrics_.metrics, v);
   });
 
@@ -358,7 +407,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, mutate_row_metrics_.metrics, clock_);
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      mutate_row_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
@@ -374,6 +425,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(mutate_rows_metrics_.metrics, v);
   });
 
@@ -386,7 +438,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, mutate_rows_metrics_.metrics, clock_);
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      mutate_rows_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext>
@@ -403,6 +457,7 @@ MetricsOperationContextFactory::CheckAndMutateRow(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(check_and_mutate_row_metrics_.metrics, v);
   });
 
@@ -415,8 +470,9 @@ MetricsOperationContextFactory::CheckAndMutateRow(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, check_and_mutate_row_metrics_.metrics,
-      clock_);
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      check_and_mutate_row_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
@@ -432,6 +488,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(sample_row_keys_metrics_.metrics, v);
   });
 
@@ -444,7 +501,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, sample_row_keys_metrics_.metrics, clock_);
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      sample_row_keys_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext>
@@ -461,6 +520,7 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(read_modify_write_row_metrics_.metrics, v);
   });
 
@@ -473,8 +533,9 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, read_modify_write_row_metrics_.metrics,
-      clock_);
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      read_modify_write_row_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::PrepareQuery(
@@ -488,6 +549,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::PrepareQuery(
     v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(prepare_query_metrics_.metrics, v);
   });
 
@@ -500,7 +562,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::PrepareQuery(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, prepare_query_metrics_.metrics, clock_);
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      prepare_query_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
@@ -517,6 +581,7 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
         std::make_shared<ApplicationBlockingLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ServerLatency>(kRpc, provider_));
     v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc, provider_));
+    v.emplace_back(std::make_shared<OutstandingRpcs>(kRpc, provider_));
     swap(execute_query_metrics_.metrics, v);
   });
 
@@ -529,7 +594,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, execute_query_metrics_.metrics, clock_);
+      resource_labels, data_labels,
+      MakeClientLabels(client_resource_labels_, resource_labels, app_profile),
+      execute_query_metrics_.metrics, clock_);
 }
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

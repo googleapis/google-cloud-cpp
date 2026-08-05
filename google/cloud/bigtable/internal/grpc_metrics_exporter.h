@@ -23,6 +23,7 @@
 #include <string>
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
+#include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
 #include "google/api/monitored_resource.pb.h"
 #include <opentelemetry/metrics/meter_provider.h>
@@ -74,6 +75,11 @@ struct MonitoredResourceResult {
   std::string project_id;
   google::api::MonitoredResource resource;
 };
+
+ClientResourceLabels MakeClientResourceLabels(
+    std::string project_id, std::string instance, std::string app_profile,
+    Options const& options, std::string const& client_uid,
+    opentelemetry::sdk::resource::Resource const& detected_resource);
 
 MonitoredResourceResult MakeMonitoredResource(
     opentelemetry::sdk::metrics::PointDataAttributes const& pda,

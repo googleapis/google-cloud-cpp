@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_row_reader.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"

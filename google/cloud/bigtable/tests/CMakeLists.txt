@@ -33,11 +33,6 @@ include(CreateBazelConfig)
 export_list_to_bazel("bigtable_client_integration_tests.bzl"
                      "bigtable_client_integration_tests" YEAR "2018")
 
-if (NOT TARGET otel_collector)
-    add_subdirectory("${PROJECT_SOURCE_DIR}/ci/otel_collector"
-                     "${CMAKE_BINARY_DIR}/ci/otel_collector")
-endif ()
-
 foreach (fname ${bigtable_client_integration_tests})
     google_cloud_cpp_add_executable(target "bigtable" "${fname}")
     target_link_libraries(
@@ -55,7 +50,7 @@ foreach (fname ${bigtable_client_integration_tests})
                 gRPC::grpc++
                 gRPC::grpc
                 protobuf::libprotobuf)
-    if (TARGET otel_collector)
+    if ("${fname}" STREQUAL "observability_integration_test.cc")
         target_link_libraries(${target} PRIVATE otel_collector)
     endif ()
     add_test(NAME ${target} COMMAND ${target})
