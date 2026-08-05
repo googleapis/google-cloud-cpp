@@ -89,10 +89,10 @@ inline std::string ComputeMD5Hash(char const* payload) {
  * @deprecated Use `UploadChecksumValidationOption` and
  * `DownloadChecksumValidationOption` instead.
  */
-struct [[deprecated(
+GOOGLE_CLOUD_CPP_DEPRECATED(
     "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")]] DisableMD5Hash
-    : public internal::ComplexOption<DisableMD5Hash, bool> {
+    "instead")
+struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
   using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it
   // explicitly
@@ -160,9 +160,10 @@ inline std::string ComputeCrc32cChecksum(char const* payload) {
  * @deprecated Use `UploadChecksumValidationOption` and
  * `DownloadChecksumValidationOption` instead.
  */
-struct [[deprecated(
+GOOGLE_CLOUD_CPP_DEPRECATED(
     "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")]] DisableCrc32cChecksum
+    "instead")
+struct DisableCrc32cChecksum
     : public internal::ComplexOption<DisableCrc32cChecksum, bool> {
   using ComplexOption<DisableCrc32cChecksum, bool>::ComplexOption;
   // GCC <= 7.0 does not use the inherited default constructor, redeclare it

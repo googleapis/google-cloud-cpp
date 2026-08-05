@@ -34,9 +34,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @deprecated Use `UploadChecksumValidationOption` and
  * `DownloadChecksumValidationOption` instead.
  */
-struct [[deprecated(
+GOOGLE_CLOUD_CPP_DEPRECATED(
     "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")]] EnableCrc32cValidationOption {
+    "instead")
+struct EnableCrc32cValidationOption {
   using Type = bool;
 };
 
@@ -65,9 +66,10 @@ struct UseCrc32cValueOption {
  * @deprecated Use `UploadChecksumValidationOption` and
  * `DownloadChecksumValidationOption` instead.
  */
-struct [[deprecated(
+GOOGLE_CLOUD_CPP_DEPRECATED(
     "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")]] EnableMD5ValidationOption {
+    "instead")
+struct EnableMD5ValidationOption {
   using Type = bool;
 };
 
