@@ -50,12 +50,12 @@ class AsyncObjectDescriptorConnectionTracing
 
   std::unique_ptr<storage::AsyncReaderConnection> Read(ReadParams p) override {
     internal::OTelScope scope(span_);
-    auto result = impl_->Read(p);
     span_->AddEvent("gl-cpp.open.read",
                     {{sc::thread::kThreadId, internal::CurrentThreadId()},
                      {"read-start", p.start},
                      {"read-length", p.length}});
-    return MakeTracingReaderConnection(span_, std::move(result));
+    return impl_->Read(p);
+    ;
   }
 
   void MakeSubsequentStream() override {

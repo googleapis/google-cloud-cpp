@@ -98,7 +98,8 @@ TEST(ObjectDescriptorConnectionTracing, Read) {
                   OTelAttribute<std::string>(sc::thread::kThreadId, _)))))));
 }
 
-TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
+TEST(ObjectDescriptorConnectionTracing,
+     SingleReadRangeCompletedDoesNotEndOpenSpan) {
   namespace sc = ::opentelemetry::semconv;
   auto span_catcher = InstallSpanCatcher();
 
@@ -106,20 +107,73 @@ TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
       std::make_shared<MockAsyncObjectDescriptorConnection>();
   auto* mock_reader_ptr = new MockAsyncReaderConnection;
   PromiseWithOTelContext<ReadResponse> p;
-  EXPECT_CALL(*mock_reader_ptr, Read).WillOnce(expect_context(p));
+  EXPECT_CALL(*mock_reader_ptr, Read).WillOnce([&p] { return p.get_future(); });
 
   EXPECT_CALL(*mock_connection, Read)
-      .WillOnce([&](ObjectDescriptorConnection::ReadParams) {
+      .WillOnce([&](ObjectDescriptorConnection::ReadParams p) {
+        EXPECT_EQ(p.start, 100);
+        EXPECT_EQ(p.length, 200);
         return std::unique_ptr<storage::AsyncReaderConnection>(mock_reader_ptr);
       });
 
   auto connection = MakeTracingObjectDescriptorConnection(
       internal::MakeSpan("test-span"), std::move(mock_connection));
 
-  auto reader = connection->Read({});
-  auto f = reader->Read().then(expect_no_context);
-  p.set_value(ReadPayload("test-payload").set_offset(123));
+  auto reader = connection->Read({100, 200});
+  auto f = reader->Read();
+  // Simulate stream completion (EOF)
+  p.set_value(Status{});
   (void)f.get();
+
+  // Before resetting the connection, the Open span must NOT be ended yet.
+  EXPECT_THAT(span_catcher->GetSpans(), ::testing::IsEmpty());
+
+  connection.reset();  // End the span now
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("test-span"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanEventsAre(AllOf(
+              EventNamed("gl-cpp.open.read"),
+              SpanEventAttributesAre(
+                  OTelAttribute<std::int64_t>("read-length", 200),
+                  OTelAttribute<std::int64_t>("read-start", 100),
+                  OTelAttribute<std::string>(sc::thread::kThreadId, _)))))));
+}
+
+TEST(ObjectDescriptorConnectionTracing, MultipleReadRanges) {
+  namespace sc = ::opentelemetry::semconv;
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock_connection =
+      std::make_shared<MockAsyncObjectDescriptorConnection>();
+  auto mock_reader1 = std::make_unique<MockAsyncReaderConnection>();
+  auto mock_reader2 = std::make_unique<MockAsyncReaderConnection>();
+
+  EXPECT_CALL(*mock_connection, Read)
+      .WillOnce([&](ObjectDescriptorConnection::ReadParams p) {
+        EXPECT_EQ(p.start, 0);
+        EXPECT_EQ(p.length, 100);
+        return std::move(mock_reader1);
+      })
+      .WillOnce([&](ObjectDescriptorConnection::ReadParams p) {
+        EXPECT_EQ(p.start, 100);
+        EXPECT_EQ(p.length, 200);
+        return std::move(mock_reader2);
+      });
+
+  auto connection = MakeTracingObjectDescriptorConnection(
+      internal::MakeSpan("test-span"), std::move(mock_connection));
+
+  auto reader1 = connection->Read({0, 100});
+  auto reader2 = connection->Read({100, 200});
+
+  // Span is still active and not ended yet
+  EXPECT_THAT(span_catcher->GetSpans(), ::testing::IsEmpty());
 
   connection.reset();  // End the span
 
@@ -133,18 +187,15 @@ TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
           SpanEventsAre(
               AllOf(EventNamed("gl-cpp.open.read"),
                     SpanEventAttributesAre(
-                        OTelAttribute<std::int64_t>("read-length", 0),
+                        OTelAttribute<std::int64_t>("read-length", 100),
                         OTelAttribute<std::int64_t>("read-start", 0),
                         OTelAttribute<std::string>(sc::thread::kThreadId, _))),
-              AllOf(EventNamed("gl-cpp.read"),
+              AllOf(EventNamed("gl-cpp.open.read"),
                     SpanEventAttributesAre(
-                        OTelAttribute<std::int64_t>("message.starting_offset",
-                                                    123),
-                        OTelAttribute<std::string>(sc::thread::kThreadId, _),
-                        OTelAttribute<std::int64_t>("rpc.message.id", 1),
-                        // THIS WAS THE MISSING ATTRIBUTE:
-                        OTelAttribute<std::string>("rpc.message.type",
-                                                   "RECEIVED")))))));
+                        OTelAttribute<std::int64_t>("read-length", 200),
+                        OTelAttribute<std::int64_t>("read-start", 100),
+                        OTelAttribute<std::string>(sc::thread::kThreadId,
+                                                   _)))))));
 }
 
 }  // namespace
