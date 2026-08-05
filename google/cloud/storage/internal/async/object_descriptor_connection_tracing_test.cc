@@ -32,7 +32,6 @@ namespace {
 using ReadResponse =
     ::google::cloud::storage::AsyncReaderConnection::ReadResponse;
 using ::google::cloud::storage::ObjectDescriptorConnection;
-using ::google::cloud::storage::ReadPayload;
 using ::google::cloud::storage_mocks::MockAsyncObjectDescriptorConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::EventNamed;
