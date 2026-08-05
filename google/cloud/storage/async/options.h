@@ -34,10 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @deprecated Use `UploadChecksumValidationOption` and
  * `DownloadChecksumValidationOption` instead.
  */
-GOOGLE_CLOUD_CPP_DEPRECATED(
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
     "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")
-struct EnableCrc32cValidationOption {
+    "instead") EnableCrc32cValidationOption {
   using Type = bool;
 };
 
@@ -51,8 +50,8 @@ struct EnableCrc32cValidationOption {
  * checksums. Note that this option has no effect if the service does not return
  * or compute a CRC32C checksum.
  */
-GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
-struct UseCrc32cValueOption {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
+    UseCrc32cValueOption {
   using Type = std::uint32_t;
 };
 
@@ -66,10 +65,9 @@ struct UseCrc32cValueOption {
  * @deprecated Use `UploadChecksumValidationOption` and
  * `DownloadChecksumValidationOption` instead.
  */
-GOOGLE_CLOUD_CPP_DEPRECATED(
+struct GOOGLE_CLOUD_CPP_DEPRECATED(
     "Use UploadChecksumValidationOption and DownloadChecksumValidationOption "
-    "instead")
-struct EnableMD5ValidationOption {
+    "instead") EnableMD5ValidationOption {
   using Type = bool;
 };
 
@@ -83,8 +81,8 @@ struct EnableMD5ValidationOption {
  * Note that this option has no effect if the service does not return or compute
  * a MD5 hash.
  */
-GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
-struct UseMD5ValueOption {
+struct GOOGLE_CLOUD_CPP_DEPRECATED("Use PrecomputedChecksumsOption instead")
+    UseMD5ValueOption {
   using Type = std::string;
 };
 
