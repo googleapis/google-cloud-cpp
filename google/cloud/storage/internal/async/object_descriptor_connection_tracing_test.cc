@@ -38,34 +38,13 @@ using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
-using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::PromiseWithOTelContext;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
-using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
-
-// A helper to set expectations on a mock async reader. It captures the OTel
-// context and returns a future that can be controlled by the test.
-auto expect_context = [](auto& p) {
-  return [&p] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    EXPECT_TRUE(OTelContextCaptured());
-    return p.get_future();
-  };
-};
-
-// A helper to be used in a `.then()` clause. It verifies the OTel context
-// has been detached before the user receives the result.
-auto expect_no_context = [](auto f) {
-  auto t = f.get();
-  EXPECT_FALSE(ThereIsAnActiveSpan());
-  EXPECT_FALSE(OTelContextCaptured());
-  return t;
-};
 
 TEST(ObjectDescriptorConnectionTracing, Read) {
   namespace sc = ::opentelemetry::semconv;
@@ -105,15 +84,16 @@ TEST(ObjectDescriptorConnectionTracing,
 
   auto mock_connection =
       std::make_shared<MockAsyncObjectDescriptorConnection>();
-  auto* mock_reader_ptr = new MockAsyncReaderConnection;
+  auto mock_reader = std::make_unique<MockAsyncReaderConnection>();
   PromiseWithOTelContext<ReadResponse> p;
-  EXPECT_CALL(*mock_reader_ptr, Read).WillOnce([&p] { return p.get_future(); });
+  EXPECT_CALL(*mock_reader, Read).WillOnce([&p] { return p.get_future(); });
 
   EXPECT_CALL(*mock_connection, Read)
-      .WillOnce([&](ObjectDescriptorConnection::ReadParams p) {
+      .WillOnce([&, r = std::move(mock_reader)](
+                    ObjectDescriptorConnection::ReadParams p) mutable {
         EXPECT_EQ(p.start, 100);
         EXPECT_EQ(p.length, 200);
-        return std::unique_ptr<storage::AsyncReaderConnection>(mock_reader_ptr);
+        return std::move(r);
       });
 
   auto connection = MakeTracingObjectDescriptorConnection(
