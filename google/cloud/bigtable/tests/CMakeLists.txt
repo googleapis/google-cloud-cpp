@@ -50,6 +50,9 @@ foreach (fname ${bigtable_client_integration_tests})
                 gRPC::grpc++
                 gRPC::grpc
                 protobuf::libprotobuf)
+    if ("${fname}" STREQUAL "observability_integration_test.cc")
+        target_link_libraries(${target} PRIVATE otel_collector)
+    endif ()
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS

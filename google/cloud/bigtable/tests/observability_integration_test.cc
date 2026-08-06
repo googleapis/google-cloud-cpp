@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_cat.h"
@@ -28,15 +29,54 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-namespace testing {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::AllOf;
+using ::testing::Contains;
+using ::testing::Each;
 using ::testing::Eq;
+using ::testing::ExplainMatchResult;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::Property;
 using ::testing::StartsWith;
+
+MATCHER_P(MetricType, matcher, "") {
+  return ExplainMatchResult(matcher, arg.metric().type(), result_listener);
+}
+
+MATCHER_P(ResourceType, matcher, "") {
+  return ExplainMatchResult(matcher, arg.resource().type(), result_listener);
+}
+
+MATCHER_P2(HasMetricLabel, key, val_matcher, "") {
+  auto const& labels = arg.metric().labels();
+  auto it = labels.find(key);
+  if (it == labels.end()) {
+    *result_listener << "no metric label '" << key << "'";
+    return false;
+  }
+  return ExplainMatchResult(val_matcher, it->second, result_listener);
+}
+
+MATCHER_P2(HasResourceLabel, key, val_matcher, "") {
+  auto const& labels = arg.resource().labels();
+  auto it = labels.find(key);
+  if (it == labels.end()) {
+    *result_listener << "no resource label '" << key << "'";
+    return false;
+  }
+  return ExplainMatchResult(val_matcher, it->second, result_listener);
+}
+
+MATCHER_P(HasTimeSeries, ts_matcher, "") {
+  return ExplainMatchResult(Contains(ts_matcher), arg.time_series(),
+                            result_listener);
+}
 
 class ObservabilityIntegrationTest
     : public ::google::cloud::bigtable::testing::TableIntegrationTest {
@@ -103,11 +143,19 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
           std::chrono::seconds(5));
 
   auto const table_id = TableTestEnvironment::table_id();
+  bool const is_dynamic = google::cloud::internal::GetEnv(
+                              "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
+                              .value_or("") == "dynamic";
 
   // Add scoped connection to ensure metrics are flushed on destruction.
   {
-    auto conn = MakeDataConnection(
-        {InstanceResource(Project(project_id()), instance_id())}, options);
+    std::shared_ptr<DataConnection> conn;
+    if (is_dynamic) {
+      conn = MakeDataConnection(
+          {InstanceResource(Project(project_id()), instance_id())}, options);
+    } else {
+      conn = MakeDataConnection(options);
+    }
     auto table = Table(std::move(conn),
                        TableResource(project_id(), instance_id(), table_id));
 
@@ -126,52 +174,38 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
   }
 
   auto recorded = collector_service_.recorded_metrics();
-  ASSERT_FALSE(recorded.empty());
+  ASSERT_THAT(recorded, Not(IsEmpty()));
+  EXPECT_THAT(
+      recorded,
+      Each(Property(&google::monitoring::v3::CreateTimeSeriesRequest::name,
+                    Eq(absl::StrCat("projects/", project_id())))));
 
-  bool found_operation_latencies = false;
-  bool found_attempt_latencies = false;
+  auto has_resource_labels = AllOf(HasResourceLabel("project_id", project_id()),
+                                   HasResourceLabel("instance", instance_id()),
+                                   HasResourceLabel("table", table_id));
 
-  for (auto const& req : recorded) {
-    EXPECT_EQ(req.name(), absl::StrCat("projects/", project_id()));
-
-    for (auto const& ts : req.time_series()) {
-      auto const& metric_type = ts.metric().type();
-      EXPECT_THAT(metric_type,
-                  StartsWith("bigtable.googleapis.com/internal/client/"));
-
-      if (metric_type.find("operation_latencies") != std::string::npos) {
-        found_operation_latencies = true;
-      }
-      if (metric_type.find("attempt_latencies") != std::string::npos) {
-        found_attempt_latencies = true;
-      }
-
-      auto const& labels = ts.resource().labels();
-      auto project_it = labels.find("project_id");
-      if (project_it != labels.end()) {
-        EXPECT_EQ(project_it->second, project_id());
-      }
-      auto instance_it = labels.find("instance");
-      if (instance_it != labels.end()) {
-        EXPECT_EQ(instance_it->second, instance_id());
-      }
-      auto table_it = labels.find("table");
-      if (table_it != labels.end()) {
-        EXPECT_EQ(table_it->second, table_id);
-      }
-      auto zone_it = labels.find("zone");
-      if (zone_it != labels.end() && !TableTestEnvironment::zone_a().empty()) {
-        std::vector<absl::string_view> parts =
-            absl::StrSplit(TableTestEnvironment::zone_a(), '-');
-        auto prefix = parts.size() >= 2 ? absl::StrCat(parts[0], "-", parts[1])
-                                        : TableTestEnvironment::zone_a();
-        EXPECT_THAT(zone_it->second, StartsWith(prefix));
-      }
-    }
+  if (!TableTestEnvironment::zone_a().empty()) {
+    std::vector<absl::string_view> parts =
+        absl::StrSplit(TableTestEnvironment::zone_a(), '-');
+    auto prefix = parts.size() >= 2 ? absl::StrCat(parts[0], "-", parts[1])
+                                    : TableTestEnvironment::zone_a();
+    EXPECT_THAT(recorded, Contains(HasTimeSeries(AllOf(
+                              MetricType(HasSubstr("operation_latencies")),
+                              has_resource_labels,
+                              HasResourceLabel("zone", StartsWith(prefix))))));
+    EXPECT_THAT(recorded, Contains(HasTimeSeries(AllOf(
+                              MetricType(HasSubstr("attempt_latencies")),
+                              has_resource_labels,
+                              HasResourceLabel("zone", StartsWith(prefix))))));
+  } else {
+    EXPECT_THAT(recorded, Contains(HasTimeSeries(AllOf(
+                              MetricType(HasSubstr("operation_latencies")),
+                              has_resource_labels))));
+    EXPECT_THAT(
+        recorded,
+        Contains(HasTimeSeries(AllOf(MetricType(HasSubstr("attempt_latencies")),
+                                     has_resource_labels))));
   }
-
-  EXPECT_TRUE(found_operation_latencies);
-  EXPECT_TRUE(found_attempt_latencies);
 }
 
 TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
@@ -191,89 +225,58 @@ TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
           std::chrono::seconds(5));
 
   auto const table_id = TableTestEnvironment::table_id();
+  bool const is_dynamic = google::cloud::internal::GetEnv(
+                              "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
+                              .value_or("") == "dynamic";
+  std::string const expected_lb_policy =
+      is_dynamic ? "RANDOM_TWO_LEAST_USED" : "ROUND_ROBIN";
 
-  auto verify_pool_metric = [this, &options, &table_id](
-                                bool dynamic_pool,
-                                std::string const& expected_lb_policy) {
-    collector_service_.Clear();
-    {
-      std::shared_ptr<DataConnection> conn;
-      if (dynamic_pool) {
-        conn = MakeDataConnection(
-            {InstanceResource(Project(project_id()), instance_id())}, options);
-      } else {
-        conn = MakeDataConnection(options);
-      }
-      auto table = Table(std::move(conn),
-                         TableResource(project_id(), instance_id(), table_id));
-
-      std::string const row_key = "observability-rpc-" + expected_lb_policy;
-      std::vector<Cell> expected{{row_key, "family4", "c0", 1000, "v1000"},
-                                 {row_key, "family4", "c1", 2000, "v2000"}};
-
-      // Perform mutations and read calls
-      Apply(table, row_key, expected);
-      auto actual = ReadRows(table, Filter::RowKeysRegex(row_key));
-      CheckEqualUnordered(expected, actual);
-
-      // Wait for the periodic 5-second exporter background thread to flush
-      // metrics while conn is active
-      std::this_thread::sleep_for(std::chrono::seconds(6));
+  collector_service_.Clear();
+  {
+    std::shared_ptr<DataConnection> conn;
+    if (is_dynamic) {
+      conn = MakeDataConnection(
+          {InstanceResource(Project(project_id()), instance_id())}, options);
+    } else {
+      conn = MakeDataConnection(options);
     }
+    auto table = Table(std::move(conn),
+                       TableResource(project_id(), instance_id(), table_id));
 
-    auto recorded = collector_service_.recorded_metrics();
-    ASSERT_THAT(recorded, Not(IsEmpty()));
+    std::string const row_key = "observability-rpc-" + expected_lb_policy;
+    std::vector<Cell> expected{{row_key, "family4", "c0", 1000, "v1000"},
+                               {row_key, "family4", "c1", 2000, "v2000"}};
 
-    bool found_outstanding_rpcs = false;
-    for (auto const& req : recorded) {
-      EXPECT_THAT(req.name(), Eq(absl::StrCat("projects/", project_id())));
+    // Perform mutations and read calls
+    Apply(table, row_key, expected);
+    auto actual = ReadRows(table, Filter::RowKeysRegex(row_key));
+    CheckEqualUnordered(expected, actual);
 
-      for (auto const& ts : req.time_series()) {
-        auto const& metric_type = ts.metric().type();
-        EXPECT_THAT(metric_type,
-                    StartsWith("bigtable.googleapis.com/internal/client/"));
+    // Wait for the periodic 5-second exporter background thread to flush
+    // metrics while conn is active
+    std::this_thread::sleep_for(std::chrono::seconds(6));
+  }
 
-        if (metric_type.find("connection_pool/outstanding_rpcs") !=
-            std::string::npos) {
-          found_outstanding_rpcs = true;
-          EXPECT_THAT(ts.resource().type(),
-                      Eq("bigtable.googleapis.com/Client"));
+  auto recorded = collector_service_.recorded_metrics();
+  ASSERT_THAT(recorded, Not(IsEmpty()));
+  EXPECT_THAT(
+      recorded,
+      Each(Property(&google::monitoring::v3::CreateTimeSeriesRequest::name,
+                    Eq(absl::StrCat("projects/", project_id())))));
 
-          auto const& res_labels = ts.resource().labels();
-          auto project_it = res_labels.find("project_id");
-          if (project_it != res_labels.end()) {
-            EXPECT_THAT(project_it->second, Eq(project_id()));
-          }
-          auto instance_it = res_labels.find("instance");
-          if (instance_it != res_labels.end()) {
-            EXPECT_THAT(instance_it->second, Eq(instance_id()));
-          }
-
-          auto const& metric_labels = ts.metric().labels();
-          auto lb_policy_it = metric_labels.find("channel_pool_lb_policy");
-          ASSERT_THAT(lb_policy_it, Not(Eq(metric_labels.end())));
-          EXPECT_THAT(lb_policy_it->second, Eq(expected_lb_policy));
-
-          auto transport_it = metric_labels.find("transport_type");
-          ASSERT_THAT(transport_it, Not(Eq(metric_labels.end())));
-          EXPECT_THAT(transport_it->second, Not(IsEmpty()));
-
-          auto streaming_it = metric_labels.find("streaming");
-          ASSERT_THAT(streaming_it, Not(Eq(metric_labels.end())));
-          EXPECT_THAT(streaming_it->second, Not(IsEmpty()));
-        }
-      }
-    }
-    EXPECT_TRUE(found_outstanding_rpcs)
-        << "Failed to find outstanding_rpcs metric for " << expected_lb_policy;
-  };
-
-  verify_pool_metric(/*dynamic_pool=*/true, "RANDOM_TWO_LEAST_USED");
-  verify_pool_metric(/*dynamic_pool=*/false, "ROUND_ROBIN");
+  EXPECT_THAT(recorded,
+              Contains(HasTimeSeries(AllOf(
+                  MetricType(HasSubstr("connection_pool/outstanding_rpcs")),
+                  ResourceType("bigtable.googleapis.com/Client"),
+                  HasResourceLabel("project_id", project_id()),
+                  HasResourceLabel("instance", instance_id()),
+                  HasMetricLabel("channel_pool_lb_policy", expected_lb_policy),
+                  HasMetricLabel("transport_type", Not(IsEmpty())),
+                  HasMetricLabel("streaming", Not(IsEmpty()))))));
 }
 
 }  // namespace
-}  // namespace testing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

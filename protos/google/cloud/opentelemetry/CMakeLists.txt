@@ -19,3 +19,9 @@ endif ()
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/testing")
     add_subdirectory(testing)
 endif ()
+
+if (IS_DIRECTORY "${PROJECT_SOURCE_DIR}/ci/otel_collector"
+    AND EXISTS "${PROJECT_SOURCE_DIR}/ci/otel_collector/CMakeLists.txt")
+    add_subdirectory("${PROJECT_SOURCE_DIR}/ci/otel_collector"
+                     "${CMAKE_CURRENT_BINARY_DIR}/ci_otel_collector")
+endif ()
