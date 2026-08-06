@@ -10,34 +10,6 @@ project that need to create a new release. We expect the reader to be familiar
 the project itself, [git][git-docs], [GitHub][github-guides], and
 [semantic versioning](https://semver.org).
 
-## 0. Update googleapis and Publish to BCR
-
-First, ensure that our release includes a `googleapis` commit that adheres to
-our [update policy][googleapis-sha-update-policy]. This generally means aiming
-for a commit that is 5-7 days old. You may need to run the
-`external/googleapis/renovate.sh` script to select the desired commit. By
-default, it uses the latest commit, but you can specify an older one using the
-`COMMIT` and `COMMIT_DATE` variables.
-
-Once the `googleapis` commit has been updated in our repository and the change
-is merged, run the `release/publish-bcr.sh` script using the same selected
-COMMIT. This script will create a Pull Request in the `googleapis/googleapis`
-repository to publish our new version to the Bazel Central Registry. You will
-need to provide the version number and the corresponding `googleapis` commit SHA
-to the script. Oversee the generated PR and ensure it is merged before
-proceeding with the release.
-
-```bash
-release/publish-bcr.sh --ref "${COMMIT}" --bcr_organization "${your_gh_id}"
-```
-
-Note that either `--bcr_organization` or `--bcr_folder` are necessary in order
-for the script to use your fork of `bazel-central-registry`. Pushes to the
-original `bazelbuild/bazel-central-registry` are not allowed.
-
-You can find more information about running the script in
-[its readme](https://github.com/googleapis/googleapis/blob/e1b12be90da62015f0bea9026d217f0abc32cafe/.bcr/README.md)
-
 ## 1. Preparing for a release
 
 To create a new release you need to perform some maintenance tasks, these are
@@ -188,9 +160,8 @@ Review the new release in the GitHub web UI (the link to the pre-release will be
 output from the `release.sh` script that was run in the previous step). If
 everything looks OK:
 
-1. Uncheck the pre-release checkbox.
-1. Check the latest release checkbox.
-1. Click the update release button.
+1. Change the "Release label" from "Pre-release" to "Latest".
+1. Click the "Update release" button.
 
 ## 4. Check the published reference docs
 
@@ -231,7 +202,107 @@ Please note that we use more strict settings for release branches than for
 - Turn on the `Restrict who can push to matching branches`. Only Google team
   members should be pushing to release branches.
 
-## 6. Push the release to Microsoft vcpkg
+## 6. Update the google_cloud_cpp BCR module
+
+[PR#9676](https://github.com/bazelbuild/bazel-central-registry/pull/9676) is a
+good example of the changes you will need to make.
+
+*NOTE*: Be sure to add the comment `@bazel-io skip_check unstable_url` to the
+PR.
+
+### a. Get to your clone of bazel-central-registry
+
+#### Create a fork of https://github.com/bazelbuild/bazel-central-registry.git
+
+Clone the fork
+
+```shell
+git clone git@github.com:<username>/bazel-central-registry.git
+```
+
+#### Sync the `main` branch in your fork to the upstream version
+
+```shell
+cd bazel-central-registry
+git pull upstream main
+```
+
+### b. Make a PR for the version update
+
+#### Save the old and new versions as an environment variables
+
+```shell
+OLD_VERSION=... # e.g. v2.12.0
+VERSION=... # e.g. v2.13.0
+```
+
+#### Create a feature branch.
+
+```shell
+git checkout -b google-cloud-cpp-update-to-${VERSION}
+```
+
+#### Copy the files from the previous version directory to the new
+
+```shell
+mkdir modules/google_cloud_cpp/${VERSION}
+cp -r modules/google_cloud_cpp/${OLD_VERSION}/* modules/google_cloud_cpp/${VERSION}
+```
+
+#### Overwrite the the MODULE.bazel file with MODULE.bazel file from the release
+
+```shell
+curl https://raw.githubusercontent.com/googleapis/google-cloud-cpp/refs/tags/v${VERSION}/MODULE.bazel > modules/google_cloud_cpp/${VERSION}/MODULE.bazel
+```
+
+#### Update the "versions" section of modules/google_cloud_cpp/metadata.json to add the new version
+
+```json
+"versions": [
+  "3.6.0",
+  "3.7.0",
+  "3.8.0"
+]
+```
+
+#### Update the modules/google_cloud_cpp/3.8.0/source.json
+
+Compute new base64 sha256 checksum for the tar.gz file with the following
+command:
+
+```shell
+curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/v${VERSION}.tar.gz | sha256sum | awk '{print $1}' | xxd -r -p | base64
+```
+
+- Update the "integrity" field with the new base64 encoded sha256 checksum.
+
+```shell
+sed -i "s#\"integrity\": \"sha256-.*=\"#\"integrity\": \"sha256-${SHA256}\"#" modules/google_cloud_cpp/${VERSION}/source.json
+```
+
+- Update the "url" and "strip_prefix" fields with the new version manually.
+
+#### Commit these changes
+
+```shell
+git add modules/google_cloud_cpp
+git commit -m"feat: add google_cloud_cpp@${VERSION}"
+```
+
+#### Push the changes to the remote repo
+
+```shell
+git push
+```
+
+#### Create the PR
+
+https://github.com/bazelbuild/bazel-central-registry/pulls
+
+*NOTE*: Be sure to add the comment `@bazel-io skip_check unstable_url` to the
+PR.
+
+## 7. \[BLOCKED on [vcpkg#47167](https://github.com/microsoft/vcpkg/issues/47167)\] Push the release to Microsoft vcpkg
 
 [PR#32391] is probably a good example of the changes you will need to make.
 
@@ -356,14 +427,14 @@ and
 ```
 </pre>
 
-## 7. Monitor the automation on Conda
+## 8. Monitor the automation on Conda
 
 On [Conda](https://conda.io) things are mostly automated. A robot will create a
 PR, similar to [PR#138]. If you want, subscribe to notifications in the
 [conda feedstock repository] or just look at the PRs in that repository over the
 next 24 hours.
 
-## 8. [optional] Push the release to Conan
+## 9. [optional] Push the release to Conan
 
 The documentation has moved to the
 [How-To Guide: Update Conan Package](/release/howto-update-conan-package.md).
@@ -448,7 +519,6 @@ ______________________________________________________________________
 [git-docs]: https://git-scm.com/doc
 [github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches
 [github-guides]: https://guides.github.com/
-[googleapis-sha-update-policy]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2024-08-13-googleapis-sha-update-policy.md
 [pr#138]: https://github.com/conda-forge/google-cloud-cpp-feedstock/pull/138
 [pr#15008]: https://github.com/googleapis/google-cloud-cpp/pull/15008
 [pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
