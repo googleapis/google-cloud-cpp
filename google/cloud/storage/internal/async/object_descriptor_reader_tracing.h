@@ -26,7 +26,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<storage::AsyncReaderConnection>
 MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl,
-                                  absl::string_view cache_status);
+                                  absl::string_view cache_status,
+                                opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span =
+        opentelemetry::trace::Tracer::GetCurrentSpan());
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

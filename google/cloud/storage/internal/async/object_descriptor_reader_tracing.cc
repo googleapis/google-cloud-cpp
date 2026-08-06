@@ -32,17 +32,23 @@ namespace sc = ::opentelemetry::semconv;
 class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
  public:
   explicit ObjectDescriptorReaderTracing(std::shared_ptr<ReadRange> impl,
-                                         absl::string_view cache_status)
-      : ObjectDescriptorReader(std::move(impl)), cache_status_(cache_status) {}
+                                         absl::string_view cache_status,
+                                         opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span)
+      : ObjectDescriptorReader(std::move(impl)), cache_status_(cache_status), parent_span_(std::move(parent_span)) {}
 
   ~ObjectDescriptorReaderTracing() override = default;
 
   future<ObjectDescriptorReader::ReadResponse> Read() override {
+    opentelemetry::trace::StartSpanOptions options;
+    if (parent_span_ && parent_span_->GetContext().IsValid()) {
+      options.parent = parent_span_->GetContext();
+    }
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadRange");
     if (!cache_status_.empty()) {
       span->SetAttribute("gl-cpp.initial-read-ranges.cache-status",
                          std::string(cache_status_));
     }
+
     internal::OTelScope scope(span);
     return ObjectDescriptorReader::Read().then(
         [span = std::move(span),
@@ -72,15 +78,18 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
 
  private:
   absl::string_view cache_status_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span_;
 };
 
 }  // namespace
 
 std::unique_ptr<storage::AsyncReaderConnection>
 MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl,
-                                  absl::string_view cache_status) {
+                                  absl::string_view cache_status,
+                                  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span) {
   return std::make_unique<ObjectDescriptorReaderTracing>(std::move(impl),
-                                                         cache_status);
+                                                         cache_status,
+                                                        std::move(parent_span));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
