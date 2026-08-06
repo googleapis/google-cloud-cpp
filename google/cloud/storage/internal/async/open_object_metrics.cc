@@ -53,19 +53,22 @@ struct StreamOpenMetrics {
 #endif
 
 void OpenObjectMetrics::RecordCall() {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
   t0_ = std::chrono::steady_clock::now();
 #endif
 }
 
 void OpenObjectMetrics::RecordStart() {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
   t1_ = std::chrono::steady_clock::now();
 #endif
 }
 
 void OpenObjectMetrics::RecordWrite() {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
   t2_ = std::chrono::steady_clock::now();
 #endif
 }
@@ -94,9 +97,13 @@ void OpenObjectMetrics::RecordMetrics(
 void OpenObjectMetrics::RecordRead(
     std::string const& bucket,
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span) {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
   auto t3 = std::chrono::steady_clock::now();
+#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
   RecordMetrics(bucket, t3);
+#else
+  (void)bucket;
+#endif
+
   if (span && span->GetContext().IsValid()) {
     auto p1 = static_cast<double>(
         std::chrono::duration_cast<std::chrono::microseconds>(t1_ - t0_)
@@ -112,10 +119,6 @@ void OpenObjectMetrics::RecordRead(
                     {"gl-cpp.latency.server_metadata", p2},
                     {"gl-cpp.latency.stream_open", p3}});
   }
-#else
-  (void)bucket;
-  (void)span;
-#endif
 }
 #else
 void OpenObjectMetrics::RecordRead(std::string const& bucket) {

@@ -46,7 +46,10 @@ class OpenObjectMetrics {
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
   void RecordMetrics(std::string const& bucket,
                      std::chrono::steady_clock::time_point t3);
+#endif
 
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
   std::chrono::steady_clock::time_point t0_;
   std::chrono::steady_clock::time_point t1_;
   std::chrono::steady_clock::time_point t2_;
