@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OPEN_OBJECT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OPEN_OBJECT_H
 
+#include "google/cloud/storage/internal/async/open_object_metrics.h"
 #include "google/cloud/storage/internal/async/open_stream.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/completion_queue.h"
@@ -108,12 +109,10 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
   std::shared_ptr<OpenStream> rpc_;
   promise<StatusOr<OpenStreamResult>> promise_;
   google::storage::v2::BidiReadObjectRequest initial_request_;
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-  std::chrono::steady_clock::time_point t0_;
-  std::chrono::steady_clock::time_point t1_;
-  std::chrono::steady_clock::time_point t2_;
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
 #endif
+  OpenObjectMetrics metrics_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

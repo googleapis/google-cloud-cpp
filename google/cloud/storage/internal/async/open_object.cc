@@ -44,37 +44,9 @@ OpenObject::OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
           stub, cq, std::move(context), std::move(options), request))),
       initial_request_(std::move(request)) {}
 
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-struct StreamOpenMetrics {
-  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-      stream_open_latency;
-  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-      network_handshake;
-  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-      server_metadata_latency;
-
-  static StreamOpenMetrics const& Instance() {
-    static auto const metrics = [] {
-      auto meter =
-          opentelemetry::metrics::Provider::GetMeterProvider()->GetMeter(
-              "storage", "v1");
-      return StreamOpenMetrics{
-          meter->CreateDoubleHistogram("gl-cpp.latency.stream_open",
-                                       "End-to-End Stream Open", "us"),
-          meter->CreateDoubleHistogram("gl-cpp.latency.network_handshake",
-                                       "Network Handshake", "us"),
-          meter->CreateDoubleHistogram("gl-cpp.latency.server_metadata",
-                                       "Server Metadata Latency", "us"),
-      };
-    }();
-    return metrics;
-  }
-};
-#endif
-
 future<StatusOr<OpenStreamResult>> OpenObject::Call() {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-  t0_ = std::chrono::steady_clock::now();
+  metrics_.RecordCall();
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   span_ = opentelemetry::trace::Tracer::GetCurrentSpan();
 #endif
   auto future = promise_.get_future();
@@ -99,9 +71,7 @@ std::unique_ptr<OpenStream::StreamingRpc> OpenObject::CreateRpc(
 }
 
 void OpenObject::OnStart(bool ok) {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-  t1_ = std::chrono::steady_clock::now();
-#endif
+  metrics_.RecordStart();
   if (!ok) return DoFinish();
   rpc_->Write(initial_request_).then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnWrite(f.get());
@@ -109,9 +79,7 @@ void OpenObject::OnStart(bool ok) {
 }
 
 void OpenObject::OnWrite(bool ok) {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-  t2_ = std::chrono::steady_clock::now();
-#endif
+  metrics_.RecordWrite();
   if (!ok) return DoFinish();
   rpc_->Read().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnRead(f.get());
@@ -120,32 +88,12 @@ void OpenObject::OnWrite(bool ok) {
 
 void OpenObject::OnRead(
     std::optional<google::storage::v2::BidiReadObjectResponse> response) {
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-  auto t3 = std::chrono::steady_clock::now();
-  auto const& metrics = StreamOpenMetrics::Instance();
-
-  auto p1 = static_cast<double>(
-      std::chrono::duration_cast<std::chrono::microseconds>(t1_ - t0_).count());
-  auto p2 = static_cast<double>(
-      std::chrono::duration_cast<std::chrono::microseconds>(t3 - t2_).count());
-  auto p3 = static_cast<double>(
-      std::chrono::duration_cast<std::chrono::microseconds>(t3 - t0_).count());
-
-  auto bucket = initial_request_.read_object_spec().bucket();
-  metrics.network_handshake->Record(p1, {{"gcp.storage.bucket", bucket}},
-                                    opentelemetry::context::Context{});
-  metrics.server_metadata_latency->Record(p2, {{"gcp.storage.bucket", bucket}},
-                                          opentelemetry::context::Context{});
-  metrics.stream_open_latency->Record(p3, {{"gcp.storage.bucket", bucket}},
-                                      opentelemetry::context::Context{});
-
-  if (span_ && span_->GetContext().IsValid()) {
-    span_->AddEvent("gl-cpp.open.read",
-                    {{"gl-cpp.latency.network_handshake", p1},
-                     {"gl-cpp.latency.server_metadata", p2},
-                     {"gl-cpp.latency.stream_open", p3}});
-  }
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  metrics_.RecordRead(initial_request_.read_object_spec().bucket(), span_);
+#else
+  metrics_.RecordRead(initial_request_.read_object_spec().bucket());
 #endif
+
   if (!response) return DoFinish();
   promise_.set_value(OpenStreamResult{std::move(rpc_), std::move(*response)});
 }

@@ -123,6 +123,8 @@ add_library(
     internal/async/object_descriptor_reader_tracing.h
     internal/async/open_object.cc
     internal/async/open_object.h
+    internal/async/open_object_metrics.cc
+    internal/async/open_object_metrics.h
     internal/async/open_stream.cc
     internal/async/open_stream.h
     internal/async/partial_upload.cc
