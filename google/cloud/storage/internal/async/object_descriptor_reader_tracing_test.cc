@@ -156,11 +156,9 @@ TEST(ObjectDescriptorReaderTracing, ReadWithParentSpan) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      spans,
-      ElementsAre(
-          AllOf(SpanNamed("storage::AsyncConnection::ReadRange"),
-                SpanWithParent(parent_span)),
-          SpanNamed("test-parent-span")));
+      spans, ElementsAre(AllOf(SpanNamed("storage::AsyncConnection::ReadRange"),
+                               SpanWithParent(parent_span)),
+                         SpanNamed("test-parent-span")));
 }
 
 }  // namespace
