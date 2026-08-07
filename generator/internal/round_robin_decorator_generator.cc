@@ -17,6 +17,7 @@
 #include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
@@ -114,75 +115,81 @@ $round_robin_class_name$::$round_robin_class_name$(
 
   for (auto const& method : methods()) {
     if (IsStreamingRead(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
 $round_robin_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const& options,
-    $request_type$ const& request) {
-  return Child()->$method_name$(std::move(context), options, request);
+    $request_type$ const& request$op_ctx_shared_decl$) {
+  return Child()->$method_name$(std::move(context), options, request$op_ctx_shared_arg$);
 }
 )""");
       continue;
     }
     if (IsStreamingWrite(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
     $request_type$, $response_type$>>
 $round_robin_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options) {
-  return Child()->$method_name$(std::move(context), options);
+    Options const& options$op_ctx_shared_decl$) {
+  return Child()->$method_name$(std::move(context), options$op_ctx_shared_arg$);
 }
 )""");
       continue;
     }
     if (IsBidirStreaming(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) {
   return Child()->Async$method_name$(
-      cq, std::move(context), std::move(options));
+      cq, std::move(context), std::move(options)$op_ctx_shared_arg$);
 }
 )""");
       continue;
     }
     if (IsLongrunningOperation(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 future<StatusOr<google::longrunning::Operation>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_decl$) {
   return Child()->Async$method_name$(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 )""");
 
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 StatusOr<google::longrunning::Operation>
 $round_robin_class_name$::$method_name$(
       grpc::ClientContext& context,
       Options options,
-      $request_type$ const& request) {
-  return Child()->$method_name$(context, options, request);
+      $request_type$ const& request$op_ctx_decl$) {
+  return Child()->$method_name$(context, options, request$op_ctx_arg$);
 }
 )""");
 
       continue;
     }
-    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""(
 $return_type$ $round_robin_class_name$::$method_name$(
     grpc::ClientContext& context,
     Options const& options,
-    $request_type$ const& request) {
-  return Child()->$method_name$(context, options, request);
+    $request_type$ const& request$op_ctx_decl$) {
+  return Child()->$method_name$(context, options, request$op_ctx_arg$);
 }
 )""");
   }
@@ -191,59 +198,63 @@ $return_type$ $round_robin_class_name$::$method_name$(
     // Nothing to do, these are always asynchronous.
     if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
     $response_type$>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_decl$) {
   return Child()->Async$method_name$(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 )""");
       continue;
     }
     if (IsStreamingWrite(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$,
     $response_type$>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) {
   return Child()->Async$method_name$(
-      cq, std::move(context), std::move(options));
+      cq, std::move(context), std::move(options)$op_ctx_shared_arg$);
 }
 )""");
       continue;
     }
     CcPrintMethod(method, __FILE__, __LINE__, "\nfuture<$return_type$>");
-    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""(
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_decl$) {
   return Child()->Async$method_name$(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 )""");
   }
 
   // long-running operation support methods
   if (HasLongrunningMethod()) {
-    CcPrint(R"""(
+    CcPrint(
+        R"""(
 future<StatusOr<google::longrunning::Operation>>
 $round_robin_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::GetOperationRequest const& request$op_ctx_shared_decl$) {
   return Child()->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 
 future<Status>
@@ -251,9 +262,9 @@ $round_robin_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::longrunning::CancelOperationRequest const& request) {
+    google::longrunning::CancelOperationRequest const& request$op_ctx_shared_decl$) {
   return Child()->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 )""");
   }

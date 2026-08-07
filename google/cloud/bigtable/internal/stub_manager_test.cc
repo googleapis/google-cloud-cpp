@@ -1,3 +1,4 @@
+#include "google/cloud/bigtable/internal/operation_context.h"
 // Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/stub_manager.h"
 #include "google/cloud/bigtable/instance_resource.h"
+#include "google/cloud/bigtable/internal/stub_manager.h"
 #include "google/cloud/bigtable/table_resource.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -41,7 +42,8 @@ TEST(StubManagerTest, NoAffinity) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .WillOnce([&](grpc::ClientContext&, Options const&,
-                    google::bigtable::v2::MutateRowRequest const& request) {
+                    google::bigtable::v2::MutateRowRequest const& request,
+                    auto const&) {
         EXPECT_THAT(request.table_name(), Eq(expected_table_name));
         return google::bigtable::v2::MutateRowResponse{};
       });
@@ -52,7 +54,8 @@ TEST(StubManagerTest, NoAffinity) {
   grpc::ClientContext context;
   google::bigtable::v2::MutateRowRequest request;
   request.set_table_name(expected_table_name);
-  auto result = stub->MutateRow(context, {}, request);
+  OperationContext op_ctx;
+  auto result = stub->MutateRow(context, {}, request, op_ctx);
   EXPECT_THAT(result, IsOk());
 }
 
@@ -65,7 +68,8 @@ TEST(StubManagerTest, AffinityToExistingInstance) {
   EXPECT_CALL(*mock_stub, MutateRow)
       .WillOnce([instance_name = instance.FullName()](
                     grpc::ClientContext&, Options const&,
-                    google::bigtable::v2::MutateRowRequest const& request) {
+                    google::bigtable::v2::MutateRowRequest const& request,
+                    auto const&) {
         EXPECT_THAT(request.table_name(), StartsWith(instance_name));
         return google::bigtable::v2::MutateRowResponse{};
       });
@@ -85,7 +89,8 @@ TEST(StubManagerTest, AffinityToExistingInstance) {
   grpc::ClientContext context;
   google::bigtable::v2::MutateRowRequest request;
   request.set_table_name(expected_table_name);
-  auto result = stub->MutateRow(context, {}, request);
+  OperationContext op_ctx;
+  auto result = stub->MutateRow(context, {}, request, op_ctx);
   EXPECT_THAT(result, IsOk());
 }
 
@@ -105,7 +110,8 @@ TEST(StubManagerTest, AffinityToMissingInstance) {
     EXPECT_CALL(*mock_stub, MutateRow)
         .WillOnce([instance_name = std::string{instance_name}](
                       grpc::ClientContext&, Options const&,
-                      google::bigtable::v2::MutateRowRequest const& request) {
+                      google::bigtable::v2::MutateRowRequest const& request,
+                      auto const&) {
           EXPECT_THAT(request.table_name(), StartsWith(instance_name));
           return google::bigtable::v2::MutateRowResponse{};
         });
@@ -121,7 +127,8 @@ TEST(StubManagerTest, AffinityToMissingInstance) {
   grpc::ClientContext context;
   google::bigtable::v2::MutateRowRequest request;
   request.set_table_name(expected_table_name);
-  auto result = stub->MutateRow(context, {}, request);
+  OperationContext op_ctx;
+  auto result = stub->MutateRow(context, {}, request, op_ctx);
   EXPECT_THAT(result, IsOk());
   EXPECT_THAT(log.ExtractLines(),
               Contains(HasSubstr(

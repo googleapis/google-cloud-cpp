@@ -851,6 +851,37 @@ VarsDictionary CreateServiceVars(
   SetRetryStatusCodeExpression(vars);
   vars["transient_errors_comment"] = TransientErrorsComment(vars);
   SetLongrunningOperationServiceVars(descriptor, vars);
+  auto const experimental_bigtable_operation_context =
+      vars.find("experimental_bigtable_operation_context");
+  if (experimental_bigtable_operation_context != vars.end() &&
+      experimental_bigtable_operation_context->second == "true") {
+    vars["op_ctx_decl"] =
+        ",\n      google::cloud::bigtable_internal::OperationContext& "
+        "operation_context";
+    vars["op_ctx_arg"] = ", operation_context";
+    vars["op_ctx_cap"] = ", &operation_context";
+    vars["op_ctx_stub_decl"] =
+        ",\n    google::cloud::bigtable_internal::OperationContext&";
+    vars["op_ctx_shared_decl"] =
+        ",\n      "
+        "std::shared_ptr<google::cloud::bigtable_internal::OperationContext> "
+        "operation_context";
+    vars["op_ctx_shared_arg"] = ", std::move(operation_context)";
+    vars["op_ctx_shared_cap"] =
+        ", operation_context = std::move(operation_context)";
+    vars["op_ctx_shared_stub_decl"] =
+        ",\n    "
+        "std::shared_ptr<google::cloud::bigtable_internal::OperationContext>";
+  } else {
+    vars["op_ctx_decl"] = "";
+    vars["op_ctx_arg"] = "";
+    vars["op_ctx_cap"] = "";
+    vars["op_ctx_stub_decl"] = "";
+    vars["op_ctx_shared_decl"] = "";
+    vars["op_ctx_shared_arg"] = "";
+    vars["op_ctx_shared_cap"] = "";
+    vars["op_ctx_shared_stub_decl"] = "";
+  }
   return vars;
 }
 

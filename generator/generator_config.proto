@@ -182,6 +182,10 @@ message ServiceConfiguration {
   // The implementation for this method in the ConnectionImpl class is not
   // generated and must be handwritten in a separate .cc file.
   repeated BespokeMethod bespoke_methods = 30;
+
+  // If set to `true`, the stub class methods will include an additional
+  // parameter of type `google::cloud::bigtable_internal::OperationContext&`.
+  bool experimental_bigtable_operation_context = 31;
 }
 
 message DiscoveryDocumentDefinedProduct {

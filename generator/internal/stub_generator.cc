@@ -90,6 +90,10 @@ Status StubGenerator::GenerateHeader() {
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
+  if (HasExperimentalBigtableOperationContext()) {
+    HeaderPrint("\nclass OperationContext;\n");
+  }
+
   // Abstract interface Stub base class
   HeaderPrint(  // clang-format off
     "\n"
@@ -107,7 +111,7 @@ Status StubGenerator::GenerateHeader() {
       $response_type$>>
   $method_name$(
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options) = 0;
+      Options const& options$op_ctx_shared_decl$) = 0;
 )""");
       continue;
     }
@@ -120,41 +124,43 @@ Status StubGenerator::GenerateHeader() {
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options) = 0;
+      google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) = 0;
 )""");
       continue;
     }
     if (IsLongrunningOperation(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   virtual future<StatusOr<google::longrunning::Operation>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) = 0;
-)""");
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      $request_type$ const& request$op_ctx_shared_decl$) = 0;
+
   virtual StatusOr<google::longrunning::Operation> $method_name$(
       grpc::ClientContext& context,
       Options options,
-      $request_type$ const& request) = 0;
+      $request_type$ const& request$op_ctx_decl$) = 0;
 )""");
       continue;
     }
     if (IsStreamingRead(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
   $method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const& options,
-    $request_type$ const& request) = 0;
+    $request_type$ const& request$op_ctx_shared_decl$) = 0;
 )""");
       continue;
     }
-    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+    HeaderPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
   virtual $return_type$ $method_name$(
       grpc::ClientContext& context,
       Options const& options,
-      $request_type$ const& request) = 0;
+      $request_type$ const& request$op_ctx_decl$) = 0;
 )""");
   }
 
@@ -162,37 +168,38 @@ Status StubGenerator::GenerateHeader() {
     // Nothing to do, these are always asynchronous.
     if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
-      auto constexpr kDeclaration = R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       $response_type$>>
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) = 0;
-)""";
-      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      $request_type$ const& request$op_ctx_shared_decl$) = 0;
+)""");
       continue;
     }
     if (IsStreamingWrite(method)) {
-      auto constexpr kDeclaration = R"""(
+      HeaderPrintMethod(method, __FILE__, __LINE__,
+                        R"""(
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
       $request_type$, $response_type$>>
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) = 0;
-)""";
-      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) = 0;
+)""");
       continue;
     }
-    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+    HeaderPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
   virtual future<$return_type$>
   Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) = 0;
+    $request_type$ const& request$op_ctx_shared_decl$) = 0;
 )""");
   }
 
@@ -204,13 +211,13 @@ Status StubGenerator::GenerateHeader() {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-      google::longrunning::GetOperationRequest const& request) = 0;
+      google::longrunning::GetOperationRequest const& request$op_ctx_shared_decl$) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::longrunning::CancelOperationRequest const& request) = 0;
+      google::longrunning::CancelOperationRequest const& request$op_ctx_shared_decl$) = 0;
 )""");
   }
   // close abstract interface Stub base class
@@ -345,7 +352,7 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $response_type$>>
 Default$stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
-    Options const&) {
+    Options const&$op_ctx_shared_stub_decl$) {
   auto response = std::make_unique<$response_type$>();
   auto stream = $grpc_stub$->$method_name$(context.get(), response.get());
   return std::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
@@ -364,7 +371,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 Default$stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_stub_decl$) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<$request_type$, $response_type$>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
@@ -382,7 +389,7 @@ Default$stub_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions,
-      $request_type$ const& request) {
+      $request_type$ const& request$op_ctx_shared_stub_decl$) {
   return internal::MakeUnaryRpcImpl<$request_type$,
                                     google::longrunning::Operation>(
       cq,
@@ -401,7 +408,7 @@ StatusOr<google::longrunning::Operation>
 Default$stub_class_name$::$method_name$(
       grpc::ClientContext& context,
       Options,
-      $request_type$ const& request) {
+      $request_type$ const& request$op_ctx_stub_decl$) {
     $response_type$ response;
     auto status =
         $grpc_stub$->$method_name$(&context, request, &response);
@@ -421,7 +428,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
 Default$stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const&,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_stub_decl$) {
   auto stream = $grpc_stub$->$method_name$(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       $response_type$>>(
@@ -437,7 +444,7 @@ Default$stub_class_name$::$method_name$(
 Status
 Default$stub_class_name$::$method_name$(
   grpc::ClientContext& context, Options const&,
-  $request_type$ const& request) {
+  $request_type$ const& request$op_ctx_stub_decl$) {
     $response_type$ response;
     auto status =
         $grpc_stub$->$method_name$(&context, request, &response);
@@ -454,7 +461,7 @@ Default$stub_class_name$::$method_name$(
 StatusOr<$response_type$>
 Default$stub_class_name$::$method_name$(
   grpc::ClientContext& context, Options const&,
-  $request_type$ const& request) {
+  $request_type$ const& request$op_ctx_stub_decl$) {
     $response_type$ response;
     auto status =
         $grpc_stub$->$method_name$(&context, request, &response);
@@ -471,14 +478,15 @@ Default$stub_class_name$::$method_name$(
     if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
 
     if (IsStreamingRead(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     $response_type$>>
 Default$stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_stub_decl$) {
   return google::cloud::internal::MakeStreamingReadRpc<$request_type$, $response_type$>(
     cq, std::move(context), std::move(options), request,
     [this](grpc::ClientContext* context, $request_type$ const& request, grpc::CompletionQueue* cq) {
@@ -489,13 +497,14 @@ Default$stub_class_name$::Async$method_name$(
       continue;
     }
     if (IsStreamingWrite(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$, $response_type$>>
 Default$stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_stub_decl$) {
   return google::cloud::internal::MakeStreamingWriteRpc<$request_type$, $response_type$>(
     cq, std::move(context), std::move(options),
     [this](grpc::ClientContext* context, $response_type$* response, grpc::CompletionQueue* cq) {
@@ -514,7 +523,7 @@ Default$stub_class_name$::Async$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_stub_decl$) {
   return internal::MakeUnaryRpcImpl<$request_type$,
                                     $response_type$>(
       cq,
@@ -539,7 +548,7 @@ Default$stub_class_name$::Async$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_stub_decl$) {
   return internal::MakeUnaryRpcImpl<$request_type$,
                                     $response_type$>(
       cq,
@@ -554,14 +563,15 @@ Default$stub_class_name$::Async$method_name$(
   }
 
   if (HasLongrunningMethod()) {
-    CcPrint(R"""(
+    CcPrint(
+        R"""(
 future<StatusOr<google::longrunning::Operation>>
 Default$stub_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::GetOperationRequest const& request$op_ctx_shared_stub_decl$) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -578,7 +588,7 @@ future<Status> Default$stub_class_name$::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::longrunning::CancelOperationRequest const& request) {
+    google::longrunning::CancelOperationRequest const& request$op_ctx_shared_stub_decl$) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
       cq,
