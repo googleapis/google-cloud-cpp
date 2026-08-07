@@ -45,7 +45,8 @@ TEST(ObjectDescriptorReaderTracing, Read) {
   auto span_catcher = InstallSpanCatcher();
 
   auto impl = std::make_shared<ReadRange>(10000, 30);
-  auto reader = MakeTracingObjectDescriptorReader(impl);
+  auto reader =
+      MakeTracingObjectDescriptorReader(impl, /*cache_status=*/"TEST");
 
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
@@ -73,7 +74,8 @@ TEST(ObjectDescriptorReaderTracing, Read) {
 TEST(ObjectDescriptorReaderTracing, ReadError) {
   auto span_catcher = InstallSpanCatcher();
   auto impl = std::make_shared<ReadRange>(10000, 30);
-  auto reader = MakeTracingObjectDescriptorReader(impl);
+  auto reader =
+      MakeTracingObjectDescriptorReader(impl, /*cache_status=*/"TEST");
 
   impl->OnFinish(PermanentError());
 
