@@ -249,7 +249,7 @@ mkdir modules/google_cloud_cpp/${VERSION}
 cp -r modules/google_cloud_cpp/${OLD_VERSION}/* modules/google_cloud_cpp/${VERSION}
 ```
 
-#### Overwrite the the MODULE.bazel file with MODULE.bazel file from the release
+#### Overwrite the MODULE.bazel file with MODULE.bazel file from the release
 
 ```shell
 curl https://raw.githubusercontent.com/googleapis/google-cloud-cpp/refs/tags/v${VERSION}/MODULE.bazel > modules/google_cloud_cpp/${VERSION}/MODULE.bazel
