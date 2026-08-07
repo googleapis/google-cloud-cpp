@@ -331,26 +331,46 @@ std::string FormatCommentBlock(std::string const& comment,
   if (offset >= line_length) GCP_LOG(FATAL) << "line_length is too small";
   auto comment_width = line_length - offset;
 
-  std::vector<std::string> lines;
-  std::size_t start_pos = 0;
-  while (start_pos != std::string::npos) {
-    std::size_t boundary = start_pos + comment_width;
-    std::size_t end_pos = boundary;
-    if (boundary < comment.length()) {
-      // Look backward from the boundary for the last word
-      end_pos = comment.rfind(' ', boundary);
-      // If there is only one word, find and use its boundary
-      if (end_pos == std::string::npos || end_pos < start_pos) {
-        end_pos = comment.find(' ', boundary);
-      }
+  std::vector<std::string_view> lines;
+  std::vector<std::string_view> paragraphs = absl::StrSplit(comment, '\n');
+  for (auto const& paragraph : paragraphs) {
+    if (paragraph.empty()) {
+      lines.emplace_back();
+      continue;
     }
-    lines.push_back(comment.substr(start_pos, end_pos - start_pos));
-    start_pos = comment.find_first_not_of(' ', end_pos);
+    std::size_t start_pos = 0;
+    while (start_pos != std::string_view::npos) {
+      std::size_t boundary = start_pos + comment_width;
+      std::size_t end_pos = boundary;
+      if (boundary < paragraph.length()) {
+        // Look backward from the boundary for the last word
+        end_pos = paragraph.rfind(' ', boundary);
+        // If there is only one word, find and use its boundary
+        if (end_pos == std::string_view::npos || end_pos < start_pos) {
+          end_pos = paragraph.find(' ', boundary);
+        }
+      }
+      lines.push_back(paragraph.substr(start_pos, end_pos - start_pos));
+      start_pos = paragraph.find_first_not_of(' ', end_pos);
+    }
   }
 
   std::string indent(indent_level * indent_width, ' ');
-  std::string joiner = absl::StrCat("\n", indent, comment_introducer);
-  return absl::StrCat(indent, comment_introducer, absl::StrJoin(lines, joiner));
+  std::string trimmed_introducer = comment_introducer;
+  while (!trimmed_introducer.empty() && trimmed_introducer.back() == ' ') {
+    trimmed_introducer.pop_back();
+  }
+
+  std::string result;
+  for (std::size_t i = 0; i < lines.size(); ++i) {
+    if (i > 0) result += "\n";
+    if (lines[i].empty()) {
+      result += absl::StrCat(indent, trimmed_introducer);
+    } else {
+      result += absl::StrCat(indent, comment_introducer, lines[i]);
+    }
+  }
+  return result;
 }
 
 std::string FormatCommentKeyValueList(
