@@ -232,8 +232,8 @@ git pull upstream main
 #### Save the old and new versions as an environment variables
 
 ```shell
-OLD_VERSION=... # e.g. v2.12.0
-VERSION=... # e.g. v2.13.0
+OLD_VERSION=... # e.g. 2.12.0
+VERSION=... # e.g. 2.13.0
 ```
 
 #### Create a feature branch.
