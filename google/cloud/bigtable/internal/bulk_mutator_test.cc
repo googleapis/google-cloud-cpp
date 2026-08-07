@@ -156,7 +156,8 @@ TEST_F(BulkMutatorTest, Simple) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -210,7 +211,8 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
       // Prepare the mocks for the request.  First create a stream response
       // which indicates a partial failure.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -226,7 +228,8 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
       // Prepare a second stream response, because the client should retry after
       // the partial failure.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -282,7 +285,8 @@ TEST_F(BulkMutatorTest, PermanentFailure) {
   EXPECT_CALL(*mock, MutateRows)
       // The first RPC return one recoverable and one unrecoverable failure.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -298,7 +302,8 @@ TEST_F(BulkMutatorTest, PermanentFailure) {
       // The BulkMutator should issue a second request, which will return
       // success for the remaining mutation.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -357,7 +362,8 @@ TEST_F(BulkMutatorTest, PartialStream) {
       // This will be the stream returned by the first request.  It is missing
       // information about one of the mutations.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -373,7 +379,8 @@ TEST_F(BulkMutatorTest, PartialStream) {
       // returned by the second request, which indicates success for the missed
       // mutation on r1.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -422,7 +429,8 @@ TEST_F(BulkMutatorTest, RetryOnlyIdempotent) {
       // We will setup the mock to return recoverable transient errors for all
       // mutations.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         EXPECT_EQ(2, request.entries_size());
@@ -440,7 +448,8 @@ TEST_F(BulkMutatorTest, RetryOnlyIdempotent) {
       // idempotent mutation. Make the mock return success for it.
       .WillOnce([this, expect_r2](
                     auto context, auto const&,
-                    google::bigtable::v2::MutateRowsRequest const& request) {
+                    google::bigtable::v2::MutateRowsRequest const& request,
+                    auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         expect_r2(request);
@@ -480,7 +489,8 @@ TEST_F(BulkMutatorTest, RetryInfoHeeded) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const&) {
+                       google::bigtable::v2::MutateRowsRequest const&,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto status =
             google::cloud::internal::ResourceExhaustedError("try again");
@@ -494,7 +504,8 @@ TEST_F(BulkMutatorTest, RetryInfoHeeded) {
       // us that it is safe to retry the mutation, even though it is not
       // idempotent.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         std::vector<RowKeyType> row_keys;
         for (auto const& entry : request.entries()) {
@@ -533,7 +544,8 @@ TEST_F(BulkMutatorTest, RetryInfoIgnored) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const&) {
+                       google::bigtable::v2::MutateRowsRequest const&,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto status =
             google::cloud::internal::ResourceExhaustedError("try again");
@@ -571,7 +583,8 @@ TEST_F(BulkMutatorTest, UnconfirmedAreFailed) {
       // We will setup the mock to return recoverable failures for idempotent
       // mutations.
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         EXPECT_EQ(3, request.entries_size());
@@ -610,7 +623,8 @@ TEST_F(BulkMutatorTest, ConfiguresContext) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -639,7 +653,8 @@ TEST_F(BulkMutatorTest, MutationStatusReportedOnOkStream) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -679,7 +694,8 @@ TEST_F(BulkMutatorTest, ReportEitherRetryableMutationFailOrStreamFail) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -721,7 +737,8 @@ TEST_F(BulkMutatorTest, ReportOnlyLatestMutationStatus) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -734,7 +751,8 @@ TEST_F(BulkMutatorTest, ReportOnlyLatestMutationStatus) {
         return stream;
       })
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const& request) {
+                       google::bigtable::v2::MutateRowsRequest const& request,
+                       auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(request, HasCorrectResourceNames());
         auto stream = std::make_unique<MockMutateRowsStream>();
@@ -771,24 +789,24 @@ TEST_F(BulkMutatorTest, Throttling) {
     ::testing::InSequence seq;
     EXPECT_CALL(*mock_limiter, Acquire);
     EXPECT_CALL(*mock_stub, MutateRows)
-        .WillOnce(
-            [this](auto context, auto const&,
-                   google::bigtable::v2::MutateRowsRequest const& request) {
-              metadata_fixture_.SetServerMetadata(*context, {});
-              EXPECT_THAT(request, HasCorrectResourceNames());
-              auto stream = std::make_unique<MockMutateRowsStream>();
-              EXPECT_CALL(*stream, Read)
-                  .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
-                    *r = MakeResponse({{0, grpc::StatusCode::OK}});
-                    return std::nullopt;
-                  })
-                  .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
-                    *r = MakeResponse({{1, grpc::StatusCode::OK}});
-                    return std::nullopt;
-                  })
-                  .WillOnce(Return(Status()));
-              return stream;
-            });
+        .WillOnce([this](auto context, auto const&,
+                         google::bigtable::v2::MutateRowsRequest const& request,
+                         auto const&) {
+          metadata_fixture_.SetServerMetadata(*context, {});
+          EXPECT_THAT(request, HasCorrectResourceNames());
+          auto stream = std::make_unique<MockMutateRowsStream>();
+          EXPECT_CALL(*stream, Read)
+              .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+                *r = MakeResponse({{0, grpc::StatusCode::OK}});
+                return std::nullopt;
+              })
+              .WillOnce([](google::bigtable::v2::MutateRowsResponse* r) {
+                *r = MakeResponse({{1, grpc::StatusCode::OK}});
+                return std::nullopt;
+              })
+              .WillOnce(Return(Status()));
+          return stream;
+        });
     EXPECT_CALL(*mock_limiter, Update).Times(2);
   }
 
@@ -811,7 +829,8 @@ TEST_F(BulkMutatorTest, BigtableCookies) {
 
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const&) {
+                       google::bigtable::v2::MutateRowsRequest const&,
+                       auto const&) {
         // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
@@ -822,7 +841,8 @@ TEST_F(BulkMutatorTest, BigtableCookies) {
         return stream;
       })
       .WillOnce([this](auto context, auto const&,
-                       google::bigtable::v2::MutateRowsRequest const&) {
+                       google::bigtable::v2::MutateRowsRequest const&,
+                       auto const&) {
         // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
         EXPECT_THAT(headers,

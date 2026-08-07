@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/bigtable_random_two_least_used_decorator.h"
 #include "google/cloud/bigtable/internal/dynamic_channel_pool.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <gmock/gmock.h>
@@ -63,6 +64,8 @@ class BigtableRandomTwoLeastUsedTest : public ::testing::Test {
       stub_factory_fn_;
   CompletionQueue cq_;
   std::shared_ptr<FakeCompletionQueueImpl> fake_cq_impl_;
+  std::shared_ptr<OperationContext> op_ctx_ =
+      std::make_shared<OperationContext>();
 };
 
 TEST_F(BigtableRandomTwoLeastUsedTest, ReadRows) {
@@ -70,7 +73,7 @@ TEST_F(BigtableRandomTwoLeastUsedTest, ReadRows) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::ReadRowsRequest request;
-  auto response = decorator->ReadRows(client_context, {}, request);
+  auto response = decorator->ReadRows(client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, SampleRowKeys) {
@@ -78,7 +81,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, SampleRowKeys) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::SampleRowKeysRequest request;
-  auto response = decorator->SampleRowKeys(client_context, {}, request);
+  auto response =
+      decorator->SampleRowKeys(client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, MutateRow) {
@@ -86,7 +90,7 @@ TEST_F(BigtableRandomTwoLeastUsedTest, MutateRow) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   grpc::ClientContext client_context;
   google::bigtable::v2::MutateRowRequest request;
-  auto response = decorator->MutateRow(client_context, {}, request);
+  auto response = decorator->MutateRow(client_context, {}, request, *op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, MutateRows) {
@@ -94,7 +98,7 @@ TEST_F(BigtableRandomTwoLeastUsedTest, MutateRows) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::MutateRowsRequest request;
-  auto response = decorator->MutateRows(client_context, {}, request);
+  auto response = decorator->MutateRows(client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, CheckAndMutateRow) {
@@ -102,7 +106,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, CheckAndMutateRow) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   grpc::ClientContext client_context;
   google::bigtable::v2::CheckAndMutateRowRequest request;
-  auto response = decorator->CheckAndMutateRow(client_context, {}, request);
+  auto response =
+      decorator->CheckAndMutateRow(client_context, {}, request, *op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, PingAndWarm) {
@@ -110,7 +115,7 @@ TEST_F(BigtableRandomTwoLeastUsedTest, PingAndWarm) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   grpc::ClientContext client_context;
   google::bigtable::v2::PingAndWarmRequest request;
-  auto response = decorator->PingAndWarm(client_context, {}, request);
+  auto response = decorator->PingAndWarm(client_context, {}, request, *op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, ReadModifyWriteRow) {
@@ -118,7 +123,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, ReadModifyWriteRow) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   grpc::ClientContext client_context;
   google::bigtable::v2::ReadModifyWriteRowRequest request;
-  auto response = decorator->ReadModifyWriteRow(client_context, {}, request);
+  auto response =
+      decorator->ReadModifyWriteRow(client_context, {}, request, *op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, PrepareQuery) {
@@ -126,7 +132,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, PrepareQuery) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   grpc::ClientContext client_context;
   google::bigtable::v2::PrepareQueryRequest request;
-  auto response = decorator->PrepareQuery(client_context, {}, request);
+  auto response =
+      decorator->PrepareQuery(client_context, {}, request, *op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, ExecuteQuery) {
@@ -134,7 +141,7 @@ TEST_F(BigtableRandomTwoLeastUsedTest, ExecuteQuery) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::ExecuteQueryRequest request;
-  auto response = decorator->ExecuteQuery(client_context, {}, request);
+  auto response = decorator->ExecuteQuery(client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, AsyncReadRows) {
@@ -142,7 +149,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, AsyncReadRows) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::ReadRowsRequest request;
-  auto response = decorator->AsyncReadRows(cq_, client_context, {}, request);
+  auto response =
+      decorator->AsyncReadRows(cq_, client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, AsyncSampleRowKeys) {
@@ -151,7 +159,7 @@ TEST_F(BigtableRandomTwoLeastUsedTest, AsyncSampleRowKeys) {
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::SampleRowKeysRequest request;
   auto response =
-      decorator->AsyncSampleRowKeys(cq_, client_context, {}, request);
+      decorator->AsyncSampleRowKeys(cq_, client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, AsyncMutateRow) {
@@ -159,7 +167,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, AsyncMutateRow) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::MutateRowRequest request;
-  auto response = decorator->AsyncMutateRow(cq_, client_context, {}, request);
+  auto response =
+      decorator->AsyncMutateRow(cq_, client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, AsyncMutateRows) {
@@ -167,7 +176,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, AsyncMutateRows) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::MutateRowsRequest request;
-  auto response = decorator->AsyncMutateRows(cq_, client_context, {}, request);
+  auto response =
+      decorator->AsyncMutateRows(cq_, client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, AsyncCheckAndMutateRow) {
@@ -175,8 +185,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, AsyncCheckAndMutateRow) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::CheckAndMutateRowRequest request;
-  auto response =
-      decorator->AsyncCheckAndMutateRow(cq_, client_context, {}, request);
+  auto response = decorator->AsyncCheckAndMutateRow(cq_, client_context, {},
+                                                    request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, AsyncPingAndWarm) {
@@ -184,7 +194,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, AsyncPingAndWarm) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::PingAndWarmRequest request;
-  auto response = decorator->AsyncPingAndWarm(cq_, client_context, {}, request);
+  auto response =
+      decorator->AsyncPingAndWarm(cq_, client_context, {}, request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, AsyncReadModifyWriteRow) {
@@ -192,8 +203,8 @@ TEST_F(BigtableRandomTwoLeastUsedTest, AsyncReadModifyWriteRow) {
   auto decorator = std::make_shared<BigtableRandomTwoLeastUsed>(pool_);
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::ReadModifyWriteRowRequest request;
-  auto response =
-      decorator->AsyncReadModifyWriteRow(cq_, client_context, {}, request);
+  auto response = decorator->AsyncReadModifyWriteRow(cq_, client_context, {},
+                                                     request, op_ctx_);
 }
 
 TEST_F(BigtableRandomTwoLeastUsedTest, AsyncPrepareQuery) {
@@ -202,7 +213,7 @@ TEST_F(BigtableRandomTwoLeastUsedTest, AsyncPrepareQuery) {
   auto client_context = std::make_shared<grpc::ClientContext>();
   google::bigtable::v2::PrepareQueryRequest request;
   auto response =
-      decorator->AsyncPrepareQuery(cq_, client_context, {}, request);
+      decorator->AsyncPrepareQuery(cq_, client_context, {}, request, op_ctx_);
 }
 
 }  // namespace
