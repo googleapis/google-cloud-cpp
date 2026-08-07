@@ -265,7 +265,7 @@ curl https://raw.githubusercontent.com/googleapis/google-cloud-cpp/refs/tags/v${
 ]
 ```
 
-#### Update the modules/google_cloud_cpp/3.8.0/source.json
+#### Update the modules/google_cloud_cpp/${VERSION}/source.json
 
 Compute new base64 sha256 checksum for the tar.gz file with the following
 command:
