@@ -40,7 +40,7 @@
   }
 
   // Composed assertion:
-  EXPECT_THAT(recorded_metrics, Contains(HasTimeSeries(AllOf(
+  EXPECT_THAT(recorded_metrics, Contains(AllOf(
       MetricType(HasSubstr("outstanding_rpcs")),
-      HasMetricLabel("channel_pool_lb_policy", Eq("RANDOM_TWO_LEAST_USED"))))));
+      HasMetricLabel("channel_pool_lb_policy", Eq("RANDOM_TWO_LEAST_USED")))));
   ```
