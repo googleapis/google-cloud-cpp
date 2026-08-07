@@ -271,7 +271,7 @@ Compute new base64 sha256 checksum for the tar.gz file with the following
 command:
 
 ```shell
-curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/v${VERSION}.tar.gz | sha256sum | awk '{print $1}' | xxd -r -p | base64
+SHA256=$(curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/v${VERSION}.tar.gz | sha256sum | awk '{print $1}' | xxd -r -p | base64)
 ```
 
 - Update the "integrity" field with the new base64 encoded sha256 checksum.
