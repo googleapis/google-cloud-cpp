@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/log.h"
 #include <chrono>
 
@@ -136,8 +137,9 @@ void ScheduleStubRefresh(
             // AsyncWaitConnectionReady.
             client_context->set_deadline(std::chrono::system_clock::now() +
                                          kConnectionReadyTimeout);
+            auto op_ctx = std::make_shared<OperationContext>();
             stub->AsyncPingAndWarm(cq, client_context, std::move(options),
-                                   request)
+                                   request, std::move(op_ctx))
                 .then(
                     [weak_stub, weak_cq_impl, state, instance_name,
                      connection_status_fn = std::move(connection_status_fn)](

@@ -71,7 +71,8 @@ void AsyncRowSampler::StartIteration() {
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead<v2::SampleRowKeysResponse>(
-      stub_->AsyncSampleRowKeys(cq_, client_context_, options_, request),
+      stub_->AsyncSampleRowKeys(cq_, client_context_, options_, request,
+                                operation_context_),
       [self](v2::SampleRowKeysResponse response) {
         return self->OnRead(std::move(response));
       },
