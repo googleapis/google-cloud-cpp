@@ -71,8 +71,8 @@ class AuthorizedUserCredentials : public Credentials {
   /**
    * Creates an instance of AuthorizedUserCredentials.
    *
-   * @param rest_client a dependency injection point. It makes it possible to
-   *     mock internal REST types. This should generally not be overridden
+   * @param client_factory a dependency injection point. It makes it possible
+   *     to mock internal REST types. This should generally not be overridden
    *     except for testing.
    */
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,

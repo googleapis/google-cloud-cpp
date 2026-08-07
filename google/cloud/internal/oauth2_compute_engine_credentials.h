@@ -83,9 +83,9 @@ class ComputeEngineCredentials : public Credentials {
   /**
    * Creates an instance of ComputeEngineCredentials.
    *
-   * @param rest_client a dependency injection point. It makes it possible to
-   *     mock internal libcurl wrappers. This should generally not be overridden
-   *     except for testing.
+   * @param client_factory a dependency injection point. It makes it possible
+   *     to mock internal libcurl wrappers. This should generally not be
+   *     overridden except for testing.
    */
   explicit ComputeEngineCredentials(std::string service_account_email,
                                     Options options,
