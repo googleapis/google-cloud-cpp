@@ -128,6 +128,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool IsExperimental() const;
 
   /**
+   * Determines if the service enables experimental Bigtable OperationContext.
+   */
+  bool HasExperimentalBigtableOperationContext() const;
+
+  /**
    * Determines if the service contains at least one method that requires
    * LRO handling. This could be AIP-151 compatible or something custom.
    */

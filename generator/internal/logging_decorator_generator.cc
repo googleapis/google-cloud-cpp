@@ -165,13 +165,13 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $response_type$>>
 $logging_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options) {
+    Options const& options$op_ctx_shared_decl$) {
   using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
       $request_type$, $response_type$>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->$method_name$(std::move(context), options);
+  auto stream = child_->$method_name$(std::move(context), options$op_ctx_shared_arg$);
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -190,14 +190,14 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 $logging_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) {
   using LoggingStream =
      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<$request_type$, $response_type$>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(
-      cq, std::move(context), std::move(options));
+      cq, std::move(context), std::move(options)$op_ctx_shared_arg$);
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -208,36 +208,38 @@ $logging_class_name$::Async$method_name$(
       continue;
     }
     if (IsLongrunningOperation(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 future<StatusOr<google::longrunning::Operation>>
 $logging_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) {
+      $request_type$ const& request$op_ctx_shared_decl$) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
+      [this$op_ctx_shared_cap$](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              $request_type$ const& request) {
         return child_->Async$method_name$(
-            cq, std::move(context), std::move(options), request);
+            cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 )""");
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 StatusOr<google::longrunning::Operation>
 $logging_class_name$::$method_name$(
       grpc::ClientContext& context,
       Options options,
-      $request_type$ const& request) {
+      $request_type$ const& request$op_ctx_decl$) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this$op_ctx_cap$](grpc::ClientContext& context,
              Options const& options,
              $request_type$ const& request) {
-        return child_->$method_name$(context, options, request);
+        return child_->$method_name$(context, options, request$op_ctx_arg$);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -246,20 +248,21 @@ $logging_class_name$::$method_name$(
       continue;
     }
     if (IsStreamingRead(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     $response_type$>>
 $logging_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const& options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_decl$) {
   return google::cloud::internal::LogWrapper(
-      [this](std::shared_ptr<grpc::ClientContext> context,
+      [this$op_ctx_shared_cap$](std::shared_ptr<grpc::ClientContext> context,
              Options const& options,
              $request_type$ const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               $response_type$>> {
-        auto stream = child_->$method_name$(std::move(context), options, request);
+        auto stream = child_->$method_name$(std::move(context), options, request$op_ctx_shared_arg$);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -280,12 +283,12 @@ $logging_class_name$::$method_name$(
 $logging_class_name$::$method_name$(
     grpc::ClientContext& context,
     Options const& options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_decl$) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this$op_ctx_cap$](grpc::ClientContext& context,
              Options const& options,
              $request_type$ const& request) {
-        return child_->$method_name$(context, options, request);
+        return child_->$method_name$(context, options, request$op_ctx_arg$);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -296,14 +299,15 @@ $logging_class_name$::$method_name$(
     // Nothing to do, these are always asynchronous.
     if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
-      auto constexpr kDefinition = R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     $response_type$>>
 $logging_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_decl$) {
   using LoggingStream =
      ::google::cloud::internal::AsyncStreamingReadRpcLogging<$response_type$>;
 
@@ -312,56 +316,56 @@ $logging_class_name$::Async$method_name$(
       __func__, request_id,
       google::cloud::internal::DebugString(request, tracing_options_));
   auto stream = child_->Async$method_name$(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
 }
-)""";
-      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+)""");
       continue;
     }
     if (IsStreamingWrite(method)) {
-      auto constexpr kDefinition = R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$, $response_type$>>
 $logging_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) {
   using LoggingStream = ::google::cloud::internal::AsyncStreamingWriteRpcLogging<
       $request_type$, $response_type$>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(
-      cq, std::move(context), std::move(options));
+      cq, std::move(context), std::move(options)$op_ctx_shared_arg$);
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
 }
-)""";
-      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+)""");
       continue;
     }
     CcPrintMethod(method, __FILE__, __LINE__, "\nfuture<$return_type$>");
-    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""(
 $logging_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) {
+      $request_type$ const& request$op_ctx_shared_decl$) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
+      [this$op_ctx_shared_cap$](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              $request_type$ const& request) {
         return child_->Async$method_name$(
-            cq, std::move(context), std::move(options), request);
+            cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
       },
       cq, std::move(context), std::move(options), request, __func__, tracing_options_);
 }
@@ -370,20 +374,21 @@ $logging_class_name$::Async$method_name$(
 
   // long running operation support methods
   if (HasLongrunningMethod()) {
-    CcPrint(R"""(
+    CcPrint(
+        R"""(
 future<StatusOr<google::longrunning::Operation>>
 $logging_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::GetOperationRequest const& request$op_ctx_shared_decl$) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
+      [this$op_ctx_shared_cap$](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+            cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -393,14 +398,14 @@ future<Status> $logging_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::longrunning::CancelOperationRequest const& request) {
+    google::longrunning::CancelOperationRequest const& request$op_ctx_shared_decl$) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
+      [this$op_ctx_shared_cap$](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+            cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
