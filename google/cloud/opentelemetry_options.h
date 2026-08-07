@@ -78,6 +78,27 @@ struct OpenTelemetryTracingOption {
   using Type = bool;
 };
 
+/**
+ * Enables metrics collection with [OpenTelemetry]
+ *
+ * Setting this option enables the generation of SDK metrics by the client
+ * library. The library uses the global meter provider to generate metrics.
+ *
+ * @par Prerequisites
+ * The library must be compiled with OpenTelemetry in order for this option to
+ * take effect.
+ *
+ * @par Environment variable
+ * This option is controlled by the `GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS`
+ * environment variable. If the environment variable is set to a non-empty
+ * value, metrics collection with OpenTelemetry is enabled.
+ *
+ * @ingroup options
+ */
+struct OpenTelemetryMetricsOption {
+  using Type = bool;
+};
+
 namespace experimental {
 /// @deprecated Use google::cloud::OpenTelemetryTracingOption instead.
 using OpenTelemetryTracingOption = ::google::cloud::OpenTelemetryTracingOption;
