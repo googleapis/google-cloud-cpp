@@ -540,8 +540,8 @@ std::unique_ptr<Metric> ApplicationBlockingLatency::clone(
     TableResourceLabels const& resource_labels,
     TableDataLabels const& data_labels) const {
   auto m = std::make_unique<ApplicationBlockingLatency>(*this);
-  m->resource_labels_ = std::move(resource_labels);
-  m->data_labels_ = std::move(data_labels);
+  m->resource_labels_ = resource_labels;
+  m->data_labels_ = data_labels;
   return m;
 }
 

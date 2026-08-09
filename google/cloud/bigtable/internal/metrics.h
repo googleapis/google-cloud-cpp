@@ -120,9 +120,7 @@ class Metric {
   virtual void ElementDelivery(opentelemetry::context::Context const&,
                                ElementDeliveryParams const&) {}
   virtual std::unique_ptr<Metric> clone(TableResourceLabels const&,
-                                        TableDataLabels const&) const {
-    return nullptr;
-  }
+                                        TableDataLabels const&) const = 0;
 };
 
 class OperationLatency : public Metric {
