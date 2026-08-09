@@ -361,7 +361,8 @@ class MockMetric : public Metric {
                ElementDeliveryParams const&),
               (override));
   MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (ResourceLabels resource_labels, DataLabels data_labels),
+              (TableResourceLabels const& resource_labels,
+               TableDataLabels const& data_labels),
               (const, override));
 };
 
@@ -376,7 +377,8 @@ class CloningMetric : public Metric {
     std::reverse(metrics_.begin(), metrics_.end());
   }
 
-  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
+  std::unique_ptr<Metric> clone(TableResourceLabels const&,
+                                TableDataLabels const&) const override {
     auto m = std::move(metrics_.back());
     metrics_.pop_back();
     return m;
@@ -388,7 +390,7 @@ class CloningMetric : public Metric {
 
 class FakeOperationContextFactory : public OperationContextFactory {
  public:
-  FakeOperationContextFactory(ResourceLabels r, DataLabels d,
+  FakeOperationContextFactory(TableResourceLabels r, TableDataLabels d,
                               std::shared_ptr<Metric> metric,
                               std::shared_ptr<OperationContext::Clock> clock)
       : resource_labels_(std::move(r)),
@@ -445,8 +447,8 @@ class FakeOperationContextFactory : public OperationContextFactory {
                                               metrics_, clock_);
   }
 
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   std::vector<std::shared_ptr<Metric const>> metrics_;
   std::shared_ptr<OperationContext::Clock> clock_;
 };
@@ -502,7 +504,7 @@ TEST_F(DataConnectionTest, ApplySuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -534,7 +536,7 @@ TEST_F(DataConnectionTest, ApplyPermanentFailure) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -566,7 +568,7 @@ TEST_F(DataConnectionTest, ApplyRetryThenSuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -605,7 +607,7 @@ TEST_F(DataConnectionTest, ApplyRetryExhausted) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -672,7 +674,7 @@ TEST_F(DataConnectionTest, ApplyBigtableCookie) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -722,7 +724,7 @@ TEST_F(DataConnectionTest, AsyncApplySuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -772,7 +774,7 @@ TEST_F(DataConnectionTest, AsyncApplyRetryExhausted) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -879,7 +881,7 @@ TEST_F(DataConnectionTest, BulkApplyEmpty) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -901,7 +903,7 @@ TEST_F(DataConnectionTest, BulkApplySuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -945,7 +947,7 @@ TEST_F(DataConnectionTest, BulkApplyRetryMutationPolicy) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1012,7 +1014,7 @@ TEST_F(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1069,7 +1071,7 @@ TEST_F(DataConnectionTest, BulkApplyStreamRetryExhausted) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1114,7 +1116,7 @@ TEST_F(DataConnectionTest, BulkApplyStreamPermanentError) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1447,7 +1449,7 @@ TEST_F(DataConnectionTest, ReadRowEmpty) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1486,7 +1488,7 @@ TEST_F(DataConnectionTest, ReadRowSuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1537,7 +1539,7 @@ TEST_F(DataConnectionTest, ReadRowFailure) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1584,7 +1586,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowSuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(v));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1688,7 +1690,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowPermanentError) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1731,7 +1733,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1838,7 +1840,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(v));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1946,7 +1948,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -1990,7 +1992,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2093,7 +2095,7 @@ TEST_F(DataConnectionTest, SampleRowsSuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2143,7 +2145,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryResetsSamples) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2197,7 +2199,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryExhausted) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2245,7 +2247,7 @@ TEST_F(DataConnectionTest, SampleRowsPermanentError) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2386,7 +2388,7 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowSuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2442,7 +2444,7 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowPermanentError) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2479,7 +2481,7 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2524,7 +2526,7 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2585,7 +2587,7 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2725,7 +2727,7 @@ TEST_F(DataConnectionTest, AsyncReadRowEmpty) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2771,7 +2773,7 @@ TEST_F(DataConnectionTest, AsyncReadRowSuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2828,7 +2830,7 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2865,7 +2867,7 @@ TEST_F(DataConnectionTest, PrepareQuerySuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2931,7 +2933,7 @@ TEST_F(DataConnectionTest, PrepareQueryPermanentError) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -2961,7 +2963,7 @@ TEST_F(DataConnectionTest, AsyncPrepareQuerySuccess) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -3023,7 +3025,7 @@ TEST_F(DataConnectionTest, AsyncPrepareQueryPermanentError) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -3057,7 +3059,7 @@ TEST_F(DataConnectionTest, ExecuteQuerySuccessWithTransientErrors) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -3175,7 +3177,7 @@ TEST_F(DataConnectionTest, ExecuteQueryFailure) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -3229,7 +3231,7 @@ TEST_F(DataConnectionTest, ExecuteQueryOperationRetryExhausted) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -3284,7 +3286,7 @@ TEST_F(DataConnectionTest, ExecuteQuerySuccessWithQueryPlanRefresh) {
   auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto factory = std::make_unique<FakeOperationContextFactory>(
-      ResourceLabels{}, DataLabels{}, fake_metric, clock);
+      TableResourceLabels{}, TableDataLabels{}, fake_metric, clock);
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
 #endif
@@ -3435,15 +3437,17 @@ TEST_F(DataConnectionTest, PrepareAndExecuteQuerySuccessWithQueryPlanRefresh) {
         std::vector<std::shared_ptr<Metric const>> metrics;
         metrics.push_back(std::make_shared<CloningMetric>(
             std::move(mock_metric_prepared_query_initial)));
-        return std::make_shared<OperationContext>(
-            ResourceLabels{}, DataLabels{}, std::move(metrics), clock);
+        return std::make_shared<OperationContext>(TableResourceLabels{},
+                                                  TableDataLabels{},
+                                                  std::move(metrics), clock);
       })
       .WillOnce([&](auto const&, auto const&) {
         std::vector<std::shared_ptr<Metric const>> metrics;
         metrics.push_back(std::make_shared<CloningMetric>(
             std::move(mock_metric_prepared_query_refresh)));
-        return std::make_shared<OperationContext>(
-            ResourceLabels{}, DataLabels{}, std::move(metrics), clock);
+        return std::make_shared<OperationContext>(TableResourceLabels{},
+                                                  TableDataLabels{},
+                                                  std::move(metrics), clock);
       });
 
   auto mock_metric_execute_query = std::make_unique<MockMetric>();
@@ -3457,8 +3461,8 @@ TEST_F(DataConnectionTest, PrepareAndExecuteQuerySuccessWithQueryPlanRefresh) {
     std::vector<std::shared_ptr<Metric const>> metrics;
     metrics.push_back(
         std::make_shared<CloningMetric>(std::move(mock_metric_execute_query)));
-    return std::make_shared<OperationContext>(ResourceLabels{}, DataLabels{},
-                                              std::move(metrics), clock);
+    return std::make_shared<OperationContext>(
+        TableResourceLabels{}, TableDataLabels{}, std::move(metrics), clock);
   });
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
@@ -3603,15 +3607,17 @@ TEST_F(DataConnectionTest,
         std::vector<std::shared_ptr<Metric const>> metrics;
         metrics.push_back(std::make_shared<CloningMetric>(
             std::move(mock_metric_prepared_query_initial)));
-        return std::make_shared<OperationContext>(
-            ResourceLabels{}, DataLabels{}, std::move(metrics), clock);
+        return std::make_shared<OperationContext>(TableResourceLabels{},
+                                                  TableDataLabels{},
+                                                  std::move(metrics), clock);
       })
       .WillOnce([&](auto const&, auto const&) {
         std::vector<std::shared_ptr<Metric const>> metrics;
         metrics.push_back(std::make_shared<CloningMetric>(
             std::move(mock_metric_prepared_query_refresh)));
-        return std::make_shared<OperationContext>(
-            ResourceLabels{}, DataLabels{}, std::move(metrics), clock);
+        return std::make_shared<OperationContext>(TableResourceLabels{},
+                                                  TableDataLabels{},
+                                                  std::move(metrics), clock);
       });
 
   auto mock_metric_execute_query = std::make_unique<MockMetric>();
@@ -3625,8 +3631,8 @@ TEST_F(DataConnectionTest,
     std::vector<std::shared_ptr<Metric const>> metrics;
     metrics.push_back(
         std::make_shared<CloningMetric>(std::move(mock_metric_execute_query)));
-    return std::make_shared<OperationContext>(ResourceLabels{}, DataLabels{},
-                                              std::move(metrics), clock);
+    return std::make_shared<OperationContext>(
+        TableResourceLabels{}, TableDataLabels{}, std::move(metrics), clock);
   });
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();

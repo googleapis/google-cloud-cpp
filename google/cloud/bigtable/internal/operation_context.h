@@ -30,8 +30,8 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-struct DataLabels;
-struct ResourceLabels;
+struct TableDataLabels;
+struct TableResourceLabels;
 class Metric;
 
 /**
@@ -64,8 +64,8 @@ class OperationContext {
   // The default constructor is used when metric support is unavailable or
   // disabled.
   OperationContext() = default;
-  OperationContext(ResourceLabels const& resource_labels,
-                   DataLabels const& data_labels,
+  OperationContext(TableResourceLabels const& resource_labels,
+                   TableDataLabels const& data_labels,
                    std::vector<std::shared_ptr<Metric const>> const& metrics,
                    std::shared_ptr<Clock> clock);
 

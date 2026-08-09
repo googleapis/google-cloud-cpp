@@ -35,10 +35,10 @@ auto constexpr kMeterInstrumentationScopeVersion = "v1";
 }  // namespace
 
 // TODO(#15329): Refactor how we're handling different data labels for
-// the various RPCs. Adding a function to each metric type to add its DataLabels
-// to the map should be more performant than performing a set_difference every
-// time.
-LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
+// the various RPCs. Adding a function to each metric type to add its
+// TableDataLabels to the map should be more performant than performing a
+// set_difference every time.
+LabelMap IntoLabelMap(TableResourceLabels const& r, TableDataLabels const& d,
                       std::set<std::string> const& filtered_data_labels,
                       std::optional<PeerInfoLabels> const& peer_info_labels) {
   LabelMap labels = {
@@ -219,11 +219,12 @@ void OperationLatency::OnDone(opentelemetry::context::Context const& context,
                                context);
 }
 
-std::unique_ptr<Metric> OperationLatency::clone(ResourceLabels resource_labels,
-                                                DataLabels data_labels) const {
+std::unique_ptr<Metric> OperationLatency::clone(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels) const {
   auto m = std::make_unique<OperationLatency>(*this);
-  m->resource_labels_ = std::move(resource_labels);
-  m->data_labels_ = std::move(data_labels);
+  m->resource_labels_ = resource_labels;
+  m->data_labels_ = data_labels;
   return m;
 }
 
@@ -256,11 +257,12 @@ void AttemptLatency::PostCall(opentelemetry::context::Context const& context,
   attempt_latencies_->Record(attempt_elapsed.count(), std::move(m), context);
 }
 
-std::unique_ptr<Metric> AttemptLatency::clone(ResourceLabels resource_labels,
-                                              DataLabels data_labels) const {
+std::unique_ptr<Metric> AttemptLatency::clone(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels) const {
   auto m = std::make_unique<AttemptLatency>(*this);
-  m->resource_labels_ = std::move(resource_labels);
-  m->data_labels_ = std::move(data_labels);
+  m->resource_labels_ = resource_labels;
+  m->data_labels_ = data_labels;
   return m;
 }
 
@@ -306,11 +308,12 @@ void AttemptLatency2::PostCall(opentelemetry::context::Context const& context,
   attempt_latencies2_->Record(attempt_elapsed.count(), std::move(m), context);
 }
 
-std::unique_ptr<Metric> AttemptLatency2::clone(ResourceLabels resource_labels,
-                                               DataLabels data_labels) const {
+std::unique_ptr<Metric> AttemptLatency2::clone(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels) const {
   auto m = std::make_unique<AttemptLatency2>(*this);
-  m->resource_labels_ = std::move(resource_labels);
-  m->data_labels_ = std::move(data_labels);
+  m->resource_labels_ = resource_labels;
+  m->data_labels_ = data_labels;
   return m;
 }
 
@@ -350,11 +353,12 @@ void RetryCount::OnDone(opentelemetry::context::Context const& context,
                     context);
 }
 
-std::unique_ptr<Metric> RetryCount::clone(ResourceLabels resource_labels,
-                                          DataLabels data_labels) const {
+std::unique_ptr<Metric> RetryCount::clone(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels) const {
   auto m = std::make_unique<RetryCount>(*this);
-  m->resource_labels_ = std::move(resource_labels);
-  m->data_labels_ = std::move(data_labels);
+  m->resource_labels_ = resource_labels;
+  m->data_labels_ = data_labels;
   return m;
 }
 
@@ -405,10 +409,11 @@ void FirstResponseLatency::OnDone(
 }
 
 std::unique_ptr<Metric> FirstResponseLatency::clone(
-    ResourceLabels resource_labels, DataLabels data_labels) const {
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels) const {
   auto m = std::make_unique<FirstResponseLatency>(*this);
-  m->resource_labels_ = std::move(resource_labels);
-  m->data_labels_ = std::move(data_labels);
+  m->resource_labels_ = resource_labels;
+  m->data_labels_ = data_labels;
   return m;
 }
 
@@ -437,11 +442,12 @@ void ServerLatency::PostCall(opentelemetry::context::Context const& context,
   }
 }
 
-std::unique_ptr<Metric> ServerLatency::clone(ResourceLabels resource_labels,
-                                             DataLabels data_labels) const {
+std::unique_ptr<Metric> ServerLatency::clone(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels) const {
   auto m = std::make_unique<ServerLatency>(*this);
-  m->resource_labels_ = std::move(resource_labels);
-  m->data_labels_ = std::move(data_labels);
+  m->resource_labels_ = resource_labels;
+  m->data_labels_ = data_labels;
   return m;
 }
 
@@ -480,10 +486,11 @@ void ConnectivityErrorCount::OnDone(
 }
 
 std::unique_ptr<Metric> ConnectivityErrorCount::clone(
-    ResourceLabels resource_labels, DataLabels data_labels) const {
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels) const {
   auto m = std::make_unique<ConnectivityErrorCount>(*this);
-  m->resource_labels_ = std::move(resource_labels);
-  m->data_labels_ = std::move(data_labels);
+  m->resource_labels_ = resource_labels;
+  m->data_labels_ = data_labels;
   return m;
 }
 
@@ -530,7 +537,8 @@ void ApplicationBlockingLatency::OnDone(
 }
 
 std::unique_ptr<Metric> ApplicationBlockingLatency::clone(
-    ResourceLabels resource_labels, DataLabels data_labels) const {
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels) const {
   auto m = std::make_unique<ApplicationBlockingLatency>(*this);
   m->resource_labels_ = std::move(resource_labels);
   m->data_labels_ = std::move(data_labels);

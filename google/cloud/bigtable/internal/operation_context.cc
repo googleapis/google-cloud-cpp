@@ -28,7 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 namespace {
 std::vector<std::shared_ptr<Metric>> CloneMetrics(
-    ResourceLabels const& resource_labels, DataLabels const& data_labels,
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
     std::vector<std::shared_ptr<Metric const>> const& metrics) {
   std::vector<std::shared_ptr<Metric>> v;
   v.reserve(metrics.size());
@@ -54,7 +55,8 @@ void OperationContext::ProcessMetadata(
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 OperationContext::OperationContext(
-    ResourceLabels const& resource_labels, DataLabels const& data_labels,
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
     std::vector<std::shared_ptr<Metric const>> const& metrics,
     std::shared_ptr<Clock> clock)
     : cloned_metrics_(CloneMetrics(resource_labels, data_labels, metrics)),
@@ -121,7 +123,7 @@ void OperationContext::ElementDelivery(grpc::ClientContext const&) {
 #else  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 OperationContext::OperationContext(
-    ResourceLabels const&, DataLabels const&,
+    TableResourceLabels const&, TableDataLabels const&,
     std::vector<std::shared_ptr<Metric const>> const&, std::shared_ptr<Clock>) {
 }
 
