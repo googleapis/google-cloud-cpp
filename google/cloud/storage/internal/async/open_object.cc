@@ -15,7 +15,8 @@
 #include "google/cloud/storage/internal/async/open_object.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_cat.h"
-#ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
 #include "google/cloud/internal/opentelemetry.h"
 #include <opentelemetry/metrics/provider.h>
 #endif
