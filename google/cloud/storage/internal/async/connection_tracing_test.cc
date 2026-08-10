@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/async/reader_connection.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
 #include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
@@ -645,6 +646,38 @@ TEST(ConnectionTracing, OpenSuccess) {
                          SpanNamed("storage::AsyncConnection::Open"),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                          SpanHasInstrumentationScope(), SpanKindIsClient())));
+}
+
+TEST(ConnectionTracing, OpenSuccessWithInitialReadRanges) {
+  auto span_catcher = InstallSpanCatcher();
+  PromiseWithOTelContext<
+      StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>>
+      p;
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillOnce(Return(TracingEnabled()));
+  EXPECT_CALL(*mock, Open).WillOnce(expect_context(p));
+
+  auto actual = MakeTracingAsyncConnection(std::move(mock));
+  auto open_params = AsyncConnection::OpenParams{};
+  open_params.options.set<ReadRangesOption>({{0, 100}, {1000, 200}});
+  auto f = actual->Open(std::move(open_params)).then(expect_no_context);
+
+  auto mock_descriptor =
+      std::make_shared<MockAsyncObjectDescriptorConnection>();
+  p.set_value(StatusOr<std::shared_ptr<storage::ObjectDescriptorConnection>>(
+      std::move(mock_descriptor)));
+  auto result = f.get();
+  ASSERT_STATUS_OK(result);
+  auto descriptor = *std::move(result);
+  descriptor.reset();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, ElementsAre(
+                 AllOf(SpanNamed("storage::AsyncConnection::Open"),
+                       SpanHasAttributes(OTelAttribute<std::size_t>(
+                           "gl-cpp.initial-read-ranges.ranges-count", 2)),
+                       SpanWithStatus(opentelemetry::trace::StatusCode::kOk))));
 }
 
 TEST(ConnectionTracing, StartAppendableObjectUploadSuccess) {

@@ -43,6 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 enum class InitialReadRangesCacheStatus {
+  kNone,
   kMiss,
   kHit,
   kEvicted,
@@ -56,6 +57,8 @@ absl::string_view CacheStatusToString(InitialReadRangesCacheStatus status) {
       return "EVICTED";
     case InitialReadRangesCacheStatus::kMiss:
       return "MISS";
+    case InitialReadRangesCacheStatus::kNone:
+      return "";
   }
   return "INVALID_STATUS";
 }
@@ -72,6 +75,7 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)),
+      has_initial_read_ranges_(options_.has<ReadRangesOption>()),
       transport_ok_(std::move(transport_ok)) {
   stream_manager_ = std::make_unique<StreamManager>(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
@@ -253,7 +257,9 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   // Check if this range matches a pre-warmed range.
   auto cache_key = std::make_pair(p.start, p.length);
   auto cache_it = prewarmed_ranges_.find(cache_key);
-  auto cache_status = InitialReadRangesCacheStatus::kMiss;
+  auto cache_status = has_initial_read_ranges_
+                          ? InitialReadRangesCacheStatus::kMiss
+                          : InitialReadRangesCacheStatus::kNone;
 
   if (cache_it != prewarmed_ranges_.end()) {
     cache_status = InitialReadRangesCacheStatus::kHit;
