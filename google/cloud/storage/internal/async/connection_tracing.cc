@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/storage/internal/async/object_descriptor_connection_tracing.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_tracing.h"
 #include "google/cloud/storage/internal/async/writer_connection_tracing.h"
@@ -63,6 +64,11 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
       OpenParams p) override {
     auto span = internal::MakeSpan("storage::AsyncConnection::Open");
     EnrichSpan(*span, p.options, p.read_spec.bucket());
+    if (p.options.has<ReadRangesOption>()) {
+      auto const& ranges = p.options.get<ReadRangesOption>();
+      span->SetAttribute("gl-cpp.initial-read-ranges.ranges-count",
+                         ranges.size());
+    }
     internal::OTelScope scope(span);
     return impl_->Open(std::move(p))
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
