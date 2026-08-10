@@ -218,9 +218,9 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $response_type$>>
 $metadata_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options) {
+    Options const& options$op_ctx_shared_decl$) {
   SetMetadata(*context, options);
-  return child_->$method_name$(std::move(context), options);
+  return child_->$method_name$(std::move(context), options$op_ctx_shared_arg$);
 }
 )""");
       continue;
@@ -238,72 +238,80 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) {
   SetMetadata(*context, *options);
-  return child_->Async$method_name$(cq, std::move(context), std::move(options));
+  return child_->Async$method_name$(cq, std::move(context), std::move(options)$op_ctx_shared_arg$);
 }
 )""");
       continue;
     }
     if (IsLongrunningOperation(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_decl$) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
                     SetMetadataText(method, kPointer, "*options"));
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
   return child_->Async$method_name$(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 )""");
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 StatusOr<google::longrunning::Operation>
 $metadata_class_name$::$method_name$(
     grpc::ClientContext& context,
     Options options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_decl$) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
                     SetMetadataText(method, kReference, "options"));
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->$method_name$(context, options, request);
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
+  return child_->$method_name$(context, options, request$op_ctx_arg$);
 }
 )""");
 
       continue;
     }
     if (IsStreamingRead(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
 $metadata_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const& options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_decl$) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
                     SetMetadataText(method, kPointer, "options"));
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->$method_name$(std::move(context), options, request);
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    R"""(
+  return child_->$method_name$(std::move(context), options, request$op_ctx_shared_arg$);
 }
 )""");
       continue;
     }
     CcPrintMethod(method, __FILE__, __LINE__, "\n$return_type$");
-    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""(
 $metadata_class_name$::$method_name$(
     grpc::ClientContext& context,
     Options const& options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_decl$) {
 )""");
     CcPrintMethod(method, __FILE__, __LINE__,
                   SetMetadataText(method, kReference, "options"));
-    CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->$method_name$(context, options, request);
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""(
+  return child_->$method_name$(context, options, request$op_ctx_arg$);
 }
 )""");
   }
@@ -320,12 +328,12 @@ $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) {
+    $request_type$ const& request$op_ctx_shared_decl$) {
 )""",
           SetMetadataText(method, kPointer, "*options"),
           R"""(
   return child_->Async$method_name$(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 )""");
       CcPrintMethod(method, __FILE__, __LINE__, definition);
@@ -336,62 +344,65 @@ $metadata_class_name$::Async$method_name$(
       // first `Write()` call contains any relevant data to "start" the stream.
       // Thus, the decorator cannot add any routing instructions. The caller
       // should initialize `context` with any such instructions.
-      auto const definition = absl::StrCat(
+      auto const* definition =
           R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$, $response_type$>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options$op_ctx_shared_decl$) {
   SetMetadata(*context, *options);
-  return child_->Async$method_name$(cq, std::move(context), std::move(options));
+  return child_->Async$method_name$(cq, std::move(context), std::move(options)$op_ctx_shared_arg$);
 }
-)""");
+)""";
       CcPrintMethod(method, __FILE__, __LINE__, definition);
       continue;
     }
     CcPrintMethod(method, __FILE__, __LINE__, "\nfuture<$return_type$>");
-    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""(
 $metadata_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) {
+      $request_type$ const& request$op_ctx_shared_decl$) {
 )""");
     CcPrintMethod(method, __FILE__, __LINE__,
                   SetMetadataText(method, kPointer, "*options"));
-    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""(
   return child_->Async$method_name$(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 )""");
   }
 
   // long running operation support methods
   if (HasLongrunningMethod()) {
-    CcPrint(R"""(
+    CcPrint(
+        R"""(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::longrunning::GetOperationRequest const& request) {
+    google::longrunning::GetOperationRequest const& request$op_ctx_shared_decl$) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 
 future<Status> $metadata_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::longrunning::CancelOperationRequest const& request) {
+    google::longrunning::CancelOperationRequest const& request$op_ctx_shared_decl$) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+      cq, std::move(context), std::move(options), request$op_ctx_shared_arg$);
 }
 )""");
   }

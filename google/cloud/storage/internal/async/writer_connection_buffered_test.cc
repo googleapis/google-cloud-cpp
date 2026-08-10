@@ -252,21 +252,22 @@ TEST(WriteConnectionBuffered, WriteBuffers) {
         "payload size", [](auto payload) { return payload.size(); }, Eq(n));
   };
 
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
   EXPECT_CALL(*mock, Write(expected_write_size(8 * 1024))).WillOnce([&](auto) {
     return sequencer.PushBack("Write").then([](auto) { return Status{}; });
   });
-  EXPECT_CALL(*mock, Flush(expected_write_size(24 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
-  });
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(32 * 1024));
-    });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(24 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 32 * 1024;
+          return Status{};
+        });
+      });
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
@@ -303,9 +304,6 @@ TEST(WriteConnectionBuffered, WriteBuffers) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
   next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
-  next.first.set_value(true);
 
   ASSERT_TRUE(w3.is_ready());
   EXPECT_STATUS_OK(w3.get());
@@ -319,33 +317,30 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
         "payload size", [](auto payload) { return payload.size(); }, Eq(n));
   };
 
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
   EXPECT_CALL(*mock, Write(expected_write_size(8 * 1024))).WillOnce([&](auto) {
     return sequencer.PushBack("Write").then([](auto) { return Status{}; });
   });
-  EXPECT_CALL(*mock, Flush(expected_write_size(24 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
-  });
-  {
-    InSequence seq;
-    EXPECT_CALL(*mock, Query).WillOnce([&]() {
-      return sequencer.PushBack("Query").then([](auto) {
-        return make_status_or(static_cast<std::int64_t>(24 * 1024));
+  EXPECT_CALL(*mock, Flush(expected_write_size(24 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 24 * 1024;
+          return Status{};
+        });
       });
-    });
-    EXPECT_CALL(*mock, Query).WillOnce([&]() {
-      return sequencer.PushBack("Query2").then([](auto) {
-        return make_status_or(static_cast<std::int64_t>(24 * 1024 + 32 * 1024));
-      });
-    });
-  }
   // The Finalize() call will flush the remaining data.
-  EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush2").then([](auto) { return Status{}; });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush2").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 24 * 1024 + 32 * 1024;
+          return Status{};
+        });
+      });
   EXPECT_CALL(*mock, Finalize(expected_write_size(0))).WillOnce([&](auto) {
     return sequencer.PushBack("Finalize").then([](auto) {
       return make_status_or(TestObject());
@@ -379,9 +374,6 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
   next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
-  next.first.set_value(true);
 
   // That should free enough data in the buffer to continue writing.
   ASSERT_TRUE(w1.is_ready());
@@ -393,9 +385,6 @@ TEST(WriteConnectionBuffered, WritePartialFlushAndFinalize) {
 
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush2");
-  next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query2");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finalize");
@@ -517,20 +506,19 @@ TEST(WriteConnectionBuffered, RewindError) {
         "payload size", [](auto payload) { return payload.size(); }, Eq(n));
   };
 
+  auto mock_persisted_size = std::make_shared<std::int64_t>(32 * 1024);
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(32 * 1024)));
-  EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
   });
-  // This should not happen: the service is rewinding the value of
-  // `persisted_size`. The client should report this error.
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(16 * 1024));
-    });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 16 * 1024;
+          return Status{};
+        });
+      });
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
@@ -548,9 +536,6 @@ TEST(WriteConnectionBuffered, RewindError) {
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
-  next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
 
   ASSERT_TRUE(write.is_ready());
@@ -571,20 +556,19 @@ TEST(WriteConnectionBuffered, FastForwardError) {
         "payload size", [](auto payload) { return payload.size(); }, Eq(n));
   };
 
+  auto mock_persisted_size = std::make_shared<std::int64_t>(32 * 1024);
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(32 * 1024)));
-  EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
   });
-  // This should not happen: the service is reporting more data persisted than
-  // the size of the data sent.  The client should report this error.
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(128 * 1024));
-    });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 128 * 1024;
+          return Status{};
+        });
+      });
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
@@ -602,9 +586,6 @@ TEST(WriteConnectionBuffered, FastForwardError) {
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
-  next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
 
   ASSERT_TRUE(write.is_ready());
@@ -659,16 +640,17 @@ TEST(WriteConnectionBuffered, Flush) {
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
-  EXPECT_CALL(*mock, Flush(expected_write_size(8 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
   });
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(8 * 1024));
-    });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(8 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 8 * 1024;
+          return Status{};
+        });
+      });
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
@@ -681,9 +663,6 @@ TEST(WriteConnectionBuffered, Flush) {
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
-  next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
 
   EXPECT_STATUS_OK(w0.get());
@@ -698,16 +677,19 @@ TEST(WriteConnectionBuffered, FlushWithEmptyPayload) {
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
   // This flush is for the empty payload.
-  EXPECT_CALL(*mock, Flush(expected_write_size(0))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
-  });
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then(
-        [](auto) { return make_status_or(static_cast<std::int64_t>(0)); });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(0)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush").then([mock_persisted_size](auto) {
+          // *mock_persisted_size = 0; // Empty payload, so it's 0, which is the
+          // current value
+          return Status{};
+        });
+      });
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
@@ -719,9 +701,6 @@ TEST(WriteConnectionBuffered, FlushWithEmptyPayload) {
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
-  next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
   EXPECT_STATUS_OK(f.get());
 }
@@ -793,18 +772,18 @@ TEST(WriteConnectionBuffered, FlushResumesAndDoesNotCompletePrematurely) {
   EXPECT_CALL(*mock2, UploadId).WillRepeatedly(Return("test-upload-id"));
   // OnResume will query persisted state. We return 0, meaning the data was
   // lost.
-  EXPECT_CALL(*mock2, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  auto mock2_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock2, PersistedState).WillRepeatedly([mock2_persisted_size] {
+    return MakePersistedState(*mock2_persisted_size);
+  });
   // The resumed connection should receive the Flush call again.
-  EXPECT_CALL(*mock2, Flush(expected_write_size(8 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush2").then([](auto) { return Status{}; });
-  });
-  // After Flush2 succeeds, it will query the status.
-  EXPECT_CALL(*mock2, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(8 * 1024));
-    });
-  });
+  EXPECT_CALL(*mock2, Flush(expected_write_size(8 * 1024)))
+      .WillOnce([&, mock2_persisted_size](auto) {
+        return sequencer.PushBack("Flush2").then([mock2_persisted_size](auto) {
+          *mock2_persisted_size = 8 * 1024;
+          return Status{};
+        });
+      });
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).WillOnce([&]() {
@@ -837,11 +816,6 @@ TEST(WriteConnectionBuffered, FlushResumesAndDoesNotCompletePrematurely) {
   // Let the second flush succeed.
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush2");
-  next.first.set_value(true);
-
-  // Let the query complete.
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
 
   // Now the flush promise should be completed.
@@ -906,17 +880,18 @@ TEST(WriteConnectionBuffered, CloseWithPayload) {
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
   // The payload is flushed first.
-  EXPECT_CALL(*mock, Flush(expected_write_size(8 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
-  });
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(static_cast<std::int64_t>(8 * 1024));
-    });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(8 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 8 * 1024;
+          return Status{};
+        });
+      });
   // Then the stream is closed with empty payload.
   EXPECT_CALL(*mock, Close(expected_write_size(0))).WillOnce([&](auto) {
     return sequencer.PushBack("Close").then([](auto) { return Status{}; });
@@ -933,10 +908,6 @@ TEST(WriteConnectionBuffered, CloseWithPayload) {
 
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush");
-  next.first.set_value(true);
-
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
   next.first.set_value(true);
 
   next = sequencer.PopFrontWithName();
@@ -1173,23 +1144,23 @@ TEST(WriteConnectionBuffered, FlushSendsAllBufferedData) {
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
   // The first Write() (8KiB) is immediately sent, not buffered.
   EXPECT_CALL(*mock, Write(expected_write_size(8 * 1024))).WillOnce([&](auto) {
     return sequencer.PushBack("Write-8K").then([](auto) { return Status{}; });
   });
   // The Flush() call has 4KiB of data. Since the buffer is empty, this
   // 4KiB is flushed.
-  EXPECT_CALL(*mock, Flush(expected_write_size(4 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush-4K").then([](auto) { return Status{}; });
-  });
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(
-          static_cast<std::int64_t>(8 * 1024 + 4 * 1024));  // Total persisted
-    });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(4 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush-4K").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 8 * 1024 + 4 * 1024;
+          return Status{};
+        });
+      });
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, Call).Times(0);
@@ -1212,9 +1183,6 @@ TEST(WriteConnectionBuffered, FlushSendsAllBufferedData) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush-4K");
   next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
-  next.first.set_value(true);
 
   EXPECT_STATUS_OK(f1.get());
 }
@@ -1228,23 +1196,23 @@ TEST(WriteConnectionBuffered, FinalizeSendsAllBufferedData) {
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
   // The first Write() (8KiB) is immediately sent, not buffered.
   EXPECT_CALL(*mock, Write(expected_write_size(8 * 1024))).WillOnce([&](auto) {
     return sequencer.PushBack("Write-8K").then([](auto) { return Status{}; });
   });
   // The Finalize() call has 4KiB of data. Since the buffer is empty, this
   // 4KiB is flushed.
-  EXPECT_CALL(*mock, Flush(expected_write_size(4 * 1024))).WillOnce([&](auto) {
-    return sequencer.PushBack("Flush-4K").then([](auto) { return Status{}; });
-  });
-  EXPECT_CALL(*mock, Query).WillOnce([&]() {
-    return sequencer.PushBack("Query").then([](auto) {
-      return make_status_or(
-          static_cast<std::int64_t>(8 * 1024 + 4 * 1024));  // Total persisted
-    });
-  });
+  EXPECT_CALL(*mock, Flush(expected_write_size(4 * 1024)))
+      .WillOnce([&, mock_persisted_size](auto) {
+        return sequencer.PushBack("Flush-4K").then([mock_persisted_size](auto) {
+          *mock_persisted_size = 8 * 1024 + 4 * 1024;
+          return Status{};
+        });
+      });
   // After the flush, the buffer is empty, and we can finalize.
   EXPECT_CALL(*mock, Finalize(expected_write_size(0))).WillOnce([&](auto) {
     return sequencer.PushBack("Finalize").then([](auto) {
@@ -1273,9 +1241,6 @@ TEST(WriteConnectionBuffered, FinalizeSendsAllBufferedData) {
   EXPECT_EQ(next.second, "Flush-4K");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query");
-  next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finalize");
   next.first.set_value(true);
 
@@ -1291,33 +1256,29 @@ TEST(WriteConnectionBuffered, WriteTriggersMultipleFlushes) {
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
 
   {
     InSequence seq;
     // Expect two separate flushes as the buffer fills up twice.
     EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024)))
-        .WillOnce([&](auto) {
-          return sequencer.PushBack("Flush1").then(
-              [](auto) { return Status{}; });
+        .WillOnce([&, mock_persisted_size](auto) {
+          return sequencer.PushBack("Flush1").then([mock_persisted_size](auto) {
+            *mock_persisted_size = 32 * 1024;
+            return Status{};
+          });
         });
-    EXPECT_CALL(*mock, Query).WillOnce([&]() {
-      return sequencer.PushBack("Query1").then([](auto) {
-        return make_status_or(static_cast<std::int64_t>(32 * 1024));
-      });
-    });
 
     EXPECT_CALL(*mock, Flush(expected_write_size(32 * 1024)))
-        .WillOnce([&](auto) {
-          return sequencer.PushBack("Flush2").then(
-              [](auto) { return Status{}; });
+        .WillOnce([&, mock_persisted_size](auto) {
+          return sequencer.PushBack("Flush2").then([mock_persisted_size](auto) {
+            *mock_persisted_size = 64 * 1024;
+            return Status{};
+          });
         });
-    EXPECT_CALL(*mock, Query).WillOnce([&]() {
-      return sequencer.PushBack("Query2").then([](auto) {
-        return make_status_or(static_cast<std::int64_t>(64 * 1024));
-      });
-    });
   }
 
   MockFactory mock_factory;
@@ -1334,9 +1295,6 @@ TEST(WriteConnectionBuffered, WriteTriggersMultipleFlushes) {
   auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush1");
   next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query1");
-  next.first.set_value(true);
   EXPECT_STATUS_OK(w1.get());
 
   // Write enough data again to go over the HWM and block.
@@ -1346,9 +1304,6 @@ TEST(WriteConnectionBuffered, WriteTriggersMultipleFlushes) {
   // Satisfy the second flush, which should unblock w2.
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush2");
-  next.first.set_value(true);
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query2");
   next.first.set_value(true);
   EXPECT_STATUS_OK(w2.get());
 }
@@ -1362,31 +1317,30 @@ TEST(WriteConnectionBuffered, MultipleConcurrentFlushesAreQueued) {
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
   EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
-  EXPECT_CALL(*mock, PersistedState)
-      .WillRepeatedly(Return(MakePersistedState(0)));
+  auto mock_persisted_size = std::make_shared<std::int64_t>(0);
+  EXPECT_CALL(*mock, PersistedState).WillRepeatedly([mock_persisted_size] {
+    return MakePersistedState(*mock_persisted_size);
+  });
 
   {
     InSequence seq;
     // The implementation sends the first Flush() payload immediately.
-    EXPECT_CALL(*mock, Flush(expected_write_size(4096))).WillOnce([&](auto) {
-      return sequencer.PushBack("Flush1").then([](auto) { return Status{}; });
-    });
-    // The Flush is followed by a Query.
-    EXPECT_CALL(*mock, Query).WillOnce([&]() {
-      return sequencer.PushBack("Query1").then(
-          [](auto) { return make_status_or(static_cast<std::int64_t>(4096)); });
-    });
+    EXPECT_CALL(*mock, Flush(expected_write_size(4096)))
+        .WillOnce([&, mock_persisted_size](auto) {
+          return sequencer.PushBack("Flush1").then([mock_persisted_size](auto) {
+            *mock_persisted_size = 4096;
+            return Status{};
+          });
+        });
+
     EXPECT_CALL(*mock, Flush(expected_write_size(8192)))
         .Times(1)
-        .WillOnce([&](auto) {
-          return sequencer.PushBack("Flush2").then(
-              [](auto) { return Status{}; });
+        .WillOnce([&, mock_persisted_size](auto) {
+          return sequencer.PushBack("Flush2").then([mock_persisted_size](auto) {
+            *mock_persisted_size = 4096 + 8192;
+            return Status{};
+          });
         });
-    EXPECT_CALL(*mock, Query).WillOnce([&]() {
-      return sequencer.PushBack("Query2").then([](auto) {
-        return make_status_or(static_cast<std::int64_t>(4096 + 8192));
-      });
-    });
   }
 
   MockFactory mock_factory;
@@ -1406,22 +1360,12 @@ TEST(WriteConnectionBuffered, MultipleConcurrentFlushesAreQueued) {
   EXPECT_EQ(next.second, "Flush1");
   next.first.set_value(true);
 
-  // Satisfy the Query call.
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query1");
-  next.first.set_value(true);
-
   // After the Query, the first Flush future should be completed.
   EXPECT_STATUS_OK(f1.get());
 
   // Satisfy the second Flush call.
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Flush2");
-  next.first.set_value(true);
-
-  // The second Flush is also followed by a Query.
-  next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Query2");
   next.first.set_value(true);
 
   EXPECT_STATUS_OK(f2.get());

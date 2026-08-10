@@ -1,3 +1,4 @@
+#include "google/cloud/bigtable/internal/operation_context.h"
 // Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -151,7 +152,8 @@ TEST_F(DynamicChannelPoolTest, SelectLeastUsedFromTwoChannels) {
   auto mock_stub_0 = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
-                   google::bigtable::v2::CheckAndMutateRowRequest const&) {
+                   google::bigtable::v2::CheckAndMutateRowRequest const&,
+                   auto&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -181,8 +183,9 @@ TEST_F(DynamicChannelPoolTest, SelectLeastUsedFromTwoChannels) {
       stub_factory_fn, sizing_policy);
   auto selected_stub = pool->GetChannelRandomTwoLeastUsed();
   grpc::ClientContext context;
+  OperationContext op_ctx;
   auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {});
+      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
 
@@ -215,7 +218,8 @@ TEST_F(DynamicChannelPoolTest, OneInitialChannel) {
     auto mock_stub_0 = std::make_shared<MockBigtableStub>();
     EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
         .WillOnce([](grpc::ClientContext&, Options const&,
-                     google::bigtable::v2::CheckAndMutateRowRequest const&) {
+                     google::bigtable::v2::CheckAndMutateRowRequest const&,
+                     auto&) {
           google::bigtable::v2::CheckAndMutateRowResponse response;
           response.set_predicate_matched(true);
           return response;
@@ -245,8 +249,9 @@ TEST_F(DynamicChannelPoolTest, OneInitialChannel) {
 
     auto selected_stub = pool->GetChannelRandomTwoLeastUsed();
     grpc::ClientContext context;
-    auto response =
-        selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {});
+    OperationContext op_ctx;
+    auto response = selected_stub->AcquireStub()->CheckAndMutateRow(context, {},
+                                                                    {}, op_ctx);
     ASSERT_STATUS_OK(response);
     EXPECT_TRUE(response->predicate_matched());
   }
@@ -270,7 +275,8 @@ TEST_F(DynamicChannelPoolTest, EmptyInitialPool) {
     auto mock_stub = std::make_shared<MockBigtableStub>();
     EXPECT_CALL(*mock_stub, CheckAndMutateRow)
         .WillOnce([](grpc::ClientContext&, Options const&,
-                     google::bigtable::v2::CheckAndMutateRowRequest const&) {
+                     google::bigtable::v2::CheckAndMutateRowRequest const&,
+                     auto&) {
           google::bigtable::v2::CheckAndMutateRowResponse response;
           response.set_predicate_matched(true);
           return response;
@@ -306,8 +312,9 @@ TEST_F(DynamicChannelPoolTest, EmptyInitialPool) {
 
     auto selected_stub = pool->GetChannelRandomTwoLeastUsed();
     grpc::ClientContext context;
-    auto response =
-        selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {});
+    OperationContext op_ctx;
+    auto response = selected_stub->AcquireStub()->CheckAndMutateRow(context, {},
+                                                                    {}, op_ctx);
     ASSERT_STATUS_OK(response);
     EXPECT_TRUE(response->predicate_matched());
 
@@ -743,7 +750,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   auto mock_stub = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
-                   google::bigtable::v2::CheckAndMutateRowRequest const&) {
+                   google::bigtable::v2::CheckAndMutateRowRequest const&,
+                   auto&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -778,8 +786,9 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   EXPECT_THAT(draining_channels, IsEmpty());
 
   grpc::ClientContext context;
+  OperationContext op_ctx;
   auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {});
+      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(1));
@@ -822,7 +831,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
   auto mock_stub = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
-                   google::bigtable::v2::CheckAndMutateRowRequest const&) {
+                   google::bigtable::v2::CheckAndMutateRowRequest const&,
+                   auto&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -859,8 +869,9 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
   EXPECT_THAT(draining_channels, IsEmpty());
 
   grpc::ClientContext context;
+  OperationContext op_ctx;
   auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {});
+      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(1));
@@ -903,7 +914,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   auto mock_stub_0 = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
-                   google::bigtable::v2::CheckAndMutateRowRequest const&) {
+                   google::bigtable::v2::CheckAndMutateRowRequest const&,
+                   auto&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -946,8 +958,9 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   EXPECT_THAT(draining_channels, IsEmpty());
 
   grpc::ClientContext context;
+  OperationContext op_ctx;
   auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {});
+      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(2));
@@ -990,7 +1003,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   auto mock_stub = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
-                   google::bigtable::v2::CheckAndMutateRowRequest const&) {
+                   google::bigtable::v2::CheckAndMutateRowRequest const&,
+                   auto&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -1043,8 +1057,9 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   EXPECT_THAT(draining_channels, IsEmpty());
 
   grpc::ClientContext context;
+  OperationContext op_ctx;
   auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {});
+      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(1));

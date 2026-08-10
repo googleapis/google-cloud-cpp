@@ -7,7 +7,9 @@ breaking changes in the upcoming 4.x release. This release is scheduled for
 **NOTE**: Please refer to the [V3 Migration Guide](/doc/v3-migration-guide.md) 
 for details on updating existing applications using v1.x.y or v2.x.y.
 
-## v3.8.0 - TBD
+## v3.9.0 - TBD
+
+## v3.8.0 - 2026-08
 
 ### Removed Libraries
 
@@ -25,6 +27,35 @@ the APIs in these libraries are stable, and are ready for production use.
 
 ### [Cloud Sql Admin API](/google/cloud/sql/README.md)
  - The library has been expanded to include the Backups and FeatureEligibility services.
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- fix(pubsub): avoid deadlock by ensuring lease refresh timer runs on cq thread ([#16297](https://github.com/googleapis/google-cloud-cpp/pull/16297))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): remove duplicate Query calls from AsyncWriterConnectionBuffered and AsyncWriterConnectionResumed ([#16315](https://github.com/googleapis/google-cloud-cpp/pull/16315))
+- feat(storage): formally deprecate MD5HashValue and Crc32cChecksumValue ([#16311](https://github.com/googleapis/google-cloud-cpp/pull/16311))
+- fix(storage): limit retries in InsertObjectWithBadChecksum sample ([#16322](https://github.com/googleapis/google-cloud-cpp/pull/16322))
+- feat(storage): implement pacing & eviction for pre-warmed ranges in ObjectDescriptorImpl ([#16309](https://github.com/googleapis/google-cloud-cpp/pull/16309))
+- fix(storage): redesign AsyncWriterConnectionImpl Flush and Query ([#16307](https://github.com/googleapis/google-cloud-cpp/pull/16307))
+- feat(storage): support pre-warming read ranges in AsyncConnection ([#16275](https://github.com/googleapis/google-cloud-cpp/pull/16275))
+- fix(storage): Use append_object_spec in EnrichSpan for ResumeAppendableUpload ([#16296](https://github.com/googleapis/google-cloud-cpp/pull/16296))
+- feat(storage): Make PrecomputedChecksumsOption compatible with Options ([#16295](https://github.com/googleapis/google-cloud-cpp/pull/16295))
+- feat(storage): add resource span attributes for ACO ( App Centric Observability ) for rewrite API in async client ([#16285](https://github.com/googleapis/google-cloud-cpp/pull/16285))
+- feat(storage): add resource span attributes for ACO ( App Centric Observability ) for async client ([#16151](https://github.com/googleapis/google-cloud-cpp/pull/16151))
+- fix(storage): consume server responses before finishing stream in AsyncWriter Close/Finalize ([#16270](https://github.com/googleapis/google-cloud-cpp/pull/16270))
+- feat(storage): migrate sync client to unified checksum options ([#16264](https://github.com/googleapis/google-cloud-cpp/pull/16264))
+- fix(storage): preserve flush state across concurrent flushes in async writers ([#16274](https://github.com/googleapis/google-cloud-cpp/pull/16274))
+- feat(storage): add support for bucket metadata call in async client ([#16262](https://github.com/googleapis/google-cloud-cpp/pull/16262))
+- feat(storage): add resource span attributes for ACO ( App Centric Observability ) ([#16119](https://github.com/googleapis/google-cloud-cpp/pull/16119))
+- feat(storage): Migrate async client to unified checksum options ([#16261](https://github.com/googleapis/google-cloud-cpp/pull/16261))
+- feat(storage): introduce unified checksum options and deprecate old options ([#16260](https://github.com/googleapis/google-cloud-cpp/pull/16260))
+- fix(storage): prevent indefinite hang when calling Close() on async appendable uploads ([#16255](https://github.com/googleapis/google-cloud-cpp/pull/16255))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2026-07-28T18:29:07-07:00](https://github.com/googleapis/googleapis/tree/b8486a2f44f15dc578a9dc1e17b144253079d5c1)
 
 ## v3.7.0 - 2026-07
 

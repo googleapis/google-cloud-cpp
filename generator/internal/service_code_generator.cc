@@ -105,6 +105,11 @@ bool ServiceCodeGenerator::IsExperimental() const {
   return iter != vars().end() && iter->second == "true";
 }
 
+bool ServiceCodeGenerator::HasExperimentalBigtableOperationContext() const {
+  auto iter = vars().find("experimental_bigtable_operation_context");
+  return iter != vars().end() && iter->second == "true";
+}
+
 bool ServiceCodeGenerator::HasLongrunningMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {
