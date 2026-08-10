@@ -66,7 +66,8 @@ class AsyncConnectionTracing : public storage::AsyncConnection {
     EnrichSpan(*span, p.options, p.read_spec.bucket());
     if (p.options.has<ReadRangesOption>()) {
       auto const& ranges = p.options.get<ReadRangesOption>();
-      span->SetAttribute("fast_open_ranges", ranges.size());
+      span->SetAttribute("gl-cpp.initial-read-ranges.ranges-count",
+                         ranges.size());
     }
     internal::OTelScope scope(span);
     return impl_->Open(std::move(p))

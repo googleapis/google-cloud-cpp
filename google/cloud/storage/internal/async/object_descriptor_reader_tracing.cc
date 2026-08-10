@@ -40,7 +40,8 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
   future<ObjectDescriptorReader::ReadResponse> Read() override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadRange");
     if (!cache_status_.empty()) {
-      span->SetAttribute("fast_open_cache_status", std::string(cache_status_));
+      span->SetAttribute("gl-cpp.initial-read-ranges.cache-status",
+                         std::string(cache_status_));
     }
     internal::OTelScope scope(span);
     return ObjectDescriptorReader::Read().then(
