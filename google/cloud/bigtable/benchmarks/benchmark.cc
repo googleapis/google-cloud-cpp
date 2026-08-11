@@ -130,8 +130,7 @@ void Benchmark::DeleteTable() {
 Table Benchmark::MakeTable(Options connection_opts) const {
   auto connection_options = MergeOptions(std::move(connection_opts), opts_);
   if (options_.metrics_period.has_value()) {
-    connection_options.set<MetricsPeriodOption>(
-        *options_.metrics_period);
+    connection_options.set<MetricsPeriodOption>(*options_.metrics_period);
   }
   auto table_opts = Options{}.set<AppProfileIdOption>(options_.app_profile_id);
   return Table(
