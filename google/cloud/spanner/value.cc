@@ -186,7 +186,7 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
             auto* f = google::protobuf::MessageFactory::generated_factory();
             if (auto const* pt = f->GetPrototype(d)) {
               std::unique_ptr<google::protobuf::Message> m(pt->New());
-              m->ParseFromString(std::string(bytes->begin(), bytes->end()));
+              (void)m->ParseFromString(std::string(bytes->begin(), bytes->end()));
               return os << internal::DebugString(*m, TracingOptions{});
             }
           }

@@ -44,7 +44,7 @@ Status ExtractOperationResultMetadataImpl(
                                        op->name(),
                                    GCP_ERROR_INFO());
   }
-  any.UnpackTo(&result);
+  (void)any.UnpackTo(&result);
   return Status{};
 }
 
@@ -71,7 +71,7 @@ Status ExtractOperationResultResponseImpl(
                                        op->name(),
                                    GCP_ERROR_INFO());
   }
-  any.UnpackTo(&result);
+  (void)any.UnpackTo(&result);
   return Status{};
 }
 
