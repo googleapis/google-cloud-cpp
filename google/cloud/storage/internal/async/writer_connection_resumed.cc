@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/writer_connection_resumed.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_impl.h"
 #include "google/cloud/future.h"
@@ -57,6 +58,15 @@ Status MakeFastForwardError(std::int64_t resend_offset,
           .WithMetadata("gcloud-cpp.storage.persisted_size", returned));
 }
 
+bool IsPermanentFailure(Options const& options, Status const& status) {
+  if (options.has<storage::AsyncRetryPolicyOption>() &&
+      options.get<storage::AsyncRetryPolicyOption>() != nullptr) {
+    return options.get<storage::AsyncRetryPolicyOption>()->IsPermanentFailure(
+        status);
+  }
+  return storage::internal::AsyncStatusTraits::IsPermanentFailure(status);
+}
+
 class AsyncWriterConnectionResumedState
     : public std::enable_shared_from_this<AsyncWriterConnectionResumedState> {
  public:
@@ -72,12 +82,12 @@ class AsyncWriterConnectionResumedState
         impl_(std::move(impl)),
         initial_request_(std::move(initial_request)),
         hash_function_(std::move(hash_function)),
+        options_(internal::MakeImmutableOptions(options)),
         first_response_(std::move(first_response)),
         buffer_size_lwm_(buffer_size_lwm),
         buffer_size_hwm_(buffer_size_hwm) {
     finalized_future_ = finalized_.get_future();
     closed_future_ = closed_.get_future();
-    options_ = internal::MakeImmutableOptions(options);
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
       buffer_offset_ = absl::get<google::storage::v2::Object>(state).size();
@@ -419,6 +429,24 @@ class AsyncWriterConnectionResumedState
   }
 
   void Resume(Status const& s) {
+    // Capture the finalization and close state *before* starting the async
+    // resume.
+    bool was_finalizing;
+    bool was_closing;
+    {
+      std::unique_lock<std::mutex> lk(mu_);
+      if (state_ == State::kResuming) return;
+      was_finalizing = finalizing_;
+      was_closing = closing_;
+      if (!s.ok() && cancelled_) {
+        return SetError(std::move(lk), std::move(s));
+      }
+      if (!s.ok() && IsPermanentFailure(*options_, s)) {
+        return SetError(std::move(lk), std::move(s));
+      }
+      state_ = State::kResuming;
+    }
+
     auto proto_status = ExtractGrpcStatus(s);
     auto request = google::storage::v2::BidiWriteObjectRequest{};
     auto& append_object_spec = *request.mutable_append_object_spec();
@@ -439,20 +467,6 @@ class AsyncWriterConnectionResumedState
     append_object_spec.set_generation(first_response_.resource().generation());
     ApplyWriteRedirectErrors(append_object_spec, std::move(proto_status));
 
-    // Capture the finalization and close state *before* starting the async
-    // resume.
-    bool was_finalizing;
-    bool was_closing;
-    {
-      std::unique_lock<std::mutex> lk(mu_);
-      if (state_ == State::kResuming) return;
-      was_finalizing = finalizing_;
-      was_closing = closing_;
-      if (!s.ok() && cancelled_) {
-        return SetError(std::move(lk), std::move(s));
-      }
-      state_ = State::kResuming;
-    }
     // Pass the original status `s`, `was_finalizing`, and `was_closing` to the
     // callback.
     factory_(std::move(request))
