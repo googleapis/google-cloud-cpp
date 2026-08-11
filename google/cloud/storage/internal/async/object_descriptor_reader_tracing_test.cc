@@ -140,7 +140,8 @@ TEST(ObjectDescriptorReaderTracing, ReadWithParentSpan) {
 
   auto parent_span = internal::MakeSpan("test-parent-span");
   auto impl = std::make_shared<ReadRange>(10000, 30);
-  auto reader = MakeTracingObjectDescriptorReader(impl, parent_span);
+  auto reader =
+      MakeTracingObjectDescriptorReader(impl, /*cache_status=*/"", parent_span);
 
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(

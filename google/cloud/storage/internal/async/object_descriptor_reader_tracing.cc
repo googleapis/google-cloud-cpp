@@ -31,10 +31,12 @@ namespace sc = ::opentelemetry::semconv;
 
 class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
  public:
-  explicit ObjectDescriptorReaderTracing(std::shared_ptr<ReadRange> impl,
-                                         absl::string_view cache_status,
-                                         opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span)
-      : ObjectDescriptorReader(std::move(impl)), cache_status_(cache_status), parent_span_(std::move(parent_span)) {}
+  explicit ObjectDescriptorReaderTracing(
+      std::shared_ptr<ReadRange> impl, absl::string_view cache_status,
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span)
+      : ObjectDescriptorReader(std::move(impl)),
+        cache_status_(cache_status),
+        parent_span_(std::move(parent_span)) {}
 
   ~ObjectDescriptorReaderTracing() override = default;
 
@@ -43,7 +45,8 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
     if (parent_span_ && parent_span_->GetContext().IsValid()) {
       options.parent = parent_span_->GetContext();
     }
-    auto span = internal::MakeSpan("storage::AsyncConnection::ReadRange");
+    auto span =
+        internal::MakeSpan("storage::AsyncConnection::ReadRange", options);
     if (!cache_status_.empty()) {
       span->SetAttribute("gl-cpp.initial-read-ranges.cache-status",
                          std::string(cache_status_));
@@ -84,12 +87,11 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
 }  // namespace
 
 std::unique_ptr<storage::AsyncReaderConnection>
-MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl,
-                                  absl::string_view cache_status,
-                                  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span) {
-  return std::make_unique<ObjectDescriptorReaderTracing>(std::move(impl),
-                                                         cache_status,
-                                                        std::move(parent_span));
+MakeTracingObjectDescriptorReader(
+    std::shared_ptr<ReadRange> impl, absl::string_view cache_status,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> parent_span) {
+  return std::make_unique<ObjectDescriptorReaderTracing>(
+      std::move(impl), cache_status, std::move(parent_span));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
