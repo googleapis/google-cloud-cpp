@@ -24,6 +24,12 @@
 #include <gmock/gmock.h>
 #include <memory>
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
+#endif
+
 namespace google {
 namespace cloud {
 namespace storage_internal {
@@ -42,6 +48,17 @@ using ::testing::Contains;
 using ::testing::Field;
 using ::testing::NotNull;
 using ::testing::Pair;
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::EventNamed;
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SpanEventAttributesAre;
+using ::google::cloud::testing_util::SpanHasEvents;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::_;
+using ::testing::ElementsAre;
+#endif
 
 using MockStream = google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
     google::storage::v2::BidiReadObjectRequest,
@@ -154,6 +171,97 @@ TEST(OpenImpl, Basic) {
   };
   ASSERT_THAT(response, IsOkAndHolds(expected_result()));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+TEST(OpenImpl, StreamOpenLatencySpanEvent) {
+  auto span_catcher = InstallSpanCatcher();
+  auto options = internal::MakeImmutableOptions(
+      Options{}.set<OpenTelemetryTracingOption>(true));
+  internal::OptionsSpan options_span(options);
+
+  auto span = internal::MakeSpan("test-open-span");
+  opentelemetry::trace::Scope scope(span);
+
+  auto constexpr kText = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "test-object"
+    generation: 42
+  )pb";
+  auto constexpr kReadResponse = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-123" }
+  )pb";
+
+  auto request = google::storage::v2::BidiReadObjectRequest{};
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(kText, request.mutable_read_object_spec()));
+  auto expected_response = google::storage::v2::BidiReadObjectResponse{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kReadResponse, &expected_response));
+
+  AsyncSequencer<bool> sequencer;
+  MockStorageStub mock;
+  EXPECT_CALL(mock, AsyncBidiReadObject)
+      .WillOnce([&](CompletionQueue const&,
+                    std::shared_ptr<grpc::ClientContext> const&,
+                    google::cloud::internal::ImmutableOptions const&) {
+        auto stream = std::make_unique<MockStream>();
+        EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
+          return sequencer.PushBack("Start").then(
+              [](auto f) { return f.get(); });
+        });
+        EXPECT_CALL(*stream, Write)
+            .WillOnce(
+                [&sequencer](google::storage::v2::BidiReadObjectRequest const&,
+                             grpc::WriteOptions) {
+                  return sequencer.PushBack("Write").then(
+                      [](auto f) { return f.get(); });
+                });
+        EXPECT_CALL(*stream, Read).WillOnce([&sequencer, expected_response]() {
+          return sequencer.PushBack("Read").then([expected_response](auto) {
+            return std::make_optional(expected_response);
+          });
+        });
+        return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
+      });
+
+  CompletionQueue cq;
+  auto coro = std::make_shared<OpenObject>(
+      mock, cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
+  auto pending = coro->Call();
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+
+  auto response = pending.get();
+  EXPECT_THAT(response, StatusIs(StatusCode::kOk));
+  internal::EndSpan(*span, Status{});
+
+  auto spans = span_catcher->GetSpans();
+  using EventMatcher =
+      testing::Matcher<opentelemetry::sdk::trace::SpanDataEvent>;
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("test-open-span"),
+          SpanHasEvents(EventMatcher(AllOf(
+              EventNamed("gl-cpp.stream_open.latency"),
+              SpanEventAttributesAre(
+                  OTelAttribute<double>("gl-cpp.latency.network_handshake", _),
+                  OTelAttribute<double>("gl-cpp.latency.server_metadata", _),
+                  OTelAttribute<double>("gl-cpp.latency.stream_open", _))))))));
+}
+#endif
 
 TEST(OpenImpl, BasicReadHandle) {
   auto constexpr kText = R"pb(

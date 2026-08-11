@@ -15,6 +15,11 @@
 #include "google/cloud/storage/internal/async/open_object.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_cat.h"
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+#include "google/cloud/internal/opentelemetry.h"
+#include <opentelemetry/metrics/provider.h>
+#endif
 #include <utility>
 
 namespace google {
@@ -41,6 +46,10 @@ OpenObject::OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
       initial_request_(std::move(request)) {}
 
 future<StatusOr<OpenStreamResult>> OpenObject::Call() {
+  metrics_.RecordCall();
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  span_ = opentelemetry::trace::Tracer::GetCurrentSpan();
+#endif
   auto future = promise_.get_future();
   rpc_->Start().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnStart(f.get());
@@ -63,6 +72,7 @@ std::unique_ptr<OpenStream::StreamingRpc> OpenObject::CreateRpc(
 }
 
 void OpenObject::OnStart(bool ok) {
+  metrics_.RecordStart();
   if (!ok) return DoFinish();
   rpc_->Write(initial_request_).then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnWrite(f.get());
@@ -70,6 +80,7 @@ void OpenObject::OnStart(bool ok) {
 }
 
 void OpenObject::OnWrite(bool ok) {
+  metrics_.RecordWrite();
   if (!ok) return DoFinish();
   rpc_->Read().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnRead(f.get());
@@ -78,6 +89,12 @@ void OpenObject::OnWrite(bool ok) {
 
 void OpenObject::OnRead(
     std::optional<google::storage::v2::BidiReadObjectResponse> response) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  metrics_.RecordRead(initial_request_.read_object_spec().bucket(), span_);
+#else
+  metrics_.RecordRead(initial_request_.read_object_spec().bucket());
+#endif
+
   if (!response) return DoFinish();
   promise_.set_value(OpenStreamResult{std::move(rpc_), std::move(*response)});
 }
