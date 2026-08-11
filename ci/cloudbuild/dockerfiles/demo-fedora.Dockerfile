@@ -66,7 +66,7 @@ ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/local/l
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.6.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v36.0-rc2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
