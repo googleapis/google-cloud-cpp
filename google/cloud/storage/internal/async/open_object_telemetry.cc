@@ -76,6 +76,11 @@ void OpenObjectTelemetry::RecordWrite() {
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
 void OpenObjectTelemetry::RecordMetrics(
     std::string const& bucket, std::chrono::steady_clock::time_point t3) {
+  if (t0_.time_since_epoch().count() == 0 ||
+      t1_.time_since_epoch().count() == 0 ||
+      t2_.time_since_epoch().count() == 0) {
+    return;
+  }
   auto const& metrics = StreamOpenMetrics::Instance();
   auto p1 = static_cast<double>(
       std::chrono::duration_cast<std::chrono::microseconds>(t1_ - t0_).count());
@@ -108,7 +113,10 @@ void OpenObjectTelemetry::RecordRead(
   (void)bucket;
 #endif
 
-  if (span && span->GetContext().IsValid()) {
+  if (span && span->GetContext().IsValid() &&
+      t0_.time_since_epoch().count() > 0 &&
+      t1_.time_since_epoch().count() > 0 &&
+      t2_.time_since_epoch().count() > 0) {
     auto p1 = static_cast<double>(
         std::chrono::duration_cast<std::chrono::microseconds>(t1_ - t0_)
             .count());

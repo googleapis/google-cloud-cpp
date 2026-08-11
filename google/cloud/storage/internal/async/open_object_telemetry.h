@@ -50,9 +50,9 @@ class OpenObjectTelemetry {
 
 #if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
     defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
-  std::chrono::steady_clock::time_point t0_;
-  std::chrono::steady_clock::time_point t1_;
-  std::chrono::steady_clock::time_point t2_;
+  std::chrono::steady_clock::time_point t0_{};
+  std::chrono::steady_clock::time_point t1_{};
+  std::chrono::steady_clock::time_point t2_{};
 #endif
 };
 
