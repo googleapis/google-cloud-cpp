@@ -783,7 +783,6 @@ class MockWriteObjectResponse
 
 TEST_F(GoldenKitchenSinkStubTest, StreamingWrite) {
   auto context = std::make_shared<grpc::ClientContext>();
-  Request request;
   EXPECT_CALL(*grpc_stub_, StreamingWriteRaw(context.get(), _))
       .WillOnce([](::grpc::ClientContext*, Response*) {
         auto stream = std::make_unique<MockWriteObjectResponse>();

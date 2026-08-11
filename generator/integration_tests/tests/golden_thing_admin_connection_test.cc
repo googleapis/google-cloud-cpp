@@ -97,7 +97,6 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
 
             ::google::test::admin::database::v1::ListDatabasesResponse page;
             page.set_next_page_token("page-1");
-            ::google::test::admin::database::v1::Database database;
             page.add_databases()->set_name("db-1");
             page.add_databases()->set_name("db-2");
             return make_status_or(page);
@@ -112,7 +111,6 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
 
             ::google::test::admin::database::v1::ListDatabasesResponse page;
             page.set_next_page_token("page-2");
-            ::google::test::admin::database::v1::Database database;
             page.add_databases()->set_name("db-3");
             page.add_databases()->set_name("db-4");
             return make_status_or(page);
@@ -127,7 +125,6 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
 
             ::google::test::admin::database::v1::ListDatabasesResponse page;
             page.clear_next_page_token();
-            ::google::test::admin::database::v1::Database database;
             page.add_databases()->set_name("db-5");
             return make_status_or(page);
           });
