@@ -891,10 +891,10 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
     auto details_proto = google::rpc::Status{};
     details_proto.set_code(grpc::StatusCode::UNAVAILABLE);
     details_proto.set_message("redirect");
-    details_proto.add_details()->PackFrom(redirected);
+    (void)details_proto.add_details()->PackFrom(redirected);
 
     std::string details;
-    details_proto.SerializeToString(&details);
+    (void)details_proto.SerializeToString(&details);
     return details;
   };
 
@@ -1121,10 +1121,10 @@ Status PartialFailure(std::int64_t read_id) {
     auto details_proto = google::rpc::Status{};
     details_proto.set_code(grpc::StatusCode::INVALID_ARGUMENT);
     details_proto.set_message("some reads are out of range");
-    details_proto.add_details()->PackFrom(error);
+    (void)details_proto.add_details()->PackFrom(error);
 
     std::string details;
-    details_proto.SerializeToString(&details);
+    (void)details_proto.SerializeToString(&details);
     return details;
   };
 

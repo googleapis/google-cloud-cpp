@@ -95,7 +95,7 @@ TEST(ApplyWriteRedirectErrors, Success) {
   redirect.mutable_write_handle()->set_handle("test-handle");
   redirect.set_routing_token("test-token");
   redirect.set_generation(1234);
-  rpc_status.add_details()->PackFrom(redirect);
+  (void)rpc_status.add_details()->PackFrom(redirect);
 
   ApplyWriteRedirectErrors(spec, rpc_status);
   EXPECT_EQ(spec.bucket(), "projects/_/buckets/test-bucket");
@@ -138,7 +138,7 @@ TEST(HandleBidiWriteRedirect, NoWriteHandle) {
   google::rpc::Status rpc_status;
   google::storage::v2::BidiWriteObjectRedirectedError redirect;
   redirect.set_routing_token("test-token");
-  rpc_status.add_details()->PackFrom(redirect);
+  (void)rpc_status.add_details()->PackFrom(redirect);
 
   auto info = HandleBidiWriteRedirect(request, rpc_status);
   EXPECT_EQ(info.routing_token, "test-token");
@@ -163,7 +163,7 @@ TEST(HandleBidiWriteRedirect, WithWriteHandleForWriteObjectSpec) {
   redirect.mutable_write_handle()->set_handle("test-handle");
   redirect.set_routing_token("test-token");
   redirect.set_generation(1234);
-  rpc_status.add_details()->PackFrom(redirect);
+  (void)rpc_status.add_details()->PackFrom(redirect);
 
   auto info = HandleBidiWriteRedirect(request, rpc_status);
   EXPECT_EQ(info.routing_token, "test-token");
@@ -199,7 +199,7 @@ TEST(HandleBidiWriteRedirect, WithWriteHandleForAppendObjectSpec) {
   redirect.mutable_write_handle()->set_handle("test-handle");
   redirect.set_routing_token("test-token");
   redirect.set_generation(1234);
-  rpc_status.add_details()->PackFrom(redirect);
+  (void)rpc_status.add_details()->PackFrom(redirect);
 
   auto info = HandleBidiWriteRedirect(request, rpc_status);
   EXPECT_EQ(info.routing_token, "test-token");

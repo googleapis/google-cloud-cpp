@@ -237,7 +237,7 @@ google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
     auto session = subscriber.Subscribe(
         [](pubsub::Message const& m, pubsub::AckHandler h) {
           google::cloud::pubsub::samples::State state;
-          state.ParseFromString(std::string{m.data()});
+          (void)state.ParseFromString(std::string{m.data()});
           std::cout << "Message contents: " << state.DebugString() << "\n";
           std::move(h).ack();
         });
