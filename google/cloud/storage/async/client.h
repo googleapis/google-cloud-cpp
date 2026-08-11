@@ -83,6 +83,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class AsyncClient {
  public:
+  /**
+   * Specifies a byte range for a read request.
+   */
+  struct ByteRange {
+    std::int64_t offset;
+    std::int64_t length;
+  };
+
+  /**
+   * Specifies initial byte ranges to request concurrently when opening an
+   * object.
+   *
+   * Passing initial read ranges allows the client to begin fetching expected
+   * byte ranges during connection setup, which may improve first-byte retrieval
+   * times for known access patterns.
+   */
+  struct InitialReadRanges {
+    // The initial read ranges.
+    std::vector<ByteRange> initial_ranges;
+  };
+
   /// Create a new client configured with @p options.
   explicit AsyncClient(Options options = {});
   /// Create a new client using @p connection. This is often used for mocking.
@@ -271,6 +292,20 @@ class AsyncClient {
    */
   future<StatusOr<ObjectDescriptor>> Open(BucketName const& bucket_name,
                                           std::string object_name,
+                                          Options opts = {});
+
+  /**
+   * Open an object descriptor, requesting specified initial read ranges
+   * concurrently.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param config initial byte ranges to request during connection setup.
+   * @param opts options controlling the behavior of this RPC.
+   */
+  future<StatusOr<ObjectDescriptor>> Open(BucketName const& bucket_name,
+                                          std::string object_name,
+                                          InitialReadRanges const& config,
                                           Options opts = {});
 
   /**
