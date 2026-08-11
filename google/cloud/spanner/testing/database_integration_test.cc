@@ -126,7 +126,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
         .GetMetadata()
         .descriptor->file()
         ->CopyTo(fds.add_file());
-    fds.SerializeToString(request.mutable_proto_descriptors());
+    (void)fds.SerializeToString(request.mutable_proto_descriptors());
     request.add_extra_statements(R"sql(
         CREATE PROTO BUNDLE (
           google.cloud.spanner.testing.SingerInfo,

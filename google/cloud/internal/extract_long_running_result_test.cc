@@ -37,7 +37,7 @@ TEST(ExtractLongRunningResultTest, MetadataDoneWithSuccess) {
   expected.set_seconds(123456);
   google::longrunning::Operation op;
   op.set_done(true);
-  op.mutable_metadata()->PackFrom(expected);
+  (void)op.mutable_metadata()->PackFrom(expected);
   auto const actual =
       ExtractLongRunningResultMetadata<Response>(op, "test-function");
   ASSERT_STATUS_OK(actual);
@@ -66,7 +66,7 @@ TEST(ExtractLongRunningResultTest, MetadataDoneWithoutResult) {
 TEST(ExtractLongRunningResultTest, MetadataDoneWithInvalidContent) {
   google::longrunning::Operation op;
   op.set_done(true);
-  op.mutable_metadata()->PackFrom(google::protobuf::Empty{});
+  (void)op.mutable_metadata()->PackFrom(google::protobuf::Empty{});
   auto const actual =
       ExtractLongRunningResultMetadata<Response>(op, "test-function");
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal,
@@ -87,7 +87,7 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithSuccess) {
   expected.set_seconds(123456);
   google::longrunning::Operation op;
   op.set_done(true);
-  op.mutable_response()->PackFrom(expected);
+  (void)op.mutable_response()->PackFrom(expected);
   auto const actual =
       ExtractLongRunningResultResponse<Response>(op, "test-function");
   ASSERT_STATUS_OK(actual);
@@ -116,7 +116,7 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithoutResult) {
 TEST(ExtractLongRunningResultTest, ResponseDoneWithInvalidContent) {
   google::longrunning::Operation op;
   op.set_done(true);
-  op.mutable_response()->PackFrom(google::protobuf::Empty{});
+  (void)op.mutable_response()->PackFrom(google::protobuf::Empty{});
   auto const actual =
       ExtractLongRunningResultResponse<Response>(op, "test-function");
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal,

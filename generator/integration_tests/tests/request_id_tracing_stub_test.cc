@@ -169,7 +169,7 @@ TEST(RequestIdTracingStubTest, Lro) {
         EXPECT_TRUE(ThereIsAnActiveSpan());
         google::longrunning::Operation result;
         result.set_done(true);
-        result.mutable_response()->PackFrom(Foo{});
+        (void)result.mutable_response()->PackFrom(Foo{});
         return make_ready_future(make_status_or(std::move(result)));
       });
 

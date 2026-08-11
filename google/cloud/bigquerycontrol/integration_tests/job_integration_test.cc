@@ -66,7 +66,6 @@ TEST_F(BigQueryJobIntegrationTest, JobCRUD) {
   query.set_parameter_mode("NAMED");
 
   // Specify value for named integer parameter: @minimum_year
-  bigquery_proto::QueryParameter minimum_year_param;
   auto constexpr kMinimumYearParam = R"pb(
     name: "minimum_year"
     parameter_type { type: "INT64" }

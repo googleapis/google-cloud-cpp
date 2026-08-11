@@ -68,7 +68,7 @@ TEST(OpenImpl, RequestParams) {
 
   auto params = [](auto text) {
     auto r = google::storage::v2::BidiReadObjectRequest{};
-    TextFormat::ParseFromString(text, &r);
+    (void)TextFormat::ParseFromString(text, &r);
     return RequestParams(r);
   };
   EXPECT_EQ(params(kPlain), "bucket=projects/_/buckets/test-bucket-name");

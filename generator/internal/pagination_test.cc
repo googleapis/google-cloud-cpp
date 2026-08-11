@@ -605,10 +605,12 @@ class BigQueryTestFixture
  public:
   void AddDependenciesToDatabase() {
     FileDescriptorProto proto_file;
-    google::protobuf::TextFormat::ParseFromString(kProtobufText, &proto_file);
+    (void)google::protobuf::TextFormat::ParseFromString(kProtobufText,
+                                                        &proto_file);
     simple_db_.Add(proto_file);
     FileDescriptorProto bq_file;
-    google::protobuf::TextFormat::ParseFromString(kBigQueryText, &bq_file);
+    (void)google::protobuf::TextFormat::ParseFromString(kBigQueryText,
+                                                        &bq_file);
     simple_db_.Add(bq_file);
   }
 

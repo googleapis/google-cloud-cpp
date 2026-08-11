@@ -95,7 +95,7 @@ ServiceCodeGenerator::ServiceCodeGenerator(
 ServiceCodeGenerator::ServiceConfiguration::EndpointLocationStyle
 ServiceCodeGenerator::EndpointLocationStyle() const {
   auto endpoint_location_style = ServiceConfiguration::LOCATION_INDEPENDENT;
-  ServiceConfiguration::EndpointLocationStyle_Parse(
+  (void)ServiceConfiguration::EndpointLocationStyle_Parse(
       vars("endpoint_location_style"), &endpoint_location_style);
   return endpoint_location_style;
 }

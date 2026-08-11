@@ -345,7 +345,7 @@ std::string FormattedCommentsForParameter(
   google::protobuf::FieldDescriptor const* parameter_descriptor =
       input_type->FindFieldByName(parameter);
   google::protobuf::SourceLocation loc;
-  parameter_descriptor->GetSourceLocation(&loc);
+  (void)parameter_descriptor->GetSourceLocation(&loc);
   auto comment = EscapePrinterDelimiter(ChompByValue(loc.leading_comments));
   // This is an arbitrary threshold. The intent is to simplify the generator
   // code for corner cases. In the few cases where the documentation of a field
@@ -897,7 +897,7 @@ std::map<std::string, std::string> ParseIdempotencyOverrides(
         absl::StrSplit(idempotency_override, absl::ByChar(':'));
     auto idempotency =
         ServiceConfiguration::IdempotencyOverride::NON_IDEMPOTENT;
-    ServiceConfiguration::IdempotencyOverride::Idempotency_Parse(
+    (void)ServiceConfiguration::IdempotencyOverride::Idempotency_Parse(
         override_splits.second, &idempotency);
     parsed_overrides[override_splits.first] =
         (idempotency == ServiceConfiguration::IdempotencyOverride::IDEMPOTENT
