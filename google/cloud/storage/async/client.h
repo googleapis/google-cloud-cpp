@@ -87,8 +87,8 @@ class AsyncClient {
    * Specifies a byte range for a read request.
    */
   struct ByteRange {
-    std::int64_t offset;
-    std::int64_t length;
+    std::int64_t offset = 0;
+    std::int64_t length = 0;
   };
 
   /**
