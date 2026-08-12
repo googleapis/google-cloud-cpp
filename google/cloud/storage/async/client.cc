@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/internal/async/default_options.h"
+#include "google/cloud/storage/internal/async/options.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
@@ -82,6 +83,27 @@ future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
         if (!connection) return std::move(connection).status();
         return ObjectDescriptor(*std::move(connection));
       });
+}
+
+future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
+    BucketName const& bucket_name, std::string object_name,
+    InitialReadRanges const& config, Options opts) {
+  auto spec = google::storage::v2::BidiReadObjectSpec{};
+  spec.set_bucket(bucket_name.FullName());
+  spec.set_object(std::move(object_name));
+
+  // Convert the user-facing `InitialReadRanges` to the internal
+  // `ReadRangesOption` so it can be propagated down to the connection
+  // implementation.
+  if (!config.initial_ranges.empty()) {
+    std::vector<storage_internal::ReadRangeConfig> internal_ranges;
+    internal_ranges.reserve(config.initial_ranges.size());
+    for (auto const& r : config.initial_ranges) {
+      internal_ranges.push_back({r.offset, r.length});
+    }
+    opts.set<storage_internal::ReadRangesOption>(std::move(internal_ranges));
+  }
+  return Open(std::move(spec), std::move(opts));
 }
 
 future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(
