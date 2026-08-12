@@ -44,3 +44,41 @@
       MetricType(HasSubstr("outstanding_rpcs")),
       HasMetricLabel("channel_pool_lb_policy", Eq("RANDOM_TWO_LEAST_USED")))));
   ```
+
+## Type Deduction and `auto` Guidelines (Abseil Tip #232)
+
+Follow [Abseil Tip of the Week #232](https://abseil.io/tips/232) and the Google
+C++ Style Guide: use `auto` only if it makes code clearer or safer, not merely
+to avoid typing an explicit type.
+
+- **Range-Based `for` Loops Over Maps and Associative Containers:**
+  - Use `auto` with structured bindings (`for (auto const& [key, value] : map)`)
+    when iterating over `std::map`, `absl::flat_hash_map`, protobuf maps (e.g.,
+    `metadata()`, `labels()`), and JSON `.items()`.
+  - *Why:* Iterating with `std::pair<Key, Value>` triggers implicit conversions
+    and unintentional deep copies because map elements are
+    `std::pair<const Key, Value>`. Structured bindings eliminate this hazard and
+    remove `kv.first` / `kv.second` noise.
+- **Standard Factory Functions:**
+  - Use `auto` when the type is explicitly specified on the RHS with standard
+    factory functions (e.g., `auto client = std::make_shared<MockClient>();`,
+    `auto ptr = std::make_unique<T>(...);`).
+- **Iterators:**
+  - Use `auto` for iterator variables when the container type is clearly
+    declared in the local scope (`auto it = local_vec.begin();`).
+  - When the container is not local (e.g., a class member variable), either
+    spell out the iterator type or explicitly bind the dereferenced element type
+    (e.g., `ElementType const& elem = *it;`).
+- **Spell Out Domain Types, Protobufs, and Return Values:**
+  - Do not use `auto` where it obscures domain types, protobuf messages, or
+    function return types (e.g., avoid `auto actual = client.InsertObject(...)`;
+    use `StatusOr<ObjectMetadata> actual = ...`).
+  - Do not use `auto` for nested protobuf access (e.g., avoid
+    `auto const& field = proto.nested().field()`; spell out the protobuf/string
+    type).
+- **Avoid `auto` for Primitive / Numeric Types:**
+  - Use explicit types (`std::size_t`, `std::int64_t`, `std::uint32_t`, etc.)
+    instead of bare `auto` initialized with integer literals.
+- **Explicit Semantics (`const`, `&`, `*`):**
+  - Always explicitly qualify `auto const&`, `auto&`, or `auto*` to make
+    ownership, references, and mutability unambiguous.
