@@ -21,6 +21,9 @@ https://google.github.io/styleguide/cppguide.html with the following variances:
 
 - Use C++17 as its minimum C++ standard version.
 - Use `std::mutex` instead of `absl::mutex`.
+- Use `std::string_view` instead of `absl::string_view`.
+- Use `std::optional` instead of `absl::optional`.
+- Use `std::variant` instead of `absl::variant`.
 - Use `google::cloud::future` and `google::cloud::promise` instead of
   `std::future` and `std::promise`.
 - Use `google::cloud::Status` and `google::cloud::StatusOr` instead of

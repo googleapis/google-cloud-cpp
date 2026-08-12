@@ -36,8 +36,11 @@ using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithParent;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::AllOf;
+using ::testing::ElementsAre;
 
 namespace sc = ::opentelemetry::semconv;
 
@@ -130,6 +133,33 @@ TEST(ObjectDescriptorReaderTracing, ReadWithCacheStatuses) {
                     SpanHasAttributes(OTelAttribute<std::string>(
                         "gl-cpp.initial-read-ranges.cache-status", status)))));
   }
+}
+
+TEST(ObjectDescriptorReaderTracing, ReadWithParentSpan) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto parent_span = internal::MakeSpan("test-parent-span");
+  auto impl = std::make_shared<ReadRange>(10000, 30);
+  auto reader =
+      MakeTracingObjectDescriptorReader(impl, /*cache_status=*/"", parent_span);
+
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "0123456789" }
+    read_range { read_offset: 10000 read_length: 10 read_id: 7 }
+    range_end: false
+  )pb";
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  impl->OnRead(std::move(data), /*is_transcoded=*/false);
+
+  auto actual = reader->Read().get();
+  internal::EndSpan(*parent_span);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, ElementsAre(AllOf(SpanNamed("storage::AsyncConnection::ReadRange"),
+                               SpanWithParent(parent_span)),
+                         SpanNamed("test-parent-span")));
 }
 
 }  // namespace

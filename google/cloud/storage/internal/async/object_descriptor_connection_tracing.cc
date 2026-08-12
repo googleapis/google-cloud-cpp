@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/internal/async/object_descriptor_connection_tracing.h"
 #include "google/cloud/storage/async/reader_connection.h"
-#include "google/cloud/storage/internal/async/reader_connection_tracing.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
 #include <opentelemetry/semconv/incubating/thread_attributes.h>
@@ -50,12 +49,11 @@ class AsyncObjectDescriptorConnectionTracing
 
   std::unique_ptr<storage::AsyncReaderConnection> Read(ReadParams p) override {
     internal::OTelScope scope(span_);
-    auto result = impl_->Read(p);
     span_->AddEvent("gl-cpp.open.read",
                     {{sc::thread::kThreadId, internal::CurrentThreadId()},
                      {"read-start", p.start},
                      {"read-length", p.length}});
-    return MakeTracingReaderConnection(span_, std::move(result));
+    return impl_->Read(p);
   }
 
   void MakeSubsequentStream() override {
