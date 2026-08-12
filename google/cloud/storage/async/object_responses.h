@@ -126,12 +126,9 @@ class ReadPayload {
   storage::HeadersMap headers_;
   // The full object checksums (aka hash values), if known.
   std::optional<storage::internal::HashValues> object_hash_values_;
-#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
-    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
   std::chrono::steady_clock::time_point t4_{};
   std::chrono::steady_clock::time_point t5_{};
   std::chrono::steady_clock::time_point t6_{};
-#endif
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

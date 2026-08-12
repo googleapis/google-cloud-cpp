@@ -81,20 +81,10 @@ struct ReadPayloadImpl {
                             std::chrono::steady_clock::time_point t4,
                             std::chrono::steady_clock::time_point t5,
                             std::chrono::steady_clock::time_point t6) {
-#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
-    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
     payload.t4_ = t4;
     payload.t5_ = t5;
     payload.t6_ = t6;
-#else
-    (void)payload;
-    (void)t4;
-    (void)t5;
-    (void)t6;
-#endif
   }
-#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
-    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
   static std::chrono::steady_clock::time_point GetT4(
       storage::ReadPayload const& p) {
     return p.t4_;
@@ -107,7 +97,6 @@ struct ReadPayloadImpl {
       storage::ReadPayload const& p) {
     return p.t6_;
   }
-#endif
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
