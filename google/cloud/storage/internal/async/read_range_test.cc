@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/read_range.h"
+#include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
@@ -82,10 +83,19 @@ TEST(ReadRange, BasicLifecycle) {
   actual.OnRead(std::move(data));
 
   EXPECT_TRUE(pending.is_ready());
-  EXPECT_THAT(pending.get(),
-              VariantWith<ReadPayload>(ResultOf(
-                  "contents", [](ReadPayload const& p) { return p.contents(); },
-                  ElementsAre("0123456789"))));
+  auto const res0 = pending.get();
+  EXPECT_THAT(
+      res0, VariantWith<ReadPayload>(ResultOf(
+                "contents",
+                [](ReadPayload const& p) {
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+                  EXPECT_TRUE(
+                      ReadPayloadImpl::GetT6(p).time_since_epoch().count() > 0);
+#endif
+                  return p.contents();
+                },
+                ElementsAre("0123456789"))));
   range = google::storage::v2::ReadRange{};
   auto constexpr kRange1 = R"pb(
     read_id: 7 read_offset: 10010 read_length: 30
