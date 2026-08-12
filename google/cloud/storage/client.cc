@@ -581,6 +581,26 @@ Options DefaultOptions(Options opts) {
                                                                 "/iamapi");
   }
 
+  if (!o.has<storage_experimental::EnableReadHedgingOption>()) {
+    o.set<storage_experimental::EnableReadHedgingOption>(false);
+  }
+  if (!o.has<storage_experimental::ReadHedgeRateLimitOption>()) {
+    o.set<storage_experimental::ReadHedgeRateLimitOption>(0.0);
+  }
+  if (!o.has<storage_experimental::MaxConcurrentHedgesOption>()) {
+    o.set<storage_experimental::MaxConcurrentHedgesOption>(0);
+  }
+  if (!o.has<storage_experimental::MaximumHedgeBufferOption>()) {
+    o.set<storage_experimental::MaximumHedgeBufferOption>(64 * 1024 * 1024);
+  }
+  if (!o.has<storage_experimental::ReadHedgeDelayOption>()) {
+    o.set<storage_experimental::ReadHedgeDelayOption>(
+        std::chrono::milliseconds(500));
+  }
+  if (!o.has<storage_experimental::MaxReadHedgesOption>()) {
+    o.set<storage_experimental::MaxReadHedgesOption>(2);
+  }
+
   auto logging = GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
   if (logging) {
     for (auto c : absl::StrSplit(*logging, ',')) {
@@ -631,6 +651,12 @@ Options DefaultOptions(Options opts) {
   }
   if (o.has<internal::CAPathOption>()) {
     rest_defaults.set<rest::CAPathOption>(o.get<internal::CAPathOption>());
+  }
+
+  // The (experimental) connect timeout is mapped the same way.
+  if (o.has<storage_experimental::HttpConnectTimeoutOption>()) {
+    rest_defaults.set<rest::HttpConnectTimeoutOption>(
+        o.get<storage_experimental::HttpConnectTimeoutOption>());
   }
 
   return google::cloud::internal::MergeOptions(std::move(o),

@@ -470,6 +470,21 @@ TEST_F(ClientTest, Timeouts) {
             internal::DefaultOptions().get<DownloadStallTimeoutOption>());
 }
 
+TEST_F(ClientTest, ConnectTimeout) {
+  namespace rest = ::google::cloud::rest_internal;
+
+  // The connect timeout is opt-in: when the application does not set it the
+  // REST layer keeps libcurl's own default.
+  EXPECT_FALSE(
+      internal::DefaultOptions().has<rest::HttpConnectTimeoutOption>());
+
+  auto const options = internal::DefaultOptions(
+      Options{}.set<storage_experimental::HttpConnectTimeoutOption>(
+          std::chrono::milliseconds(1500)));
+  EXPECT_EQ(std::chrono::milliseconds(1500),
+            options.get<rest::HttpConnectTimeoutOption>());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
