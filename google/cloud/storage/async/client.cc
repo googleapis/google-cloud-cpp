@@ -95,12 +95,14 @@ future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
   // Convert the user-facing `InitialReadRanges` to the internal
   // `ReadRangesOption` so it can be propagated down to the connection
   // implementation.
-  std::vector<storage_internal::ReadRangeConfig> internal_ranges;
-  internal_ranges.reserve(config.initial_ranges.size());
-  for (auto const& r : config.initial_ranges) {
-    internal_ranges.push_back({r.offset, r.length});
+  if (!config.initial_ranges.empty()) {
+    std::vector<storage_internal::ReadRangeConfig> internal_ranges;
+    internal_ranges.reserve(config.initial_ranges.size());
+    for (auto const& r : config.initial_ranges) {
+      internal_ranges.push_back({r.offset, r.length});
+    }
+    opts.set<storage_internal::ReadRangesOption>(std::move(internal_ranges));
   }
-  opts.set<storage_internal::ReadRangesOption>(std::move(internal_ranges));
   return Open(std::move(spec), std::move(opts));
 }
 

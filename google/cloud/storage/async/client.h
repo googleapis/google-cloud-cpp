@@ -298,6 +298,15 @@ class AsyncClient {
    * Open an object descriptor, requesting specified initial read ranges
    * concurrently.
    *
+   * @par Example
+   * @snippet storage_async_samples.cc open-object-initial-read-ranges
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. The operation will
+   * retry until the descriptor is successfully created. The descriptor itself
+   * will resume any incomplete ranged reads if the connection(s) are
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
+   *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
    * @param config initial byte ranges to request during connection setup.
