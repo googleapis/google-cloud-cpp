@@ -80,5 +80,6 @@ to avoid typing an explicit type.
   - Use explicit types (`std::size_t`, `std::int64_t`, `std::uint32_t`, etc.)
     instead of bare `auto` initialized with integer literals.
 - **Explicit Semantics (`const`, `&`, `*`):**
-  - Always explicitly qualify `auto const&`, `auto&`, or `auto*` to make
-    ownership, references, and mutability unambiguous.
+  - When a reference or pointer is intended, always explicitly qualify as
+    `auto const&`, `auto&`, or `auto*` to prevent accidental copies (since bare
+    `auto` deduces by value) and to make ownership and mutability unambiguous.
