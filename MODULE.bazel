@@ -30,11 +30,11 @@ bazel_dep(name = "abseil-cpp", version = "20250814.2")
 # a native repository we cannot override.
 # See https://github.com/googleapis/google-cloud-cpp/issues/15393
 bazel_dep(name = "protobuf", version = "36.0-rc2", repo_name = "com_google_protobuf")
-git_override(
-    module_name = "protobuf",
-    commit = "d65ed10e49acbee0e7d14277ab3e0330a0dd2838",
-    remote = "https://github.com/protocolbuffers/protobuf.git",
-)
+#git_override(
+#    module_name = "protobuf",
+#    commit = "d65ed10e49acbee0e7d14277ab3e0330a0dd2838",
+#    remote = "https://github.com/protocolbuffers/protobuf.git",
+#)
 bazel_dep(name = "boringssl", version = "0.20251124.0")
 bazel_dep(name = "nlohmann_json", version = "3.12.0.bcr.1")
 bazel_dep(name = "curl", version = "8.8.0.bcr.3")
