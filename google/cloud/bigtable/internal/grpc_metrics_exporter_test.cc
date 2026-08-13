@@ -412,6 +412,7 @@ TEST(GrpcMetricsExporterTest, ValidatePluginConfigArguments) {
   Options options;
   options.set<AuthorityOption>("custom-bigtable-authority.googleapis.com");
   options.set<bigtable::AppProfileIdOption>("test-app-profile");
+  options.set<bigtable::MetricsPeriodOption>(std::chrono::seconds(60));
   auto conn = std::make_shared<DummyMetricServiceConnection>();
   std::string const client_uid = "test-client-uid";
 

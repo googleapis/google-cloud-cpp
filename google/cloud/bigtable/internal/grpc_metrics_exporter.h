@@ -108,7 +108,7 @@ struct GrpcMetricsPluginConfig {
 };
 
 GrpcMetricsPluginConfig MakeGrpcMetricsPluginConfig(
-    opentelemetry::sdk::resource::Resource const& detected_resource,
+    opentelemetry::sdk::resource::Resource detected_resource,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
     Options const& options, std::string const& client_uid);
 

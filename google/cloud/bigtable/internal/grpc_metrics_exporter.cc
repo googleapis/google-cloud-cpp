@@ -290,11 +290,12 @@ MonitoredResourceResult MakeMonitoredResource(
 }
 
 GrpcMetricsPluginConfig MakeGrpcMetricsPluginConfig(
-    opentelemetry::sdk::resource::Resource const& detected_resource,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    opentelemetry::sdk::resource::Resource detected_resource,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
     Options const& options, std::string const& client_uid) {
   auto dynamic_resource_fn =
-      [options, client_uid, detected_resource](
+      [options, client_uid, detected_resource = std::move(detected_resource)](
           opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
         auto res =
             MakeMonitoredResource(pda, detected_resource, options, client_uid);
