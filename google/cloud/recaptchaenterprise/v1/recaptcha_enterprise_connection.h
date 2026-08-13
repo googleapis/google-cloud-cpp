@@ -252,6 +252,13 @@ class RecaptchaEnterpriseServiceConnection {
   virtual StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
 
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Policy> GetPolicy(
+      google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Policy> UpdatePolicy(
+      google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+          request);
+
   virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
   CreateFirewallPolicy(
       google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&

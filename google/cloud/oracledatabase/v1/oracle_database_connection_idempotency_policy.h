@@ -153,6 +153,14 @@ class OracleDatabaseConnectionIdempotencyPolicy {
       google::cloud::oracledatabase::v1::
           FailoverAutonomousDatabaseRequest const& request);
 
+  virtual google::cloud::Idempotency RefreshAutonomousDatabase(
+      google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAutonomousDatabaseRefreshableClones(
+      google::cloud::oracledatabase::v1::
+          GetAutonomousDatabaseRefreshableClonesRequest const& request);
+
   virtual google::cloud::Idempotency ListOdbNetworks(
       google::cloud::oracledatabase::v1::ListOdbNetworksRequest request);
 

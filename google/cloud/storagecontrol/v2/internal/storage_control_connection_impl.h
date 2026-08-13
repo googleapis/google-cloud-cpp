@@ -255,6 +255,11 @@ class StorageControlConnectionImpl
       google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
           request) override;
 
+  StatusOr<google::storage::control::v2::ObjectFullContext>
+  ViewObjectFullContext(
+      google::storage::control::v2::ViewObjectFullContextRequest const& request)
+      override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<storagecontrol_v2_internal::StorageControlStub> stub_;

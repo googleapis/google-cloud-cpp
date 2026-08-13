@@ -331,6 +331,26 @@ class OracleDatabaseStub {
       google::cloud::oracledatabase::v1::
           FailoverAutonomousDatabaseRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRefreshAutonomousDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> RefreshAutonomousDatabase(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+  GetAutonomousDatabaseRefreshableClones(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          GetAutonomousDatabaseRefreshableClonesRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::oracledatabase::v1::ListOdbNetworksResponse>
   ListOdbNetworks(
       grpc::ClientContext& context, Options const& options,
@@ -1090,6 +1110,27 @@ class DefaultOracleDatabaseStub : public OracleDatabaseStub {
       grpc::ClientContext& context, Options options,
       google::cloud::oracledatabase::v1::
           FailoverAutonomousDatabaseRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRefreshAutonomousDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RefreshAutonomousDatabase(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+          request) override;
+
+  StatusOr<
+      google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+  GetAutonomousDatabaseRefreshableClones(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          GetAutonomousDatabaseRefreshableClonesRequest const& request)
+      override;
 
   StatusOr<google::cloud::oracledatabase::v1::ListOdbNetworksResponse>
   ListOdbNetworks(

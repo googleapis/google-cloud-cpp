@@ -173,6 +173,27 @@ RecaptchaEnterpriseServiceTracingConnection::GetMetrics(
   return internal::EndSpan(*span, child_->GetMetrics(request));
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceTracingConnection::GetPolicy(
+    google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "GetPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPolicy(request));
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceTracingConnection::UpdatePolicy(
+    google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "UpdatePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdatePolicy(request));
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceTracingConnection::CreateFirewallPolicy(
     google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&

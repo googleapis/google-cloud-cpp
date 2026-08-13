@@ -610,6 +610,18 @@ DefaultStorageControlStub::ListIntelligenceFindingRevisions(
   return response;
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+DefaultStorageControlStub::ViewObjectFullContext(
+    grpc::ClientContext& context, Options const&,
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  google::storage::control::v2::ObjectFullContext response;
+  auto status = grpc_stub_->ViewObjectFullContext(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

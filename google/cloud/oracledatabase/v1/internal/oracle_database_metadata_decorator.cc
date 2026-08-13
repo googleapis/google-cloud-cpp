@@ -535,6 +535,40 @@ OracleDatabaseMetadata::FailoverAutonomousDatabase(
   return child_->FailoverAutonomousDatabase(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseMetadata::AsyncRefreshAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRefreshAutonomousDatabase(cq, std::move(context),
+                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseMetadata::RefreshAutonomousDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RefreshAutonomousDatabase(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+OracleDatabaseMetadata::GetAutonomousDatabaseRefreshableClones(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GetAutonomousDatabaseRefreshableClonesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAutonomousDatabaseRefreshableClones(context, options,
+                                                        request);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListOdbNetworksResponse>
 OracleDatabaseMetadata::ListOdbNetworks(
     grpc::ClientContext& context, Options const& options,

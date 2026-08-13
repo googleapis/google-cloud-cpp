@@ -197,6 +197,31 @@ DefaultRecaptchaEnterpriseServiceStub::GetMetrics(
   return response;
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+DefaultRecaptchaEnterpriseServiceStub::GetPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request) {
+  google::cloud::recaptchaenterprise::v1::Policy response;
+  auto status = grpc_stub_->GetPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+DefaultRecaptchaEnterpriseServiceStub::UpdatePolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+        request) {
+  google::cloud::recaptchaenterprise::v1::Policy response;
+  auto status = grpc_stub_->UpdatePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 DefaultRecaptchaEnterpriseServiceStub::CreateFirewallPolicy(
     grpc::ClientContext& context, Options const&,

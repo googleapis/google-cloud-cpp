@@ -328,6 +328,27 @@ class OracleDatabaseConnectionImpl
   FailoverAutonomousDatabase(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  RefreshAutonomousDatabase(
+      google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RefreshAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+  RefreshAutonomousDatabase(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<
+      google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+  GetAutonomousDatabaseRefreshableClones(
+      google::cloud::oracledatabase::v1::
+          GetAutonomousDatabaseRefreshableClonesRequest const& request)
+      override;
+
   StreamRange<google::cloud::oracledatabase::v1::OdbNetwork> ListOdbNetworks(
       google::cloud::oracledatabase::v1::ListOdbNetworksRequest request)
       override;

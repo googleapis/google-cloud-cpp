@@ -90,24 +90,26 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Enrolls the customer resource(folder/project/organization) to the audit
-  /// manager service by creating the audit managers Service Agent in customers
-  /// workload and granting required permissions to the Service Agent. Please
-  /// note that if enrollment request is made on the already enrolled workload
-  /// then enrollment is executed overriding the existing set of destinations.
+  /// Adds your project, folder, or organization to Audit
+  /// Manager. This method creates the Audit Manager service agent in your
+  /// workload and grants required permissions to the service agent.
+  /// If you make this request on a workload that's already enrolled,
+  /// then this method overrides the existing set of destinations.
   ///
-  /// @param scope  Required. The resource to be enrolled to the audit manager. Scope format
-  ///  should be resource_type/resource_identifier Eg:
-  ///  projects/{project}/locations/{location},
-  ///  folders/{folder}/locations/{location}
-  ///  organizations/{organization}/locations/{location}
-  /// @param destinations  Required. List of destination among which customer can choose to upload
-  ///  their reports during the audit process. While enrolling at a
-  ///  organization/folder level, customer can choose Cloud storage bucket in any
-  ///  project. If the audit is triggered at project level using the service agent
-  ///  at organization/folder level, all the destination options associated with
-  ///  respective organization/folder level service agent will be available to
-  ///  auditing projects.
+  /// @param scope  Required. Organization, folder, or project to enroll in Audit Manager, in
+  ///  one of the following formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `organizations/{organization}/locations/{location}`
+  /// @param destinations  Required. Cloud Storage buckets that you can upload your audit reports to
+  ///  during the audit process.
+  ///  @n
+  ///  When you enroll an organization or folder, you can choose a Cloud Storage
+  ///  bucket from any project in the organization or folder. If you run an audit
+  ///  at the project level using the service agent at the organization or folder
+  ///  level, all the buckets that are associated with the service agent are
+  ///  available.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -121,8 +123,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L239}
-  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L492}
+  /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L260}
+  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L562}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
@@ -133,11 +135,11 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Enrolls the customer resource(folder/project/organization) to the audit
-  /// manager service by creating the audit managers Service Agent in customers
-  /// workload and granting required permissions to the Service Agent. Please
-  /// note that if enrollment request is made on the already enrolled workload
-  /// then enrollment is executed overriding the existing set of destinations.
+  /// Adds your project, folder, or organization to Audit
+  /// Manager. This method creates the Audit Manager service agent in your
+  /// workload and grants required permissions to the service agent.
+  /// If you make this request on a workload that's already enrolled,
+  /// then this method overrides the existing set of destinations.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -158,8 +160,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L239}
-  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L492}
+  /// [google.cloud.auditmanager.v1.EnrollResourceRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L260}
+  /// [google.cloud.auditmanager.v1.Enrollment]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L562}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::Enrollment> EnrollResource(
@@ -168,17 +170,26 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Generates a demo report highlighting different responsibilities
-  /// (Google/Customer/ shared) required to be fulfilled for the customer's
-  /// workload to be compliant with the given standard.
+  /// Generates an audit scope report for the given standard.
   ///
-  /// @param scope  Required. Scope for which the AuditScopeReport is required. Must be of
-  ///  format resource_type/resource_identifier Eg:
-  ///  projects/{project}/locations/{location},
-  ///  folders/{folder}/locations/{location}
-  /// @param compliance_standard  Required. Compliance Standard against which the Scope Report must be
-  ///  generated. Eg: FEDRAMP_MODERATE
-  /// @param report_format  Required. The format in which the Scope report bytes should be returned.
+  /// The report includes the following:
+  ///
+  /// * The technical attributes and constraints that Audit Manager uses to
+  ///   verify your compliance with a framework.
+  /// * A list of Google Cloud services and resources that are within the
+  ///   scope of the framework.
+  ///
+  /// @param scope  Required. Project or folder that the audit scope report is generated for,
+  ///  in one of the following formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `organizations/{organization}/locations/{location}`
+  /// @param compliance_standard  Optional. Deprecated. The standard (industry or regulatory requirements)
+  ///  that the audit scope report is run against.
+  ///  @n
+  ///  Use the `compliance_framework` field instead.
+  /// @param report_format  Required. Format for the audit scope report.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -192,8 +203,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L512}
-  /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L269}
+  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L586}
+  /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L295}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditScopeReport>
@@ -205,9 +216,14 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Generates a demo report highlighting different responsibilities
-  /// (Google/Customer/ shared) required to be fulfilled for the customer's
-  /// workload to be compliant with the given standard.
+  /// Generates an audit scope report for the given standard.
+  ///
+  /// The report includes the following:
+  ///
+  /// * The technical attributes and constraints that Audit Manager uses to
+  ///   verify your compliance with a framework.
+  /// * A list of Google Cloud services and resources that are within the
+  ///   scope of the framework.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -228,8 +244,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L512}
-  /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L269}
+  /// [google.cloud.auditmanager.v1.AuditScopeReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L586}
+  /// [google.cloud.auditmanager.v1.GenerateAuditScopeReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L295}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditScopeReport>
@@ -240,19 +256,23 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Register the Audit Report generation requests and returns the OperationId
-  /// using which the customer can track the report generation progress.
+  /// Registers audit report generation requests. This method returns the
+  /// operation identifier that you can use to track the report generation
+  /// progress.
   ///
-  /// @param scope  Required. Scope for which the AuditScopeReport is required. Must be of
-  ///  format resource_type/resource_identifier Eg:
-  ///  projects/{project}/locations/{location},
-  ///  folders/{folder}/locations/{location}
-  /// @param gcs_uri  Destination Cloud storage bucket where report and evidence must be
-  ///  uploaded. The Cloud storage bucket provided here must be selected among
-  ///  the buckets entered during the enrollment process.
-  /// @param compliance_standard  Required. Compliance Standard against which the Scope Report must be
-  ///  generated. Eg: FEDRAMP_MODERATE
-  /// @param report_format  Required. The format in which the audit report should be created.
+  /// @param scope  Required. Organization, folder, or project that the audit applies to, in
+  ///  one of the following formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `organizations/{organization}/locations/{location}`
+  /// @param gcs_uri  URL for the Cloud Storage bucket where the report and evidence is
+  ///  uploaded. You must select a bucket that was provided during the
+  ///  enrollment process.
+  /// @param compliance_standard  Optional. Deprecated. Compliance standard for the audit report.
+  ///  @n
+  ///  Use the `compliance_framework` field instead.
+  /// @param report_format  Required. Format for the audit report.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -273,8 +293,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L608}
-  /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L299}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
+  /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L331}
   ///
   // clang-format on
   future<StatusOr<google::cloud::auditmanager::v1::AuditReport>>
@@ -305,8 +325,9 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Register the Audit Report generation requests and returns the OperationId
-  /// using which the customer can track the report generation progress.
+  /// Registers audit report generation requests. This method returns the
+  /// operation identifier that you can use to track the report generation
+  /// progress.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -334,8 +355,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L608}
-  /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L299}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
+  /// [google.cloud.auditmanager.v1.GenerateAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L331}
   ///
   // clang-format on
   future<StatusOr<google::cloud::auditmanager::v1::AuditReport>>
@@ -376,9 +397,15 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Lists audit reports in the selected parent scope
+  /// Lists the audit reports for the organization, folder, or project that you
+  /// specify as the parent scope.
   ///
-  /// @param parent  Required. The parent scope for which to list the reports.
+  /// @param parent  Required. Parent organization, folder, or project to list reports for,
+  ///  in one of the following formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}`
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `organizations/{organization}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -401,8 +428,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L608}
-  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L378}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
+  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L432}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::AuditReport> ListAuditReports(
@@ -410,7 +437,8 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Lists audit reports in the selected parent scope
+  /// Lists the audit reports for the organization, folder, or project that you
+  /// specify as the parent scope.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -440,8 +468,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L608}
-  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L378}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
+  /// [google.cloud.auditmanager.v1.ListAuditReportsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L432}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::AuditReport> ListAuditReports(
@@ -450,11 +478,13 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Get the overall audit report
+  /// Gets the full metadata and findings for an audit report.
   ///
-  /// @param name  Required. Format
-  ///  projects/{project}/locations/{location}/auditReports/{audit_report},
-  ///  folders/{folder}/locations/{location}/auditReports/{audit_report}
+  /// @param name  Required. Name of the audit report, in one of the following formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}/auditReports/{audit_report}`
+  ///  * `folders/{folder}/locations/{location}/auditReports/{audit_report}`
+  ///  * `organizations/{organization}/locations/{location}/auditReports/{audit_report}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -468,8 +498,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L608}
-  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L406}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
+  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L472}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditReport> GetAuditReport(
@@ -477,7 +507,7 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Get the overall audit report
+  /// Gets the full metadata and findings for an audit report.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -498,8 +528,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L608}
-  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L406}
+  /// [google.cloud.auditmanager.v1.AuditReport]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L695}
+  /// [google.cloud.auditmanager.v1.GetAuditReportRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L472}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::AuditReport> GetAuditReport(
@@ -508,12 +538,14 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Get a resource along with its enrollment status.
+  /// Gets a resource and its enrollment status.
   ///
-  /// @param name  Required. Format
-  ///  folders/{folder}/locations/{location}/resourceEnrollmentStatuses/{resource_enrollment_status},
-  ///  projects/{project}/locations/{location}/resourceEnrollmentStatuses/{resource_enrollment_status},
-  ///  organizations/{organization}/locations/{location}/resourceEnrollmentStatuses/{resource_enrollment_status}
+  /// @param name  Required. Name of the resource enrollment status, in one of the following
+  ///  formats:
+  ///  @n
+  ///  * `folders/{folder}/locations/{location}/resourceEnrollmentStatuses/{resource_enrollment_status}`
+  ///  * `projects/{project}/locations/{location}/resourceEnrollmentStatuses/{resource_enrollment_status}`
+  ///  * `organizations/{organization}/locations/{location}/resourceEnrollmentStatuses/{resource_enrollment_status}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -527,8 +559,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L335}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L563}
+  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L377}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L644}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -536,7 +568,7 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Get a resource along with its enrollment status.
+  /// Gets a resource and its enrollment status.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -557,8 +589,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L335}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L563}
+  /// [google.cloud.auditmanager.v1.GetResourceEnrollmentStatusRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L377}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L644}
   ///
   // clang-format on
   StatusOr<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -569,10 +601,14 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Fetches all resources under the parent along with their enrollment.
+  /// Lists all the folders and projects in an organization or folder, along with
+  /// their enrollments.
   ///
-  /// @param parent  Required. The parent scope for which the list of resources with enrollments
-  ///  are required.
+  /// @param parent  Required. Parent organization or folder to list enrollment statuses for,
+  ///  in one of the following formats:
+  ///  @n
+  ///  * `folders/{folder}/locations/{location}`
+  ///  * `organizations/{organization}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -595,8 +631,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L350}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L563}
+  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L394}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L644}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -604,7 +640,8 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Fetches all resources under the parent along with their enrollment.
+  /// Lists all the folders and projects in an organization or folder, along with
+  /// their enrollments.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -634,8 +671,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L350}
-  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L563}
+  /// [google.cloud.auditmanager.v1.ListResourceEnrollmentStatusesRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L394}
+  /// [google.cloud.auditmanager.v1.ResourceEnrollmentStatus]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L644}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::ResourceEnrollmentStatus>
@@ -646,11 +683,14 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Gets controls needed to be implemented to be compliant to a standard.
+  /// Lists the controls that you must implement to become compliant to a
+  /// regulatory standard.
   ///
-  /// @param parent  Required. Format
-  ///  projects/{project}/locations/{location}/standards/{standard},
-  ///  folders/{folder}/locations/{location}/standards/{standard}
+  /// @param parent  Required. Standard to list controls for, in one of the following formats:
+  ///  @n
+  ///  * `projects/{project}/locations/{location}/standards/{standard}`
+  ///  * `folders/{folder}/locations/{location}/standards/{standard}`
+  ///  * `organizations/{organization}/locations/{location}/standards/{standard}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -673,8 +713,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L689}
-  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L419}
+  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L793}
+  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L488}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::Control> ListControls(
@@ -682,7 +722,8 @@ class AuditManagerClient {
 
   // clang-format off
   ///
-  /// Gets controls needed to be implemented to be compliant to a standard.
+  /// Lists the controls that you must implement to become compliant to a
+  /// regulatory standard.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -712,8 +753,8 @@ class AuditManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L689}
-  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L419}
+  /// [google.cloud.auditmanager.v1.Control]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L793}
+  /// [google.cloud.auditmanager.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/auditmanager/v1/auditmanager.proto#L488}
   ///
   // clang-format on
   StreamRange<google::cloud::auditmanager::v1::Control> ListControls(

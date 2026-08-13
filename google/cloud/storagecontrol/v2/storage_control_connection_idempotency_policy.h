@@ -158,6 +158,10 @@ class StorageControlConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListIntelligenceFindingRevisions(
       google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
           request);
+
+  virtual google::cloud::Idempotency ViewObjectFullContext(
+      google::storage::control::v2::ViewObjectFullContextRequest const&
+          request);
 };
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>

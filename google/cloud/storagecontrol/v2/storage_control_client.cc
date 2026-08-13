@@ -875,6 +875,38 @@ StorageControlClient::ListIntelligenceFindingRevisions(
   return connection_->ListIntelligenceFindingRevisions(std::move(request));
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlClient::ViewObjectFullContext(std::string const& name,
+                                            std::string const& context_key,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ViewObjectFullContextRequest request;
+  request.set_name(name);
+  request.set_context_key(context_key);
+  return connection_->ViewObjectFullContext(request);
+}
+
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlClient::ViewObjectFullContext(std::string const& name,
+                                            std::int64_t generation,
+                                            std::string const& context_key,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ViewObjectFullContextRequest request;
+  request.set_name(name);
+  request.set_generation(generation);
+  request.set_context_key(context_key);
+  return connection_->ViewObjectFullContext(request);
+}
+
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlClient::ViewObjectFullContext(
+    google::storage::control::v2::ViewObjectFullContextRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ViewObjectFullContext(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2
 }  // namespace cloud

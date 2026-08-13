@@ -214,6 +214,33 @@ RecaptchaEnterpriseServiceLogging::GetMetrics(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceLogging::GetPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::recaptchaenterprise::v1::GetPolicyRequest const&
+                 request) {
+        return child_->GetPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceLogging::UpdatePolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+                 request) {
+        return child_->UpdatePolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceLogging::CreateFirewallPolicy(
     grpc::ClientContext& context, Options const& options,
