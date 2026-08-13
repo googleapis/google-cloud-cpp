@@ -14,6 +14,7 @@
 #include "google/cloud/storage/internal/async/writer_connection_resumed.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
 #include "google/cloud/storage/async/connection.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -1232,6 +1233,89 @@ TEST(WriterConnectionResumed, DuplicateFinalizeFails) {
 
   EXPECT_STATUS_OK(finalize1.get());
   EXPECT_THAT(finalize2.get(), StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(WriteConnectionResumed, PermanentErrorNoResume) {
+  AsyncSequencer<bool> sequencer;
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+  auto failed_precondition = Status(StatusCode::kFailedPrecondition,
+                                    "another writer became exclusive");
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Flush).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush").then(
+        [failed_precondition](auto) { return failed_precondition; });
+  });
+
+  MockFactory mock_factory;
+  // factory_ should NOT be called because error is permanent
+  // (FAILED_PRECONDITION).
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, Options{});
+
+  auto write = connection->Write(TestPayload(10));
+  ASSERT_FALSE(write.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, Eq("Flush"));
+  next.first.set_value(true);
+
+  EXPECT_THAT(write.get(), StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(WriteConnectionResumed, CustomRetryPolicyOption) {
+  struct CustomAsyncRetryPolicy : public storage::AsyncRetryPolicy {
+    std::unique_ptr<storage::AsyncRetryPolicy> clone() const override {
+      return std::make_unique<CustomAsyncRetryPolicy>();
+    }
+    bool OnFailure(Status const&) override { return false; }
+    bool IsExhausted() const override { return false; }
+    bool IsPermanentFailure(Status const& s) const override {
+      return s.code() == StatusCode::kInvalidArgument;
+    }
+  };
+
+  AsyncSequencer<bool> sequencer;
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto first_response = google::storage::v2::BidiWriteObjectResponse{};
+  auto invalid_argument =
+      Status(StatusCode::kInvalidArgument, "custom permanent error");
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Flush).WillOnce([&](auto) {
+    return sequencer.PushBack("Flush").then(
+        [invalid_argument](auto) { return invalid_argument; });
+  });
+
+  MockFactory mock_factory;
+  // factory_ should NOT be called because error is permanent per custom policy.
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto options = Options{}.set<storage::AsyncRetryPolicyOption>(
+      std::make_shared<CustomAsyncRetryPolicy>());
+
+  auto connection = MakeWriterConnectionResumed(
+      mock_factory.AsStdFunction(), std::move(mock), initial_request, nullptr,
+      first_response, options);
+
+  auto write = connection->Write(TestPayload(10));
+  ASSERT_FALSE(write.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, Eq("Flush"));
+  next.first.set_value(true);
+
+  EXPECT_THAT(write.get(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 }  // namespace
