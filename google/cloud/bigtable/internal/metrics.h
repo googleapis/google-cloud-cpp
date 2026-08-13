@@ -36,7 +36,7 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-struct ResourceLabels {
+struct TableResourceLabels {
   std::string project_id;
   std::string instance;
   std::string table;
@@ -44,7 +44,7 @@ struct ResourceLabels {
   std::string zone;
 };
 
-struct DataLabels {
+struct TableDataLabels {
   std::string method;
   std::string streaming;
   std::string client_name;
@@ -63,7 +63,7 @@ struct PeerInfoLabels {
 using LabelMap = std::unordered_map<std::string, std::string>;
 // `peer_info_labels` is optional because only AttemptLatency2 populates it.
 LabelMap IntoLabelMap(
-    ResourceLabels const& r, DataLabels const& d,
+    TableResourceLabels const& r, TableDataLabels const& d,
     std::set<std::string> const& filtered_data_labels = {},
     std::optional<PeerInfoLabels> const& peer_info_labels = std::nullopt);
 
@@ -119,8 +119,8 @@ class Metric {
                               ElementRequestParams const&) {}
   virtual void ElementDelivery(opentelemetry::context::Context const&,
                                ElementDeliveryParams const&) {}
-  virtual std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                        DataLabels data_labels) const = 0;
+  virtual std::unique_ptr<Metric> clone(TableResourceLabels const&,
+                                        TableDataLabels const&) const = 0;
 };
 
 class OperationLatency : public Metric {
@@ -136,12 +136,13 @@ class OperationLatency : public Metric {
                 PostCallParams const& p) override;
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams const& p) override;
-  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                DataLabels data_labels) const override;
+  std::unique_ptr<Metric> clone(
+      TableResourceLabels const& resource_labels,
+      TableDataLabels const& data_labels) const override;
 
  private:
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       operation_latencies_;
   OperationContext::Clock::time_point operation_start_;
@@ -157,12 +158,13 @@ class AttemptLatency : public Metric {
   void PostCall(opentelemetry::context::Context const& context,
                 grpc::ClientContext const& client_context,
                 PostCallParams const& p) override;
-  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                DataLabels data_labels) const override;
+  std::unique_ptr<Metric> clone(
+      TableResourceLabels const& resource_labels,
+      TableDataLabels const& data_labels) const override;
 
  private:
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       attempt_latencies_;
   OperationContext::Clock::time_point attempt_start_;
@@ -179,12 +181,13 @@ class AttemptLatency2 : public Metric {
   void PostCall(opentelemetry::context::Context const& context,
                 grpc::ClientContext const& client_context,
                 PostCallParams const& p) override;
-  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                DataLabels data_labels) const override;
+  std::unique_ptr<Metric> clone(
+      TableResourceLabels const& resource_labels,
+      TableDataLabels const& data_labels) const override;
 
  private:
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   PeerInfoLabels peer_info_labels_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       attempt_latencies2_;
@@ -203,12 +206,13 @@ class RetryCount : public Metric {
                 PostCallParams const& p) override;
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams const& p) override;
-  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                DataLabels data_labels) const override;
+  std::unique_ptr<Metric> clone(
+      TableResourceLabels const& resource_labels,
+      TableDataLabels const& data_labels) const override;
 
  private:
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   std::uint64_t num_retries_ = 0;
   opentelemetry::nostd::shared_ptr<
       opentelemetry::metrics::Counter<std::uint64_t>>
@@ -231,12 +235,13 @@ class FirstResponseLatency : public Metric {
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams const& p) override;
 
-  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                DataLabels data_labels) const override;
+  std::unique_ptr<Metric> clone(
+      TableResourceLabels const& resource_labels,
+      TableDataLabels const& data_labels) const override;
 
  private:
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       first_response_latencies_;
   OperationContext::Clock::time_point operation_start_;
@@ -252,12 +257,13 @@ class ServerLatency : public Metric {
                 grpc::ClientContext const& client_context,
                 PostCallParams const& p) override;
 
-  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                DataLabels data_labels) const override;
+  std::unique_ptr<Metric> clone(
+      TableResourceLabels const& resource_labels,
+      TableDataLabels const& data_labels) const override;
 
  private:
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       server_latencies_;
 };
@@ -278,12 +284,13 @@ class ApplicationBlockingLatency : public Metric {
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams const&) override;
 
-  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                DataLabels data_labels) const override;
+  std::unique_ptr<Metric> clone(
+      TableResourceLabels const& resource_labels,
+      TableDataLabels const& data_labels) const override;
 
  private:
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       application_blocking_latencies_;
   OperationContext::Clock::time_point element_delivery_time_;
@@ -301,12 +308,13 @@ class ConnectivityErrorCount : public Metric {
                 PostCallParams const& p) override;
   void OnDone(opentelemetry::context::Context const& context,
               OnDoneParams const&) override;
-  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
-                                DataLabels data_labels) const override;
+  std::unique_ptr<Metric> clone(
+      TableResourceLabels const& resource_labels,
+      TableDataLabels const& data_labels) const override;
 
  private:
-  ResourceLabels resource_labels_;
-  DataLabels data_labels_;
+  TableResourceLabels resource_labels_;
+  TableDataLabels data_labels_;
   std::uint64_t num_errors_ = 0;
   opentelemetry::nostd::shared_ptr<
       opentelemetry::metrics::Counter<std::uint64_t>>

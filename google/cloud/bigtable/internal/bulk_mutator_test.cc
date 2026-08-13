@@ -107,8 +107,8 @@ class MockMetric : public bigtable_internal::Metric {
                bigtable_internal::ElementDeliveryParams const&),
               (override));
   MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (bigtable_internal::ResourceLabels resource_labels,
-               bigtable_internal::DataLabels data_labels),
+              (bigtable_internal::TableResourceLabels const& resource_labels,
+               bigtable_internal::TableDataLabels const& data_labels),
               (const, override));
 };
 
@@ -118,8 +118,8 @@ class CloningMetric : public bigtable_internal::Metric {
   explicit CloningMetric(std::unique_ptr<MockMetric> metric)
       : metric_(std::move(metric)) {}
   std::unique_ptr<bigtable_internal::Metric> clone(
-      bigtable_internal::ResourceLabels,
-      bigtable_internal::DataLabels) const override {
+      bigtable_internal::TableResourceLabels const&,
+      bigtable_internal::TableDataLabels const&) const override {
     return std::move(metric_);
   }
 

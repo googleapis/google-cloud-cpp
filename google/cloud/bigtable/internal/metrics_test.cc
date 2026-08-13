@@ -228,10 +228,10 @@ class MockMeterProvider : public opentelemetry::metrics::MeterProvider {
 };
 
 TEST(LabelMap, IntoLabelMap) {
-  ResourceLabels r{"my-project", "my-instance", "my-table", "my-cluster",
-                   "my-zone"};
-  DataLabels d{"my-method",     "my-streaming",   "my-client-name",
-               "my-client-uid", "my-app-profile", "my-status"};
+  TableResourceLabels r{"my-project", "my-instance", "my-table", "my-cluster",
+                        "my-zone"};
+  TableDataLabels d{"my-method",     "my-streaming",   "my-client-name",
+                    "my-client-uid", "my-app-profile", "my-status"};
   auto label_map = IntoLabelMap(r, d);
   EXPECT_THAT(
       label_map,
@@ -246,9 +246,9 @@ TEST(LabelMap, IntoLabelMap) {
 }
 
 TEST(LabelMap, IntoLabelMapWithDefaults) {
-  ResourceLabels r{"my-project", "my-instance", "my-table", "", ""};
-  DataLabels d{"my-method",     "my-streaming",   "my-client-name",
-               "my-client-uid", "my-app-profile", "my-status"};
+  TableResourceLabels r{"my-project", "my-instance", "my-table", "", ""};
+  TableDataLabels d{"my-method",     "my-streaming",   "my-client-name",
+                    "my-client-uid", "my-app-profile", "my-status"};
   auto label_map = IntoLabelMap(r, d);
   EXPECT_THAT(
       label_map,
@@ -510,10 +510,11 @@ TEST(OperationLatencyTest, FirstAttemptSuccess) {
       });
 
   OperationLatency operation_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = operation_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -583,10 +584,11 @@ TEST(OperationLatencyTest, ThirdAttemptSuccess) {
       });
 
   OperationLatency operation_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = operation_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -671,10 +673,11 @@ TEST(OperationLatencyTest, UsesDefaultClusterAndZone) {
       });
 
   OperationLatency operation_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = operation_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -743,10 +746,11 @@ TEST(AttemptLatencyTest, NoRetry) {
       });
 
   AttemptLatency attempt_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = attempt_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -846,10 +850,11 @@ TEST(AttemptLatencyTest, ThreeAttempts) {
       });
 
   AttemptLatency attempt_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = attempt_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -929,10 +934,11 @@ TEST(AttemptLatencyTest, UsesDefaultClusterAndZone) {
       });
 
   AttemptLatency attempt_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = attempt_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1004,10 +1010,11 @@ TEST(AttemptLatency2Test, NoRetry) {
       });
 
   AttemptLatency2 attempt_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = attempt_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1114,10 +1121,11 @@ TEST(AttemptLatency2Test, ThreeAttempts) {
       });
 
   AttemptLatency2 attempt_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = attempt_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1198,10 +1206,11 @@ TEST(AttemptLatency2Test, UsesDefaultClusterAndZone) {
       });
 
   AttemptLatency2 attempt_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = attempt_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1270,10 +1279,11 @@ TEST(RetryCountTest, NoRetry) {
       });
 
   RetryCount retry_count("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = retry_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1343,10 +1353,11 @@ TEST(RetryCountTest, ThreeAttempts) {
       });
 
   RetryCount retry_count("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = retry_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1426,10 +1437,11 @@ TEST(RetryCountTest, UsesDefaultClusterAndZone) {
       });
 
   RetryCount retry_count("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = retry_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1499,10 +1511,11 @@ TEST(FirstResponseLatency, Success) {
 
   FirstResponseLatency first_response_latency("my-instrument-scope",
                                               mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = first_response_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1564,10 +1577,11 @@ TEST(FirstResponseLatency, NoDataReceived) {
 
   FirstResponseLatency first_response_latency("my-instrument-scope",
                                               mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = first_response_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1642,10 +1656,11 @@ TEST(FirstResponseLatency, UsesDefaultClusterAndZone) {
 
   FirstResponseLatency first_response_latency("my-instrument-scope",
                                               mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = first_response_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1756,10 +1771,11 @@ TEST(ServerLatency, SingleSuccess) {
       });
 
   ServerLatency server_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = server_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1831,10 +1847,11 @@ TEST(ServerLatency, UsesDefaultClusterAndZone) {
       });
 
   ServerLatency server_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = server_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1916,10 +1933,11 @@ TEST(ServerLatency, TwoAttempts) {
       });
 
   ServerLatency server_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = server_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -1986,10 +2004,11 @@ TEST(ServerLatency, NoServerTiming) {
       });
 
   ServerLatency server_latency("my-instrument-scope", mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = server_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -2053,10 +2072,11 @@ TEST(ConnectivityErrorCount, MissingResourceLabels) {
 
   ConnectivityErrorCount connectivity_error_count("my-instrument-scope",
                                                   mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = connectivity_error_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -2133,10 +2153,11 @@ TEST(ConnectivityErrorCount, Success) {
 
   ConnectivityErrorCount connectivity_error_count("my-instrument-scope",
                                                   mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = connectivity_error_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -2209,10 +2230,11 @@ TEST(ConnectivityErrorCount, OkAndMissingServerTiming) {
 
   ConnectivityErrorCount connectivity_error_count("my-instrument-scope",
                                                   mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = connectivity_error_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -2278,10 +2300,11 @@ TEST(ConnectivityErrorCount, DeadlineExceededAndMissingServerTiming) {
 
   ConnectivityErrorCount connectivity_error_count("my-instrument-scope",
                                                   mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = connectivity_error_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -2346,10 +2369,11 @@ TEST(ApplicationBlockingLatency, Success) {
 
   ApplicationBlockingLatency application_blocking_latency("my-instrument-scope",
                                                           mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = application_blocking_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
@@ -2433,10 +2457,11 @@ TEST(ApplicationBlockingLatency, StreamingData) {
 
   ApplicationBlockingLatency application_blocking_latency("my-instrument-scope",
                                                           mock_provider);
-  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
-                                 ""};
-  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
-                         "my-client-uid", "my-app-profile", ""};
+  TableResourceLabels resource_labels{"my-project-id", "my-instance",
+                                      "my-table", "", ""};
+  TableDataLabels data_labels{"my-method",      "my-streaming",
+                              "my-client-name", "my-client-uid",
+                              "my-app-profile", ""};
   auto clone = application_blocking_latency.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
