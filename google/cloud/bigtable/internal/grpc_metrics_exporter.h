@@ -25,11 +25,14 @@
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 #include "google/cloud/monitoring/v3/metric_connection.h"
 #include "google/api/monitored_resource.pb.h"
+#include <grpcpp/ext/otel_plugin.h>
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader.h>
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <functional>
+#include <string_view>
 #include <vector>
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
 
@@ -94,6 +97,24 @@ std::shared_ptr<opentelemetry::metrics::MeterProvider> MakeGrpcMeterProvider(
     std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter> exporter,
     opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions
         reader_options);
+
+struct GrpcMetricsPluginConfig {
+  std::shared_ptr<opentelemetry::metrics::MeterProvider> meter_provider;
+  std::vector<std::string_view> enabled_metrics;
+  std::vector<std::string_view> disabled_metrics;
+  std::function<bool(std::string_view)> generic_method_filter;
+  std::function<bool(grpc::OpenTelemetryPluginBuilder::ChannelScope const&)>
+      channel_scope_filter;
+};
+
+GrpcMetricsPluginConfig MakeGrpcMetricsPluginConfig(
+    opentelemetry::sdk::resource::Resource const& detected_resource,
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
+    Options const& options, std::string const& client_uid);
+
+GrpcMetricsPluginConfig MakeGrpcMetricsPluginConfig(
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
+    Options const& options, std::string const& client_uid);
 
 void EnableGrpcMetrics(
     std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,

@@ -289,17 +289,12 @@ MonitoredResourceResult MakeMonitoredResource(
   return MonitoredResourceResult{std::move(project_id), std::move(resource)};
 }
 
-void EnableGrpcMetrics(
+GrpcMetricsPluginConfig MakeGrpcMetricsPluginConfig(
+    opentelemetry::sdk::resource::Resource const& detected_resource,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
     Options const& options, std::string const& client_uid) {
-  auto authority = options.get<AuthorityOption>();
-  if (!GrpcMetricsExporterRegistry::Singleton().Register(authority)) return;
-
-  auto detector = otel::MakeResourceDetector();
-  auto detected_resource = detector->Detect();
-
   auto dynamic_resource_fn =
-      [options, client_uid, detected_resource = std::move(detected_resource)](
+      [options, client_uid, detected_resource](
           opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
         auto res =
             MakeMonitoredResource(pda, detected_resource, options, client_uid);
@@ -357,7 +352,7 @@ void EnableGrpcMetrics(
   auto provider =
       MakeGrpcMeterProvider(std::move(exporter), std::move(reader_options));
 
-  auto const metrics = std::vector<std::string_view>{
+  auto metrics = std::vector<std::string_view>{
       std::string_view{"grpc.client.attempt.duration"},
       std::string_view{"grpc.lb.rls.default_target_picks"},
       std::string_view{"grpc.lb.rls.target_picks"},
@@ -370,13 +365,14 @@ void EnableGrpcMetrics(
       std::string_view{"grpc.subchannel.open_connections"},
   };
 
-  auto const disable_metrics = std::vector<std::string_view>{
+  auto disable_metrics = std::vector<std::string_view>{
       std::string_view{
           "grpc.client.attempt.sent_total_compressed_message_size"},
       std::string_view{
           "grpc.client.attempt.rcvd_total_compressed_message_size"},
   };
 
+  auto authority = options.get<AuthorityOption>();
   auto scope_filter =
       [authority = std::move(authority)](
           grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
@@ -386,15 +382,41 @@ void EnableGrpcMetrics(
                        << " vs expected authority=" << authority;
         return scope.default_authority() == authority;
       };
+
+  auto generic_method_filter = [](std::string_view target) {
+    return absl::StartsWith(target, "google.bigtable.v2");
+  };
+
+  return GrpcMetricsPluginConfig{
+      std::move(provider),        std::move(metrics),
+      std::move(disable_metrics), std::move(generic_method_filter),
+      std::move(scope_filter),
+  };
+}
+
+GrpcMetricsPluginConfig MakeGrpcMetricsPluginConfig(
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
+    Options const& options, std::string const& client_uid) {
+  auto detector = otel::MakeResourceDetector();
+  return MakeGrpcMetricsPluginConfig(detector->Detect(), conn, options,
+                                     client_uid);
+}
+
+void EnableGrpcMetrics(
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> const& conn,
+    Options const& options, std::string const& client_uid) {
+  auto const& authority = options.get<AuthorityOption>();
+  if (!GrpcMetricsExporterRegistry::Singleton().Register(authority)) return;
+
+  auto config = MakeGrpcMetricsPluginConfig(conn, options, client_uid);
   auto status =
       grpc::OpenTelemetryPluginBuilder()
-          .SetMeterProvider(provider)
-          .EnableMetrics(metrics)
-          .DisableMetrics(disable_metrics)
-          .SetGenericMethodAttributeFilter([](std::string_view target) {
-            return absl::StartsWith(target, "google.bigtable.v2");
-          })
-          .SetChannelScopeFilter(std::move(scope_filter))
+          .SetMeterProvider(config.meter_provider)
+          .EnableMetrics(config.enabled_metrics)
+          .DisableMetrics(config.disabled_metrics)
+          .SetGenericMethodAttributeFilter(
+              std::move(config.generic_method_filter))
+          .SetChannelScopeFilter(std::move(config.channel_scope_filter))
           .BuildAndRegisterGlobal();
   if (!status.ok()) {
     GCP_LOG(ERROR) << "Cannot register provider status=" << status.ToString();
