@@ -96,6 +96,14 @@ class RecaptchaEnterpriseServiceTracingConnection
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request)
       override;
 
+  StatusOr<google::cloud::recaptchaenterprise::v1::Policy> GetPolicy(
+      google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::recaptchaenterprise::v1::Policy> UpdatePolicy(
+      google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+          request) override;
+
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
   CreateFirewallPolicy(
       google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&

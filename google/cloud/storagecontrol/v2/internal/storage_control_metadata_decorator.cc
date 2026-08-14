@@ -1020,6 +1020,35 @@ StorageControlMetadata::ListIntelligenceFindingRevisions(
   return child_->ListIntelligenceFindingRevisions(context, options, request);
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlMetadata::ViewObjectFullContext(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::ViewObjectFullContextRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::
+                    ViewObjectFullContextRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  bucket_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->ViewObjectFullContext(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

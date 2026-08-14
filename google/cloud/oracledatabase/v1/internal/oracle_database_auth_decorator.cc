@@ -629,6 +629,48 @@ OracleDatabaseAuth::FailoverAutonomousDatabase(
   return child_->FailoverAutonomousDatabase(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseAuth::AsyncRefreshAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRefreshAutonomousDatabase(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseAuth::RefreshAutonomousDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RefreshAutonomousDatabase(context, options, request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+OracleDatabaseAuth::GetAutonomousDatabaseRefreshableClones(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GetAutonomousDatabaseRefreshableClonesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAutonomousDatabaseRefreshableClones(context, options,
+                                                        request);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListOdbNetworksResponse>
 OracleDatabaseAuth::ListOdbNetworks(
     grpc::ClientContext& context, Options const& options,

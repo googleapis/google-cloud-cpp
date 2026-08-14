@@ -531,6 +531,15 @@ StorageControlTracingConnection::ListIntelligenceFindingRevisions(
       std::move(span), std::move(sr));
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlTracingConnection::ViewObjectFullContext(
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::ViewObjectFullContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ViewObjectFullContext(request));
+}
+
 std::shared_ptr<storagecontrol_v2::StorageControlConnection>
 MakeStorageControlTracingConnection(
     std::shared_ptr<storagecontrol_v2::StorageControlConnection> conn) {

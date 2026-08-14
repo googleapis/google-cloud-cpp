@@ -240,6 +240,11 @@ class StorageControlTracingConnection
       google::storage::control::v2::ListIntelligenceFindingRevisionsRequest
           request) override;
 
+  StatusOr<google::storage::control::v2::ObjectFullContext>
+  ViewObjectFullContext(
+      google::storage::control::v2::ViewObjectFullContextRequest const& request)
+      override;
+
  private:
   std::shared_ptr<storagecontrol_v2::StorageControlConnection> child_;
 };

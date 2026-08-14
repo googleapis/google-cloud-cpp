@@ -126,6 +126,17 @@ class MockRecaptchaEnterpriseServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::recaptchaenterprise::v1::Policy>, GetPolicy,
+      (google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::recaptchaenterprise::v1::Policy>, UpdatePolicy,
+      (google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+           request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>,
               CreateFirewallPolicy,
               (google::cloud::recaptchaenterprise::v1::

@@ -605,6 +605,18 @@ StorageControlTracingStub::ListIntelligenceFindingRevisions(
       child_->ListIntelligenceFindingRevisions(context, options, request));
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlTracingStub::ViewObjectFullContext(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
+                                     "ViewObjectFullContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ViewObjectFullContext(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

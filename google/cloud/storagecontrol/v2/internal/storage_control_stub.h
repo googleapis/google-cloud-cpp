@@ -282,6 +282,12 @@ class StorageControlStub {
       google::storage::control::v2::
           ListIntelligenceFindingRevisionsRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::control::v2::ObjectFullContext>
+  ViewObjectFullContext(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ViewObjectFullContextRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -540,6 +546,12 @@ class DefaultStorageControlStub : public StorageControlStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::
           ListIntelligenceFindingRevisionsRequest const& request) override;
+
+  StatusOr<google::storage::control::v2::ObjectFullContext>
+  ViewObjectFullContext(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ViewObjectFullContextRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

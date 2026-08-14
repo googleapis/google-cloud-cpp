@@ -157,6 +157,25 @@ RecaptchaEnterpriseServiceAuth::GetMetrics(
   return child_->GetMetrics(context, options, request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceAuth::GetPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceAuth::UpdatePolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePolicy(context, options, request);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceAuth::CreateFirewallPolicy(
     grpc::ClientContext& context, Options const& options,

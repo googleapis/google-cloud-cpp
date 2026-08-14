@@ -704,6 +704,51 @@ OracleDatabaseTracingConnection::FailoverAutonomousDatabase(
                            child_->FailoverAutonomousDatabase(operation));
 }
 
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseTracingConnection::RefreshAutonomousDatabase(
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::RefreshAutonomousDatabase");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RefreshAutonomousDatabase(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseTracingConnection::RefreshAutonomousDatabase(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::RefreshAutonomousDatabase");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RefreshAutonomousDatabase(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseTracingConnection::RefreshAutonomousDatabase(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::RefreshAutonomousDatabase");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RefreshAutonomousDatabase(operation));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+OracleDatabaseTracingConnection::GetAutonomousDatabaseRefreshableClones(
+    google::cloud::oracledatabase::v1::
+        GetAutonomousDatabaseRefreshableClonesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "oracledatabase_v1::OracleDatabaseConnection::"
+      "GetAutonomousDatabaseRefreshableClones");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->GetAutonomousDatabaseRefreshableClones(request));
+}
+
 StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>
 OracleDatabaseTracingConnection::ListOdbNetworks(
     google::cloud::oracledatabase::v1::ListOdbNetworksRequest request) {

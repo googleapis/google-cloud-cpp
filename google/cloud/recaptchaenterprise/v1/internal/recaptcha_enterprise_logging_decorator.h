@@ -113,6 +113,16 @@ class RecaptchaEnterpriseServiceLogging
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request)
       override;
 
+  StatusOr<google::cloud::recaptchaenterprise::v1::Policy> GetPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::recaptchaenterprise::v1::Policy> UpdatePolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+          request) override;
+
   StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
   CreateFirewallPolicy(
       grpc::ClientContext& context, Options const& options,

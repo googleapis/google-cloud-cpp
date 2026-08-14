@@ -1297,6 +1297,21 @@ StorageControlConnectionImpl::ListIntelligenceFindingRevisions(
       });
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlConnectionImpl::ViewObjectFullContext(
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ViewObjectFullContext(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::ViewObjectFullContextRequest const&
+                 request) {
+        return stub_->ViewObjectFullContext(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2_internal
 }  // namespace cloud

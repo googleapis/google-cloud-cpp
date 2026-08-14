@@ -752,6 +752,55 @@ OracleDatabaseLogging::FailoverAutonomousDatabase(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+OracleDatabaseLogging::AsyncRefreshAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::oracledatabase::v1::
+                 RefreshAutonomousDatabaseRequest const& request) {
+        return child_->AsyncRefreshAutonomousDatabase(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseLogging::RefreshAutonomousDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 RefreshAutonomousDatabaseRequest const& request) {
+        return child_->RefreshAutonomousDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+OracleDatabaseLogging::GetAutonomousDatabaseRefreshableClones(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GetAutonomousDatabaseRefreshableClonesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::oracledatabase::v1::
+                 GetAutonomousDatabaseRefreshableClonesRequest const& request) {
+        return child_->GetAutonomousDatabaseRefreshableClones(context, options,
+                                                              request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListOdbNetworksResponse>
 OracleDatabaseLogging::ListOdbNetworks(
     grpc::ClientContext& context, Options const& options,

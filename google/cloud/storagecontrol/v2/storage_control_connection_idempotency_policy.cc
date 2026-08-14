@@ -255,6 +255,11 @@ StorageControlConnectionIdempotencyPolicy::ListIntelligenceFindingRevisions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::ViewObjectFullContext(
+    google::storage::control::v2::ViewObjectFullContextRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
 MakeDefaultStorageControlConnectionIdempotencyPolicy() {
   return std::make_unique<StorageControlConnectionIdempotencyPolicy>();

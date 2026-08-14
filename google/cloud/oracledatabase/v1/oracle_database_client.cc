@@ -1001,6 +1001,73 @@ OracleDatabaseClient::FailoverAutonomousDatabase(
   return connection_->FailoverAutonomousDatabase(operation);
 }
 
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseClient::RefreshAutonomousDatabase(
+    std::string const& name,
+    google::protobuf::Timestamp const& refresh_cutoff_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest request;
+  request.set_name(name);
+  *request.mutable_refresh_cutoff_time() = refresh_cutoff_time;
+  return connection_->RefreshAutonomousDatabase(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::RefreshAutonomousDatabase(
+    NoAwaitTag, std::string const& name,
+    google::protobuf::Timestamp const& refresh_cutoff_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest request;
+  request.set_name(name);
+  *request.mutable_refresh_cutoff_time() = refresh_cutoff_time;
+  return connection_->RefreshAutonomousDatabase(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseClient::RefreshAutonomousDatabase(
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RefreshAutonomousDatabase(request);
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseClient::RefreshAutonomousDatabase(
+    NoAwaitTag,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RefreshAutonomousDatabase(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseClient::RefreshAutonomousDatabase(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RefreshAutonomousDatabase(operation);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+OracleDatabaseClient::GetAutonomousDatabaseRefreshableClones(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oracledatabase::v1::
+      GetAutonomousDatabaseRefreshableClonesRequest request;
+  request.set_name(name);
+  return connection_->GetAutonomousDatabaseRefreshableClones(request);
+}
+
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+OracleDatabaseClient::GetAutonomousDatabaseRefreshableClones(
+    google::cloud::oracledatabase::v1::
+        GetAutonomousDatabaseRefreshableClonesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAutonomousDatabaseRefreshableClones(request);
+}
+
 StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>
 OracleDatabaseClient::ListOdbNetworks(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

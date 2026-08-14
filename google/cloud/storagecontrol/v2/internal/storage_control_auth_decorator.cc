@@ -490,6 +490,15 @@ StorageControlAuth::ListIntelligenceFindingRevisions(
   return child_->ListIntelligenceFindingRevisions(context, options, request);
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlAuth::ViewObjectFullContext(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ViewObjectFullContext(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

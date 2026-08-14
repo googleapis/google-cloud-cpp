@@ -122,6 +122,18 @@ RecaptchaEnterpriseServiceConnection::GetMetrics(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceConnection::GetPolicy(
+    google::cloud::recaptchaenterprise::v1::GetPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceConnection::UpdatePolicy(
+    google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceConnection::CreateFirewallPolicy(
     google::cloud::recaptchaenterprise::v1::

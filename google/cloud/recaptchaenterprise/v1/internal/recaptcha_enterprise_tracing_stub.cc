@@ -209,6 +209,33 @@ RecaptchaEnterpriseServiceTracingStub::GetMetrics(
                            child_->GetMetrics(context, options, request));
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceTracingStub::GetPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::GetPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "GetPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetPolicy(context, options, request));
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::Policy>
+RecaptchaEnterpriseServiceTracingStub::UpdatePolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "UpdatePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdatePolicy(context, options, request));
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceTracingStub::CreateFirewallPolicy(
     grpc::ClientContext& context, Options const& options,

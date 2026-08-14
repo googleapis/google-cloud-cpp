@@ -736,6 +736,55 @@ DefaultOracleDatabaseStub::FailoverAutonomousDatabase(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultOracleDatabaseStub::AsyncRefreshAutonomousDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::oracledatabase::v1::
+                 RefreshAutonomousDatabaseRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRefreshAutonomousDatabase(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultOracleDatabaseStub::RefreshAutonomousDatabase(
+    grpc::ClientContext& context, Options,
+    google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RefreshAutonomousDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+DefaultOracleDatabaseStub::GetAutonomousDatabaseRefreshableClones(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::oracledatabase::v1::
+        GetAutonomousDatabaseRefreshableClonesRequest const& request) {
+  google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones
+      response;
+  auto status = grpc_stub_->GetAutonomousDatabaseRefreshableClones(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::oracledatabase::v1::ListOdbNetworksResponse>
 DefaultOracleDatabaseStub::ListOdbNetworks(
     grpc::ClientContext& context, Options const&,
