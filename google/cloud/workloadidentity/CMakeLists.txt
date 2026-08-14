@@ -28,6 +28,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         NAME workloadidentity_quickstart
         COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
                 $<TARGET_FILE:workloadidentity_quickstart> GOOGLE_CLOUD_PROJECT)
-    set_tests_properties(workloadidentity_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    set_tests_properties(
+        workloadidentity_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "INVALID_ARGUMENT: Invalid container ID[ \n]+format")
 endif ()
