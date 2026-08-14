@@ -1232,6 +1232,10 @@
 ./include/google/cloud/workflows/v1
 ./include/google/cloud/workflows/v1/internal
 ./include/google/cloud/workflows/v1/mocks
+./include/google/cloud/workloadidentity
+./include/google/cloud/workloadidentity/v1
+./include/google/cloud/workloadidentity/v1/internal
+./include/google/cloud/workloadidentity/v1/mocks
 ./include/google/cloud/workloadmanager
 ./include/google/cloud/workloadmanager/v1
 ./include/google/cloud/workloadmanager/v1/internal
@@ -1612,6 +1616,8 @@
 ./lib64/cmake/google_cloud_cpp_websecurityscanner_mocks
 ./lib64/cmake/google_cloud_cpp_workflows
 ./lib64/cmake/google_cloud_cpp_workflows_mocks
+./lib64/cmake/google_cloud_cpp_workloadidentity
+./lib64/cmake/google_cloud_cpp_workloadidentity_mocks
 ./lib64/cmake/google_cloud_cpp_workloadmanager
 ./lib64/cmake/google_cloud_cpp_workloadmanager_mocks
 ./lib64/cmake/google_cloud_cpp_workstations

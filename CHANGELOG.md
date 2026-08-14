@@ -9,6 +9,13 @@ for details on updating existing applications using v1.x.y or v2.x.y.
 
 ## v3.9.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Workload Identity API](/google/cloud/workloadidentity/README.md)
+
 ## v3.8.0 - 2026-08
 
 ### Removed Libraries
