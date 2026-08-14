@@ -355,6 +355,7 @@ declare -A -r LIBRARIES=(
       "@googleapis//google/cloud/workflows/type:type_cc_grpc" \
       "@googleapis//google/cloud/workflows/executions/v1:executions_cc_grpc"
   )"
+  ["workloadidentity"]="@googleapis//google/cloud/workloadidentity/v1:workloadidentity_cc_grpc"
   ["workloadmanager"]="@googleapis//google/cloud/workloadmanager/v1:workloadmanager_cc_grpc"
   ["workstations"]="$(
     printf ",%s" \

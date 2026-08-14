@@ -4294,6 +4294,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Workload Identity
+service {
+  service_proto_path: "google/cloud/workloadidentity/v1/service.proto"
+  product_path: "google/cloud/workloadidentity/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Workload Manager
 service {
   service_proto_path: "google/cloud/workloadmanager/v1/service.proto"
