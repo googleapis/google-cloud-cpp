@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/internal/base64_transforms.h" 
 #include "google/cloud/bigquery/v2/minimal/internal/json_utils.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
@@ -192,6 +193,65 @@ std::string CancelJobResponse::DebugString(absl::string_view name,
       .Build();
 }
 
+std::string ArrowSchema::DebugString(absl::string_view name,
+                                     TracingOptions const& options,
+                                     int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("serialized_schema", serialized_schema)
+      .Build();
+}
+
+std::string ArrowRecordBatch::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("serialized_record_batch", serialized_record_batch)
+      .Field("row_count", row_count)
+      .Build();
+}
+
+void to_json(nlohmann::json& j, ArrowSchema const& a) {
+  j = nlohmann::json{
+      {"serializedSchema", internal::UrlsafeBase64Encode(a.serialized_schema)}};
+}
+
+void from_json(nlohmann::json const& j, ArrowSchema& a) {
+  if (j.contains("serializedSchema") && j["serializedSchema"].is_string()) {
+    std::string b64 = j["serializedSchema"].get<std::string>();
+    auto bytes = internal::UrlsafeBase64Decode(b64);
+    if (bytes) {
+      a.serialized_schema.assign(
+          reinterpret_cast<char const*>(bytes->data()), bytes->size());
+    } else {
+      a.serialized_schema = b64;
+    }
+  }
+}
+
+void to_json(nlohmann::json& j, ArrowRecordBatch const& a) {
+  j = nlohmann::json{
+      {"serializedRecordBatch",
+       internal::UrlsafeBase64Encode(a.serialized_record_batch)},
+      {"rowCount", std::to_string(a.row_count)}};
+}
+
+void from_json(nlohmann::json const& j, ArrowRecordBatch& a) {
+  if (j.contains("serializedRecordBatch") &&
+      j["serializedRecordBatch"].is_string()) {
+    std::string b64 = j["serializedRecordBatch"].get<std::string>();
+    auto bytes = internal::UrlsafeBase64Decode(b64);
+    if (bytes) {
+      a.serialized_record_batch.assign(
+          reinterpret_cast<char const*>(bytes->data()), bytes->size());
+    } else {
+      a.serialized_record_batch = b64;
+    }
+  }
+  if (j.contains("rowCount")) {
+    a.row_count = GetNumberFromJson(j, "rowCount");
+  }
+}
+
 std::string PostQueryResults::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
@@ -209,6 +269,9 @@ std::string PostQueryResults::DebugString(absl::string_view name,
       .SubMessage("job_reference", job_reference)
       .SubMessage("session_info", session_info)
       .SubMessage("dml_stats", dml_stats)
+      .SubMessage("arrow_schema", arrow_schema)
+      .SubMessage("arrow_record_batch", arrow_record_batch)
+      .Field("page_row_count", page_row_count)
       .Build();
 }
 
@@ -262,6 +325,11 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
 
   SafeGetTo(query_results.session_info, *json, "sessionInfo");
   SafeGetTo(query_results.dml_stats, *json, "dmlStats");
+  SafeGetTo(query_results.arrow_schema, *json, "arrowSchema");
+  SafeGetTo(query_results.arrow_record_batch, *json, "arrowRecordBatch");
+  if (json->contains("pageRowCount")) {
+    query_results.page_row_count = GetNumberFromJson(*json, "pageRowCount");
+  }
 
   QueryResponse response;
   response.http_response = http_response;
@@ -299,6 +367,15 @@ void to_json(nlohmann::json& j, PostQueryResults const& q) {
                      {"errors", q.errors},
                      {"sessionInfo", q.session_info},
                      {"dmlStats", q.dml_stats}};
+  if (!q.arrow_schema.serialized_schema.empty()) {
+    j["arrowSchema"] = q.arrow_schema;
+  }
+  if (!q.arrow_record_batch.serialized_record_batch.empty()) {
+    j["arrowRecordBatch"] = q.arrow_record_batch;
+  }
+  if (q.page_row_count > 0) {
+    j["pageRowCount"] = std::to_string(q.page_row_count);
+  }
 }
 
 void from_json(nlohmann::json const& j, PostQueryResults& q) {
@@ -315,6 +392,11 @@ void from_json(nlohmann::json const& j, PostQueryResults& q) {
   SafeGetTo(q.errors, j, "errors");
   SafeGetTo(q.session_info, j, "sessionInfo");
   SafeGetTo(q.dml_stats, j, "dmlStats");
+  SafeGetTo(q.arrow_schema, j, "arrowSchema");
+  SafeGetTo(q.arrow_record_batch, j, "arrowRecordBatch");
+  if (j.contains("pageRowCount")) {
+    q.page_row_count = GetNumberFromJson(j, "pageRowCount");
+  }
 }
 
 void to_json(nlohmann::json& j, GetQueryResults const& q) {
@@ -330,6 +412,15 @@ void to_json(nlohmann::json& j, GetQueryResults const& q) {
                      {"jobReference", q.job_reference},
                      {"rows", q.rows},
                      {"errors", q.errors}};
+  if (!q.arrow_schema.serialized_schema.empty()) {
+    j["arrowSchema"] = q.arrow_schema;
+  }
+  if (!q.arrow_record_batch.serialized_record_batch.empty()) {
+    j["arrowRecordBatch"] = q.arrow_record_batch;
+  }
+  if (q.page_row_count > 0) {
+    j["pageRowCount"] = std::to_string(q.page_row_count);
+  }
 }
 void from_json(nlohmann::json const& j, GetQueryResults& q) {
   SafeGetTo(q.kind, j, "kind");
@@ -344,6 +435,11 @@ void from_json(nlohmann::json const& j, GetQueryResults& q) {
   SafeGetTo(q.job_reference, j, "jobReference");
   SafeGetTo(q.rows, j, "rows");
   SafeGetTo(q.errors, j, "errors");
+  SafeGetTo(q.arrow_schema, j, "arrowSchema");
+  SafeGetTo(q.arrow_record_batch, j, "arrowRecordBatch");
+  if (j.contains("pageRowCount")) {
+    q.page_row_count = GetNumberFromJson(j, "pageRowCount");
+  }
 }
 
 std::string GetQueryResults::DebugString(absl::string_view name,
@@ -362,6 +458,9 @@ std::string GetQueryResults::DebugString(absl::string_view name,
       .Field("errors", errors)
       .SubMessage("schema", schema)
       .SubMessage("job_reference", job_reference)
+      .SubMessage("arrow_schema", arrow_schema)
+      .SubMessage("arrow_record_batch", arrow_record_batch)
+      .Field("page_row_count", page_row_count)
       .Build();
 }
 
@@ -411,6 +510,12 @@ GetQueryResultsResponse::BuildFromHttpResponse(
       auto const& error = json_error_proto_obj.get<ErrorProto>();
       get_query_results.errors.push_back(error);
     }
+  }
+
+  SafeGetTo(get_query_results.arrow_schema, *json, "arrowSchema");
+  SafeGetTo(get_query_results.arrow_record_batch, *json, "arrowRecordBatch");
+  if (json->contains("pageRowCount")) {
+    get_query_results.page_row_count = GetNumberFromJson(*json, "pageRowCount");
   }
 
   GetQueryResultsResponse response;

@@ -281,6 +281,10 @@ void to_json(nlohmann::json& j, QueryRequest const& q) {
       {"formatOptions", q.format_options()},
       {"labels", q.labels()}};
 
+  if (!q.query_results_format().empty()) {
+    j["queryResultsFormat"] = q.query_results_format();
+  }
+
   ToIntJson(q.timeout(), j,
             "timeoutMs");  // timeoutMs value is a number for this request type.
 }
@@ -309,6 +313,7 @@ void from_json(nlohmann::json const& j, QueryRequest& q) {
   SafeGetTo(j, "defaultDataset", &QueryRequest::set_default_dataset, q);
   SafeGetTo(j, "formatOptions", &QueryRequest::set_format_options, q);
   SafeGetTo(j, "labels", &QueryRequest::set_labels, q);
+  SafeGetTo(j, "queryResultsFormat", &QueryRequest::set_query_results_format, q);
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");
@@ -370,6 +375,7 @@ std::string QueryRequest::DebugString(absl::string_view name,
       .SubMessage("default_dataset", default_dataset())
       .SubMessage("format_options", format_options())
       .SubMessage("job_creation_mode", job_creation_mode())
+      .StringField("query_results_format", query_results_format())
       .Build();
 }
 

@@ -78,6 +78,7 @@ QueryRequest MakeQueryRequest() {
       .set_labels(labels)
       .set_format_options(dfo)
       .set_job_creation_mode(JobCreationMode::UnSpecified())
+      .set_query_results_format("ARROW")
       .set_default_dataset(MakeDatasetReference());
 
   return expected;
@@ -135,6 +136,7 @@ void AssertEquals(QueryRequest const& lhs, QueryRequest const& rhs) {
   EXPECT_EQ(lhs.default_dataset().project_id, rhs.default_dataset().project_id);
   EXPECT_EQ(lhs.format_options().use_int64_timestamp,
             rhs.format_options().use_int64_timestamp);
+  EXPECT_EQ(lhs.query_results_format(), rhs.query_results_format());
 }
 
 void AssertEquals(bigquery_v2_minimal_internal::PostQueryRequest const& lhs,
@@ -165,6 +167,10 @@ PostQueryResults MakePostQueryResults() {
   expected.schema = MakeTable().schema;
   expected.total_bytes_processed = 1000;
   expected.total_rows = 1000;
+  expected.arrow_schema.serialized_schema = "test_schema_data";
+  expected.arrow_record_batch.serialized_record_batch = "test_batch_data";
+  expected.arrow_record_batch.row_count = 10;
+  expected.page_row_count = 10;
 
   return expected;
 }
@@ -188,6 +194,10 @@ GetQueryResults MakeGetQueryResults() {
   expected.schema = MakeTable().schema;
   expected.total_bytes_processed = 1000;
   expected.total_rows = 1000;
+  expected.arrow_schema.serialized_schema = "test_schema_data";
+  expected.arrow_record_batch.serialized_record_batch = "test_batch_data";
+  expected.arrow_record_batch.row_count = 10;
+  expected.page_row_count = 10;
 
   return expected;
 }
@@ -230,6 +240,9 @@ void AssertEquals(bigquery_v2_minimal_internal::PostQueryResults const& lhs,
       std::equal(lhs.errors.begin(), lhs.errors.end(), rhs.errors.begin()));
 
   EXPECT_TRUE(std::equal(lhs.rows.begin(), lhs.rows.end(), rhs.rows.begin()));
+  EXPECT_EQ(lhs.arrow_schema, rhs.arrow_schema);
+  EXPECT_EQ(lhs.arrow_record_batch, rhs.arrow_record_batch);
+  EXPECT_EQ(lhs.page_row_count, rhs.page_row_count);
 }
 
 void AssertEquals(bigquery_v2_minimal_internal::GetQueryResults const& lhs,
@@ -255,6 +268,9 @@ void AssertEquals(bigquery_v2_minimal_internal::GetQueryResults const& lhs,
       std::equal(lhs.errors.begin(), lhs.errors.end(), rhs.errors.begin()));
 
   EXPECT_TRUE(std::equal(lhs.rows.begin(), lhs.rows.end(), rhs.rows.begin()));
+  EXPECT_EQ(lhs.arrow_schema, rhs.arrow_schema);
+  EXPECT_EQ(lhs.arrow_record_batch, rhs.arrow_record_batch);
+  EXPECT_EQ(lhs.page_row_count, rhs.page_row_count);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

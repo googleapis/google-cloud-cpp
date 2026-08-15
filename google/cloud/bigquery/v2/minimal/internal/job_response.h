@@ -96,6 +96,35 @@ class CancelJobResponse {
   BigQueryHttpResponse http_response;
 };
 
+struct ArrowSchema {
+  std::string serialized_schema;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+void to_json(nlohmann::json& j, ArrowSchema const& a);
+void from_json(nlohmann::json const& j, ArrowSchema& a);
+inline bool operator==(ArrowSchema const& lhs, ArrowSchema const& rhs) {
+  return lhs.serialized_schema == rhs.serialized_schema;
+}
+
+struct ArrowRecordBatch {
+  std::string serialized_record_batch;
+  std::int64_t row_count = 0;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+void to_json(nlohmann::json& j, ArrowRecordBatch const& a);
+void from_json(nlohmann::json const& j, ArrowRecordBatch& a);
+inline bool operator==(ArrowRecordBatch const& lhs,
+                       ArrowRecordBatch const& rhs) {
+  return lhs.serialized_record_batch == rhs.serialized_record_batch &&
+         lhs.row_count == rhs.row_count;
+}
+
 struct PostQueryResults {
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
@@ -117,6 +146,9 @@ struct PostQueryResults {
   std::vector<ErrorProto> errors;
   SessionInfo session_info;
   DmlStats dml_stats;
+  ArrowSchema arrow_schema;
+  ArrowRecordBatch arrow_record_batch;
+  std::int64_t page_row_count = 0;
 };
 void to_json(nlohmann::json& j, PostQueryResults const& q);
 void from_json(nlohmann::json const& j, PostQueryResults& q);
@@ -153,6 +185,9 @@ struct GetQueryResults {
 
   std::vector<RowData> rows;
   std::vector<ErrorProto> errors;
+  ArrowSchema arrow_schema;
+  ArrowRecordBatch arrow_record_batch;
+  std::int64_t page_row_count = 0;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

@@ -538,6 +538,19 @@ class QueryRequest {
     return std::move(set_job_creation_mode(std::move(job_creation_mode)));
   }
 
+  std::string const& query_results_format() const {
+    return query_results_format_;
+  }
+  QueryRequest& set_query_results_format(std::string query_results_format) & {
+    query_results_format_ = std::move(query_results_format);
+    return *this;
+  }
+  QueryRequest&& set_query_results_format(
+      std::string query_results_format) && {
+    return std::move(
+        set_query_results_format(std::move(query_results_format)));
+  }
+
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
@@ -548,6 +561,7 @@ class QueryRequest {
   std::string parameter_mode_;
   std::string location_;
   std::string request_id_;
+  std::string query_results_format_;
 
   bool dry_run_ = false;
   bool preserve_nulls_ = false;
