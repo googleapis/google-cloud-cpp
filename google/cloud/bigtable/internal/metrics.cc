@@ -15,6 +15,8 @@
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 #include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "absl/strings/charconv.h"
 #include "absl/strings/escaping.h"
@@ -22,6 +24,9 @@
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/faas_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
 #include <algorithm>
 #include <map>
 #include <set>
@@ -86,6 +91,123 @@ LabelMap IntoLabelMap(TableResourceLabels const& r, TableDataLabels const& d,
                       filtered_data_labels.end(),
                       std::inserter(labels, labels.begin()), Compare());
 
+  return labels;
+}
+
+std::string ToString(ChannelPoolLbPolicy policy) {
+  switch (policy) {
+    case ChannelPoolLbPolicy::kRoundRobin:
+      return "ROUND_ROBIN";
+    case ChannelPoolLbPolicy::kRandomTwoLeastUsed:
+      return "RANDOM_TWO_LEAST_USED";
+  }
+  return "ROUND_ROBIN";
+}
+
+std::string ToString(TransportType type) {
+  switch (type) {
+    case TransportType::kCloudPath:
+      return "CloudPath";
+    case TransportType::kDirectPath:
+      return "DirectPath";
+  }
+  return "CloudPath";
+}
+
+std::string ToString(RpcType streaming) {
+  switch (streaming) {
+    case RpcType::kUnary:
+      return "false";
+    case RpcType::kStreaming:
+      return "true";
+  }
+  return "false";
+}
+
+LabelMap IntoLabelMap(ClientResourceLabels const& r,
+                      ClientOutstandingRpcLabels const& d,
+                      std::set<std::string> const& filtered_data_labels) {
+  LabelMap labels = {
+      {"project_id", r.project_id},   {"instance", r.instance},
+      {"app_profile", r.app_profile}, {"client_name", r.client_name},
+      {"client_uid", r.client_uid},   {"client_project", r.client_project},
+      {"location", r.location},       {"cloud_platform", r.cloud_platform},
+      {"host_id", r.host_id},         {"hostname", r.hostname}};
+
+  std::map<std::string, std::string> data = {{
+      {"transport_type", ToString(d.transport_type)},
+      {"channel_pool_lb_policy", ToString(d.channel_pool_lb_policy)},
+      {"streaming", ToString(d.streaming)},
+  }};
+
+  if (filtered_data_labels.empty()) {
+    labels.insert(data.begin(), data.end());
+    return labels;
+  }
+
+  struct Compare {
+    bool operator()(std::pair<std::string const, std::string> const& a,
+                    std::string const& b) {
+      return a.first < b;
+    }
+
+    bool operator()(std::string const& a,
+                    std::pair<std::string const, std::string> const& b) {
+      return a < b.first;
+    }
+  };
+
+  std::set_difference(data.begin(), data.end(), filtered_data_labels.begin(),
+                      filtered_data_labels.end(),
+                      std::inserter(labels, labels.begin()), Compare());
+
+  return labels;
+}
+
+ClientResourceLabels MakeClientResourceLabels(
+    std::string project_id, std::string instance, std::string app_profile,
+    Options const& options, std::string const& client_uid,
+    opentelemetry::sdk::resource::Resource const& detected_resource) {
+  namespace sc = ::opentelemetry::semconv;
+  auto const& detected_attributes = detected_resource.GetAttributes();
+  auto by_name = [&](std::string const& name, std::string default_value = {}) {
+    auto const l = detected_attributes.find(name);
+    if (l == detected_attributes.end() ||
+        !opentelemetry::nostd::holds_alternative<std::string>(l->second)) {
+      return default_value;
+    }
+    return opentelemetry::nostd::get<std::string>(l->second);
+  };
+
+  if (project_id.empty() &&
+      options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
+    auto const& instances =
+        options.get<bigtable_internal::InstanceChannelAffinityOption>();
+    if (!instances.empty()) {
+      project_id = instances[0].project_id();
+    }
+  }
+  if (project_id.empty()) {
+    project_id = by_name(sc::cloud::kCloudAccountId);
+  }
+
+  auto client_project = by_name(sc::cloud::kCloudAccountId);
+  if (client_project.empty()) {
+    client_project = project_id;
+  }
+
+  ClientResourceLabels labels;
+  labels.project_id = std::move(project_id);
+  labels.instance = std::move(instance);
+  labels.app_profile = std::move(app_profile);
+  labels.client_name = "cpp.Bigtable/" + bigtable::version_string();
+  labels.client_uid = client_uid;
+  labels.client_project = std::move(client_project);
+  labels.location = by_name(sc::cloud::kCloudAvailabilityZone,
+                            by_name(sc::cloud::kCloudRegion, "global"));
+  labels.cloud_platform = by_name(sc::cloud::kCloudPlatform, "unknown");
+  labels.host_id = by_name("faas.id", by_name(sc::host::kHostId, "unknown"));
+  labels.hostname = by_name(sc::host::kHostName);
   return labels;
 }
 
@@ -545,16 +667,62 @@ std::unique_ptr<Metric> ApplicationBlockingLatency::clone(
   return m;
 }
 
+OutstandingRpcs::OutstandingRpcs(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : outstanding_rpcs_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateDoubleHistogram(
+                  "connection_pool/outstanding_rpcs",
+                  "Instantaneous count of outstanding RPCs on the selected "
+                  "channel.",
+                  "1")) {}
+
+void OutstandingRpcs::StubSelection(
+    opentelemetry::context::Context const& context,
+    StubSelectionParams const& p) {
+  ClientOutstandingRpcLabels data_labels{p.transport_type,
+                                         p.channel_pool_lb_policy, p.streaming};
+  outstanding_rpcs_->Record(static_cast<double>(p.outstanding_rpcs),
+                            IntoLabelMap(resource_labels_, data_labels),
+                            context);
+}
+
+std::unique_ptr<Metric> OutstandingRpcs::clone(
+    ClientResourceLabels const& resource_labels) const {
+  auto m = std::make_unique<OutstandingRpcs>(*this);
+  m->resource_labels_ = resource_labels;
+  return m;
+}
+
 std::vector<std::shared_ptr<Metric>> CloneMetrics(
     TableResourceLabels const& resource_labels,
     TableDataLabels const& data_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics) {
+  return CloneMetrics(resource_labels, data_labels, ClientResourceLabels{},
+                      metrics);
+}
+
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    ClientResourceLabels const& client_resource_labels,
     std::vector<std::shared_ptr<Metric const>> const& metrics) {
   std::vector<std::shared_ptr<Metric>> v;
   v.reserve(metrics.size());
   for (auto const& m : metrics) {
     // We should never add a nullptr Metric to the list.
     if (m == nullptr) continue;
-    v.push_back(m->clone(resource_labels, data_labels));
+    auto clone = m->clone(resource_labels, data_labels);
+    if (!clone) {
+      clone = m->clone(client_resource_labels);
+    }
+    if (clone) {
+      v.push_back(std::move(clone));
+    }
   }
   return v;
 }

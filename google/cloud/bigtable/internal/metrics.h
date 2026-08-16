@@ -19,6 +19,7 @@
 
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/bigtable/v2/peer_info.pb.h"
 #include "google/bigtable/v2/response_params.pb.h"
@@ -27,6 +28,7 @@
 #include <opentelemetry/metrics/meter.h>
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/metrics/sync_instruments.h>
+#include <opentelemetry/sdk/resource/resource.h>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -44,6 +46,25 @@ struct TableResourceLabels {
   std::string zone;
 };
 
+enum class ChannelPoolLbPolicy {
+  kRoundRobin,
+  kRandomTwoLeastUsed,
+};
+
+enum class TransportType {
+  kCloudPath,
+  kDirectPath,
+};
+
+enum class RpcType {
+  kUnary,
+  kStreaming,
+};
+
+std::string ToString(ChannelPoolLbPolicy policy);
+std::string ToString(TransportType type);
+std::string ToString(RpcType streaming);
+
 struct TableDataLabels {
   std::string method;
   std::string streaming;
@@ -51,6 +72,32 @@ struct TableDataLabels {
   std::string client_uid;
   std::string app_profile;
   std::string status;
+};
+
+struct ClientResourceLabels {
+  std::string project_id;
+  std::string instance;
+  std::string app_profile;
+  std::string client_name;
+  std::string client_uid;
+  std::string client_project;
+  std::string location;
+  std::string cloud_platform;
+  std::string host_id;
+  std::string hostname;
+};
+
+struct ClientOutstandingRpcLabels {
+  TransportType transport_type;
+  ChannelPoolLbPolicy channel_pool_lb_policy;
+  RpcType streaming;
+};
+
+struct StubSelectionParams {
+  std::int64_t outstanding_rpcs;
+  ChannelPoolLbPolicy channel_pool_lb_policy;
+  TransportType transport_type;
+  RpcType streaming;
 };
 
 // Labels populated from the peer info metadata.
@@ -66,6 +113,15 @@ LabelMap IntoLabelMap(
     TableResourceLabels const& r, TableDataLabels const& d,
     std::set<std::string> const& filtered_data_labels = {},
     std::optional<PeerInfoLabels> const& peer_info_labels = std::nullopt);
+
+LabelMap IntoLabelMap(ClientResourceLabels const& r,
+                      ClientOutstandingRpcLabels const& d,
+                      std::set<std::string> const& filtered_data_labels = {});
+
+ClientResourceLabels MakeClientResourceLabels(
+    std::string project_id, std::string instance, std::string app_profile,
+    Options const& options, std::string const& client_uid,
+    opentelemetry::sdk::resource::Resource const& detected_resource);
 
 bool HasServerTiming(grpc::ClientContext const& client_context);
 bool IsConnectivityError(google::cloud::Status const& status,
@@ -109,6 +165,8 @@ class Metric {
   using LatencyDuration = std::chrono::duration<double, std::milli>;
 
   virtual ~Metric() = 0;
+  virtual void StubSelection(opentelemetry::context::Context const&,
+                             StubSelectionParams const&) {}
   virtual void PreCall(opentelemetry::context::Context const&,
                        PreCallParams const&) {}
   virtual void PostCall(opentelemetry::context::Context const&,
@@ -120,12 +178,23 @@ class Metric {
   virtual void ElementDelivery(opentelemetry::context::Context const&,
                                ElementDeliveryParams const&) {}
   virtual std::unique_ptr<Metric> clone(TableResourceLabels const&,
-                                        TableDataLabels const&) const = 0;
+                                        TableDataLabels const&) const {
+    return nullptr;
+  }
+  virtual std::unique_ptr<Metric> clone(ClientResourceLabels const&) const {
+    return nullptr;
+  }
 };
 
 std::vector<std::shared_ptr<Metric>> CloneMetrics(
     TableResourceLabels const& resource_labels,
     TableDataLabels const& data_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics);
+
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    ClientResourceLabels const& client_resource_labels,
     std::vector<std::shared_ptr<Metric const>> const& metrics);
 
 class OperationLatency : public Metric {
@@ -324,6 +393,22 @@ class ConnectivityErrorCount : public Metric {
   opentelemetry::nostd::shared_ptr<
       opentelemetry::metrics::Counter<std::uint64_t>>
       connectivity_error_count_;
+};
+
+class OutstandingRpcs : public Metric {
+ public:
+  OutstandingRpcs(std::string const& instrumentation_scope,
+                  opentelemetry::nostd::shared_ptr<
+                      opentelemetry::metrics::MeterProvider> const& provider);
+  void StubSelection(opentelemetry::context::Context const&,
+                     StubSelectionParams const& p) override;
+  std::unique_ptr<Metric> clone(
+      ClientResourceLabels const& resource_labels) const override;
+
+ private:
+  ClientResourceLabels resource_labels_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
+      outstanding_rpcs_;
 };
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

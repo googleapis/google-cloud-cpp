@@ -26,6 +26,7 @@ namespace {
 
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::NotNull;
 
 class MockMetric : public Metric {
  public:
@@ -206,6 +207,48 @@ TEST(MetricsOperationContextFactoryTest, ExecuteQuery) {
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context =
       factory.ExecuteQuery(instance_full_name, app_profile);
+}
+
+TEST(MetricsOperationContextFactoryTest, IncludesOutstandingRpcs) {
+  std::string app_profile = "my-app-profile";
+  std::string table_full_name =
+      "projects/my-project/instances/my-instance/tables/my-table";
+  MetricsOperationContextFactory factory(
+      "test-uid",
+      std::shared_ptr<monitoring_v3::MetricServiceConnection>(nullptr));
+  auto operation_context = factory.ReadRow(table_full_name, app_profile);
+  EXPECT_THAT(operation_context, NotNull());
+  operation_context->StubSelection(
+      StubSelectionParams{10, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+                          TransportType::kDirectPath, RpcType::kUnary});
+}
+
+class MockClientMetric : public Metric {
+ public:
+  MOCK_METHOD(std::unique_ptr<Metric>, clone, (ClientResourceLabels const&),
+              (const, override));
+};
+
+TEST(MetricsOperationContextFactoryTest, ClientResourceLabelsPopulated) {
+  std::string app_profile = "my-app-profile";
+  std::string table_full_name =
+      "projects/my-project/instances/my-instance/tables/my-table";
+
+  auto mock_metric = std::make_shared<MockClientMetric const>();
+  EXPECT_CALL(*mock_metric, clone(::testing::A<ClientResourceLabels const&>()))
+      .WillOnce([&](ClientResourceLabels const& client_labels) {
+        EXPECT_THAT(client_labels.project_id, Eq("my-project"));
+        EXPECT_THAT(client_labels.instance, Eq("my-instance"));
+        EXPECT_THAT(client_labels.app_profile, Eq("my-app-profile"));
+        EXPECT_THAT(client_labels.client_name,
+                    Eq("cpp.Bigtable/" + version_string()));
+        EXPECT_THAT(client_labels.client_uid, Eq("my-client-uid"));
+        return std::make_unique<MockClientMetric>();
+      });
+
+  MetricsOperationContextFactory factory("my-client-uid", mock_metric);
+  auto operation_context = factory.ReadRow(table_full_name, app_profile);
+  EXPECT_THAT(operation_context, NotNull());
 }
 
 }  // namespace

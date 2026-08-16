@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
-#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
+#include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/logging_result_set_reader.h"
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/internal/partial_result_set_reader.h"
@@ -39,8 +39,12 @@
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/monitoring/v3/metric_connection.h"
+#endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/universe_domain_options.h"
 #include <memory>
 #include <string>

@@ -156,7 +156,7 @@ TEST_F(ScheduleStubRefreshTest, RefreshedUsingAsyncPingAndWarm) {
           [&](CompletionQueue&, std::shared_ptr<grpc::ClientContext> const&,
               internal::ImmutableOptions const&,
               google::bigtable::v2::PingAndWarmRequest const& request,
-              auto const&)
+              std::shared_ptr<bigtable_internal::OperationContext> const&)
               -> future<StatusOr<google::bigtable::v2::PingAndWarmResponse>> {
             EXPECT_THAT(request.name(), Eq(instance_name));
             return p2.get_future();

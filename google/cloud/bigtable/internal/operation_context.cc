@@ -42,6 +42,13 @@ OperationContext::OperationContext(std::vector<std::shared_ptr<Metric>> metrics,
                                    std::shared_ptr<Clock> clock)
     : cloned_metrics_(std::move(metrics)), clock_(std::move(clock)) {}
 
+void OperationContext::StubSelection(StubSelectionParams const& params) {
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  for (auto& m : cloned_metrics_) {
+    m->StubSelection(otel_context, params);
+  }
+}
+
 void OperationContext::PreCall(grpc::ClientContext& client_context) {
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto attempt_start = clock_->Now();

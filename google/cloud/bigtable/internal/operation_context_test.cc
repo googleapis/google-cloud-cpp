@@ -140,10 +140,6 @@ class MockMetric : public Metric {
               (opentelemetry::context::Context const&,
                ElementDeliveryParams const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (TableResourceLabels const& resource_labels,
-               TableDataLabels const& data_labels),
-              (const, override));
 };
 
 TEST(OperationContextMetricTest, MetricPreCall) {
