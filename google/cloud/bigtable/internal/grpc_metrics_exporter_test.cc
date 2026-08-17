@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
+#include <grpc/event_engine/endpoint_config.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/metrics/meter.h>
@@ -57,6 +58,7 @@ using ::testing::Ge;
 using ::testing::IsEmpty;
 using ::testing::Le;
 using ::testing::Not;
+using ::testing::NotNull;
 using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::SizeIs;
@@ -160,6 +162,19 @@ auto TestReaderOptions() {
   reader_options.export_timeout_millis = kExportTimeout;
   return reader_options;
 }
+
+class DummyEndpointConfig
+    : public grpc_event_engine::experimental::EndpointConfig {
+ public:
+  ~DummyEndpointConfig() override = default;
+  std::optional<int> GetInt(absl::string_view) const override {
+    return std::nullopt;
+  }
+  std::optional<absl::string_view> GetString(absl::string_view) const override {
+    return std::nullopt;
+  }
+  void* GetVoidPointer(absl::string_view) const override { return nullptr; }
+};
 
 class DummyMetricServiceConnection
     : public monitoring_v3::MetricServiceConnection {
@@ -391,6 +406,57 @@ TEST(GrpcMetricsExporterTest, ValidateGrpcClientAttemptDuration) {
       std::this_thread::sleep_for(kExportInterval);
     }
   }
+}
+
+TEST(GrpcMetricsExporterTest, ValidatePluginConfigArguments) {
+  Options options;
+  options.set<AuthorityOption>("custom-bigtable-authority.googleapis.com");
+  options.set<bigtable::AppProfileIdOption>("test-app-profile");
+  options.set<bigtable::MetricsPeriodOption>(std::chrono::seconds(60));
+  auto conn = std::make_shared<DummyMetricServiceConnection>();
+  std::string const client_uid = "test-client-uid";
+
+  auto config = MakeGrpcMetricsPluginConfig(conn, options, client_uid);
+
+  EXPECT_THAT(config.meter_provider, NotNull());
+
+  EXPECT_THAT(
+      config.enabled_metrics,
+      ElementsAre("grpc.client.attempt.duration",
+                  "grpc.lb.rls.default_target_picks",
+                  "grpc.lb.rls.target_picks", "grpc.lb.rls.failed_picks",
+                  "grpc.xds_client.server_failure",
+                  "grpc.xds_client.resource_updates_invalid",
+                  "grpc.subchannel.disconnections",
+                  "grpc.subchannel.connection_attempts_succeeded",
+                  "grpc.subchannel.connection_attempts_failed",
+                  "grpc.subchannel.open_connections"));
+
+  EXPECT_THAT(
+      config.disabled_metrics,
+      ElementsAre("grpc.client.attempt.sent_total_compressed_message_size",
+                  "grpc.client.attempt.rcvd_total_compressed_message_size"));
+
+  ASSERT_TRUE(config.generic_method_filter);
+  EXPECT_TRUE(
+      config.generic_method_filter("google.bigtable.v2.Bigtable/ReadRows"));
+  EXPECT_TRUE(
+      config.generic_method_filter("google.bigtable.v2.Bigtable/MutateRow"));
+  EXPECT_FALSE(
+      config.generic_method_filter("google.storage.v2.Storage/ReadObject"));
+  EXPECT_FALSE(
+      config.generic_method_filter("google.spanner.v1.Spanner/ExecuteSql"));
+  EXPECT_FALSE(config.generic_method_filter(""));
+
+  ASSERT_TRUE(config.channel_scope_filter);
+  DummyEndpointConfig endpoint_config;
+  grpc::OpenTelemetryPluginBuilder::ChannelScope matching_scope(
+      "custom-target", "custom-bigtable-authority.googleapis.com",
+      endpoint_config);
+  grpc::OpenTelemetryPluginBuilder::ChannelScope non_matching_scope(
+      "custom-target", "other-authority.googleapis.com", endpoint_config);
+  EXPECT_TRUE(config.channel_scope_filter(matching_scope));
+  EXPECT_FALSE(config.channel_scope_filter(non_matching_scope));
 }
 
 }  // namespace
