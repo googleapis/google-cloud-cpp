@@ -34,8 +34,11 @@ class AsyncObjectDescriptorConnectionTracing
  public:
   explicit AsyncObjectDescriptorConnectionTracing(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      std::shared_ptr<storage::ObjectDescriptorConnection> impl)
-      : span_(std::move(span)), impl_(std::move(impl)) {}
+      std::shared_ptr<storage::ObjectDescriptorConnection> impl,
+      std::string bucket_name)
+      : span_(std::move(span)),
+        impl_(std::move(impl)),
+        bucket_name_(std::move(bucket_name)) {}
 
   ~AsyncObjectDescriptorConnectionTracing() override {
     internal::EndSpan(*span_);
@@ -55,7 +58,7 @@ class AsyncObjectDescriptorConnectionTracing
                     {{sc::thread::kThreadId, internal::CurrentThreadId()},
                      {"read-start", p.start},
                      {"read-length", p.length}});
-    return MakeTracingReaderConnection(span_, std::move(result));
+    return MakeTracingReaderConnection(span_, std::move(result), bucket_name_);
   }
 
   void MakeSubsequentStream() override {
@@ -65,6 +68,7 @@ class AsyncObjectDescriptorConnectionTracing
  private:
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
   std::shared_ptr<storage::ObjectDescriptorConnection> impl_;
+  std::string bucket_name_;
 };
 
 }  // namespace
@@ -72,9 +76,10 @@ class AsyncObjectDescriptorConnectionTracing
 std::shared_ptr<storage::ObjectDescriptorConnection>
 MakeTracingObjectDescriptorConnection(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::shared_ptr<storage::ObjectDescriptorConnection> impl) {
+    std::shared_ptr<storage::ObjectDescriptorConnection> impl,
+    std::string bucket_name) {
   return std::make_unique<AsyncObjectDescriptorConnectionTracing>(
-      std::move(span), std::move(impl));
+      std::move(span), std::move(impl), std::move(bucket_name));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
