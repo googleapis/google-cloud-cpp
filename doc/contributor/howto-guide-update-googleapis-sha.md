@@ -30,7 +30,7 @@ steps.
 ```
 COMMIT=<a recent commit SHA>
 cd .bcr
-./publish-to-bcr.sh --ref ${COMMIT}  -f <path to your fork>bazel-central-registry/
+./publish-to-bcr.sh --ref ${COMMIT} -f <path to local clone of bazel-central-registry>
 ```
 
 Once this PR is merged, you can update the googleapis BCR module in
