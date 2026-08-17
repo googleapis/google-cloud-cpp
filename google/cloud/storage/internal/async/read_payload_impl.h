@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
+#include <chrono>
 #include <optional>
 
 namespace google {
@@ -74,6 +75,27 @@ struct ReadPayloadImpl {
   static void Append(storage::ReadPayload& payload,
                      storage::ReadPayload new_data) {
     payload.impl_.Append(std::move(new_data.impl_));
+  }
+
+  static void SetTimestamps(storage::ReadPayload& payload,
+                            std::chrono::steady_clock::time_point t4,
+                            std::chrono::steady_clock::time_point t5,
+                            std::chrono::steady_clock::time_point t6) {
+    payload.t4_ = t4;
+    payload.t5_ = t5;
+    payload.t6_ = t6;
+  }
+  static std::chrono::steady_clock::time_point GetT4(
+      storage::ReadPayload const& p) {
+    return p.t4_;
+  }
+  static std::chrono::steady_clock::time_point GetT5(
+      storage::ReadPayload const& p) {
+    return p.t5_;
+  }
+  static std::chrono::steady_clock::time_point GetT6(
+      storage::ReadPayload const& p) {
+    return p.t6_;
   }
 };
 

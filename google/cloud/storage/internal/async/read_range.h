@@ -22,6 +22,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "google/storage/v2/storage.pb.h"
+#include <chrono>
 #include <cstdint>
 #include <memory>
 #include <mutex>
@@ -83,6 +84,20 @@ class ReadRange {
   void OnRead(google::storage::v2::ObjectRangeData data,
               bool is_transcoded = false,
               std::optional<std::int64_t> object_size = std::nullopt);
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+  void SetT4(std::chrono::steady_clock::time_point t) {
+    std::unique_lock<std::mutex> lk(self->mu_);
+    t4_ = t;
+  }
+  void SetT5(std::chrono::steady_clock::time_point t) {
+    std::unique_lock<std::mutex> lk(self->mu_);
+    t5_ = t;
+  }
+#else
+  void SetT4(std::chrono::steady_clock::time_point) {}
+  void SetT5(std::chrono::steady_clock::time_point) {}
+#endif
 
  private:
   void Notify(std::unique_lock<std::mutex> lk, storage::ReadPayload p);
@@ -103,6 +118,12 @@ class ReadRange {
   std::optional<promise<ReadResponse>> wait_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
   std::unique_ptr<storage::internal::HashValidator> hash_validator_;
+
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+  std::chrono::steady_clock::time_point t4_{};
+  std::chrono::steady_clock::time_point t5_{};
+#endif
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

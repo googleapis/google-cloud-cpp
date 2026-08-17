@@ -305,6 +305,17 @@ void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk,
   google::storage::v2::BidiReadObjectRequest request;
   request.Swap(&it->stream->next_request);
 
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+  auto t4_stamp = std::chrono::steady_clock::now();
+  for (auto const& rr : request.read_ranges()) {
+    auto const l = it->active_ranges.find(rr.read_id());
+    if (l != it->active_ranges.end()) {
+      l->second->SetT4(t4_stamp);
+    }
+  }
+#endif
+
   // Assign CurrentStream to a temporary variable to prevent
   // lifetime extension which can cause the lock to be held until the
   // end of the block.
@@ -362,10 +373,22 @@ void ObjectDescriptorImpl::OnRead(
   // Release the lock while notifying the ranges. The notifications may trigger
   // application code, and that code may callback on this class.
   lk.unlock();
+
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+  auto t5_stamp = std::chrono::steady_clock::now();
+#endif
+
   for (auto& range_data : *response->mutable_object_data_ranges()) {
     auto id = range_data.read_range().read_id();
     auto const l = copy.find(id);
     if (l == copy.end()) continue;
+
+#if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
+    defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+    l->second->SetT5(t5_stamp);
+#endif
+
     // TODO(#15104) - Consider returning if the range is done, and then
     // skipping CleanupDoneRanges().
     l->second->OnRead(std::move(range_data), is_transcoded, object_size);

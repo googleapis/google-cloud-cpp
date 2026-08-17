@@ -22,6 +22,7 @@
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
 #include "google/storage/v2/storage.pb.h"
+#include <chrono>
 #include <cstdint>
 #include <map>
 #include <optional>
@@ -125,6 +126,9 @@ class ReadPayload {
   storage::HeadersMap headers_;
   // The full object checksums (aka hash values), if known.
   std::optional<storage::internal::HashValues> object_hash_values_;
+  std::chrono::steady_clock::time_point t4_{};
+  std::chrono::steady_clock::time_point t5_{};
+  std::chrono::steady_clock::time_point t6_{};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
