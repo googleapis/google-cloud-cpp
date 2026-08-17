@@ -12,6 +12,30 @@ breakage for us and our customers as `googleapis` makes changes. From time to
 time we need to manually update this commit SHA. This document describes these
 steps.
 
+## Update the googleapis BCR module
+
+### BCR repository
+
+1. Create a fork of https://github.com/bazelbuild/bazel-central-registry if you
+   don't already have one.
+1. Update the main branch to latest.
+
+### googleapis repository
+
+1. Create a fork of googleapis/googleapis.
+1. Clone/update your fork to the latest on the master branch.
+1. Pick a recent commit SHA from `git log`.
+1. Execute the googleapis script to publish to BCR:
+
+```
+COMMIT=<a recent commit SHA>
+cd .bcr
+./publish-to-bcr.sh --ref ${COMMIT}  -f <path to your fork>bazel-central-registry/
+```
+
+Once this PR is merged, you can update the googleapis BCR module in
+`google-cloud-cpp` by following the steps below.
+
 ## Set your working directory
 
 Go to whatever directory holds your clone of the project, for example:
@@ -29,11 +53,11 @@ git checkout -b chore-update-googleapis-sha-circa-$(date +%Y-%m-%d)
 
 ## Run the "renovate.sh" script
 
-By default `renovate.sh` uses the most recent commit SHA and the current date.
-To override these values use environment variables `COMMIT` and `COMMIT_DATE`.
+The script updates the googleapis BCR module to the version you just published.
+The version is typically in the format `0.0.0-<date>-<short SHA>`.
 
 ```shell
-external/googleapis/renovate.sh
+external/googleapis/renovate.sh 0.0.0-20260812-f76fc6dc
 ```
 
 ## Verify everything compiles
