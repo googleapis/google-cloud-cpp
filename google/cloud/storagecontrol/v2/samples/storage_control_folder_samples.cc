@@ -13,7 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
+#include <grpcpp/grpcpp.h>
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "google/storage/control/v2/storage_control.pb.h"
@@ -73,6 +76,24 @@ void DeleteFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
     std::cout << "Deleted folder: " << folder_id << "\n";
   }
   // [END storage_control_delete_folder]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+void DeleteFolderRecursive(
+    google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::vector<std::string> const& argv) {
+  // [START storage_control_delete_folder_recursive]
+  namespace storagecontrol = google::cloud::storagecontrol_v2;
+  [](storagecontrol::StorageControlClient client,
+     std::string const& bucket_name, std::string const& folder_id) {
+    auto const name = std::string{"projects/_/buckets/"} + bucket_name +
+                      "/folders/" + folder_id;
+    auto status = client.DeleteFolderRecursive(name).get();
+    if (!status) throw std::move(status).status();
+
+    std::cout << "Deleted folder recursive: " << folder_id << "\n";
+  }
+  // [END storage_control_delete_folder_recursive]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -144,8 +165,16 @@ void AutoRun(std::vector<std::string> const& argv) {
           "GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME")
           .value();
 
+  auto options = google::cloud::Options{};
+  options.unset<google::cloud::UserProjectOption>();
+  auto endpoint = google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_CONTROL_ENDPOINT");
+  std::cout << "DEBUG: Storage Control Endpoint = " << endpoint.value_or("not set") << std::endl;
+  if (endpoint) {
+    options.set<google::cloud::GrpcCredentialOption>(
+        grpc::InsecureChannelCredentials());
+  }
   auto client = storagecontrol::StorageControlClient(
-      storagecontrol::MakeStorageControlConnection());
+      storagecontrol::MakeStorageControlConnection(std::move(options)));
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const prefix = std::string{"storage-control-samples"};
   auto const folder_id = prefix + "-" +
@@ -154,6 +183,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const dest_folder_id = prefix + "-" +
                               google::cloud::internal::Sample(
                                   generator, 32, "abcdefghijklmnopqrstuvwxyz");
+  auto const recursive_folder_id =
+      prefix + "-" +
+      google::cloud::internal::Sample(generator, 32,
+                                      "abcdefghijklmnopqrstuvwxyz");
   auto const create_time_limit =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   // This is the only example that cleans up stale folders. The examples run in
@@ -176,6 +209,13 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteFolder() example" << std::endl;
   DeleteFolder(client, {bucket_name, dest_folder_id});
+
+  std::cout << "\nRunning CreateFolder() example for recursive deletion"
+            << std::endl;
+  CreateFolder(client, {bucket_name, recursive_folder_id});
+
+  std::cout << "\nRunning DeleteFolderRecursive() example" << std::endl;
+  DeleteFolderRecursive(client, {bucket_name, recursive_folder_id});
 }
 
 }  // namespace
@@ -196,8 +236,15 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
         for (auto const& a : arg_names) usage += " <" + a + ">";
         throw google::cloud::testing_util::Usage{std::move(usage)};
       }
+      auto options = google::cloud::Options{};
+      options.unset<google::cloud::UserProjectOption>();
+      auto endpoint = google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_CONTROL_ENDPOINT");
+      if (endpoint) {
+        options.set<google::cloud::GrpcCredentialOption>(
+            grpc::InsecureChannelCredentials());
+      }
       auto client = storagecontrol::StorageControlClient(
-          storagecontrol::MakeStorageControlConnection());
+          storagecontrol::MakeStorageControlConnection(std::move(options)));
       command(client, std::move(argv));
     };
     return google::cloud::testing_util::Commands::value_type(std::move(name),
@@ -212,6 +259,8 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       make_entry("rename-folder",
                  {"bucket-name", "source-folder-id", "dest-folder-id"},
                  RenameFolder),
+      make_entry("delete-folder-recursive", {"bucket-name", "folder-id"},
+                 DeleteFolderRecursive),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

@@ -29,3 +29,8 @@ cc_gapic_library(
     googleapis_deps = googleapis_deps,
     service_dirs = service_dirs,
 )
+
+sh_test(
+    name = "setup_emulator_test",
+    srcs = ["create_resources.sh"],
+)

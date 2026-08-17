@@ -13,7 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
+#include <grpcpp/grpcpp.h>
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "google/storage/control/v2/storage_control.pb.h"
@@ -127,8 +130,15 @@ void AutoRun(std::vector<std::string> const& argv) {
           "GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME")
           .value();
 
+  auto options = google::cloud::Options{};
+  options.unset<google::cloud::UserProjectOption>();
+  auto endpoint = google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_CONTROL_ENDPOINT");
+  if (endpoint) {
+    options.set<google::cloud::GrpcCredentialOption>(
+        grpc::InsecureChannelCredentials());
+  }
   auto client = storagecontrol::StorageControlClient(
-      storagecontrol::MakeStorageControlConnection());
+      storagecontrol::MakeStorageControlConnection(std::move(options)));
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const prefix = std::string{"storage-control-samples"};
   auto const managed_folder_id =
@@ -174,8 +184,15 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
         for (auto const& a : arg_names) usage += " <" + a + ">";
         throw google::cloud::testing_util::Usage{std::move(usage)};
       }
+      auto options = google::cloud::Options{};
+      options.unset<google::cloud::UserProjectOption>();
+      auto endpoint = google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_CONTROL_ENDPOINT");
+      if (endpoint) {
+        options.set<google::cloud::GrpcCredentialOption>(
+            grpc::InsecureChannelCredentials());
+      }
       auto client = storagecontrol::StorageControlClient(
-          storagecontrol::MakeStorageControlConnection());
+          storagecontrol::MakeStorageControlConnection(std::move(options)));
       command(client, std::move(argv));
     };
     return google::cloud::testing_util::Commands::value_type(std::move(name),
