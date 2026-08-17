@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/writer_connection_buffered.h"
 #include "google/cloud/storage/async/connection.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/async_sequencer.h"
@@ -707,7 +708,7 @@ TEST(WriteConnectionBuffered, FlushWithEmptyPayload) {
 
 TEST(WriteConnectionBuffered, ErrorFailsPendingFlushes) {
   AsyncSequencer<bool> sequencer;
-  auto flush_error = PermanentError();
+  auto flush_error = TransientError();
   auto resume_error = Status(StatusCode::kAborted, "resume loop failed");
 
   auto mock = std::make_unique<MockAsyncWriterConnection>();
@@ -1679,6 +1680,85 @@ TEST(WriteConnectionBuffered, DuplicateFinalizeFails) {
 
   EXPECT_STATUS_OK(finalize1.get());
   EXPECT_THAT(finalize2.get(), StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(WriteConnectionBuffered, PermanentErrorNoResume) {
+  AsyncSequencer<bool> sequencer;
+  auto failed_precondition =
+      Status(StatusCode::kFailedPrecondition, "precondition failed");
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Write).WillOnce([&](auto) {
+    return sequencer.PushBack("Write").then(
+        [failed_precondition](auto) { return failed_precondition; });
+  });
+
+  MockFactory mock_factory;
+  // factory_ should NOT be called because error is permanent
+  // (FAILED_PRECONDITION).
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto write1 = connection->Write(TestPayload(1));
+  EXPECT_STATUS_OK(write1.get());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, Eq("Write"));
+  next.first.set_value(true);
+
+  auto write2 = connection->Write(TestPayload(1));
+  EXPECT_THAT(write2.get(), StatusIs(StatusCode::kFailedPrecondition));
+}
+
+TEST(WriteConnectionBuffered, CustomRetryPolicyOption) {
+  struct CustomAsyncRetryPolicy : public storage::AsyncRetryPolicy {
+    std::unique_ptr<storage::AsyncRetryPolicy> clone() const override {
+      return std::make_unique<CustomAsyncRetryPolicy>();
+    }
+    bool OnFailure(Status const&) override { return false; }
+    bool IsExhausted() const override { return false; }
+    bool IsPermanentFailure(Status const& s) const override {
+      return s.code() == StatusCode::kInvalidArgument;
+    }
+  };
+
+  AsyncSequencer<bool> sequencer;
+  auto invalid_argument =
+      Status(StatusCode::kInvalidArgument, "custom permanent error");
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Write).WillOnce([&](auto) {
+    return sequencer.PushBack("Write").then(
+        [invalid_argument](auto) { return invalid_argument; });
+  });
+
+  MockFactory mock_factory;
+  // factory_ should NOT be called because error is permanent per custom policy.
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto options = TestOptions().set<storage::AsyncRetryPolicyOption>(
+      std::make_shared<CustomAsyncRetryPolicy>());
+
+  auto connection = MakeWriterConnectionBuffered(mock_factory.AsStdFunction(),
+                                                 std::move(mock), options);
+
+  auto write1 = connection->Write(TestPayload(1));
+  EXPECT_STATUS_OK(write1.get());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, Eq("Write"));
+  next.first.set_value(true);
+
+  auto write2 = connection->Write(TestPayload(1));
+  EXPECT_THAT(write2.get(), StatusIs(StatusCode::kInvalidArgument));
 }
 
 }  // namespace

@@ -93,7 +93,7 @@ class PolicyBindingsClient {
   ///
   /// Creates a policy binding and returns a long-running operation.
   /// Callers will need the IAM permissions on both the policy and target.
-  /// Once the binding is created, the policy is applied to the target.
+  /// After the binding is created, the policy is applied to the target.
   ///
   /// @param parent  Required. The parent resource where this policy binding will be created.
   ///  The binding parent is the closest Resource Manager resource (project,
@@ -132,7 +132,7 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.CreatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L170}
+  /// [google.iam.v3.CreatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L168}
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
@@ -161,7 +161,7 @@ class PolicyBindingsClient {
   ///
   /// Creates a policy binding and returns a long-running operation.
   /// Callers will need the IAM permissions on both the policy and target.
-  /// Once the binding is created, the policy is applied to the target.
+  /// After the binding is created, the policy is applied to the target.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -189,7 +189,7 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.CreatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L170}
+  /// [google.iam.v3.CreatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L168}
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
@@ -249,7 +249,7 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.GetPolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L205}
+  /// [google.iam.v3.GetPolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L203}
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
@@ -279,7 +279,7 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.GetPolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L205}
+  /// [google.iam.v3.GetPolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L203}
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
@@ -291,9 +291,7 @@ class PolicyBindingsClient {
   ///
   /// Updates a policy binding and returns a long-running operation.
   /// Callers will need the IAM permissions on the policy and target in the
-  /// binding to update, and the IAM permission to remove the existing policy
-  /// from the binding. Target is immutable and cannot be updated. Once the
-  /// binding is updated, the new policy is applied to the target.
+  /// binding to update. Target and policy are immutable and cannot be updated.
   ///
   /// @param policy_binding  Required. The policy binding to update.
   ///  @n
@@ -321,7 +319,7 @@ class PolicyBindingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
-  /// [google.iam.v3.UpdatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L223}
+  /// [google.iam.v3.UpdatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
@@ -347,9 +345,7 @@ class PolicyBindingsClient {
   ///
   /// Updates a policy binding and returns a long-running operation.
   /// Callers will need the IAM permissions on the policy and target in the
-  /// binding to update, and the IAM permission to remove the existing policy
-  /// from the binding. Target is immutable and cannot be updated. Once the
-  /// binding is updated, the new policy is applied to the target.
+  /// binding to update. Target and policy are immutable and cannot be updated.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -378,7 +374,7 @@ class PolicyBindingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
-  /// [google.iam.v3.UpdatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L223}
+  /// [google.iam.v3.UpdatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L221}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
@@ -416,7 +412,7 @@ class PolicyBindingsClient {
   ///
   /// Deletes a policy binding and returns a long-running operation.
   /// Callers will need the IAM permissions on both the policy and target.
-  /// Once the binding is deleted, the policy no longer applies to the target.
+  /// After the binding is deleted, the policy no longer applies to the target.
   ///
   /// @param name  Required. The name of the policy binding to delete.
   ///  @n
@@ -446,7 +442,7 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.DeletePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L240}
+  /// [google.iam.v3.DeletePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L238}
   /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L30}
   ///
   // clang-format on
@@ -471,7 +467,7 @@ class PolicyBindingsClient {
   ///
   /// Deletes a policy binding and returns a long-running operation.
   /// Callers will need the IAM permissions on both the policy and target.
-  /// Once the binding is deleted, the policy no longer applies to the target.
+  /// After the binding is deleted, the policy no longer applies to the target.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -499,7 +495,7 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.DeletePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L240}
+  /// [google.iam.v3.DeletePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L238}
   /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L30}
   ///
   // clang-format on
@@ -569,7 +565,7 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.ListPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L266}
+  /// [google.iam.v3.ListPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L264}
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
@@ -608,7 +604,7 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.ListPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L266}
+  /// [google.iam.v3.ListPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L264}
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
@@ -663,7 +659,7 @@ class PolicyBindingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
-  /// [google.iam.v3.SearchTargetPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L322}
+  /// [google.iam.v3.SearchTargetPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L320}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding> SearchTargetPolicyBindings(
@@ -703,7 +699,7 @@ class PolicyBindingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
-  /// [google.iam.v3.SearchTargetPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L322}
+  /// [google.iam.v3.SearchTargetPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L320}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding> SearchTargetPolicyBindings(

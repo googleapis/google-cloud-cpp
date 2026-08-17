@@ -35,7 +35,7 @@ TEST(BenchmarkOptions, Basic) {
       {"self-test", "--project-id=test-project", "--instance-id=test-instance",
        "--app-profile-id=test-app-profile-id", "--table-size=10000",
        "--test-duration=300s", "--use-embedded-server=true",
-       "--include-read-rows=true"},
+       "--include-read-rows=true", "--metrics-period=10s"},
       "");
   ASSERT_STATUS_OK(options);
   EXPECT_FALSE(options->exit_after_parse);
@@ -46,6 +46,8 @@ TEST(BenchmarkOptions, Basic) {
   EXPECT_EQ(300, options->test_duration.count());
   EXPECT_EQ(true, options->use_embedded_server);
   EXPECT_EQ(true, options->include_read_rows);
+  EXPECT_THAT(options->metrics_period,
+              ::testing::Optional(std::chrono::seconds(10)));
 }
 
 TEST(BenchmarkOptions, Defaults) {
@@ -64,6 +66,7 @@ TEST(BenchmarkOptions, Defaults) {
             options->test_duration.count());
   EXPECT_EQ(false, options->use_embedded_server);
   EXPECT_EQ(10, options->parallel_requests);
+  EXPECT_FALSE(options->metrics_period.has_value());
 }
 
 TEST(BenchmarkOptions, Initialization) {
@@ -105,6 +108,13 @@ TEST(BenchmarkOptions, Validate) {
   EXPECT_FALSE(ParseBenchmarkOptions(
       {"self-test", "--project-id=a", "--instance-id=b", "--test-duration=0"},
       ""));
+  EXPECT_FALSE(ParseBenchmarkOptions(
+      {"self-test", "--project-id=a", "--instance-id=b", "--metrics-period=0s"},
+      ""));
+  EXPECT_FALSE(
+      ParseBenchmarkOptions({"self-test", "--project-id=a", "--instance-id=b",
+                             "--metrics-period=-5s"},
+                            ""));
 }
 
 }  // namespace

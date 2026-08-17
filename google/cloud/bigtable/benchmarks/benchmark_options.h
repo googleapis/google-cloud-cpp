@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/benchmarks/constants.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -42,6 +43,7 @@ struct BenchmarkOptions {
   bool exit_after_parse = false;
   bool include_read_rows = false;
   bool enable_metrics = true;
+  std::optional<std::chrono::seconds> metrics_period;
 };
 
 google::cloud::StatusOr<BenchmarkOptions> ParseBenchmarkOptions(

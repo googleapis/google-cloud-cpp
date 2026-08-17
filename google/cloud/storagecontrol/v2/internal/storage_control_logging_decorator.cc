@@ -636,6 +636,19 @@ StorageControlLogging::ListIntelligenceFindingRevisions(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlLogging::ViewObjectFullContext(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::control::v2::ViewObjectFullContextRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::ViewObjectFullContextRequest const&
+                 request) {
+        return child_->ViewObjectFullContext(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 StorageControlLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

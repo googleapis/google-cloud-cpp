@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/writer_connection_buffered.h"
+#include "google/cloud/storage/async/retry_policy.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
@@ -60,14 +61,25 @@ Status MakeFastForwardError(absl::string_view upload_id,
           .WithMetadata("gcloud-cpp.storage.persisted_size", returned));
 }
 
+bool IsPermanentFailure(Options const& options, Status const& status) {
+  if (options.has<storage::AsyncRetryPolicyOption>() &&
+      options.get<storage::AsyncRetryPolicyOption>() != nullptr) {
+    return options.get<storage::AsyncRetryPolicyOption>()->IsPermanentFailure(
+        status);
+  }
+  return storage::internal::AsyncStatusTraits::IsPermanentFailure(status);
+}
+
 class AsyncWriterConnectionBufferedState
     : public std::enable_shared_from_this<AsyncWriterConnectionBufferedState> {
  public:
   AsyncWriterConnectionBufferedState(
       WriterConnectionFactory factory,
       std::unique_ptr<storage::AsyncWriterConnection> impl,
-      std::size_t buffer_size_lwm, std::size_t buffer_size_hwm)
+      Options const& options, std::size_t buffer_size_lwm,
+      std::size_t buffer_size_hwm)
       : factory_(std::move(factory)),
+        options_(internal::MakeImmutableOptions(options)),
         buffer_size_lwm_(buffer_size_lwm),
         buffer_size_hwm_(buffer_size_hwm),
         impl_(std::move(impl)) {
@@ -422,6 +434,9 @@ class AsyncWriterConnectionBufferedState
       if (!s.ok() && cancelled_) {
         return SetError(std::move(lk), std::move(s));
       }
+      if (!s.ok() && IsPermanentFailure(*options_, s)) {
+        return SetError(std::move(lk), std::move(s));
+      }
       // Guard against concurrent resume attempts.
       if (resuming_) return;
       resuming_ = true;
@@ -630,6 +645,8 @@ class AsyncWriterConnectionBufferedState
   // Creates new `impl_` instances when needed.
   WriterConnectionFactory const factory_;
 
+  google::cloud::internal::ImmutableOptions options_;
+
   // Request a server-side flush if the buffer goes over this threshold.
   std::size_t const buffer_size_lwm_;
 
@@ -780,9 +797,10 @@ class AsyncWriterConnectionBuffered : public storage::AsyncWriterConnection {
   explicit AsyncWriterConnectionBuffered(
       WriterConnectionFactory factory,
       std::unique_ptr<storage::AsyncWriterConnection> impl,
-      std::size_t buffer_size_lwm, std::size_t buffer_size_hwm)
+      Options const& options, std::size_t buffer_size_lwm,
+      std::size_t buffer_size_hwm)
       : state_(std::make_shared<AsyncWriterConnectionBufferedState>(
-            std::move(factory), std::move(impl), buffer_size_lwm,
+            std::move(factory), std::move(impl), options, buffer_size_lwm,
             buffer_size_hwm)) {}
 
   void Cancel() override { return state_->Cancel(); }
@@ -833,7 +851,7 @@ std::unique_ptr<storage::AsyncWriterConnection> MakeWriterConnectionBuffered(
     std::unique_ptr<storage::AsyncWriterConnection> impl,
     Options const& options) {
   return absl::make_unique<AsyncWriterConnectionBuffered>(
-      std::move(factory), std::move(impl),
+      std::move(factory), std::move(impl), options,
       options.get<storage::BufferedUploadLwmOption>(),
       options.get<storage::BufferedUploadHwmOption>());
 }

@@ -83,7 +83,7 @@ void AsyncBulkApplier::MakeRequest() {
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
       stub_->AsyncMutateRows(cq_, client_context_, options_,
-                             state_.BeforeStart()),
+                             state_.BeforeStart(), operation_context_),
       [self](google::bigtable::v2::MutateRowsResponse r) {
         self->OnRead(std::move(r));
         return make_ready_future(self->keep_reading_.load());

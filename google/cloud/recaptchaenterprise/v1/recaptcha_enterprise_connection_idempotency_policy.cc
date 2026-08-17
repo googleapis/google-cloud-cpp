@@ -107,6 +107,16 @@ Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetMetrics(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetPolicy(
+    google::cloud::recaptchaenterprise::v1::GetPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::UpdatePolicy(
+    google::cloud::recaptchaenterprise::v1::UpdatePolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::CreateFirewallPolicy(
     google::cloud::recaptchaenterprise::v1::

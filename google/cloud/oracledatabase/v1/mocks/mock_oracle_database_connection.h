@@ -755,6 +755,56 @@ class MockOracleDatabaseConnection
       FailoverAutonomousDatabase,
       (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RefreshAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::RefreshAutonomousDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      RefreshAutonomousDatabase,
+      (google::cloud::oracledatabase::v1::
+           RefreshAutonomousDatabaseRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RefreshAutonomousDatabase(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              RefreshAutonomousDatabase,
+              (NoAwaitTag, google::cloud::oracledatabase::v1::
+                               RefreshAutonomousDatabaseRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RefreshAutonomousDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      RefreshAutonomousDatabase,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::oracledatabase::v1::
+                   AutonomousDatabaseRefreshableClones>,
+      GetAutonomousDatabaseRefreshableClones,
+      (google::cloud::oracledatabase::v1::
+           GetAutonomousDatabaseRefreshableClonesRequest const& request),
+      (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>),
       ListOdbNetworks,

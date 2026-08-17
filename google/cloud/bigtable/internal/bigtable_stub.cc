@@ -39,7 +39,8 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 DefaultBigtableStub::ReadRows(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::bigtable::v2::ReadRowsRequest const& request) {
+    google::bigtable::v2::ReadRowsRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   auto stream = grpc_stub_->ReadRows(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::ReadRowsResponse>>(std::move(context),
@@ -50,7 +51,8 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::SampleRowKeysResponse>>
 DefaultBigtableStub::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::bigtable::v2::SampleRowKeysRequest const& request) {
+    google::bigtable::v2::SampleRowKeysRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   auto stream = grpc_stub_->SampleRowKeys(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::SampleRowKeysResponse>>(std::move(context),
@@ -60,7 +62,8 @@ DefaultBigtableStub::SampleRowKeys(
 StatusOr<google::bigtable::v2::MutateRowResponse>
 DefaultBigtableStub::MutateRow(
     grpc::ClientContext& context, Options const&,
-    google::bigtable::v2::MutateRowRequest const& request) {
+    google::bigtable::v2::MutateRowRequest const& request,
+    google::cloud::bigtable_internal::OperationContext&) {
   google::bigtable::v2::MutateRowResponse response;
   auto status = grpc_stub_->MutateRow(&context, request, &response);
   if (!status.ok()) {
@@ -73,7 +76,8 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::MutateRowsResponse>>
 DefaultBigtableStub::MutateRows(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::bigtable::v2::MutateRowsRequest const& request) {
+    google::bigtable::v2::MutateRowsRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   auto stream = grpc_stub_->MutateRows(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::MutateRowsResponse>>(std::move(context),
@@ -83,7 +87,8 @@ DefaultBigtableStub::MutateRows(
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 DefaultBigtableStub::CheckAndMutateRow(
     grpc::ClientContext& context, Options const&,
-    google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+    google::bigtable::v2::CheckAndMutateRowRequest const& request,
+    google::cloud::bigtable_internal::OperationContext&) {
   google::bigtable::v2::CheckAndMutateRowResponse response;
   auto status = grpc_stub_->CheckAndMutateRow(&context, request, &response);
   if (!status.ok()) {
@@ -95,7 +100,8 @@ DefaultBigtableStub::CheckAndMutateRow(
 StatusOr<google::bigtable::v2::PingAndWarmResponse>
 DefaultBigtableStub::PingAndWarm(
     grpc::ClientContext& context, Options const&,
-    google::bigtable::v2::PingAndWarmRequest const& request) {
+    google::bigtable::v2::PingAndWarmRequest const& request,
+    google::cloud::bigtable_internal::OperationContext&) {
   google::bigtable::v2::PingAndWarmResponse response;
   auto status = grpc_stub_->PingAndWarm(&context, request, &response);
   if (!status.ok()) {
@@ -107,7 +113,8 @@ DefaultBigtableStub::PingAndWarm(
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 DefaultBigtableStub::ReadModifyWriteRow(
     grpc::ClientContext& context, Options const&,
-    google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+    google::cloud::bigtable_internal::OperationContext&) {
   google::bigtable::v2::ReadModifyWriteRowResponse response;
   auto status = grpc_stub_->ReadModifyWriteRow(&context, request, &response);
   if (!status.ok()) {
@@ -119,7 +126,8 @@ DefaultBigtableStub::ReadModifyWriteRow(
 StatusOr<google::bigtable::v2::PrepareQueryResponse>
 DefaultBigtableStub::PrepareQuery(
     grpc::ClientContext& context, Options const&,
-    google::bigtable::v2::PrepareQueryRequest const& request) {
+    google::bigtable::v2::PrepareQueryRequest const& request,
+    google::cloud::bigtable_internal::OperationContext&) {
   google::bigtable::v2::PrepareQueryResponse response;
   auto status = grpc_stub_->PrepareQuery(&context, request, &response);
   if (!status.ok()) {
@@ -132,7 +140,8 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ExecuteQueryResponse>>
 DefaultBigtableStub::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::bigtable::v2::ExecuteQueryRequest const& request) {
+    google::bigtable::v2::ExecuteQueryRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   auto stream = grpc_stub_->ExecuteQuery(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::ExecuteQueryResponse>>(std::move(context),
@@ -142,7 +151,8 @@ DefaultBigtableStub::ExecuteQuery(
 StatusOr<google::bigtable::v2::ClientConfiguration>
 DefaultBigtableStub::GetClientConfiguration(
     grpc::ClientContext& context, Options const&,
-    google::bigtable::v2::GetClientConfigurationRequest const& request) {
+    google::bigtable::v2::GetClientConfigurationRequest const& request,
+    google::cloud::bigtable_internal::OperationContext&) {
   google::bigtable::v2::ClientConfiguration response;
   auto status =
       grpc_stub_->GetClientConfiguration(&context, request, &response);
@@ -158,7 +168,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 DefaultBigtableStub::AsyncOpenTable(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::bigtable::v2::SessionRequest,
       google::bigtable::v2::SessionResponse>(
@@ -174,7 +185,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 DefaultBigtableStub::AsyncOpenAuthorizedView(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::bigtable::v2::SessionRequest,
       google::bigtable::v2::SessionResponse>(
@@ -190,7 +202,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
 DefaultBigtableStub::AsyncOpenMaterializedView(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options) {
+    google::cloud::internal::ImmutableOptions options,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::bigtable::v2::SessionRequest,
       google::bigtable::v2::SessionResponse>(
@@ -206,7 +219,8 @@ DefaultBigtableStub::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::ReadRowsRequest const& request) {
+    google::bigtable::v2::ReadRowsRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::ReadRowsRequest,
       google::bigtable::v2::ReadRowsResponse>(
@@ -224,7 +238,8 @@ DefaultBigtableStub::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::SampleRowKeysRequest const& request) {
+    google::bigtable::v2::SampleRowKeysRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::SampleRowKeysRequest,
       google::bigtable::v2::SampleRowKeysResponse>(
@@ -242,7 +257,8 @@ DefaultBigtableStub::AsyncMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::bigtable::v2::MutateRowRequest const& request) {
+    google::bigtable::v2::MutateRowRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<google::bigtable::v2::MutateRowRequest,
                                     google::bigtable::v2::MutateRowResponse>(
       cq,
@@ -260,7 +276,8 @@ DefaultBigtableStub::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::bigtable::v2::MutateRowsRequest const& request) {
+    google::bigtable::v2::MutateRowsRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::MutateRowsRequest,
       google::bigtable::v2::MutateRowsResponse>(
@@ -278,7 +295,8 @@ DefaultBigtableStub::AsyncCheckAndMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::bigtable::v2::CheckAndMutateRowRequest const& request) {
+    google::bigtable::v2::CheckAndMutateRowRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::v2::CheckAndMutateRowRequest,
       google::bigtable::v2::CheckAndMutateRowResponse>(
@@ -297,7 +315,8 @@ DefaultBigtableStub::AsyncPingAndWarm(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::bigtable::v2::PingAndWarmRequest const& request) {
+    google::bigtable::v2::PingAndWarmRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<google::bigtable::v2::PingAndWarmRequest,
                                     google::bigtable::v2::PingAndWarmResponse>(
       cq,
@@ -315,7 +334,8 @@ DefaultBigtableStub::AsyncReadModifyWriteRow(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::v2::ReadModifyWriteRowRequest,
       google::bigtable::v2::ReadModifyWriteRowResponse>(
@@ -334,7 +354,8 @@ DefaultBigtableStub::AsyncPrepareQuery(
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
-    google::bigtable::v2::PrepareQueryRequest const& request) {
+    google::bigtable::v2::PrepareQueryRequest const& request,
+    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>) {
   return internal::MakeUnaryRpcImpl<google::bigtable::v2::PrepareQueryRequest,
                                     google::bigtable::v2::PrepareQueryResponse>(
       cq,

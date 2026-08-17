@@ -40,6 +40,31 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace {
+
+enum class InitialReadRangesCacheStatus {
+  kNone,
+  kMiss,
+  kHit,
+  kEvicted,
+};
+
+absl::string_view CacheStatusToString(InitialReadRangesCacheStatus status) {
+  switch (status) {
+    case InitialReadRangesCacheStatus::kHit:
+      return "HIT";
+    case InitialReadRangesCacheStatus::kEvicted:
+      return "EVICTED";
+    case InitialReadRangesCacheStatus::kMiss:
+      return "MISS";
+    case InitialReadRangesCacheStatus::kNone:
+      return "";
+  }
+  return "INVALID_STATUS";
+}
+
+}  // namespace
+
 ObjectDescriptorImpl::ObjectDescriptorImpl(
     std::unique_ptr<storage::ResumePolicy> resume_policy,
     OpenStreamFactory make_stream,
@@ -50,6 +75,7 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
       options_(std::move(options)),
+      has_initial_read_ranges_(options_.has<ReadRangesOption>()),
       transport_ok_(std::move(transport_ok)) {
   stream_manager_ = std::make_unique<StreamManager>(
       []() -> std::shared_ptr<ReadStream> { return nullptr; },  // NOLINT
@@ -231,7 +257,12 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
   // Check if this range matches a pre-warmed range.
   auto cache_key = std::make_pair(p.start, p.length);
   auto cache_it = prewarmed_ranges_.find(cache_key);
+  auto cache_status = has_initial_read_ranges_
+                          ? InitialReadRangesCacheStatus::kMiss
+                          : InitialReadRangesCacheStatus::kNone;
+
   if (cache_it != prewarmed_ranges_.end()) {
+    cache_status = InitialReadRangesCacheStatus::kHit;
     // Cache hit. Claim the pre-warmed range and return it to the user.
     auto prewarmed = std::move(cache_it->second);
     prewarmed_ranges_.erase(cache_it);
@@ -247,7 +278,13 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       return std::unique_ptr<storage::AsyncReaderConnection>(
           std::make_unique<ObjectDescriptorReader>(std::move(prewarmed.range)));
     }
-    return MakeTracingObjectDescriptorReader(std::move(prewarmed.range));
+    return MakeTracingObjectDescriptorReader(std::move(prewarmed.range),
+                                             CacheStatusToString(cache_status));
+  }
+
+  // If not hit, check if it was evicted earlier due to pacing.
+  if (evicted_ranges_.erase(cache_key) != 0) {
+    cache_status = InitialReadRangesCacheStatus::kEvicted;
   }
 
   if (stream_manager_->Empty()) {
@@ -258,7 +295,8 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
       return std::unique_ptr<storage::AsyncReaderConnection>(
           std::make_unique<ObjectDescriptorReader>(std::move(range)));
     }
-    return MakeTracingObjectDescriptorReader(std::move(range));
+    return MakeTracingObjectDescriptorReader(std::move(range),
+                                             CacheStatusToString(cache_status));
   }
 
   auto it = stream_manager_->GetLeastBusyStream();
@@ -274,8 +312,8 @@ std::unique_ptr<storage::AsyncReaderConnection> ObjectDescriptorImpl::Read(
     return std::unique_ptr<storage::AsyncReaderConnection>(
         std::make_unique<ObjectDescriptorReader>(std::move(range)));
   }
-
-  return MakeTracingObjectDescriptorReader(std::move(range));
+  return MakeTracingObjectDescriptorReader(std::move(range),
+                                           CacheStatusToString(cache_status));
 }
 
 std::shared_ptr<storage::internal::HashFunction>
@@ -429,6 +467,11 @@ void ObjectDescriptorImpl::OnRead(
         max_prewarmed_buffer_size_) {
       // Evict the range if it exceeds the pacing limit.
       total_prewarmed_bytes_buffered_ -= unclaimed_it->second.bytes_buffered;
+      // Cap tombstone set size to prevent unbounded memory growth in long-lived
+      // descriptors where pre-warmed ranges are evicted but never requested.
+      if (evicted_ranges_.size() < 1000) {
+        evicted_ranges_.insert(unclaimed_it->second.cache_it->first);
+      }
       prewarmed_ranges_.erase(unclaimed_it->second.cache_it);
       unclaimed_ranges_.erase(unclaimed_it);
 

@@ -29,7 +29,8 @@ using ::testing::IsEmpty;
 
 class MockMetric : public Metric {
  public:
-  MOCK_METHOD(std::unique_ptr<Metric>, clone, (ResourceLabels, DataLabels),
+  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+              (TableResourceLabels const&, TableDataLabels const&),
               (const, override));
 };
 
@@ -40,8 +41,8 @@ TEST(MetricsOperationContextFactoryTest, ReadRow) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const& resource_labels,
-                    DataLabels const& data_labels) {
+      .WillOnce([&](TableResourceLabels const& resource_labels,
+                    TableDataLabels const& data_labels) {
         EXPECT_THAT(resource_labels.project_id, Eq("my-project"));
         EXPECT_THAT(resource_labels.instance, Eq("my-instance"));
         EXPECT_THAT(resource_labels.table, Eq("my-table"));
@@ -68,11 +69,12 @@ TEST(MetricsOperationContextFactoryTest, ReadRows) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        EXPECT_THAT(data_labels.method, Eq("ReadRows"));
-        EXPECT_THAT(data_labels.streaming, Eq("true"));
-        return std::make_unique<MockMetric>();
-      });
+      .WillOnce(
+          [&](TableResourceLabels const&, TableDataLabels const& data_labels) {
+            EXPECT_THAT(data_labels.method, Eq("ReadRows"));
+            EXPECT_THAT(data_labels.streaming, Eq("true"));
+            return std::make_unique<MockMetric>();
+          });
 
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context = factory.ReadRows(table_full_name, app_profile);
@@ -85,11 +87,12 @@ TEST(MetricsOperationContextFactoryTest, MutateRow) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        EXPECT_THAT(data_labels.method, Eq("MutateRow"));
-        EXPECT_THAT(data_labels.streaming, Eq("false"));
-        return std::make_unique<MockMetric>();
-      });
+      .WillOnce(
+          [&](TableResourceLabels const&, TableDataLabels const& data_labels) {
+            EXPECT_THAT(data_labels.method, Eq("MutateRow"));
+            EXPECT_THAT(data_labels.streaming, Eq("false"));
+            return std::make_unique<MockMetric>();
+          });
 
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context = factory.MutateRow(table_full_name, app_profile);
@@ -102,11 +105,12 @@ TEST(MetricsOperationContextFactoryTest, MutateRows) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        EXPECT_THAT(data_labels.method, Eq("MutateRows"));
-        EXPECT_THAT(data_labels.streaming, Eq("true"));
-        return std::make_unique<MockMetric>();
-      });
+      .WillOnce(
+          [&](TableResourceLabels const&, TableDataLabels const& data_labels) {
+            EXPECT_THAT(data_labels.method, Eq("MutateRows"));
+            EXPECT_THAT(data_labels.streaming, Eq("true"));
+            return std::make_unique<MockMetric>();
+          });
 
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context = factory.MutateRows(table_full_name, app_profile);
@@ -119,11 +123,12 @@ TEST(MetricsOperationContextFactoryTest, CheckAndMutateRow) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        EXPECT_THAT(data_labels.method, Eq("CheckAndMutateRow"));
-        EXPECT_THAT(data_labels.streaming, Eq("false"));
-        return std::make_unique<MockMetric>();
-      });
+      .WillOnce(
+          [&](TableResourceLabels const&, TableDataLabels const& data_labels) {
+            EXPECT_THAT(data_labels.method, Eq("CheckAndMutateRow"));
+            EXPECT_THAT(data_labels.streaming, Eq("false"));
+            return std::make_unique<MockMetric>();
+          });
 
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context =
@@ -137,11 +142,12 @@ TEST(MetricsOperationContextFactoryTest, SampleRowKeys) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        EXPECT_THAT(data_labels.method, Eq("SampleRowKeys"));
-        EXPECT_THAT(data_labels.streaming, Eq("true"));
-        return std::make_unique<MockMetric>();
-      });
+      .WillOnce(
+          [&](TableResourceLabels const&, TableDataLabels const& data_labels) {
+            EXPECT_THAT(data_labels.method, Eq("SampleRowKeys"));
+            EXPECT_THAT(data_labels.streaming, Eq("true"));
+            return std::make_unique<MockMetric>();
+          });
 
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context = factory.SampleRowKeys(table_full_name, app_profile);
@@ -154,11 +160,12 @@ TEST(MetricsOperationContextFactoryTest, ReadModifyWriteRow) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        EXPECT_THAT(data_labels.method, Eq("ReadModifyWriteRow"));
-        EXPECT_THAT(data_labels.streaming, Eq("false"));
-        return std::make_unique<MockMetric>();
-      });
+      .WillOnce(
+          [&](TableResourceLabels const&, TableDataLabels const& data_labels) {
+            EXPECT_THAT(data_labels.method, Eq("ReadModifyWriteRow"));
+            EXPECT_THAT(data_labels.streaming, Eq("false"));
+            return std::make_unique<MockMetric>();
+          });
 
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context =
@@ -171,11 +178,12 @@ TEST(MetricsOperationContextFactoryTest, PrepareQuery) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        EXPECT_THAT(data_labels.method, Eq("PrepareQuery"));
-        EXPECT_THAT(data_labels.streaming, Eq("false"));
-        return std::make_unique<MockMetric>();
-      });
+      .WillOnce(
+          [&](TableResourceLabels const&, TableDataLabels const& data_labels) {
+            EXPECT_THAT(data_labels.method, Eq("PrepareQuery"));
+            EXPECT_THAT(data_labels.streaming, Eq("false"));
+            return std::make_unique<MockMetric>();
+          });
 
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context =
@@ -188,11 +196,12 @@ TEST(MetricsOperationContextFactoryTest, ExecuteQuery) {
 
   auto mock_metric = std::make_shared<MockMetric const>();
   EXPECT_CALL(*mock_metric, clone)
-      .WillOnce([&](ResourceLabels const&, DataLabels const& data_labels) {
-        EXPECT_THAT(data_labels.method, Eq("ExecuteQuery"));
-        EXPECT_THAT(data_labels.streaming, Eq("true"));
-        return std::make_unique<MockMetric>();
-      });
+      .WillOnce(
+          [&](TableResourceLabels const&, TableDataLabels const& data_labels) {
+            EXPECT_THAT(data_labels.method, Eq("ExecuteQuery"));
+            EXPECT_THAT(data_labels.streaming, Eq("true"));
+            return std::make_unique<MockMetric>();
+          });
 
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context =

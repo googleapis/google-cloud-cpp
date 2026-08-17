@@ -16,7 +16,7 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "3.8.0",  # Updated by CMake
+    version = "3.9.0-rc",  # Updated by CMake
     compatibility_level = 3,  # Updated by CMake
 )
 
@@ -53,6 +53,6 @@ python.toolchain(
 )
 
 bazel_dep(name = "grpc", version = "1.83.0")
-bazel_dep(name = "googleapis", version = "0.0.0-20260728-b8486a2f")
+bazel_dep(name = "googleapis", version = "0.0.0-20260812-f76fc6dc")
 bazel_dep(name = "googleapis-cc", version = "1.1.5")
 bazel_dep(name = "googleapis-grpc-cc", version = "1.1.5")

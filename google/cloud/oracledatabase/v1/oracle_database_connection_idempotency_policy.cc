@@ -210,6 +210,20 @@ OracleDatabaseConnectionIdempotencyPolicy::FailoverAutonomousDatabase(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+OracleDatabaseConnectionIdempotencyPolicy::RefreshAutonomousDatabase(
+    google::cloud::oracledatabase::v1::
+        RefreshAutonomousDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency OracleDatabaseConnectionIdempotencyPolicy::
+    GetAutonomousDatabaseRefreshableClones(
+        google::cloud::oracledatabase::v1::
+            GetAutonomousDatabaseRefreshableClonesRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency OracleDatabaseConnectionIdempotencyPolicy::ListOdbNetworks(
     google::cloud::oracledatabase::v1::ListOdbNetworksRequest) {  // NOLINT
   return Idempotency::kIdempotent;

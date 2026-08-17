@@ -163,7 +163,8 @@ class MockMetric : public Metric {
                ElementDeliveryParams const&),
               (override));
   MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (ResourceLabels resource_labels, DataLabels data_labels),
+              (TableResourceLabels const& resource_labels,
+               TableDataLabels const& data_labels),
               (const, override));
 };
 
@@ -172,7 +173,8 @@ class CloningMetric : public Metric {
  public:
   explicit CloningMetric(std::unique_ptr<MockMetric> metric)
       : metric_(std::move(metric)) {}
-  std::unique_ptr<Metric> clone(ResourceLabels, DataLabels) const override {
+  std::unique_ptr<Metric> clone(TableResourceLabels const&,
+                                TableDataLabels const&) const override {
     return std::move(metric_);
   }
 
@@ -207,7 +209,7 @@ TEST_F(AsyncBulkApplyTest, Success) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto client_context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -281,7 +283,7 @@ TEST_F(AsyncBulkApplyTest, PartialStreamIsRetried) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -306,7 +308,7 @@ TEST_F(AsyncBulkApplyTest, PartialStreamIsRetried) {
         return stream;
       })
       .WillOnce([this](CompletionQueue const&, auto client_context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -383,7 +385,7 @@ TEST_F(AsyncBulkApplyTest, IdempotentMutationPolicy) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto client_context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -408,7 +410,7 @@ TEST_F(AsyncBulkApplyTest, IdempotentMutationPolicy) {
         return stream;
       })
       .WillOnce([this](CompletionQueue const&, auto client_context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -464,7 +466,8 @@ TEST_F(AsyncBulkApplyTest, TooManyStreamFailures) {
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::MutateRowsRequest const& request) {
+                             v2::MutateRowsRequest const& request,
+                             auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -530,7 +533,7 @@ TEST_F(AsyncBulkApplyTest, RetryInfoHeeded) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -544,7 +547,7 @@ TEST_F(AsyncBulkApplyTest, RetryInfoHeeded) {
         return stream;
       })
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -603,7 +606,7 @@ TEST_F(AsyncBulkApplyTest, RetryInfoIgnored) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -640,7 +643,7 @@ TEST_F(AsyncBulkApplyTest, TimerError) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const& request) {
+                       v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -705,7 +708,7 @@ TEST_F(AsyncBulkApplyTest, CancelAfterSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([&p, this](CompletionQueue const&, auto client_context, auto,
-                           v2::MutateRowsRequest const& request) {
+                           v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -781,7 +784,7 @@ TEST_F(AsyncBulkApplyTest, CancelMidStream) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([&p, this](CompletionQueue const&, auto client_context, auto,
-                           v2::MutateRowsRequest const& request) {
+                           v2::MutateRowsRequest const& request, auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -849,7 +852,7 @@ TEST_F(AsyncBulkApplyTest, CurrentOptionsContinuedOnRetries) {
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(2)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::MutateRowsRequest const&) {
+                             v2::MutateRowsRequest const&, auto const&) {
         EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
@@ -902,7 +905,8 @@ TEST_F(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::MutateRowsRequest const& request) {
+                             v2::MutateRowsRequest const& request,
+                             auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -974,7 +978,8 @@ TEST_F(AsyncBulkApplyTest, Throttling) {
   });
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([&limiter, this](CompletionQueue const&, auto client_context,
-                                 auto, v2::MutateRowsRequest const&) {
+                                 auto, v2::MutateRowsRequest const&,
+                                 auto const&) {
         metadata_fixture_.SetServerMetadata(*client_context, {});
         ::testing::InSequence seq2;
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
@@ -1011,7 +1016,7 @@ TEST_F(AsyncBulkApplyTest, ThrottlingBeforeEachRetry) {
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
       .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
-                             v2::MutateRowsRequest const&) {
+                             v2::MutateRowsRequest const&, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
@@ -1065,7 +1070,7 @@ TEST_F(AsyncBulkApplyTest, BigtableCookie) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
@@ -1079,7 +1084,7 @@ TEST_F(AsyncBulkApplyTest, BigtableCookie) {
         return stream;
       })
       .WillOnce([this](CompletionQueue const&, auto context, auto,
-                       v2::MutateRowsRequest const&) {
+                       v2::MutateRowsRequest const&, auto const&) {
         // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
         EXPECT_THAT(headers,
@@ -1128,10 +1133,11 @@ TEST_F(AsyncBulkApplyTest, TracedBackoff) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this](auto&, auto context, auto, auto const&) {
-        metadata_fixture_.SetServerMetadata(*context, {});
-        return std::make_unique<ErrorStream>(TransientError());
-      });
+      .WillRepeatedly(
+          [this](auto&, auto context, auto, auto const&, auto const&) {
+            metadata_fixture_.SetServerMetadata(*context, {});
+            return std::make_unique<ErrorStream>(TransientError());
+          });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
@@ -1160,11 +1166,12 @@ TEST_F(AsyncBulkApplyTest, CallSpanActiveThroughout) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this, span](auto&, auto context, auto, auto const&) {
-        metadata_fixture_.SetServerMetadata(*context, {});
-        EXPECT_THAT(span, IsActive());
-        return std::make_unique<ErrorStream>(TransientError());
-      });
+      .WillRepeatedly(
+          [this, span](auto&, auto context, auto, auto const&, auto const&) {
+            metadata_fixture_.SetServerMetadata(*context, {});
+            EXPECT_THAT(span, IsActive());
+            return std::make_unique<ErrorStream>(TransientError());
+          });
 
   internal::AutomaticallyCreatedBackgroundThreads background;
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();

@@ -504,6 +504,38 @@ OracleDatabaseConnection::FailoverAutonomousDatabase(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnection::RefreshAutonomousDatabase(
+    google::cloud::oracledatabase::v1::
+        RefreshAutonomousDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OracleDatabaseConnection::RefreshAutonomousDatabase(
+    NoAwaitTag, google::cloud::oracledatabase::v1::
+                    RefreshAutonomousDatabaseRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
+OracleDatabaseConnection::RefreshAutonomousDatabase(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabaseRefreshableClones>
+OracleDatabaseConnection::GetAutonomousDatabaseRefreshableClones(
+    google::cloud::oracledatabase::v1::
+        GetAutonomousDatabaseRefreshableClonesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::oracledatabase::v1::OdbNetwork>
 OracleDatabaseConnection::ListOdbNetworks(
     google::cloud::oracledatabase::v1::

@@ -21,6 +21,9 @@ https://google.github.io/styleguide/cppguide.html with the following variances:
 
 - Use C++17 as its minimum C++ standard version.
 - Use `std::mutex` instead of `absl::mutex`.
+- Use `std::string_view` instead of `absl::string_view`.
+- Use `std::optional` instead of `absl::optional`.
+- Use `std::variant` instead of `absl::variant`.
 - Use `google::cloud::future` and `google::cloud::promise` instead of
   `std::future` and `std::promise`.
 - Use `google::cloud::Status` and `google::cloud::StatusOr` instead of
@@ -68,6 +71,34 @@ When reviewing or generating code, apply rigorous scrutiny:
   keep the main logic flow linear.
 - **Documentation:** Document all public items in libraries with Doxygen style
   comments using `///`.
+
+## Type Deduction (`auto`)
+
+Apply the type deduction rules from
+[Abseil Tip #232](https://abseil.io/tips/232) and the Google C++ Style Guide
+during code reviews:
+
+- **Require Structured Bindings in Map Loops:** In range-based `for` loops over
+  maps, protobuf maps, and JSON `.items()`, require `auto` with structured
+  bindings (e.g., `for (auto const& [key, value] : map)`). Flag loops that use
+  `std::pair` or trigger implicit copy conversions.
+- **Factory Functions:** Allow `auto` when the type is explicitly written on the
+  RHS (e.g., `auto ptr = std::make_unique<T>(...);`,
+  `auto client = std::make_shared<T>(...);`).
+- **Iterators:** Allow `auto` for iterators only when the container type is
+  locally visible. When iterating over non-local/member containers, require
+  explicitly typed dereferences (e.g., `ElementType const& elem = *it;`).
+- **Reject Obscured Domain & Return Types:** Flag and reject `auto` when it
+  hides `StatusOr<T>`, domain objects, protobuf messages/fields, or function
+  return types (e.g., demand
+  `StatusOr<ObjectMetadata> actual = client.InsertObject(...)` instead of
+  `auto actual = ...`).
+- **Disallow `auto` for Primitives:** Require explicit numeric and scalar types
+  (`std::size_t`, `std::int64_t`, `bool`, etc.) rather than deducing them from
+  literals.
+- **Enforce Explicit Qualifiers:** Ensure `auto` is explicitly qualified with
+  `const`, reference (`&`), or pointer (`*`) (e.g., `auto const&`, `auto&`,
+  `auto*`) to prevent unintended copies or ambiguous mutability.
 
 ## Google Cloud SDK Specifics
 

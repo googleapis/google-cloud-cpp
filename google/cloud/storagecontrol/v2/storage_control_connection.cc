@@ -378,6 +378,12 @@ StorageControlConnection::ListIntelligenceFindingRevisions(
       StreamRange<google::storage::control::v2::IntelligenceFindingRevision>>();
 }
 
+StatusOr<google::storage::control::v2::ObjectFullContext>
+StorageControlConnection::ViewObjectFullContext(
+    google::storage::control::v2::ViewObjectFullContextRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<StorageControlConnection> MakeStorageControlConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
