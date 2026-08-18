@@ -108,20 +108,6 @@ class MockMetric : public Metric {
               (const, override));
 };
 
-// This class is a vehicle to get a MockMetric into the OperationContext object.
-class CloningMetric : public Metric {
- public:
-  explicit CloningMetric(std::unique_ptr<MockMetric> metric)
-      : metric_(std::move(metric)) {}
-  std::unique_ptr<Metric> clone(TableResourceLabels const&,
-                                TableDataLabels const&) const override {
-    return std::move(metric_);
-  }
-
- private:
-  mutable std::unique_ptr<MockMetric> metric_;
-};
-
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 class AsyncSampleRowKeysTest : public ::testing::Test {
@@ -131,19 +117,18 @@ class AsyncSampleRowKeysTest : public ::testing::Test {
 
 TEST_F(AsyncSampleRowKeysTest, Simple) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -198,19 +183,18 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
 
 TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(2);
   EXPECT_CALL(*mock_metric, PostCall).Times(2);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -289,19 +273,18 @@ TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
 
 TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(kNumRetries + 1);
   EXPECT_CALL(*mock_metric, PostCall).Times(kNumRetries + 1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -354,19 +337,18 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
 
 TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(2);
   EXPECT_CALL(*mock_metric, PostCall).Times(2);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -426,19 +408,18 @@ TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
 
 TEST_F(AsyncSampleRowKeysTest, RetryInfoIgnored) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -526,19 +507,18 @@ TEST_F(AsyncSampleRowKeysTest, TimerError) {
 TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
   promise<std::optional<v2::SampleRowKeysResponse>> p;
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif
@@ -597,19 +577,18 @@ TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
 TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
   promise<std::optional<v2::SampleRowKeysResponse>> p;
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
   EXPECT_CALL(*mock_metric, OnDone).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<OperationContext>(
-      new OperationContext({}, {}, {fake_metric}, clock));
+      new OperationContext({mock_metric}, clock));
 #else
   auto operation_context = std::make_shared<OperationContext>();
 #endif

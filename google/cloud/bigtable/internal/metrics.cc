@@ -545,6 +545,21 @@ std::unique_ptr<Metric> ApplicationBlockingLatency::clone(
   return m;
 }
 
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics) {
+  std::vector<std::shared_ptr<Metric>> v;
+  v.reserve(metrics.size());
+  for (auto const& m : metrics) {
+    // We should never add a nullptr Metric to the list.
+    assert(m != nullptr);
+    auto clone = m->clone(resource_labels, data_labels);
+    v.emplace_back(std::move(clone));
+  }
+  return v;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
