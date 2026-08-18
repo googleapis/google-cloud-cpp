@@ -708,7 +708,7 @@ TEST(AsyncWriterConnectionTest, FlushFailsWithRedirect) {
   redirect.mutable_write_handle()->set_handle("redirect-handle");
   redirect.set_routing_token("redirect-token");
   redirect.set_generation(4321);
-  rpc_status.add_details()->PackFrom(redirect);
+  (void)rpc_status.add_details()->PackFrom(redirect);
   std::string rpc_status_payload;
   ASSERT_TRUE(rpc_status.SerializeToString(&rpc_status_payload));
   Status status(StatusCode::kAborted, "redirect");

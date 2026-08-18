@@ -217,7 +217,7 @@ void ListInstanceConfigOperations(
        client.ListInstanceConfigOperations(project.FullName())) {
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::instance::v1::CreateInstanceConfigMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "CreateInstanceConfig metadata is:\n"
               << metadata.DebugString();
   }
@@ -229,7 +229,7 @@ void ListInstanceConfigOperations(
        client.ListInstanceConfigOperations(project.FullName())) {
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::instance::v1::UpdateInstanceConfigMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "UpdateInstanceConfig metadata is:\n"
               << metadata.DebugString();
   }
@@ -1849,7 +1849,7 @@ void ListBackupOperations(
   for (auto& operation : client.ListBackupOperations(request)) {
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::database::v1::CreateBackupMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "Backup " << metadata.name() << " of database "
               << metadata.database() << " is "
               << metadata.progress().progress_percent() << "% complete.\n";
@@ -1861,7 +1861,7 @@ void ListBackupOperations(
   for (auto& operation : client.ListBackupOperations(request)) {
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::database::v1::CopyBackupMetadata metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "Copy " << metadata.name() << " of backup "
               << metadata.source_backup() << " is "
               << metadata.progress().progress_percent() << "% complete.\n";
@@ -1894,7 +1894,7 @@ void ListDatabaseOperations(
     if (!operation) throw std::move(operation).status();
     google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata
         metadata;
-    operation->metadata().UnpackTo(&metadata);
+    (void)operation->metadata().UnpackTo(&metadata);
     std::cout << "Database " << metadata.name() << " restored from backup is "
               << metadata.progress().progress_percent() << "% optimized.\n";
   }
@@ -4371,7 +4371,7 @@ void AddProtoTypeColumns(
       .GetMetadata()
       .descriptor->file()
       ->CopyTo(fds.add_file());
-  fds.SerializeToString(request.mutable_proto_descriptors());
+  (void)fds.SerializeToString(request.mutable_proto_descriptors());
   request.add_statements(R"""(
       CREATE PROTO BUNDLE (
           google.cloud.spanner.testing.SingerInfo,

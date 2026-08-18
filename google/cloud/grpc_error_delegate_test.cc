@@ -54,8 +54,8 @@ std::string MakeErrorDetails(grpc::StatusCode code, std::string message,
   *retry_info_proto.mutable_retry_delay() =
       internal::ToDurationProto(retry_info.retry_delay());
 
-  proto.add_details()->PackFrom(error_info_proto);
-  proto.add_details()->PackFrom(retry_info_proto);
+  (void)proto.add_details()->PackFrom(error_info_proto);
+  (void)proto.add_details()->PackFrom(retry_info_proto);
   return MakeErrorDetails(proto);
 }
 

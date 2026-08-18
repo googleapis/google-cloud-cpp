@@ -24,7 +24,7 @@ google::rpc::Status ExtractGrpcStatus(Status const& status) {
   google::rpc::Status proto_status = google::rpc::Status{};
   auto payload = google::cloud::internal::GetPayload(
       status, google::cloud::internal::StatusPayloadGrpcProto());
-  if (payload) proto_status.ParseFromString(*payload);
+  if (payload) (void)proto_status.ParseFromString(*payload);
   return proto_status;
 }
 

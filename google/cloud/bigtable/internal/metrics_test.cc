@@ -2080,7 +2080,6 @@ TEST(ConnectivityErrorCount, MissingResourceLabels) {
   auto clone = connectivity_error_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
-  google::bigtable::v2::ResponseParams response_params;
   RpcMetadata server_metadata;
   server_metadata.headers.emplace("server-timing", "gfet4t7; dur=15");
   SetServerMetadata(client_context, server_metadata);

@@ -102,7 +102,7 @@ TEST(AsyncPollingLoopTest, ImmediateSuccess) {
   google::longrunning::Operation op;
   op.set_name("test-op-name");
   op.set_done(true);
-  op.mutable_metadata()->PackFrom(expected);
+  (void)op.mutable_metadata()->PackFrom(expected);
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation).Times(0);
@@ -183,7 +183,7 @@ TEST(AsyncPollingLoopTest, PollThenSuccess) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation expected = starting_op;
   expected.set_done(true);
-  expected.mutable_metadata()->PackFrom(response);
+  (void)expected.mutable_metadata()->PackFrom(response);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -253,7 +253,7 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation expected = starting_op;
   expected.set_done(true);
-  expected.mutable_metadata()->PackFrom(response);
+  (void)expected.mutable_metadata()->PackFrom(response);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -309,7 +309,7 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation expected = starting_op;
   expected.set_done(true);
-  expected.mutable_metadata()->PackFrom(response);
+  (void)expected.mutable_metadata()->PackFrom(response);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -357,7 +357,7 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation expected = starting_op;
   expected.set_done(true);
-  expected.mutable_metadata()->PackFrom(response);
+  (void)expected.mutable_metadata()->PackFrom(response);
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -404,7 +404,7 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
   starting_op.set_name("test-op-name");
   google::longrunning::Operation expected = starting_op;
   expected.set_done(true);
-  expected.mutable_metadata()->PackFrom(response);
+  (void)expected.mutable_metadata()->PackFrom(response);
 
   AsyncSequencer<TimerType> timer_sequencer;
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
