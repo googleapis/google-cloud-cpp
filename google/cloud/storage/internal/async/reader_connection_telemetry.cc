@@ -28,48 +28,35 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
-namespace {
-struct ReadLatencyMetrics {
-  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-      queue_hist;
-  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-      network_hist;
-  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
-      output_hist;
-
-  static ReadLatencyMetrics const& Instance() {
-    static ReadLatencyMetrics const metrics = [] {
-      opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter> meter =
-          opentelemetry::metrics::Provider::GetMeterProvider()->GetMeter(
-              "google-cloud-cpp", version::version_string());
-      return ReadLatencyMetrics{
-          meter->CreateDoubleHistogram("gl-cpp.latency.bidi_read.queue",
-                                       "Read Range Queue Latency", "us"),
-          meter->CreateDoubleHistogram("gl-cpp.latency.bidi_read.network",
-                                       "Read Range Network Latency", "us"),
-          meter->CreateDoubleHistogram("gl-cpp.latency.bidi_read.internal",
-                                       "Read Range Internal Overhead", "us"),
-      };
-    }();
-    return metrics;
-  }
-};
-}  // namespace
+ReaderConnectionTelemetry::ReaderConnectionTelemetry() {
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter> meter =
+      opentelemetry::metrics::Provider::GetMeterProvider()->GetMeter(
+          "google-cloud-cpp", version::version_string());
+  metrics_ = {
+      meter->CreateDoubleHistogram("gl-cpp.latency.bidi_read.queue",
+                                   "Read Range Queue Latency", "us"),
+      meter->CreateDoubleHistogram("gl-cpp.latency.bidi_read.network",
+                                   "Read Range Network Latency", "us"),
+      meter->CreateDoubleHistogram("gl-cpp.latency.bidi_read.internal",
+                                   "Read Range Internal Overhead", "us"),
+  };
+}
 
 void ReaderConnectionTelemetry::RecordMetrics(std::string const& bucket_name,
                                               double p1, double p2,
                                               double p3) const {
-  auto const& metrics = ReadLatencyMetrics::Instance();
-  if (metrics.queue_hist)
-    metrics.queue_hist->Record(p1, {{"gcp.storage.bucket", bucket_name}},
-                               opentelemetry::context::Context{});
-  if (metrics.network_hist)
-    metrics.network_hist->Record(p2, {{"gcp.storage.bucket", bucket_name}},
-                                 opentelemetry::context::Context{});
-  if (metrics.output_hist)
-    metrics.output_hist->Record(p3, {{"gcp.storage.bucket", bucket_name}},
+  if (metrics_.queue_hist)
+    metrics_.queue_hist->Record(p1, {{"gcp.storage.bucket", bucket_name}},
                                 opentelemetry::context::Context{});
+  if (metrics_.network_hist)
+    metrics_.network_hist->Record(p2, {{"gcp.storage.bucket", bucket_name}},
+                                  opentelemetry::context::Context{});
+  if (metrics_.output_hist)
+    metrics_.output_hist->Record(p3, {{"gcp.storage.bucket", bucket_name}},
+                                 opentelemetry::context::Context{});
 }
+#else
+ReaderConnectionTelemetry::ReaderConnectionTelemetry() = default;
 #endif
 
 void ReaderConnectionTelemetry::RecordRead(
@@ -81,9 +68,8 @@ void ReaderConnectionTelemetry::RecordRead(
   std::chrono::steady_clock::time_point t5 = ReadPayloadImpl::GetT5(payload);
   std::chrono::steady_clock::time_point t6 = ReadPayloadImpl::GetT6(payload);
 
-  if (t4 != std::chrono::steady_clock::time_point{} &&
-      t5 != std::chrono::steady_clock::time_point{} &&
-      t6 != std::chrono::steady_clock::time_point{}) {
+  if (t4 != std::chrono::steady_clock::time_point{} && t4 <= t5 && t5 <= t6 &&
+      t6 <= t7) {
     double p1 = std::chrono::duration<double, std::micro>(t5 - t4).count();
     double p2 = std::chrono::duration<double, std::micro>(t6 - t5).count();
     double p3 = std::chrono::duration<double, std::micro>(t7 - t6).count();

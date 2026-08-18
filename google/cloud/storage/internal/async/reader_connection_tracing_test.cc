@@ -213,7 +213,7 @@ TEST(ReaderConnectionTracing, ReadLatencyEvent) {
       internal::MakeSpan("test-span-name"), std::move(mock), "test-bucket");
 
   auto f1 = actual->Read().then(expect_no_context);
-  auto now = std::chrono::steady_clock::now();
+  auto now = std::chrono::steady_clock::now() - std::chrono::milliseconds(2);
   auto payload = ReadPayload("m1");
   ReadPayloadImpl::SetTimestamps(payload, now,
                                  now + std::chrono::microseconds(100),
