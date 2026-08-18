@@ -38,8 +38,8 @@ struct ReadLatencyMetrics {
       output_hist;
 
   static ReadLatencyMetrics const& Instance() {
-    static auto const metrics = [] {
-      auto meter =
+    static ReadLatencyMetrics const metrics = [] {
+      opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter> meter =
           opentelemetry::metrics::Provider::GetMeterProvider()->GetMeter(
               "google-cloud-cpp", version::version_string());
       return ReadLatencyMetrics{
@@ -76,21 +76,25 @@ void ReaderConnectionTelemetry::RecordRead(
     storage::ReadPayload const& payload,
     std::chrono::steady_clock::time_point t7, std::string const& bucket_name,
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
-    absl::string_view event_name) const {
-  auto t4 = ReadPayloadImpl::GetT4(payload);
-  auto t5 = ReadPayloadImpl::GetT5(payload);
-  auto t6 = ReadPayloadImpl::GetT6(payload);
+    std::string_view event_name) const {
+  std::chrono::steady_clock::time_point t4 = ReadPayloadImpl::GetT4(payload);
+  std::chrono::steady_clock::time_point t5 = ReadPayloadImpl::GetT5(payload);
+  std::chrono::steady_clock::time_point t6 = ReadPayloadImpl::GetT6(payload);
 
-  if (t4.time_since_epoch().count() > 0 && t5.time_since_epoch().count() > 0 &&
-      t6.time_since_epoch().count() > 0) {
-    auto p1 = std::chrono::duration<double, std::micro>(t5 - t4).count();
-    auto p2 = std::chrono::duration<double, std::micro>(t6 - t5).count();
-    auto p3 = std::chrono::duration<double, std::micro>(t7 - t6).count();
+  if (t4 != std::chrono::steady_clock::time_point{} &&
+      t5 != std::chrono::steady_clock::time_point{} &&
+      t6 != std::chrono::steady_clock::time_point{}) {
+    double p1 = std::chrono::duration<double, std::micro>(t5 - t4).count();
+    double p2 = std::chrono::duration<double, std::micro>(t6 - t5).count();
+    double p3 = std::chrono::duration<double, std::micro>(t7 - t6).count();
 
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS
     RecordMetrics(bucket_name, p1, p2, p3);
 #else
     (void)bucket_name;
+    (void)p1;
+    (void)p2;
+    (void)p3;
 #endif
 
     if (span && span->GetContext().IsValid()) {

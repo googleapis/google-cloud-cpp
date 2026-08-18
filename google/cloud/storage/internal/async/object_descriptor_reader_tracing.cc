@@ -49,7 +49,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
          oc = opentelemetry::context::RuntimeContext::GetCurrent(),
          bucket_name = bucket_name_,
          metrics = metrics_](auto f) -> ReadResponse {
-          auto result = f.get();
+          ReadResponse result = f.get();
           internal::DetachOTelContext(oc);
           if (auto const* payload =
                   absl::get_if<storage::ReadPayload>(&result)) {

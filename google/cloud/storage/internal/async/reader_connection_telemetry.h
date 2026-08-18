@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_READER_CONNECTION_TELEMETRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_READER_CONNECTION_TELEMETRY_H
 
-#include "google/cloud/storage/internal/async/read_payload_impl.h"
+#include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
-#include "absl/strings/string_view.h"
 #include <chrono>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -35,7 +35,7 @@ class ReaderConnectionTelemetry {
       storage::ReadPayload const& payload,
       std::chrono::steady_clock::time_point t7, std::string const& bucket_name,
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
-      absl::string_view event_name = "gl-cpp.latency.read") const;
+      std::string_view event_name = "gl-cpp.latency.read") const;
 
  private:
 #ifdef GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS

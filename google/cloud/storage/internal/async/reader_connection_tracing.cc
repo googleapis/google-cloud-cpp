@@ -55,7 +55,7 @@ class AsyncReaderConnectionTracing : public storage::AsyncReaderConnection {
     return impl_->Read()
         .then([count = ++count_, span = span_, bucket_name = bucket_name_,
                metrics = metrics_](auto f) -> ReadResponse {
-          auto r = f.get();
+          ReadResponse r = f.get();
           if (auto const* status = absl::get_if<Status>(&r)) {
             span->AddEvent(
                 "gl-cpp.read",
