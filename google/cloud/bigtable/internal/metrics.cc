@@ -553,9 +553,8 @@ std::vector<std::shared_ptr<Metric>> CloneMetrics(
   v.reserve(metrics.size());
   for (auto const& m : metrics) {
     // We should never add a nullptr Metric to the list.
-    assert(m != nullptr);
-    auto clone = m->clone(resource_labels, data_labels);
-    v.emplace_back(std::move(clone));
+    if (m == nullptr) continue;
+    v.push_back(m->clone(resource_labels, data_labels));
   }
   return v;
 }
