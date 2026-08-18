@@ -79,7 +79,7 @@ TEST(ObjectDescriptorConnectionTracing, Read) {
         return std::make_unique<MockAsyncReaderConnection>();
       });
   auto actual = MakeTracingObjectDescriptorConnection(
-      internal::MakeSpan("test-span-name"), std::move(mock));
+      internal::MakeSpan("test-span-name"), std::move(mock), "test-bucket");
   auto f1 = actual->Read(ObjectDescriptorConnection::ReadParams{100, 200});
 
   actual.reset();
@@ -114,7 +114,8 @@ TEST(ObjectDescriptorConnectionTracing, ReadThenRead) {
       });
 
   auto connection = MakeTracingObjectDescriptorConnection(
-      internal::MakeSpan("test-span"), std::move(mock_connection));
+      internal::MakeSpan("test-span"), std::move(mock_connection),
+      "test-bucket");
 
   auto reader = connection->Read({});
   auto f = reader->Read().then(expect_no_context);

@@ -87,11 +87,11 @@ class ReadRange {
 #if defined(GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS) || \
     defined(GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
   void SetT4(std::chrono::steady_clock::time_point t) {
-    std::unique_lock<std::mutex> lk(self->mu_);
+    std::unique_lock<std::mutex> lk(mu_);
     t4_ = t;
   }
   void SetT5(std::chrono::steady_clock::time_point t) {
-    std::unique_lock<std::mutex> lk(self->mu_);
+    std::unique_lock<std::mutex> lk(mu_);
     t5_ = t;
   }
 #else

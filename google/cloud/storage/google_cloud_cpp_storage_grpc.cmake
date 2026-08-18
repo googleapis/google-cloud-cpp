@@ -137,6 +137,8 @@ add_library(
     internal/async/reader_connection_factory.h
     internal/async/reader_connection_impl.cc
     internal/async/reader_connection_impl.h
+    internal/async/reader_connection_telemetry.cc
+    internal/async/reader_connection_telemetry.h
     internal/async/reader_connection_resume.cc
     internal/async/reader_connection_resume.h
     internal/async/reader_connection_tracing.cc

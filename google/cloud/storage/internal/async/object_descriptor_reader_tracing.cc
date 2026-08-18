@@ -15,9 +15,11 @@
 #include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader.h"
+#include "google/cloud/storage/internal/async/reader_connection_telemetry.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
 #include <opentelemetry/semconv/incubating/thread_attributes.h>
+#include <chrono>
 #include <memory>
 
 namespace google {
@@ -31,8 +33,11 @@ namespace sc = ::opentelemetry::semconv;
 
 class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
  public:
-  explicit ObjectDescriptorReaderTracing(std::shared_ptr<ReadRange> impl)
-      : ObjectDescriptorReader(std::move(impl)) {}
+  explicit ObjectDescriptorReaderTracing(std::shared_ptr<ReadRange> impl,
+                                         std::string bucket_name)
+      : ObjectDescriptorReader(std::move(impl)),
+        bucket_name_(
+            std::make_shared<std::string const>(std::move(bucket_name))) {}
 
   ~ObjectDescriptorReaderTracing() override = default;
 
@@ -41,18 +46,21 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
     internal::OTelScope scope(span);
     return ObjectDescriptorReader::Read().then(
         [span = std::move(span),
-         oc = opentelemetry::context::RuntimeContext::GetCurrent()](
-            auto f) -> ReadResponse {
-          auto result = f.get();
+         oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+         bucket_name = bucket_name_,
+         metrics = metrics_](auto f) -> ReadResponse {
+          ReadResponse result = f.get();
           internal::DetachOTelContext(oc);
-          if (!absl::holds_alternative<Status>(result)) {
-            auto const& payload = absl::get<storage::ReadPayload>(result);
-
+          if (auto const* payload =
+                  absl::get_if<storage::ReadPayload>(&result)) {
             span->AddEvent(
                 "gl-cpp.read-range",
                 {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
                  {sc::thread::kThreadId, internal::CurrentThreadId()},
-                 {"message.size", static_cast<std::uint32_t>(payload.size())}});
+                 {"message.size",
+                  static_cast<std::uint32_t>(payload->size())}});
+            metrics.RecordRead(*payload, std::chrono::steady_clock::now(),
+                               *bucket_name, span, "gl-cpp.latency.read-range");
           } else {
             span->AddEvent(
                 "gl-cpp.read-range",
@@ -64,13 +72,19 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
           return result;
         });
   }
+
+ private:
+  std::shared_ptr<std::string const> bucket_name_;
+  ReaderConnectionTelemetry metrics_;
 };
 
 }  // namespace
 
 std::unique_ptr<storage::AsyncReaderConnection>
-MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl) {
-  return std::make_unique<ObjectDescriptorReaderTracing>(std::move(impl));
+MakeTracingObjectDescriptorReader(std::shared_ptr<ReadRange> impl,
+                                  std::string bucket_name) {
+  return std::make_unique<ObjectDescriptorReaderTracing>(
+      std::move(impl), std::move(bucket_name));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
