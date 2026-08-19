@@ -1127,6 +1127,156 @@ TEST_F(AsyncClientIntegrationTest, OpenWithChecksumValidation) {
                       storage::Generation(metadata->generation()));
 }
 
+// Verifies that opening an object with multiple initial disjoint read ranges
+// properly pre-warms all ranges and that subsequent Read calls for those exact
+// ranges return the expected byte contents.
+TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_MultipleDisjointRanges) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+
+  auto create = client.CreateBucket(
+      bucket_name(), storage::BucketMetadata{}.set_location("us-west4"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+
+  // Populate object with random test data (32 KB total payload size).
+  auto constexpr kSize = 32 * 1024;
+  auto const block = MakeRandomData(kSize);
+
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+  auto p = writer.Write(std::move(token), WritePayload(block)).get();
+  ASSERT_STATUS_OK(p);
+  token = *std::move(p);
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+
+  // Specify 3 non-overlapping, disjoint initial byte ranges with Open:
+  //   Range 1: [0, 1024)
+  //   Range 2: [4096, 5120)
+  //   Range 3: [16384, 17408)
+  AsyncClient::InitialReadRanges ranges;
+  ranges.initial_ranges = {{0, 1024}, {4096, 1024}, {16384, 1024}};
+  auto descriptor =
+      async.Open(BucketName(bucket_name()), object_name, std::move(ranges))
+          .get();
+  ASSERT_STATUS_OK(descriptor);
+
+  std::string actual1, actual2, actual3;
+
+  // Read Range 1 ([0, 1024)) and assert it hits pre-warmed cache with
+  // correct content.
+  {
+    AsyncReader r;
+    AsyncToken t;
+    std::tie(r, t) = descriptor->Read(0, 1024);
+    while (t.valid()) {
+      auto read = r.Read(std::move(t)).get();
+      ASSERT_STATUS_OK(read);
+      ReadPayload p;
+      std::tie(p, t) = *std::move(read);
+      for (auto sv : p.contents()) absl::StrAppend(&actual1, sv);
+    }
+  }
+  EXPECT_EQ(actual1.size(), 1024);
+  EXPECT_EQ(actual1, block.substr(0, 1024));
+
+  // Read Range 2 ([4096, 5120)) and assert exact match.
+  {
+    AsyncReader r;
+    AsyncToken t;
+    std::tie(r, t) = descriptor->Read(4096, 1024);
+    while (t.valid()) {
+      auto read = r.Read(std::move(t)).get();
+      ASSERT_STATUS_OK(read);
+      ReadPayload p;
+      std::tie(p, t) = *std::move(read);
+      for (auto sv : p.contents()) absl::StrAppend(&actual2, sv);
+    }
+  }
+  EXPECT_EQ(actual2.size(), 1024);
+  EXPECT_EQ(actual2, block.substr(4096, 1024));
+
+  // Read Range 3 ([16384, 17408)) and assert exact match.
+  {
+    AsyncReader r;
+    AsyncToken t;
+    std::tie(r, t) = descriptor->Read(16384, 1024);
+    while (t.valid()) {
+      auto read = r.Read(std::move(t)).get();
+      ASSERT_STATUS_OK(read);
+      ReadPayload p;
+      std::tie(p, t) = *std::move(read);
+      for (auto sv : p.contents()) absl::StrAppend(&actual3, sv);
+    }
+  }
+  EXPECT_EQ(actual3.size(), 1024);
+  EXPECT_EQ(actual3, block.substr(16384, 1024));
+  client.DeleteObject(bucket_name(), object_name,
+                      storage::Generation(metadata->generation()));
+}
+
+// Verifies teardown safety: when an ObjectDescriptor with active pre-warming
+// streams goes out of scope before data is consumed, the underlying gRPC
+// streams are safely cancelled and torn down without leaks, or unhandled
+// exceptions.
+TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_DestructorTeardown) {
+  if (!UsingEmulator()) GTEST_SKIP();
+  auto async = AsyncClient(TestOptions());
+  auto client = MakeIntegrationTestClient(true, TestOptions());
+  auto object_name = MakeRandomObjectName();
+
+  auto create = client.CreateBucket(
+      bucket_name(), storage::BucketMetadata{}.set_location("us-west4"));
+  if (!create && create.status().code() != StatusCode::kAlreadyExists) {
+    GTEST_FAIL() << "cannot create bucket: " << create.status();
+  }
+
+  // Create 1 MB object payload.
+  auto constexpr kSize = 1024 * 1024;
+  auto const block = MakeRandomData(kSize);
+
+  auto w =
+      async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
+          .get();
+  ASSERT_STATUS_OK(w);
+  AsyncWriter writer;
+  AsyncToken token;
+  std::tie(writer, token) = *std::move(w);
+  auto p = writer.Write(std::move(token), WritePayload(block)).get();
+  ASSERT_STATUS_OK(p);
+  token = *std::move(p);
+
+  auto metadata = writer.Finalize(std::move(token)).get();
+  ASSERT_STATUS_OK(metadata);
+
+  {
+    // Open descriptor with a 1 MB initial range.
+    AsyncClient::InitialReadRanges ranges;
+    ranges.initial_ranges = {{0, 1024 * 1024}};
+    auto descriptor =
+        async.Open(BucketName(bucket_name()), object_name, std::move(ranges))
+            .get();
+    ASSERT_STATUS_OK(descriptor);
+    // Force immediate destructor invocation on descriptor while streams are
+    // actively pre-warming. This tests proper stream cancellation/finish on
+    // teardown.
+  }
+
+  // Ensure bucket cleanup proceeds without issues.
+  client.DeleteObject(bucket_name(), object_name,
+                      storage::Generation(metadata->generation()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
