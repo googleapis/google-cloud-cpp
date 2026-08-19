@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/operation_context.h"
-#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -120,9 +120,8 @@ TEST_F(OperationContextTest, Retries) {
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-class MockMetric : public Metric {
+class MockMetric : public TableSchemaMetric {
  public:
-  MetricSchema schema() const override { return MetricSchema::kTable; }
   MOCK_METHOD(void, PreCall,
               (opentelemetry::context::Context const&, PreCallParams const&),
               (override));
@@ -141,6 +140,9 @@ class MockMetric : public Metric {
               (opentelemetry::context::Context const&,
                ElementDeliveryParams const&),
               (override));
+  MOCK_METHOD((std::unique_ptr<TableSchemaMetric>), clone,
+              (TableResourceLabels const&, TableDataLabels const&),
+              (const, override));
 };
 
 TEST(OperationContextMetricTest, MetricPreCall) {

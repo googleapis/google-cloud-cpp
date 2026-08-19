@@ -29,6 +29,7 @@
 #include <algorithm>
 #include <map>
 #include <set>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -127,7 +128,7 @@ std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
   auto iter_init = init_metadata.find("bigtable-peer-info");
   if (iter_init == init_metadata.end() ||
       !absl::WebSafeBase64Unescape(
-          absl::string_view{iter_init->second.data(), iter_init->second.size()},
+          std::string_view{iter_init->second.data(), iter_init->second.size()},
           &decoded)) {
     // Find it in trailing metadata if not found in initial metadata or failed
     // to decode.
@@ -135,8 +136,8 @@ std::optional<google::bigtable::v2::PeerInfo> GetPeerInfoFromServerMetadata(
     auto iter_trailing = trailing_metadata.find("bigtable-peer-info");
     if (iter_trailing == trailing_metadata.end() ||
         !absl::WebSafeBase64Unescape(
-            absl::string_view{iter_trailing->second.data(),
-                              iter_trailing->second.size()},
+            std::string_view{iter_trailing->second.data(),
+                             iter_trailing->second.size()},
             &decoded)) {
       return std::nullopt;
     }
@@ -154,20 +155,20 @@ std::optional<double> GetServerLatencyFromInitialMetadata(
     return std::nullopt;
   }
 
-  absl::string_view value(it->second.data(), it->second.length());
+  std::string_view value(it->second.data(), it->second.length());
 
-  for (absl::string_view entry : absl::StrSplit(value, ',')) {
+  for (std::string_view entry : absl::StrSplit(value, ',')) {
     entry = absl::StripAsciiWhitespace(entry);
-    std::vector<absl::string_view> parts = absl::StrSplit(entry, ';');
+    std::vector<std::string_view> parts = absl::StrSplit(entry, ';');
     if (parts.empty()) {
       continue;
     }
 
-    absl::string_view metric_name = absl::StripAsciiWhitespace(parts[0]);
+    std::string_view metric_name = absl::StripAsciiWhitespace(parts[0]);
     if (metric_name == "gfet4t7") {
       // Look for the "dur" parameter within its parts.
       for (size_t i = 1; i < parts.size(); ++i) {
-        absl::string_view param = absl::StripAsciiWhitespace(parts[i]);
+        std::string_view param = absl::StripAsciiWhitespace(parts[i]);
         if (absl::ConsumePrefix(&param, "dur=")) {
           double dur_value;
           auto result = absl::from_chars(
@@ -191,8 +192,8 @@ OperationLatency::OperationLatency(
     : operation_latencies_(provider
                                ->GetMeter(instrumentation_scope,
                                           kMeterInstrumentationScopeVersion)
-                               ->CreateDoubleHistogram("operation_latencies")
-                               .release()) {}
+                               ->CreateDoubleHistogram("operation_latencies")) {
+}
 
 void OperationLatency::PreCall(opentelemetry::context::Context const&,
                                PreCallParams const& p) {
@@ -237,8 +238,7 @@ AttemptLatency::AttemptLatency(
     : attempt_latencies_(provider
                              ->GetMeter(instrumentation_scope,
                                         kMeterInstrumentationScopeVersion)
-                             ->CreateDoubleHistogram("attempt_latencies")
-                             .release()) {}
+                             ->CreateDoubleHistogram("attempt_latencies")) {}
 
 void AttemptLatency::PreCall(opentelemetry::context::Context const&,
                              PreCallParams const& p) {
@@ -289,13 +289,15 @@ void AttemptLatency2::PostCall(opentelemetry::context::Context const& context,
                                grpc::ClientContext const& client_context,
                                PostCallParams const& p) {
   data_labels_.status = StatusCodeToString(p.attempt_status.code());
-  auto response_params = GetResponseParamsFromTrailingMetadata(client_context);
+  std::optional<google::bigtable::v2::ResponseParams> response_params =
+      GetResponseParamsFromTrailingMetadata(client_context);
   if (response_params) {
     resource_labels_.cluster = response_params->cluster_id();
     resource_labels_.zone = response_params->zone_id();
   }
 
-  auto peer_info = GetPeerInfoFromServerMetadata(client_context);
+  std::optional<google::bigtable::v2::PeerInfo> peer_info =
+      GetPeerInfoFromServerMetadata(client_context);
   if (peer_info) {
     peer_info_labels_.transport_type = absl::AsciiStrToLower(
         google::bigtable::v2::PeerInfo::TransportType_Name(
@@ -304,6 +306,12 @@ void AttemptLatency2::PostCall(opentelemetry::context::Context const& context,
         absl::AsciiStrToLower(peer_info->application_frontend_region());
     peer_info_labels_.transport_subzone =
         absl::AsciiStrToLower(peer_info->application_frontend_subzone());
+  } else {
+    peer_info_labels_.transport_type = absl::AsciiStrToLower(
+        google::bigtable::v2::PeerInfo::TransportType_Name(
+            google::bigtable::v2::PeerInfo::TRANSPORT_TYPE_UNKNOWN));
+    peer_info_labels_.transport_region.clear();
+    peer_info_labels_.transport_subzone.clear();
   }
 
   auto attempt_elapsed = std::chrono::duration_cast<LatencyDuration>(
@@ -327,13 +335,13 @@ RetryCount::RetryCount(
     std::string const& instrumentation_scope,
     opentelemetry::nostd::shared_ptr<
         opentelemetry::metrics::MeterProvider> const& provider)
-    : retry_count_(provider
-                       ->GetMeter(instrumentation_scope,
-                                  kMeterInstrumentationScopeVersion)
-                       ->CreateUInt64Counter(
-                           "retry_count",
-                           "The number of additional RPCs sent by the client.")
-                       .release()) {}
+    : retry_count_(
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateUInt64Counter(
+                  "retry_count",
+                  "The number of additional RPCs sent by the client.")) {}
 
 void RetryCount::PreCall(opentelemetry::context::Context const&,
                          PreCallParams const& p) {
@@ -518,8 +526,7 @@ ConnectivityErrorCount::ConnectivityErrorCount(
           provider
               ->GetMeter(instrumentation_scope,
                          kMeterInstrumentationScopeVersion)
-              ->CreateUInt64Counter("connectivity_error_count")
-              .release()) {}
+              ->CreateUInt64Counter("connectivity_error_count")) {}
 
 void ConnectivityErrorCount::PostCall(opentelemetry::context::Context const&,
                                       grpc::ClientContext const& client_context,
