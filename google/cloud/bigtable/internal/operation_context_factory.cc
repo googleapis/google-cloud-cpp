@@ -300,8 +300,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
                                  app_profile,
                                  "" /*=status*/};
 
-  return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                            read_row_metrics_.metrics, clock_);
+  return std::make_shared<OperationContext>(
+      CloneMetrics(resource_labels, data_labels, read_row_metrics_.metrics),
+      clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
@@ -329,8 +330,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
                                  app_profile,
                                  "" /*=status*/};
 
-  return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                            read_rows_metrics_.metrics, clock_);
+  return std::make_shared<OperationContext>(
+      CloneMetrics(resource_labels, data_labels, read_rows_metrics_.metrics),
+      clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
@@ -358,7 +360,8 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, mutate_row_metrics_.metrics, clock_);
+      CloneMetrics(resource_labels, data_labels, mutate_row_metrics_.metrics),
+      clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
@@ -386,7 +389,8 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, mutate_rows_metrics_.metrics, clock_);
+      CloneMetrics(resource_labels, data_labels, mutate_rows_metrics_.metrics),
+      clock_);
 }
 
 std::shared_ptr<OperationContext>
@@ -415,7 +419,8 @@ MetricsOperationContextFactory::CheckAndMutateRow(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, check_and_mutate_row_metrics_.metrics,
+      CloneMetrics(resource_labels, data_labels,
+                   check_and_mutate_row_metrics_.metrics),
       clock_);
 }
 
@@ -444,7 +449,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, sample_row_keys_metrics_.metrics, clock_);
+      CloneMetrics(resource_labels, data_labels,
+                   sample_row_keys_metrics_.metrics),
+      clock_);
 }
 
 std::shared_ptr<OperationContext>
@@ -473,7 +480,8 @@ MetricsOperationContextFactory::ReadModifyWriteRow(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, read_modify_write_row_metrics_.metrics,
+      CloneMetrics(resource_labels, data_labels,
+                   read_modify_write_row_metrics_.metrics),
       clock_);
 }
 
@@ -500,7 +508,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::PrepareQuery(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, prepare_query_metrics_.metrics, clock_);
+      CloneMetrics(resource_labels, data_labels,
+                   prepare_query_metrics_.metrics),
+      clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
@@ -529,7 +539,9 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
                                  "" /*=status*/};
 
   return std::make_shared<OperationContext>(
-      resource_labels, data_labels, execute_query_metrics_.metrics, clock_);
+      CloneMetrics(resource_labels, data_labels,
+                   execute_query_metrics_.metrics),
+      clock_);
 }
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

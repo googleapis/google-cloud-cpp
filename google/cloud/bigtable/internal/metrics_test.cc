@@ -38,6 +38,7 @@ using ::google::cloud::testing_util::SetServerMetadata;
 using ::testing::A;
 using ::testing::Eq;
 using ::testing::Pair;
+using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
 
 using ::opentelemetry::metrics::Counter;
@@ -2080,7 +2081,6 @@ TEST(ConnectivityErrorCount, MissingResourceLabels) {
   auto clone = connectivity_error_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
-  google::bigtable::v2::ResponseParams response_params;
   RpcMetadata server_metadata;
   server_metadata.headers.emplace("server-timing", "gfet4t7; dur=15");
   SetServerMetadata(client_context, server_metadata);
@@ -2480,6 +2480,28 @@ TEST(ApplicationBlockingLatency, StreamingData) {
   clone->PostCall(otel_context, client_context, {clock->Now(), Status{}});
   clone->OnDone(otel_context, {clock->Now(), Status{}});
 }
+
+class FakeTableMetric : public Metric {
+ public:
+  std::unique_ptr<Metric> clone(TableResourceLabels const&,
+                                TableDataLabels const&) const override {
+    return std::make_unique<FakeTableMetric>(*this);
+  }
+};
+
+TEST(MetricsTest, CloneMetrics) {
+  auto table_metric = std::make_shared<FakeTableMetric>();
+
+  TableResourceLabels resource_labels{"project", "instance", "table", "cluster",
+                                      "zone"};
+  TableDataLabels data_labels{"method", "streaming", "client",
+                              "uid",    "profile",   "status"};
+
+  std::vector<std::shared_ptr<Metric const>> metrics = {table_metric};
+  auto cloned = CloneMetrics(resource_labels, data_labels, metrics);
+  EXPECT_THAT(cloned, SizeIs(1));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

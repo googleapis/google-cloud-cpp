@@ -25,22 +25,6 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-namespace {
-std::vector<std::shared_ptr<Metric>> CloneMetrics(
-    TableResourceLabels const& resource_labels,
-    TableDataLabels const& data_labels,
-    std::vector<std::shared_ptr<Metric const>> const& metrics) {
-  std::vector<std::shared_ptr<Metric>> v;
-  v.reserve(metrics.size());
-  for (auto const& m : metrics) {
-    v.emplace_back(m->clone(resource_labels, data_labels));
-  }
-  return v;
-}
-}  // namespace
-#endif
-
 void OperationContext::ProcessMetadata(
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
   for (auto const& kv : metadata) {
@@ -54,13 +38,9 @@ void OperationContext::ProcessMetadata(
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-OperationContext::OperationContext(
-    TableResourceLabels const& resource_labels,
-    TableDataLabels const& data_labels,
-    std::vector<std::shared_ptr<Metric const>> const& metrics,
-    std::shared_ptr<Clock> clock)
-    : cloned_metrics_(CloneMetrics(resource_labels, data_labels, metrics)),
-      clock_(std::move(clock)) {}
+OperationContext::OperationContext(std::vector<std::shared_ptr<Metric>> metrics,
+                                   std::shared_ptr<Clock> clock)
+    : cloned_metrics_(std::move(metrics)), clock_(std::move(clock)) {}
 
 void OperationContext::PreCall(grpc::ClientContext& client_context) {
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
@@ -122,10 +102,8 @@ void OperationContext::ElementDelivery(grpc::ClientContext const&) {
 
 #else  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-OperationContext::OperationContext(
-    TableResourceLabels const&, TableDataLabels const&,
-    std::vector<std::shared_ptr<Metric const>> const&, std::shared_ptr<Clock>) {
-}
+OperationContext::OperationContext(std::vector<std::shared_ptr<Metric>>,
+                                   std::shared_ptr<Clock>) {}
 
 void OperationContext::PreCall(grpc::ClientContext& client_context) {
   for (auto const& h : cookies_) {

@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/crc32c.h"
 #include "google/cloud/bigtable/internal/defaults.h"
-#include "google/cloud/bigtable/internal/grpc_metrics_exporter.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/internal/query_plan.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
@@ -443,8 +443,8 @@ class FakeOperationContextFactory : public OperationContextFactory {
                                            std::string const& app_profile) {
     resource_labels_.table = name;
     data_labels_.app_profile = app_profile;
-    return std::make_shared<OperationContext>(resource_labels_, data_labels_,
-                                              metrics_, clock_);
+    return std::make_shared<OperationContext>(
+        CloneMetrics(resource_labels_, data_labels_, metrics_), clock_);
   }
 
   TableResourceLabels resource_labels_;
@@ -3437,17 +3437,17 @@ TEST_F(DataConnectionTest, PrepareAndExecuteQuerySuccessWithQueryPlanRefresh) {
         std::vector<std::shared_ptr<Metric const>> metrics;
         metrics.push_back(std::make_shared<CloningMetric>(
             std::move(mock_metric_prepared_query_initial)));
-        return std::make_shared<OperationContext>(TableResourceLabels{},
-                                                  TableDataLabels{},
-                                                  std::move(metrics), clock);
+        return std::make_shared<OperationContext>(
+            CloneMetrics(TableResourceLabels{}, TableDataLabels{}, metrics),
+            clock);
       })
       .WillOnce([&](auto const&, auto const&) {
         std::vector<std::shared_ptr<Metric const>> metrics;
         metrics.push_back(std::make_shared<CloningMetric>(
             std::move(mock_metric_prepared_query_refresh)));
-        return std::make_shared<OperationContext>(TableResourceLabels{},
-                                                  TableDataLabels{},
-                                                  std::move(metrics), clock);
+        return std::make_shared<OperationContext>(
+            CloneMetrics(TableResourceLabels{}, TableDataLabels{}, metrics),
+            clock);
       });
 
   auto mock_metric_execute_query = std::make_unique<MockMetric>();
@@ -3462,7 +3462,7 @@ TEST_F(DataConnectionTest, PrepareAndExecuteQuerySuccessWithQueryPlanRefresh) {
     metrics.push_back(
         std::make_shared<CloningMetric>(std::move(mock_metric_execute_query)));
     return std::make_shared<OperationContext>(
-        TableResourceLabels{}, TableDataLabels{}, std::move(metrics), clock);
+        CloneMetrics(TableResourceLabels{}, TableDataLabels{}, metrics), clock);
   });
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();
@@ -3607,17 +3607,17 @@ TEST_F(DataConnectionTest,
         std::vector<std::shared_ptr<Metric const>> metrics;
         metrics.push_back(std::make_shared<CloningMetric>(
             std::move(mock_metric_prepared_query_initial)));
-        return std::make_shared<OperationContext>(TableResourceLabels{},
-                                                  TableDataLabels{},
-                                                  std::move(metrics), clock);
+        return std::make_shared<OperationContext>(
+            CloneMetrics(TableResourceLabels{}, TableDataLabels{}, metrics),
+            clock);
       })
       .WillOnce([&](auto const&, auto const&) {
         std::vector<std::shared_ptr<Metric const>> metrics;
         metrics.push_back(std::make_shared<CloningMetric>(
             std::move(mock_metric_prepared_query_refresh)));
-        return std::make_shared<OperationContext>(TableResourceLabels{},
-                                                  TableDataLabels{},
-                                                  std::move(metrics), clock);
+        return std::make_shared<OperationContext>(
+            CloneMetrics(TableResourceLabels{}, TableDataLabels{}, metrics),
+            clock);
       });
 
   auto mock_metric_execute_query = std::make_unique<MockMetric>();
@@ -3632,7 +3632,7 @@ TEST_F(DataConnectionTest,
     metrics.push_back(
         std::make_shared<CloningMetric>(std::move(mock_metric_execute_query)));
     return std::make_shared<OperationContext>(
-        TableResourceLabels{}, TableDataLabels{}, std::move(metrics), clock);
+        CloneMetrics(TableResourceLabels{}, TableDataLabels{}, metrics), clock);
   });
 #else
   auto factory = std::make_unique<SimpleOperationContextFactory>();

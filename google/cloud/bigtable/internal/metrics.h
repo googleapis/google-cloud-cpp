@@ -123,6 +123,11 @@ class Metric {
                                         TableDataLabels const&) const = 0;
 };
 
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics);
+
 class OperationLatency : public Metric {
  public:
   explicit OperationLatency(
