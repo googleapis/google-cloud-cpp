@@ -1136,7 +1136,7 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_MultipleDisjointRanges) {
   auto client = MakeIntegrationTestClient(true, TestOptions());
   auto object_name = MakeRandomObjectName();
 
-  auto create = client.CreateBucket(
+  StatusOr<storage::BucketMetadata> create = client.CreateBucket(
       bucket_name(), storage::BucketMetadata{}.set_location("us-west4"));
   if (!create && create.status().code() != StatusCode::kAlreadyExists) {
     GTEST_FAIL() << "cannot create bucket: " << create.status();
@@ -1146,14 +1146,15 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_MultipleDisjointRanges) {
   auto constexpr kSize = 32 * 1024;
   auto const block = MakeRandomData(kSize);
 
-  auto w =
+  StatusOr<std::pair<AsyncWriter, AsyncToken>> w =
       async.StartAppendableObjectUpload(BucketName(bucket_name()), object_name)
           .get();
   ASSERT_STATUS_OK(w);
   AsyncWriter writer;
   AsyncToken token;
   std::tie(writer, token) = *std::move(w);
-  auto p = writer.Write(std::move(token), WritePayload(block)).get();
+  StatusOr<AsyncToken> p =
+      writer.Write(std::move(token), WritePayload(block)).get();
   ASSERT_STATUS_OK(p);
   token = *std::move(p);
 
@@ -1184,7 +1185,7 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_MultipleDisjointRanges) {
       ASSERT_STATUS_OK(read);
       ReadPayload p;
       std::tie(p, t) = *std::move(read);
-      for (auto sv : p.contents()) absl::StrAppend(&actual1, sv);
+      for (std::string_view sv : p.contents()) absl::StrAppend(&actual1, sv);
     }
   }
   EXPECT_EQ(actual1.size(), 1024);
@@ -1200,7 +1201,7 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_MultipleDisjointRanges) {
       ASSERT_STATUS_OK(read);
       ReadPayload p;
       std::tie(p, t) = *std::move(read);
-      for (auto sv : p.contents()) absl::StrAppend(&actual2, sv);
+      for (std::string_view sv : p.contents()) absl::StrAppend(&actual2, sv);
     }
   }
   EXPECT_EQ(actual2.size(), 1024);
@@ -1216,7 +1217,7 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_MultipleDisjointRanges) {
       ASSERT_STATUS_OK(read);
       ReadPayload p;
       std::tie(p, t) = *std::move(read);
-      for (auto sv : p.contents()) absl::StrAppend(&actual3, sv);
+      for (std::string_view sv : p.contents()) absl::StrAppend(&actual3, sv);
     }
   }
   EXPECT_EQ(actual3.size(), 1024);

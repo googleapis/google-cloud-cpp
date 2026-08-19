@@ -2327,12 +2327,12 @@ TEST(ObjectDescriptorImpl, PrewarmedCacheHit) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2374,7 +2374,7 @@ TEST(ObjectDescriptorImpl, PrewarmedCacheHit) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{"Pre-warmed data"}))));
+                  ElementsAre(std::string_view{"Pre-warmed data"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
 
@@ -2426,12 +2426,12 @@ TEST(ObjectDescriptorImpl, PrewarmedCacheMiss) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2477,7 +2477,7 @@ TEST(ObjectDescriptorImpl, PrewarmedCacheMiss) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{"Missed range data"}))));
+                  ElementsAre(std::string_view{"Missed range data"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
 
@@ -2530,12 +2530,12 @@ TEST(ObjectDescriptorImpl, PrewarmedPacingEviction) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2611,12 +2611,12 @@ TEST(ObjectDescriptorImpl, InitialReadRanges_ExactRangeCacheHit) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2657,7 +2657,7 @@ TEST(ObjectDescriptorImpl, InitialReadRanges_ExactRangeCacheHit) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{"Exact hit data"}))));
+                  ElementsAre(std::string_view{"Exact hit data"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
 
@@ -2709,12 +2709,12 @@ TEST(ObjectDescriptorImpl, InitialReadRanges_SubRangeCacheMiss) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2759,7 +2759,7 @@ TEST(ObjectDescriptorImpl, InitialReadRanges_SubRangeCacheMiss) {
               VariantWith<storage::ReadPayload>(ResultOf(
                   "contents are",
                   [](storage::ReadPayload const& p) { return p.contents(); },
-                  ElementsAre(absl::string_view{"Sub range data"}))));
+                  ElementsAre(std::string_view{"Sub range data"}))));
 
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(IsOk()));
 
@@ -2812,12 +2812,12 @@ TEST(ObjectDescriptorImpl, PreWarmBufferLimit_EvictionTombstone) {
         return sequencer.PushBack("Read[1]").then([&](auto) {
           auto response = Response{};
           EXPECT_TRUE(TextFormat::ParseFromString(kResponse1, &response));
-          return absl::make_optional(response);
+          return std::make_optional(response);
         });
       })
       .WillOnce([&sequencer]() {
         return sequencer.PushBack("Read[2]").then(
-            [](auto) { return absl::optional<Response>{}; });
+            [](auto) { return std::optional<Response>{}; });
       });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
@@ -2884,7 +2884,7 @@ TEST(ObjectDescriptorImpl, DuplicateInitialRanges_Deduplication) {
 
   EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
     return sequencer.PushBack("Read[1]").then(
-        [](auto) { return absl::optional<Response>{}; });
+        [](auto) { return std::optional<Response>{}; });
   });
   EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
     return sequencer.PushBack("Finish").then(
