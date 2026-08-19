@@ -249,6 +249,24 @@ TEST(PopulateCommonOptions, OpenTelemetryTracing) {
   }
 }
 
+TEST(PopulateCommonOptions, OpenTelemetryMetrics) {
+  struct TestCase {
+    std::optional<std::string> env;
+    bool value;
+  };
+  std::vector<TestCase> tests = {
+      {std::nullopt, false},
+      {"", false},
+      {"ON", true},
+  };
+  auto const input = Options{}.set<OpenTelemetryMetricsOption>(false);
+  for (auto const& test : tests) {
+    ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS", test.env);
+    auto options = PopulateCommonOptions(input, {}, {}, {}, {});
+    EXPECT_EQ(options.get<OpenTelemetryMetricsOption>(), test.value);
+  }
+}
+
 TEST(DefaultTracingComponents, NoEnvironment) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", std::nullopt);
   auto const actual = DefaultTracingComponents();
@@ -297,6 +315,12 @@ TEST(MakeAuthOptions, WithTracing) {
   auto auth_options = MakeAuthOptions(options);
   EXPECT_FALSE(auth_options.has<EndpointOption>());
   EXPECT_TRUE(auth_options.get<OpenTelemetryTracingOption>());
+}
+
+TEST(MakeAuthOptions, WithMetrics) {
+  auto options = Options{}.set<OpenTelemetryMetricsOption>(true);
+  auto auth_options = MakeAuthOptions(options);
+  EXPECT_TRUE(auth_options.get<OpenTelemetryMetricsOption>());
 }
 
 TEST(MakeAuthOptions, WithoutLoggingComponents) {

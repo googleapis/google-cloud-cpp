@@ -22,6 +22,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_options.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include <chrono>
 #include <cstdint>
@@ -63,6 +64,19 @@ struct HttpVersionOption {
  * @ingroup storage-options
  */
 struct OTelSpanEnrichmentOption {
+  using Type = bool;
+};
+
+/**
+ * Enable/disable OpenTelemetry metrics collection for Storage.
+ *
+ * @par Environment variable
+ * This option is controlled by the `GCP_STORAGE_CPP_ENABLE_OTEL_METRICS` or
+ * `GOOGLE_CLOUD_CPP_OPENTELEMETRY_METRICS` environment variable.
+ *
+ * @ingroup storage-options
+ */
+struct EnableOTelMetricsOption {
   using Type = bool;
 };
 
@@ -392,7 +406,9 @@ using ClientOptionList = ::google::cloud::OptionList<
     IdempotencyPolicyOption, CARootsFilePathOption,
     UploadChecksumValidationOption, DownloadChecksumValidationOption,
     PrecomputedChecksumsOption, storage_experimental::HttpVersionOption,
-    storage_experimental::OTelSpanEnrichmentOption>;
+    storage_experimental::OTelSpanEnrichmentOption,
+    storage_experimental::EnableOTelMetricsOption, OpenTelemetryTracingOption,
+    OpenTelemetryMetricsOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
