@@ -36,11 +36,6 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-enum class TransportType {
-  kCloudPath,
-  kDirectPath,
-};
-
 //
 // This class manages a pool of Stubs wrapped in a ChannelUsage object, and
 // selects one for use using a "Random Two Least Used" strategy.
@@ -71,12 +66,11 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy,
-      TransportType transport_type = TransportType::kCloudPath) {
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy) {
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(instance_name), std::move(cq), std::move(initial_channels),
         std::move(refresh_state), std::move(stub_factory_fn),
-        std::move(sizing_policy), transport_type));
+        std::move(sizing_policy)));
     return pool;
   }
 
@@ -110,8 +104,6 @@ class DynamicChannelPool
       const {
     return sizing_policy_;
   }
-
-  TransportType transport_type() const { return transport_type_; }
 
   // Calls CheckPoolChannelHealth before picking a channel.
   //
@@ -167,8 +159,8 @@ class DynamicChannelPool
       channels_.push_back(stub_factory_fn_(next_channel_id_++, instance_name_,
                                            StubManager::Priming::kNoPriming)
                               .value());
-      auto sor = channels_.front()->instant_outstanding_rpcs();
-      return SelectedChannel<T>{channels_.front(), sor ? *sor : 0};
+      StatusOr<int> rpcs = channels_.front()->instant_outstanding_rpcs();
+      return SelectedChannel<T>{channels_.front(), rpcs ? *rpcs : 0};
     }
     return HandleBadChannels(lk, d);
   }
@@ -181,16 +173,14 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_wrapped_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy,
-      TransportType transport_type = TransportType::kCloudPath)
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy)
       : instance_name_(std::move(instance_name)),
         cq_(std::move(cq)),
         refresh_state_(std::move(refresh_state)),
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(std::move(initial_wrapped_channels)),
         sizing_policy_(std::move(sizing_policy)),
-        next_channel_id_(static_cast<std::uint32_t>(channels_.size())),
-        transport_type_(transport_type) {
+        next_channel_id_(static_cast<std::uint32_t>(channels_.size())) {
     std::scoped_lock lk(mu_);
     SetSizeDecreaseCooldownTimer(lk);
   }
@@ -268,8 +258,8 @@ class DynamicChannelPool
                               .value());
       std::swap(channels_.front(), channels_.back());
       channel = channels_.front();
-      auto sor = channel->instant_outstanding_rpcs();
-      outstanding_rpcs = sor ? *sor : 0;
+      StatusOr<int> rpcs = channel->instant_outstanding_rpcs();
+      outstanding_rpcs = rpcs ? *rpcs : 0;
     }
     ScheduleRemoveChannels(lk);
     return SelectedChannel<T>{std::move(channel), outstanding_rpcs};
@@ -463,7 +453,6 @@ class DynamicChannelPool
   future<StatusOr<std::chrono::system_clock::time_point>>
       pool_size_decrease_cooldown_timer_;
   std::uint32_t next_channel_id_;
-  TransportType const transport_type_ = TransportType::kCloudPath;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
