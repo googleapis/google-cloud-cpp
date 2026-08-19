@@ -40,6 +40,18 @@ Idempotency LicenseCodesConnectionIdempotencyPolicy::GetLicenseCode(
   return Idempotency::kIdempotent;
 }
 
+Idempotency LicenseCodesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::
+        GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LicenseCodesConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::
+        SetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency LicenseCodesConnectionIdempotencyPolicy::TestIamPermissions(
     google::cloud::cpp::compute::license_codes::v1::
         TestIamPermissionsRequest const&) {

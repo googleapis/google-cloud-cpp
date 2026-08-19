@@ -250,6 +250,10 @@ class TargetTcpProxiesConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetProxyHeader(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

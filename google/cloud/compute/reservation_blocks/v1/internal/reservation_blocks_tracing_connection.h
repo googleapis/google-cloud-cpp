@@ -45,6 +45,10 @@ class ReservationBlocksTracingConnection
       google::cloud::cpp::compute::reservation_blocks::v1::
           GetReservationBlocksGetResponseRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          GetIamPolicyRequest const& request) override;
+
   StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
   ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::
                             ListReservationBlocksRequest request) override;
@@ -60,6 +64,14 @@ class ReservationBlocksTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::reservation_blocks::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>

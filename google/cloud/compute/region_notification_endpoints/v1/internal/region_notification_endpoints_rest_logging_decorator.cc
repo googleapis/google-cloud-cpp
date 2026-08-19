@@ -35,6 +35,23 @@ RegionNotificationEndpointsRestLogging::RegionNotificationEndpointsRestLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
+StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList>
+RegionNotificationEndpointsRestLogging::
+    AggregatedListRegionNotificationEndpoints(
+        rest_internal::RestContext& rest_context, Options const& options,
+        google::cloud::cpp::compute::region_notification_endpoints::v1::
+            AggregatedListRegionNotificationEndpointsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::region_notification_endpoints::v1::
+              AggregatedListRegionNotificationEndpointsRequest const& request) {
+        return child_->AggregatedListRegionNotificationEndpoints(
+            rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestLogging::AsyncDeleteNotificationEndpoint(
     CompletionQueue& cq,
@@ -130,6 +147,20 @@ RegionNotificationEndpointsRestLogging::ListRegionNotificationEndpoints(
                  ListRegionNotificationEndpointsRequest const& request) {
         return child_->ListRegionNotificationEndpoints(rest_context, options,
                                                        request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionNotificationEndpointsRestLogging::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_notification_endpoints::v1::
+                 TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

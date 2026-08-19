@@ -48,6 +48,55 @@ RegionNotificationEndpointsRestConnectionImpl::
           std::move(options),
           RegionNotificationEndpointsConnection::options())) {}
 
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::NotificationEndpointsScopedList>>
+RegionNotificationEndpointsRestConnectionImpl::
+    AggregatedListRegionNotificationEndpoints(
+        google::cloud::cpp::compute::region_notification_endpoints::v1::
+            AggregatedListRegionNotificationEndpointsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListRegionNotificationEndpoints(
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::NotificationEndpointsScopedList>>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_region_notification_endpoints_v1::
+                                   RegionNotificationEndpointsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::cpp::compute::region_notification_endpoints::v1::
+              AggregatedListRegionNotificationEndpointsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                rest_internal::RestContext& rest_context,
+                Options const& options,
+                google::cloud::cpp::compute::region_notification_endpoints::v1::
+                    AggregatedListRegionNotificationEndpointsRequest const&
+                        request) {
+              return stub->AggregatedListRegionNotificationEndpoints(
+                  rest_context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList
+             r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               NotificationEndpointsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -369,6 +418,22 @@ RegionNotificationEndpointsRestConnectionImpl::ListRegionNotificationEndpoints(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionNotificationEndpointsRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_notification_endpoints::v1::
+                 TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(rest_context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -107,6 +107,65 @@ DefaultInstancesRestStub::AddAccessConfig(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultInstancesRestStub::AsyncAddNetworkInterface(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.network_interface_resource(),
+                false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "zones", "/", request.zone(), "/", "instances",
+                             "/", request.instance(), "/",
+                             "addNetworkInterface"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::AddNetworkInterface(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.network_interface_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "addNetworkInterface"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstancesRestStub::AsyncAddResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -329,6 +388,8 @@ DefaultInstancesRestStub::AsyncDeleteInstance(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"no_graceful_shutdown",
+                                (request.no_graceful_shutdown() ? "1" : "0")});
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -360,6 +421,8 @@ DefaultInstancesRestStub::DeleteInstance(
     google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"no_graceful_shutdown", (request.no_graceful_shutdown() ? "1" : "0")});
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -421,6 +484,58 @@ DefaultInstancesRestStub::DeleteAccessConfig(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "deleteAccessConfig"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultInstancesRestStub::AsyncDeleteNetworkInterface(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request, false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "zones", "/", request.zone(), "/", "instances",
+                             "/", request.instance(), "/",
+                             "deleteNetworkInterface"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstancesRestStub::DeleteNetworkInterface(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instances", "/", request.instance(),
+                   "/", "deleteNetworkInterface"),
       std::move(query_params));
 }
 
@@ -2071,6 +2186,8 @@ DefaultInstancesRestStub::AsyncUpdateInstance(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"discard_local_ssd", (request.discard_local_ssd() ? "1" : "0")});
         query_params.push_back({"minimal_action", request.minimal_action()});
         query_params.push_back({"most_disruptive_allowed_action",
                                 request.most_disruptive_allowed_action()});
@@ -2105,6 +2222,8 @@ DefaultInstancesRestStub::UpdateInstance(
     google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"discard_local_ssd", (request.discard_local_ssd() ? "1" : "0")});
   query_params.push_back({"minimal_action", request.minimal_action()});
   query_params.push_back({"most_disruptive_allowed_action",
                           request.most_disruptive_allowed_action()});

@@ -226,6 +226,13 @@ TargetSslProxiesConnection::SetSslPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetSslProxiesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_ssl_proxies_v1
 }  // namespace cloud

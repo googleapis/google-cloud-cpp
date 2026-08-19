@@ -91,6 +91,12 @@ class FirewallsRestStub {
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::firewalls::v1::
+                         TestIamPermissionsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateFirewall(
       google::cloud::CompletionQueue& cq,
@@ -183,6 +189,12 @@ class DefaultFirewallsRestStub : public FirewallsRestStub {
       Options const& options,
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::firewalls::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateFirewall(

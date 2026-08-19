@@ -89,8 +89,8 @@ class ImageFamilyViewsClient {
 
   // clang-format off
   ///
-  /// Returns the latest image that is part of an image family, is not deprecated
-  /// and is rolled out in the specified zone.
+  /// Returns the latest image that is part of an image family, is not
+  /// deprecated and is rolled out in the specified zone.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/imageFamilyViews/get
   ///
   /// @param project  Project ID for this request.
@@ -110,7 +110,7 @@ class ImageFamilyViewsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
-  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_056.proto#L26}
+  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_070.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
@@ -119,8 +119,8 @@ class ImageFamilyViewsClient {
 
   // clang-format off
   ///
-  /// Returns the latest image that is part of an image family, is not deprecated
-  /// and is rolled out in the specified zone.
+  /// Returns the latest image that is part of an image family, is not
+  /// deprecated and is rolled out in the specified zone.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/imageFamilyViews/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -143,7 +143,7 @@ class ImageFamilyViewsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
-  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_056.proto#L26}
+  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_070.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(

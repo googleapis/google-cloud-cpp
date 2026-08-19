@@ -136,6 +136,13 @@ HealthChecksConnection::PatchHealthCheck(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+HealthChecksConnection::TestIamPermissions(
+    google::cloud::cpp::compute::health_checks::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::UpdateHealthCheck(
     google::cloud::cpp::compute::health_checks::v1::

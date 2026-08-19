@@ -90,13 +90,15 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Adds a list of instances to the specified instance group. All of the
+  /// Adds a list of instances to the specified instance group.  All of the
   /// instances in the instance group must be in the same network/subnetwork.
-  /// Read Adding instances for more information.
+  /// Read
+  /// Adding instances for more information.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/addInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the instance group is located.
+  /// @param zone  The name of the zone
+  ///  where the instance group is located.
   /// @param instance_group  The name of the instance group where you are adding instances.
   /// @param instance_groups_add_instances_request_resource  The InstanceGroupsAddInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -119,7 +121,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.AddInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L165}
+  /// [google.cloud.cpp.compute.instance_groups.v1.AddInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
@@ -149,9 +151,10 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Adds a list of instances to the specified instance group. All of the
+  /// Adds a list of instances to the specified instance group.  All of the
   /// instances in the instance group must be in the same network/subnetwork.
-  /// Read Adding instances for more information.
+  /// Read
+  /// Adding instances for more information.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/addInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -180,7 +183,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.AddInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L165}
+  /// [google.cloud.cpp.compute.instance_groups.v1.AddInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
@@ -220,9 +223,10 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of instance groups and sorts them by zone. To prevent
-  /// failure, Google recommends that you set the `returnPartialSuccess`
-  /// parameter to `true`.
+  /// Retrieves the list of instance groups and sorts them by zone.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -248,8 +252,8 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.AggregatedListInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L203}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_060.proto#L379}
+  /// [google.cloud.cpp.compute.instance_groups.v1.AggregatedListInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L232}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_074.proto#L449}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -258,9 +262,10 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of instance groups and sorts them by zone. To prevent
-  /// failure, Google recommends that you set the `returnPartialSuccess`
-  /// parameter to `true`.
+  /// Retrieves the list of instance groups and sorts them by zone.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -291,8 +296,8 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.AggregatedListInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L203}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_060.proto#L379}
+  /// [google.cloud.cpp.compute.instance_groups.v1.AggregatedListInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L232}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_074.proto#L449}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -306,11 +311,13 @@ class InstanceGroupsClient {
   ///
   /// Deletes the specified instance group. The instances in the group are not
   /// deleted. Note that instance group must not belong to a backend service.
-  /// Read Deleting an instance group for more information.
+  /// Read
+  /// Deleting an instance group for more information.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/delete
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the instance group is located.
+  /// @param zone  The name of the zone
+  ///  where the instance group is located.
   /// @param instance_group  The name of the instance group to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -332,7 +339,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L285}
+  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L347}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -358,7 +365,8 @@ class InstanceGroupsClient {
   ///
   /// Deletes the specified instance group. The instances in the group are not
   /// deleted. Note that instance group must not belong to a backend service.
-  /// Read Deleting an instance group for more information.
+  /// Read
+  /// Deleting an instance group for more information.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -387,7 +395,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L285}
+  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L347}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -429,13 +437,16 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Returns the specified zonal instance group. Get a list of available zonal
-  /// instance groups by making a list() request. For managed instance groups,
-  /// use the instanceGroupManagers or regionInstanceGroupManagers methods
-  /// instead.
+  /// instance groups by making a list() request.
+  ///
+  /// For managed instance groups, use theinstanceGroupManagers
+  /// or regionInstanceGroupManagers
+  /// methods instead.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/get
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the instance group is located.
+  /// @param zone  The name of the zone
+  ///  where the instance group is located.
   /// @param instance_group  The name of the instance group.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -450,8 +461,8 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L318}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L34}
+  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L384}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L43}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
@@ -461,9 +472,11 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Returns the specified zonal instance group. Get a list of available zonal
-  /// instance groups by making a list() request. For managed instance groups,
-  /// use the instanceGroupManagers or regionInstanceGroupManagers methods
-  /// instead.
+  /// instance groups by making a list() request.
+  ///
+  /// For managed instance groups, use theinstanceGroupManagers
+  /// or regionInstanceGroupManagers
+  /// methods instead.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -485,8 +498,8 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L318}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L34}
+  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L384}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L43}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
@@ -496,12 +509,13 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Creates an instance group in the specified project using the parameters
-  /// that are included in the request.
+  /// Creates an instance group in the specified project using the
+  /// parameters that are included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/insert
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where you want to create the instance group.
+  /// @param zone  The name of the zone
+  ///  where you want to create the instance group.
   /// @param instance_group_resource  The InstanceGroup for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -523,7 +537,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L332}
+  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L399}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -551,8 +565,8 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Creates an instance group in the specified project using the parameters
-  /// that are included in the request.
+  /// Creates an instance group in the specified project using the
+  /// parameters that are included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -581,7 +595,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L332}
+  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L399}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -623,12 +637,16 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Retrieves the list of zonal instance group resources contained within the
-  /// specified zone. For managed instance groups, use the instanceGroupManagers
-  /// or regionInstanceGroupManagers methods instead.
+  /// specified zone.
+  ///
+  /// For managed instance groups, use theinstanceGroupManagers
+  /// or regionInstanceGroupManagers
+  /// methods instead.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/list
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the instance group is located.
+  /// @param zone  The name of thezone
+  ///  where the instance group is located.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -651,8 +669,8 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L365}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L34}
+  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L436}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L43}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -662,8 +680,11 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Retrieves the list of zonal instance group resources contained within the
-  /// specified zone. For managed instance groups, use the instanceGroupManagers
-  /// or regionInstanceGroupManagers methods instead.
+  /// specified zone.
+  ///
+  /// For managed instance groups, use theinstanceGroupManagers
+  /// or regionInstanceGroupManagers
+  /// methods instead.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -694,8 +715,8 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L365}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L34}
+  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L436}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L43}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -705,15 +726,17 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Lists the instances in the specified instance group. The orderBy query
-  /// parameter is not supported. The filter query parameter is supported, but
-  /// only for expressions that use `eq` (equal) or `ne` (not equal) operators.
+  /// Lists the instances in the specified instance group.
+  /// The orderBy query parameter is not supported.
+  /// The filter query parameter is supported, but only for
+  /// expressions that use `eq` (equal) or `ne` (not equal) operators.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/listInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the instance group is located.
-  /// @param instance_group  The name of the instance group from which you want to generate a list of
-  ///  included instances.
+  /// @param zone  The name of the zone
+  ///  where the instance group is located.
+  /// @param instance_group  The name of the instance group from which you want to generate a list
+  ///  of included instances.
   /// @param instance_groups_list_instances_request_resource  The InstanceGroupsListInstancesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -737,8 +760,8 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L436}
-  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L96}
+  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L541}
+  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L115}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
@@ -751,9 +774,10 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Lists the instances in the specified instance group. The orderBy query
-  /// parameter is not supported. The filter query parameter is supported, but
-  /// only for expressions that use `eq` (equal) or `ne` (not equal) operators.
+  /// Lists the instances in the specified instance group.
+  /// The orderBy query parameter is not supported.
+  /// The filter query parameter is supported, but only for
+  /// expressions that use `eq` (equal) or `ne` (not equal) operators.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/listInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -784,8 +808,8 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L436}
-  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L96}
+  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L541}
+  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L115}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
@@ -797,13 +821,17 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Removes one or more instances from the specified instance group, but does
-  /// not delete those instances. If the group is part of a backend service that
-  /// has enabled connection draining, it can take up to 60 seconds after the
-  /// connection draining duration before the VM instance is removed or deleted.
+  /// not delete those instances.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration before the VM instance is removed or deleted.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/removeInstances
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the instance group is located.
+  /// @param zone  The name of the zone
+  ///  where the instance group is located.
   /// @param instance_group  The name of the instance group where the specified instances will be
   ///  removed.
   /// @param instance_groups_remove_instances_request_resource  The InstanceGroupsRemoveInstancesRequest for this request.
@@ -827,7 +855,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.RemoveInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L517}
+  /// [google.cloud.cpp.compute.instance_groups.v1.RemoveInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L656}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
@@ -860,9 +888,12 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Removes one or more instances from the specified instance group, but does
-  /// not delete those instances. If the group is part of a backend service that
-  /// has enabled connection draining, it can take up to 60 seconds after the
-  /// connection draining duration before the VM instance is removed or deleted.
+  /// not delete those instances.
+  ///
+  /// If the group is part of a backend
+  /// service that has enabled
+  /// connection draining, it can take up to 60 seconds after the connection
+  /// draining duration before the VM instance is removed or deleted.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/removeInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -891,7 +922,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.RemoveInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L517}
+  /// [google.cloud.cpp.compute.instance_groups.v1.RemoveInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L656}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
@@ -935,7 +966,8 @@ class InstanceGroupsClient {
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/setNamedPorts
   ///
   /// @param project  Project ID for this request.
-  /// @param zone  The name of the zone where the instance group is located.
+  /// @param zone  The name of the zone
+  ///  where the instance group is located.
   /// @param instance_group  The name of the instance group where the named ports are updated.
   /// @param instance_groups_set_named_ports_request_resource  The InstanceGroupsSetNamedPortsRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -958,7 +990,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.SetNamedPortsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L556}
+  /// [google.cloud.cpp.compute.instance_groups.v1.SetNamedPortsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L699}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
@@ -1017,7 +1049,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.SetNamedPortsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L556}
+  /// [google.cloud.cpp.compute.instance_groups.v1.SetNamedPortsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L699}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
@@ -1054,6 +1086,73 @@ class InstanceGroupsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/testIamPermissions
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  The name of the zone for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.instance_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L741}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      std::string const& project, std::string const& zone,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/testIamPermissions
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.instance_groups.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.instance_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L741}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::instance_groups::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<InstanceGroupsConnection> connection_;

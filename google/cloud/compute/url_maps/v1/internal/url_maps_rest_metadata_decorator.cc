@@ -149,6 +149,15 @@ UrlMapsRestMetadata::PatchUrlMap(
   return child_->PatchUrlMap(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+UrlMapsRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::TestIamPermissionsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestMetadata::AsyncUpdateUrlMap(
     CompletionQueue& cq,

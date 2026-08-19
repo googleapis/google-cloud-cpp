@@ -95,6 +95,15 @@ RoutesRestMetadata::ListRoutes(
   return child_->ListRoutes(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RoutesRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

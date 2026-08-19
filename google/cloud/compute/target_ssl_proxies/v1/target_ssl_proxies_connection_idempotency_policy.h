@@ -72,6 +72,10 @@ class TargetSslProxiesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetSslPolicy(
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetSslPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::target_ssl_proxies::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<TargetSslProxiesConnectionIdempotencyPolicy>

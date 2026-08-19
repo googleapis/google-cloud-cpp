@@ -88,8 +88,10 @@ class AddressesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of addresses. To prevent failure, Google
-  /// recommends that you set the `returnPartialSuccess` parameter to `true`.
+  /// Retrieves an aggregated list of addresses.
+  ///
+  /// To prevent failure, it is recommended that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -115,8 +117,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L125}
-  /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L137}
+  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L141}
+  /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L159}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -125,8 +127,10 @@ class AddressesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of addresses. To prevent failure, Google
-  /// recommends that you set the `returnPartialSuccess` parameter to `true`.
+  /// Retrieves an aggregated list of addresses.
+  ///
+  /// To prevent failure, it is recommended that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -157,8 +161,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L125}
-  /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L137}
+  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L141}
+  /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_006.proto#L159}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -196,7 +200,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L207}
+  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L256}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
@@ -249,7 +253,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L207}
+  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L256}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
@@ -308,8 +312,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.GetAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L240}
-  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L30}
+  /// [google.cloud.cpp.compute.addresses.v1.GetAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L292}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
@@ -340,8 +344,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.GetAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L240}
-  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L30}
+  /// [google.cloud.cpp.compute.addresses.v1.GetAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L292}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
@@ -378,7 +382,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L255}
+  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L307}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
@@ -434,7 +438,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L255}
+  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L307}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
@@ -474,7 +478,8 @@ class AddressesClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of addresses contained within the specified region.
+  /// Retrieves a list of addresses contained within
+  /// the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/list
   ///
   /// @param project  Project ID for this request.
@@ -501,8 +506,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L288}
-  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L30}
+  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L343}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
@@ -510,7 +515,8 @@ class AddressesClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of addresses contained within the specified region.
+  /// Retrieves a list of addresses contained within
+  /// the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -541,8 +547,8 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L288}
-  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_004.proto#L30}
+  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L343}
+  /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
@@ -578,7 +584,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L360}
+  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L448}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -637,7 +643,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L360}
+  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L448}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -675,8 +681,8 @@ class AddressesClient {
 
   // clang-format off
   ///
-  /// Sets the labels on an Address. To learn more about labels, read the
-  /// Labeling Resources documentation.
+  /// Sets the labels on an Address. To learn more about labels, read theLabeling
+  /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/setLabels
   ///
   /// @param project  Project ID for this request.
@@ -703,7 +709,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L398}
+  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L489}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -733,8 +739,8 @@ class AddressesClient {
 
   // clang-format off
   ///
-  /// Sets the labels on an Address. To learn more about labels, read the
-  /// Labeling Resources documentation.
+  /// Sets the labels on an Address. To learn more about labels, read theLabeling
+  /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -763,7 +769,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L398}
+  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L489}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -800,6 +806,73 @@ class AddressesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/testIamPermissions
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  The name of the region for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.addresses.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L530}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/testIamPermissions
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.addresses.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.addresses.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L530}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::addresses::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<AddressesConnection> connection_;

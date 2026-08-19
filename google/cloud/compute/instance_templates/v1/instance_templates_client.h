@@ -92,8 +92,10 @@ class InstanceTemplatesClient {
   // clang-format off
   ///
   /// Retrieves the list of all InstanceTemplates resources, regional and global,
-  /// available to the specified project. To prevent failure, Google recommends
-  /// that you set the `returnPartialSuccess` parameter to `true`.
+  /// available to the specified project.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
@@ -119,8 +121,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L143}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L134}
+  /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L146}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L155}
   ///
   // clang-format on
   StreamRange<
@@ -132,8 +134,10 @@ class InstanceTemplatesClient {
   // clang-format off
   ///
   /// Retrieves the list of all InstanceTemplates resources, regional and global,
-  /// available to the specified project. To prevent failure, Google recommends
-  /// that you set the `returnPartialSuccess` parameter to `true`.
+  /// available to the specified project.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -164,8 +168,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L143}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L134}
+  /// [google.cloud.cpp.compute.instance_templates.v1.AggregatedListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L146}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L155}
   ///
   // clang-format on
   StreamRange<
@@ -179,8 +183,8 @@ class InstanceTemplatesClient {
   // clang-format off
   ///
   /// Deletes the specified instance template. Deleting an instance template is
-  /// permanent and cannot be undone. It is not possible to delete templates that
-  /// are already in use by a managed instance group.
+  /// permanent and cannot be undone. It is not possible to delete templates
+  /// that are already in use by a managed instance group.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/delete
   ///
   /// @param project  Project ID for this request.
@@ -205,7 +209,7 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L225}
+  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -231,8 +235,8 @@ class InstanceTemplatesClient {
   // clang-format off
   ///
   /// Deletes the specified instance template. Deleting an instance template is
-  /// permanent and cannot be undone. It is not possible to delete templates that
-  /// are already in use by a managed instance group.
+  /// permanent and cannot be undone. It is not possible to delete templates
+  /// that are already in use by a managed instance group.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -261,7 +265,7 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L225}
+  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -320,8 +324,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L266}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L85}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L305}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_033.proto#L109}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -352,8 +356,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L266}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L85}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L305}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_033.proto#L109}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -382,8 +386,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L290}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -415,8 +419,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L290}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -426,10 +430,11 @@ class InstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// Creates an instance template in the specified project using the data that
-  /// is included in the request. If you are creating a new template to update an
-  /// existing instance group, your new instance template must use the same
-  /// network or, if applicable, the same subnetwork as the original template.
+  /// Creates an instance template in the specified project using the
+  /// data that is included in the request. If you are creating a new template to
+  /// update an existing instance group, your new instance template must use the
+  /// same network or, if applicable, the same subnetwork as the original
+  /// template.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/insert
   ///
   /// @param project  Project ID for this request.
@@ -454,7 +459,7 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L277}
+  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -483,10 +488,11 @@ class InstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// Creates an instance template in the specified project using the data that
-  /// is included in the request. If you are creating a new template to update an
-  /// existing instance group, your new instance template must use the same
-  /// network or, if applicable, the same subnetwork as the original template.
+  /// Creates an instance template in the specified project using the
+  /// data that is included in the request. If you are creating a new template to
+  /// update an existing instance group, your new instance template must use the
+  /// same network or, if applicable, the same subnetwork as the original
+  /// template.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -515,7 +521,7 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L277}
+  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -556,8 +562,8 @@ class InstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of instance templates that are contained within the
-  /// specified project.
+  /// Retrieves a list of instance templates that are contained within
+  /// the specified project.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/list
   ///
   /// @param project  Project ID for this request.
@@ -583,8 +589,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L303}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L85}
+  /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L345}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_033.proto#L109}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -592,8 +598,8 @@ class InstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of instance templates that are contained within the
-  /// specified project.
+  /// Retrieves a list of instance templates that are contained within
+  /// the specified project.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -624,8 +630,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L303}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L85}
+  /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L345}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_033.proto#L109}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -635,8 +641,8 @@ class InstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/setIamPolicy
   ///
   /// @param project  Project ID for this request.
@@ -655,8 +661,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L371}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.instance_templates.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L446}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -667,8 +673,8 @@ class InstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -690,8 +696,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L371}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.instance_templates.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L446}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -720,8 +726,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L387}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L462}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -755,8 +761,8 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L387}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L462}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

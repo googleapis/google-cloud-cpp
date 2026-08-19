@@ -49,6 +49,15 @@ ReservationBlocksRestMetadata::GetReservationBlocksGetResponse(
                                                  request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksRestMetadata::GetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        GetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksListResponse>
 ReservationBlocksRestMetadata::ListReservationBlocks(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -77,6 +86,24 @@ ReservationBlocksRestMetadata::PerformMaintenance(
         PerformMaintenanceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PerformMaintenance(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksRestMetadata::SetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        SetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetIamPolicy(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationBlocksRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

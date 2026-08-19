@@ -197,6 +197,12 @@ class BackendBucketsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddSignedUrlKey(google::cloud::cpp::compute::v1::Operation const& operation);
 
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>
+  AggregatedListBackendBuckets(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AggregatedListBackendBucketsRequest request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
                           DeleteBackendBucketRequest const& request);
@@ -247,6 +253,10 @@ class BackendBucketsConnection {
   virtual StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
   ListBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
                          ListBackendBucketsRequest request);
+
+  virtual StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
+  ListUsable(google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest
+                 request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::

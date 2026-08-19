@@ -69,6 +69,12 @@ Idempotency AutoscalersConnectionIdempotencyPolicy::PatchAutoscaler(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AutoscalersConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::autoscalers::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AutoscalersConnectionIdempotencyPolicy::UpdateAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
         UpdateAutoscalerRequest const&) {

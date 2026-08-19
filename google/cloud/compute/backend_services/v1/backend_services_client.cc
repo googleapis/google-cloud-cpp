@@ -236,6 +236,25 @@ BackendServicesClient::GetBackendService(
   return connection_->GetBackendService(request);
 }
 
+Status BackendServicesClient::GetEffectiveSecurityPolicies(
+    std::string const& project, std::string const& backend_service,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::backend_services::v1::
+      GetEffectiveSecurityPoliciesRequest request;
+  request.set_project(project);
+  request.set_backend_service(backend_service);
+  return connection_->GetEffectiveSecurityPolicies(request);
+}
+
+Status BackendServicesClient::GetEffectiveSecurityPolicies(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetEffectiveSecurityPoliciesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEffectiveSecurityPolicies(request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesClient::GetHealth(
     std::string const& project, std::string const& backend_service,

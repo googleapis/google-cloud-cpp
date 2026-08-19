@@ -1208,6 +1208,22 @@ TargetPoolsRestConnectionImpl::SetSecurityPolicy(
       });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetPoolsRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::target_pools::v1::
+        TestIamPermissionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TestIamPermissions(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_pools_v1_internal
 }  // namespace cloud

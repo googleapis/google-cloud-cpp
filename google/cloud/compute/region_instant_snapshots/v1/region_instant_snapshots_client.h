@@ -98,8 +98,10 @@ class RegionInstantSnapshotsClient {
   /// a single instantSnapshot might not necessarily delete all the data on that
   /// instantSnapshot. If any data on the instantSnapshot that is marked for
   /// deletion is needed for subsequent instantSnapshots, the data will be moved
-  /// to the next corresponding instantSnapshot. For more information, see
-  /// Deleting instantSnapshots.
+  /// to the next corresponding instantSnapshot.
+  ///
+  /// For more information, seeDeleting
+  /// instantSnapshots.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshots/delete
   ///
   /// @param project  Project ID for this request.
@@ -125,7 +127,7 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.DeleteInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L146}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.DeleteInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L149}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -153,8 +155,10 @@ class RegionInstantSnapshotsClient {
   /// a single instantSnapshot might not necessarily delete all the data on that
   /// instantSnapshot. If any data on the instantSnapshot that is marked for
   /// deletion is needed for subsequent instantSnapshots, the data will be moved
-  /// to the next corresponding instantSnapshot. For more information, see
-  /// Deleting instantSnapshots.
+  /// to the next corresponding instantSnapshot.
+  ///
+  /// For more information, seeDeleting
+  /// instantSnapshots.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshots/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -183,7 +187,7 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.DeleteInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L146}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.DeleteInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L149}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -243,8 +247,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L198}
-  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L26}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L204}
+  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
@@ -275,8 +279,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L198}
-  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L26}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L204}
+  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
@@ -306,8 +310,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L179}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L185}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -339,8 +343,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L179}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L185}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -376,7 +380,7 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.InsertInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L213}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.InsertInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L219}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -433,7 +437,7 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.InsertInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L213}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.InsertInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L219}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -474,8 +478,8 @@ class RegionInstantSnapshotsClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of InstantSnapshot resources contained within the
-  /// specified region.
+  /// Retrieves the list of InstantSnapshot resources contained within
+  /// the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshots/list
   ///
   /// @param project  Project ID for this request.
@@ -502,8 +506,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.ListRegionInstantSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L246}
-  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L26}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.ListRegionInstantSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L255}
+  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
@@ -512,8 +516,8 @@ class RegionInstantSnapshotsClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of InstantSnapshot resources contained within the
-  /// specified region.
+  /// Retrieves the list of InstantSnapshot resources contained within
+  /// the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshots/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -544,8 +548,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.ListRegionInstantSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L246}
-  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L26}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.ListRegionInstantSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L255}
+  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
@@ -556,8 +560,8 @@ class RegionInstantSnapshotsClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshots/setIamPolicy
   ///
   /// @param project  Project ID for this request.
@@ -577,8 +581,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L318}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L360}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -590,8 +594,8 @@ class RegionInstantSnapshotsClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshots/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -613,8 +617,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L318}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L360}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -625,7 +629,8 @@ class RegionInstantSnapshotsClient {
   // clang-format off
   ///
   /// Sets the labels on a instantSnapshot in the given region. To learn more
-  /// about labels, read the Labeling Resources documentation.
+  /// about labels, read the Labeling
+  /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshots/setLabels
   ///
   /// @param project  Project ID for this request.
@@ -652,7 +657,7 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L338}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -683,7 +688,8 @@ class RegionInstantSnapshotsClient {
   // clang-format off
   ///
   /// Sets the labels on a instantSnapshot in the given region. To learn more
-  /// about labels, read the Labeling Resources documentation.
+  /// about labels, read the Labeling
+  /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstantSnapshots/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -712,7 +718,7 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L338}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -772,8 +778,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L376}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L421}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -808,8 +814,8 @@ class RegionInstantSnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L376}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.region_instant_snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L421}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

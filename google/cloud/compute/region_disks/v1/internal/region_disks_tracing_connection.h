@@ -205,6 +205,18 @@ class RegionDisksTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateKmsKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   std::shared_ptr<compute_region_disks_v1::RegionDisksConnection> child_;
 };

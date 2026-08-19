@@ -184,6 +184,16 @@ AddressesTracingConnection::SetLabels(
   return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+AddressesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::addresses::v1::TestIamPermissionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_addresses_v1::AddressesConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<compute_addresses_v1::AddressesConnection>
 MakeAddressesTracingConnection(
     std::shared_ptr<compute_addresses_v1::AddressesConnection> conn) {

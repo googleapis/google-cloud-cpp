@@ -26,9 +26,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include "google/cloud/compute/v1/internal/common_016.pb.h"
-#include "google/cloud/compute/v1/internal/common_115.pb.h"
-#include "google/cloud/compute/v1/internal/common_116.pb.h"
+#include "google/cloud/compute/v1/internal/common_019.pb.h"
+#include "google/cloud/compute/v1/internal/common_138.pb.h"
+#include "google/cloud/compute/v1/internal/common_139.pb.h"
+#include "google/cloud/compute/v1/internal/common_171.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_PROTO_EXPORT_H

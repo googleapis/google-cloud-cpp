@@ -103,6 +103,12 @@ class TargetInstancesRestLogging : public TargetInstancesRestStub {
       google::cloud::cpp::compute::target_instances::v1::
           SetSecurityPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::target_instances::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

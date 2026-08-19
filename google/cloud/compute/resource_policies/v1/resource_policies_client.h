@@ -91,9 +91,10 @@ class ResourcePoliciesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of resource policies. To prevent failure,
-  /// Google recommends that you set the `returnPartialSuccess` parameter to
-  /// `true`.
+  /// Retrieves an aggregated list of resource policies.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -119,8 +120,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.AggregatedListResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L151}
-  /// [google.cloud.cpp.compute.v1.ResourcePoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L24}
+  /// [google.cloud.cpp.compute.resource_policies.v1.AggregatedListResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L152}
+  /// [google.cloud.cpp.compute.v1.ResourcePoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L24}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -129,9 +130,10 @@ class ResourcePoliciesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of resource policies. To prevent failure,
-  /// Google recommends that you set the `returnPartialSuccess` parameter to
-  /// `true`.
+  /// Retrieves an aggregated list of resource policies.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -162,8 +164,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.AggregatedListResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L151}
-  /// [google.cloud.cpp.compute.v1.ResourcePoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L24}
+  /// [google.cloud.cpp.compute.resource_policies.v1.AggregatedListResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L152}
+  /// [google.cloud.cpp.compute.v1.ResourcePoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L24}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -201,7 +203,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L233}
+  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -254,7 +256,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L233}
+  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -314,8 +316,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L285}
-  /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L120}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L322}
+  /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
@@ -346,8 +348,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L285}
-  /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L120}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L322}
+  /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L141}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
@@ -377,8 +379,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L266}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L303}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -410,8 +412,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L266}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L303}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -447,7 +449,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L300}
+  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L337}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -504,7 +506,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L300}
+  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L337}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -573,8 +575,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.ListResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L333}
-  /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L120}
+  /// [google.cloud.cpp.compute.resource_policies.v1.ListResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L373}
+  /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L141}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
@@ -615,8 +617,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.ListResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L333}
-  /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L120}
+  /// [google.cloud.cpp.compute.resource_policies.v1.ListResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L373}
+  /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_135.proto#L141}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
@@ -654,7 +656,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L405}
+  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L478}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -714,7 +716,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L405}
+  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L478}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -755,8 +757,8 @@ class ResourcePoliciesClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/setIamPolicy
   ///
   /// @param project  Project ID for this request.
@@ -776,8 +778,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L445}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.resource_policies.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L521}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -789,8 +791,8 @@ class ResourcePoliciesClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -812,8 +814,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L445}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.resource_policies.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L521}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -843,8 +845,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L465}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.resource_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L541}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -879,8 +881,8 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L465}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.resource_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L541}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

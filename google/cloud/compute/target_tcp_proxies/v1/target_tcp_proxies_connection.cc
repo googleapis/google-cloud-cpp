@@ -161,6 +161,13 @@ TargetTcpProxiesConnection::SetProxyHeader(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetTcpProxiesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_tcp_proxies_v1
 }  // namespace cloud

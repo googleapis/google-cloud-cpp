@@ -120,7 +120,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L131}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L132}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -174,7 +174,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L131}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L132}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -235,8 +235,8 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.GetTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L164}
-  /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L36}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.GetTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L168}
+  /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_163.proto#L45}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -267,8 +267,8 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.GetTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L164}
-  /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L36}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.GetTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L168}
+  /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_163.proto#L45}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -305,7 +305,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L179}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L183}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -364,7 +364,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L179}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L183}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -406,8 +406,8 @@ class RegionTargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of TargetHttpsProxy resources available to the specified
-  /// project in the specified region.
+  /// Retrieves the list of TargetHttpsProxy resources available
+  /// to the specified project in the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/list
   ///
   /// @param project  Project ID for this request.
@@ -434,8 +434,8 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.ListRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L212}
-  /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L36}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.ListRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L219}
+  /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_163.proto#L45}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -444,8 +444,8 @@ class RegionTargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of TargetHttpsProxy resources available to the specified
-  /// project in the specified region.
+  /// Retrieves the list of TargetHttpsProxy resources available
+  /// to the specified project in the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -476,8 +476,8 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.ListRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L212}
-  /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L36}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.ListRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L219}
+  /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_163.proto#L45}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -489,8 +489,9 @@ class RegionTargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Patches the specified regional TargetHttpsProxy resource with the data
-  /// included in the request. This method supports PATCH semantics and uses JSON
-  /// merge patch format and processing rules.
+  /// included in the request. This method supports PATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/patch
   ///
   /// @param project  Project ID for this request.
@@ -517,7 +518,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L284}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L324}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -548,8 +549,9 @@ class RegionTargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Patches the specified regional TargetHttpsProxy resource with the data
-  /// included in the request. This method supports PATCH semantics and uses JSON
-  /// merge patch format and processing rules.
+  /// included in the request. This method supports PATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -578,7 +580,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L284}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L324}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -625,8 +627,8 @@ class RegionTargetHttpsProxiesClient {
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
-  /// @param target_https_proxy  Name of the TargetHttpsProxy resource to set an SslCertificates resource
-  ///  for.
+  /// @param target_https_proxy  Name of the TargetHttpsProxy resource to set an
+  ///  SslCertificates resource for.
   /// @param region_target_https_proxies_set_ssl_certificates_request_resource  The RegionTargetHttpsProxiesSetSslCertificatesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -648,7 +650,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.SetSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L321}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.SetSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L364}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -710,7 +712,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.SetSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L321}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.SetSslCertificatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L364}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -778,7 +780,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.SetUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L361}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.SetUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L407}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
@@ -837,7 +839,7 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.SetUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L361}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.SetUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L407}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(

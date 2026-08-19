@@ -61,6 +61,21 @@ BackendBucketsTracingConnection::AddSignedUrlKey(
   return internal::EndSpan(std::move(span), child_->AddSignedUrlKey(operation));
 }
 
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>
+BackendBucketsTracingConnection::AggregatedListBackendBuckets(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AggregatedListBackendBucketsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "AggregatedListBackendBuckets");
+  internal::OTelScope scope(span);
+  auto sr = child_->AggregatedListBackendBuckets(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>(
+      std::move(span), std::move(sr));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsTracingConnection::DeleteBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -195,6 +210,19 @@ BackendBucketsTracingConnection::ListBackendBuckets(
       "ListBackendBuckets");
   internal::OTelScope scope(span);
   auto sr = child_->ListBackendBuckets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::BackendBucket>(std::move(span),
+                                                      std::move(sr));
+}
+
+StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
+BackendBucketsTracingConnection::ListUsable(
+    google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::ListUsable");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListUsable(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::BackendBucket>(std::move(span),
                                                       std::move(sr));

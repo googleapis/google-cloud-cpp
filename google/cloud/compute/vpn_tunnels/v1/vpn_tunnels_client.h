@@ -88,8 +88,10 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of VPN tunnels. To prevent failure, Google
-  /// recommends that you set the `returnPartialSuccess` parameter to `true`.
+  /// Retrieves an aggregated list of VPN tunnels.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -115,8 +117,8 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnTunnelsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_149.proto#L398}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L113}
+  /// [google.cloud.cpp.compute.v1.VpnTunnelsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_178.proto#L522}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L116}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -125,8 +127,10 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of VPN tunnels. To prevent failure, Google
-  /// recommends that you set the `returnPartialSuccess` parameter to `true`.
+  /// Retrieves an aggregated list of VPN tunnels.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -157,8 +161,8 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnTunnelsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_149.proto#L398}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L113}
+  /// [google.cloud.cpp.compute.v1.VpnTunnelsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_178.proto#L522}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L116}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -195,7 +199,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L195}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L231}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
@@ -248,7 +252,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L195}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L231}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
@@ -307,8 +311,8 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnTunnel]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_149.proto#L26}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L228}
+  /// [google.cloud.cpp.compute.v1.VpnTunnel]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_178.proto#L28}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
@@ -339,8 +343,8 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnTunnel]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_149.proto#L26}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L228}
+  /// [google.cloud.cpp.compute.v1.VpnTunnel]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_178.proto#L28}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
@@ -350,8 +354,8 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// Creates a VpnTunnel resource in the specified project and region using the
-  /// data included in the request.
+  /// Creates a VpnTunnel resource in the specified project and region using
+  /// the data included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/insert
   ///
   /// @param project  Project ID for this request.
@@ -377,7 +381,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L243}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L282}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
@@ -403,8 +407,8 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// Creates a VpnTunnel resource in the specified project and region using the
-  /// data included in the request.
+  /// Creates a VpnTunnel resource in the specified project and region using
+  /// the data included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -433,7 +437,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L243}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L282}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
@@ -473,8 +477,8 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of VpnTunnel resources contained in the specified project
-  /// and region.
+  /// Retrieves a list of VpnTunnel resources contained in the specified
+  /// project and region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/list
   ///
   /// @param project  Project ID for this request.
@@ -501,8 +505,8 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnTunnel]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_149.proto#L26}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L276}
+  /// [google.cloud.cpp.compute.v1.VpnTunnel]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_178.proto#L28}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L318}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
@@ -510,8 +514,8 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of VpnTunnel resources contained in the specified project
-  /// and region.
+  /// Retrieves a list of VpnTunnel resources contained in the specified
+  /// project and region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -542,8 +546,8 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.VpnTunnel]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_149.proto#L26}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L276}
+  /// [google.cloud.cpp.compute.v1.VpnTunnel]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_178.proto#L28}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L318}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
@@ -553,8 +557,9 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// Sets the labels on a VpnTunnel. To learn more about labels, read the
-  /// Labeling Resources documentation.
+  /// Sets the labels on a VpnTunnel. To learn more about labels, read
+  /// theLabeling
+  /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/setLabels
   ///
   /// @param project  Project ID for this request.
@@ -581,7 +586,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L348}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L423}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -611,8 +616,9 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// Sets the labels on a VpnTunnel. To learn more about labels, read the
-  /// Labeling Resources documentation.
+  /// Sets the labels on a VpnTunnel. To learn more about labels, read
+  /// theLabeling
+  /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -641,7 +647,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L348}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L423}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

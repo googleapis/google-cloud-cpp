@@ -150,6 +150,12 @@ class TargetSslProxiesRestMetadata : public TargetSslProxiesRestStub {
       google::cloud::cpp::compute::target_ssl_proxies::v1::
           SetSslPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::target_ssl_proxies::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

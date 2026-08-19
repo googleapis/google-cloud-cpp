@@ -145,6 +145,16 @@ FirewallsTracingConnection::PatchFirewall(
   return internal::EndSpan(std::move(span), child_->PatchFirewall(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+FirewallsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::firewalls::v1::TestIamPermissionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_firewalls_v1::FirewallsConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsTracingConnection::UpdateFirewall(
     google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&

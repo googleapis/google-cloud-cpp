@@ -202,6 +202,13 @@ class RegionHealthCheckServicesConnection {
 
   virtual Options options() { return Options{}; }
 
+  virtual StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::HealthCheckServicesScopedList>>
+  AggregatedListRegionHealthCheckServices(
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          AggregatedListRegionHealthCheckServicesRequest request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
@@ -253,6 +260,10 @@ class RegionHealthCheckServicesConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchHealthCheckService(
       google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::region_health_check_services::
+                         v1::TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

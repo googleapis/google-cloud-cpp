@@ -23,6 +23,7 @@
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
 #include <iostream>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -335,6 +336,11 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
 
     std::string method_description = method_json.value("description", "");
     if (!method_description.empty()) {
+      static std::regex const kRelativeLinkRegex(
+          R"(\]\(/([a-zA-Z0-9_#/-]+)\))");
+      method_description =
+          std::regex_replace(method_description, kRelativeLinkRegex,
+                             "](https://cloud.google.com/$1)");
       rpc_text.push_back(FormatCommentBlock(method_description, 1));
     }
     auto constexpr kMethodLinkComments =

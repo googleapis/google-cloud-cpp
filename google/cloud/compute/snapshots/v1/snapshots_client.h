@@ -88,11 +88,14 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Deletes the specified Snapshot resource. Keep in mind that deleting a
-  /// single snapshot might not necessarily delete all the data on that snapshot.
-  /// If any data on the snapshot that is marked for deletion is needed for
-  /// subsequent snapshots, the data will be moved to the next corresponding
-  /// snapshot. For more information, see Deleting snapshots.
+  /// Deletes the specified Snapshot resource. Keep in mind that deleting
+  /// a single snapshot might not necessarily delete all the data on that
+  /// snapshot. If any data on the snapshot that is marked for deletion is
+  /// needed for subsequent snapshots, the data will be moved to the next
+  /// corresponding snapshot.
+  ///
+  /// For more information, seeDeleting
+  /// snapshots.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/delete
   ///
   /// @param project  Project ID for this request.
@@ -117,7 +120,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L167}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
@@ -141,11 +144,14 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Deletes the specified Snapshot resource. Keep in mind that deleting a
-  /// single snapshot might not necessarily delete all the data on that snapshot.
-  /// If any data on the snapshot that is marked for deletion is needed for
-  /// subsequent snapshots, the data will be moved to the next corresponding
-  /// snapshot. For more information, see Deleting snapshots.
+  /// Deletes the specified Snapshot resource. Keep in mind that deleting
+  /// a single snapshot might not necessarily delete all the data on that
+  /// snapshot. If any data on the snapshot that is marked for deletion is
+  /// needed for subsequent snapshots, the data will be moved to the next
+  /// corresponding snapshot.
+  ///
+  /// For more information, seeDeleting
+  /// snapshots.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -174,7 +180,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L167}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
@@ -232,8 +238,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L189}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L29}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L211}
+  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_146.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
@@ -264,8 +270,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L189}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L29}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L211}
+  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_146.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
@@ -294,8 +300,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L174}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L196}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -327,8 +333,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L174}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L196}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -338,10 +344,11 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Creates a snapshot in the specified project using the data included in the
-  /// request. For regular snapshot creation, consider using this method instead
-  /// of disks.createSnapshot, as this method supports more features, such as
-  /// creating snapshots in a project different from the source disk project.
+  /// Creates a snapshot in the specified project using the data included
+  /// in the request. For regular snapshot creation, consider using this method
+  /// instead of disks.createSnapshot,
+  /// as this method supports more features, such as creating snapshots in a
+  /// project different from the source disk project.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/insert
   ///
   /// @param project  Project ID for this request.
@@ -366,7 +373,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L200}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L222}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
@@ -392,10 +399,11 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Creates a snapshot in the specified project using the data included in the
-  /// request. For regular snapshot creation, consider using this method instead
-  /// of disks.createSnapshot, as this method supports more features, such as
-  /// creating snapshots in a project different from the source disk project.
+  /// Creates a snapshot in the specified project using the data included
+  /// in the request. For regular snapshot creation, consider using this method
+  /// instead of disks.createSnapshot,
+  /// as this method supports more features, such as creating snapshots in a
+  /// project different from the source disk project.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -424,7 +432,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L200}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L222}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
@@ -464,8 +472,8 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of Snapshot resources contained within the specified
-  /// project.
+  /// Retrieves the list of Snapshot resources contained within
+  /// the specified project.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/list
   ///
   /// @param project  Project ID for this request.
@@ -491,8 +499,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L226}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L29}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L251}
+  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_146.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
@@ -500,8 +508,8 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of Snapshot resources contained within the specified
-  /// project.
+  /// Retrieves the list of Snapshot resources contained within
+  /// the specified project.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -532,8 +540,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L226}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L29}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L251}
+  /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_146.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
@@ -542,8 +550,8 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setIamPolicy
   ///
   /// @param project  Project ID for this request.
@@ -562,8 +570,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L294}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L352}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -574,8 +582,8 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -597,8 +605,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L294}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L352}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -608,8 +616,8 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Sets the labels on a snapshot. To learn more about labels, read the
-  /// Labeling Resources documentation.
+  /// Sets the labels on a snapshot. To learn more about labels, read theLabeling
+  /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setLabels
   ///
   /// @param project  Project ID for this request.
@@ -635,7 +643,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L310}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -663,8 +671,8 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// Sets the labels on a snapshot. To learn more about labels, read the
-  /// Labeling Resources documentation.
+  /// Sets the labels on a snapshot. To learn more about labels, read theLabeling
+  /// Resources documentation.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -693,7 +701,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L310}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -752,8 +760,8 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L329}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L387}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -787,14 +795,139 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L329}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L387}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
                          TestIamPermissionsRequest const& request,
                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Rotates the customer-managed
+  /// encryption key to the latest version for the specified snapshot.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/updateKmsKey
+  ///
+  /// @param project  Project ID for this request.
+  /// @param snapshot  Name of the snapshot resource to update. Should conform to RFC1035.
+  /// @param snapshot_update_kms_key_request_resource  The SnapshotUpdateKmsKeyRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.snapshots.v1.UpdateKmsKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L402}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      std::string const& project, std::string const& snapshot,
+      google::cloud::cpp::compute::v1::SnapshotUpdateKmsKeyRequest const&
+          snapshot_update_kms_key_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateKmsKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateKmsKey(
+      NoAwaitTag, std::string const& project, std::string const& snapshot,
+      google::cloud::cpp::compute::v1::SnapshotUpdateKmsKeyRequest const&
+          snapshot_update_kms_key_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Rotates the customer-managed
+  /// encryption key to the latest version for the specified snapshot.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/updateKmsKey
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.snapshots.v1.UpdateKmsKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.snapshots.v1.UpdateKmsKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L402}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateKmsKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateKmsKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateKmsKey
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<SnapshotsConnection> connection_;

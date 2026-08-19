@@ -234,6 +234,10 @@ class BackendServicesConnection {
   GetBackendService(google::cloud::cpp::compute::backend_services::v1::
                         GetBackendServiceRequest const& request);
 
+  virtual Status GetEffectiveSecurityPolicies(
+      google::cloud::cpp::compute::backend_services::v1::
+          GetEffectiveSecurityPoliciesRequest const& request);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(
       google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&

@@ -64,6 +64,12 @@ Idempotency HttpHealthChecksConnectionIdempotencyPolicy::PatchHttpHealthCheck(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency HttpHealthChecksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::http_health_checks::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency HttpHealthChecksConnectionIdempotencyPolicy::UpdateHttpHealthCheck(
     google::cloud::cpp::compute::http_health_checks::v1::
         UpdateHttpHealthCheckRequest const&) {

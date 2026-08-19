@@ -22,6 +22,7 @@
 
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks_rest_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -98,8 +99,8 @@ class ReservationSubBlocksClient {
   /// @param zone  Name of the zone for this request. Zone name should conform to RFC1035.
   /// @param parent_name  The name of the parent reservation and parent block. In the format of
   ///  reservations/{reservation_name}/reservationBlocks/{reservation_block_name}
-  /// @param reservation_sub_block  The name of the reservation subBlock. Name should conform to RFC1035 or be
-  ///  a resource ID.
+  /// @param reservation_sub_block  The name of the reservation subBlock.
+  ///  Name should conform to RFC1035 or be a resource ID.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -113,8 +114,8 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetReservationSubBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L62}
-  /// [google.cloud.cpp.compute.v1.ReservationSubBlocksGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L82}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetReservationSubBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L165}
+  /// [google.cloud.cpp.compute.v1.ReservationSubBlocksGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L165}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationSubBlocksGetResponse>
@@ -148,14 +149,211 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetReservationSubBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L62}
-  /// [google.cloud.cpp.compute.v1.ReservationSubBlocksGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L82}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetReservationSubBlocksGetResponseRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L165}
+  /// [google.cloud.cpp.compute.v1.ReservationSubBlocksGetResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L165}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationSubBlocksGetResponse>
   GetReservationSubBlocksGetResponse(
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           GetReservationSubBlocksGetResponseRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the access control policy for a resource. May be empty if no such
+  /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/getIamPolicy
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  The name of the zone for this request.
+  /// @param parent_resource  Name or id of parent resource of the resource for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L143}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& parent_resource, std::string const& resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the access control policy for a resource. May be empty if no such
+  /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/getIamPolicy
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L143}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Allows customers to get SBOM versions of a reservation subBlock.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/getVersion
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  Name of the zone for this request. Zone name should conform to RFC1035.
+  /// @param parent_name  The name of the parent reservation and parent block. In the format of
+  ///  reservations/{reservation_name}/reservationBlocks/{reservation_block_name}
+  /// @param reservation_sub_block  The name of the reservation subBlock.
+  ///  Name should conform to RFC1035 or be a resource ID.
+  /// @param reservation_sub_blocks_get_version_request_resource  The ReservationSubBlocksGetVersionRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
+      std::string const& project, std::string const& zone,
+      std::string const& parent_name, std::string const& reservation_sub_block,
+      google::cloud::cpp::compute::v1::
+          ReservationSubBlocksGetVersionRequest const&
+              reservation_sub_blocks_get_version_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief GetVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetVersion(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& parent_name, std::string const& reservation_sub_block,
+      google::cloud::cpp::compute::v1::
+          ReservationSubBlocksGetVersionRequest const&
+              reservation_sub_blocks_get_version_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Allows customers to get SBOM versions of a reservation subBlock.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/getVersion
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.GetVersionRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetVersionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief GetVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetVersion(
+      NoAwaitTag,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetVersionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief GetVersion
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -189,8 +387,8 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ListReservationSubBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L84}
-  /// [google.cloud.cpp.compute.v1.ReservationSubBlock]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L25}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ListReservationSubBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L244}
+  /// [google.cloud.cpp.compute.v1.ReservationSubBlock]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L61}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>
@@ -230,14 +428,408 @@ class ReservationSubBlocksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ListReservationSubBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L84}
-  /// [google.cloud.cpp.compute.v1.ReservationSubBlock]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L25}
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ListReservationSubBlocksRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L244}
+  /// [google.cloud.cpp.compute.v1.ReservationSubBlock]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L61}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>
   ListReservationSubBlocks(google::cloud::cpp::compute::reservation_sub_blocks::
                                v1::ListReservationSubBlocksRequest request,
                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Allows customers to perform maintenance on a reservation subBlock
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/performMaintenance
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  Name of the zone for this request. Zone name should conform to RFC1035.
+  /// @param parent_name  The name of the parent reservation and parent block. In the format of
+  ///  reservations/{reservation_name}/reservationBlocks/{reservation_block_name}
+  /// @param reservation_sub_block  The name of the reservation subBlock.
+  ///  Name should conform to RFC1035 or be a resource ID.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L353}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(std::string const& project, std::string const& zone,
+                     std::string const& parent_name,
+                     std::string const& reservation_sub_block,
+                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PerformMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& parent_name, std::string const& reservation_sub_block,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Allows customers to perform maintenance on a reservation subBlock
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/performMaintenance
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.reservation_sub_blocks.v1.PerformMaintenanceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.PerformMaintenanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L353}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         PerformMaintenanceRequest const& request,
+                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PerformMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          PerformMaintenanceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PerformMaintenance
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Allows customers to report a faulty subBlock.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/reportFaulty
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  Name of the zone for this request. Zone name should conform to RFC1035.
+  /// @param parent_name  The name of the parent reservation and parent block. In the format of
+  ///  reservations/{reservation_name}/reservationBlocks/{reservation_block_name}
+  /// @param reservation_sub_block  The name of the reservation subBlock.
+  ///  Name should conform to RFC1035 or be a resource ID.
+  /// @param reservation_sub_blocks_report_faulty_request_resource  The ReservationSubBlocksReportFaultyRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ReportFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L397}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ReportFaulty(
+      std::string const& project, std::string const& zone,
+      std::string const& parent_name, std::string const& reservation_sub_block,
+      google::cloud::cpp::compute::v1::
+          ReservationSubBlocksReportFaultyRequest const&
+              reservation_sub_blocks_report_faulty_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ReportFaulty
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ReportFaulty(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& parent_name, std::string const& reservation_sub_block,
+      google::cloud::cpp::compute::v1::
+          ReservationSubBlocksReportFaultyRequest const&
+              reservation_sub_blocks_report_faulty_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Allows customers to report a faulty subBlock.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/reportFaulty
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.reservation_sub_blocks.v1.ReportFaultyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.ReportFaultyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L397}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ReportFaulty(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          ReportFaultyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ReportFaulty
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ReportFaulty(
+      NoAwaitTag,
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          ReportFaultyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ReportFaulty
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ReportFaulty(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/setIamPolicy
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  The name of the zone for this request.
+  /// @param parent_resource  Name or id of parent resource of the resource for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param zone_set_nested_policy_request_resource  The ZoneSetNestedPolicyRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L446}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& parent_resource, std::string const& resource,
+      google::cloud::cpp::compute::v1::ZoneSetNestedPolicyRequest const&
+          zone_set_nested_policy_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/setIamPolicy
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.reservation_sub_blocks.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L446}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/testIamPermissions
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  The name of the zone for this request.
+  /// @param parent_resource  Name or id of parent resource of the resource for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L469}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      std::string const& project, std::string const& zone,
+      std::string const& parent_resource, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservationSubBlocks/testIamPermissions
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.reservation_sub_blocks.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.reservation_sub_blocks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks.proto#L469}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<ReservationSubBlocksConnection> connection_;

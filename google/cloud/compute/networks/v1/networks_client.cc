@@ -85,6 +85,66 @@ NetworksClient::AddPeering(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::CancelRequestRemovePeering(
+    std::string const& project, std::string const& network,
+    google::cloud::cpp::compute::v1::
+        NetworksCancelRequestRemovePeeringRequest const&
+            networks_cancel_request_remove_peering_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::CancelRequestRemovePeeringRequest
+      request;
+  request.set_project(project);
+  request.set_network(network);
+  *request.mutable_networks_cancel_request_remove_peering_request_resource() =
+      networks_cancel_request_remove_peering_request_resource;
+  return connection_->CancelRequestRemovePeering(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::CancelRequestRemovePeering(
+    NoAwaitTag, std::string const& project, std::string const& network,
+    google::cloud::cpp::compute::v1::
+        NetworksCancelRequestRemovePeeringRequest const&
+            networks_cancel_request_remove_peering_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::CancelRequestRemovePeeringRequest
+      request;
+  request.set_project(project);
+  request.set_network(network);
+  *request.mutable_networks_cancel_request_remove_peering_request_resource() =
+      networks_cancel_request_remove_peering_request_resource;
+  return connection_->CancelRequestRemovePeering(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::CancelRequestRemovePeering(
+    google::cloud::cpp::compute::networks::v1::
+        CancelRequestRemovePeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelRequestRemovePeering(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::CancelRequestRemovePeering(
+    NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::
+        CancelRequestRemovePeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelRequestRemovePeering(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::CancelRequestRemovePeering(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelRequestRemovePeering(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksClient::DeleteNetwork(std::string const& project,
                               std::string const& network, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -357,6 +417,64 @@ NetworksClient::RemovePeering(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemovePeering(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::RequestRemovePeering(
+    std::string const& project, std::string const& network,
+    google::cloud::cpp::compute::v1::NetworksRequestRemovePeeringRequest const&
+        networks_request_remove_peering_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::RequestRemovePeeringRequest
+      request;
+  request.set_project(project);
+  request.set_network(network);
+  *request.mutable_networks_request_remove_peering_request_resource() =
+      networks_request_remove_peering_request_resource;
+  return connection_->RequestRemovePeering(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::RequestRemovePeering(
+    NoAwaitTag, std::string const& project, std::string const& network,
+    google::cloud::cpp::compute::v1::NetworksRequestRemovePeeringRequest const&
+        networks_request_remove_peering_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::RequestRemovePeeringRequest
+      request;
+  request.set_project(project);
+  request.set_network(network);
+  *request.mutable_networks_request_remove_peering_request_resource() =
+      networks_request_remove_peering_request_resource;
+  return connection_->RequestRemovePeering(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::RequestRemovePeering(
+    google::cloud::cpp::compute::networks::v1::
+        RequestRemovePeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RequestRemovePeering(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::RequestRemovePeering(
+    NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::
+        RequestRemovePeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RequestRemovePeering(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::RequestRemovePeering(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RequestRemovePeering(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -44,6 +44,14 @@ class RegionNotificationEndpointsRestLogging
       std::shared_ptr<RegionNotificationEndpointsRestStub> child,
       TracingOptions tracing_options, std::set<std::string> components);
 
+  StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList>
+  AggregatedListRegionNotificationEndpoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          AggregatedListRegionNotificationEndpointsRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
@@ -87,6 +95,13 @@ class RegionNotificationEndpointsRestLogging
       Options const& options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           ListRegionNotificationEndpointsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

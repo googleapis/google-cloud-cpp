@@ -68,6 +68,21 @@ BackendBucketsRestLogging::AddSignedUrlKey(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::BackendBucketAggregatedList>
+BackendBucketsRestLogging::AggregatedListBackendBuckets(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AggregatedListBackendBucketsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_buckets::v1::
+                 AggregatedListBackendBucketsRequest const& request) {
+        return child_->AggregatedListBackendBuckets(rest_context, options,
+                                                    request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsRestLogging::AsyncDeleteBackendBucket(
     CompletionQueue& cq,
@@ -208,6 +223,20 @@ BackendBucketsRestLogging::ListBackendBuckets(
              google::cloud::cpp::compute::backend_buckets::v1::
                  ListBackendBucketsRequest const& request) {
         return child_->ListBackendBuckets(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::BackendBucketListUsable>
+BackendBucketsRestLogging::ListUsable(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_buckets::v1::
+                 ListUsableRequest const& request) {
+        return child_->ListUsable(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

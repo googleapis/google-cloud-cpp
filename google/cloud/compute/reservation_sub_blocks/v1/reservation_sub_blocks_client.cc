@@ -57,6 +57,97 @@ ReservationSubBlocksClient::GetReservationSubBlocksGetResponse(
   return connection_->GetReservationSubBlocksGetResponse(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksClient::GetIamPolicy(std::string const& project,
+                                         std::string const& zone,
+                                         std::string const& parent_resource,
+                                         std::string const& resource,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::GetIamPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_resource(parent_resource);
+  request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksClient::GetIamPolicy(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetIamPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::GetVersion(
+    std::string const& project, std::string const& zone,
+    std::string const& parent_name, std::string const& reservation_sub_block,
+    google::cloud::cpp::compute::v1::
+        ReservationSubBlocksGetVersionRequest const&
+            reservation_sub_blocks_get_version_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::GetVersionRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_name(parent_name);
+  request.set_reservation_sub_block(reservation_sub_block);
+  *request.mutable_reservation_sub_blocks_get_version_request_resource() =
+      reservation_sub_blocks_get_version_request_resource;
+  return connection_->GetVersion(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksClient::GetVersion(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& parent_name, std::string const& reservation_sub_block,
+    google::cloud::cpp::compute::v1::
+        ReservationSubBlocksGetVersionRequest const&
+            reservation_sub_blocks_get_version_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::GetVersionRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_name(parent_name);
+  request.set_reservation_sub_block(reservation_sub_block);
+  *request.mutable_reservation_sub_blocks_get_version_request_resource() =
+      reservation_sub_blocks_get_version_request_resource;
+  return connection_->GetVersion(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::GetVersion(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetVersion(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksClient::GetVersion(
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetVersion(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::GetVersion(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetVersion(operation);
+}
+
 StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>
 ReservationSubBlocksClient::ListReservationSubBlocks(
     std::string const& project, std::string const& zone,
@@ -77,6 +168,184 @@ ReservationSubBlocksClient::ListReservationSubBlocks(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReservationSubBlocks(std::move(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::PerformMaintenance(
+    std::string const& project, std::string const& zone,
+    std::string const& parent_name, std::string const& reservation_sub_block,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::
+      PerformMaintenanceRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_name(parent_name);
+  request.set_reservation_sub_block(reservation_sub_block);
+  return connection_->PerformMaintenance(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksClient::PerformMaintenance(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& parent_name, std::string const& reservation_sub_block,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::
+      PerformMaintenanceRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_name(parent_name);
+  request.set_reservation_sub_block(reservation_sub_block);
+  return connection_->PerformMaintenance(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::PerformMaintenance(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformMaintenance(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksClient::PerformMaintenance(
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformMaintenance(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::PerformMaintenance(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PerformMaintenance(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::ReportFaulty(
+    std::string const& project, std::string const& zone,
+    std::string const& parent_name, std::string const& reservation_sub_block,
+    google::cloud::cpp::compute::v1::
+        ReservationSubBlocksReportFaultyRequest const&
+            reservation_sub_blocks_report_faulty_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::ReportFaultyRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_name(parent_name);
+  request.set_reservation_sub_block(reservation_sub_block);
+  *request.mutable_reservation_sub_blocks_report_faulty_request_resource() =
+      reservation_sub_blocks_report_faulty_request_resource;
+  return connection_->ReportFaulty(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksClient::ReportFaulty(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& parent_name, std::string const& reservation_sub_block,
+    google::cloud::cpp::compute::v1::
+        ReservationSubBlocksReportFaultyRequest const&
+            reservation_sub_blocks_report_faulty_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::ReportFaultyRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_name(parent_name);
+  request.set_reservation_sub_block(reservation_sub_block);
+  *request.mutable_reservation_sub_blocks_report_faulty_request_resource() =
+      reservation_sub_blocks_report_faulty_request_resource;
+  return connection_->ReportFaulty(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::ReportFaulty(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReportFaulty(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksClient::ReportFaulty(
+    NoAwaitTag,
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReportFaulty(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksClient::ReportFaulty(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReportFaulty(operation);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksClient::SetIamPolicy(
+    std::string const& project, std::string const& zone,
+    std::string const& parent_resource, std::string const& resource,
+    google::cloud::cpp::compute::v1::ZoneSetNestedPolicyRequest const&
+        zone_set_nested_policy_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::SetIamPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_resource(parent_resource);
+  request.set_resource(resource);
+  *request.mutable_zone_set_nested_policy_request_resource() =
+      zone_set_nested_policy_request_resource;
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksClient::SetIamPolicy(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        SetIamPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationSubBlocksClient::TestIamPermissions(
+    std::string const& project, std::string const& zone,
+    std::string const& parent_resource, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_sub_blocks::v1::
+      TestIamPermissionsRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_resource(parent_resource);
+  request.set_resource(resource);
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationSubBlocksClient::TestIamPermissions(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

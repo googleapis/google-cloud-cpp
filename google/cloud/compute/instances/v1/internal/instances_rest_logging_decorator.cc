@@ -69,6 +69,40 @@ InstancesRestLogging::AddAccessConfig(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesRestLogging::AsyncAddNetworkInterface(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::instances::v1::
+                 AddNetworkInterfaceRequest const& request) {
+        return child_->AsyncAddNetworkInterface(cq, std::move(rest_context),
+                                                std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestLogging::AddNetworkInterface(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instances::v1::
+                 AddNetworkInterfaceRequest const& request) {
+        return child_->AddNetworkInterface(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestLogging::AsyncAddResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -252,6 +286,40 @@ InstancesRestLogging::DeleteAccessConfig(
              google::cloud::cpp::compute::instances::v1::
                  DeleteAccessConfigRequest const& request) {
         return child_->DeleteAccessConfig(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesRestLogging::AsyncDeleteNetworkInterface(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::instances::v1::
+                 DeleteNetworkInterfaceRequest const& request) {
+        return child_->AsyncDeleteNetworkInterface(cq, std::move(rest_context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestLogging::DeleteNetworkInterface(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instances::v1::
+                 DeleteNetworkInterfaceRequest const& request) {
+        return child_->DeleteNetworkInterface(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

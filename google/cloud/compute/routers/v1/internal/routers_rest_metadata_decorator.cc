@@ -69,6 +69,27 @@ RoutersRestMetadata::DeleteRouter(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestMetadata::AsyncDeleteNamedSet(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteNamedSet(cq, std::move(rest_context),
+                                     std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::DeleteNamedSet(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteNamedSet(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestMetadata::AsyncDeleteRoutePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -95,6 +116,15 @@ RoutersRestMetadata::GetRouter(
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetRouter(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+RoutersRestMetadata::GetNamedSet(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->GetNamedSet(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
@@ -172,6 +202,15 @@ RoutersRestMetadata::ListBgpRoutes(
   return child_->ListBgpRoutes(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets>
+RoutersRestMetadata::ListNamedSets(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->ListNamedSets(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
 RoutersRestMetadata::ListRoutePolicies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -200,6 +239,27 @@ RoutersRestMetadata::PatchRouter(
         request) {
   SetMetadata(rest_context, options);
   return child_->PatchRouter(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestMetadata::AsyncPatchNamedSet(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncPatchNamedSet(cq, std::move(rest_context),
+                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::PatchNamedSet(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchNamedSet(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -250,6 +310,27 @@ RoutersRestMetadata::UpdateRouter(
         request) {
   SetMetadata(rest_context, options);
   return child_->UpdateRouter(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestMetadata::AsyncUpdateNamedSet(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncUpdateNamedSet(cq, std::move(rest_context),
+                                     std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::UpdateNamedSet(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateNamedSet(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

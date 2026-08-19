@@ -56,6 +56,31 @@ ReservationBlocksClient::GetReservationBlocksGetResponse(
   return connection_->GetReservationBlocksGetResponse(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksClient::GetIamPolicy(std::string const& project,
+                                      std::string const& zone,
+                                      std::string const& parent_resource,
+                                      std::string const& resource,
+                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_blocks::v1::GetIamPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_resource(parent_resource);
+  request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksClient::GetIamPolicy(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        GetIamPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
 StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
 ReservationBlocksClient::ListReservationBlocks(std::string const& project,
                                                std::string const& zone,
@@ -143,6 +168,62 @@ ReservationBlocksClient::PerformMaintenance(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PerformMaintenance(operation);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksClient::SetIamPolicy(
+    std::string const& project, std::string const& zone,
+    std::string const& parent_resource, std::string const& resource,
+    google::cloud::cpp::compute::v1::ZoneSetNestedPolicyRequest const&
+        zone_set_nested_policy_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_blocks::v1::SetIamPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_resource(parent_resource);
+  request.set_resource(resource);
+  *request.mutable_zone_set_nested_policy_request_resource() =
+      zone_set_nested_policy_request_resource;
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksClient::SetIamPolicy(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        SetIamPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationBlocksClient::TestIamPermissions(
+    std::string const& project, std::string const& zone,
+    std::string const& parent_resource, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::reservation_blocks::v1::TestIamPermissionsRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_parent_resource(parent_resource);
+  request.set_resource(resource);
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationBlocksClient::TestIamPermissions(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

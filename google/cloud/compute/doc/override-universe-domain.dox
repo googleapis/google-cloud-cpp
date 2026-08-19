@@ -14,9 +14,11 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c compute_accelerator_types_v1::AcceleratorTypesClient](@ref compute_accelerator_types_v1::AcceleratorTypesClient-universe-domain-snippet)
 - [\c compute_addresses_v1::AddressesClient](@ref compute_addresses_v1::AddressesClient-universe-domain-snippet)
+- [\c compute_advice_v1::AdviceClient](@ref compute_advice_v1::AdviceClient-universe-domain-snippet)
 - [\c compute_autoscalers_v1::AutoscalersClient](@ref compute_autoscalers_v1::AutoscalersClient-universe-domain-snippet)
 - [\c compute_backend_buckets_v1::BackendBucketsClient](@ref compute_backend_buckets_v1::BackendBucketsClient-universe-domain-snippet)
 - [\c compute_backend_services_v1::BackendServicesClient](@ref compute_backend_services_v1::BackendServicesClient-universe-domain-snippet)
+- [\c compute_cross_site_networks_v1::CrossSiteNetworksClient](@ref compute_cross_site_networks_v1::CrossSiteNetworksClient-universe-domain-snippet)
 - [\c compute_disk_types_v1::DiskTypesClient](@ref compute_disk_types_v1::DiskTypesClient-universe-domain-snippet)
 - [\c compute_disks_v1::DisksClient](@ref compute_disks_v1::DisksClient-universe-domain-snippet)
 - [\c compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient](@ref compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-universe-domain-snippet)
@@ -29,7 +31,9 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-universe-domain-snippet)
 - [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-universe-domain-snippet)
 - [\c compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient](@ref compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-universe-domain-snippet)
+- [\c compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient](@ref compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient-universe-domain-snippet)
 - [\c compute_health_checks_v1::HealthChecksClient](@ref compute_health_checks_v1::HealthChecksClient-universe-domain-snippet)
+- [\c compute_hosts_v1::HostsClient](@ref compute_hosts_v1::HostsClient-universe-domain-snippet)
 - [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-universe-domain-snippet)
 - [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-universe-domain-snippet)
 - [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-universe-domain-snippet)
@@ -40,6 +44,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_settings_v1::InstanceSettingsClient](@ref compute_instance_settings_v1::InstanceSettingsClient-universe-domain-snippet)
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-universe-domain-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-universe-domain-snippet)
+- [\c compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient](@ref compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient-universe-domain-snippet)
 - [\c compute_instant_snapshots_v1::InstantSnapshotsClient](@ref compute_instant_snapshots_v1::InstantSnapshotsClient-universe-domain-snippet)
 - [\c compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient](@ref compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-universe-domain-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-universe-domain-snippet)
@@ -60,27 +65,37 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-universe-domain-snippet)
 - [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-universe-domain-snippet)
 - [\c compute_node_types_v1::NodeTypesClient](@ref compute_node_types_v1::NodeTypesClient-universe-domain-snippet)
+- [\c compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient](@ref compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-universe-domain-snippet)
 - [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-universe-domain-snippet)
+- [\c compute_preview_features_v1::PreviewFeaturesClient](@ref compute_preview_features_v1::PreviewFeaturesClient-universe-domain-snippet)
 - [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-universe-domain-snippet)
 - [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-universe-domain-snippet)
 - [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-universe-domain-snippet)
 - [\c compute_region_autoscalers_v1::RegionAutoscalersClient](@ref compute_region_autoscalers_v1::RegionAutoscalersClient-universe-domain-snippet)
+- [\c compute_region_backend_buckets_v1::RegionBackendBucketsClient](@ref compute_region_backend_buckets_v1::RegionBackendBucketsClient-universe-domain-snippet)
 - [\c compute_region_backend_services_v1::RegionBackendServicesClient](@ref compute_region_backend_services_v1::RegionBackendServicesClient-universe-domain-snippet)
 - [\c compute_region_commitments_v1::RegionCommitmentsClient](@ref compute_region_commitments_v1::RegionCommitmentsClient-universe-domain-snippet)
+- [\c compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient](@ref compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient-universe-domain-snippet)
 - [\c compute_region_disk_types_v1::RegionDiskTypesClient](@ref compute_region_disk_types_v1::RegionDiskTypesClient-universe-domain-snippet)
 - [\c compute_region_disks_v1::RegionDisksClient](@ref compute_region_disks_v1::RegionDisksClient-universe-domain-snippet)
+- [\c compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient](@ref compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient-universe-domain-snippet)
 - [\c compute_region_health_check_services_v1::RegionHealthCheckServicesClient](@ref compute_region_health_check_services_v1::RegionHealthCheckServicesClient-universe-domain-snippet)
 - [\c compute_region_health_checks_v1::RegionHealthChecksClient](@ref compute_region_health_checks_v1::RegionHealthChecksClient-universe-domain-snippet)
+- [\c compute_region_health_sources_v1::RegionHealthSourcesClient](@ref compute_region_health_sources_v1::RegionHealthSourcesClient-universe-domain-snippet)
+- [\c compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient](@ref compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient-universe-domain-snippet)
 - [\c compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient](@ref compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-universe-domain-snippet)
 - [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-universe-domain-snippet)
 - [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-universe-domain-snippet)
 - [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-universe-domain-snippet)
+- [\c compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient](@ref compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient-universe-domain-snippet)
 - [\c compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient](@ref compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-universe-domain-snippet)
 - [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-universe-domain-snippet)
 - [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-universe-domain-snippet)
 - [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-universe-domain-snippet)
 - [\c compute_region_operations_v1::RegionOperationsClient](@ref compute_region_operations_v1::RegionOperationsClient-universe-domain-snippet)
 - [\c compute_region_security_policies_v1::RegionSecurityPoliciesClient](@ref compute_region_security_policies_v1::RegionSecurityPoliciesClient-universe-domain-snippet)
+- [\c compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient](@ref compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient-universe-domain-snippet)
+- [\c compute_region_snapshots_v1::RegionSnapshotsClient](@ref compute_region_snapshots_v1::RegionSnapshotsClient-universe-domain-snippet)
 - [\c compute_region_ssl_certificates_v1::RegionSslCertificatesClient](@ref compute_region_ssl_certificates_v1::RegionSslCertificatesClient-universe-domain-snippet)
 - [\c compute_region_ssl_policies_v1::RegionSslPoliciesClient](@ref compute_region_ssl_policies_v1::RegionSslPoliciesClient-universe-domain-snippet)
 - [\c compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient](@ref compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-universe-domain-snippet)
@@ -89,10 +104,14 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-universe-domain-snippet)
 - [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-universe-domain-snippet)
 - [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-universe-domain-snippet)
+- [\c compute_reliability_risks_v1::ReliabilityRisksClient](@ref compute_reliability_risks_v1::ReliabilityRisksClient-universe-domain-snippet)
 - [\c compute_reservation_blocks_v1::ReservationBlocksClient](@ref compute_reservation_blocks_v1::ReservationBlocksClient-universe-domain-snippet)
+- [\c compute_reservation_slots_v1::ReservationSlotsClient](@ref compute_reservation_slots_v1::ReservationSlotsClient-universe-domain-snippet)
 - [\c compute_reservation_sub_blocks_v1::ReservationSubBlocksClient](@ref compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-universe-domain-snippet)
 - [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-universe-domain-snippet)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-universe-domain-snippet)
+- [\c compute_rollout_plans_v1::RolloutPlansClient](@ref compute_rollout_plans_v1::RolloutPlansClient-universe-domain-snippet)
+- [\c compute_rollouts_v1::RolloutsClient](@ref compute_rollouts_v1::RolloutsClient-universe-domain-snippet)
 - [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-universe-domain-snippet)
 - [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-universe-domain-snippet)
 - [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-universe-domain-snippet)
@@ -115,7 +134,9 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_url_maps_v1::UrlMapsClient](@ref compute_url_maps_v1::UrlMapsClient-universe-domain-snippet)
 - [\c compute_vpn_gateways_v1::VpnGatewaysClient](@ref compute_vpn_gateways_v1::VpnGatewaysClient-universe-domain-snippet)
 - [\c compute_vpn_tunnels_v1::VpnTunnelsClient](@ref compute_vpn_tunnels_v1::VpnTunnelsClient-universe-domain-snippet)
+- [\c compute_wire_groups_v1::WireGroupsClient](@ref compute_wire_groups_v1::WireGroupsClient-universe-domain-snippet)
 - [\c compute_zone_operations_v1::ZoneOperationsClient](@ref compute_zone_operations_v1::ZoneOperationsClient-universe-domain-snippet)
+- [\c compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient](@ref compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient-universe-domain-snippet)
 - [\c compute_zones_v1::ZonesClient](@ref compute_zones_v1::ZonesClient-universe-domain-snippet)
 
 <!-- inject-universe-domain-snippet-end -->
@@ -136,6 +157,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_advice_v1::AdviceClient-universe-domain-snippet Override compute_advice_v1::AdviceClient Universe Domain
+
+@snippet google/cloud/compute/advice/v1/samples/advice_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page compute_autoscalers_v1::AutoscalersClient-universe-domain-snippet Override compute_autoscalers_v1::AutoscalersClient Universe Domain
 
 @snippet google/cloud/compute/autoscalers/v1/samples/autoscalers_client_samples.cc set-client-universe-domain
@@ -151,6 +178,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_backend_services_v1::BackendServicesClient-universe-domain-snippet Override compute_backend_services_v1::BackendServicesClient Universe Domain
 
 @snippet google/cloud/compute/backend_services/v1/samples/backend_services_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_cross_site_networks_v1::CrossSiteNetworksClient-universe-domain-snippet Override compute_cross_site_networks_v1::CrossSiteNetworksClient Universe Domain
+
+@snippet google/cloud/compute/cross_site_networks/v1/samples/cross_site_networks_client_samples.cc set-client-universe-domain
 
 */
 
@@ -226,9 +259,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient-universe-domain-snippet Override compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/global_vm_extension_policies/v1/samples/global_vm_extension_policies_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page compute_health_checks_v1::HealthChecksClient-universe-domain-snippet Override compute_health_checks_v1::HealthChecksClient Universe Domain
 
 @snippet google/cloud/compute/health_checks/v1/samples/health_checks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_hosts_v1::HostsClient-universe-domain-snippet Override compute_hosts_v1::HostsClient Universe Domain
+
+@snippet google/cloud/compute/hosts/v1/samples/hosts_client_samples.cc set-client-universe-domain
 
 */
 
@@ -289,6 +334,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_instances_v1::InstancesClient-universe-domain-snippet Override compute_instances_v1::InstancesClient Universe Domain
 
 @snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient-universe-domain-snippet Override compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient Universe Domain
+
+@snippet google/cloud/compute/instant_snapshot_groups/v1/samples/instant_snapshot_groups_client_samples.cc set-client-universe-domain
 
 */
 
@@ -412,9 +463,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-universe-domain-snippet Override compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/organization_security_policies/v1/samples/organization_security_policies_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page compute_packet_mirrorings_v1::PacketMirroringsClient-universe-domain-snippet Override compute_packet_mirrorings_v1::PacketMirroringsClient Universe Domain
 
 @snippet google/cloud/compute/packet_mirrorings/v1/samples/packet_mirrorings_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_preview_features_v1::PreviewFeaturesClient-universe-domain-snippet Override compute_preview_features_v1::PreviewFeaturesClient Universe Domain
+
+@snippet google/cloud/compute/preview_features/v1/samples/preview_features_client_samples.cc set-client-universe-domain
 
 */
 
@@ -442,6 +505,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_region_backend_buckets_v1::RegionBackendBucketsClient-universe-domain-snippet Override compute_region_backend_buckets_v1::RegionBackendBucketsClient Universe Domain
+
+@snippet google/cloud/compute/region_backend_buckets/v1/samples/region_backend_buckets_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page compute_region_backend_services_v1::RegionBackendServicesClient-universe-domain-snippet Override compute_region_backend_services_v1::RegionBackendServicesClient Universe Domain
 
 @snippet google/cloud/compute/region_backend_services/v1/samples/region_backend_services_client_samples.cc set-client-universe-domain
@@ -451,6 +520,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_commitments_v1::RegionCommitmentsClient-universe-domain-snippet Override compute_region_commitments_v1::RegionCommitmentsClient Universe Domain
 
 @snippet google/cloud/compute/region_commitments/v1/samples/region_commitments_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient-universe-domain-snippet Override compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient Universe Domain
+
+@snippet google/cloud/compute/region_composite_health_checks/v1/samples/region_composite_health_checks_client_samples.cc set-client-universe-domain
 
 */
 
@@ -466,6 +541,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient-universe-domain-snippet Override compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/region_health_aggregation_policies/v1/samples/region_health_aggregation_policies_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page compute_region_health_check_services_v1::RegionHealthCheckServicesClient-universe-domain-snippet Override compute_region_health_check_services_v1::RegionHealthCheckServicesClient Universe Domain
 
 @snippet google/cloud/compute/region_health_check_services/v1/samples/region_health_check_services_client_samples.cc set-client-universe-domain
@@ -475,6 +556,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_health_checks_v1::RegionHealthChecksClient-universe-domain-snippet Override compute_region_health_checks_v1::RegionHealthChecksClient Universe Domain
 
 @snippet google/cloud/compute/region_health_checks/v1/samples/region_health_checks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_health_sources_v1::RegionHealthSourcesClient-universe-domain-snippet Override compute_region_health_sources_v1::RegionHealthSourcesClient Universe Domain
+
+@snippet google/cloud/compute/region_health_sources/v1/samples/region_health_sources_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient-universe-domain-snippet Override compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient Universe Domain
+
+@snippet google/cloud/compute/region_instance_group_manager_resize_requests/v1/samples/region_instance_group_manager_resize_requests_client_samples.cc set-client-universe-domain
 
 */
 
@@ -499,6 +592,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_instances_v1::RegionInstancesClient-universe-domain-snippet Override compute_region_instances_v1::RegionInstancesClient Universe Domain
 
 @snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient-universe-domain-snippet Override compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient Universe Domain
+
+@snippet google/cloud/compute/region_instant_snapshot_groups/v1/samples/region_instant_snapshot_groups_client_samples.cc set-client-universe-domain
 
 */
 
@@ -535,6 +634,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_security_policies_v1::RegionSecurityPoliciesClient-universe-domain-snippet Override compute_region_security_policies_v1::RegionSecurityPoliciesClient Universe Domain
 
 @snippet google/cloud/compute/region_security_policies/v1/samples/region_security_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient-universe-domain-snippet Override compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient Universe Domain
+
+@snippet google/cloud/compute/region_snapshot_settings/v1/samples/region_snapshot_settings_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_region_snapshots_v1::RegionSnapshotsClient-universe-domain-snippet Override compute_region_snapshots_v1::RegionSnapshotsClient Universe Domain
+
+@snippet google/cloud/compute/region_snapshots/v1/samples/region_snapshots_client_samples.cc set-client-universe-domain
 
 */
 
@@ -586,9 +697,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_reliability_risks_v1::ReliabilityRisksClient-universe-domain-snippet Override compute_reliability_risks_v1::ReliabilityRisksClient Universe Domain
+
+@snippet google/cloud/compute/reliability_risks/v1/samples/reliability_risks_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page compute_reservation_blocks_v1::ReservationBlocksClient-universe-domain-snippet Override compute_reservation_blocks_v1::ReservationBlocksClient Universe Domain
 
 @snippet google/cloud/compute/reservation_blocks/v1/samples/reservation_blocks_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_reservation_slots_v1::ReservationSlotsClient-universe-domain-snippet Override compute_reservation_slots_v1::ReservationSlotsClient Universe Domain
+
+@snippet google/cloud/compute/reservation_slots/v1/samples/reservation_slots_client_samples.cc set-client-universe-domain
 
 */
 
@@ -607,6 +730,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_resource_policies_v1::ResourcePoliciesClient-universe-domain-snippet Override compute_resource_policies_v1::ResourcePoliciesClient Universe Domain
 
 @snippet google/cloud/compute/resource_policies/v1/samples/resource_policies_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_rollout_plans_v1::RolloutPlansClient-universe-domain-snippet Override compute_rollout_plans_v1::RolloutPlansClient Universe Domain
+
+@snippet google/cloud/compute/rollout_plans/v1/samples/rollout_plans_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_rollouts_v1::RolloutsClient-universe-domain-snippet Override compute_rollouts_v1::RolloutsClient Universe Domain
+
+@snippet google/cloud/compute/rollouts/v1/samples/rollouts_client_samples.cc set-client-universe-domain
 
 */
 
@@ -742,9 +877,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_wire_groups_v1::WireGroupsClient-universe-domain-snippet Override compute_wire_groups_v1::WireGroupsClient Universe Domain
+
+@snippet google/cloud/compute/wire_groups/v1/samples/wire_groups_client_samples.cc set-client-universe-domain
+
+*/
+
 /*! @page compute_zone_operations_v1::ZoneOperationsClient-universe-domain-snippet Override compute_zone_operations_v1::ZoneOperationsClient Universe Domain
 
 @snippet google/cloud/compute/zone_operations/v1/samples/zone_operations_client_samples.cc set-client-universe-domain
+
+*/
+
+/*! @page compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient-universe-domain-snippet Override compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient Universe Domain
+
+@snippet google/cloud/compute/zone_vm_extension_policies/v1/samples/zone_vm_extension_policies_client_samples.cc set-client-universe-domain
 
 */
 

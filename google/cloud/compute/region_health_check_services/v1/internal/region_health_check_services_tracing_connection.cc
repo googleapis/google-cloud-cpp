@@ -35,6 +35,25 @@ RegionHealthCheckServicesTracingConnection::
             child)
     : child_(std::move(child)) {}
 
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::HealthCheckServicesScopedList>>
+RegionHealthCheckServicesTracingConnection::
+    AggregatedListRegionHealthCheckServices(
+        google::cloud::cpp::compute::region_health_check_services::v1::
+            AggregatedListRegionHealthCheckServicesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_region_health_check_services_v1::"
+      "RegionHealthCheckServicesConnection::"
+      "AggregatedListRegionHealthCheckServices");
+  internal::OTelScope scope(span);
+  auto sr = child_->AggregatedListRegionHealthCheckServices(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::HealthCheckServicesScopedList>>(
+      std::move(span), std::move(sr));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesTracingConnection::DeleteHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
@@ -163,6 +182,17 @@ RegionHealthCheckServicesTracingConnection::PatchHealthCheckService(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchHealthCheckService(operation));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthCheckServicesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_health_check_services_v1::"
+      "RegionHealthCheckServicesConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 std::shared_ptr<compute_region_health_check_services_v1::

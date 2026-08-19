@@ -90,9 +90,10 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of target instances. To prevent failure,
-  /// Google recommends that you set the `returnPartialSuccess` parameter to
-  /// `true`.
+  /// Retrieves an aggregated list of target instances.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -118,8 +119,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L115}
-  /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L304}
+  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L130}
+  /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_164.proto#L353}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -128,9 +129,10 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of target instances. To prevent failure,
-  /// Google recommends that you set the `returnPartialSuccess` parameter to
-  /// `true`.
+  /// Retrieves an aggregated list of target instances.
+  ///
+  /// To prevent failure, Google recommends that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -161,8 +163,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L115}
-  /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L304}
+  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L130}
+  /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_164.proto#L353}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -200,7 +202,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L197}
+  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L245}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -253,7 +255,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L197}
+  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L245}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -313,8 +315,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L230}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L28}
+  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L281}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_164.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
@@ -345,8 +347,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L230}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L28}
+  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L281}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_164.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
@@ -383,7 +385,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L244}
+  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L295}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -441,7 +443,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L244}
+  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L295}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -510,8 +512,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L277}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L28}
+  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L331}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_164.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
@@ -552,8 +554,8 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L277}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L28}
+  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L331}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_164.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
@@ -564,7 +566,8 @@ class TargetInstancesClient {
   // clang-format off
   ///
   /// Sets the Google Cloud Armor security policy for the specified target
-  /// instance. For more information, see Google Cloud Armor Overview
+  /// instance. For more information, seeGoogle
+  /// Cloud Armor Overview
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/setSecurityPolicy
   ///
   /// @param project  Project ID for this request.
@@ -592,7 +595,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L348}
+  /// [google.cloud.cpp.compute.target_instances.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L435}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -624,7 +627,8 @@ class TargetInstancesClient {
   // clang-format off
   ///
   /// Sets the Google Cloud Armor security policy for the specified target
-  /// instance. For more information, see Google Cloud Armor Overview
+  /// instance. For more information, seeGoogle
+  /// Cloud Armor Overview
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/setSecurityPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -653,7 +657,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L348}
+  /// [google.cloud.cpp.compute.target_instances.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L435}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -690,6 +694,73 @@ class TargetInstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/testIamPermissions
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  The name of the zone for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.target_instances.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L477}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      std::string const& project, std::string const& zone,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/testIamPermissions
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.target_instances.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.target_instances.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L477}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::target_instances::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<TargetInstancesConnection> connection_;

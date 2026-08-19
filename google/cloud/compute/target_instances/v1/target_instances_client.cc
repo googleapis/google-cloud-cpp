@@ -270,6 +270,33 @@ TargetInstancesClient::SetSecurityPolicy(
   return connection_->SetSecurityPolicy(operation);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetInstancesClient::TestIamPermissions(
+    std::string const& project, std::string const& zone,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_instances::v1::TestIamPermissionsRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_resource(resource);
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetInstancesClient::TestIamPermissions(
+    google::cloud::cpp::compute::target_instances::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_instances_v1
 }  // namespace cloud

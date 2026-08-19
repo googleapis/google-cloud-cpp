@@ -24,6 +24,7 @@
 #include "google/protobuf/descriptor.pb.h"
 #include <cassert>
 #include <optional>
+#include <regex>
 #include <set>
 
 namespace google {
@@ -413,15 +414,24 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
   }
 }
 
+namespace {
+std::string FormatDocDescription(std::string description) {
+  static std::regex const kRelativeLinkRegex(R"(\]\(/([a-zA-Z0-9_#/-]+)\))");
+  description = std::regex_replace(description, kRelativeLinkRegex,
+                                   "](https://cloud.google.com/$1)");
+  // Replace the $ in the description with $$ so the protoc compiler
+  // will emit a $ instead of trying to perform a substitution.
+  absl::StrReplaceAll({{"$", "$$"}}, &description);
+  return description;
+}
+}  // namespace
+
 std::string DiscoveryTypeVertex::FormatMessageDescription(
     nlohmann::json const& field, int indent_level) {
   std::string description;
   if (field.contains("description")) {
-    auto sanitized_description = std::string(field["description"]);
-    // Replace the $ in the description with $$ so the protoc compiler
-    // will emit a $ instead of trying to perform a substitution.
-    // because protobuf will interpret it as message substitution.
-    absl::StrReplaceAll({{"$", "$$"}}, &sanitized_description);
+    auto sanitized_description =
+        FormatDocDescription(std::string(field["description"]));
     description = absl::StrCat(
         FormatCommentBlock(std::string(sanitized_description), indent_level),
         "\n");
@@ -433,8 +443,9 @@ std::string DiscoveryTypeVertex::FormatMessageDescription(
     std::vector<std::pair<std::string, std::string>> enum_comments;
     for (nlohmann::json::size_type i = 0; i < enum_field.size(); ++i) {
       if (i < enum_descriptions.size()) {
-        enum_comments.emplace_back(std::string(enum_field[i]),
-                                   std::string(enum_descriptions[i]));
+        enum_comments.emplace_back(
+            std::string(enum_field[i]),
+            FormatDocDescription(std::string(enum_descriptions[i])));
       } else {
         enum_comments.emplace_back(std::string(enum_field[i]), "");
       }
@@ -549,9 +560,11 @@ StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage(
   int indent_level = 0;
   std::string proto;
   if (json_.contains("description")) {
+    auto sanitized_description =
+        FormatDocDescription(std::string(json_["description"]));
     absl::StrAppend(
         &proto,
-        FormatCommentBlock(std::string(json_["description"]), indent_level),
+        FormatCommentBlock(std::string(sanitized_description), indent_level),
         "\n");
   }
   auto message =

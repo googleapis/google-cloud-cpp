@@ -93,6 +93,10 @@ class GlobalAddressesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::global_addresses::v1::
+                         TestIamPermissionsRequest const& request) override;
+
  private:
   std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
       child_;

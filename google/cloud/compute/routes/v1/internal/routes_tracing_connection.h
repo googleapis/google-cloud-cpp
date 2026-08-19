@@ -69,6 +69,11 @@ class RoutesTracingConnection : public compute_routes_v1::RoutesConnection {
       google::cloud::cpp::compute::routes::v1::ListRoutesRequest request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&
+          request) override;
+
  private:
   std::shared_ptr<compute_routes_v1::RoutesConnection> child_;
 };

@@ -66,6 +66,12 @@ Idempotency RegionHealthChecksConnectionIdempotencyPolicy::PatchHealthCheck(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency RegionHealthChecksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::region_health_checks::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency RegionHealthChecksConnectionIdempotencyPolicy::UpdateHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
         UpdateHealthCheckRequest const&) {

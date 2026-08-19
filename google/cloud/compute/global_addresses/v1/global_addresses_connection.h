@@ -241,6 +241,10 @@ class GlobalAddressesConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::global_addresses::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

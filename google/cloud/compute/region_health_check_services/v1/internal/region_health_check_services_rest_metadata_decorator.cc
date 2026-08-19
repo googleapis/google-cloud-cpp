@@ -40,6 +40,16 @@ RegionHealthCheckServicesRestMetadata::RegionHealthCheckServicesRestMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
+StatusOr<google::cloud::cpp::compute::v1::HealthCheckServiceAggregatedList>
+RegionHealthCheckServicesRestMetadata::AggregatedListRegionHealthCheckServices(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        AggregatedListRegionHealthCheckServicesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListRegionHealthCheckServices(rest_context, options,
+                                                         request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesRestMetadata::AsyncDeleteHealthCheckService(
     CompletionQueue& cq,
@@ -119,6 +129,15 @@ RegionHealthCheckServicesRestMetadata::PatchHealthCheckService(
         PatchHealthCheckServiceRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchHealthCheckService(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthCheckServicesRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -60,6 +60,12 @@ Idempotency FirewallsConnectionIdempotencyPolicy::PatchFirewall(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency FirewallsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::firewalls::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency FirewallsConnectionIdempotencyPolicy::UpdateFirewall(
     google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&) {
   return Idempotency::kIdempotent;

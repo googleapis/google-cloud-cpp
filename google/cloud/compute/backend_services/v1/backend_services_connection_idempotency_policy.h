@@ -57,6 +57,10 @@ class BackendServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::backend_services::v1::
           GetBackendServiceRequest const& request);
 
+  virtual google::cloud::Idempotency GetEffectiveSecurityPolicies(
+      google::cloud::cpp::compute::backend_services::v1::
+          GetEffectiveSecurityPoliciesRequest const& request);
+
   virtual google::cloud::Idempotency GetHealth(
       google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
           request);

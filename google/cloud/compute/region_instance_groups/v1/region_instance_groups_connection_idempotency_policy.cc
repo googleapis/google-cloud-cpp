@@ -61,6 +61,12 @@ Idempotency RegionInstanceGroupsConnectionIdempotencyPolicy::SetNamedPorts(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency RegionInstanceGroupsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::region_instance_groups::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<RegionInstanceGroupsConnectionIdempotencyPolicy>
 MakeDefaultRegionInstanceGroupsConnectionIdempotencyPolicy() {
   return std::make_unique<RegionInstanceGroupsConnectionIdempotencyPolicy>();

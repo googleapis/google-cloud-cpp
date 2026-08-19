@@ -49,6 +49,10 @@ class RoutesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListRoutes(
       google::cloud::cpp::compute::routes::v1::ListRoutesRequest request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&
+          request);
 };
 
 std::unique_ptr<RoutesConnectionIdempotencyPolicy>

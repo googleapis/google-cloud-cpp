@@ -233,6 +233,31 @@ HttpsHealthChecksClient::PatchHttpsHealthCheck(
   return connection_->PatchHttpsHealthCheck(operation);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+HttpsHealthChecksClient::TestIamPermissions(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::https_health_checks::v1::
+      TestIamPermissionsRequest request;
+  request.set_project(project);
+  request.set_resource(resource);
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+HttpsHealthChecksClient::TestIamPermissions(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksClient::UpdateHttpsHealthCheck(
     std::string const& project, std::string const& https_health_check,

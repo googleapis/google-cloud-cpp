@@ -485,6 +485,22 @@ BackendServicesRestConnectionImpl::GetBackendService(
       *current, request, __func__);
 }
 
+Status BackendServicesRestConnectionImpl::GetEffectiveSecurityPolicies(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetEffectiveSecurityPoliciesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetEffectiveSecurityPolicies(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 GetEffectiveSecurityPoliciesRequest const& request) {
+        return stub_->GetEffectiveSecurityPolicies(rest_context, options,
+                                                   request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesRestConnectionImpl::GetHealth(
     google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&

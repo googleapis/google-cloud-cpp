@@ -103,6 +103,12 @@ Idempotency TargetPoolsConnectionIdempotencyPolicy::SetSecurityPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency TargetPoolsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::target_pools::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<TargetPoolsConnectionIdempotencyPolicy>
 MakeDefaultTargetPoolsConnectionIdempotencyPolicy() {
   return std::make_unique<TargetPoolsConnectionIdempotencyPolicy>();

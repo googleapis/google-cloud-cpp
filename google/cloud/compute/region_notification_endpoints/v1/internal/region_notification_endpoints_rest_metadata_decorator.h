@@ -42,6 +42,14 @@ class RegionNotificationEndpointsRestMetadata
       std::shared_ptr<RegionNotificationEndpointsRestStub> child,
       std::string api_client_header = "");
 
+  StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList>
+  AggregatedListRegionNotificationEndpoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          AggregatedListRegionNotificationEndpointsRequest const& request)
+      override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
@@ -85,6 +93,13 @@ class RegionNotificationEndpointsRestMetadata
       Options const& options,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           ListRegionNotificationEndpointsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          TestIamPermissionsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

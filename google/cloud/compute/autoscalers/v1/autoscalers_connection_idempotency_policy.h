@@ -60,6 +60,10 @@ class AutoscalersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::autoscalers::v1::
           PatchAutoscalerRequest const& request);
 
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::autoscalers::v1::
+          TestIamPermissionsRequest const& request);
+
   virtual google::cloud::Idempotency UpdateAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::
           UpdateAutoscalerRequest const& request);

@@ -60,6 +60,10 @@ class TargetInstancesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetSecurityPolicy(
       google::cloud::cpp::compute::target_instances::v1::
           SetSecurityPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::target_instances::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<TargetInstancesConnectionIdempotencyPolicy>

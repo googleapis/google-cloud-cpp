@@ -63,6 +63,10 @@ class UrlMapsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
           request);
 
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::url_maps::v1::
+          TestIamPermissionsRequest const& request);
+
   virtual google::cloud::Idempotency UpdateUrlMap(
       google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
           request);

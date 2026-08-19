@@ -47,6 +47,18 @@ class LicenseCodesRestLogging : public LicenseCodesRestStub {
       google::cloud::cpp::compute::license_codes::v1::
           GetLicenseCodeRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
                      Options const& options,

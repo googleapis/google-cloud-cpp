@@ -90,8 +90,10 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of autoscalers. To prevent failure, Google
-  /// recommends that you set the `returnPartialSuccess` parameter to `true`.
+  /// Retrieves an aggregated list of autoscalers.
+  ///
+  /// To prevent failure, it is recommended that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/aggregatedList
   ///
   /// @param project  Project ID for this request.
@@ -117,8 +119,8 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L125}
-  /// [google.cloud.cpp.compute.v1.AutoscalersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L247}
+  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L142}
+  /// [google.cloud.cpp.compute.v1.AutoscalersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L290}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -127,8 +129,10 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of autoscalers. To prevent failure, Google
-  /// recommends that you set the `returnPartialSuccess` parameter to `true`.
+  /// Retrieves an aggregated list of autoscalers.
+  ///
+  /// To prevent failure, it is recommended that you set the
+  /// `returnPartialSuccess` parameter to `true`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -159,8 +163,8 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L125}
-  /// [google.cloud.cpp.compute.v1.AutoscalersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L247}
+  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L142}
+  /// [google.cloud.cpp.compute.v1.AutoscalersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L290}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -197,7 +201,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L207}
+  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
@@ -250,7 +254,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L207}
+  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
@@ -309,8 +313,8 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L240}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L34}
+  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L293}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L43}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
@@ -341,8 +345,8 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L240}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L34}
+  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L293}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L43}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
@@ -352,8 +356,8 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Creates an autoscaler in the specified project using the data included in
-  /// the request.
+  /// Creates an autoscaler in the specified project using the data
+  /// included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/insert
   ///
   /// @param project  Project ID for this request.
@@ -379,7 +383,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L254}
+  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L307}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
@@ -405,8 +409,8 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Creates an autoscaler in the specified project using the data included in
-  /// the request.
+  /// Creates an autoscaler in the specified project using the data
+  /// included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -435,7 +439,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L254}
+  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L307}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
@@ -475,7 +479,8 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of autoscalers contained within the specified zone.
+  /// Retrieves a list of autoscalers contained within
+  /// the specified zone.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/list
   ///
   /// @param project  Project ID for this request.
@@ -502,8 +507,8 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L287}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L34}
+  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L343}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L43}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler> ListAutoscalers(
@@ -511,7 +516,8 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of autoscalers contained within the specified zone.
+  /// Retrieves a list of autoscalers contained within
+  /// the specified zone.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -542,8 +548,8 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L287}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L34}
+  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L343}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L43}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler> ListAutoscalers(
@@ -553,8 +559,9 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Updates an autoscaler in the specified project using the data included in
-  /// the request. This method supports PATCH semantics and uses the JSON merge
+  /// Updates an autoscaler in the specified project using the data
+  /// included in the request. This method supportsPATCH
+  /// semantics and uses theJSON merge
   /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/patch
   ///
@@ -581,7 +588,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L358}
+  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L447}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
@@ -607,8 +614,9 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Updates an autoscaler in the specified project using the data included in
-  /// the request. This method supports PATCH semantics and uses the JSON merge
+  /// Updates an autoscaler in the specified project using the data
+  /// included in the request. This method supportsPATCH
+  /// semantics and uses theJSON merge
   /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/patch
   ///
@@ -638,7 +646,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L358}
+  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L447}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
@@ -678,8 +686,75 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Updates an autoscaler in the specified project using the data included in
-  /// the request.
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/testIamPermissions
+  ///
+  /// @param project  Project ID for this request.
+  /// @param zone  The name of the zone for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.autoscalers.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L486}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      std::string const& project, std::string const& zone,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/testIamPermissions
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.autoscalers.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.autoscalers.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L486}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::autoscalers::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an autoscaler in the specified project using the data
+  /// included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/update
   ///
   /// @param project  Project ID for this request.
@@ -705,7 +780,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L394}
+  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L504}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
@@ -731,8 +806,8 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// Updates an autoscaler in the specified project using the data included in
-  /// the request.
+  /// Updates an autoscaler in the specified project using the data
+  /// included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -761,7 +836,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L394}
+  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L504}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(

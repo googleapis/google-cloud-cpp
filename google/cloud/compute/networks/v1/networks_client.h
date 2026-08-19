@@ -113,7 +113,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L172}
+  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L201}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
@@ -170,7 +170,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L172}
+  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L201}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
@@ -210,6 +210,140 @@ class NetworksClient {
 
   // clang-format off
   ///
+  /// Cancel requests to remove a peering from the specified network. Applicable
+  /// only for PeeringConnection with update_strategy=CONSENSUS.  Cancels a
+  /// request to remove a peering from the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/cancelRequestRemovePeering
+  ///
+  /// @param project  Project ID for this request.
+  /// @param network  Name of the network resource to remove peering from.
+  /// @param networks_cancel_request_remove_peering_request_resource  The NetworksCancelRequestRemovePeeringRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.networks.v1.CancelRequestRemovePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L235}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CancelRequestRemovePeering(
+      std::string const& project, std::string const& network,
+      google::cloud::cpp::compute::v1::
+          NetworksCancelRequestRemovePeeringRequest const&
+              networks_cancel_request_remove_peering_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelRequestRemovePeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CancelRequestRemovePeering(
+      NoAwaitTag, std::string const& project, std::string const& network,
+      google::cloud::cpp::compute::v1::
+          NetworksCancelRequestRemovePeeringRequest const&
+              networks_cancel_request_remove_peering_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancel requests to remove a peering from the specified network. Applicable
+  /// only for PeeringConnection with update_strategy=CONSENSUS.  Cancels a
+  /// request to remove a peering from the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/cancelRequestRemovePeering
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.networks.v1.CancelRequestRemovePeeringRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.networks.v1.CancelRequestRemovePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L235}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CancelRequestRemovePeering(
+      google::cloud::cpp::compute::networks::v1::
+          CancelRequestRemovePeeringRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelRequestRemovePeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CancelRequestRemovePeering(
+      NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::
+          CancelRequestRemovePeeringRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelRequestRemovePeering
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CancelRequestRemovePeering(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes the specified network.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/delete
   ///
@@ -235,7 +369,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L203}
+  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L269}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
@@ -288,7 +422,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L203}
+  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L269}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
@@ -346,8 +480,8 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L240}
-  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L161}
+  /// [google.cloud.cpp.compute.networks.v1.GetNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L309}
+  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L185}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
@@ -378,8 +512,8 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L240}
-  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L161}
+  /// [google.cloud.cpp.compute.networks.v1.GetNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L309}
+  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L185}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
@@ -407,8 +541,8 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L229}
-  /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L532}
+  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L298}
+  /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L733}
   ///
   // clang-format on
   StatusOr<
@@ -440,8 +574,8 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L229}
-  /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L532}
+  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L298}
+  /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L733}
   ///
   // clang-format on
   StatusOr<
@@ -452,8 +586,8 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// Creates a network in the specified project using the data included in the
-  /// request.
+  /// Creates a network in the specified project using the data included
+  /// in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert
   ///
   /// @param project  Project ID for this request.
@@ -478,7 +612,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.InsertNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L251}
+  /// [google.cloud.cpp.compute.networks.v1.InsertNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
@@ -504,8 +638,8 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// Creates a network in the specified project using the data included in the
-  /// request.
+  /// Creates a network in the specified project using the data included
+  /// in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -534,7 +668,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.InsertNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L251}
+  /// [google.cloud.cpp.compute.networks.v1.InsertNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L320}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
@@ -600,8 +734,8 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L277}
-  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L161}
+  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L349}
+  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L185}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
@@ -640,8 +774,8 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L277}
-  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L161}
+  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L349}
+  /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L185}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
@@ -677,8 +811,8 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L345}
-  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L27}
+  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L450}
+  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
@@ -718,8 +852,8 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L345}
-  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L27}
+  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L450}
+  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
@@ -730,8 +864,8 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// Patches the specified network with the data included in the request. Only
-  /// routingConfig can be modified.
+  /// Patches the specified network with the data included in the request.
+  /// Only routingConfig can be modified.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/patch
   ///
   /// @param project  Project ID for this request.
@@ -757,7 +891,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.PatchNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L430}
+  /// [google.cloud.cpp.compute.networks.v1.PatchNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L568}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
@@ -783,8 +917,8 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// Patches the specified network with the data included in the request. Only
-  /// routingConfig can be modified.
+  /// Patches the specified network with the data included in the request.
+  /// Only routingConfig can be modified.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -813,7 +947,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.PatchNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L430}
+  /// [google.cloud.cpp.compute.networks.v1.PatchNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L568}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
@@ -879,7 +1013,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L460}
+  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L601}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
@@ -936,7 +1070,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L460}
+  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L601}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
@@ -976,6 +1110,134 @@ class NetworksClient {
 
   // clang-format off
   ///
+  /// Requests to remove a peering from the specified network. Applicable only
+  /// for PeeringConnection with update_strategy=CONSENSUS.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/requestRemovePeering
+  ///
+  /// @param project  Project ID for this request.
+  /// @param network  Name of the network resource to remove peering from.
+  /// @param networks_request_remove_peering_request_resource  The NetworksRequestRemovePeeringRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.networks.v1.RequestRemovePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L635}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RequestRemovePeering(std::string const& project, std::string const& network,
+                       google::cloud::cpp::compute::v1::
+                           NetworksRequestRemovePeeringRequest const&
+                               networks_request_remove_peering_request_resource,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RequestRemovePeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RequestRemovePeering(
+      NoAwaitTag, std::string const& project, std::string const& network,
+      google::cloud::cpp::compute::v1::
+          NetworksRequestRemovePeeringRequest const&
+              networks_request_remove_peering_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Requests to remove a peering from the specified network. Applicable only
+  /// for PeeringConnection with update_strategy=CONSENSUS.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/requestRemovePeering
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.networks.v1.RequestRemovePeeringRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.networks.v1.RequestRemovePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L635}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RequestRemovePeering(google::cloud::cpp::compute::networks::v1::
+                           RequestRemovePeeringRequest const& request,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RequestRemovePeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RequestRemovePeering(
+      NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::
+          RequestRemovePeeringRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RequestRemovePeering
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RequestRemovePeering(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Switches the network mode from auto subnet mode to custom subnet mode.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/switchToCustomMode
   ///
@@ -1001,7 +1263,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L491}
+  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L669}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1054,7 +1316,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L491}
+  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L669}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1123,7 +1385,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L517}
+  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L698}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
@@ -1182,7 +1444,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L517}
+  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L698}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(

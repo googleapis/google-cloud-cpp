@@ -483,6 +483,36 @@ DisksTracingConnection::UpdateDisk(
   return internal::EndSpan(std::move(span), child_->UpdateDisk(operation));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksTracingConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::UpdateKmsKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateKmsKey(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksTracingConnection::UpdateKmsKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::UpdateKmsKey");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateKmsKey(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksTracingConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::UpdateKmsKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateKmsKey(operation));
+}
+
 std::shared_ptr<compute_disks_v1::DisksConnection> MakeDisksTracingConnection(
     std::shared_ptr<compute_disks_v1::DisksConnection> conn) {
   if (internal::TracingEnabled(conn->options())) {

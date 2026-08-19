@@ -242,6 +242,17 @@ InstanceGroupsTracingConnection::SetNamedPorts(
   return internal::EndSpan(std::move(span), child_->SetNamedPorts(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+InstanceGroupsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::instance_groups::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
 MakeInstanceGroupsTracingConnection(
     std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>

@@ -41,6 +41,14 @@ class LicenseCodesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::license_codes::v1::
           GetLicenseCodeRequest const& request);
 
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+          request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+          request);
+
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::license_codes::v1::
           TestIamPermissionsRequest const& request);

@@ -54,6 +54,20 @@ class InstancesRestMetadata : public InstancesRestStub {
           request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddNetworkInterface(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::
+          AddNetworkInterfaceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNetworkInterface(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instances::v1::
+          AddNetworkInterfaceRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddResourcePolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -129,6 +143,20 @@ class InstancesRestMetadata : public InstancesRestStub {
       Options const& options,
       google::cloud::cpp::compute::instances::v1::
           DeleteAccessConfigRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteNetworkInterface(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::
+          DeleteNetworkInterfaceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkInterface(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instances::v1::
+          DeleteNetworkInterfaceRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDetachDisk(

@@ -69,6 +69,41 @@ NetworksRestLogging::AddPeering(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksRestLogging::AsyncCancelRequestRemovePeering(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::networks::v1::
+        CancelRequestRemovePeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::networks::v1::
+                 CancelRequestRemovePeeringRequest const& request) {
+        return child_->AsyncCancelRequestRemovePeering(
+            cq, std::move(rest_context), std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestLogging::CancelRequestRemovePeering(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::
+        CancelRequestRemovePeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::networks::v1::
+                 CancelRequestRemovePeeringRequest const& request) {
+        return child_->CancelRequestRemovePeering(rest_context, options,
+                                                  request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestLogging::AsyncDeleteNetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -265,6 +300,40 @@ NetworksRestLogging::RemovePeering(
           google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
               request) {
         return child_->RemovePeering(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksRestLogging::AsyncRequestRemovePeering(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::networks::v1::
+        RequestRemovePeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::cpp::compute::networks::v1::
+                 RequestRemovePeeringRequest const& request) {
+        return child_->AsyncRequestRemovePeering(cq, std::move(rest_context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestLogging::RequestRemovePeering(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::
+        RequestRemovePeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::networks::v1::
+                 RequestRemovePeeringRequest const& request) {
+        return child_->RequestRemovePeering(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

@@ -38,6 +38,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionHealthCheckServicesConnection::~RegionHealthCheckServicesConnection() =
     default;
 
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::HealthCheckServicesScopedList>>
+RegionHealthCheckServicesConnection::AggregatedListRegionHealthCheckServices(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        AggregatedListRegionHealthCheckServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             HealthCheckServicesScopedList>>>();
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesConnection::DeleteHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
@@ -126,6 +137,13 @@ RegionHealthCheckServicesConnection::PatchHealthCheckService(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthCheckServicesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

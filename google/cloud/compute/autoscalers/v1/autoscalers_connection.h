@@ -231,6 +231,10 @@ class AutoscalersConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchAutoscaler(google::cloud::cpp::compute::v1::Operation const& operation);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::autoscalers::v1::
+                         TestIamPermissionsRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
                        UpdateAutoscalerRequest const& request);

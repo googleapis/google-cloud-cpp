@@ -120,6 +120,14 @@ BackendServicesRestMetadata::GetBackendService(
   return child_->GetBackendService(rest_context, options, request);
 }
 
+Status BackendServicesRestMetadata::GetEffectiveSecurityPolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_services::v1::
+        GetEffectiveSecurityPoliciesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetEffectiveSecurityPolicies(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesRestMetadata::GetHealth(
     rest_internal::RestContext& rest_context, Options const& options,

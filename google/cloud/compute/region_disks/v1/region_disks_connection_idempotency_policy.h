@@ -103,6 +103,10 @@ class RegionDisksConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateDisk(
       google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
           request);
+
+  virtual google::cloud::Idempotency UpdateKmsKey(
+      google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+          request);
 };
 
 std::unique_ptr<RegionDisksConnectionIdempotencyPolicy>

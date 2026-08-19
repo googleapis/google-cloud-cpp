@@ -27,13 +27,13 @@
 
 // IWYU pragma: begin_exports
 #include "google/cloud/compute/v1/internal/common_001.pb.h"
-#include "google/cloud/compute/v1/internal/common_003.pb.h"
-#include "google/cloud/compute/v1/internal/common_015.pb.h"
-#include "google/cloud/compute/v1/internal/common_016.pb.h"
-#include "google/cloud/compute/v1/internal/common_021.pb.h"
-#include "google/cloud/compute/v1/internal/common_029.pb.h"
-#include "google/cloud/compute/v1/internal/common_033.pb.h"
-#include "google/cloud/compute/v1/internal/common_081.pb.h"
+#include "google/cloud/compute/v1/internal/common_004.pb.h"
+#include "google/cloud/compute/v1/internal/common_018.pb.h"
+#include "google/cloud/compute/v1/internal/common_019.pb.h"
+#include "google/cloud/compute/v1/internal/common_028.pb.h"
+#include "google/cloud/compute/v1/internal/common_038.pb.h"
+#include "google/cloud/compute/v1/internal/common_042.pb.h"
+#include "google/cloud/compute/v1/internal/common_096.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCES_V1_REGION_INSTANCES_PROTO_EXPORT_H

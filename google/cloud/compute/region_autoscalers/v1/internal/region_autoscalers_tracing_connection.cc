@@ -158,6 +158,17 @@ RegionAutoscalersTracingConnection::PatchAutoscaler(
   return internal::EndSpan(std::move(span), child_->PatchAutoscaler(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionAutoscalersTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersTracingConnection::UpdateAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::

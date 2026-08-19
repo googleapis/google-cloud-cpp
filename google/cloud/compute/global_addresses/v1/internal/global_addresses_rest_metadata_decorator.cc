@@ -141,6 +141,15 @@ GlobalAddressesRestMetadata::SetLabels(
   return child_->SetLabels(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+GlobalAddressesRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_addresses::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

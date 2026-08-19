@@ -60,6 +60,16 @@ struct ReservationSubBlocksConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-compute-options
+ */
+struct ReservationSubBlocksPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to ReservationSubBlocks.
  *
  * @ingroup google-cloud-compute-options
@@ -67,6 +77,7 @@ struct ReservationSubBlocksConnectionIdempotencyPolicyOption {
 using ReservationSubBlocksPolicyOptionList =
     OptionList<ReservationSubBlocksRetryPolicyOption,
                ReservationSubBlocksBackoffPolicyOption,
+               ReservationSubBlocksPollingPolicyOption,
                ReservationSubBlocksConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

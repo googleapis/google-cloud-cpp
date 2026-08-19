@@ -247,6 +247,10 @@ class UrlMapsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchUrlMap(google::cloud::cpp::compute::v1::Operation const& operation);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::url_maps::v1::
+                         TestIamPermissionsRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateUrlMap(
       google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&

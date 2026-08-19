@@ -87,6 +87,10 @@ class HttpsHealthChecksTracingConnection
   PatchHttpsHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::https_health_checks::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHttpsHealthCheck(
       google::cloud::cpp::compute::https_health_checks::v1::

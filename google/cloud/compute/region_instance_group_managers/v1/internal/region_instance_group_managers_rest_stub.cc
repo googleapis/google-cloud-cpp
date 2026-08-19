@@ -248,6 +248,8 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManager(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"no_graceful_shutdown",
+                                (request.no_graceful_shutdown() ? "1" : "0")});
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -280,6 +282,8 @@ DefaultRegionInstanceGroupManagersRestStub::DeleteInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         DeleteInstanceGroupManagerRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"no_graceful_shutdown", (request.no_graceful_shutdown() ? "1" : "0")});
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -306,6 +310,8 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstances(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"no_graceful_shutdown",
+                                (request.no_graceful_shutdown() ? "1" : "0")});
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -341,6 +347,8 @@ DefaultRegionInstanceGroupManagersRestStub::DeleteInstances(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         DeleteInstancesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"no_graceful_shutdown", (request.no_graceful_shutdown() ? "1" : "0")});
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -726,6 +734,8 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncRecreateInstances(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"no_graceful_shutdown",
+                                (request.no_graceful_shutdown() ? "1" : "0")});
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -761,6 +771,8 @@ DefaultRegionInstanceGroupManagersRestStub::RecreateInstances(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         RecreateInstancesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"no_graceful_shutdown", (request.no_graceful_shutdown() ? "1" : "0")});
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -1095,6 +1107,8 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncStopInstances(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"no_graceful_shutdown",
+                                (request.no_graceful_shutdown() ? "1" : "0")});
         query_params.push_back({"request_id", request.request_id()});
         query_params =
             rest_internal::TrimEmptyQueryParameters(std::move(query_params));
@@ -1130,6 +1144,8 @@ DefaultRegionInstanceGroupManagersRestStub::StopInstances(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         StopInstancesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"no_graceful_shutdown", (request.no_graceful_shutdown() ? "1" : "0")});
   query_params.push_back({"request_id", request.request_id()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));

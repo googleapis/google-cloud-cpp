@@ -121,7 +121,7 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.DeleteInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L160}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.DeleteInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L161}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -176,7 +176,7 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.DeleteInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L160}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.DeleteInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L161}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -238,8 +238,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L204}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L26}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L208}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentGroup>
@@ -272,8 +272,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L204}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L26}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L208}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentGroup>
@@ -303,8 +303,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L189}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L193}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -336,8 +336,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L189}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L193}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -366,8 +366,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetOperationalStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L217}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L211}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetOperationalStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L221}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L224}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -401,8 +401,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetOperationalStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L217}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L211}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.GetOperationalStatusRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L221}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroupsGetOperationalStatusResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L224}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -440,7 +440,7 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.InsertInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L230}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.InsertInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -500,7 +500,7 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.InsertInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L230}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.InsertInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -569,8 +569,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.ListInterconnectAttachmentGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L258}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L26}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.ListInterconnectAttachmentGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L265}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L26}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachmentGroup>
@@ -610,8 +610,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.ListInterconnectAttachmentGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L258}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_071.proto#L26}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.ListInterconnectAttachmentGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L265}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L26}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachmentGroup>
@@ -623,8 +623,9 @@ class InterconnectAttachmentGroupsClient {
   // clang-format off
   ///
   /// Patches the specified InterconnectAttachmentGroup resource with the data
-  /// included in the request. This method supports PATCH semantics and uses JSON
-  /// merge patch format and processing rules.
+  /// included in the request. This method supports PATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachmentGroups/patch
   ///
   /// @param project  Project ID for this request.
@@ -651,7 +652,7 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.PatchInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L326}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.PatchInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L366}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -686,8 +687,9 @@ class InterconnectAttachmentGroupsClient {
   // clang-format off
   ///
   /// Patches the specified InterconnectAttachmentGroup resource with the data
-  /// included in the request. This method supports PATCH semantics and uses JSON
-  /// merge patch format and processing rules.
+  /// included in the request. This method supports PATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachmentGroups/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -716,7 +718,7 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.PatchInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L326}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.PatchInterconnectAttachmentGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L366}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -759,8 +761,8 @@ class InterconnectAttachmentGroupsClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachmentGroups/setIamPolicy
   ///
   /// @param project  Project ID for this request.
@@ -779,8 +781,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L363}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L406}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -791,8 +793,8 @@ class InterconnectAttachmentGroupsClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachmentGroups/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -814,8 +816,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L363}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L406}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -844,8 +846,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L379}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L422}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -879,8 +881,8 @@ class InterconnectAttachmentGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L379}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.interconnect_attachment_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachment_groups/v1/interconnect_attachment_groups.proto#L422}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

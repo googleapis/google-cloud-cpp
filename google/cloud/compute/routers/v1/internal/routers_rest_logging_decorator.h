@@ -64,6 +64,20 @@ class RoutersRestLogging : public RoutersRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteNamedSet(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNamedSet(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRoutePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -82,6 +96,13 @@ class RoutersRestLogging : public RoutersRestStub {
       Options const& options,
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request)
       override;
+
+  StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+  GetNamedSet(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -136,6 +157,12 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets> ListNamedSets(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
   ListRoutePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -154,6 +181,20 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchNamedSet(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNamedSet(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -188,6 +229,20 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateNamedSet(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNamedSet(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

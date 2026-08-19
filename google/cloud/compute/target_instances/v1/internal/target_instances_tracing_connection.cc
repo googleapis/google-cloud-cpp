@@ -176,6 +176,17 @@ TargetInstancesTracingConnection::SetSecurityPolicy(
                            child_->SetSecurityPolicy(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetInstancesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::target_instances::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_instances_v1::TargetInstancesConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
 MakeTargetInstancesTracingConnection(
     std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
