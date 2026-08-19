@@ -2583,7 +2583,7 @@ TEST(ObjectDescriptorImpl, PrewarmedPacingEviction) {
   next.first.set_value(true);
 }
 
-TEST(ObjectDescriptorImpl, InitialReadRanges_ExactRangeCacheHit) {
+TEST(ObjectDescriptorImpl, InitialReadRangesExactRangeCacheHit) {
   auto constexpr kResponse0 = R"pb(
     metadata {
       bucket: "projects/_/buckets/test-bucket"
@@ -2670,7 +2670,7 @@ TEST(ObjectDescriptorImpl, InitialReadRanges_ExactRangeCacheHit) {
   next.first.set_value(true);
 }
 
-TEST(ObjectDescriptorImpl, InitialReadRanges_SubRangeCacheMiss) {
+TEST(ObjectDescriptorImpl, InitialReadRangesSubRangeCacheMiss) {
   auto constexpr kResponse0 = R"pb(
     metadata {
       bucket: "projects/_/buckets/test-bucket"
@@ -2772,7 +2772,7 @@ TEST(ObjectDescriptorImpl, InitialReadRanges_SubRangeCacheMiss) {
   next.first.set_value(true);
 }
 
-TEST(ObjectDescriptorImpl, PreWarmBufferLimit_EvictionTombstone) {
+TEST(ObjectDescriptorImpl, PreWarmBufferLimitEvictionTombstone) {
   auto constexpr kResponse0 = R"pb(
     metadata {
       bucket: "projects/_/buckets/test-bucket"
@@ -2866,7 +2866,7 @@ TEST(ObjectDescriptorImpl, PreWarmBufferLimit_EvictionTombstone) {
   next.first.set_value(true);
 }
 
-TEST(ObjectDescriptorImpl, DuplicateInitialRanges_Deduplication) {
+TEST(ObjectDescriptorImpl, DuplicateInitialRangesDeduplication) {
   auto constexpr kResponse0 = R"pb(
     metadata {
       bucket: "projects/_/buckets/test-bucket"

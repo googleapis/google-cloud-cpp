@@ -1130,7 +1130,7 @@ TEST_F(AsyncClientIntegrationTest, OpenWithChecksumValidation) {
 // Verifies that opening an object with multiple initial disjoint read ranges
 // properly pre-warms all ranges and that subsequent Read calls for those exact
 // ranges return the expected byte contents.
-TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_MultipleDisjointRanges) {
+TEST_F(AsyncClientIntegrationTest, MultiRangeOpenMultipleDisjointRanges) {
   if (!UsingEmulator()) GTEST_SKIP();
   auto async = AsyncClient(TestOptions());
   auto client = MakeIntegrationTestClient(true, TestOptions());
@@ -1230,7 +1230,7 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_MultipleDisjointRanges) {
 // streams goes out of scope before data is consumed, the underlying gRPC
 // streams are safely cancelled and torn down without leaks, or unhandled
 // exceptions.
-TEST_F(AsyncClientIntegrationTest, MultiRangeOpen_DestructorTeardown) {
+TEST_F(AsyncClientIntegrationTest, MultiRangeOpenDestructorTeardown) {
   if (!UsingEmulator()) GTEST_SKIP();
   auto async = AsyncClient(TestOptions());
   auto client = MakeIntegrationTestClient(true, TestOptions());
