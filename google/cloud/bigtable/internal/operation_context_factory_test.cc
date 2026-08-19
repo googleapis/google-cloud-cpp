@@ -16,6 +16,7 @@
 
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
 #include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -26,10 +27,11 @@ namespace {
 
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::SizeIs;
 
-class MockMetric : public Metric {
+class MockMetric : public TableSchemaMetric {
  public:
-  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+  MOCK_METHOD(std::unique_ptr<TableSchemaMetric>, clone,
               (TableResourceLabels const&, TableDataLabels const&),
               (const, override));
 };
@@ -206,6 +208,27 @@ TEST(MetricsOperationContextFactoryTest, ExecuteQuery) {
   MetricsOperationContextFactory factory({}, mock_metric);
   auto operation_context =
       factory.ExecuteQuery(instance_full_name, app_profile);
+}
+
+class FakeTableMetric : public TableSchemaMetric {
+ public:
+  std::unique_ptr<TableSchemaMetric> clone(
+      TableResourceLabels const&, TableDataLabels const&) const override {
+    return std::make_unique<FakeTableMetric>(*this);
+  }
+};
+
+TEST(MetricsOperationContextFactoryTest, CloneMetrics) {
+  auto table_metric = std::make_shared<FakeTableMetric>();
+
+  TableResourceLabels resource_labels{"project", "instance", "table", "cluster",
+                                      "zone"};
+  TableDataLabels data_labels{"method", "streaming", "client",
+                              "uid",    "profile",   "status"};
+
+  std::vector<std::shared_ptr<Metric const>> metrics = {table_metric};
+  auto cloned = CloneMetrics(resource_labels, data_labels, metrics);
+  EXPECT_THAT(cloned, SizeIs(1));
 }
 
 }  // namespace

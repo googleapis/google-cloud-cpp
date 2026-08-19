@@ -122,6 +122,7 @@ TEST_F(OperationContextTest, Retries) {
 
 class MockMetric : public Metric {
  public:
+  MetricSchema schema() const override { return MetricSchema::kTable; }
   MOCK_METHOD(void, PreCall,
               (opentelemetry::context::Context const&, PreCallParams const&),
               (override));
@@ -140,10 +141,6 @@ class MockMetric : public Metric {
               (opentelemetry::context::Context const&,
                ElementDeliveryParams const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<Metric>, clone,
-              (TableResourceLabels const& resource_labels,
-               TableDataLabels const& data_labels),
-              (const, override));
 };
 
 TEST(OperationContextMetricTest, MetricPreCall) {

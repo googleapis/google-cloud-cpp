@@ -16,9 +16,11 @@
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/opentelemetry/internal/monitoring_exporter.h"
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
+#include "google/cloud/opentelemetry/resource_detector.h"
 #include "google/cloud/internal/algorithm.h"
 #include "absl/strings/str_split.h"
 #include "google/api/monitored_resource.pb.h"
@@ -542,6 +544,23 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ExecuteQuery(
       CloneMetrics(resource_labels, data_labels,
                    execute_query_metrics_.metrics),
       clock_);
+}
+
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics) {
+  std::vector<std::shared_ptr<Metric>> v;
+  v.reserve(metrics.size());
+  for (auto const& m : metrics) {
+    // We should never add a nullptr Metric to the list.
+    if (m == nullptr) continue;
+    if (m->schema() == MetricSchema::kTable) {
+      v.push_back(static_cast<TableSchemaMetric const*>(m.get())->clone(
+          resource_labels, data_labels));
+    }
+  }
+  return v;
 }
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
