@@ -109,10 +109,11 @@ class AsyncStreamingReadWriteRpcTracking
 template <typename Response>
 Response UnaryHelper(std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
                      std::function<Response(BigtableStub&)> fn) {
-  auto child = pool->GetChannelRandomTwoLeastUsed();
-  auto stub = child->AcquireStub();
-  auto result = fn(*stub);
-  child->ReleaseStub();
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  Response result = fn(*stub);
+  selection.channel->ReleaseStub();
   return result;
 }
 
@@ -123,11 +124,12 @@ StreamingHelper(
     std::function<std::unique_ptr<
         google::cloud::internal::StreamingReadRpc<Response>>(BigtableStub&)>
         fn) {
-  auto child = pool->GetChannelRandomTwoLeastUsed();
-  auto stub = child->AcquireStub();
-  auto result = fn(*stub);
-  auto release_fn = [weak = child->MakeWeak()] {
-    auto child = weak.lock();
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  std::unique_ptr<internal::StreamingReadRpc<Response>> result = fn(*stub);
+  auto release_fn = [weak = selection.channel->MakeWeak()] {
+    std::shared_ptr<ChannelUsage<BigtableStub>> child = weak.lock();
     if (child) child->ReleaseStub();
   };
   return std::make_unique<StreamingReadRpcTracking<Response>>(
@@ -142,11 +144,12 @@ AsyncStreamingHelper(
         google::cloud::internal::AsyncStreamingReadRpc<Response>>(
         BigtableStub&)>
         fn) {
-  auto child = pool->GetChannelRandomTwoLeastUsed();
-  auto stub = child->AcquireStub();
-  auto result = fn(*stub);
-  auto release_fn = [weak = child->MakeWeak()] {
-    auto child = weak.lock();
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  std::unique_ptr<internal::AsyncStreamingReadRpc<Response>> result = fn(*stub);
+  auto release_fn = [weak = selection.channel->MakeWeak()] {
+    std::shared_ptr<ChannelUsage<BigtableStub>> child = weak.lock();
     if (child) child->ReleaseStub();
   };
   return std::make_unique<AsyncStreamingReadRpcTracking<Response>>(
@@ -160,11 +163,13 @@ AsyncStreamingHelper(
     std::function<std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
         Request, Response>>(BigtableStub&)>
         fn) {
-  auto child = pool->GetChannelRandomTwoLeastUsed();
-  auto stub = child->AcquireStub();
-  auto result = fn(*stub);
-  auto release_fn = [weak = child->MakeWeak()] {
-    auto child = weak.lock();
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> result =
+      fn(*stub);
+  auto release_fn = [weak = selection.channel->MakeWeak()] {
+    std::shared_ptr<ChannelUsage<BigtableStub>> child = weak.lock();
     if (child) child->ReleaseStub();
   };
   return std::make_unique<
