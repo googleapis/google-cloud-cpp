@@ -40,6 +40,9 @@ add_library(
     mock_backoff_policy.h
     mock_fake_clock.cc
     mock_fake_clock.h
+    mock_opentelemetry_metrics.h
+    opentelemetry_attributes.cc
+    opentelemetry_attributes.h
     opentelemetry_matchers.cc
     opentelemetry_matchers.h
     scoped_environment.cc
