@@ -33,6 +33,28 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+enum class ChannelPoolLbPolicy {
+  kRoundRobin,
+  kRandomTwoLeastUsed,
+};
+
+enum class TransportType {
+  kCloudPath,
+  kDirectPath,
+};
+
+enum class RpcType {
+  kUnary,
+  kStreaming,
+};
+
+struct StubSelectionParams {
+  std::int64_t outstanding_rpcs;
+  ChannelPoolLbPolicy channel_pool_lb_policy;
+  TransportType transport_type;
+  RpcType streaming;
+};
+
 struct PreCallParams {
   OperationContext::Clock::time_point attempt_start;
   bool first_attempt;
@@ -68,6 +90,8 @@ class Metric {
 
   virtual ~Metric() = 0;
   virtual MetricSchema schema() const = 0;
+  virtual void StubSelection(opentelemetry::context::Context const&,
+                             StubSelectionParams const&) {}
   virtual void PreCall(opentelemetry::context::Context const&,
                        PreCallParams const&) {}
   virtual void PostCall(opentelemetry::context::Context const&,
