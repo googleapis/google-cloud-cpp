@@ -256,6 +256,25 @@ TEST(ClientSchemaMetricsTest, IntoLabelMapClientRoundRobinCloudPathUnary) {
                   Pair("streaming", "false")));
 }
 
+TEST(ClientSchemaMetricsTest, IntoLabelMapFilteredDataLabels) {
+  ClientResourceLabels resource{"p-1",    "i-1",       "app-1", "client-1",
+                                "uid-1",  "cp-1",      "loc-1", "cloud-1",
+                                "host-1", "hostname-1"};
+  ClientOutstandingRpcLabels data{TransportType::kDirectPath,
+                                  ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+                                  RpcType::kStreaming};
+  LabelMap actual = IntoLabelMap(resource, data, {"streaming"});
+  EXPECT_THAT(actual,
+              UnorderedElementsAre(
+                  Pair("project_id", "p-1"), Pair("instance", "i-1"),
+                  Pair("app_profile", "app-1"), Pair("client_name", "client-1"),
+                  Pair("client_uid", "uid-1"), Pair("client_project", "cp-1"),
+                  Pair("location", "loc-1"), Pair("cloud_platform", "cloud-1"),
+                  Pair("host_id", "host-1"), Pair("hostname", "hostname-1"),
+                  Pair("transport_type", "DirectPath"),
+                  Pair("channel_pool_lb_policy", "RANDOM_TWO_LEAST_USED")));
+}
+
 TEST(ClientSchemaMetricsTest, OutstandingRpcsMetric) {
   auto mock_histogram = std::make_unique<MockHistogram<double>>();
   EXPECT_CALL(

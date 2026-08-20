@@ -19,6 +19,7 @@
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include <opentelemetry/context/runtime_context.h>
 #endif
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -28,9 +29,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void OperationContext::ProcessMetadata(
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
   for (auto const& [k, v] : metadata) {
-    auto key = std::string{k.data(), k.size()};
-    if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
-      cookies_[std::move(key)] = std::string{v.data(), v.size()};
+    std::string_view key_view{k.data(), k.size()};
+    if (absl::StartsWith(key_view, "x-goog-cbt-cookie")) {
+      cookies_[std::string{key_view}] = std::string{v.data(), v.size()};
     }
   }
 }

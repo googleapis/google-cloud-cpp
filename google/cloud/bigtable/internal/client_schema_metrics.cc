@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <map>
 #include <set>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 auto constexpr kMeterInstrumentationScopeVersion = "v1";
 
-std::string ToString(ChannelPoolLbPolicy policy) {
+std::string_view ToString(ChannelPoolLbPolicy policy) {
   switch (policy) {
     case ChannelPoolLbPolicy::kRoundRobin:
       return "ROUND_ROBIN";
@@ -43,7 +44,7 @@ std::string ToString(ChannelPoolLbPolicy policy) {
   return "ROUND_ROBIN";
 }
 
-std::string ToString(TransportType type) {
+std::string_view ToString(TransportType type) {
   switch (type) {
     case TransportType::kCloudPath:
       return "CloudPath";
@@ -53,7 +54,7 @@ std::string ToString(TransportType type) {
   return "CloudPath";
 }
 
-std::string IsStreamingAsString(RpcType type) {
+std::string_view IsStreamingAsString(RpcType type) {
   switch (type) {
     case RpcType::kStreaming:
       return "true";
@@ -74,32 +75,21 @@ LabelMap IntoLabelMap(ClientResourceLabels const& r,
       {"location", r.location},       {"cloud_platform", r.cloud_platform},
       {"host_id", r.host_id},         {"hostname", r.hostname}};
 
-  std::map<std::string, std::string> data = {{
-      {"transport_type", ToString(d.transport_type)},
-      {"channel_pool_lb_policy", ToString(d.channel_pool_lb_policy)},
-      {"streaming", IsStreamingAsString(d.streaming)},
-  }};
-
-  if (filtered_data_labels.empty()) {
-    labels.insert(data.begin(), data.end());
-    return labels;
-  }
-
-  struct Compare {
-    bool operator()(std::pair<std::string const, std::string> const& a,
-                    std::string const& b) {
-      return a.first < b;
-    }
-
-    bool operator()(std::string const& a,
-                    std::pair<std::string const, std::string> const& b) {
-      return a < b.first;
-    }
+  struct {
+    std::string key;
+    std::string value;
+  } data[] = {
+      {"transport_type", std::string(ToString(d.transport_type))},
+      {"channel_pool_lb_policy",
+       std::string(ToString(d.channel_pool_lb_policy))},
+      {"streaming", std::string(IsStreamingAsString(d.streaming))},
   };
 
-  std::set_difference(data.begin(), data.end(), filtered_data_labels.begin(),
-                      filtered_data_labels.end(),
-                      std::inserter(labels, labels.begin()), Compare());
+  for (auto& item : data) {
+    if (filtered_data_labels.find(item.key) == filtered_data_labels.end()) {
+      labels.emplace(std::move(item.key), std::move(item.value));
+    }
+  }
 
   return labels;
 }
@@ -143,10 +133,15 @@ ClientResourceLabels MakeClientResourceLabels(
   labels.client_name = "cpp.Bigtable/" + bigtable::version_string();
   labels.client_uid = client_uid;
   labels.client_project = std::move(client_project);
-  labels.location = by_name(sc::cloud::kCloudAvailabilityZone,
-                            by_name(sc::cloud::kCloudRegion, "global"));
+  labels.location = by_name(sc::cloud::kCloudAvailabilityZone);
+  if (labels.location.empty()) {
+    labels.location = by_name(sc::cloud::kCloudRegion, "global");
+  }
   labels.cloud_platform = by_name(sc::cloud::kCloudPlatform, "unknown");
-  labels.host_id = by_name("faas.id", by_name(sc::host::kHostId, "unknown"));
+  labels.host_id = by_name("faas.id");
+  if (labels.host_id.empty()) {
+    labels.host_id = by_name(sc::host::kHostId, "unknown");
+  }
   labels.hostname = by_name(sc::host::kHostName);
   return labels;
 }
