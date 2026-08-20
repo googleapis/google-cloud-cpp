@@ -254,6 +254,15 @@ void MetricsOperationContextFactory::InitializeProvider(
   auto constexpr kTableLabel = "table";
   auto constexpr kClusterLabel = "cluster";
   auto constexpr kZoneLabel = "zone";
+  auto constexpr kAppProfileLabel = "app_profile";
+  auto constexpr kClientNameLabel = "client_name";
+  auto constexpr kClientUidAttribute = "client_uid";
+  auto constexpr kUuidLabel = "uuid";
+  auto constexpr kClientProjectLabel = "client_project";
+  auto constexpr kLocationLabel = "location";
+  auto constexpr kCloudPlatformLabel = "cloud_platform";
+  auto constexpr kHostIdLabel = "host_id";
+  auto constexpr kHostnameLabel = "hostname";
 
   auto dynamic_resource_fn =
       [=](opentelemetry::sdk::metrics::PointDataAttributes const& pda) {
@@ -268,45 +277,41 @@ void MetricsOperationContextFactory::InitializeProvider(
           return opentelemetry::nostd::get<std::string>(it->second);
         };
 
+        google::api::MonitoredResource resource;
+        resource.set_type(kResourceType);
+        auto& labels = *resource.mutable_labels();
+        labels[kProjectLabel] = get_attr(kProjectLabel);
+        labels[kInstanceLabel] = get_attr(kInstanceLabel);
+
         if (attributes.find(kTableLabel) != attributes.end()) {
-          google::api::MonitoredResource resource;
-          resource.set_type(kResourceType);
-          auto& labels = *resource.mutable_labels();
-          labels[kProjectLabel] = get_attr(kProjectLabel);
-          labels[kInstanceLabel] = get_attr(kInstanceLabel);
           labels[kTableLabel] = get_attr(kTableLabel);
           labels[kClusterLabel] = get_attr(kClusterLabel);
           labels[kZoneLabel] = get_attr(kZoneLabel);
           return std::make_pair(labels[kProjectLabel], resource);
         }
 
-        google::api::MonitoredResource resource;
-        resource.set_type(kResourceType);
-        auto& labels = *resource.mutable_labels();
-        labels["project_id"] = get_attr("project_id");
-        labels["instance"] = get_attr("instance");
-        labels["app_profile"] = get_attr("app_profile");
-        labels["client_name"] = get_attr("client_name");
-        labels["uuid"] = get_attr("client_uid");
-        std::string client_project = get_attr("client_project");
+        labels[kAppProfileLabel] = get_attr(kAppProfileLabel);
+        labels[kClientNameLabel] = get_attr(kClientNameLabel);
+        labels[kUuidLabel] = get_attr(kClientUidAttribute);
+        std::string client_project = get_attr(kClientProjectLabel);
         if (!client_project.empty()) {
-          labels["client_project"] = std::move(client_project);
+          labels[kClientProjectLabel] = std::move(client_project);
         }
-        labels["location"] = get_attr("location");
-        labels["cloud_platform"] = get_attr("cloud_platform");
-        labels["host_id"] = get_attr("host_id");
-        std::string hostname = get_attr("hostname");
+        labels[kLocationLabel] = get_attr(kLocationLabel);
+        labels[kCloudPlatformLabel] = get_attr(kCloudPlatformLabel);
+        labels[kHostIdLabel] = get_attr(kHostIdLabel);
+        std::string hostname = get_attr(kHostnameLabel);
         if (!hostname.empty()) {
-          labels["hostname"] = std::move(hostname);
+          labels[kHostnameLabel] = std::move(hostname);
         }
-        return std::make_pair(labels["project_id"], resource);
+        return std::make_pair(labels[kProjectLabel], resource);
       };
 
-  std::set<std::string> s{kProjectLabel,    kInstanceLabel, kTableLabel,
-                          kClusterLabel,    kZoneLabel,     "app_profile",
-                          "client_name",    "client_uid",   "uuid",
-                          "client_project", "location",     "cloud_platform",
-                          "host_id",        "hostname"};
+  std::set<std::string> s{
+      kProjectLabel, kInstanceLabel,      kTableLabel,      kClusterLabel,
+      kZoneLabel,    kAppProfileLabel,    kClientNameLabel, kClientUidAttribute,
+      kUuidLabel,    kClientProjectLabel, kLocationLabel,   kCloudPlatformLabel,
+      kHostIdLabel,  kHostnameLabel};
   auto resource_filter_fn = [resource_labels =
                                  std::move(s)](std::string const& key) {
     return internal::Contains(resource_labels, key);

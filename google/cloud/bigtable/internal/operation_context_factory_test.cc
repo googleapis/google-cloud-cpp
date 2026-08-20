@@ -18,7 +18,9 @@
 #include "google/cloud/bigtable/internal/client_schema_metrics.h"
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/internal/table_schema_metrics.h"
+#include "google/cloud/bigtable/options.h"
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -221,9 +223,12 @@ TEST(MetricsOperationContextFactoryTest, IncludesOutstandingRpcs) {
   std::string app_profile = "my-app-profile";
   std::string table_full_name =
       "projects/my-project/instances/my-instance/tables/my-table";
+  auto options =
+      Options{}.set<bigtable::MetricsPeriodOption>(std::chrono::seconds(60));
   MetricsOperationContextFactory factory(
       "test-uid",
-      std::shared_ptr<monitoring_v3::MetricServiceConnection>(nullptr));
+      std::shared_ptr<monitoring_v3::MetricServiceConnection>(nullptr),
+      std::move(options));
   std::shared_ptr<OperationContext> operation_context =
       factory.ReadRow(table_full_name, app_profile);
   EXPECT_THAT(operation_context, NotNull());
