@@ -66,11 +66,12 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy) {
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy,
+      TransportType transport_type) {
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(instance_name), std::move(cq), std::move(initial_channels),
         std::move(refresh_state), std::move(stub_factory_fn),
-        std::move(sizing_policy)));
+        std::move(sizing_policy), transport_type));
     return pool;
   }
 
@@ -104,6 +105,8 @@ class DynamicChannelPool
       const {
     return sizing_policy_;
   }
+
+  TransportType transport_type() const { return transport_type_; }
 
   // Calls CheckPoolChannelHealth before picking a channel.
   //
@@ -173,14 +176,16 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_wrapped_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy)
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy,
+      TransportType transport_type)
       : instance_name_(std::move(instance_name)),
         cq_(std::move(cq)),
         refresh_state_(std::move(refresh_state)),
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(std::move(initial_wrapped_channels)),
         sizing_policy_(std::move(sizing_policy)),
-        next_channel_id_(static_cast<std::uint32_t>(channels_.size())) {
+        next_channel_id_(static_cast<std::uint32_t>(channels_.size())),
+        transport_type_(transport_type) {
     std::scoped_lock lk(mu_);
     SetSizeDecreaseCooldownTimer(lk);
   }
@@ -453,6 +458,7 @@ class DynamicChannelPool
   future<StatusOr<std::chrono::system_clock::time_point>>
       pool_size_decrease_cooldown_timer_;
   std::uint32_t next_channel_id_;
+  TransportType const transport_type_ = TransportType::kCloudPath;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

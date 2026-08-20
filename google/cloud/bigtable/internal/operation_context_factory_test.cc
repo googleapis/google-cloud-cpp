@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
 #include "google/cloud/bigtable/internal/operation_context_factory.h"
+#include "google/cloud/bigtable/internal/client_schema_metrics.h"
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include <gmock/gmock.h>
@@ -27,6 +28,7 @@ namespace {
 
 using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::NotNull;
 using ::testing::SizeIs;
 
 class MockMetric : public TableSchemaMetric {
@@ -61,7 +63,8 @@ TEST(MetricsOperationContextFactoryTest, ReadRow) {
       });
 
   MetricsOperationContextFactory factory("my-client-uid", mock_metric);
-  auto operation_context = factory.ReadRow(table_full_name, app_profile);
+  std::shared_ptr<OperationContext> operation_context =
+      factory.ReadRow(table_full_name, app_profile);
 }
 
 TEST(MetricsOperationContextFactoryTest, ReadRows) {
@@ -79,7 +82,8 @@ TEST(MetricsOperationContextFactoryTest, ReadRows) {
           });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  auto operation_context = factory.ReadRows(table_full_name, app_profile);
+  std::shared_ptr<OperationContext> operation_context =
+      factory.ReadRows(table_full_name, app_profile);
 }
 
 TEST(MetricsOperationContextFactoryTest, MutateRow) {
@@ -97,7 +101,8 @@ TEST(MetricsOperationContextFactoryTest, MutateRow) {
           });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  auto operation_context = factory.MutateRow(table_full_name, app_profile);
+  std::shared_ptr<OperationContext> operation_context =
+      factory.MutateRow(table_full_name, app_profile);
 }
 
 TEST(MetricsOperationContextFactoryTest, MutateRows) {
@@ -115,7 +120,8 @@ TEST(MetricsOperationContextFactoryTest, MutateRows) {
           });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  auto operation_context = factory.MutateRows(table_full_name, app_profile);
+  std::shared_ptr<OperationContext> operation_context =
+      factory.MutateRows(table_full_name, app_profile);
 }
 
 TEST(MetricsOperationContextFactoryTest, CheckAndMutateRow) {
@@ -133,7 +139,7 @@ TEST(MetricsOperationContextFactoryTest, CheckAndMutateRow) {
           });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  auto operation_context =
+  std::shared_ptr<OperationContext> operation_context =
       factory.CheckAndMutateRow(table_full_name, app_profile);
 }
 
@@ -152,7 +158,8 @@ TEST(MetricsOperationContextFactoryTest, SampleRowKeys) {
           });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  auto operation_context = factory.SampleRowKeys(table_full_name, app_profile);
+  std::shared_ptr<OperationContext> operation_context =
+      factory.SampleRowKeys(table_full_name, app_profile);
 }
 
 TEST(MetricsOperationContextFactoryTest, ReadModifyWriteRow) {
@@ -170,7 +177,7 @@ TEST(MetricsOperationContextFactoryTest, ReadModifyWriteRow) {
           });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  auto operation_context =
+  std::shared_ptr<OperationContext> operation_context =
       factory.ReadModifyWriteRow(table_full_name, app_profile);
 }
 
@@ -188,7 +195,7 @@ TEST(MetricsOperationContextFactoryTest, PrepareQuery) {
           });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  auto operation_context =
+  std::shared_ptr<OperationContext> operation_context =
       factory.PrepareQuery(instance_full_name, app_profile);
 }
 
@@ -206,8 +213,52 @@ TEST(MetricsOperationContextFactoryTest, ExecuteQuery) {
           });
 
   MetricsOperationContextFactory factory({}, mock_metric);
-  auto operation_context =
+  std::shared_ptr<OperationContext> operation_context =
       factory.ExecuteQuery(instance_full_name, app_profile);
+}
+
+TEST(MetricsOperationContextFactoryTest, IncludesOutstandingRpcs) {
+  std::string app_profile = "my-app-profile";
+  std::string table_full_name =
+      "projects/my-project/instances/my-instance/tables/my-table";
+  MetricsOperationContextFactory factory(
+      "test-uid",
+      std::shared_ptr<monitoring_v3::MetricServiceConnection>(nullptr));
+  std::shared_ptr<OperationContext> operation_context =
+      factory.ReadRow(table_full_name, app_profile);
+  EXPECT_THAT(operation_context, NotNull());
+  operation_context->StubSelection(
+      StubSelectionParams{10, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+                          TransportType::kDirectPath, RpcType::kUnary});
+}
+
+class MockClientMetric : public ClientSchemaMetric {
+ public:
+  MOCK_METHOD(std::unique_ptr<ClientSchemaMetric>, clone,
+              (ClientResourceLabels const&), (const, override));
+};
+
+TEST(MetricsOperationContextFactoryTest, ClientResourceLabelsPopulated) {
+  std::string app_profile = "my-app-profile";
+  std::string table_full_name =
+      "projects/my-project/instances/my-instance/tables/my-table";
+
+  auto mock_metric = std::make_shared<MockClientMetric const>();
+  EXPECT_CALL(*mock_metric, clone(::testing::A<ClientResourceLabels const&>()))
+      .WillOnce([&](ClientResourceLabels const& client_labels) {
+        EXPECT_THAT(client_labels.project_id, Eq("my-project"));
+        EXPECT_THAT(client_labels.instance, Eq("my-instance"));
+        EXPECT_THAT(client_labels.app_profile, Eq("my-app-profile"));
+        EXPECT_THAT(client_labels.client_name,
+                    Eq("cpp.Bigtable/" + version_string()));
+        EXPECT_THAT(client_labels.client_uid, Eq("my-client-uid"));
+        return std::make_unique<MockClientMetric>();
+      });
+
+  MetricsOperationContextFactory factory("my-client-uid", mock_metric);
+  std::shared_ptr<OperationContext> operation_context =
+      factory.ReadRow(table_full_name, app_profile);
+  EXPECT_THAT(operation_context, NotNull());
 }
 
 class FakeTableMetric : public TableSchemaMetric {
@@ -218,17 +269,47 @@ class FakeTableMetric : public TableSchemaMetric {
   }
 };
 
+class FakeClientMetric : public ClientSchemaMetric {
+ public:
+  std::unique_ptr<ClientSchemaMetric> clone(
+      ClientResourceLabels const&) const override {
+    return std::make_unique<FakeClientMetric>(*this);
+  }
+};
+
 TEST(MetricsOperationContextFactoryTest, CloneMetrics) {
   auto table_metric = std::make_shared<FakeTableMetric>();
+  auto client_metric = std::make_shared<FakeClientMetric>();
 
   TableResourceLabels resource_labels{"project", "instance", "table", "cluster",
                                       "zone"};
   TableDataLabels data_labels{"method", "streaming", "client",
                               "uid",    "profile",   "status"};
 
-  std::vector<std::shared_ptr<Metric const>> metrics = {table_metric};
-  auto cloned = CloneMetrics(resource_labels, data_labels, metrics);
-  EXPECT_THAT(cloned, SizeIs(1));
+  std::vector<std::shared_ptr<Metric const>> metrics = {table_metric,
+                                                        client_metric};
+  std::vector<std::shared_ptr<Metric>> cloned =
+      CloneMetrics(resource_labels, data_labels, metrics);
+  EXPECT_THAT(cloned, SizeIs(2));
+}
+
+TEST(MetricsOperationContextFactoryTest, CloneMetricsWithClientResourceLabels) {
+  auto table_metric = std::make_shared<FakeTableMetric>();
+  auto client_metric = std::make_shared<FakeClientMetric>();
+
+  TableResourceLabels resource_labels{"project", "instance", "table", "cluster",
+                                      "zone"};
+  TableDataLabels data_labels{"method", "streaming", "client",
+                              "uid",    "profile",   "status"};
+  ClientResourceLabels client_labels{
+      "project",     "instance", "profile", "client", "uid",
+      "client-proj", "location", "gcp",     "host",   "hostname"};
+
+  std::vector<std::shared_ptr<Metric const>> metrics = {table_metric,
+                                                        client_metric};
+  std::vector<std::shared_ptr<Metric>> cloned =
+      CloneMetrics(resource_labels, data_labels, client_labels, metrics);
+  EXPECT_THAT(cloned, SizeIs(2));
 }
 
 }  // namespace

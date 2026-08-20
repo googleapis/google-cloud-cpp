@@ -180,7 +180,7 @@ TEST_F(DynamicChannelPoolTest, SelectLeastUsedFromTwoChannels) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn, sizing_policy);
+      stub_factory_fn, sizing_policy, TransportType::kCloudPath);
   auto selected = pool->GetChannelRandomTwoLeastUsed();
   EXPECT_THAT(selected.outstanding_rpcs, Eq(5));
   grpc::ClientContext context;
@@ -247,7 +247,8 @@ TEST_F(DynamicChannelPoolTest, OneInitialChannel) {
     sizing_policy.minimum_channel_pool_size = 1;
     auto pool = DynamicChannelPool<BigtableStub>::Create(
         instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-        stub_factory_fn.AsStdFunction(), sizing_policy);
+        stub_factory_fn.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
     EXPECT_THAT(pool->size(), Eq(1));
 
     auto selected = pool->GetChannelRandomTwoLeastUsed();
@@ -310,7 +311,8 @@ TEST_F(DynamicChannelPoolTest, EmptyInitialPool) {
     sizing_policy.minimum_channel_pool_size = 0;
     auto pool = DynamicChannelPool<BigtableStub>::Create(
         instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-        stub_factory_fn.AsStdFunction(), sizing_policy);
+        stub_factory_fn.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
 
     EXPECT_THAT(*pool, ::testing::IsEmpty());
 
@@ -356,7 +358,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolUndersized) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   {
@@ -416,7 +419,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolAtMax) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
@@ -463,7 +467,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolBelowMax) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
@@ -520,7 +525,8 @@ TEST_F(DynamicChannelPoolTest, AddChannels) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   std::vector<int> new_channel_ids = {0, 1};
   wrapper.set_num_pending_channels(new_channel_ids.size());
@@ -557,7 +563,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleRemoveChannelsAlreadyPending) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   promise<void> p;
@@ -597,7 +604,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleRemoveChannelsNotAlreadyPending) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
@@ -643,7 +651,8 @@ TEST_F(DynamicChannelPoolTest, RemoveChannelsLoneChannelDrained) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> draining_channels;
@@ -684,7 +693,8 @@ TEST_F(DynamicChannelPoolTest, RemoveChannelsSomeChannelsDrained) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> draining_channels;
@@ -779,7 +789,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
@@ -862,7 +873,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
@@ -951,7 +963,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
@@ -1050,7 +1063,8 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
@@ -1112,7 +1126,8 @@ TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsIncrease) {
     sizing_policy.maximum_channel_pool_size = 1;
     auto pool = DynamicChannelPool<BigtableStub>::Create(
         instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-        stub_factory_fn.AsStdFunction(), sizing_policy);
+        stub_factory_fn.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
     DynamicChannelPoolTestWrapper wrapper(pool);
 
     // ScheduleAddChannels will NOT be called as the pool has max channels.
@@ -1126,7 +1141,8 @@ TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsIncrease) {
     sizing_policy.maximum_channel_pool_size = 10;
     auto pool = DynamicChannelPool<BigtableStub>::Create(
         instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-        stub_factory_fn.AsStdFunction(), sizing_policy);
+        stub_factory_fn.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
     DynamicChannelPoolTestWrapper wrapper(pool);
 
     // ScheduleAddChannels will be called.
@@ -1192,7 +1208,8 @@ TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsDecrease) {
   sizing_policy.minimum_average_outstanding_rpcs_per_channel = 5;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   // ScheduleAddChannels will NOT be called.
@@ -1205,6 +1222,41 @@ TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsDecrease) {
 
   EXPECT_THAT(wrapper.num_pending_channels(), Eq(0));
   EXPECT_THAT(pool->size(), Eq(3));
+}
+
+TEST_F(DynamicChannelPoolTest, TransportType) {
+  auto instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl_, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
+  DynamicChannelPoolSizingPolicy sizing_policy;
+  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
+      std::uint32_t, std::string const&, StubManager::Priming)>
+      stub_factory_fn;
+
+  EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
+      .WillRepeatedly([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return make_ready_future(StatusOr(std::chrono::system_clock::now()));
+      });
+
+  auto pool_cloud = DynamicChannelPool<BigtableStub>::Create(
+      instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
+  EXPECT_THAT(pool_cloud->transport_type(), Eq(TransportType::kCloudPath));
+
+  auto pool_direct = DynamicChannelPool<BigtableStub>::Create(
+      instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kDirectPath);
+  EXPECT_THAT(pool_direct->transport_type(), Eq(TransportType::kDirectPath));
 }
 
 }  // namespace
