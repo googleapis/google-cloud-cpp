@@ -17,12 +17,16 @@
 
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/common/key_value_iterable_view.h>
+#include <opentelemetry/common/key_value_iterable.h>
 #include <opentelemetry/context/context.h>
 #include <opentelemetry/metrics/async_instruments.h>
 #include <opentelemetry/metrics/meter.h>
 #include <opentelemetry/metrics/meter_provider.h>
 #include <opentelemetry/metrics/sync_instruments.h>
+#include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/nostd/span.h>
+#include <opentelemetry/nostd/string_view.h>
+#include <opentelemetry/nostd/unique_ptr.h>
 #include <opentelemetry/version.h>
 #include <cstdint>
 

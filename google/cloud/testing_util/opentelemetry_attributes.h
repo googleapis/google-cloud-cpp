@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_ATTRIBUTES_H
 
 #include "google/cloud/version.h"
-#include <opentelemetry/common/key_value_iterable_view.h>
+#include <opentelemetry/common/key_value_iterable.h>
 #include <string>
 #include <unordered_map>
 
