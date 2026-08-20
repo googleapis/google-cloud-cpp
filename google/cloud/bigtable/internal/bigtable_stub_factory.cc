@@ -178,7 +178,10 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
           std::move(children), std::move(refresh_state),
           std::move(refreshing_channel_stub_factory),
           options.get<
-              bigtable::experimental::DynamicChannelPoolSizingPolicyOption>()));
+              bigtable::experimental::DynamicChannelPoolSizingPolicyOption>(),
+          bigtable::internal::IsDirectPath(options)
+              ? TransportType::kDirectPath
+              : TransportType::kCloudPath));
 }
 
 std::shared_ptr<BigtableStub> CreateDecoratedStubs(
