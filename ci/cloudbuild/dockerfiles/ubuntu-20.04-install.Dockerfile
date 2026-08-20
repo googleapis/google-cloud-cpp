@@ -96,7 +96,7 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.5.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/nlohmann-json
-RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.12.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
