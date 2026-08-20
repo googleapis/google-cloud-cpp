@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/bigtable/options.h"
+#include "google/cloud/monitoring/v3/metric_connection.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -315,6 +316,116 @@ TEST(MetricsOperationContextFactoryTest, CloneMetricsWithClientResourceLabels) {
   std::vector<std::shared_ptr<Metric>> cloned =
       CloneMetrics(resource_labels, data_labels, client_labels, metrics);
   EXPECT_THAT(cloned, SizeIs(2));
+}
+
+class MockMetricServiceConnection
+    : public monitoring_v3::MetricServiceConnection {
+ public:
+  ~MockMetricServiceConnection() override = default;
+  MOCK_METHOD(Status, CreateServiceTimeSeries,
+              (google::monitoring::v3::CreateTimeSeriesRequest const&),
+              (override));
+  MOCK_METHOD(Status, CreateTimeSeries,
+              (google::monitoring::v3::CreateTimeSeriesRequest const&),
+              (override));
+};
+
+TEST(MetricsOperationContextFactoryTest,
+     InitializeProviderExportsTableAndClientMetrics) {
+  auto mock_conn = std::make_shared<MockMetricServiceConnection>();
+
+  EXPECT_CALL(*mock_conn, CreateServiceTimeSeries)
+      .WillRepeatedly(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), Eq("projects/my-project"));
+            for (auto const& ts : request.time_series()) {
+              EXPECT_THAT(ts.resource().type(), Eq("bigtable_client_raw"));
+              if (ts.resource().labels().find("table") !=
+                  ts.resource().labels().end()) {
+                EXPECT_THAT(ts.resource().labels().at("project_id"),
+                            Eq("my-project"));
+                EXPECT_THAT(ts.resource().labels().at("instance"),
+                            Eq("my-instance"));
+                EXPECT_THAT(ts.resource().labels().at("table"), Eq("my-table"));
+              } else {
+                EXPECT_THAT(ts.resource().labels().at("project_id"),
+                            Eq("my-project"));
+                EXPECT_THAT(ts.resource().labels().at("instance"),
+                            Eq("my-instance"));
+                EXPECT_THAT(ts.resource().labels().at("app_profile"),
+                            Eq("my-app-profile"));
+                EXPECT_THAT(ts.resource().labels().at("uuid"), Eq("test-uid"));
+                EXPECT_THAT(ts.resource().labels().at("client_name"),
+                            Eq("cpp.Bigtable/" + version_string()));
+              }
+              // Verify resource filtering removed resource labels from metric
+              // labels:
+              EXPECT_TRUE(ts.metric().labels().find("project_id") ==
+                          ts.metric().labels().end());
+              EXPECT_TRUE(ts.metric().labels().find("instance") ==
+                          ts.metric().labels().end());
+              EXPECT_TRUE(ts.metric().labels().find("table") ==
+                          ts.metric().labels().end());
+              EXPECT_TRUE(ts.metric().labels().find("app_profile") ==
+                          ts.metric().labels().end());
+              EXPECT_TRUE(ts.metric().labels().find("uuid") ==
+                          ts.metric().labels().end());
+            }
+            return Status();
+          });
+
+  auto options =
+      Options{}.set<bigtable::MetricsPeriodOption>(std::chrono::seconds(60));
+  {
+    MetricsOperationContextFactory factory("test-uid", mock_conn, options);
+    std::shared_ptr<OperationContext> op = factory.ReadRow(
+        "projects/my-project/instances/my-instance/tables/my-table",
+        "my-app-profile");
+    ASSERT_THAT(op, NotNull());
+    op->OnDone(Status());
+    op->StubSelection(
+        StubSelectionParams{10, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+                            TransportType::kDirectPath, RpcType::kUnary});
+  }
+}
+
+TEST(MetricsOperationContextFactoryTest, InitializeProviderInstanceLevelRpc) {
+  auto mock_conn = std::make_shared<MockMetricServiceConnection>();
+
+  EXPECT_CALL(*mock_conn, CreateServiceTimeSeries)
+      .WillRepeatedly(
+          [](google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+            EXPECT_THAT(request.name(), Eq("projects/my-project"));
+            for (auto const& ts : request.time_series()) {
+              EXPECT_THAT(ts.resource().type(), Eq("bigtable_client_raw"));
+              EXPECT_THAT(ts.resource().labels().at("project_id"),
+                          Eq("my-project"));
+              EXPECT_THAT(ts.resource().labels().at("instance"),
+                          Eq("my-instance"));
+            }
+            return Status();
+          });
+
+  auto options =
+      Options{}.set<bigtable::MetricsPeriodOption>(std::chrono::seconds(60));
+  {
+    MetricsOperationContextFactory factory("test-uid", mock_conn, options);
+    std::shared_ptr<OperationContext> op = factory.ExecuteQuery(
+        "projects/my-project/instances/my-instance", "my-app-profile");
+    ASSERT_THAT(op, NotNull());
+    op->OnDone(Status());
+  }
+}
+
+TEST(MetricsOperationContextFactoryTest, InitializeProviderWithoutConnection) {
+  auto options =
+      Options{}.set<bigtable::MetricsPeriodOption>(std::chrono::seconds(60));
+  MetricsOperationContextFactory factory("test-uid", nullptr, options);
+
+  std::shared_ptr<OperationContext> operation_context = factory.ReadRow(
+      "projects/my-project/instances/my-instance/tables/my-table",
+      "my-app-profile");
+  EXPECT_THAT(operation_context, NotNull());
 }
 
 }  // namespace

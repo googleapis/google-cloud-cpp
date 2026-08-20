@@ -307,15 +307,15 @@ void MetricsOperationContextFactory::InitializeProvider(
         return std::make_pair(labels[kProjectLabel], resource);
       };
 
-  std::set<std::string> s{
+  std::set<std::string> resource_labels{
       kProjectLabel, kInstanceLabel,      kTableLabel,      kClusterLabel,
       kZoneLabel,    kAppProfileLabel,    kClientNameLabel, kClientUidAttribute,
       kUuidLabel,    kClientProjectLabel, kLocationLabel,   kCloudPlatformLabel,
       kHostIdLabel,  kHostnameLabel};
-  auto resource_filter_fn = [resource_labels =
-                                 std::move(s)](std::string const& key) {
-    return internal::Contains(resource_labels, key);
-  };
+  auto resource_filter_fn =
+      [resource_labels = std::move(resource_labels)](std::string const& key) {
+        return internal::Contains(resource_labels, key);
+      };
 
   auto reader_options =
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
