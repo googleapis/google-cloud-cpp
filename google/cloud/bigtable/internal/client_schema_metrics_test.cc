@@ -190,6 +190,13 @@ class MockMeterProvider : public opentelemetry::metrics::MeterProvider {
                opentelemetry::nostd::string_view,
                opentelemetry::common::KeyValueIterable const*),
               (noexcept, override));
+
+  MOCK_METHOD(void, RemoveMeter,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view),
+              (noexcept, override));
+
 #else
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>,
               GetMeter,  // NOLINT(bugprone-exception-escape)
