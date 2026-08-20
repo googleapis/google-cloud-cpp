@@ -17,6 +17,7 @@
 #include "google/cloud/grpc_options.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
@@ -83,7 +84,7 @@ v2::MutateRowsResponse MakeResponse(
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-class MockMetric : public bigtable_internal::Metric {
+class MockMetric : public bigtable_internal::TableSchemaMetric {
  public:
   MOCK_METHOD(void, PreCall,
               (opentelemetry::context::Context const&,
@@ -106,7 +107,7 @@ class MockMetric : public bigtable_internal::Metric {
               (opentelemetry::context::Context const&,
                bigtable_internal::ElementDeliveryParams const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+  MOCK_METHOD(std::unique_ptr<bigtable_internal::TableSchemaMetric>, clone,
               (bigtable_internal::TableResourceLabels const& resource_labels,
                bigtable_internal::TableDataLabels const& data_labels),
               (const, override));

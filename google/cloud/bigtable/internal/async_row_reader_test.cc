@@ -21,6 +21,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
 #include "google/cloud/testing_util/mock_backoff_policy.h"
@@ -94,7 +95,7 @@ class AsyncRowReaderTest : public ::testing::Test {
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-class MockMetric : public Metric {
+class MockMetric : public TableSchemaMetric {
  public:
   MOCK_METHOD(void, PreCall,
               (opentelemetry::context::Context const&, PreCallParams const&),
@@ -114,7 +115,7 @@ class MockMetric : public Metric {
               (opentelemetry::context::Context const&,
                ElementDeliveryParams const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+  MOCK_METHOD(std::unique_ptr<TableSchemaMetric>, clone,
               (TableResourceLabels const& resource_labels,
                TableDataLabels const& data_labels),
               (const, override));

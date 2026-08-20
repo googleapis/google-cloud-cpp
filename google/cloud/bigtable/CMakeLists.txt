@@ -222,6 +222,8 @@ add_library(
     internal/rpc_policy_parameters.inc
     internal/stub_manager.cc
     internal/stub_manager.h
+    internal/table_schema_metrics.cc
+    internal/table_schema_metrics.h
     internal/traced_row_reader.cc
     internal/traced_row_reader.h
     internal/tuple_utils.h
@@ -485,6 +487,7 @@ if (BUILD_TESTING)
         internal/rate_limiter_test.cc
         internal/retry_traits_test.cc
         internal/stub_manager_test.cc
+        internal/table_schema_metrics_test.cc
         internal/traced_row_reader_test.cc
         internal/tuple_utils_test.cc
         mocks/mock_row_reader_test.cc
