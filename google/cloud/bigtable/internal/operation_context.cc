@@ -27,11 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void OperationContext::ProcessMetadata(
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
-  for (auto const& kv : metadata) {
-    auto key = std::string{kv.first.data(), kv.first.size()};
+  for (auto const& [k, v] : metadata) {
+    auto key = std::string{k.data(), k.size()};
     if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
-      cookies_[std::move(key)] =
-          std::string{kv.second.data(), kv.second.size()};
+      cookies_[std::move(key)] = std::string{v.data(), v.size()};
     }
   }
 }
@@ -41,6 +40,13 @@ void OperationContext::ProcessMetadata(
 OperationContext::OperationContext(std::vector<std::shared_ptr<Metric>> metrics,
                                    std::shared_ptr<Clock> clock)
     : cloned_metrics_(std::move(metrics)), clock_(std::move(clock)) {}
+
+void OperationContext::StubSelection(StubSelectionParams const& params) {
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  for (auto& m : cloned_metrics_) {
+    m->StubSelection(otel_context, params);
+  }
+}
 
 void OperationContext::PreCall(grpc::ClientContext& client_context) {
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
@@ -53,8 +59,8 @@ void OperationContext::PreCall(grpc::ClientContext& client_context) {
                PreCallParams{attempt_start, attempt_number_ == 0});
   }
 
-  for (auto const& h : cookies_) {
-    client_context.AddMetadata(h.first, h.second);
+  for (auto const& [key, value] : cookies_) {
+    client_context.AddMetadata(key, value);
   }
   client_context.AddMetadata("bigtable-attempt",
                              std::to_string(attempt_number_++));
@@ -106,8 +112,8 @@ OperationContext::OperationContext(std::vector<std::shared_ptr<Metric>>,
                                    std::shared_ptr<Clock>) {}
 
 void OperationContext::PreCall(grpc::ClientContext& client_context) {
-  for (auto const& h : cookies_) {
-    client_context.AddMetadata(h.first, h.second);
+  for (auto const& [key, value] : cookies_) {
+    client_context.AddMetadata(key, value);
   }
   client_context.AddMetadata("bigtable-attempt",
                              std::to_string(attempt_number_++));
