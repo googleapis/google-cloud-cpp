@@ -230,9 +230,9 @@ class AsyncWriterConnectionBufferedState
   }
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
+    writing_ = true;
     // If we are writing data, continue doing so.
     if (write_offset_ < resend_buffer_.size()) {
-      writing_ = true;
       // Still data to write, determine the next chunk.
       auto const n = resend_buffer_.size() - write_offset_;
       auto payload = resend_buffer_.Subcord(write_offset_, n);
@@ -243,18 +243,15 @@ class AsyncWriterConnectionBufferedState
     // No data left to write.
     // Check if we need to finalize (only if not already finalizing).
     if (finalize_ && !finalizing_) {
-      writing_ = true;
       // FinalizeStep will set the finalizing_ flag.
       return FinalizeStep(std::move(lk));
     }
     if (close_ && !closing_) {
-      writing_ = true;
       // CloseStep will set the closing_ flag.
       return CloseStep(std::move(lk));
     }
     // If not finalizing, check if an empty flush is needed.
     if (flush_) {
-      writing_ = true;
       // Pass empty payload to FlushStep
       return FlushStep(std::move(lk), absl::Cord{});
     }
