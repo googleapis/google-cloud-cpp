@@ -824,6 +824,108 @@ TEST(WriteConnectionBuffered, FlushResumesAndDoesNotCompletePrematurely) {
   EXPECT_STATUS_OK(f.get());
 }
 
+TEST(WriteConnectionBuffered, FinalizeWhileFlushing) {
+  AsyncSequencer<bool> sequencer;
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+
+  // An explicit 0-byte flush triggers a `Flush` on the underlying connection.
+  EXPECT_CALL(*mock, Flush).WillOnce([&](auto payload) {
+    EXPECT_TRUE(payload.empty());
+    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  });
+  // Finalize should only be dispatched after Flush has completed.
+  EXPECT_CALL(*mock, Finalize).WillOnce([&](auto payload) {
+    EXPECT_TRUE(payload.empty());
+    return sequencer.PushBack("Finalize").then([](auto) {
+      return make_status_or(TestObject());
+    });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  // Trigger an explicit `Flush` with no data.
+  auto flush = connection->Flush(storage::WritePayload{});
+  ASSERT_FALSE(flush.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+
+  // While `Flush` is in-flight, call `Finalize`.
+  // Because the `writing_` flag remains true during `FlushStep`, `Finalize`
+  // must be queued and must not call `mock->Finalize` concurrently.
+  auto finalize = connection->Finalize(storage::WritePayload{});
+  ASSERT_FALSE(finalize.is_ready());
+
+  // Complete the `Flush` step.
+  next.first.set_value(true);
+
+  // `Flush` promise is satisfied.
+  ASSERT_TRUE(flush.is_ready());
+  EXPECT_STATUS_OK(flush.get());
+
+  // Only now should `Finalize` be dispatched to the underlying connection.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finalize");
+  next.first.set_value(true);
+
+  ASSERT_TRUE(finalize.is_ready());
+  EXPECT_THAT(finalize.get(), IsOkAndHolds(IsProtoEqual(TestObject())));
+}
+
+TEST(WriteConnectionBuffered, WriteWhileFlushing) {
+  AsyncSequencer<bool> sequencer;
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, UploadId).WillRepeatedly(Return("test-upload-id"));
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+
+  EXPECT_CALL(*mock, Flush).WillOnce([&](auto payload) {
+    EXPECT_TRUE(payload.empty());
+    return sequencer.PushBack("Flush").then([](auto) { return Status{}; });
+  });
+  EXPECT_CALL(*mock, Write).WillOnce([&](auto payload) {
+    EXPECT_EQ(payload.size(), 1024);
+    return sequencer.PushBack("Write").then([](auto) { return Status{}; });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection = MakeWriterConnectionBuffered(
+      mock_factory.AsStdFunction(), std::move(mock), TestOptions());
+
+  auto flush = connection->Flush(storage::WritePayload{});
+  ASSERT_FALSE(flush.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+
+  // Call `Write` while `Flush` is in-flight.
+  auto write = connection->Write(TestPayload(1024));
+
+  // Complete `Flush`.
+  next.first.set_value(true);
+
+  ASSERT_TRUE(flush.is_ready());
+  EXPECT_STATUS_OK(flush.get());
+
+  // Now `Write` should execute.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+
+  EXPECT_STATUS_OK(write.get());
+}
+
 TEST(WriteConnectionBuffered, CloseEmpty) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockAsyncWriterConnection>();
