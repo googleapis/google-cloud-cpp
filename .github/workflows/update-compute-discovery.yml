@@ -42,7 +42,7 @@ jobs:
           title: "feat(compute): update discovery doc and generate new services"
           body: |
             Automated update of Compute Engine Discovery Document and generated C++ client code.
-            
+
             Triggered automatically by the `update-compute-discovery` workflow.
           labels: |
             autorelease: pending
