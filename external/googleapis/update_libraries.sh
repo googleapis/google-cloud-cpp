@@ -161,6 +161,7 @@ declare -A -r LIBRARIES=(
   )"
   ["filestore"]="@googleapis//google/cloud/filestore/v1:filestore_cc_grpc"
   ["financialservices"]="@googleapis//google/cloud/financialservices/v1:financialservices_cc_grpc"
+  ["ftp"]="@googleapis//google/cloud/ftp/v1:ftp_cc_grpc"
   ["functions"]="$(
     printf ",%s" \
       "@googleapis//google/cloud/functions/v1:functions_cc_grpc" \
