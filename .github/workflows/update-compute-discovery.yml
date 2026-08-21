@@ -1,0 +1,48 @@
+name: Update Compute Discovery Document
+
+on:
+  schedule:
+    # Runs every Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions UI
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-compute-discovery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git user identity
+        run: |
+          git config user.name "cloud-cpp-automation[bot]"
+          git config user.email "cloud-cpp-automation[bot]@users.noreply.github.com"
+
+      - name: Run update_discovery_doc.sh
+        run: |
+          ./generator/discovery/update_discovery_doc.sh --no-create-branch
+
+      - name: Run checkers
+        run: |
+          ci/cloudbuild/build.sh -t checkers-pr
+
+      - name: Create Pull Request if changes exist
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat(compute): update discovery doc and generate new services"
+          branch: "automation/update-compute-discovery"
+          delete-branch: true
+          title: "feat(compute): update discovery doc and generate new services"
+          body: |
+            Automated update of Compute Engine Discovery Document and generated C++ client code.
+            
+            Triggered automatically by the `update-compute-discovery` workflow.
+          labels: |
+            autorelease: pending
