@@ -186,9 +186,8 @@ INSTANTIATE_TEST_SUITE_P(DetectGcpPlatform,
 
 TEST_P(MakeGcpDetectorServerlessEnvVarsTest, DetectsServerlessEnvVar) {
   std::string const& env_var = GetParam();
-  auto scoped_env =
-      google::cloud::testing_util::ScopedEnvironment(env_var, "TEST_VALUE");
-  auto gcp_detector = MakeGcpDetector();
+  testing_util::ScopedEnvironment scoped_env(env_var, "TEST_VALUE");
+  std::shared_ptr<GcpDetector> gcp_detector = MakeGcpDetector();
   EXPECT_TRUE(gcp_detector->IsGoogleCloudServerless());
 }
 
