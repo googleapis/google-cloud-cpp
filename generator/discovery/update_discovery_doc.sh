@@ -90,8 +90,16 @@ CURRENT_REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${PROJE
 
 io::log_h2 "Fetching discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
 TEMP_JSON=$(mktemp)
+if [[ ! -f "${TEMP_JSON}" ]]; then
+  io::log_red "Failed to create temporary file."
+  exit 1
+fi
 trap 'rm -f "${TEMP_JSON}"' EXIT
-curl -fsSL "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${TEMP_JSON}"
+
+if ! curl -fsSL "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${TEMP_JSON}"; then
+  io::log_red "Failed to fetch discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
+  exit 1
+fi
 
 REVISION=$(sed -En 's/  \"revision\": \"([[:digit:]]+)\",/\1/p' "${TEMP_JSON}")
 if [[ -z "${REVISION}" ]]; then
