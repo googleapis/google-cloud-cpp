@@ -30,6 +30,7 @@
 #include <netinet/in.h>
 #include <cerrno>
 #include <chrono>
+#include <string_view>
 #include <thread>
 #include <fcntl.h>
 #include <poll.h>
@@ -246,7 +247,7 @@ TEST_F(ObservabilityIntegrationTest, VerifyOperationAndAttemptMetrics) {
                                    HasResourceLabel("table", table_id));
 
   if (!TableTestEnvironment::zone_a().empty()) {
-    std::vector<absl::string_view> parts =
+    std::vector<std::string_view> parts =
         absl::StrSplit(TableTestEnvironment::zone_a(), '-');
     auto prefix = parts.size() >= 2 ? absl::StrCat(parts[0], "-", parts[1])
                                     : TableTestEnvironment::zone_a();
@@ -341,7 +342,7 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
 
   Matcher<std::string const&> region_val_matcher = Not(IsEmpty());
   if (expected_location.has_value() && !expected_location->empty()) {
-    std::vector<absl::string_view> parts =
+    std::vector<std::string_view> parts =
         absl::StrSplit(*expected_location, '-');
     std::string region_prefix = parts.size() >= 2
                                     ? absl::StrCat(parts[0], "-", parts[1])
