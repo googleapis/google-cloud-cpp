@@ -32,17 +32,29 @@ jobs:
         run: |
           ci/cloudbuild/build.sh -t checkers-pr
 
-      - name: Create Pull Request if changes exist
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "feat(compute): update discovery doc and generate new services"
-          branch: "automation/update-compute-discovery"
-          delete-branch: true
-          title: "feat(compute): update discovery doc and generate new services"
-          body: |
-            Automated update of Compute Engine Discovery Document and generated C++ client code.
+      - name: Push branch and create Pull Request if changes exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if a new commit was made (HEAD differs from origin/main)
+          if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]]; then
+            echo "Changes detected. Pushing branch automation/update-compute-discovery..."
+            git push origin HEAD:automation/update-compute-discovery --force
 
-            Triggered automatically by the `update-compute-discovery` workflow.
-          labels: |
-            autorelease: pending
+            echo "Checking if a PR is already open..."
+            if ! gh pr list --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
+              echo "Opening new PR..."
+              gh pr create \
+                --title "feat(compute): update discovery doc and generate new services" \
+                --body "Automated update of Compute Engine Discovery Document and generated C++ client code.
+
+Triggered automatically by the \`update-compute-discovery\` workflow." \
+                --base main \
+                --head automation/update-compute-discovery \
+                --label "autorelease: pending"
+            else
+              echo "Pull request already exists for automation/update-compute-discovery. Branch has been updated."
+            fi
+          else
+            echo "No changes committed. Nothing to push or create."
+          fi
