@@ -34,6 +34,83 @@ namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
+ * Enable experimental request hedging for `ReadObject()` streams.
+ *
+ * When enabled, opening a download races the initial request against one or
+ * more delayed, duplicate ("hedged") requests, and the first to respond wins.
+ * This reduces tail latency at the cost of additional requests.
+ *
+ * @ingroup storage-options
+ */
+struct EnableReadHedgingOption {
+  using Type = bool;
+};
+
+/**
+ * The maximum rate of hedged requests per second across the connection.
+ *
+ * The default is 0.0, meaning no rate limit.
+ *
+ * @ingroup storage-options
+ */
+struct ReadHedgeRateLimitOption {
+  using Type = double;
+};
+
+/**
+ * The maximum number of concurrently active hedged requests across the
+ * connection.
+ *
+ * The default is 0, meaning no concurrency limit.
+ *
+ * @ingroup storage-options
+ */
+struct MaxConcurrentHedgesOption {
+  using Type = std::int64_t;
+};
+
+/**
+ * The largest read, in bytes, that is eligible for hedging.
+ *
+ * Racing requests each buffer their own copy of the data, so the memory used
+ * while opening a stream grows with the size of the first read. A read larger
+ * than this value is served without hedging, reading directly into the
+ * application's buffer, which bounds that growth. Note this is the size the
+ * application asks for in a single read (e.g. `stream.read(buf, n)`), not the
+ * size of the object or of a requested range.
+ *
+ * The default is 64 MiB (64 * 1024 * 1024).
+ *
+ * @ingroup storage-options
+ */
+struct MaximumHedgeBufferOption {
+  using Type = std::size_t;
+};
+
+/**
+ * The delay before starting a hedged request.
+ *
+ * The default is 500 milliseconds.
+ *
+ * @ingroup storage-options
+ */
+struct ReadHedgeDelayOption {
+  using Type = std::chrono::milliseconds;
+};
+
+/**
+ * The maximum number of hedged requests per stream open.
+ *
+ * The default is 2. Set to 0 to disable hedging for reads even when
+ * `EnableReadHedgingOption` is set.
+ *
+ * @ingroup storage-options
+ */
+struct MaxReadHedgesOption {
+  using Type = int;
+};
+
+/**
  * Set the HTTP version used by the client.
  *
  * If this option is not provided, or is set to `default` then the library uses
@@ -64,6 +141,24 @@ struct HttpVersionOption {
  */
 struct OTelSpanEnrichmentOption {
   using Type = bool;
+};
+
+/**
+ * Sets the TCP/TLS connection timeout.
+ *
+ * If the connection cannot be established within this time, the request is
+ * aborted. This is useful as a fail-safe against OS-level TCP locks during
+ * severe network routing anomalies.
+ *
+ * This applies to all requests, not just downloads, and it only bounds
+ * establishing the connection: it has no effect once bytes start flowing. Use
+ * `TransferStallTimeoutOption` and `DownloadStallTimeoutOption` to bound
+ * stalled transfers.
+ *
+ * @ingroup storage-options
+ */
+struct HttpConnectTimeoutOption {
+  using Type = std::chrono::milliseconds;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -392,6 +487,13 @@ using ClientOptionList = ::google::cloud::OptionList<
     IdempotencyPolicyOption, CARootsFilePathOption,
     UploadChecksumValidationOption, DownloadChecksumValidationOption,
     PrecomputedChecksumsOption, storage_experimental::HttpVersionOption,
+    storage_experimental::HttpConnectTimeoutOption,
+    storage_experimental::EnableReadHedgingOption,
+    storage_experimental::ReadHedgeRateLimitOption,
+    storage_experimental::MaxConcurrentHedgesOption,
+    storage_experimental::MaximumHedgeBufferOption,
+    storage_experimental::ReadHedgeDelayOption,
+    storage_experimental::MaxReadHedgesOption,
     storage_experimental::OTelSpanEnrichmentOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

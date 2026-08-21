@@ -198,6 +198,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "webrisk"
     "websecurityscanner"
     "workflows"
+    "workloadidentity"
     "workloadmanager"
     "workstations")
 

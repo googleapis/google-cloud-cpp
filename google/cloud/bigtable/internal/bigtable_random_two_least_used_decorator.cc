@@ -108,11 +108,33 @@ class AsyncStreamingReadWriteRpcTracking
 
 template <typename Response>
 Response UnaryHelper(std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
+                     OperationContext& oc,
                      std::function<Response(BigtableStub&)> fn) {
-  auto child = pool->GetChannelRandomTwoLeastUsed();
-  auto stub = child->AcquireStub();
-  auto result = fn(*stub);
-  child->ReleaseStub();
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  oc.StubSelection(StubSelectionParams{
+      selection.outstanding_rpcs, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+      pool->transport_type(), RpcType::kUnary});
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  Response result = fn(*stub);
+  selection.channel->ReleaseStub();
+  return result;
+}
+
+template <typename Response>
+Response AsyncHelper(std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
+                     std::shared_ptr<OperationContext> const& operation_context,
+                     std::function<Response(BigtableStub&)> fn) {
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  if (operation_context != nullptr) {
+    operation_context->StubSelection(StubSelectionParams{
+        selection.outstanding_rpcs, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+        pool->transport_type(), RpcType::kUnary});
+  }
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  Response result = fn(*stub);
+  selection.channel->ReleaseStub();
   return result;
 }
 
@@ -120,14 +142,21 @@ template <typename Response>
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<Response>>
 StreamingHelper(
     std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
+    std::shared_ptr<OperationContext> const& operation_context,
     std::function<std::unique_ptr<
         google::cloud::internal::StreamingReadRpc<Response>>(BigtableStub&)>
         fn) {
-  auto child = pool->GetChannelRandomTwoLeastUsed();
-  auto stub = child->AcquireStub();
-  auto result = fn(*stub);
-  auto release_fn = [weak = child->MakeWeak()] {
-    auto child = weak.lock();
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  if (operation_context != nullptr) {
+    operation_context->StubSelection(StubSelectionParams{
+        selection.outstanding_rpcs, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+        pool->transport_type(), RpcType::kStreaming});
+  }
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  std::unique_ptr<internal::StreamingReadRpc<Response>> result = fn(*stub);
+  auto release_fn = [weak = selection.channel->MakeWeak()] {
+    std::shared_ptr<ChannelUsage<BigtableStub>> child = weak.lock();
     if (child) child->ReleaseStub();
   };
   return std::make_unique<StreamingReadRpcTracking<Response>>(
@@ -138,15 +167,22 @@ template <typename Response>
 std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<Response>>
 AsyncStreamingHelper(
     std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
+    std::shared_ptr<OperationContext> const& operation_context,
     std::function<std::unique_ptr<
         google::cloud::internal::AsyncStreamingReadRpc<Response>>(
         BigtableStub&)>
         fn) {
-  auto child = pool->GetChannelRandomTwoLeastUsed();
-  auto stub = child->AcquireStub();
-  auto result = fn(*stub);
-  auto release_fn = [weak = child->MakeWeak()] {
-    auto child = weak.lock();
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  if (operation_context != nullptr) {
+    operation_context->StubSelection(StubSelectionParams{
+        selection.outstanding_rpcs, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+        pool->transport_type(), RpcType::kStreaming});
+  }
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  std::unique_ptr<internal::AsyncStreamingReadRpc<Response>> result = fn(*stub);
+  auto release_fn = [weak = selection.channel->MakeWeak()] {
+    std::shared_ptr<ChannelUsage<BigtableStub>> child = weak.lock();
     if (child) child->ReleaseStub();
   };
   return std::make_unique<AsyncStreamingReadRpcTracking<Response>>(
@@ -157,14 +193,22 @@ template <typename Request, typename Response>
 std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<Request, Response>>
 AsyncStreamingHelper(
     std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
+    std::shared_ptr<OperationContext> const& operation_context,
     std::function<std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
         Request, Response>>(BigtableStub&)>
         fn) {
-  auto child = pool->GetChannelRandomTwoLeastUsed();
-  auto stub = child->AcquireStub();
-  auto result = fn(*stub);
-  auto release_fn = [weak = child->MakeWeak()] {
-    auto child = weak.lock();
+  SelectedChannel<BigtableStub> selection =
+      pool->GetChannelRandomTwoLeastUsed();
+  if (operation_context != nullptr) {
+    operation_context->StubSelection(StubSelectionParams{
+        selection.outstanding_rpcs, ChannelPoolLbPolicy::kRandomTwoLeastUsed,
+        pool->transport_type(), RpcType::kStreaming});
+  }
+  std::shared_ptr<BigtableStub> stub = selection.channel->AcquireStub();
+  std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> result =
+      fn(*stub);
+  auto release_fn = [weak = selection.channel->MakeWeak()] {
+    std::shared_ptr<ChannelUsage<BigtableStub>> child = weak.lock();
     if (child) child->ReleaseStub();
   };
   return std::make_unique<
@@ -181,9 +225,9 @@ BigtableRandomTwoLeastUsed::ReadRows(
     google::bigtable::v2::ReadRowsRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return StreamingHelper<google::bigtable::v2::ReadRowsResponse>(
-      pool_, [&, context = std::move(context),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context),
+       operation_context](BigtableStub& stub) mutable {
         return stub.ReadRows(std::move(context), options, request,
                              std::move(operation_context));
       });
@@ -196,9 +240,9 @@ BigtableRandomTwoLeastUsed::SampleRowKeys(
     google::bigtable::v2::SampleRowKeysRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return StreamingHelper<google::bigtable::v2::SampleRowKeysResponse>(
-      pool_, [&, context = std::move(context),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context),
+       operation_context](BigtableStub& stub) mutable {
         return stub.SampleRowKeys(std::move(context), options, request,
                                   std::move(operation_context));
       });
@@ -210,7 +254,7 @@ BigtableRandomTwoLeastUsed::MutateRow(
     google::bigtable::v2::MutateRowRequest const& request,
     OperationContext& operation_context) {
   return UnaryHelper<StatusOr<google::bigtable::v2::MutateRowResponse>>(
-      pool_, [&](BigtableStub& stub) {
+      pool_, operation_context, [&](BigtableStub& stub) {
         return stub.MutateRow(context, options, request, operation_context);
       });
 }
@@ -222,9 +266,9 @@ BigtableRandomTwoLeastUsed::MutateRows(
     google::bigtable::v2::MutateRowsRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return StreamingHelper<google::bigtable::v2::MutateRowsResponse>(
-      pool_, [&, context = std::move(context),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context),
+       operation_context](BigtableStub& stub) mutable {
         return stub.MutateRows(std::move(context), options, request,
                                std::move(operation_context));
       });
@@ -236,7 +280,7 @@ BigtableRandomTwoLeastUsed::CheckAndMutateRow(
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
     OperationContext& operation_context) {
   return UnaryHelper<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>(
-      pool_, [&](BigtableStub& stub) {
+      pool_, operation_context, [&](BigtableStub& stub) {
         return stub.CheckAndMutateRow(context, options, request,
                                       operation_context);
       });
@@ -248,7 +292,7 @@ BigtableRandomTwoLeastUsed::PingAndWarm(
     google::bigtable::v2::PingAndWarmRequest const& request,
     OperationContext& operation_context) {
   return UnaryHelper<StatusOr<google::bigtable::v2::PingAndWarmResponse>>(
-      pool_, [&](BigtableStub& stub) {
+      pool_, operation_context, [&](BigtableStub& stub) {
         return stub.PingAndWarm(context, options, request, operation_context);
       });
 }
@@ -260,7 +304,7 @@ BigtableRandomTwoLeastUsed::ReadModifyWriteRow(
     OperationContext& operation_context) {
   return UnaryHelper<
       StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>(
-      pool_, [&](BigtableStub& stub) {
+      pool_, operation_context, [&](BigtableStub& stub) {
         return stub.ReadModifyWriteRow(context, options, request,
                                        operation_context);
       });
@@ -272,7 +316,7 @@ BigtableRandomTwoLeastUsed::PrepareQuery(
     google::bigtable::v2::PrepareQueryRequest const& request,
     OperationContext& operation_context) {
   return UnaryHelper<StatusOr<google::bigtable::v2::PrepareQueryResponse>>(
-      pool_, [&](BigtableStub& stub) {
+      pool_, operation_context, [&](BigtableStub& stub) {
         return stub.PrepareQuery(context, options, request, operation_context);
       });
 }
@@ -284,9 +328,9 @@ BigtableRandomTwoLeastUsed::ExecuteQuery(
     google::bigtable::v2::ExecuteQueryRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return StreamingHelper<google::bigtable::v2::ExecuteQueryResponse>(
-      pool_, [&, context = std::move(context),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context),
+       operation_context](BigtableStub& stub) mutable {
         return stub.ExecuteQuery(std::move(context), options, request,
                                  std::move(operation_context));
       });
@@ -301,9 +345,9 @@ BigtableRandomTwoLeastUsed::AsyncReadRows(
     google::bigtable::v2::ReadRowsRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::ReadRowsResponse>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncReadRows(cq, std::move(context), std::move(options),
                                   request, std::move(operation_context));
       });
@@ -318,9 +362,9 @@ BigtableRandomTwoLeastUsed::AsyncSampleRowKeys(
     google::bigtable::v2::SampleRowKeysRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::SampleRowKeysResponse>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncSampleRowKeys(cq, std::move(context),
                                        std::move(options), request,
                                        std::move(operation_context));
@@ -334,10 +378,10 @@ BigtableRandomTwoLeastUsed::AsyncMutateRow(
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
-  return UnaryHelper<future<StatusOr<google::bigtable::v2::MutateRowResponse>>>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+  return AsyncHelper<future<StatusOr<google::bigtable::v2::MutateRowResponse>>>(
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncMutateRow(cq, std::move(context), std::move(options),
                                    request, std::move(operation_context));
       });
@@ -352,9 +396,9 @@ BigtableRandomTwoLeastUsed::AsyncMutateRows(
     google::bigtable::v2::MutateRowsRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::MutateRowsResponse>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncMutateRows(cq, std::move(context), std::move(options),
                                     request, std::move(operation_context));
       });
@@ -367,11 +411,11 @@ BigtableRandomTwoLeastUsed::AsyncCheckAndMutateRow(
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
-  return UnaryHelper<
+  return AsyncHelper<
       future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncCheckAndMutateRow(cq, std::move(context),
                                            std::move(options), request,
                                            std::move(operation_context));
@@ -385,11 +429,11 @@ BigtableRandomTwoLeastUsed::AsyncPingAndWarm(
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PingAndWarmRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
-  return UnaryHelper<
+  return AsyncHelper<
       future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncPingAndWarm(cq, std::move(context), std::move(options),
                                      request, std::move(operation_context));
       });
@@ -402,11 +446,11 @@ BigtableRandomTwoLeastUsed::AsyncReadModifyWriteRow(
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
-  return UnaryHelper<
+  return AsyncHelper<
       future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncReadModifyWriteRow(cq, std::move(context),
                                             std::move(options), request,
                                             std::move(operation_context));
@@ -420,11 +464,11 @@ BigtableRandomTwoLeastUsed::AsyncPrepareQuery(
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PrepareQueryRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
-  return UnaryHelper<
+  return AsyncHelper<
       future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncPrepareQuery(cq, std::move(context),
                                       std::move(options), request,
                                       std::move(operation_context));
@@ -437,7 +481,7 @@ BigtableRandomTwoLeastUsed::GetClientConfiguration(
     google::bigtable::v2::GetClientConfigurationRequest const& request,
     OperationContext& operation_context) {
   return UnaryHelper<StatusOr<google::bigtable::v2::ClientConfiguration>>(
-      pool_, [&](BigtableStub& stub) {
+      pool_, operation_context, [&](BigtableStub& stub) {
         return stub.GetClientConfiguration(context, options, request,
                                            operation_context);
       });
@@ -453,9 +497,9 @@ BigtableRandomTwoLeastUsed::AsyncOpenTable(
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::SessionRequest,
                               google::bigtable::v2::SessionResponse>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncOpenTable(cq, std::move(context), std::move(options),
                                    std::move(operation_context));
       });
@@ -471,9 +515,9 @@ BigtableRandomTwoLeastUsed::AsyncOpenAuthorizedView(
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::SessionRequest,
                               google::bigtable::v2::SessionResponse>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncOpenAuthorizedView(cq, std::move(context),
                                             std::move(options),
                                             std::move(operation_context));
@@ -490,9 +534,9 @@ BigtableRandomTwoLeastUsed::AsyncOpenMaterializedView(
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::SessionRequest,
                               google::bigtable::v2::SessionResponse>(
-      pool_, [&, context = std::move(context), options = std::move(options),
-              operation_context =
-                  std::move(operation_context)](BigtableStub& stub) mutable {
+      pool_, operation_context,
+      [&, context = std::move(context), options = std::move(options),
+       operation_context](BigtableStub& stub) mutable {
         return stub.AsyncOpenMaterializedView(cq, std::move(context),
                                               std::move(options),
                                               std::move(operation_context));

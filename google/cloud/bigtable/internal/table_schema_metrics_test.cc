@@ -17,7 +17,8 @@
 #if !defined(_WIN32) && !defined(__MACH__)
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-#include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -2080,7 +2081,6 @@ TEST(ConnectivityErrorCount, MissingResourceLabels) {
   auto clone = connectivity_error_count.clone(resource_labels, data_labels);
 
   grpc::ClientContext client_context;
-  google::bigtable::v2::ResponseParams response_params;
   RpcMetadata server_metadata;
   server_metadata.headers.emplace("server-timing", "gfet4t7; dur=15");
   SetServerMetadata(client_context, server_metadata);
@@ -2480,6 +2480,7 @@ TEST(ApplicationBlockingLatency, StreamingData) {
   clone->PostCall(otel_context, client_context, {clock->Now(), Status{}});
   clone->OnDone(otel_context, {clock->Now(), Status{}});
 }
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

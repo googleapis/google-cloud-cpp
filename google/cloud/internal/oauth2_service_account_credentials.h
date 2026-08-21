@@ -252,11 +252,9 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
   /**
    * Creates an instance of ServiceAccountCredentials.
    *
-   * @param rest_client a dependency injection point. It makes it possible to
-   *     mock internal REST types. This should generally not be overridden
+   * @param client_factory a dependency injection point. It makes it possible
+   *     to mock internal REST types. This should generally not be overridden
    *     except for testing.
-   * @param current_time_fn a dependency injection point to fetch the current
-   *     time. This should generally not be overridden except for testing.
    */
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
                                      Options options,

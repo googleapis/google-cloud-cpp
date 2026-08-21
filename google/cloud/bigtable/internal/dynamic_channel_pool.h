@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/channel_usage.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/internal/stub_manager.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/completion_queue.h"
@@ -43,6 +45,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // DynamicChannelPoolSizingPolicyOption.
 //
 template <typename T>
+struct SelectedChannel {
+  std::shared_ptr<ChannelUsage<T>> channel;
+  int outstanding_rpcs;
+};
+
+template <typename T>
 class DynamicChannelPool
     : public std::enable_shared_from_this<DynamicChannelPool<T>> {
  public:
@@ -58,11 +66,12 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy) {
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy,
+      TransportType transport_type) {
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(instance_name), std::move(cq), std::move(initial_channels),
         std::move(refresh_state), std::move(stub_factory_fn),
-        std::move(sizing_policy)));
+        std::move(sizing_policy), transport_type));
     return pool;
   }
 
@@ -97,6 +106,8 @@ class DynamicChannelPool
     return sizing_policy_;
   }
 
+  TransportType transport_type() const { return transport_type_; }
+
   // Calls CheckPoolChannelHealth before picking a channel.
   //
   // Pick two random channels from channels_ and return the channel with the
@@ -111,7 +122,7 @@ class DynamicChannelPool
   //
   // If there are no healthy channels in channels_, create a new channel and
   // use that one. Also call ScheduleAddChannels to replenish channels_.
-  std::shared_ptr<ChannelUsage<T>> GetChannelRandomTwoLeastUsed() {
+  SelectedChannel<T> GetChannelRandomTwoLeastUsed() {
     std::scoped_lock lk(mu_);
     CheckPoolChannelHealth(lk);
 
@@ -136,12 +147,13 @@ class DynamicChannelPool
 
     // This is the most common case so we try it first.
     if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
-      return *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
-                                                   : *d.channel_2_iter;
+      return *d.channel_1_rpcs < *d.channel_2_rpcs
+                 ? SelectedChannel<T>{*d.channel_1_iter, *d.channel_1_rpcs}
+                 : SelectedChannel<T>{*d.channel_2_iter, *d.channel_2_rpcs};
     }
     if (d.iterators.size() == 1 && d.channel_1_rpcs.ok()) {
       // Pool contains exactly 1 good channel.
-      return *d.channel_1_iter;
+      return SelectedChannel<T>{*d.channel_1_iter, *d.channel_1_rpcs};
     }
     if (d.iterators.empty()) {
       // Pool is empty, create a channel immediately and return it. While the
@@ -150,7 +162,8 @@ class DynamicChannelPool
       channels_.push_back(stub_factory_fn_(next_channel_id_++, instance_name_,
                                            StubManager::Priming::kNoPriming)
                               .value());
-      return channels_.front();
+      StatusOr<int> rpcs = channels_.front()->instant_outstanding_rpcs();
+      return SelectedChannel<T>{channels_.front(), rpcs ? *rpcs : 0};
     }
     return HandleBadChannels(lk, d);
   }
@@ -163,14 +176,16 @@ class DynamicChannelPool
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_wrapped_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
-      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy)
+      bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy,
+      TransportType transport_type)
       : instance_name_(std::move(instance_name)),
         cq_(std::move(cq)),
         refresh_state_(std::move(refresh_state)),
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(std::move(initial_wrapped_channels)),
         sizing_policy_(std::move(sizing_policy)),
-        next_channel_id_(static_cast<std::uint32_t>(channels_.size())) {
+        next_channel_id_(static_cast<std::uint32_t>(channels_.size())),
+        transport_type_(transport_type) {
     std::scoped_lock lk(mu_);
     SetSizeDecreaseCooldownTimer(lk);
   }
@@ -204,8 +219,8 @@ class DynamicChannelPool
 
   // We have one or more bad channels. Spending time finding a good channel
   // will be cheaper than trying to use a bad channel in the long run.
-  std::shared_ptr<ChannelUsage<T>> HandleBadChannels(
-      std::scoped_lock<std::mutex> const& lk, ChannelSelectionData& d) {
+  SelectedChannel<T> HandleBadChannels(std::scoped_lock<std::mutex> const& lk,
+                                       ChannelSelectionData& d) {
     std::vector<typename ChannelSelectionData::ChannelSelect> bad_channel_iters;
     if (d.shuffle_iter != d.iterators.end()) ++d.shuffle_iter;
     ChannelSelectionData::FindGoodChannel(d.iterators, d.channel_1_iter,
@@ -216,14 +231,22 @@ class DynamicChannelPool
                                           bad_channel_iters);
 
     std::shared_ptr<ChannelUsage<T>> channel;
+    int outstanding_rpcs = 0;
     if (d.channel_1_rpcs.ok() || d.channel_2_rpcs.ok()) {
       if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
-        channel = *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
-                                                        : *d.channel_2_iter;
+        if (*d.channel_1_rpcs < *d.channel_2_rpcs) {
+          channel = *d.channel_1_iter;
+          outstanding_rpcs = *d.channel_1_rpcs;
+        } else {
+          channel = *d.channel_2_iter;
+          outstanding_rpcs = *d.channel_2_rpcs;
+        }
       } else if (d.channel_1_rpcs.ok()) {
         channel = *d.channel_1_iter;
+        outstanding_rpcs = *d.channel_1_rpcs;
       } else if (d.channel_2_rpcs.ok()) {
         channel = *d.channel_2_iter;
+        outstanding_rpcs = *d.channel_2_rpcs;
       }
       // Wait until we no longer need valid iterators to call EvictBadChannels.
       EvictBadChannels(lk, bad_channel_iters);
@@ -240,9 +263,11 @@ class DynamicChannelPool
                               .value());
       std::swap(channels_.front(), channels_.back());
       channel = channels_.front();
+      StatusOr<int> rpcs = channel->instant_outstanding_rpcs();
+      outstanding_rpcs = rpcs ? *rpcs : 0;
     }
     ScheduleRemoveChannels(lk);
-    return channel;
+    return SelectedChannel<T>{std::move(channel), outstanding_rpcs};
   }
 
   // Determines the number of channels to add and reserves the channel ids to
@@ -433,6 +458,7 @@ class DynamicChannelPool
   future<StatusOr<std::chrono::system_clock::time_point>>
       pool_size_decrease_cooldown_timer_;
   std::uint32_t next_channel_id_;
+  TransportType const transport_type_ = TransportType::kCloudPath;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

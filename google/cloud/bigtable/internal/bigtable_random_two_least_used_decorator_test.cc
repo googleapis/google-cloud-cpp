@@ -50,7 +50,8 @@ class BigtableRandomTwoLeastUsedTest : public ::testing::Test {
 
     pool_ = DynamicChannelPool<BigtableStub>::Create(
         instance_name, cq_, channels, refresh_state,
-        stub_factory_fn_.AsStdFunction(), sizing_policy);
+        stub_factory_fn_.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
   }
 
   ~BigtableRandomTwoLeastUsedTest() override {

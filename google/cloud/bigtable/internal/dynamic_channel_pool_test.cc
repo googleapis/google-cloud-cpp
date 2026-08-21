@@ -1,4 +1,3 @@
-#include "google/cloud/bigtable/internal/operation_context.h"
 // Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/dynamic_channel_pool.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
@@ -36,7 +36,7 @@ class DynamicChannelPoolTestWrapper {
   using ChannelSelectionData =
       DynamicChannelPool<BigtableStub>::ChannelSelectionData;
 
-  std::shared_ptr<ChannelUsage<BigtableStub>> HandleBadChannels(
+  SelectedChannel<BigtableStub> HandleBadChannels(
       std::scoped_lock<std::mutex> const& lk,
       DynamicChannelPool<BigtableStub>::ChannelSelectionData& d) {
     return pool_->HandleBadChannels(lk, d);
@@ -153,14 +153,14 @@ TEST_F(DynamicChannelPoolTest, SelectLeastUsedFromTwoChannels) {
   EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   auto&) {
+                   OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
       });
   auto mock_stub_1 = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock_stub_1, CheckAndMutateRow).Times(0);
-  int initial_rpc_count = 0;
+  int initial_rpc_count = 5;
   channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
       std::move(mock_stub_0), initial_rpc_count++));
   channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
@@ -180,12 +180,15 @@ TEST_F(DynamicChannelPoolTest, SelectLeastUsedFromTwoChannels) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn, sizing_policy);
-  auto selected_stub = pool->GetChannelRandomTwoLeastUsed();
+      stub_factory_fn, sizing_policy, TransportType::kCloudPath);
+  auto selected = pool->GetChannelRandomTwoLeastUsed();
+  EXPECT_THAT(selected.outstanding_rpcs, Eq(5));
   grpc::ClientContext context;
-  OperationContext op_ctx;
-  auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
+  OperationContext default_oc;
+  auto response = selected.channel->AcquireStub()->CheckAndMutateRow(
+      context, {}, {}, default_oc);
+  EXPECT_THAT(selected.channel->instant_outstanding_rpcs(),
+              testing_util::IsOkAndHolds(Eq(6)));
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
 
@@ -219,7 +222,7 @@ TEST_F(DynamicChannelPoolTest, OneInitialChannel) {
     EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
         .WillOnce([](grpc::ClientContext&, Options const&,
                      google::bigtable::v2::CheckAndMutateRowRequest const&,
-                     auto&) {
+                     OperationContext&) {
           google::bigtable::v2::CheckAndMutateRowResponse response;
           response.set_predicate_matched(true);
           return response;
@@ -244,14 +247,16 @@ TEST_F(DynamicChannelPoolTest, OneInitialChannel) {
     sizing_policy.minimum_channel_pool_size = 1;
     auto pool = DynamicChannelPool<BigtableStub>::Create(
         instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-        stub_factory_fn.AsStdFunction(), sizing_policy);
+        stub_factory_fn.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
     EXPECT_THAT(pool->size(), Eq(1));
 
-    auto selected_stub = pool->GetChannelRandomTwoLeastUsed();
+    auto selected = pool->GetChannelRandomTwoLeastUsed();
+    EXPECT_THAT(selected.outstanding_rpcs, Eq(0));
     grpc::ClientContext context;
-    OperationContext op_ctx;
-    auto response = selected_stub->AcquireStub()->CheckAndMutateRow(context, {},
-                                                                    {}, op_ctx);
+    OperationContext default_oc;
+    auto response = selected.channel->AcquireStub()->CheckAndMutateRow(
+        context, {}, {}, default_oc);
     ASSERT_STATUS_OK(response);
     EXPECT_TRUE(response->predicate_matched());
   }
@@ -276,7 +281,7 @@ TEST_F(DynamicChannelPoolTest, EmptyInitialPool) {
     EXPECT_CALL(*mock_stub, CheckAndMutateRow)
         .WillOnce([](grpc::ClientContext&, Options const&,
                      google::bigtable::v2::CheckAndMutateRowRequest const&,
-                     auto&) {
+                     OperationContext&) {
           google::bigtable::v2::CheckAndMutateRowResponse response;
           response.set_predicate_matched(true);
           return response;
@@ -306,15 +311,17 @@ TEST_F(DynamicChannelPoolTest, EmptyInitialPool) {
     sizing_policy.minimum_channel_pool_size = 0;
     auto pool = DynamicChannelPool<BigtableStub>::Create(
         instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-        stub_factory_fn.AsStdFunction(), sizing_policy);
+        stub_factory_fn.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
 
     EXPECT_THAT(*pool, ::testing::IsEmpty());
 
-    auto selected_stub = pool->GetChannelRandomTwoLeastUsed();
+    auto selected = pool->GetChannelRandomTwoLeastUsed();
+    EXPECT_THAT(selected.outstanding_rpcs, Eq(0));
     grpc::ClientContext context;
-    OperationContext op_ctx;
-    auto response = selected_stub->AcquireStub()->CheckAndMutateRow(context, {},
-                                                                    {}, op_ctx);
+    OperationContext default_oc;
+    auto response = selected.channel->AcquireStub()->CheckAndMutateRow(
+        context, {}, {}, default_oc);
     ASSERT_STATUS_OK(response);
     EXPECT_TRUE(response->predicate_matched());
 
@@ -351,7 +358,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolUndersized) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   {
@@ -411,7 +419,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolAtMax) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
@@ -458,7 +467,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleAddChannelsPoolBelowMax) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
@@ -515,7 +525,8 @@ TEST_F(DynamicChannelPoolTest, AddChannels) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   std::vector<int> new_channel_ids = {0, 1};
   wrapper.set_num_pending_channels(new_channel_ids.size());
@@ -552,7 +563,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleRemoveChannelsAlreadyPending) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   promise<void> p;
@@ -592,7 +604,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleRemoveChannelsNotAlreadyPending) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
@@ -638,7 +651,8 @@ TEST_F(DynamicChannelPoolTest, RemoveChannelsLoneChannelDrained) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> draining_channels;
@@ -679,7 +693,8 @@ TEST_F(DynamicChannelPoolTest, RemoveChannelsSomeChannelsDrained) {
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> draining_channels;
@@ -751,7 +766,7 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   auto&) {
+                   OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -774,11 +789,12 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
-  std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
+  SelectedChannel<BigtableStub> selected_stub;
   {
     auto lock = wrapper.CreateLock();
     selected_stub = wrapper.HandleBadChannels(lock, data);
@@ -786,9 +802,9 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   EXPECT_THAT(draining_channels, IsEmpty());
 
   grpc::ClientContext context;
-  OperationContext op_ctx;
-  auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
+  OperationContext default_oc;
+  auto response = selected_stub.channel->AcquireStub()->CheckAndMutateRow(
+      context, {}, {}, default_oc);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(1));
@@ -832,7 +848,7 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   auto&) {
+                   OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -857,11 +873,12 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
-  std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
+  SelectedChannel<BigtableStub> selected_stub;
   {
     auto lock = wrapper.CreateLock();
     selected_stub = wrapper.HandleBadChannels(lock, data);
@@ -869,9 +886,9 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
   EXPECT_THAT(draining_channels, IsEmpty());
 
   grpc::ClientContext context;
-  OperationContext op_ctx;
-  auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
+  OperationContext default_oc;
+  auto response = selected_stub.channel->AcquireStub()->CheckAndMutateRow(
+      context, {}, {}, default_oc);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(1));
@@ -915,7 +932,7 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   auto&) {
+                   OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -946,11 +963,12 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
-  std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
+  SelectedChannel<BigtableStub> selected_stub;
   {
     auto lock = wrapper.CreateLock();
     selected_stub = wrapper.HandleBadChannels(lock, data);
@@ -958,9 +976,9 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   EXPECT_THAT(draining_channels, IsEmpty());
 
   grpc::ClientContext context;
-  OperationContext op_ctx;
-  auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
+  OperationContext default_oc;
+  auto response = selected_stub.channel->AcquireStub()->CheckAndMutateRow(
+      context, {}, {}, default_oc);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(2));
@@ -1004,7 +1022,7 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&,
-                   auto&) {
+                   OperationContext&) {
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -1045,11 +1063,12 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   sizing_policy.minimum_channel_pool_size = 2;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
-  std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
+  SelectedChannel<BigtableStub> selected_stub;
   {
     auto lock = wrapper.CreateLock();
     selected_stub = wrapper.HandleBadChannels(lock, data);
@@ -1057,9 +1076,9 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   EXPECT_THAT(draining_channels, IsEmpty());
 
   grpc::ClientContext context;
-  OperationContext op_ctx;
-  auto response =
-      selected_stub->AcquireStub()->CheckAndMutateRow(context, {}, {}, op_ctx);
+  OperationContext default_oc;
+  auto response = selected_stub.channel->AcquireStub()->CheckAndMutateRow(
+      context, {}, {}, default_oc);
   ASSERT_STATUS_OK(response);
   EXPECT_TRUE(response->predicate_matched());
   EXPECT_THAT(pool->size(), Eq(1));
@@ -1107,7 +1126,8 @@ TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsIncrease) {
     sizing_policy.maximum_channel_pool_size = 1;
     auto pool = DynamicChannelPool<BigtableStub>::Create(
         instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-        stub_factory_fn.AsStdFunction(), sizing_policy);
+        stub_factory_fn.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
     DynamicChannelPoolTestWrapper wrapper(pool);
 
     // ScheduleAddChannels will NOT be called as the pool has max channels.
@@ -1121,7 +1141,8 @@ TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsIncrease) {
     sizing_policy.maximum_channel_pool_size = 10;
     auto pool = DynamicChannelPool<BigtableStub>::Create(
         instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-        stub_factory_fn.AsStdFunction(), sizing_policy);
+        stub_factory_fn.AsStdFunction(), sizing_policy,
+        TransportType::kCloudPath);
     DynamicChannelPoolTestWrapper wrapper(pool);
 
     // ScheduleAddChannels will be called.
@@ -1187,7 +1208,8 @@ TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsDecrease) {
   sizing_policy.minimum_average_outstanding_rpcs_per_channel = 5;
   auto pool = DynamicChannelPool<BigtableStub>::Create(
       instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
-      stub_factory_fn.AsStdFunction(), sizing_policy);
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
   DynamicChannelPoolTestWrapper wrapper(pool);
 
   // ScheduleAddChannels will NOT be called.
@@ -1200,6 +1222,41 @@ TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsDecrease) {
 
   EXPECT_THAT(wrapper.num_pending_channels(), Eq(0));
   EXPECT_THAT(pool->size(), Eq(3));
+}
+
+TEST_F(DynamicChannelPoolTest, TransportType) {
+  auto instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl_, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
+  DynamicChannelPoolSizingPolicy sizing_policy;
+  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
+      std::uint32_t, std::string const&, StubManager::Priming)>
+      stub_factory_fn;
+
+  EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
+      .WillRepeatedly([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return make_ready_future(StatusOr(std::chrono::system_clock::now()));
+      });
+
+  auto pool_cloud = DynamicChannelPool<BigtableStub>::Create(
+      instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kCloudPath);
+  EXPECT_THAT(pool_cloud->transport_type(), Eq(TransportType::kCloudPath));
+
+  auto pool_direct = DynamicChannelPool<BigtableStub>::Create(
+      instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
+      stub_factory_fn.AsStdFunction(), sizing_policy,
+      TransportType::kDirectPath);
+  EXPECT_THAT(pool_direct->transport_type(), Eq(TransportType::kDirectPath));
 }
 
 }  // namespace

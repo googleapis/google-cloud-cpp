@@ -197,6 +197,10 @@ CurlImpl::CurlImpl(CurlHandle handle,
 
   http_version_ = options.get<HttpVersionOption>();
 
+  if (options.has<HttpConnectTimeoutOption>()) {
+    connect_timeout_ms_ = options.get<HttpConnectTimeoutOption>();
+  }
+
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
   transfer_stall_minimum_rate_ = options.get<TransferStallMinimumRateOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
@@ -260,6 +264,22 @@ void CurlImpl::WriteHeader(std::string const& header) {
   auto* headers = curl_slist_append(request_headers_.get(), header.c_str());
   (void)request_headers_.release();  // Now owned by list, not us.
   request_headers_.reset(headers);
+}
+
+Status CurlImpl::SetConnectTimeout(std::chrono::seconds fallback) {
+  // libcurl stores `CURLOPT_CONNECTTIMEOUT` and `CURLOPT_CONNECTTIMEOUT_MS` in
+  // a single setting, so there must be exactly one place that decides the
+  // value. An explicitly configured connect timeout wins; otherwise fall back
+  // to the timeout implied by the stall options, preserving the historical
+  // behavior for applications that do not set one.
+  auto const connect_timeout =
+      connect_timeout_ms_ != std::chrono::milliseconds::zero()
+          ? connect_timeout_ms_
+          : std::chrono::duration_cast<std::chrono::milliseconds>(fallback);
+  if (connect_timeout == std::chrono::milliseconds::zero()) return {};
+  // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
+  auto const timeout_ms = static_cast<long>(connect_timeout.count());
+  return handle_.SetOption(CURLOPT_CONNECTTIMEOUT_MS, timeout_ms);
 }
 
 void CurlImpl::MergeAndWriteHeaders(
@@ -432,6 +452,13 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
 #endif
   }
 
+  // Nothing else sets a connection timeout, so this can be decided once, before
+  // the per-method options.
+  status =
+      SetConnectTimeout(method == HttpMethod::kGet ? download_stall_timeout_
+                                                   : transfer_stall_timeout_);
+  if (!status.ok()) return OnTransferError(context, std::move(status));
+
   if (method == HttpMethod::kGet) {
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
     if (!status.ok()) return OnTransferError(context, std::move(status));
@@ -440,8 +467,6 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
       auto const timeout = static_cast<long>(download_stall_timeout_.count());
       // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
       auto const limit = static_cast<long>(download_stall_minimum_rate_);
-      status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
-      if (!status.ok()) return OnTransferError(context, std::move(status));
       // Timeout if the request sends or receives less than 1 byte/second
       // (i.e.  effectively no bytes) for download_stall_timeout_.
       status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
@@ -457,8 +482,6 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     auto const timeout = static_cast<long>(transfer_stall_timeout_.count());
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
     auto const limit = static_cast<long>(transfer_stall_minimum_rate_);
-    status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
-    if (!status.ok()) return OnTransferError(context, std::move(status));
     // Timeout if the request sends or receives less than 1 byte/second
     // (i.e.  effectively no bytes) for transfer_stall_timeout_.
     status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);

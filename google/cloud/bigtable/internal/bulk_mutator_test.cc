@@ -17,6 +17,7 @@
 #include "google/cloud/grpc_options.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 #include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/testing_util/fake_clock.h"
 #endif
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
@@ -83,7 +84,7 @@ v2::MutateRowsResponse MakeResponse(
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
-class MockMetric : public bigtable_internal::Metric {
+class MockMetric : public bigtable_internal::TableSchemaMetric {
  public:
   MOCK_METHOD(void, PreCall,
               (opentelemetry::context::Context const&,
@@ -106,25 +107,10 @@ class MockMetric : public bigtable_internal::Metric {
               (opentelemetry::context::Context const&,
                bigtable_internal::ElementDeliveryParams const&),
               (override));
-  MOCK_METHOD(std::unique_ptr<Metric>, clone,
+  MOCK_METHOD(std::unique_ptr<bigtable_internal::TableSchemaMetric>, clone,
               (bigtable_internal::TableResourceLabels const& resource_labels,
                bigtable_internal::TableDataLabels const& data_labels),
               (const, override));
-};
-
-// This class is a vehicle to get a MockMetric into the OperationContext object.
-class CloningMetric : public bigtable_internal::Metric {
- public:
-  explicit CloningMetric(std::unique_ptr<MockMetric> metric)
-      : metric_(std::move(metric)) {}
-  std::unique_ptr<bigtable_internal::Metric> clone(
-      bigtable_internal::TableResourceLabels const&,
-      bigtable_internal::TableDataLabels const&) const override {
-    return std::move(metric_);
-  }
-
- private:
-  mutable std::unique_ptr<MockMetric> metric_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -137,18 +123,17 @@ class BulkMutatorTest : public ::testing::Test {
 TEST_F(BulkMutatorTest, Simple) {
   BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"));
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(1);
   EXPECT_CALL(*mock_metric, PostCall).Times(1);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<bigtable_internal::OperationContext>(
-      new bigtable_internal::OperationContext({}, {}, {fake_metric}, clock));
+      new bigtable_internal::OperationContext({mock_metric}, clock));
 #else
   auto operation_context =
       std::make_shared<bigtable_internal::OperationContext>();
@@ -189,18 +174,17 @@ TEST_F(BulkMutatorTest, RetryPartialFailure) {
   // First create the mutation.
   BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"));
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(2);
   EXPECT_CALL(*mock_metric, PostCall).Times(2);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<bigtable_internal::OperationContext>(
-      new bigtable_internal::OperationContext({}, {}, {fake_metric}, clock));
+      new bigtable_internal::OperationContext({mock_metric}, clock));
 #else
   auto operation_context =
       std::make_shared<bigtable_internal::OperationContext>();
@@ -265,18 +249,17 @@ TEST_F(BulkMutatorTest, PermanentFailure) {
   BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"));
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(2);
   EXPECT_CALL(*mock_metric, PostCall).Times(2);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<bigtable_internal::OperationContext>(
-      new bigtable_internal::OperationContext({}, {}, {fake_metric}, clock));
+      new bigtable_internal::OperationContext({mock_metric}, clock));
 #else
   auto operation_context =
       std::make_shared<bigtable_internal::OperationContext>();
@@ -341,18 +324,17 @@ TEST_F(BulkMutatorTest, PartialStream) {
   BulkMutation mut(IdempotentMutation("r0"), IdempotentMutation("r1"));
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  auto mock_metric = std::make_unique<MockMetric>();
+  auto mock_metric = std::make_shared<MockMetric>();
   EXPECT_CALL(*mock_metric, PreCall).Times(2);
   EXPECT_CALL(*mock_metric, PostCall).Times(2);
 
-  auto fake_metric = std::make_shared<CloningMetric>(std::move(mock_metric));
   auto clock = std::make_shared<testing_util::FakeSteadyClock>();
 
   // Normally std::make_shared would be used here, but some weird type deduction
   // is preventing it.
   // NOLINTNEXTLINE(modernize-make-shared)
   auto operation_context = std::shared_ptr<bigtable_internal::OperationContext>(
-      new bigtable_internal::OperationContext({}, {}, {fake_metric}, clock));
+      new bigtable_internal::OperationContext({mock_metric}, clock));
 #else
   auto operation_context =
       std::make_shared<bigtable_internal::OperationContext>();
