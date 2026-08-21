@@ -7,17 +7,20 @@ on:
   workflow_dispatch: # Allows manual trigger from the GitHub Actions UI
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   update-compute-discovery:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Git user identity
         run: |
@@ -44,11 +47,10 @@ jobs:
             echo "Checking if a PR is already open..."
             if ! gh pr list --head "automation/update-compute-discovery" --json number -q '.[0].number' | grep -q '^[0-9]'; then
               echo "Opening new PR..."
+              BODY="Automated update of Compute Engine Discovery Document and generated C++ client code.\n\nTriggered automatically by the \`update-compute-discovery\` workflow."
               gh pr create \
                 --title "feat(compute): update discovery doc and generate new services" \
-                --body "Automated update of Compute Engine Discovery Document and generated C++ client code.
-
-Triggered automatically by the \`update-compute-discovery\` workflow." \
+                --body "$(printf '%b' "$BODY")" \
                 --base main \
                 --head automation/update-compute-discovery \
                 --label "autorelease: pending"
