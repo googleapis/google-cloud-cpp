@@ -441,6 +441,8 @@ DefaultFirewallPoliciesRestStub::ListAssociations(
     google::cloud::cpp::compute::firewall_policies::v1::
         ListAssociationsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"include_inherited_policies",
+                          (request.include_inherited_policies() ? "1" : "0")});
   query_params.push_back({"target_resource", request.target_resource()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));

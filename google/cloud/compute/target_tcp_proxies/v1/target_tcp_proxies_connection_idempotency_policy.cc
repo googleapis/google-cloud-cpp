@@ -77,6 +77,12 @@ Idempotency TargetTcpProxiesConnectionIdempotencyPolicy::SetProxyHeader(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency TargetTcpProxiesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<TargetTcpProxiesConnectionIdempotencyPolicy>
 MakeDefaultTargetTcpProxiesConnectionIdempotencyPolicy() {
   return std::make_unique<TargetTcpProxiesConnectionIdempotencyPolicy>();

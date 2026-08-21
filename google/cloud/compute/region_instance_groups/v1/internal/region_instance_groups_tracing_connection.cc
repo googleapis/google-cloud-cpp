@@ -105,6 +105,17 @@ RegionInstanceGroupsTracingConnection::SetNamedPorts(
   return internal::EndSpan(std::move(span), child_->SetNamedPorts(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionInstanceGroupsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_instance_groups::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_instance_groups_v1::RegionInstanceGroupsConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<
     compute_region_instance_groups_v1::RegionInstanceGroupsConnection>
 MakeRegionInstanceGroupsTracingConnection(

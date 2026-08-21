@@ -71,6 +71,12 @@ Idempotency AddressesConnectionIdempotencyPolicy::SetLabels(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AddressesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::addresses::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AddressesConnectionIdempotencyPolicy>
 MakeDefaultAddressesConnectionIdempotencyPolicy() {
   return std::make_unique<AddressesConnectionIdempotencyPolicy>();

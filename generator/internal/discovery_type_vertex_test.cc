@@ -96,6 +96,18 @@ TEST(DiscoveryTypeVertexTest, FormatMessageDescriptionWithDollarSigns) {
               Eq("// Example: `sample_table$$20190123`\n"));
 }
 
+TEST(DiscoveryTypeVertexTest, FormatMessageDescriptionWithRelativeLinks) {
+  auto constexpr kDescription =
+      "For more information, see the [known "
+      "issue](/compute/docs/troubleshooting/known-issues#foo).";
+  auto const json = nlohmann::json{{"description", kDescription}};
+  EXPECT_EQ(DiscoveryTypeVertex::FormatMessageDescription(json, 0),
+            "// For more information, see the [known\n"
+            "// "
+            "issue](https://cloud.google.com/compute/docs/troubleshooting/"
+            "known-issues#foo).\n");
+}
+
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsEmpty) {
   auto constexpr kOptionalEmptyFieldJson = R"""({})""";
   auto json = nlohmann::json::parse(kOptionalEmptyFieldJson, nullptr, false);

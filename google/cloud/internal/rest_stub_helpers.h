@@ -88,7 +88,9 @@ StatusOr<Response> Delete(
   return RestResponseToProto<Response>(std::move(**response));
 }
 
-template <typename Response, typename Request>
+template <typename Response, typename Request,
+          std::enable_if_t<!std::is_same<Response, EmptyResponseType>::value,
+                           int> = 0>
 StatusOr<Response> Get(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const&, bool, std::string path,
@@ -98,6 +100,20 @@ StatusOr<Response> Get(
   auto response = client.Get(rest_context, rest_request);
   if (!response.ok()) return response.status();
   return RestResponseToProto<Response>(std::move(**response));
+}
+
+template <
+    typename Response, typename Request,
+    std::enable_if_t<std::is_same<Response, EmptyResponseType>::value, int> = 0>
+Status Get(rest_internal::RestClient& client,
+           rest_internal::RestContext& rest_context, Request const&, bool,
+           std::string path,
+           std::vector<std::pair<std::string, std::string>> query_params = {}) {
+  auto rest_request =
+      CreateRestRequest(std::move(path), std::move(query_params));
+  auto response = client.Get(rest_context, rest_request);
+  if (!response.ok()) return response.status();
+  return Status();
 }
 
 template <typename Response, typename Request>

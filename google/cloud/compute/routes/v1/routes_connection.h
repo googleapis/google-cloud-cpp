@@ -210,6 +210,11 @@ class RoutesConnection {
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
       google::cloud::cpp::compute::routes::v1::ListRoutesRequest request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

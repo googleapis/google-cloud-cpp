@@ -135,6 +135,13 @@ AutoscalersConnection::PatchAutoscaler(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+AutoscalersConnection::TestIamPermissions(
+    google::cloud::cpp::compute::autoscalers::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersConnection::UpdateAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::

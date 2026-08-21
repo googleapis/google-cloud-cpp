@@ -57,6 +57,10 @@ class HttpHealthChecksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::http_health_checks::v1::
           PatchHttpHealthCheckRequest const& request);
 
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          TestIamPermissionsRequest const& request);
+
   virtual google::cloud::Idempotency UpdateHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
           UpdateHttpHealthCheckRequest const& request);

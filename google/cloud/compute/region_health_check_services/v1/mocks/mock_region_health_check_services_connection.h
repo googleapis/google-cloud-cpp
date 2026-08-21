@@ -49,6 +49,14 @@ class MockRegionHealthCheckServicesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              HealthCheckServicesScopedList>>),
+      AggregatedListRegionHealthCheckServices,
+      (google::cloud::cpp::compute::region_health_check_services::v1::
+           AggregatedListRegionHealthCheckServicesRequest request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code
@@ -187,6 +195,13 @@ class MockRegionHealthCheckServicesConnection
               PatchHealthCheckService,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::region_health_check_services::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -53,6 +53,10 @@ class RegionInstanceGroupsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetNamedPorts(
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::region_instance_groups::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<RegionInstanceGroupsConnectionIdempotencyPolicy>

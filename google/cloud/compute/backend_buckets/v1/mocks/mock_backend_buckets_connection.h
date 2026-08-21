@@ -88,6 +88,14 @@ class MockBackendBucketsConnection
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              BackendBucketsScopedList>>),
+      AggregatedListBackendBuckets,
+      (google::cloud::cpp::compute::backend_buckets::v1::
+           AggregatedListBackendBucketsRequest request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code
@@ -227,6 +235,12 @@ class MockBackendBucketsConnection
               (google::cloud::cpp::compute::backend_buckets::v1::
                    ListBackendBucketsRequest request),
               (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cpp::compute::v1::BackendBucket>), ListUsable,
+      (google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///

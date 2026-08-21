@@ -46,6 +46,49 @@ ReservationSubBlocksTracingConnection::GetReservationSubBlocksGetResponse(
                            child_->GetReservationSubBlocksGetResponse(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksTracingConnection::GetVersion(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "GetVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->GetVersion(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksTracingConnection::GetVersion(
+    NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                    GetVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "GetVersion");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->GetVersion(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksTracingConnection::GetVersion(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "GetVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->GetVersion(operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>
 ReservationSubBlocksTracingConnection::ListReservationSubBlocks(
     google::cloud::cpp::compute::reservation_sub_blocks::v1::
@@ -58,6 +101,95 @@ ReservationSubBlocksTracingConnection::ListReservationSubBlocks(
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::ReservationSubBlock>(std::move(span),
                                                             std::move(sr));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksTracingConnection::PerformMaintenance(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "PerformMaintenance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PerformMaintenance(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksTracingConnection::PerformMaintenance(
+    NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                    PerformMaintenanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "PerformMaintenance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->PerformMaintenance(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksTracingConnection::PerformMaintenance(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "PerformMaintenance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PerformMaintenance(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksTracingConnection::ReportFaulty(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "ReportFaulty");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ReportFaulty(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksTracingConnection::ReportFaulty(
+    NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                    ReportFaultyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "ReportFaulty");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->ReportFaulty(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksTracingConnection::ReportFaulty(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "ReportFaulty");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ReportFaulty(operation));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationSubBlocksTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_sub_blocks_v1::ReservationSubBlocksConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 std::shared_ptr<

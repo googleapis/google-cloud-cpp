@@ -60,6 +60,27 @@ NetworksRestMetadata::AddPeering(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksRestMetadata::AsyncCancelRequestRemovePeering(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::networks::v1::
+        CancelRequestRemovePeeringRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelRequestRemovePeering(cq, std::move(rest_context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::CancelRequestRemovePeering(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::
+        CancelRequestRemovePeeringRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->CancelRequestRemovePeering(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestMetadata::AsyncDeleteNetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -177,6 +198,27 @@ NetworksRestMetadata::RemovePeering(
         request) {
   SetMetadata(rest_context, options);
   return child_->RemovePeering(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksRestMetadata::AsyncRequestRemovePeering(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::networks::v1::
+        RequestRemovePeeringRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncRequestRemovePeering(cq, std::move(rest_context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::RequestRemovePeering(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::
+        RequestRemovePeeringRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->RequestRemovePeering(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

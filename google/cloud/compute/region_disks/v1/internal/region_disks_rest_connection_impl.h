@@ -218,6 +218,18 @@ class RegionDisksRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateKmsKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::region_disks::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   static std::unique_ptr<compute_region_disks_v1::RegionDisksRetryPolicy>
   retry_policy(Options const& options) {

@@ -187,6 +187,16 @@ UrlMapsTracingConnection::PatchUrlMap(
   return internal::EndSpan(std::move(span), child_->PatchUrlMap(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+UrlMapsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::url_maps::v1::TestIamPermissionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_url_maps_v1::UrlMapsConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsTracingConnection::UpdateUrlMap(
     google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&

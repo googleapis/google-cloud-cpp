@@ -228,6 +228,18 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateKmsKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateKmsKey(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   std::shared_ptr<compute_disks_v1::DisksConnection> child_;
 };

@@ -63,6 +63,7 @@ DefaultSubnetworksRestStub::AggregatedListSubnetworks(
                           (request.return_partial_success() ? "1" : "0")});
   query_params.push_back(
       {"service_project_number", request.service_project_number()});
+  query_params.push_back({"views", request.views()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
@@ -200,6 +201,9 @@ DefaultSubnetworksRestStub::GetSubnetwork(
     google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"views", request.views()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Subnetwork>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -302,6 +306,7 @@ DefaultSubnetworksRestStub::ListSubnetworks(
   query_params.push_back({"page_token", request.page_token()});
   query_params.push_back({"return_partial_success",
                           (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back({"views", request.views()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::SubnetworkList>(
@@ -327,6 +332,7 @@ DefaultSubnetworksRestStub::ListUsable(
   query_params.push_back({"page_token", request.page_token()});
   query_params.push_back({"return_partial_success",
                           (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back({"service_project", request.service_project()});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<

@@ -107,7 +107,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L93}
+  /// [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L100}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& project, std::string const& region,
@@ -135,7 +135,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L93}
+  /// [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L100}
   ///
   // clang-format on
   Status DeleteOperation(google::cloud::cpp::compute::region_operations::v1::
@@ -164,8 +164,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L109}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L116}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -196,8 +196,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L109}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L116}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -207,8 +207,8 @@ class RegionOperationsClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of Operation resources contained within the specified
-  /// region.
+  /// Retrieves a list of Operation resources contained within
+  /// the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/list
   ///
   /// @param project  Project ID for this request.
@@ -235,8 +235,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L131}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L138}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
@@ -244,8 +244,8 @@ class RegionOperationsClient {
 
   // clang-format off
   ///
-  /// Retrieves a list of Operation resources contained within the specified
-  /// region.
+  /// Retrieves a list of Operation resources contained within
+  /// the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -276,8 +276,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L131}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L138}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
@@ -287,17 +287,24 @@ class RegionOperationsClient {
 
   // clang-format off
   ///
-  /// Waits for the specified Operation resource to return as `DONE` or for the
-  /// request to approach the 2 minute deadline, and retrieves the specified
-  /// Operation resource. This method differs from the `GET` method in that it
-  /// waits for no more than the default deadline (2 minutes) and then returns
-  /// the current state of the operation, which might be `DONE` or still in
-  /// progress. This method is called on a best-effort basis. Specifically: - In
-  /// uncommon cases, when the server is overloaded, the request might return
-  /// before the default deadline is reached, or might return after zero seconds.
-  /// - If the default deadline is reached, there is no guarantee that the
-  /// operation is actually done when the method returns. Be prepared to retry if
-  /// the operation is not `DONE`.
+  /// Waits for the specified Operation resource to return as `DONE`
+  /// or for the request to approach the 2 minute deadline, and retrieves the
+  /// specified Operation resource. This method differs from the
+  /// `GET` method in that it waits for no more than the default
+  /// deadline (2 minutes) and then returns the current state of the operation,
+  /// which might be `DONE` or still in progress.
+  ///
+  /// This method is called on a best-effort basis. Specifically:
+  ///
+  ///
+  ///     - In uncommon cases, when the server is overloaded, the request might
+  ///     return before the default deadline is reached, or might return after
+  /// zero
+  ///     seconds.
+  ///    - If the default deadline is reached, there is no guarantee that the
+  ///     operation is actually done when the method returns. Be prepared to
+  /// retry
+  ///     if the operation is not `DONE`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/wait
   ///
   /// @param project  Project ID for this request.
@@ -317,8 +324,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L203}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L243}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
@@ -327,17 +334,24 @@ class RegionOperationsClient {
 
   // clang-format off
   ///
-  /// Waits for the specified Operation resource to return as `DONE` or for the
-  /// request to approach the 2 minute deadline, and retrieves the specified
-  /// Operation resource. This method differs from the `GET` method in that it
-  /// waits for no more than the default deadline (2 minutes) and then returns
-  /// the current state of the operation, which might be `DONE` or still in
-  /// progress. This method is called on a best-effort basis. Specifically: - In
-  /// uncommon cases, when the server is overloaded, the request might return
-  /// before the default deadline is reached, or might return after zero seconds.
-  /// - If the default deadline is reached, there is no guarantee that the
-  /// operation is actually done when the method returns. Be prepared to retry if
-  /// the operation is not `DONE`.
+  /// Waits for the specified Operation resource to return as `DONE`
+  /// or for the request to approach the 2 minute deadline, and retrieves the
+  /// specified Operation resource. This method differs from the
+  /// `GET` method in that it waits for no more than the default
+  /// deadline (2 minutes) and then returns the current state of the operation,
+  /// which might be `DONE` or still in progress.
+  ///
+  /// This method is called on a best-effort basis. Specifically:
+  ///
+  ///
+  ///     - In uncommon cases, when the server is overloaded, the request might
+  ///     return before the default deadline is reached, or might return after
+  /// zero
+  ///     seconds.
+  ///    - If the default deadline is reached, there is no guarantee that the
+  ///     operation is actually done when the method returns. Be prepared to
+  /// retry
+  ///     if the operation is not `DONE`.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/wait
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -359,8 +373,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L203}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L243}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L188}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(

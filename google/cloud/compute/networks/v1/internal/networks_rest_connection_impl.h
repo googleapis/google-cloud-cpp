@@ -62,6 +62,21 @@ class NetworksRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CancelRequestRemovePeering(
+      google::cloud::cpp::compute::networks::v1::
+          CancelRequestRemovePeeringRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CancelRequestRemovePeering(
+      NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::
+          CancelRequestRemovePeeringRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CancelRequestRemovePeering(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request) override;
@@ -127,6 +142,18 @@ class NetworksRestConnectionImpl
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RequestRemovePeering(google::cloud::cpp::compute::networks::v1::
+                           RequestRemovePeeringRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RequestRemovePeering(
+      NoAwaitTag, google::cloud::cpp::compute::networks::v1::
+                      RequestRemovePeeringRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RequestRemovePeering(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

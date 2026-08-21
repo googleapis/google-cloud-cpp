@@ -180,6 +180,15 @@ InstanceGroupsRestMetadata::SetNamedPorts(
   return child_->SetNamedPorts(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+InstanceGroupsRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

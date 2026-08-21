@@ -88,10 +88,11 @@ class LicenseCodesClient {
 
   // clang-format off
   ///
-  /// Return a specified license code. License codes are mirrored across all
-  /// projects that have permissions to read the License Code. *Caution* This
-  /// resource is intended for use only by third-party partners who are creating
-  /// Cloud Marketplace images.
+  /// Return a specified license code. License codes are mirrored across
+  /// all projects that have permissions to read the License Code.
+  ///  *Caution* This resource is intended
+  /// for use only by third-party partners who are creatingCloud Marketplace
+  /// images.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/get
   ///
   /// @param project  Project ID for this request.
@@ -109,8 +110,8 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodeRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L68}
-  /// [google.cloud.cpp.compute.v1.LicenseCode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L27}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodeRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L117}
+  /// [google.cloud.cpp.compute.v1.LicenseCode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
@@ -119,10 +120,11 @@ class LicenseCodesClient {
 
   // clang-format off
   ///
-  /// Return a specified license code. License codes are mirrored across all
-  /// projects that have permissions to read the License Code. *Caution* This
-  /// resource is intended for use only by third-party partners who are creating
-  /// Cloud Marketplace images.
+  /// Return a specified license code. License codes are mirrored across
+  /// all projects that have permissions to read the License Code.
+  ///  *Caution* This resource is intended
+  /// for use only by third-party partners who are creatingCloud Marketplace
+  /// images.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -144,8 +146,8 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodeRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L68}
-  /// [google.cloud.cpp.compute.v1.LicenseCode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L27}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodeRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L117}
+  /// [google.cloud.cpp.compute.v1.LicenseCode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
@@ -155,9 +157,151 @@ class LicenseCodesClient {
 
   // clang-format off
   ///
-  /// Returns permissions that a caller has on the specified resource. *Caution*
-  /// This resource is intended for use only by third-party partners who are
-  /// creating Cloud Marketplace images.
+  /// Gets the access control policy for a resource. May be empty if no such
+  /// policy or resource exists.
+  ///  *Caution* This resource is intended
+  /// for use only by third-party partners who are creatingCloud Marketplace
+  /// images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/getIamPolicy
+  ///
+  /// @param project  Project ID for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.license_codes.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L102}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the access control policy for a resource. May be empty if no such
+  /// policy or resource exists.
+  ///  *Caution* This resource is intended
+  /// for use only by third-party partners who are creatingCloud Marketplace
+  /// images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/getIamPolicy
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.license_codes.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.license_codes.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L102}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
+  ///  *Caution* This resource is intended
+  /// for use only by third-party partners who are creatingCloud Marketplace
+  /// images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/setIamPolicy
+  ///
+  /// @param project  Project ID for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param global_set_policy_request_resource  The GlobalSetPolicyRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.license_codes.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L128}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
+  ///  *Caution* This resource is intended
+  /// for use only by third-party partners who are creatingCloud Marketplace
+  /// images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/setIamPolicy
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.license_codes.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.license_codes.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L128}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  ///  *Caution* This resource is intended
+  /// for use only by third-party partners who are creatingCloud Marketplace
+  /// images.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/testIamPermissions
   ///
   /// @param project  Project ID for this request.
@@ -176,8 +320,8 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L79}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L144}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -189,9 +333,10 @@ class LicenseCodesClient {
 
   // clang-format off
   ///
-  /// Returns permissions that a caller has on the specified resource. *Caution*
-  /// This resource is intended for use only by third-party partners who are
-  /// creating Cloud Marketplace images.
+  /// Returns permissions that a caller has on the specified resource.
+  ///  *Caution* This resource is intended
+  /// for use only by third-party partners who are creatingCloud Marketplace
+  /// images.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -213,8 +358,8 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L79}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L144}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

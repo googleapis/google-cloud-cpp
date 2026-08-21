@@ -48,6 +48,37 @@ DefaultRegionNotificationEndpointsRestStub::
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
+StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList>
+DefaultRegionNotificationEndpointsRestStub::
+    AggregatedListRegionNotificationEndpoints(
+        google::cloud::rest_internal::RestContext& rest_context,
+        Options const& options,
+        google::cloud::cpp::compute::region_notification_endpoints::v1::
+            AggregatedListRegionNotificationEndpointsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "aggregated", "/",
+                   "notificationEndpoints"),
+      std::move(query_params));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionNotificationEndpointsRestStub::AsyncDeleteNotificationEndpoint(
     CompletionQueue& cq,
@@ -204,6 +235,25 @@ DefaultRegionNotificationEndpointsRestStub::ListRegionNotificationEndpoints(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "notificationEndpoints"),
+      std::move(query_params));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+DefaultRegionNotificationEndpointsRestStub::TestIamPermissions(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+      *service_, rest_context, request.test_permissions_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "notificationEndpoints", "/",
+                   request.resource(), "/", "testIamPermissions"),
       std::move(query_params));
 }
 

@@ -96,6 +96,12 @@ class RegionHealthChecksRestMetadata : public RegionHealthChecksRestStub {
       google::cloud::cpp::compute::region_health_checks::v1::
           PatchHealthCheckRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::region_health_checks::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateHealthCheck(
       google::cloud::CompletionQueue& cq,

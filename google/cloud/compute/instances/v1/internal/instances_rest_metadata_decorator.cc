@@ -60,6 +60,27 @@ InstancesRestMetadata::AddAccessConfig(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesRestMetadata::AsyncAddNetworkInterface(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncAddNetworkInterface(cq, std::move(rest_context),
+                                          std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::AddNetworkInterface(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AddNetworkInterface(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncAddResourcePolicies(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -171,6 +192,27 @@ InstancesRestMetadata::DeleteAccessConfig(
         request) {
   SetMetadata(rest_context, options);
   return child_->DeleteAccessConfig(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesRestMetadata::AsyncDeleteNetworkInterface(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteNetworkInterface(cq, std::move(rest_context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::DeleteNetworkInterface(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteNetworkInterface(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

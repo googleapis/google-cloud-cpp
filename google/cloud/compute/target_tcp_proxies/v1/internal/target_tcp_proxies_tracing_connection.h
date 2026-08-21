@@ -100,6 +100,10 @@ class TargetTcpProxiesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                         TestIamPermissionsRequest const& request) override;
+
  private:
   std::shared_ptr<compute_target_tcp_proxies_v1::TargetTcpProxiesConnection>
       child_;

@@ -44,12 +44,108 @@ ReservationSubBlocksConnection::GetReservationSubBlocksGetResponse(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksConnection::GetIamPolicy(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksConnection::GetVersion(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksConnection::GetVersion(
+    NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                    GetVersionRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksConnection::GetVersion(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>
 ReservationSubBlocksConnection::ListReservationSubBlocks(
     google::cloud::cpp::compute::reservation_sub_blocks::v1::
         ListReservationSubBlocksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>>();
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksConnection::PerformMaintenance(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksConnection::PerformMaintenance(
+    NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                    PerformMaintenanceRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksConnection::PerformMaintenance(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksConnection::ReportFaulty(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationSubBlocksConnection::ReportFaulty(
+    NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                    ReportFaultyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationSubBlocksConnection::ReportFaulty(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationSubBlocksConnection::SetIamPolicy(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationSubBlocksConnection::TestIamPermissions(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

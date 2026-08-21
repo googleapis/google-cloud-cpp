@@ -141,6 +141,30 @@ SnapshotsConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsConnection::UpdateKmsKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::UpdateKmsKeyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_snapshots_v1
 }  // namespace cloud

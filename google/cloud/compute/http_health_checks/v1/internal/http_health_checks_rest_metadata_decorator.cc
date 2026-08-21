@@ -120,6 +120,15 @@ HttpHealthChecksRestMetadata::PatchHttpHealthCheck(
   return child_->PatchHttpHealthCheck(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+HttpHealthChecksRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::http_health_checks::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpHealthChecksRestMetadata::AsyncUpdateHttpHealthCheck(
     CompletionQueue& cq,

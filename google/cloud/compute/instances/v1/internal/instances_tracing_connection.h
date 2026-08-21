@@ -51,6 +51,18 @@ class InstancesTracingConnection
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNetworkInterface(google::cloud::cpp::compute::instances::v1::
+                          AddNetworkInterfaceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNetworkInterface(
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      AddNetworkInterfaceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddNetworkInterface(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(google::cloud::cpp::compute::instances::v1::
                           AddResourcePoliciesRequest const& request) override;
 
@@ -114,6 +126,19 @@ class InstancesTracingConnection
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteAccessConfig(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkInterface(
+      google::cloud::cpp::compute::instances::v1::
+          DeleteNetworkInterfaceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkInterface(
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      DeleteNetworkInterfaceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkInterface(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(

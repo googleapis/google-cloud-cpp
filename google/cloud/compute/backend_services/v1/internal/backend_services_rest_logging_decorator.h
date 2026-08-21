@@ -97,6 +97,12 @@ class BackendServicesRestLogging : public BackendServicesRestStub {
       google::cloud::cpp::compute::backend_services::v1::
           GetBackendServiceRequest const& request) override;
 
+  Status GetEffectiveSecurityPolicies(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_services::v1::
+          GetEffectiveSecurityPoliciesRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(
       google::cloud::rest_internal::RestContext& rest_context,

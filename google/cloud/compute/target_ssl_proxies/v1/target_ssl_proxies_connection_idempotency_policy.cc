@@ -88,6 +88,12 @@ Idempotency TargetSslProxiesConnectionIdempotencyPolicy::SetSslPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<TargetSslProxiesConnectionIdempotencyPolicy>
 MakeDefaultTargetSslProxiesConnectionIdempotencyPolicy() {
   return std::make_unique<TargetSslProxiesConnectionIdempotencyPolicy>();

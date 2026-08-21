@@ -234,6 +234,10 @@ class HttpsHealthChecksConnection {
   PatchHttpsHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::https_health_checks::v1::
+                         TestIamPermissionsRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
                              UpdateHttpsHealthCheckRequest const& request);

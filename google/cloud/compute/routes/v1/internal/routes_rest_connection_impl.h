@@ -81,6 +81,11 @@ class RoutesRestConnectionImpl : public compute_routes_v1::RoutesConnection {
       google::cloud::cpp::compute::routes::v1::ListRoutesRequest request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&
+          request) override;
+
  private:
   static std::unique_ptr<compute_routes_v1::RoutesRetryPolicy> retry_policy(
       Options const& options) {

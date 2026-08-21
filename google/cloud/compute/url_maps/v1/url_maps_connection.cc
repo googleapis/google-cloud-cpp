@@ -155,6 +155,13 @@ UrlMapsConnection::PatchUrlMap(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+UrlMapsConnection::TestIamPermissions(
+    google::cloud::cpp::compute::url_maps::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsConnection::UpdateUrlMap(
     google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&) {

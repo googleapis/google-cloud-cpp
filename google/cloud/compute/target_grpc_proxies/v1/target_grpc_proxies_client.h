@@ -115,7 +115,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L101}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -169,7 +169,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L101}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -228,8 +228,8 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L127}
-  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L29}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L131}
+  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_159.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
@@ -260,8 +260,8 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L127}
-  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L29}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L131}
+  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_159.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
@@ -271,8 +271,8 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// Creates a TargetGrpcProxy in the specified project in the given scope using
-  /// the parameters that are included in the request.
+  /// Creates a TargetGrpcProxy in the specified project in the given scope
+  /// using the parameters that are included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/insert
   ///
   /// @param project  Project ID for this request.
@@ -297,7 +297,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L138}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L142}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -325,8 +325,8 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// Creates a TargetGrpcProxy in the specified project in the given scope using
-  /// the parameters that are included in the request.
+  /// Creates a TargetGrpcProxy in the specified project in the given scope
+  /// using the parameters that are included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -355,7 +355,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L138}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L142}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -422,8 +422,8 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L164}
-  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L29}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L171}
+  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_159.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -462,8 +462,8 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L164}
-  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_133.proto#L29}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L171}
+  /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_159.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -474,8 +474,9 @@ class TargetGrpcProxiesClient {
   // clang-format off
   ///
   /// Patches the specified TargetGrpcProxy resource with the data included in
-  /// the request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// the request. This method supports PATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/patch
   ///
   /// @param project  Project ID for this request.
@@ -501,7 +502,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L232}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -532,8 +533,9 @@ class TargetGrpcProxiesClient {
   // clang-format off
   ///
   /// Patches the specified TargetGrpcProxy resource with the data included in
-  /// the request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// the request. This method supports PATCH
+  /// semantics and usesJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -562,7 +564,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L232}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

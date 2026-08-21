@@ -38,6 +38,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionNotificationEndpointsConnection::
     ~RegionNotificationEndpointsConnection() = default;
 
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::NotificationEndpointsScopedList>>
+RegionNotificationEndpointsConnection::AggregatedListRegionNotificationEndpoints(
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        AggregatedListRegionNotificationEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string, google::cloud::cpp::compute::v1::
+                                 NotificationEndpointsScopedList>>>();
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsConnection::DeleteNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -101,6 +112,13 @@ RegionNotificationEndpointsConnection::ListRegionNotificationEndpoints(
         ListRegionNotificationEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>>();
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionNotificationEndpointsConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

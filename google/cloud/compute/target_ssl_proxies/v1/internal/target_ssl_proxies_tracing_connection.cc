@@ -295,6 +295,17 @@ TargetSslProxiesTracingConnection::SetSslPolicy(
   return internal::EndSpan(std::move(span), child_->SetSslPolicy(operation));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetSslProxiesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
 MakeTargetSslProxiesTracingConnection(
     std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>

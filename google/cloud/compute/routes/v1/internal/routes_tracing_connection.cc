@@ -111,6 +111,16 @@ RoutesTracingConnection::ListRoutes(
       google::cloud::cpp::compute::v1::Route>(std::move(span), std::move(sr));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RoutesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::routes::v1::TestIamPermissionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_routes_v1::RoutesConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
 std::shared_ptr<compute_routes_v1::RoutesConnection>
 MakeRoutesTracingConnection(
     std::shared_ptr<compute_routes_v1::RoutesConnection> conn) {

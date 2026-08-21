@@ -41,6 +41,17 @@ RegionNotificationEndpointsRestMetadata::
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
+StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointAggregatedList>
+RegionNotificationEndpointsRestMetadata::
+    AggregatedListRegionNotificationEndpoints(
+        rest_internal::RestContext& rest_context, Options const& options,
+        google::cloud::cpp::compute::region_notification_endpoints::v1::
+            AggregatedListRegionNotificationEndpointsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListRegionNotificationEndpoints(rest_context,
+                                                           options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestMetadata::AsyncDeleteNotificationEndpoint(
     CompletionQueue& cq,
@@ -100,6 +111,15 @@ RegionNotificationEndpointsRestMetadata::ListRegionNotificationEndpoints(
   SetMetadata(rest_context, options);
   return child_->ListRegionNotificationEndpoints(rest_context, options,
                                                  request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionNotificationEndpointsRestMetadata::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        TestIamPermissionsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->TestIamPermissions(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

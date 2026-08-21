@@ -42,6 +42,12 @@ class RegionNotificationEndpointsTracingConnection
 
   Options options() override { return child_->options(); }
 
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                         NotificationEndpointsScopedList>>
+  AggregatedListRegionNotificationEndpoints(
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          AggregatedListRegionNotificationEndpointsRequest request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -81,6 +87,11 @@ class RegionNotificationEndpointsTracingConnection
   ListRegionNotificationEndpoints(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           ListRegionNotificationEndpointsRequest request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_region_notification_endpoints_v1::

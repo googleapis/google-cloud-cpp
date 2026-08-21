@@ -111,6 +111,12 @@ class UrlMapsRestStub {
       google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::url_maps::v1::
+                         TestIamPermissionsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateUrlMap(
       google::cloud::CompletionQueue& cq,
@@ -229,6 +235,12 @@ class DefaultUrlMapsRestStub : public UrlMapsRestStub {
       Options const& options,
       google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::url_maps::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateUrlMap(

@@ -136,6 +136,13 @@ TargetInstancesConnection::SetSecurityPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+TargetInstancesConnection::TestIamPermissions(
+    google::cloud::cpp::compute::target_instances::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_instances_v1
 }  // namespace cloud

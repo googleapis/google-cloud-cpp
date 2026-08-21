@@ -43,11 +43,47 @@ Idempotency ReservationSubBlocksConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
+Idempotency ReservationSubBlocksConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ReservationSubBlocksConnectionIdempotencyPolicy::GetVersion(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        GetVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 ReservationSubBlocksConnectionIdempotencyPolicy::ListReservationSubBlocks(
     google::cloud::cpp::compute::reservation_sub_blocks::v1::
         ListReservationSubBlocksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
+}
+
+Idempotency ReservationSubBlocksConnectionIdempotencyPolicy::PerformMaintenance(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        PerformMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ReservationSubBlocksConnectionIdempotencyPolicy::ReportFaulty(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        ReportFaultyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ReservationSubBlocksConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        SetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ReservationSubBlocksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::reservation_sub_blocks::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ReservationSubBlocksConnectionIdempotencyPolicy>

@@ -112,6 +112,10 @@ class AddressesRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::addresses::v1::
+                         TestIamPermissionsRequest const& request) override;
+
  private:
   static std::unique_ptr<compute_addresses_v1::AddressesRetryPolicy>
   retry_policy(Options const& options) {

@@ -70,6 +70,12 @@ Idempotency UrlMapsConnectionIdempotencyPolicy::PatchUrlMap(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency UrlMapsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::url_maps::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency UrlMapsConnectionIdempotencyPolicy::UpdateUrlMap(
     google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&) {
   return Idempotency::kIdempotent;

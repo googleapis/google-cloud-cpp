@@ -380,6 +380,30 @@ DisksConnection::UpdateDisk(google::cloud::cpp::compute::v1::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DisksConnection::UpdateKmsKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksConnection::UpdateKmsKey(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_disks_v1
 }  // namespace cloud

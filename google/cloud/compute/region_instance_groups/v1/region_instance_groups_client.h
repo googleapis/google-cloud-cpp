@@ -111,8 +111,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L92}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L34}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L105}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L43}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
@@ -143,8 +143,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L92}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L34}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L105}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L43}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
@@ -154,8 +154,8 @@ class RegionInstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of instance group resources contained within the
-  /// specified region.
+  /// Retrieves the list of instance group resources contained within
+  /// the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/list
   ///
   /// @param project  Project ID for this request.
@@ -182,8 +182,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L189}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L34}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L235}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L43}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -192,8 +192,8 @@ class RegionInstanceGroupsClient {
 
   // clang-format off
   ///
-  /// Retrieves the list of instance group resources contained within the
-  /// specified region.
+  /// Retrieves the list of instance group resources contained within
+  /// the specified region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -224,8 +224,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L189}
-  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L34}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L235}
+  /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L43}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -237,8 +237,8 @@ class RegionInstanceGroupsClient {
   ///
   /// Lists the instances in the specified instance group and displays
   /// information about the named ports. Depending on the specified options, this
-  /// method can list all instances or only the instances that are running. The
-  /// orderBy query parameter is not supported.
+  /// method can list all instances or only the instances that are running.
+  /// The orderBy query parameter is not supported.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/listInstances
   ///
   /// @param project  Project ID for this request.
@@ -268,8 +268,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L107}
-  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L96}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L120}
+  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L115}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
@@ -284,8 +284,8 @@ class RegionInstanceGroupsClient {
   ///
   /// Lists the instances in the specified instance group and displays
   /// information about the named ports. Depending on the specified options, this
-  /// method can list all instances or only the instances that are running. The
-  /// orderBy query parameter is not supported.
+  /// method can list all instances or only the instances that are running.
+  /// The orderBy query parameter is not supported.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/listInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -316,8 +316,8 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L107}
-  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L96}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L120}
+  /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_073.proto#L115}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
@@ -354,7 +354,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L261}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L340}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
@@ -415,7 +415,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L261}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L340}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
@@ -452,6 +452,73 @@ class RegionInstanceGroupsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/testIamPermissions
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  The name of the region for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L381}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/testIamPermissions
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_instance_groups.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L381}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::region_instance_groups::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<RegionInstanceGroupsConnection> connection_;

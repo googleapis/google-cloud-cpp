@@ -141,6 +141,10 @@ DefaultServiceAttachmentsRestStub::GetServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
         GetServiceAttachmentRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"show_nat_ips", (request.show_nat_ips() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::ServiceAttachment>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

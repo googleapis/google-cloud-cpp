@@ -194,6 +194,13 @@ InstanceGroupsConnection::SetNamedPorts(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+InstanceGroupsConnection::TestIamPermissions(
+    google::cloud::cpp::compute::instance_groups::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_groups_v1
 }  // namespace cloud

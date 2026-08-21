@@ -128,6 +128,12 @@ BackendServicesConnection::GetBackendService(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status BackendServicesConnection::GetEffectiveSecurityPolicies(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetEffectiveSecurityPoliciesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesConnection::GetHealth(
     google::cloud::cpp::compute::backend_services::v1::

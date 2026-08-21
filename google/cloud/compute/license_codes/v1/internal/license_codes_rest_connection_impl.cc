@@ -56,6 +56,38 @@ LicenseCodesRestConnectionImpl::GetLicenseCode(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetIamPolicy(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::license_codes::v1::
+                 GetIamPolicyRequest const& request) {
+        return stub_->GetIamPolicy(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetIamPolicy(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::license_codes::v1::
+                 SetIamPolicyRequest const& request) {
+        return stub_->SetIamPolicy(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesRestConnectionImpl::TestIamPermissions(
     google::cloud::cpp::compute::license_codes::v1::

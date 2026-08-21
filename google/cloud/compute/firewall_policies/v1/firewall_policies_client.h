@@ -237,7 +237,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L282}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -294,7 +294,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L282}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -358,7 +358,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.CloneRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L305}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.CloneRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
@@ -409,7 +409,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.CloneRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L305}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.CloneRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L311}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
@@ -473,7 +473,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L328}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L337}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -524,7 +524,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L328}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L337}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -582,8 +582,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L357}
-  /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_038.proto#L27}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L369}
+  /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_047.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicy(
@@ -613,8 +613,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L357}
-  /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_038.proto#L27}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L369}
+  /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_047.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicy(
@@ -641,8 +641,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetAssociationRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L347}
-  /// [google.cloud.cpp.compute.v1.FirewallPolicyAssociation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_038.proto#L115}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetAssociationRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L359}
+  /// [google.cloud.cpp.compute.v1.FirewallPolicyAssociation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_047.proto#L132}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -672,8 +672,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetAssociationRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L347}
-  /// [google.cloud.cpp.compute.v1.FirewallPolicyAssociation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_038.proto#L115}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetAssociationRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L359}
+  /// [google.cloud.cpp.compute.v1.FirewallPolicyAssociation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_047.proto#L132}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -701,8 +701,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L364}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L376}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -733,8 +733,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L364}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L376}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -761,8 +761,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L375}
-  /// [google.cloud.cpp.compute.v1.FirewallPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L26}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L387}
+  /// [google.cloud.cpp.compute.v1.FirewallPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_048.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule> GetRule(
@@ -792,8 +792,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L375}
-  /// [google.cloud.cpp.compute.v1.FirewallPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_039.proto#L26}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L387}
+  /// [google.cloud.cpp.compute.v1.FirewallPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_048.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule> GetRule(
@@ -833,7 +833,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.InsertFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L385}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.InsertFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L397}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -874,8 +874,8 @@ class FirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// Lists all the policies that have been configured for the specified folder
-  /// or organization.
+  /// Lists all the policies that have been configured for the specified
+  /// folder or organization.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -906,8 +906,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.ListFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L416}
-  /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_038.proto#L27}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.ListFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L437}
+  /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_047.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -939,8 +939,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.ListAssociationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L409}
-  /// [google.cloud.cpp.compute.v1.FirewallPoliciesListAssociationsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_036.proto#L27}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.ListAssociationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L424}
+  /// [google.cloud.cpp.compute.v1.FirewallPoliciesListAssociationsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_045.proto#L27}
   ///
   // clang-format on
   StatusOr<
@@ -975,7 +975,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L485}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L539}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -1026,7 +1026,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L485}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.MoveRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L539}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -1091,7 +1091,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L509}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L566}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1148,7 +1148,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L509}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L566}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1214,7 +1214,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L532}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L592}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -1271,7 +1271,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L532}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L592}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -1335,7 +1335,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.RemoveAssociationRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L558}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.RemoveAssociationRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L621}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1386,7 +1386,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.RemoveAssociationRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L558}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.RemoveAssociationRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L621}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1450,7 +1450,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L580}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L646}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -1501,7 +1501,7 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L580}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L646}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -1541,8 +1541,8 @@ class FirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/setIamPolicy
   ///
   /// @param resource  Name or id of the resource for this request.
@@ -1560,8 +1560,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L602}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L671}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1572,8 +1572,8 @@ class FirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// Sets the access control policy on the specified resource. Replaces any
-  /// existing policy.
+  /// Sets the access control policy on the specified resource.
+  /// Replaces any existing policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1595,8 +1595,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L602}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L671}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L317}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1624,8 +1624,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L614}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L683}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1659,8 +1659,8 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L614}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_145.proto#L30}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L683}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

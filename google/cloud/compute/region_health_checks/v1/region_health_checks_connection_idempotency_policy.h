@@ -58,6 +58,10 @@ class RegionHealthChecksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_health_checks::v1::
           PatchHealthCheckRequest const& request);
 
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::region_health_checks::v1::
+          TestIamPermissionsRequest const& request);
+
   virtual google::cloud::Idempotency UpdateHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
           UpdateHealthCheckRequest const& request);

@@ -63,6 +63,38 @@ InstancesTracingConnection::AddAccessConfig(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesTracingConnection::AddNetworkInterface(
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::AddNetworkInterface");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddNetworkInterface(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesTracingConnection::AddNetworkInterface(
+    NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                    AddNetworkInterfaceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::AddNetworkInterface");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->AddNetworkInterface(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesTracingConnection::AddNetworkInterface(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::AddNetworkInterface");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddNetworkInterface(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesTracingConnection::AddResourcePolicies(
     google::cloud::cpp::compute::instances::v1::
         AddResourcePoliciesRequest const& request) {
@@ -230,6 +262,38 @@ InstancesTracingConnection::DeleteAccessConfig(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAccessConfig(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesTracingConnection::DeleteNetworkInterface(
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::DeleteNetworkInterface");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkInterface(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesTracingConnection::DeleteNetworkInterface(
+    NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                    DeleteNetworkInterfaceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::DeleteNetworkInterface");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteNetworkInterface(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesTracingConnection::DeleteNetworkInterface(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::DeleteNetworkInterface");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkInterface(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

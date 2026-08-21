@@ -165,6 +165,20 @@ RegionHealthChecksRestLogging::PatchHealthCheck(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthChecksRestLogging::TestIamPermissions(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_checks::v1::
+        TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_health_checks::v1::
+                 TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksRestLogging::AsyncUpdateHealthCheck(
     CompletionQueue& cq,

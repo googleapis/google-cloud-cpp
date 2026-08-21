@@ -236,6 +236,13 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::url_maps::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

@@ -60,6 +60,10 @@ class GlobalAddressesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
           request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::global_addresses::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<GlobalAddressesConnectionIdempotencyPolicy>

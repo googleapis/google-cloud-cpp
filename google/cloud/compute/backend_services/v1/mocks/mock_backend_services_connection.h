@@ -184,6 +184,11 @@ class MockBackendServicesConnection
                    GetBackendServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(Status, GetEffectiveSecurityPolicies,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   GetEffectiveSecurityPoliciesRequest const& request),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>,
       GetHealth,

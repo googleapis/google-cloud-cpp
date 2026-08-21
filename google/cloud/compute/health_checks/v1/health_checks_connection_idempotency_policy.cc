@@ -70,6 +70,12 @@ Idempotency HealthChecksConnectionIdempotencyPolicy::PatchHealthCheck(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency HealthChecksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::health_checks::v1::
+        TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency HealthChecksConnectionIdempotencyPolicy::UpdateHealthCheck(
     google::cloud::cpp::compute::health_checks::v1::
         UpdateHealthCheckRequest const&) {

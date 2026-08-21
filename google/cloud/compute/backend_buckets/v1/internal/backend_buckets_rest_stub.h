@@ -51,6 +51,13 @@ class BackendBucketsRestStub {
       google::cloud::cpp::compute::backend_buckets::v1::
           AddSignedUrlKeyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::BackendBucketAggregatedList>
+  AggregatedListBackendBuckets(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AggregatedListBackendBucketsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteBackendBucket(
       google::cloud::CompletionQueue& cq,
@@ -110,6 +117,13 @@ class BackendBucketsRestStub {
                      Options const& options,
                      google::cloud::cpp::compute::backend_buckets::v1::
                          ListBackendBucketsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::BackendBucketListUsable>
+  ListUsable(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchBackendBucket(
@@ -204,6 +218,13 @@ class DefaultBackendBucketsRestStub : public BackendBucketsRestStub {
       google::cloud::cpp::compute::backend_buckets::v1::
           AddSignedUrlKeyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucketAggregatedList>
+  AggregatedListBackendBuckets(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AggregatedListBackendBucketsRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteBackendBucket(
       google::cloud::CompletionQueue& cq,
@@ -263,6 +284,12 @@ class DefaultBackendBucketsRestStub : public BackendBucketsRestStub {
                      Options const& options,
                      google::cloud::cpp::compute::backend_buckets::v1::
                          ListBackendBucketsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucketListUsable> ListUsable(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchBackendBucket(

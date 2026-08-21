@@ -39,6 +39,12 @@ Idempotency InstancesConnectionIdempotencyPolicy::AddAccessConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency InstancesConnectionIdempotencyPolicy::AddNetworkInterface(
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency InstancesConnectionIdempotencyPolicy::AddResourcePolicies(
     google::cloud::cpp::compute::instances::v1::
         AddResourcePoliciesRequest const&) {
@@ -69,6 +75,12 @@ Idempotency InstancesConnectionIdempotencyPolicy::DeleteInstance(
 Idempotency InstancesConnectionIdempotencyPolicy::DeleteAccessConfig(
     google::cloud::cpp::compute::instances::v1::
         DeleteAccessConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency InstancesConnectionIdempotencyPolicy::DeleteNetworkInterface(
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

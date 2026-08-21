@@ -91,6 +91,66 @@ InstancesClient::AddAccessConfig(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::AddNetworkInterface(
+    std::string const& project, std::string const& zone,
+    std::string const& instance,
+    google::cloud::cpp::compute::v1::NetworkInterface const&
+        network_interface_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instances::v1::AddNetworkInterfaceRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance(instance);
+  *request.mutable_network_interface_resource() = network_interface_resource;
+  return connection_->AddNetworkInterface(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesClient::AddNetworkInterface(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& instance,
+    google::cloud::cpp::compute::v1::NetworkInterface const&
+        network_interface_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instances::v1::AddNetworkInterfaceRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance(instance);
+  *request.mutable_network_interface_resource() = network_interface_resource;
+  return connection_->AddNetworkInterface(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::AddNetworkInterface(
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddNetworkInterface(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesClient::AddNetworkInterface(
+    NoAwaitTag,
+    google::cloud::cpp::compute::instances::v1::
+        AddNetworkInterfaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddNetworkInterface(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::AddNetworkInterface(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddNetworkInterface(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesClient::AddResourcePolicies(
     std::string const& project, std::string const& zone,
     std::string const& instance,
@@ -393,6 +453,62 @@ InstancesClient::DeleteAccessConfig(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAccessConfig(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::DeleteNetworkInterface(
+    std::string const& project, std::string const& zone,
+    std::string const& instance, std::string const& network_interface_name,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instances::v1::DeleteNetworkInterfaceRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance(instance);
+  request.set_network_interface_name(network_interface_name);
+  return connection_->DeleteNetworkInterface(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesClient::DeleteNetworkInterface(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& instance, std::string const& network_interface_name,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instances::v1::DeleteNetworkInterfaceRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance(instance);
+  request.set_network_interface_name(network_interface_name);
+  return connection_->DeleteNetworkInterface(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::DeleteNetworkInterface(
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetworkInterface(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesClient::DeleteNetworkInterface(
+    NoAwaitTag,
+    google::cloud::cpp::compute::instances::v1::
+        DeleteNetworkInterfaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetworkInterface(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::DeleteNetworkInterface(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetworkInterface(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

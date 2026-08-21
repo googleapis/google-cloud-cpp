@@ -504,6 +504,25 @@ DefaultTargetSslProxiesRestStub::SetSslPolicy(
       std::move(query_params));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+DefaultTargetSslProxiesRestStub::TestIamPermissions(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+      *service_, rest_context, request.test_permissions_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetSslProxies", "/", request.resource(), "/",
+                   "testIamPermissions"),
+      std::move(query_params));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

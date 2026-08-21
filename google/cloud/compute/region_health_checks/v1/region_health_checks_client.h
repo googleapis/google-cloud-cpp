@@ -118,7 +118,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.DeleteHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L117}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.DeleteHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -171,7 +171,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.DeleteHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L117}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.DeleteHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -230,8 +230,8 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.GetHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L150}
-  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L271}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.GetHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L167}
+  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L368}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
@@ -262,8 +262,8 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.GetHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L150}
-  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L271}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.GetHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L167}
+  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L368}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
@@ -300,7 +300,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.InsertHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L165}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.InsertHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L182}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -357,7 +357,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.InsertHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L165}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.InsertHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L182}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -425,8 +425,8 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.ListRegionHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L198}
-  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L271}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.ListRegionHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L218}
+  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L368}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
@@ -467,8 +467,8 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.ListRegionHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L198}
-  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L271}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.ListRegionHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L218}
+  /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_053.proto#L368}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
@@ -479,8 +479,9 @@ class RegionHealthChecksClient {
   // clang-format off
   ///
   /// Updates a HealthCheck resource in the specified project using the data
-  /// included in the request. This method supports PATCH semantics and uses the
-  /// JSON merge patch format and processing rules.
+  /// included in the request. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/patch
   ///
   /// @param project  Project ID for this request.
@@ -507,7 +508,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.PatchHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L270}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.PatchHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L323}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
@@ -536,8 +537,9 @@ class RegionHealthChecksClient {
   // clang-format off
   ///
   /// Updates a HealthCheck resource in the specified project using the data
-  /// included in the request. This method supports PATCH semantics and uses the
-  /// JSON merge patch format and processing rules.
+  /// included in the request. This method supportsPATCH
+  /// semantics and uses theJSON merge
+  /// patch format and processing rules.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -566,7 +568,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.PatchHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L270}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.PatchHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L323}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
@@ -606,6 +608,73 @@ class RegionHealthChecksClient {
 
   // clang-format off
   ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/testIamPermissions
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  The name of the region for this request.
+  /// @param resource  Name or id of the resource for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_health_checks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L363}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/testIamPermissions
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_health_checks.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.TestPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_health_checks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L363}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_171.proto#L30}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::region_health_checks::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
+
+  // clang-format off
+  ///
   /// Updates a HealthCheck resource in the specified project using the data
   /// included in the request.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/update
@@ -634,7 +703,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.UpdateHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L307}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.UpdateHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L382}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -693,7 +762,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.UpdateHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L307}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.UpdateHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L382}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

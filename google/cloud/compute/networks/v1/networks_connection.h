@@ -195,6 +195,20 @@ class NetworksConnection {
   AddPeering(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CancelRequestRemovePeering(
+      google::cloud::cpp::compute::networks::v1::
+          CancelRequestRemovePeeringRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  CancelRequestRemovePeering(
+      NoAwaitTag, google::cloud::cpp::compute::networks::v1::
+                      CancelRequestRemovePeeringRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CancelRequestRemovePeering(
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetwork(
       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request);
@@ -262,6 +276,19 @@ class NetworksConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemovePeering(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RequestRemovePeering(google::cloud::cpp::compute::networks::v1::
+                           RequestRemovePeeringRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RequestRemovePeering(NoAwaitTag,
+                       google::cloud::cpp::compute::networks::v1::
+                           RequestRemovePeeringRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RequestRemovePeering(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::

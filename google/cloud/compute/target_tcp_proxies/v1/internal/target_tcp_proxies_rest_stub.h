@@ -113,6 +113,12 @@ class TargetTcpProxiesRestStub {
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::target_tcp_proxies::v1::
+                         TestIamPermissionsRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -212,6 +218,12 @@ class DefaultTargetTcpProxiesRestStub : public TargetTcpProxiesRestStub {
       Options const& options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::target_tcp_proxies::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

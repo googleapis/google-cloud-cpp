@@ -171,6 +171,48 @@ BackendBucketsRestConnectionImpl::AddSignedUrlKey(
       });
 }
 
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>
+BackendBucketsRestConnectionImpl::AggregatedListBackendBuckets(
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AggregatedListBackendBucketsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListBackendBuckets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::BackendBucketsScopedList>>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_backend_buckets_v1::BackendBucketsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::cpp::compute::backend_buckets::v1::
+              AggregatedListBackendBucketsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::cpp::compute::backend_buckets::v1::
+                       AggregatedListBackendBucketsRequest const& request) {
+              return stub->AggregatedListBackendBuckets(rest_context, options,
+                                                        request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::cpp::compute::v1::BackendBucketAggregatedList r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               BackendBucketsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsRestConnectionImpl::DeleteBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -613,6 +655,43 @@ BackendBucketsRestConnectionImpl::ListBackendBuckets(
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::BackendBucketList r) {
+        std::vector<google::cloud::cpp::compute::v1::BackendBucket> result(
+            r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
+BackendBucketsRestConnectionImpl::ListUsable(
+    google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListUsable(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendBucket>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_backend_buckets_v1::BackendBucketsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::cloud::cpp::compute::backend_buckets::
+                                      v1::ListUsableRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::cpp::compute::backend_buckets::v1::
+                       ListUsableRequest const& request) {
+              return stub->ListUsable(rest_context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::cpp::compute::v1::BackendBucketListUsable r) {
         std::vector<google::cloud::cpp::compute::v1::BackendBucket> result(
             r.items().size());
         auto& messages = *r.mutable_items();

@@ -202,6 +202,19 @@ class RoutersConnection {
   DeleteRouter(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNamedSet(
+      google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNamedSet(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::DeleteNamedSetRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNamedSet(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteRoutePolicy(
       google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
           request);
@@ -218,6 +231,11 @@ class RoutersConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::RoutersGetNamedSetResponse>
+  GetNamedSet(
+      google::cloud::cpp::compute::routers::v1::GetNamedSetRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
@@ -262,6 +280,11 @@ class RoutersConnection {
       google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::RoutersListNamedSets>
+  ListNamedSets(
+      google::cloud::cpp::compute::routers::v1::ListNamedSetsRequest const&
+          request);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
   ListRoutePolicies(
       google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
@@ -279,6 +302,19 @@ class RoutersConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchRouter(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNamedSet(
+      google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNamedSet(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::PatchNamedSetRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNamedSet(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchRoutePolicy(
@@ -309,6 +345,19 @@ class RoutersConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateRouter(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateNamedSet(
+      google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNamedSet(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::UpdateNamedSetRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateNamedSet(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateRoutePolicy(

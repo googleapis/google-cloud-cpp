@@ -52,6 +52,49 @@ LicenseCodesClient::GetLicenseCode(
   return connection_->GetLicenseCode(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesClient::GetIamPolicy(std::string const& project,
+                                 std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest request;
+  request.set_project(project);
+  request.set_resource(resource);
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesClient::GetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::GetIamPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesClient::SetIamPolicy(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+        global_set_policy_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest request;
+  request.set_project(project);
+  request.set_resource(resource);
+  *request.mutable_global_set_policy_request_resource() =
+      global_set_policy_request_resource;
+  return connection_->SetIamPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+LicenseCodesClient::SetIamPolicy(
+    google::cloud::cpp::compute::license_codes::v1::SetIamPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetIamPolicy(request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesClient::TestIamPermissions(
     std::string const& project, std::string const& resource,

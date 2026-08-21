@@ -35,6 +35,26 @@ RegionNotificationEndpointsTracingConnection::
             child)
     : child_(std::move(child)) {}
 
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::NotificationEndpointsScopedList>>
+RegionNotificationEndpointsTracingConnection::
+    AggregatedListRegionNotificationEndpoints(
+        google::cloud::cpp::compute::region_notification_endpoints::v1::
+            AggregatedListRegionNotificationEndpointsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_region_notification_endpoints_v1::"
+      "RegionNotificationEndpointsConnection::"
+      "AggregatedListRegionNotificationEndpoints");
+  internal::OTelScope scope(span);
+  auto sr =
+      child_->AggregatedListRegionNotificationEndpoints(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::NotificationEndpointsScopedList>>(
+      std::move(span), std::move(sr));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsTracingConnection::DeleteNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -128,6 +148,17 @@ RegionNotificationEndpointsTracingConnection::ListRegionNotificationEndpoints(
   return internal::MakeTracedStreamRange<
       google::cloud::cpp::compute::v1::NotificationEndpoint>(std::move(span),
                                                              std::move(sr));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionNotificationEndpointsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_notification_endpoints_v1::"
+      "RegionNotificationEndpointsConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 std::shared_ptr<compute_region_notification_endpoints_v1::

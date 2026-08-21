@@ -60,6 +60,15 @@ BackendBucketsRestMetadata::AddSignedUrlKey(
   return child_->AddSignedUrlKey(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::BackendBucketAggregatedList>
+BackendBucketsRestMetadata::AggregatedListBackendBuckets(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AggregatedListBackendBucketsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListBackendBuckets(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsRestMetadata::AsyncDeleteBackendBucket(
     CompletionQueue& cq,
@@ -148,6 +157,15 @@ BackendBucketsRestMetadata::ListBackendBuckets(
         ListBackendBucketsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListBackendBuckets(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::BackendBucketListUsable>
+BackendBucketsRestMetadata::ListUsable(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::ListUsableRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->ListUsable(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

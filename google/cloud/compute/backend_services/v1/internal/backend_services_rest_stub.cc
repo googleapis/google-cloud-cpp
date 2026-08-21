@@ -257,6 +257,22 @@ DefaultBackendServicesRestStub::GetBackendService(
       std::move(query_params));
 }
 
+Status DefaultBackendServicesRestStub::GetEffectiveSecurityPolicies(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::backend_services::v1::
+        GetEffectiveSecurityPoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Get<google::cloud::rest_internal::EmptyResponseType>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendServices", "/", request.backend_service(), "/",
+                   "getEffectiveSecurityPolicies"),
+      std::move(query_params));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 DefaultBackendServicesRestStub::GetHealth(
     google::cloud::rest_internal::RestContext& rest_context,

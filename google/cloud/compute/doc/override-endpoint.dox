@@ -15,9 +15,11 @@ Follow these links to find examples for other \c *Client classes:
 
 - [\c compute_accelerator_types_v1::AcceleratorTypesClient](@ref compute_accelerator_types_v1::AcceleratorTypesClient-endpoint-snippet)
 - [\c compute_addresses_v1::AddressesClient](@ref compute_addresses_v1::AddressesClient-endpoint-snippet)
+- [\c compute_advice_v1::AdviceClient](@ref compute_advice_v1::AdviceClient-endpoint-snippet)
 - [\c compute_autoscalers_v1::AutoscalersClient](@ref compute_autoscalers_v1::AutoscalersClient-endpoint-snippet)
 - [\c compute_backend_buckets_v1::BackendBucketsClient](@ref compute_backend_buckets_v1::BackendBucketsClient-endpoint-snippet)
 - [\c compute_backend_services_v1::BackendServicesClient](@ref compute_backend_services_v1::BackendServicesClient-endpoint-snippet)
+- [\c compute_cross_site_networks_v1::CrossSiteNetworksClient](@ref compute_cross_site_networks_v1::CrossSiteNetworksClient-endpoint-snippet)
 - [\c compute_disk_types_v1::DiskTypesClient](@ref compute_disk_types_v1::DiskTypesClient-endpoint-snippet)
 - [\c compute_disks_v1::DisksClient](@ref compute_disks_v1::DisksClient-endpoint-snippet)
 - [\c compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient](@ref compute_external_vpn_gateways_v1::ExternalVpnGatewaysClient-endpoint-snippet)
@@ -30,7 +32,9 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_global_operations_v1::GlobalOperationsClient](@ref compute_global_operations_v1::GlobalOperationsClient-endpoint-snippet)
 - [\c compute_global_organization_operations_v1::GlobalOrganizationOperationsClient](@ref compute_global_organization_operations_v1::GlobalOrganizationOperationsClient-endpoint-snippet)
 - [\c compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient](@ref compute_global_public_delegated_prefixes_v1::GlobalPublicDelegatedPrefixesClient-endpoint-snippet)
+- [\c compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient](@ref compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient-endpoint-snippet)
 - [\c compute_health_checks_v1::HealthChecksClient](@ref compute_health_checks_v1::HealthChecksClient-endpoint-snippet)
+- [\c compute_hosts_v1::HostsClient](@ref compute_hosts_v1::HostsClient-endpoint-snippet)
 - [\c compute_http_health_checks_v1::HttpHealthChecksClient](@ref compute_http_health_checks_v1::HttpHealthChecksClient-endpoint-snippet)
 - [\c compute_https_health_checks_v1::HttpsHealthChecksClient](@ref compute_https_health_checks_v1::HttpsHealthChecksClient-endpoint-snippet)
 - [\c compute_image_family_views_v1::ImageFamilyViewsClient](@ref compute_image_family_views_v1::ImageFamilyViewsClient-endpoint-snippet)
@@ -41,6 +45,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_settings_v1::InstanceSettingsClient](@ref compute_instance_settings_v1::InstanceSettingsClient-endpoint-snippet)
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-endpoint-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-endpoint-snippet)
+- [\c compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient](@ref compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient-endpoint-snippet)
 - [\c compute_instant_snapshots_v1::InstantSnapshotsClient](@ref compute_instant_snapshots_v1::InstantSnapshotsClient-endpoint-snippet)
 - [\c compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient](@ref compute_interconnect_attachment_groups_v1::InterconnectAttachmentGroupsClient-endpoint-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-endpoint-snippet)
@@ -61,27 +66,37 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-endpoint-snippet)
 - [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-endpoint-snippet)
 - [\c compute_node_types_v1::NodeTypesClient](@ref compute_node_types_v1::NodeTypesClient-endpoint-snippet)
+- [\c compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient](@ref compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-endpoint-snippet)
 - [\c compute_packet_mirrorings_v1::PacketMirroringsClient](@ref compute_packet_mirrorings_v1::PacketMirroringsClient-endpoint-snippet)
+- [\c compute_preview_features_v1::PreviewFeaturesClient](@ref compute_preview_features_v1::PreviewFeaturesClient-endpoint-snippet)
 - [\c compute_projects_v1::ProjectsClient](@ref compute_projects_v1::ProjectsClient-endpoint-snippet)
 - [\c compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient](@ref compute_public_advertised_prefixes_v1::PublicAdvertisedPrefixesClient-endpoint-snippet)
 - [\c compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient](@ref compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesClient-endpoint-snippet)
 - [\c compute_region_autoscalers_v1::RegionAutoscalersClient](@ref compute_region_autoscalers_v1::RegionAutoscalersClient-endpoint-snippet)
+- [\c compute_region_backend_buckets_v1::RegionBackendBucketsClient](@ref compute_region_backend_buckets_v1::RegionBackendBucketsClient-endpoint-snippet)
 - [\c compute_region_backend_services_v1::RegionBackendServicesClient](@ref compute_region_backend_services_v1::RegionBackendServicesClient-endpoint-snippet)
 - [\c compute_region_commitments_v1::RegionCommitmentsClient](@ref compute_region_commitments_v1::RegionCommitmentsClient-endpoint-snippet)
+- [\c compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient](@ref compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient-endpoint-snippet)
 - [\c compute_region_disk_types_v1::RegionDiskTypesClient](@ref compute_region_disk_types_v1::RegionDiskTypesClient-endpoint-snippet)
 - [\c compute_region_disks_v1::RegionDisksClient](@ref compute_region_disks_v1::RegionDisksClient-endpoint-snippet)
+- [\c compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient](@ref compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient-endpoint-snippet)
 - [\c compute_region_health_check_services_v1::RegionHealthCheckServicesClient](@ref compute_region_health_check_services_v1::RegionHealthCheckServicesClient-endpoint-snippet)
 - [\c compute_region_health_checks_v1::RegionHealthChecksClient](@ref compute_region_health_checks_v1::RegionHealthChecksClient-endpoint-snippet)
+- [\c compute_region_health_sources_v1::RegionHealthSourcesClient](@ref compute_region_health_sources_v1::RegionHealthSourcesClient-endpoint-snippet)
+- [\c compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient](@ref compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient-endpoint-snippet)
 - [\c compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient](@ref compute_region_instance_group_managers_v1::RegionInstanceGroupManagersClient-endpoint-snippet)
 - [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-endpoint-snippet)
 - [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-endpoint-snippet)
 - [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-endpoint-snippet)
+- [\c compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient](@ref compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient-endpoint-snippet)
 - [\c compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient](@ref compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-endpoint-snippet)
 - [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-endpoint-snippet)
 - [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-endpoint-snippet)
 - [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-endpoint-snippet)
 - [\c compute_region_operations_v1::RegionOperationsClient](@ref compute_region_operations_v1::RegionOperationsClient-endpoint-snippet)
 - [\c compute_region_security_policies_v1::RegionSecurityPoliciesClient](@ref compute_region_security_policies_v1::RegionSecurityPoliciesClient-endpoint-snippet)
+- [\c compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient](@ref compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient-endpoint-snippet)
+- [\c compute_region_snapshots_v1::RegionSnapshotsClient](@ref compute_region_snapshots_v1::RegionSnapshotsClient-endpoint-snippet)
 - [\c compute_region_ssl_certificates_v1::RegionSslCertificatesClient](@ref compute_region_ssl_certificates_v1::RegionSslCertificatesClient-endpoint-snippet)
 - [\c compute_region_ssl_policies_v1::RegionSslPoliciesClient](@ref compute_region_ssl_policies_v1::RegionSslPoliciesClient-endpoint-snippet)
 - [\c compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient](@ref compute_region_target_http_proxies_v1::RegionTargetHttpProxiesClient-endpoint-snippet)
@@ -90,10 +105,14 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_url_maps_v1::RegionUrlMapsClient](@ref compute_region_url_maps_v1::RegionUrlMapsClient-endpoint-snippet)
 - [\c compute_region_zones_v1::RegionZonesClient](@ref compute_region_zones_v1::RegionZonesClient-endpoint-snippet)
 - [\c compute_regions_v1::RegionsClient](@ref compute_regions_v1::RegionsClient-endpoint-snippet)
+- [\c compute_reliability_risks_v1::ReliabilityRisksClient](@ref compute_reliability_risks_v1::ReliabilityRisksClient-endpoint-snippet)
 - [\c compute_reservation_blocks_v1::ReservationBlocksClient](@ref compute_reservation_blocks_v1::ReservationBlocksClient-endpoint-snippet)
+- [\c compute_reservation_slots_v1::ReservationSlotsClient](@ref compute_reservation_slots_v1::ReservationSlotsClient-endpoint-snippet)
 - [\c compute_reservation_sub_blocks_v1::ReservationSubBlocksClient](@ref compute_reservation_sub_blocks_v1::ReservationSubBlocksClient-endpoint-snippet)
 - [\c compute_reservations_v1::ReservationsClient](@ref compute_reservations_v1::ReservationsClient-endpoint-snippet)
 - [\c compute_resource_policies_v1::ResourcePoliciesClient](@ref compute_resource_policies_v1::ResourcePoliciesClient-endpoint-snippet)
+- [\c compute_rollout_plans_v1::RolloutPlansClient](@ref compute_rollout_plans_v1::RolloutPlansClient-endpoint-snippet)
+- [\c compute_rollouts_v1::RolloutsClient](@ref compute_rollouts_v1::RolloutsClient-endpoint-snippet)
 - [\c compute_routers_v1::RoutersClient](@ref compute_routers_v1::RoutersClient-endpoint-snippet)
 - [\c compute_routes_v1::RoutesClient](@ref compute_routes_v1::RoutesClient-endpoint-snippet)
 - [\c compute_security_policies_v1::SecurityPoliciesClient](@ref compute_security_policies_v1::SecurityPoliciesClient-endpoint-snippet)
@@ -116,7 +135,9 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_url_maps_v1::UrlMapsClient](@ref compute_url_maps_v1::UrlMapsClient-endpoint-snippet)
 - [\c compute_vpn_gateways_v1::VpnGatewaysClient](@ref compute_vpn_gateways_v1::VpnGatewaysClient-endpoint-snippet)
 - [\c compute_vpn_tunnels_v1::VpnTunnelsClient](@ref compute_vpn_tunnels_v1::VpnTunnelsClient-endpoint-snippet)
+- [\c compute_wire_groups_v1::WireGroupsClient](@ref compute_wire_groups_v1::WireGroupsClient-endpoint-snippet)
 - [\c compute_zone_operations_v1::ZoneOperationsClient](@ref compute_zone_operations_v1::ZoneOperationsClient-endpoint-snippet)
+- [\c compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient](@ref compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient-endpoint-snippet)
 - [\c compute_zones_v1::ZonesClient](@ref compute_zones_v1::ZonesClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
@@ -137,6 +158,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_advice_v1::AdviceClient-endpoint-snippet Override compute_advice_v1::AdviceClient Endpoint Configuration
+
+@snippet google/cloud/compute/advice/v1/samples/advice_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_autoscalers_v1::AutoscalersClient-endpoint-snippet Override compute_autoscalers_v1::AutoscalersClient Endpoint Configuration
 
 @snippet google/cloud/compute/autoscalers/v1/samples/autoscalers_client_samples.cc set-client-endpoint
@@ -152,6 +179,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_backend_services_v1::BackendServicesClient-endpoint-snippet Override compute_backend_services_v1::BackendServicesClient Endpoint Configuration
 
 @snippet google/cloud/compute/backend_services/v1/samples/backend_services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_cross_site_networks_v1::CrossSiteNetworksClient-endpoint-snippet Override compute_cross_site_networks_v1::CrossSiteNetworksClient Endpoint Configuration
+
+@snippet google/cloud/compute/cross_site_networks/v1/samples/cross_site_networks_client_samples.cc set-client-endpoint
 
 */
 
@@ -227,9 +260,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient-endpoint-snippet Override compute_global_vm_extension_policies_v1::GlobalVmExtensionPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/global_vm_extension_policies/v1/samples/global_vm_extension_policies_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_health_checks_v1::HealthChecksClient-endpoint-snippet Override compute_health_checks_v1::HealthChecksClient Endpoint Configuration
 
 @snippet google/cloud/compute/health_checks/v1/samples/health_checks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_hosts_v1::HostsClient-endpoint-snippet Override compute_hosts_v1::HostsClient Endpoint Configuration
+
+@snippet google/cloud/compute/hosts/v1/samples/hosts_client_samples.cc set-client-endpoint
 
 */
 
@@ -290,6 +335,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_instances_v1::InstancesClient-endpoint-snippet Override compute_instances_v1::InstancesClient Endpoint Configuration
 
 @snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient-endpoint-snippet Override compute_instant_snapshot_groups_v1::InstantSnapshotGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/instant_snapshot_groups/v1/samples/instant_snapshot_groups_client_samples.cc set-client-endpoint
 
 */
 
@@ -413,9 +464,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient-endpoint-snippet Override compute_organization_security_policies_v1::OrganizationSecurityPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/organization_security_policies/v1/samples/organization_security_policies_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_packet_mirrorings_v1::PacketMirroringsClient-endpoint-snippet Override compute_packet_mirrorings_v1::PacketMirroringsClient Endpoint Configuration
 
 @snippet google/cloud/compute/packet_mirrorings/v1/samples/packet_mirrorings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_preview_features_v1::PreviewFeaturesClient-endpoint-snippet Override compute_preview_features_v1::PreviewFeaturesClient Endpoint Configuration
+
+@snippet google/cloud/compute/preview_features/v1/samples/preview_features_client_samples.cc set-client-endpoint
 
 */
 
@@ -443,6 +506,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_region_backend_buckets_v1::RegionBackendBucketsClient-endpoint-snippet Override compute_region_backend_buckets_v1::RegionBackendBucketsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_backend_buckets/v1/samples/region_backend_buckets_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_region_backend_services_v1::RegionBackendServicesClient-endpoint-snippet Override compute_region_backend_services_v1::RegionBackendServicesClient Endpoint Configuration
 
 @snippet google/cloud/compute/region_backend_services/v1/samples/region_backend_services_client_samples.cc set-client-endpoint
@@ -452,6 +521,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_commitments_v1::RegionCommitmentsClient-endpoint-snippet Override compute_region_commitments_v1::RegionCommitmentsClient Endpoint Configuration
 
 @snippet google/cloud/compute/region_commitments/v1/samples/region_commitments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient-endpoint-snippet Override compute_region_composite_health_checks_v1::RegionCompositeHealthChecksClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_composite_health_checks/v1/samples/region_composite_health_checks_client_samples.cc set-client-endpoint
 
 */
 
@@ -467,6 +542,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient-endpoint-snippet Override compute_region_health_aggregation_policies_v1::RegionHealthAggregationPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_health_aggregation_policies/v1/samples/region_health_aggregation_policies_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_region_health_check_services_v1::RegionHealthCheckServicesClient-endpoint-snippet Override compute_region_health_check_services_v1::RegionHealthCheckServicesClient Endpoint Configuration
 
 @snippet google/cloud/compute/region_health_check_services/v1/samples/region_health_check_services_client_samples.cc set-client-endpoint
@@ -476,6 +557,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_health_checks_v1::RegionHealthChecksClient-endpoint-snippet Override compute_region_health_checks_v1::RegionHealthChecksClient Endpoint Configuration
 
 @snippet google/cloud/compute/region_health_checks/v1/samples/region_health_checks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_health_sources_v1::RegionHealthSourcesClient-endpoint-snippet Override compute_region_health_sources_v1::RegionHealthSourcesClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_health_sources/v1/samples/region_health_sources_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient-endpoint-snippet Override compute_region_instance_group_manager_resize_requests_v1::RegionInstanceGroupManagerResizeRequestsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_instance_group_manager_resize_requests/v1/samples/region_instance_group_manager_resize_requests_client_samples.cc set-client-endpoint
 
 */
 
@@ -500,6 +593,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_instances_v1::RegionInstancesClient-endpoint-snippet Override compute_region_instances_v1::RegionInstancesClient Endpoint Configuration
 
 @snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient-endpoint-snippet Override compute_region_instant_snapshot_groups_v1::RegionInstantSnapshotGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_instant_snapshot_groups/v1/samples/region_instant_snapshot_groups_client_samples.cc set-client-endpoint
 
 */
 
@@ -536,6 +635,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_security_policies_v1::RegionSecurityPoliciesClient-endpoint-snippet Override compute_region_security_policies_v1::RegionSecurityPoliciesClient Endpoint Configuration
 
 @snippet google/cloud/compute/region_security_policies/v1/samples/region_security_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient-endpoint-snippet Override compute_region_snapshot_settings_v1::RegionSnapshotSettingsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_snapshot_settings/v1/samples/region_snapshot_settings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_snapshots_v1::RegionSnapshotsClient-endpoint-snippet Override compute_region_snapshots_v1::RegionSnapshotsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_snapshots/v1/samples/region_snapshots_client_samples.cc set-client-endpoint
 
 */
 
@@ -587,9 +698,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_reliability_risks_v1::ReliabilityRisksClient-endpoint-snippet Override compute_reliability_risks_v1::ReliabilityRisksClient Endpoint Configuration
+
+@snippet google/cloud/compute/reliability_risks/v1/samples/reliability_risks_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_reservation_blocks_v1::ReservationBlocksClient-endpoint-snippet Override compute_reservation_blocks_v1::ReservationBlocksClient Endpoint Configuration
 
 @snippet google/cloud/compute/reservation_blocks/v1/samples/reservation_blocks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_reservation_slots_v1::ReservationSlotsClient-endpoint-snippet Override compute_reservation_slots_v1::ReservationSlotsClient Endpoint Configuration
+
+@snippet google/cloud/compute/reservation_slots/v1/samples/reservation_slots_client_samples.cc set-client-endpoint
 
 */
 
@@ -608,6 +731,18 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_resource_policies_v1::ResourcePoliciesClient-endpoint-snippet Override compute_resource_policies_v1::ResourcePoliciesClient Endpoint Configuration
 
 @snippet google/cloud/compute/resource_policies/v1/samples/resource_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_rollout_plans_v1::RolloutPlansClient-endpoint-snippet Override compute_rollout_plans_v1::RolloutPlansClient Endpoint Configuration
+
+@snippet google/cloud/compute/rollout_plans/v1/samples/rollout_plans_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_rollouts_v1::RolloutsClient-endpoint-snippet Override compute_rollouts_v1::RolloutsClient Endpoint Configuration
+
+@snippet google/cloud/compute/rollouts/v1/samples/rollouts_client_samples.cc set-client-endpoint
 
 */
 
@@ -743,9 +878,21 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_wire_groups_v1::WireGroupsClient-endpoint-snippet Override compute_wire_groups_v1::WireGroupsClient Endpoint Configuration
+
+@snippet google/cloud/compute/wire_groups/v1/samples/wire_groups_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_zone_operations_v1::ZoneOperationsClient-endpoint-snippet Override compute_zone_operations_v1::ZoneOperationsClient Endpoint Configuration
 
 @snippet google/cloud/compute/zone_operations/v1/samples/zone_operations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient-endpoint-snippet Override compute_zone_vm_extension_policies_v1::ZoneVmExtensionPoliciesClient Endpoint Configuration
+
+@snippet google/cloud/compute/zone_vm_extension_policies/v1/samples/zone_vm_extension_policies_client_samples.cc set-client-endpoint
 
 */
 

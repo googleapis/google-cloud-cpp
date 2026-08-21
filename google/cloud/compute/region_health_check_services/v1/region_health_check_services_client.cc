@@ -34,6 +34,30 @@ RegionHealthCheckServicesClient::RegionHealthCheckServicesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 RegionHealthCheckServicesClient::~RegionHealthCheckServicesClient() = default;
 
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::HealthCheckServicesScopedList>>
+RegionHealthCheckServicesClient::AggregatedListRegionHealthCheckServices(
+    std::string const& project, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_health_check_services::v1::
+      AggregatedListRegionHealthCheckServicesRequest request;
+  request.set_project(project);
+  return connection_->AggregatedListRegionHealthCheckServices(request);
+}
+
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::HealthCheckServicesScopedList>>
+RegionHealthCheckServicesClient::AggregatedListRegionHealthCheckServices(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        AggregatedListRegionHealthCheckServicesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AggregatedListRegionHealthCheckServices(
+      std::move(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesClient::DeleteHealthCheckService(
     std::string const& project, std::string const& region,
@@ -246,6 +270,33 @@ RegionHealthCheckServicesClient::PatchHealthCheckService(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchHealthCheckService(operation);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthCheckServicesClient::TestIamPermissions(
+    std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_health_check_services::v1::
+      TestIamPermissionsRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource(resource);
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
+  return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionHealthCheckServicesClient::TestIamPermissions(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TestIamPermissions(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

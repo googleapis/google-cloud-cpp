@@ -126,6 +126,13 @@ RegionAutoscalersConnection::PatchAutoscaler(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+RegionAutoscalersConnection::TestIamPermissions(
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersConnection::UpdateAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::

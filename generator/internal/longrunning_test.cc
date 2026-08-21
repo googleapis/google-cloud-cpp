@@ -695,7 +695,9 @@ TEST_F(LongrunningVarsTest,
           "google::cloud::cpp::compute::global_organization_operations::v1::"
           "DeleteOperationRequest")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
+      // clang-format off
       r.set_operation(op);
+      // clang-format on
 )""")));
   EXPECT_THAT(vars,
               Contains(Pair("longrunning_await_set_operation_fields", R"""(

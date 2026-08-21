@@ -853,6 +853,62 @@ DisksClient::UpdateDisk(
   return connection_->UpdateDisk(operation);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::UpdateKmsKey(
+    std::string const& project, std::string const& zone,
+    std::string const& disk,
+    google::cloud::cpp::compute::v1::DiskUpdateKmsKeyRequest const&
+        disk_update_kms_key_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_disk(disk);
+  *request.mutable_disk_update_kms_key_request_resource() =
+      disk_update_kms_key_request_resource;
+  return connection_->UpdateKmsKey(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation> DisksClient::UpdateKmsKey(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& disk,
+    google::cloud::cpp::compute::v1::DiskUpdateKmsKeyRequest const&
+        disk_update_kms_key_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_disk(disk);
+  *request.mutable_disk_update_kms_key_request_resource() =
+      disk_update_kms_key_request_resource;
+  return connection_->UpdateKmsKey(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::UpdateKmsKey(
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateKmsKey(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation> DisksClient::UpdateKmsKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::disks::v1::UpdateKmsKeyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateKmsKey(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DisksClient::UpdateKmsKey(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateKmsKey(operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_disks_v1
 }  // namespace cloud

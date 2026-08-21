@@ -129,6 +129,10 @@ class TargetSslProxiesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                         TestIamPermissionsRequest const& request) override;
+
  private:
   std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
       child_;

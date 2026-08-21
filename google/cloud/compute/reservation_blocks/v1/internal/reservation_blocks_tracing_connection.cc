@@ -44,6 +44,17 @@ ReservationBlocksTracingConnection::GetReservationBlocksGetResponse(
                            child_->GetReservationBlocksGetResponse(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_blocks_v1::ReservationBlocksConnection::"
+      "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
 ReservationBlocksTracingConnection::ListReservationBlocks(
     google::cloud::cpp::compute::reservation_blocks::v1::
@@ -91,6 +102,28 @@ ReservationBlocksTracingConnection::PerformMaintenance(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PerformMaintenance(operation));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Policy>
+ReservationBlocksTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_blocks_v1::ReservationBlocksConnection::"
+      "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+ReservationBlocksTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservation_blocks_v1::ReservationBlocksConnection::"
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 std::shared_ptr<compute_reservation_blocks_v1::ReservationBlocksConnection>

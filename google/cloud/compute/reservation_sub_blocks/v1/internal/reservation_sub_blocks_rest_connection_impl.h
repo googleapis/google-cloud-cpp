@@ -25,6 +25,7 @@
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks_connection.h"
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks_connection_idempotency_policy.h"
 #include "google/cloud/compute/reservation_sub_blocks/v1/reservation_sub_blocks_options.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -57,10 +58,56 @@ class ReservationSubBlocksRestConnectionImpl
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           GetReservationSubBlocksGetResponseRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetIamPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          GetVersionRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetVersion(
+      NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                      GetVersionRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> GetVersion(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::ReservationSubBlock>
   ListReservationSubBlocks(
       google::cloud::cpp::compute::reservation_sub_blocks::v1::
           ListReservationSubBlocksRequest request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         PerformMaintenanceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                      PerformMaintenanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ReportFaulty(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          ReportFaultyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ReportFaulty(
+      NoAwaitTag, google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                      ReportFaultyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ReportFaulty(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::reservation_sub_blocks::v1::
+          SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::reservation_sub_blocks::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   static std::unique_ptr<
@@ -85,6 +132,13 @@ class ReservationSubBlocksRestConnectionImpl
     return options
         .get<compute_reservation_sub_blocks_v1::
                  ReservationSubBlocksConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
+    return options
+        .get<compute_reservation_sub_blocks_v1::
+                 ReservationSubBlocksPollingPolicyOption>()
         ->clone();
   }
 

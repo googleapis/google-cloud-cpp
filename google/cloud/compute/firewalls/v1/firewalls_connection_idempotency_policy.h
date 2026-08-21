@@ -55,6 +55,10 @@ class FirewallsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request);
 
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::firewalls::v1::
+          TestIamPermissionsRequest const& request);
+
   virtual google::cloud::Idempotency UpdateFirewall(
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request);

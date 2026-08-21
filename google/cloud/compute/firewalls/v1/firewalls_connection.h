@@ -230,6 +230,10 @@ class FirewallsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchFirewall(google::cloud::cpp::compute::v1::Operation const& operation);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::firewalls::v1::
+                         TestIamPermissionsRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateFirewall(
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&

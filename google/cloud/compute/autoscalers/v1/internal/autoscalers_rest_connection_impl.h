@@ -98,6 +98,10 @@ class AutoscalersRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::cpp::compute::autoscalers::v1::
+                         TestIamPermissionsRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::
           UpdateAutoscalerRequest const& request) override;
