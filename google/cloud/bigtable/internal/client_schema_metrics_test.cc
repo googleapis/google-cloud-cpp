@@ -20,10 +20,10 @@
 #include "google/cloud/bigtable/internal/client_schema_metrics.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/testing_util/mock_opentelemetry_metrics.h"
+#include "google/cloud/testing_util/opentelemetry_attributes.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/runtime_context.h>
-#include <opentelemetry/metrics/async_instruments.h>
-#include <opentelemetry/metrics/meter.h>
 
 namespace google {
 namespace cloud {
@@ -31,197 +31,15 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::MakeAttributesMap;
+using ::google::cloud::testing_util::MockHistogram;
+using ::google::cloud::testing_util::MockMeter;
+using ::google::cloud::testing_util::MockMeterProvider;
 using ::testing::A;
 using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
-
-using ::opentelemetry::metrics::Counter;
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
-using ::opentelemetry::metrics::Gauge;
-#endif
-using ::opentelemetry::metrics::Histogram;
-using ::opentelemetry::metrics::ObservableInstrument;
-using ::opentelemetry::metrics::UpDownCounter;
-
-template <typename T>
-class MockHistogram : public opentelemetry::metrics::Histogram<T> {
- public:
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
-  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
-              (T value), (noexcept, override));
-  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
-              (T, opentelemetry::common::KeyValueIterable const&),
-              (noexcept, override));
-
-#endif
-  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
-              (T value, opentelemetry::context::Context const& context),
-              (noexcept, override));
-  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
-              (T value,
-               opentelemetry::common::KeyValueIterable const& attributes,
-               opentelemetry::context::Context const& context),
-              (noexcept, override));
-};
-
-class MockMeter : public opentelemetry::metrics::Meter {
- public:
-  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Counter<uint64_t>>,
-              CreateUInt64Counter,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Counter<double>>,
-              CreateDoubleCounter,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(
-      opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-      CreateInt64ObservableCounter,  // NOLINT(bugprone-exception-escape)
-      (opentelemetry::nostd::string_view, opentelemetry::nostd::string_view,
-       opentelemetry::nostd::string_view),
-      (noexcept, override));
-
-  MOCK_METHOD(
-      opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-      CreateDoubleObservableCounter,  // NOLINT(bugprone-exception-escape)
-      (opentelemetry::nostd::string_view, opentelemetry::nostd::string_view,
-       opentelemetry::nostd::string_view),
-      (noexcept, override));
-
-  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Histogram<uint64_t>>,
-              CreateUInt64Histogram,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Histogram<double>>,
-              CreateDoubleHistogram,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
-  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Gauge<int64_t>>,
-              CreateInt64Gauge,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Gauge<double>>,
-              CreateDoubleGauge,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(uintptr_t,
-              RegisterCallback,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::metrics::MultiObservableCallbackPtr, void*,
-               opentelemetry::nostd::span<
-                   opentelemetry::metrics::ObservableInstrument*>),
-              (noexcept, override));
-
-  MOCK_METHOD(void,
-              DeregisterCallback,  // NOLINT(bugprone-exception-escape)
-              (uintptr_t), (noexcept, override));
-#endif
-
-  MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-              CreateInt64ObservableGauge,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-              CreateDoubleObservableGauge,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(opentelemetry::nostd::unique_ptr<UpDownCounter<int64_t>>,
-              CreateInt64UpDownCounter,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(opentelemetry::nostd::unique_ptr<UpDownCounter<double>>,
-              CreateDoubleUpDownCounter,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-  MOCK_METHOD(
-      opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-      CreateInt64ObservableUpDownCounter,  // NOLINT(bugprone-exception-escape)
-      (opentelemetry::nostd::string_view, opentelemetry::nostd::string_view,
-       opentelemetry::nostd::string_view),
-      (noexcept, override));
-
-  MOCK_METHOD(
-      opentelemetry::nostd::shared_ptr<ObservableInstrument>,
-      CreateDoubleObservableUpDownCounter,  // NOLINT(bugprone-exception-escape)
-      (opentelemetry::nostd::string_view, opentelemetry::nostd::string_view,
-       opentelemetry::nostd::string_view),
-      (noexcept, override));
-};
-
-class MockMeterProvider : public opentelemetry::metrics::MeterProvider {
- public:
-#if OPENTELEMETRY_ABI_VERSION_NO >= 2
-  MOCK_METHOD(opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>,
-              GetMeter,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::common::KeyValueIterable const*),
-              (noexcept, override));
-
-  MOCK_METHOD(void, RemoveMeter,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-
-#else
-  MOCK_METHOD(opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>,
-              GetMeter,  // NOLINT(bugprone-exception-escape)
-              (opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view,
-               opentelemetry::nostd::string_view),
-              (noexcept, override));
-#endif
-};
-
-std::unordered_map<std::string, std::string> MakeAttributesMap(
-    opentelemetry::common::KeyValueIterable const& attributes) {
-  std::unordered_map<std::string, std::string> m;
-  attributes.ForEachKeyValue([&](opentelemetry::nostd::string_view k,
-                                 opentelemetry::common::AttributeValue v) {
-    if (opentelemetry::nostd::holds_alternative<
-            opentelemetry::nostd::string_view>(v)) {
-      m.emplace(
-          std::string{k},
-          opentelemetry::nostd::get<opentelemetry::nostd::string_view>(v));
-    }
-    return true;
-  });
-  return m;
-}
 
 TEST(ClientSchemaMetricsTest, IntoLabelMapClient) {
   ClientResourceLabels resource{"p-1",    "i-1",       "app-1", "client-1",
