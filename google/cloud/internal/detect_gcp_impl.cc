@@ -117,7 +117,12 @@ bool GcpDetectorImpl::IsGoogleCloudServerless() {
 
 std::shared_ptr<GcpDetector> MakeGcpDetector() {
   auto config = GcpDetectorImpl::GcpDetectorConfig{};
-  config.env_variables = {"CLOUD_RUN_JOB", "FUNCTION_NAME", "K_SERVICE"};
+  config.env_variables = {
+      "CLOUD_RUN_JOB",
+      "CLOUD_RUN_WORKER_POOL",
+      "FUNCTION_NAME",
+      "K_SERVICE",
+  };
 #ifdef _WIN32
   config.key = HKEY_LOCAL_MACHINE;
   config.sub_key = "SYSTEM\\HardwareConfig\\Current";

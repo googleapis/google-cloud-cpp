@@ -175,6 +175,23 @@ TEST(DetectGcpPlatform, ContainsServerlessEnvVar) {
   EXPECT_TRUE(is_cloud_serverless);
 }
 
+class MakeGcpDetectorServerlessEnvVarsTest
+    : public ::testing::TestWithParam<std::string> {};
+
+INSTANTIATE_TEST_SUITE_P(DetectGcpPlatform,
+                         MakeGcpDetectorServerlessEnvVarsTest,
+                         testing::Values("CLOUD_RUN_JOB",
+                                         "CLOUD_RUN_WORKER_POOL",
+                                         "FUNCTION_NAME", "K_SERVICE"));
+
+TEST_P(MakeGcpDetectorServerlessEnvVarsTest, DetectsServerlessEnvVar) {
+  std::string const& env_var = GetParam();
+  auto scoped_env =
+      google::cloud::testing_util::ScopedEnvironment(env_var, "TEST_VALUE");
+  auto gcp_detector = MakeGcpDetector();
+  EXPECT_TRUE(gcp_detector->IsGoogleCloudServerless());
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
