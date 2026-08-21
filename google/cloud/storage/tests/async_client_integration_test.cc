@@ -1172,10 +1172,9 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpenMultipleDisjointRanges) {
           .get();
   ASSERT_STATUS_OK(descriptor);
 
-  std::string actual1, actual2, actual3;
-
   // Read Range 1 ([0, 1024)) and assert it hits pre-warmed cache with
   // correct content.
+  std::string actual1;
   {
     AsyncReader r;
     AsyncToken t;
@@ -1192,6 +1191,7 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpenMultipleDisjointRanges) {
   EXPECT_EQ(actual1, block.substr(0, 1024));
 
   // Read Range 2 ([4096, 5120)) and assert exact match.
+  std::string actual2;
   {
     AsyncReader r;
     AsyncToken t;
@@ -1208,6 +1208,7 @@ TEST_F(AsyncClientIntegrationTest, MultiRangeOpenMultipleDisjointRanges) {
   EXPECT_EQ(actual2, block.substr(4096, 1024));
 
   // Read Range 3 ([16384, 17408)) and assert exact match.
+  std::string actual3;
   {
     AsyncReader r;
     AsyncToken t;
