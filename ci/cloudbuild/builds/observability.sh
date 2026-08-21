@@ -159,10 +159,12 @@ chmod +x /tmp/observability_integration_test-dynamic-pool
 TEST_EXIT_CODE=0
 
 echo "Running observability_integration_test-default..."
+GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL=static \
 /tmp/observability_integration_test-default \
   --gtest_output=xml:/tmp/test-default.xml > /tmp/test-default.log 2>&1 || TEST_EXIT_CODE=\$?
 
 echo "Running observability_integration_test-dynamic-pool..."
+GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL=dynamic \
 /tmp/observability_integration_test-dynamic-pool \
   --gtest_output=xml:/tmp/test-dynamic-pool.xml > /tmp/test-dynamic-pool.log 2>&1 || TEST_EXIT_CODE=\$?
 
