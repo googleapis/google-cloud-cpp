@@ -169,6 +169,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "eventarc",
     "filestore",
     "financialservices",
+    "ftp",
     "functions",
     "geminidataanalytics",
     "gkebackup",

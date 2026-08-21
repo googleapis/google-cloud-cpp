@@ -2649,6 +2649,16 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Ftp
+service {
+  service_proto_path: "google/cloud/ftp/v1/service.proto"
+  product_path: "google/cloud/ftp/v1"
+  initial_copyright_year: "2026"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
 # Functions
 service {
   service_proto_path: "google/cloud/functions/v1/functions.proto"
