@@ -32,6 +32,9 @@ io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TA
 excluded_rules=(
   "-//examples:grpc_credential_types"
   "-//google/cloud/bigtable/examples:bigtable_grpc_credentials"
+  # Observability integration tests are run separately by observability.sh
+  "-//google/cloud/bigtable/tests:observability_integration_test-default"
+  "-//google/cloud/bigtable/tests:observability_integration_test-dynamic-pool"
   # This sample uses HMAC keys, which are very limited in production (at most
   # 5 per service account). Disabled for now.
   "-//google/cloud/storage/examples:storage_service_account_samples"
