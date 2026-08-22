@@ -31,7 +31,7 @@ template <typename T>
 class StreamingReadRpcTracking : public internal::StreamingReadRpc<T> {
  public:
   StreamingReadRpcTracking(std::unique_ptr<internal::StreamingReadRpc<T>> child,
-                           std::function<void(void)> on_destruction)
+                           std::function<void()> on_destruction)
       : child_(std::move(child)), on_destruction_(std::move(on_destruction)) {}
 
   ~StreamingReadRpcTracking() override { on_destruction_(); }
@@ -46,7 +46,7 @@ class StreamingReadRpcTracking : public internal::StreamingReadRpc<T> {
 
  private:
   std::unique_ptr<internal::StreamingReadRpc<T>> child_;
-  std::function<void(void)> on_destruction_;
+  std::function<void()> on_destruction_;
 };
 
 template <typename T>
@@ -55,7 +55,7 @@ class AsyncStreamingReadRpcTracking
  public:
   AsyncStreamingReadRpcTracking(
       std::unique_ptr<internal::AsyncStreamingReadRpc<T>> child,
-      std::function<void(void)> on_destruction)
+      std::function<void()> on_destruction)
       : child_(std::move(child)), on_destruction_(std::move(on_destruction)) {}
 
   ~AsyncStreamingReadRpcTracking() override { on_destruction_(); }
@@ -70,7 +70,7 @@ class AsyncStreamingReadRpcTracking
 
  private:
   std::unique_ptr<internal::AsyncStreamingReadRpc<T>> child_;
-  std::function<void(void)> on_destruction_;
+  std::function<void()> on_destruction_;
 };
 
 template <typename Request, typename Response>
@@ -79,7 +79,7 @@ class AsyncStreamingReadWriteRpcTracking
  public:
   AsyncStreamingReadWriteRpcTracking(
       std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> child,
-      std::function<void(void)> on_destruction)
+      std::function<void()> on_destruction)
       : child_(std::move(child)), on_destruction_(std::move(on_destruction)) {}
 
   ~AsyncStreamingReadWriteRpcTracking() override { on_destruction_(); }
@@ -98,13 +98,13 @@ class AsyncStreamingReadWriteRpcTracking
 
  private:
   std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> child_;
-  std::function<void(void)> on_destruction_;
+  std::function<void()> on_destruction_;
 };
 
 template <typename Response>
 Response UnaryHelper(std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
                      OperationContext& oc,
-                     std::function<Response(BigtableStub&)> fn) {
+                     std::function<Response(BigtableStub&)> const& fn) {
   SelectedChannel<BigtableStub> selection =
       pool->GetChannelRandomTwoLeastUsed();
   oc.StubSelection(StubSelectionParams{
@@ -119,7 +119,7 @@ Response UnaryHelper(std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
 template <typename Response>
 Response AsyncHelper(std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
                      std::shared_ptr<OperationContext> const& operation_context,
-                     std::function<Response(BigtableStub&)> fn) {
+                     std::function<Response(BigtableStub&)> const& fn) {
   SelectedChannel<BigtableStub> selection =
       pool->GetChannelRandomTwoLeastUsed();
   if (operation_context != nullptr) {
@@ -137,9 +137,8 @@ template <typename Response>
 std::unique_ptr<internal::StreamingReadRpc<Response>> StreamingHelper(
     std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
     std::shared_ptr<OperationContext> const& operation_context,
-    std::function<
-        std::unique_ptr<internal::StreamingReadRpc<Response>>(BigtableStub&)>
-        fn) {
+    std::function<std::unique_ptr<internal::StreamingReadRpc<Response>>(
+        BigtableStub&)> const& fn) {
   SelectedChannel<BigtableStub> selection =
       pool->GetChannelRandomTwoLeastUsed();
   if (operation_context != nullptr) {
@@ -162,8 +161,7 @@ std::unique_ptr<internal::AsyncStreamingReadRpc<Response>> AsyncStreamingHelper(
     std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
     std::shared_ptr<OperationContext> const& operation_context,
     std::function<std::unique_ptr<internal::AsyncStreamingReadRpc<Response>>(
-        BigtableStub&)>
-        fn) {
+        BigtableStub&)> const& fn) {
   SelectedChannel<BigtableStub> selection =
       pool->GetChannelRandomTwoLeastUsed();
   if (operation_context != nullptr) {
@@ -183,12 +181,10 @@ std::unique_ptr<internal::AsyncStreamingReadRpc<Response>> AsyncStreamingHelper(
 
 template <typename Request, typename Response>
 std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>
-AsyncStreamingHelper(
-    std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
-    std::shared_ptr<OperationContext> const& operation_context,
-    std::function<std::unique_ptr<
-        AsyncStreamingReadWriteRpc<Request, Response>>(BigtableStub&)>
-        fn) {
+AsyncStreamingHelper(std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
+                     std::shared_ptr<OperationContext> const& operation_context,
+                     std::function<std::unique_ptr<AsyncStreamingReadWriteRpc<
+                         Request, Response>>(BigtableStub&)> const& fn) {
   SelectedChannel<BigtableStub> selection =
       pool->GetChannelRandomTwoLeastUsed();
   if (operation_context != nullptr) {
