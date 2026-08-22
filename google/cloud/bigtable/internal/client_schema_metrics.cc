@@ -22,8 +22,6 @@
 #include <opentelemetry/semconv/incubating/cloud_attributes.h>
 #include <opentelemetry/semconv/incubating/faas_attributes.h>
 #include <opentelemetry/semconv/incubating/host_attributes.h>
-#include <algorithm>
-#include <map>
 #include <set>
 #include <string_view>
 
@@ -63,33 +61,33 @@ std::string_view IsStreamingAsString(RpcType type) {
   }
   return "false";
 }
+
+LabelMap BaseLabels(ClientResourceLabels const& r) {
+  return {{"project_id", r.project_id},   {"instance", r.instance},
+          {"app_profile", r.app_profile}, {"client_name", r.client_name},
+          {"client_uid", r.client_uid},   {"client_project", r.client_project},
+          {"location", r.location},       {"cloud_platform", r.cloud_platform},
+          {"host_id", r.host_id},         {"hostname", r.hostname}};
+}
 }  // namespace
 
 LabelMap IntoLabelMap(ClientResourceLabels const& r,
                       ClientOutstandingRpcLabels const& d,
                       std::set<std::string> const& filtered_data_labels) {
-  LabelMap labels = {
-      {"project_id", r.project_id},   {"instance", r.instance},
-      {"app_profile", r.app_profile}, {"client_name", r.client_name},
-      {"client_uid", r.client_uid},   {"client_project", r.client_project},
-      {"location", r.location},       {"cloud_platform", r.cloud_platform},
-      {"host_id", r.host_id},         {"hostname", r.hostname}};
+  LabelMap labels = BaseLabels(r);
 
-  struct {
-    std::string key;
-    std::string value;
-  } data[] = {
-      {"transport_type", std::string(ToString(d.transport_type))},
-      {"channel_pool_lb_policy",
-       std::string(ToString(d.channel_pool_lb_policy))},
-      {"streaming", std::string(IsStreamingAsString(d.streaming))},
-  };
-
-  for (auto& [key, value] : data) {
+  auto emplace_if_not_filtered = [&](std::string key, std::string value) {
     if (filtered_data_labels.find(key) == filtered_data_labels.end()) {
       labels.emplace(std::move(key), std::move(value));
     }
-  }
+  };
+
+  emplace_if_not_filtered("transport_type",
+                          std::string(ToString(d.transport_type)));
+  emplace_if_not_filtered("channel_pool_lb_policy",
+                          std::string(ToString(d.channel_pool_lb_policy)));
+  emplace_if_not_filtered("streaming",
+                          std::string(IsStreamingAsString(d.streaming)));
 
   return labels;
 }
@@ -97,26 +95,16 @@ LabelMap IntoLabelMap(ClientResourceLabels const& r,
 LabelMap IntoLabelMap(ClientResourceLabels const& r,
                       DirectAccessCompatibilityLabels const& d,
                       std::set<std::string> const& filtered_data_labels) {
-  LabelMap labels = {
-      {"project_id", r.project_id},   {"instance", r.instance},
-      {"app_profile", r.app_profile}, {"client_name", r.client_name},
-      {"client_uid", r.client_uid},   {"client_project", r.client_project},
-      {"location", r.location},       {"cloud_platform", r.cloud_platform},
-      {"host_id", r.host_id},         {"hostname", r.hostname}};
+  LabelMap labels = BaseLabels(r);
 
-  struct {
-    std::string key;
-    std::string value;
-  } data[] = {
-      {"ip_preference", d.ip_preference},
-      {"reason", d.reason},
-  };
-
-  for (auto& [key, value] : data) {
+  auto emplace_if_not_filtered = [&](std::string key, std::string value) {
     if (filtered_data_labels.find(key) == filtered_data_labels.end()) {
       labels.emplace(std::move(key), std::move(value));
     }
-  }
+  };
+
+  emplace_if_not_filtered("ip_preference", d.ip_preference);
+  emplace_if_not_filtered("reason", d.reason);
 
   return labels;
 }
@@ -136,10 +124,8 @@ ClientResourceLabels MakeClientResourceLabels(
     return opentelemetry::nostd::get<std::string>(l->second);
   };
 
-  if (project_id.empty() &&
-      options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
-    auto const& instances =
-        options.get<bigtable_internal::InstanceChannelAffinityOption>();
+  if (project_id.empty() && options.has<InstanceChannelAffinityOption>()) {
+    auto const& instances = options.get<InstanceChannelAffinityOption>();
     if (!instances.empty()) {
       project_id = instances[0].project_id();
     }
@@ -148,10 +134,8 @@ ClientResourceLabels MakeClientResourceLabels(
     project_id = by_name(sc::cloud::kCloudAccountId);
   }
 
-  if (instance.empty() &&
-      options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
-    auto const& instances =
-        options.get<bigtable_internal::InstanceChannelAffinityOption>();
+  if (instance.empty() && options.has<InstanceChannelAffinityOption>()) {
+    auto const& instances = options.get<InstanceChannelAffinityOption>();
     if (!instances.empty()) {
       instance = instances[0].instance_id();
     }
