@@ -28,12 +28,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 template <typename T>
-class StreamingReadRpcTracking
-    : public google::cloud::internal::StreamingReadRpc<T> {
+class StreamingReadRpcTracking : public internal::StreamingReadRpc<T> {
  public:
-  StreamingReadRpcTracking(
-      std::unique_ptr<google::cloud::internal::StreamingReadRpc<T>> child,
-      std::function<void(void)> on_destruction)
+  StreamingReadRpcTracking(std::unique_ptr<internal::StreamingReadRpc<T>> child,
+                           std::function<void(void)> on_destruction)
       : child_(std::move(child)), on_destruction_(std::move(on_destruction)) {}
 
   ~StreamingReadRpcTracking() override { on_destruction_(); }
@@ -47,16 +45,16 @@ class StreamingReadRpcTracking
   }
 
  private:
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<T>> child_;
+  std::unique_ptr<internal::StreamingReadRpc<T>> child_;
   std::function<void(void)> on_destruction_;
 };
 
 template <typename T>
 class AsyncStreamingReadRpcTracking
-    : public google::cloud::internal::AsyncStreamingReadRpc<T> {
+    : public internal::AsyncStreamingReadRpc<T> {
  public:
   AsyncStreamingReadRpcTracking(
-      std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<T>> child,
+      std::unique_ptr<internal::AsyncStreamingReadRpc<T>> child,
       std::function<void(void)> on_destruction)
       : child_(std::move(child)), on_destruction_(std::move(on_destruction)) {}
 
@@ -71,18 +69,16 @@ class AsyncStreamingReadRpcTracking
   }
 
  private:
-  std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<T>> child_;
+  std::unique_ptr<internal::AsyncStreamingReadRpc<T>> child_;
   std::function<void(void)> on_destruction_;
 };
 
 template <typename Request, typename Response>
 class AsyncStreamingReadWriteRpcTracking
-    : public google::cloud::AsyncStreamingReadWriteRpc<Request, Response> {
+    : public AsyncStreamingReadWriteRpc<Request, Response> {
  public:
   AsyncStreamingReadWriteRpcTracking(
-      std::unique_ptr<
-          google::cloud::AsyncStreamingReadWriteRpc<Request, Response>>
-          child,
+      std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> child,
       std::function<void(void)> on_destruction)
       : child_(std::move(child)), on_destruction_(std::move(on_destruction)) {}
 
@@ -101,8 +97,7 @@ class AsyncStreamingReadWriteRpcTracking
   }
 
  private:
-  std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<Request, Response>>
-      child_;
+  std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>> child_;
   std::function<void(void)> on_destruction_;
 };
 
@@ -139,12 +134,11 @@ Response AsyncHelper(std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
 }
 
 template <typename Response>
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<Response>>
-StreamingHelper(
+std::unique_ptr<internal::StreamingReadRpc<Response>> StreamingHelper(
     std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
     std::shared_ptr<OperationContext> const& operation_context,
-    std::function<std::unique_ptr<
-        google::cloud::internal::StreamingReadRpc<Response>>(BigtableStub&)>
+    std::function<
+        std::unique_ptr<internal::StreamingReadRpc<Response>>(BigtableStub&)>
         fn) {
   SelectedChannel<BigtableStub> selection =
       pool->GetChannelRandomTwoLeastUsed();
@@ -164,12 +158,10 @@ StreamingHelper(
 }
 
 template <typename Response>
-std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<Response>>
-AsyncStreamingHelper(
+std::unique_ptr<internal::AsyncStreamingReadRpc<Response>> AsyncStreamingHelper(
     std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
     std::shared_ptr<OperationContext> const& operation_context,
-    std::function<std::unique_ptr<
-        google::cloud::internal::AsyncStreamingReadRpc<Response>>(
+    std::function<std::unique_ptr<internal::AsyncStreamingReadRpc<Response>>(
         BigtableStub&)>
         fn) {
   SelectedChannel<BigtableStub> selection =
@@ -190,12 +182,12 @@ AsyncStreamingHelper(
 }
 
 template <typename Request, typename Response>
-std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<Request, Response>>
+std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>
 AsyncStreamingHelper(
     std::shared_ptr<DynamicChannelPool<BigtableStub>>& pool,
     std::shared_ptr<OperationContext> const& operation_context,
-    std::function<std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
-        Request, Response>>(BigtableStub&)>
+    std::function<std::unique_ptr<
+        AsyncStreamingReadWriteRpc<Request, Response>>(BigtableStub&)>
         fn) {
   SelectedChannel<BigtableStub> selection =
       pool->GetChannelRandomTwoLeastUsed();
@@ -218,8 +210,8 @@ AsyncStreamingHelper(
 
 }  // namespace
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::bigtable::v2::ReadRowsResponse>>
+std::unique_ptr<
+    internal::StreamingReadRpc<google::bigtable::v2::ReadRowsResponse>>
 BigtableRandomTwoLeastUsed::ReadRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ReadRowsRequest const& request,
@@ -233,8 +225,8 @@ BigtableRandomTwoLeastUsed::ReadRows(
       });
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::bigtable::v2::SampleRowKeysResponse>>
+std::unique_ptr<
+    internal::StreamingReadRpc<google::bigtable::v2::SampleRowKeysResponse>>
 BigtableRandomTwoLeastUsed::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::SampleRowKeysRequest const& request,
@@ -259,8 +251,8 @@ BigtableRandomTwoLeastUsed::MutateRow(
       });
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::bigtable::v2::MutateRowsResponse>>
+std::unique_ptr<
+    internal::StreamingReadRpc<google::bigtable::v2::MutateRowsResponse>>
 BigtableRandomTwoLeastUsed::MutateRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::MutateRowsRequest const& request,
@@ -321,8 +313,8 @@ BigtableRandomTwoLeastUsed::PrepareQuery(
       });
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::bigtable::v2::ExecuteQueryResponse>>
+std::unique_ptr<
+    internal::StreamingReadRpc<google::bigtable::v2::ExecuteQueryResponse>>
 BigtableRandomTwoLeastUsed::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ExecuteQueryRequest const& request,
@@ -336,12 +328,11 @@ BigtableRandomTwoLeastUsed::ExecuteQuery(
       });
 }
 
-std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
-    google::bigtable::v2::ReadRowsResponse>>
+std::unique_ptr<
+    internal::AsyncStreamingReadRpc<google::bigtable::v2::ReadRowsResponse>>
 BigtableRandomTwoLeastUsed::AsyncReadRows(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::ReadRowsResponse>(
@@ -353,12 +344,11 @@ BigtableRandomTwoLeastUsed::AsyncReadRows(
       });
 }
 
-std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
+std::unique_ptr<internal::AsyncStreamingReadRpc<
     google::bigtable::v2::SampleRowKeysResponse>>
 BigtableRandomTwoLeastUsed::AsyncSampleRowKeys(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::SampleRowKeysResponse>(
@@ -373,9 +363,8 @@ BigtableRandomTwoLeastUsed::AsyncSampleRowKeys(
 
 future<StatusOr<google::bigtable::v2::MutateRowResponse>>
 BigtableRandomTwoLeastUsed::AsyncMutateRow(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncHelper<future<StatusOr<google::bigtable::v2::MutateRowResponse>>>(
@@ -387,12 +376,11 @@ BigtableRandomTwoLeastUsed::AsyncMutateRow(
       });
 }
 
-std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
-    google::bigtable::v2::MutateRowsResponse>>
+std::unique_ptr<
+    internal::AsyncStreamingReadRpc<google::bigtable::v2::MutateRowsResponse>>
 BigtableRandomTwoLeastUsed::AsyncMutateRows(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::MutateRowsResponse>(
@@ -406,9 +394,8 @@ BigtableRandomTwoLeastUsed::AsyncMutateRows(
 
 future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
 BigtableRandomTwoLeastUsed::AsyncCheckAndMutateRow(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncHelper<
@@ -424,9 +411,8 @@ BigtableRandomTwoLeastUsed::AsyncCheckAndMutateRow(
 
 future<StatusOr<google::bigtable::v2::PingAndWarmResponse>>
 BigtableRandomTwoLeastUsed::AsyncPingAndWarm(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     google::bigtable::v2::PingAndWarmRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncHelper<
@@ -441,9 +427,8 @@ BigtableRandomTwoLeastUsed::AsyncPingAndWarm(
 
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableRandomTwoLeastUsed::AsyncReadModifyWriteRow(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncHelper<
@@ -459,9 +444,8 @@ BigtableRandomTwoLeastUsed::AsyncReadModifyWriteRow(
 
 future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
 BigtableRandomTwoLeastUsed::AsyncPrepareQuery(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     google::bigtable::v2::PrepareQueryRequest const& request,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncHelper<
@@ -487,13 +471,12 @@ BigtableRandomTwoLeastUsed::GetClientConfiguration(
       });
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::bigtable::v2::SessionRequest,
-    google::bigtable::v2::SessionResponse>>
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::bigtable::v2::SessionRequest,
+                               google::bigtable::v2::SessionResponse>>
 BigtableRandomTwoLeastUsed::AsyncOpenTable(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::SessionRequest,
                               google::bigtable::v2::SessionResponse>(
@@ -505,13 +488,12 @@ BigtableRandomTwoLeastUsed::AsyncOpenTable(
       });
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::bigtable::v2::SessionRequest,
-    google::bigtable::v2::SessionResponse>>
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::bigtable::v2::SessionRequest,
+                               google::bigtable::v2::SessionResponse>>
 BigtableRandomTwoLeastUsed::AsyncOpenAuthorizedView(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::SessionRequest,
                               google::bigtable::v2::SessionResponse>(
@@ -524,13 +506,12 @@ BigtableRandomTwoLeastUsed::AsyncOpenAuthorizedView(
       });
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::bigtable::v2::SessionRequest,
-    google::bigtable::v2::SessionResponse>>
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::bigtable::v2::SessionRequest,
+                               google::bigtable::v2::SessionResponse>>
 BigtableRandomTwoLeastUsed::AsyncOpenMaterializedView(
-    google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    internal::ImmutableOptions options,
     std::shared_ptr<OperationContext> operation_context) {
   return AsyncStreamingHelper<google::bigtable::v2::SessionRequest,
                               google::bigtable::v2::SessionResponse>(
