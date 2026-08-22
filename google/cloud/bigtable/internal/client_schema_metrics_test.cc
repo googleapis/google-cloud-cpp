@@ -33,6 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::MakeAttributesMap;
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+using ::google::cloud::testing_util::MockGauge;
+#endif
 using ::google::cloud::testing_util::MockHistogram;
 using ::google::cloud::testing_util::MockMeter;
 using ::google::cloud::testing_util::MockMeterProvider;

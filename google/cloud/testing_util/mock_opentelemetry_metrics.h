@@ -56,6 +56,26 @@ class MockHistogram : public opentelemetry::metrics::Histogram<T> {
               (noexcept, override));
 };
 
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+template <typename T>
+class MockGauge : public opentelemetry::metrics::Gauge<T> {
+ public:
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
+              (T value), (noexcept, override));
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
+              (T value, opentelemetry::context::Context const& context),
+              (noexcept, override));
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
+              (T, opentelemetry::common::KeyValueIterable const&),
+              (noexcept, override));
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
+              (T value,
+               opentelemetry::common::KeyValueIterable const& attributes,
+               opentelemetry::context::Context const& context),
+              (noexcept, override));
+};
+#endif
+
 template <typename T>
 class MockCounter : public opentelemetry::metrics::Counter<T> {
  public:
