@@ -85,9 +85,36 @@ LabelMap IntoLabelMap(ClientResourceLabels const& r,
       {"streaming", std::string(IsStreamingAsString(d.streaming))},
   };
 
-  for (auto& item : data) {
-    if (filtered_data_labels.find(item.key) == filtered_data_labels.end()) {
-      labels.emplace(std::move(item.key), std::move(item.value));
+  for (auto& [key, value] : data) {
+    if (filtered_data_labels.find(key) == filtered_data_labels.end()) {
+      labels.emplace(std::move(key), std::move(value));
+    }
+  }
+
+  return labels;
+}
+
+LabelMap IntoLabelMap(ClientResourceLabels const& r,
+                      DirectAccessCompatibilityLabels const& d,
+                      std::set<std::string> const& filtered_data_labels) {
+  LabelMap labels = {
+      {"project_id", r.project_id},   {"instance", r.instance},
+      {"app_profile", r.app_profile}, {"client_name", r.client_name},
+      {"client_uid", r.client_uid},   {"client_project", r.client_project},
+      {"location", r.location},       {"cloud_platform", r.cloud_platform},
+      {"host_id", r.host_id},         {"hostname", r.hostname}};
+
+  struct {
+    std::string key;
+    std::string value;
+  } data[] = {
+      {"ip_preference", d.ip_preference},
+      {"reason", d.reason},
+  };
+
+  for (auto& [key, value] : data) {
+    if (filtered_data_labels.find(key) == filtered_data_labels.end()) {
+      labels.emplace(std::move(key), std::move(value));
     }
   }
 
@@ -119,6 +146,19 @@ ClientResourceLabels MakeClientResourceLabels(
   }
   if (project_id.empty()) {
     project_id = by_name(sc::cloud::kCloudAccountId);
+  }
+
+  if (instance.empty() &&
+      options.has<bigtable_internal::InstanceChannelAffinityOption>()) {
+    auto const& instances =
+        options.get<bigtable_internal::InstanceChannelAffinityOption>();
+    if (!instances.empty()) {
+      instance = instances[0].instance_id();
+    }
+  }
+
+  if (app_profile.empty() && options.has<bigtable::AppProfileIdOption>()) {
+    app_profile = options.get<bigtable::AppProfileIdOption>();
   }
 
   std::string client_project = by_name(sc::cloud::kCloudAccountId);
@@ -173,6 +213,47 @@ void OutstandingRpcs::StubSelection(
 std::unique_ptr<ClientSchemaMetric> OutstandingRpcs::clone(
     ClientResourceLabels const& resource_labels) const {
   auto m = std::make_unique<OutstandingRpcs>(*this);
+  m->resource_labels_ = resource_labels;
+  return m;
+}
+
+DirectAccessCompatibility::DirectAccessCompatibility(
+    std::string const& instrumentation_scope,
+    opentelemetry::nostd::shared_ptr<
+        opentelemetry::metrics::MeterProvider> const& provider)
+    : gauge_(
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateInt64Gauge(
+                  "direct_access/compatible",
+                  "Compatibility check result for Bigtable DirectPath.", "1")
+#else
+          provider
+              ->GetMeter(instrumentation_scope,
+                         kMeterInstrumentationScopeVersion)
+              ->CreateDoubleHistogram(
+                  "direct_access/compatible",
+                  "Compatibility check result for Bigtable DirectPath.", "1")
+#endif
+      ) {
+}
+
+void DirectAccessCompatibility::Record(
+    opentelemetry::context::Context const& context, std::int64_t value,
+    DirectAccessCompatibilityLabels const& data_labels) {
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  gauge_->Record(value, IntoLabelMap(resource_labels_, data_labels), context);
+#else
+  gauge_->Record(static_cast<double>(value),
+                 IntoLabelMap(resource_labels_, data_labels), context);
+#endif
+}
+
+std::unique_ptr<ClientSchemaMetric> DirectAccessCompatibility::clone(
+    ClientResourceLabels const& resource_labels) const {
+  auto m = std::make_unique<DirectAccessCompatibility>(*this);
   m->resource_labels_ = resource_labels;
   return m;
 }
