@@ -114,51 +114,45 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> const& auth,
     bigtable::InstanceResource const& instance_resource, Options const& options,
     CompletionQueue const& cq) {
-  if (!auth) {
-    return internal::InternalError("Auth strategy cannot be null",
-                                   GCP_ERROR_INFO());
-  }
-
-  auto constexpr kDirectPathEndpoint = "google-c2p:///bigtable.googleapis.com";
-  auto constexpr kAuthority = "bigtable.googleapis.com";
-
-  Options probe_options = options;
-  probe_options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-      kDirectPathEndpoint);
-  probe_options.set<EndpointOption>(kDirectPathEndpoint);
-  probe_options.set<AuthorityOption>(kAuthority);
-  probe_options.set<bigtable::experimental::DirectPathModeOption>(
-      bigtable::experimental::DirectPathMode::kEnabled);
-  probe_options.set<GrpcNumChannelsOption>(1);
-  probe_options.set<bigtable::MinConnectionRefreshOption>(
-      std::chrono::milliseconds::zero());
-  probe_options.set<bigtable::MaxConnectionRefreshOption>(
-      std::chrono::milliseconds::zero());
-
-  auto stub_factory = [](std::shared_ptr<grpc::Channel> channel) {
-    return std::make_shared<DefaultBigtableStub>(
-        google::bigtable::v2::Bigtable::NewStub(std::move(channel)));
-  };
-  std::shared_ptr<BigtableStub> stub =
-      CreateDecoratedStubs(auth, cq, probe_options, stub_factory);
-
-  return Probe(stub, instance_resource, probe_options);
+  return Probe(auth, instance_resource, options, cq, nullptr, "", nullptr);
 }
 
 StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
-    std::shared_ptr<BigtableStub> stub,
-    bigtable::InstanceResource const& instance_resource,
-    Options const& options) {
-  return Probe(std::move(stub), instance_resource, options, "", nullptr);
-}
-
-StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
-    std::shared_ptr<BigtableStub> stub,
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> const& auth,
     bigtable::InstanceResource const& instance_resource, Options const& options,
+    CompletionQueue const& cq, std::shared_ptr<BigtableStub> const& stub,
     std::string const& peer_address,
-    std::shared_ptr<grpc::AuthContext const> auth_context) {
-  if (!stub) {
-    return internal::InternalError("Stub cannot be null", GCP_ERROR_INFO());
+    std::shared_ptr<grpc::AuthContext const> const& auth_context) {
+  std::shared_ptr<BigtableStub> effective_stub = stub;
+  if (!effective_stub) {
+    if (!auth) {
+      return internal::InternalError("Auth strategy cannot be null",
+                                     GCP_ERROR_INFO());
+    }
+
+    auto constexpr kDirectPathEndpoint =
+        "google-c2p:///bigtable.googleapis.com";
+    auto constexpr kAuthority = "bigtable.googleapis.com";
+
+    Options probe_options = options;
+    probe_options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
+        kDirectPathEndpoint);
+    probe_options.set<EndpointOption>(kDirectPathEndpoint);
+    probe_options.set<AuthorityOption>(kAuthority);
+    probe_options.set<bigtable::experimental::DirectPathModeOption>(
+        bigtable::experimental::DirectPathMode::kEnabled);
+    probe_options.set<GrpcNumChannelsOption>(1);
+    probe_options.set<bigtable::MinConnectionRefreshOption>(
+        std::chrono::milliseconds::zero());
+    probe_options.set<bigtable::MaxConnectionRefreshOption>(
+        std::chrono::milliseconds::zero());
+
+    auto stub_factory = [](std::shared_ptr<grpc::Channel> channel) {
+      return std::make_shared<DefaultBigtableStub>(
+          google::bigtable::v2::Bigtable::NewStub(std::move(channel)));
+    };
+    effective_stub =
+        CreateDecoratedStubs(auth, cq, probe_options, stub_factory);
   }
 
   std::chrono::milliseconds timeout =
@@ -177,7 +171,7 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
   }
   OperationContext op_ctx;
   StatusOr<google::bigtable::v2::PingAndWarmResponse> response =
-      stub->PingAndWarm(client_context, options, request, op_ctx);
+      effective_stub->PingAndWarm(client_context, options, request, op_ctx);
   if (!response.ok()) return response.status();
 
   DirectPathProbeResult result;

@@ -55,16 +55,12 @@ class DirectPathProber {
 
   /// For testing only.
   static StatusOr<DirectPathProbeResult> Probe(
-      std::shared_ptr<BigtableStub> stub,
+      std::shared_ptr<internal::GrpcAuthenticationStrategy> const& auth,
       bigtable::InstanceResource const& instance_resource,
-      Options const& options);
-
-  /// For testing only.
-  static StatusOr<DirectPathProbeResult> Probe(
-      std::shared_ptr<BigtableStub> stub,
-      bigtable::InstanceResource const& instance_resource,
-      Options const& options, std::string const& peer_address,
-      std::shared_ptr<grpc::AuthContext const> auth_context);
+      Options const& options, CompletionQueue const& cq,
+      std::shared_ptr<BigtableStub> const& stub,
+      std::string const& peer_address,
+      std::shared_ptr<grpc::AuthContext const> const& auth_context);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

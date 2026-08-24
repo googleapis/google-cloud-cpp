@@ -229,10 +229,7 @@ TEST(DirectPathProberTest, ProbeReturnsErrorWhenRpcFails) {
                                HasSubstr("service unavailable")));
 }
 
-class FakeAuthPropertyIterator : public grpc::AuthPropertyIterator {
- public:
-  FakeAuthPropertyIterator() : grpc::AuthPropertyIterator() {}
-};
+class FakeAuthPropertyIterator : public grpc::AuthPropertyIterator {};
 
 class FakeAuthContext : public grpc::AuthContext {
  public:
@@ -249,7 +246,8 @@ class FakeAuthContext : public grpc::AuthContext {
       std::string const& name) const override {
     if (name == "transport_security_type") {
       std::vector<grpc::string_ref> res;
-      for (auto const& st : transport_security_types_) {
+      res.reserve(transport_security_types_.size());
+      for (std::string const& st : transport_security_types_) {
         res.emplace_back(st.data(), st.size());
       }
       return res;
@@ -286,8 +284,9 @@ TEST(DirectPathProberTest, ProbeWithAltsNegotiatedIpv4) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"alts"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv4:34.126.1.1:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv4:34.126.1.1:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(true)),
@@ -309,8 +308,9 @@ TEST(DirectPathProberTest, ProbeWithAltsNegotiatedIpv6) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"alts"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv6:[2001:db8::1]:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv6:[2001:db8::1]:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(true)),
@@ -332,9 +332,9 @@ TEST(DirectPathProberTest, ProbeWithAltsNegotiatedUnknownPeer) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"alts"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(mock_stub, instance, Options{},
-                              "dns:///bigtable.googleapis.com", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      nullptr, instance, Options{}, CompletionQueue{}, mock_stub,
+      "dns:///bigtable.googleapis.com", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(
@@ -357,8 +357,9 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv4) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv4:34.126.0.1:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv4:34.126.0.1:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(true)),
@@ -380,8 +381,9 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv4MaxSubnet) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv4:34.126.63.255:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv4:34.126.63.255:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(true)),
@@ -403,9 +405,9 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDirectPathIpv6) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(mock_stub, instance, Options{},
-                              "ipv6:[2607:f8b0:4000:800::200a]:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      nullptr, instance, Options{}, CompletionQueue{}, mock_stub,
+      "ipv6:[2607:f8b0:4000:800::200a]:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(
@@ -428,8 +430,9 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedNonDirectPathIpv4) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv4:34.126.64.1:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv4:34.126.64.1:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
@@ -451,8 +454,9 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDifferentOctetIpv4) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv4:34.125.1.1:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv4:34.125.1.1:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
@@ -474,8 +478,9 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedDifferentFirstOctetIpv4) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv4:35.126.1.1:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv4:35.126.1.1:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
@@ -497,8 +502,9 @@ TEST(DirectPathProberTest, ProbeWithPeerAuthenticatedInvalidIpv4) {
       std::make_shared<FakeAuthContext>(true, std::vector<std::string>{"ssl"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv4:invalid:format", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv4:invalid:format", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
@@ -520,8 +526,9 @@ TEST(DirectPathProberTest, ProbeWithPeerUnauthenticated) {
       false, std::vector<std::string>{"alts"});
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
 
-  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
-      mock_stub, instance, Options{}, "ipv4:34.126.1.1:443", auth_ctx);
+  StatusOr<DirectPathProbeResult> const result =
+      DirectPathProber::Probe(nullptr, instance, Options{}, CompletionQueue{},
+                              mock_stub, "ipv4:34.126.1.1:443", auth_ctx);
 
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, AllOf(ProbeSuccess(Eq(false)),
@@ -531,8 +538,8 @@ TEST(DirectPathProberTest, ProbeWithPeerUnauthenticated) {
 
 TEST(DirectPathProberTest, ProbeNullStubFails) {
   bigtable::InstanceResource const instance(Project("test-proj"), "test-inst");
-  StatusOr<DirectPathProbeResult> const result =
-      DirectPathProber::Probe(nullptr, instance, Options{});
+  StatusOr<DirectPathProbeResult> const result = DirectPathProber::Probe(
+      nullptr, instance, Options{}, CompletionQueue{}, nullptr, "", nullptr);
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 }
 
