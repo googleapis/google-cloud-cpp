@@ -35,6 +35,10 @@ std::multimap<std::string, std::string> CurlHttpPayload::DebugHeaders() const {
   return impl_->headers();
 }
 
+void CurlHttpPayload::Cancel() {
+  if (impl_) impl_->Cancel();
+}
+
 StatusOr<std::string> ReadAll(std::unique_ptr<HttpPayload> payload,
                               std::size_t read_size) {
   std::string output_buffer;

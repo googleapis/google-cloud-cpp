@@ -78,6 +78,15 @@ TEST_F(RestContextTest, Equality) {
   EXPECT_THAT(lhs, Eq(rhs));
 }
 
+TEST_F(RestContextTest, CancellationToken) {
+  RestContext context;
+  EXPECT_EQ(context.cancellation_token(), nullptr);
+
+  auto token = std::make_shared<std::atomic<bool>>(false);
+  context.set_cancellation_token(token);
+  EXPECT_EQ(context.cancellation_token(), token);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

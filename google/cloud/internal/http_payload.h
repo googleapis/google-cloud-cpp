@@ -46,6 +46,9 @@ class HttpPayload {
   virtual std::multimap<std::string, std::string> DebugHeaders() const {
     return {};
   }
+
+  /// Cancels an in-progress or subsequent read.
+  virtual void Cancel() {}
 };
 
 // This function makes one or more HttpPayload::Read calls and writes all the

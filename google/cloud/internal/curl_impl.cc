@@ -125,6 +125,12 @@ static int SeekFunction(  // NOLINT(misc-use-anonymous-namespace)
              : CURL_SEEKFUNC_FAIL;
 }
 
+static int TransferInfoFunction(  // NOLINT(misc-use-anonymous-namespace)
+    void* userdata, curl_off_t, curl_off_t, curl_off_t, curl_off_t) {
+  auto* const request = reinterpret_cast<CurlImpl*>(userdata);
+  return request->TransferInfoCallback();
+}
+
 }  // extern "C"
 
 std::size_t SpillBuffer::CopyFrom(absl::Span<char const> src) {
@@ -244,7 +250,12 @@ CurlImpl::~CurlImpl() {
   CleanupHandles();
 
   CurlHandle::ReturnToPool(*factory_, std::move(handle_));
-  factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
+  factory_->CleanupMultiHandle(ReleaseMulti(), HandleDisposition::kKeep);
+}
+
+CurlMulti CurlImpl::ReleaseMulti() {
+  std::lock_guard<std::mutex> lk(multi_mu_);
+  return std::move(multi_);
 }
 
 void CurlImpl::SetHeader(HttpHeader header) {
@@ -460,8 +471,6 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   if (!status.ok()) return OnTransferError(context, std::move(status));
 
   if (method == HttpMethod::kGet) {
-    status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
-    if (!status.ok()) return OnTransferError(context, std::move(status));
     if (download_stall_timeout_ != std::chrono::seconds::zero()) {
       // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
       auto const timeout = static_cast<long>(download_stall_timeout_.count());
@@ -553,7 +562,41 @@ StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
   // This context is discarded.  Any interesting information was already
   // captured when the request was started.
   RestContext context;
+  if (cancellation_token_) {
+    context.set_cancellation_token(cancellation_token_);
+  }
   return ReadImpl(context, std::move(output));
+}
+
+void CurlImpl::SetCancellationToken(
+    std::shared_ptr<std::atomic<bool>> token) {
+  if (token) {
+    if (cancellation_token_->load(std::memory_order_relaxed)) {
+      token->store(true, std::memory_order_relaxed);
+    }
+    cancellation_token_ = std::move(token);
+    cancellable_ = true;
+  }
+}
+
+void CurlImpl::Cancel() {
+  cancellation_token_->store(true, std::memory_order_relaxed);
+#if CURL_AT_LEAST_VERSION(7, 68, 0)
+  // The lock keeps `multi_` alive and owned by this request while the wakeup
+  // is delivered: without it the transfer thread could concurrently return
+  // the handle to the pool, where another request may already be using it.
+  std::lock_guard<std::mutex> lk(multi_mu_);
+  if (multi_) {
+    (void)curl_multi_wakeup(multi_.get());
+  }
+#endif
+}
+
+int CurlImpl::TransferInfoCallback() {
+  if (cancellation_token_->load(std::memory_order_relaxed)) {
+    return 1;
+  }
+  return 0;
 }
 
 std::size_t CurlImpl::WriteCallback(absl::Span<char> response) {
@@ -624,6 +667,17 @@ std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
 Status CurlImpl::MakeRequestImpl(RestContext& context) {
   TRACE_STATE() << ", url_=" << url_;
 
+  if (context.cancellation_token() &&
+      context.cancellation_token() != cancellation_token_) {
+    SetCancellationToken(context.cancellation_token());
+  }
+
+  if (cancellation_token_->load(std::memory_order_relaxed)) {
+    return OnTransferError(
+        context,
+        internal::CancelledError("Request cancelled", GCP_ERROR_INFO()));
+  }
+
   Status status;
   status = handle_.SetOption(CURLOPT_URL, url_.c_str());
   if (!status.ok()) return OnTransferError(context, std::move(status));
@@ -644,6 +698,13 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
 
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
+
+  status = handle_.SetOption(CURLOPT_NOPROGRESS, 0L);
+  if (!status.ok()) return OnTransferError(context, std::move(status));
+  status = handle_.SetOption(CURLOPT_XFERINFOFUNCTION, &TransferInfoFunction);
+  if (!status.ok()) return OnTransferError(context, std::move(status));
+  status = handle_.SetOption(CURLOPT_XFERINFODATA, this);
+  if (!status.ok()) return OnTransferError(context, std::move(status));
 
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
 
@@ -668,6 +729,17 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(RestContext& context,
   handle_.FlushDebug(__func__);
   avail_ = output;
   TRACE_STATE() << ", begin";
+
+  if (context.cancellation_token() &&
+      context.cancellation_token() != cancellation_token_) {
+    SetCancellationToken(context.cancellation_token());
+  }
+
+  if (cancellation_token_->load(std::memory_order_relaxed)) {
+    return OnTransferError(
+        context,
+        internal::CancelledError("Request cancelled", GCP_ERROR_INFO()));
+  }
 
   // Before calling WaitForHandles(), move any data from the spill buffer
   // into the output buffer. It is possible that WaitForHandles() will
@@ -807,6 +879,15 @@ StatusOr<int> CurlImpl::PerformWork() {
       // (see above) tells libcurl that it cannot receive more data.
       if (closing_) continue;
       if (multi_info_read_result != CURLE_OK) {
+        // CURLE_ABORTED_BY_CALLBACK maps to `kAborted`, but when the abort
+        // came from TransferInfoCallback() observing the cancellation token
+        // the caller asked for the cancellation: report `kCancelled` so it is
+        // not mistaken for a permanent failure.
+        if (multi_info_read_result == CURLE_ABORTED_BY_CALLBACK &&
+            cancellation_token_->load(std::memory_order_relaxed)) {
+          return internal::CancelledError("Request cancelled",
+                                          GCP_ERROR_INFO());
+        }
         return CurlHandle::AsStatus(multi_info_read_result, __func__);
       }
       if (multi_remove_result != CURLM_OK) {
@@ -822,6 +903,9 @@ Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
   TRACE_STATE() << ", begin";
   int repeats = 0;
   while (!predicate()) {
+    if (cancellation_token_->load(std::memory_order_relaxed)) {
+      return internal::CancelledError("Request cancelled", GCP_ERROR_INFO());
+    }
     handle_.FlushDebug(__func__);
     TRACE_STATE() << ", repeats=" << repeats;
     auto running_handles = PerformWork();
@@ -839,7 +923,14 @@ Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
 }
 
 Status CurlImpl::WaitForHandles(int& repeats) {
+#if !CURL_AT_LEAST_VERSION(7, 68, 0)
+  // Without curl_multi_wakeup() a Cancel() from another thread cannot
+  // interrupt the wait, so poll frequently -- but only when some caller can
+  // actually cancel this transfer; other transfers keep the long timeout.
+  int const timeout_ms = cancellable_ ? 50 : 1000;
+#else
   int const timeout_ms = 1000;
+#endif
   int numfds = 0;
   CURLMcode result;
 #if CURL_AT_LEAST_VERSION(7, 66, 0)
@@ -890,7 +981,7 @@ Status CurlImpl::OnTransferError(RestContext& context, Status status) {
   // While the handle is suspect, there is probably nothing wrong with the
   // CURLM* handle. That just represents a local resource, such as data
   // structures for epoll(7) or select(2).
-  factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
+  factory_->CleanupMultiHandle(ReleaseMulti(), HandleDisposition::kKeep);
 
   return status;
 }
@@ -903,7 +994,7 @@ void CurlImpl::OnTransferDone() {
   // in PerformWork(). Release the handles back to the factory as soon as
   // possible, so they can be reused for any other requests.
   CurlHandle::ReturnToPool(*factory_, std::move(handle_));
-  factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
+  factory_->CleanupMultiHandle(ReleaseMulti(), HandleDisposition::kKeep);
 }
 
 std::optional<std::string> CurlOptProxy(Options const& options) {
